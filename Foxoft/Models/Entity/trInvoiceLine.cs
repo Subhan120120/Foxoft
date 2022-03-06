@@ -21,16 +21,21 @@ namespace Foxoft.Models
         public Guid? RelatedLineId { get; set; }
 
 
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        [ForeignKey("DcProduct")]
         [DisplayName("Məhsul")]
+        [ForeignKey("DcProduct")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProductCode { get; set; }
 
-        [DisplayName("Say")]
+        [DisplayName("Say Giriş")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [Range(1, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        public int Qty { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+        public int QtyIn { get; set; }
+
+        [DisplayName("Say Çıxış")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+        public int QtyOut { get; set; }
 
         [DisplayName("Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]

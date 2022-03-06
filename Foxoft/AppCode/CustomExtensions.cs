@@ -67,6 +67,22 @@ namespace Foxoft
             gridView.OptionsBehavior.Editable = false;
         }
 
+        public static string ProcessDir(string processCode)
+        {
+            if (processCode == "RP")
+                return "In";
+            else if (processCode == "RS")
+                return "Out";
+            else if (processCode == "EX")
+                return "In";
+            else if (processCode == "SB")
+                return "In";
+            else if (processCode == "W")
+                return "Out";
+            else
+                return "";
+        }
+
     }
 
 }

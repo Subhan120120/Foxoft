@@ -40,8 +40,8 @@ namespace Foxoft
 
                 InvoiceLines.ForEach(x =>
                 {
-                    x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.Qty);
-                    x.RemainingQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.Qty) + x.Qty;
+                    x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);
+                    x.RemainingQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut) + x.QtyOut;
                 });
 
                 #region Comment
@@ -241,7 +241,7 @@ namespace Foxoft
             }
         }
 
-        public int UpdateInvoiceLineQty(object invoiceLineId, int qty)
+        public int UpdateInvoiceLineQtyOut(object invoiceLineId, int qtyOut)
         {
             Guid variable = Guid.Parse(invoiceLineId.ToString());
 
@@ -249,17 +249,17 @@ namespace Foxoft
             {
                 TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.FirstOrDefault(x => x.InvoiceLineId == variable);
 
-                trInvoiceLine.PosDiscount = qty * (trInvoiceLine.PosDiscount / trInvoiceLine.Qty); // qty is new quantity trInvoiceLine.Qty is old quantity
-                trInvoiceLine.Amount = qty * Convert.ToDecimal(trInvoiceLine.Price);
+                trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
+                trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
                 trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
-                trInvoiceLine.Qty = qty;
+                trInvoiceLine.QtyOut = qtyOut;
 
                 db.TrInvoiceLines.Update(trInvoiceLine);
                 return db.SaveChanges();
             }
         }
 
-        public int UpdateInvoiceLineQty(object invoiceHeaderId, object relatedLineId, int qty)
+        public int UpdateInvoiceLineQtyOut(object invoiceHeaderId, object relatedLineId, int qtyOut)
         {
             Guid HeaderId = Guid.Parse(invoiceHeaderId.ToString());
             Guid relatedId = Guid.Parse(relatedLineId.ToString());
@@ -269,10 +269,10 @@ namespace Foxoft
                 TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.Where(x => x.RelatedLineId == relatedId)
                                                    .FirstOrDefault(x => x.InvoiceHeaderId == HeaderId);
 
-                trInvoiceLine.PosDiscount = qty * (trInvoiceLine.PosDiscount / trInvoiceLine.Qty); // qty is new quantity trInvoiceLine.Qty is old quantity
-                trInvoiceLine.Amount = qty * Convert.ToDecimal(trInvoiceLine.Price);
+                trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
+                trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
                 trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
-                trInvoiceLine.Qty = qty;
+                trInvoiceLine.QtyOut = qtyOut;
 
                 db.TrInvoiceLines.Update(trInvoiceLine);
                 return db.SaveChanges();

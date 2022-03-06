@@ -46,13 +46,14 @@ namespace Foxoft
             this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_shipment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_ApproveInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Report = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
             this.SuspendLayout();
@@ -89,6 +90,8 @@ namespace Foxoft
             // 
             // skinPaletteDropDownButtonItem
             // 
+            this.skinPaletteDropDownButtonItem.ActAsDropDown = true;
+            this.skinPaletteDropDownButtonItem.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
             this.skinPaletteDropDownButtonItem.Id = 3;
             this.skinPaletteDropDownButtonItem.Name = "skinPaletteDropDownButtonItem";
             // 
@@ -198,6 +201,14 @@ namespace Foxoft
             this.aCE_ApproveInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_ApproveInvoice.Text = "Transferi Təsdiqlə";
             // 
+            // aCE_Expense
+            // 
+            this.aCE_Expense.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Expense.ImageOptions.SvgImage")));
+            this.aCE_Expense.Name = "aCE_Expense";
+            this.aCE_Expense.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_Expense.Text = "Xərclər";
+            this.aCE_Expense.Click += new System.EventHandler(this.aCE_Expense_Click);
+            // 
             // aCE_Acounting
             // 
             this.aCE_Acounting.Expanded = true;
@@ -215,7 +226,8 @@ namespace Foxoft
             // aCE_Reports
             // 
             this.aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
-            this.aCE_Report});
+            this.aCE_Report,
+            this.accordionControlElement2});
             this.aCE_Reports.Expanded = true;
             this.aCE_Reports.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Reports.ImageOptions.SvgImage")));
             this.aCE_Reports.Name = "aCE_Reports";
@@ -246,13 +258,13 @@ namespace Foxoft
             this.aCE_CurrAccs.Text = "İstifadəçilər";
             this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
             // 
-            // aCE_Expense
+            // accordionControlElement2
             // 
-            this.aCE_Expense.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
-            this.aCE_Expense.Name = "aCE_Expense";
-            this.aCE_Expense.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.aCE_Expense.Text = "Xərclər";
-            this.aCE_Expense.Click += new System.EventHandler(this.aCE_Expense_Click);
+            this.accordionControlElement2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement2.ImageOptions.SvgImage")));
+            this.accordionControlElement2.Name = "accordionControlElement2";
+            this.accordionControlElement2.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.accordionControlElement2.Text = "Element2";
+            this.accordionControlElement2.Click += new System.EventHandler(this.accordionControlElement2_Click);
             // 
             // FormERP
             // 
@@ -300,5 +312,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_POS;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Expense;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement2;
     }
 }

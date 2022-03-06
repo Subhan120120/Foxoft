@@ -371,7 +371,7 @@ namespace Foxoft
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
                         object invoiceLineId = gV_InvoiceLine.GetRowCellValue(rowIndx, "InvoiceLineId");
-                        efMethods.UpdateInvoiceLineQty(invoiceLineId, formQty.qty);
+                        efMethods.UpdateInvoiceLineQtyOut(invoiceLineId, formQty.qty);
                         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
                         gV_InvoiceLine.MoveLast();
                     }

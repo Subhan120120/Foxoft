@@ -1,8 +1,13 @@
-﻿using DevExpress.Utils.VisualEffects;
+﻿using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.DataAccess.Sql;
+using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraReports.UI;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -204,6 +209,41 @@ namespace Foxoft
                 formInvoice.Show();
                 ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
             }
+        }
+
+        private string subConnString = Settings.Default.subConnString;
+
+        private void accordionControlElement2_Click(object sender, EventArgs e)
+        {
+
+            DsMethods dsMethods = new DsMethods();
+            ReportClass reportClass = new ReportClass(); 
+
+            //object[] objInvoiceHeaders = efMethods.SelectInvoiceLineForReport(invoiceHeaderId).Cast<object>().ToArray();
+
+            //DataTable trInvoiceLines = adoMethods.SelectInvoiceLines(DateTime.Now.Date, DateTime.Now.Date);
+            //DataTable trPaymentLines = adoMethods.SelectPaymentLines(DateTime.Now.Date, DateTime.Now.Date);
+
+            //DataSet dataSet = new DataSet("GunSonu");
+            //dataSet.Tables.AddRange(new DataTable[] { trInvoiceLines, trPaymentLines });
+
+            SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+            dataSource.Name = "GunSonu";
+
+            //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
+            SqlQuery sqlQuerySale = dsMethods.SelectSales(DateTime.Now.Date, DateTime.Now.Date);
+            SqlQuery sqlQueryPayment = dsMethods.SelectPayments(DateTime.Now.Date, DateTime.Now.Date);
+            SqlQuery sqlQueryExpences = dsMethods.SelectExpences(DateTime.Now.Date, DateTime.Now.Date);
+
+
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale, sqlQueryPayment, sqlQueryExpences });
+            dataSource.Fill();
+
+            string designPath = Settings.Default.AppSetting.PrintDesignPath;
+            if (!File.Exists(designPath))
+                designPath = reportClass.SelectDesign();
+            ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
+            designTool.ShowRibbonDesignerDialog();
         }
     }
 }

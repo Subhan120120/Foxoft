@@ -113,7 +113,13 @@ namespace Foxoft
                                             {
                                                 LocalView<TrInvoiceLine> local = dbContext.TrInvoiceLines.Local;
                                                 if (form.trInvoiceHeader.IsReturn)
-                                                    local.ForEach(x => { x.Qty = x.Qty * (-1); x.Amount = x.Amount * (-1); x.NetAmount = x.NetAmount * (-1); });
+                                                    local.ForEach(x =>
+                                                    {
+                                                        x.QtyIn = x.QtyIn * (-1);
+                                                        x.QtyOut = x.QtyOut * (-1);
+                                                        x.Amount = x.Amount * (-1);
+                                                        x.NetAmount = x.NetAmount * (-1);
+                                                    });
 
                                                 trInvoiceLinesBindingSource.DataSource = local.ToBindingList();
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -145,7 +151,7 @@ namespace Foxoft
         {
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceHeaderId", trInvoiceHeader.InvoiceHeaderId);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "Qty", 1);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
         }
 
         private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -162,12 +168,12 @@ namespace Foxoft
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
             object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "Price");
-            object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "Qty");
+            object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
             object objPosDiscount = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "PosDiscount");
 
             if (e.Column.FieldName == "Price")
                 objPrice = e.Value;
-            if (e.Column.FieldName == "Qty")
+            if (e.Column.FieldName == (CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut"))
                 objQty = e.Value;
             if (e.Column.FieldName == "PosDiscount")
                 objPosDiscount = e.Value;
@@ -219,7 +225,7 @@ namespace Foxoft
         private void CalcInvoiceLineNetAmount()
         {
             object objPrice = gV_InvoiceLine.GetFocusedRowCellValue("Price");
-            object objQty = gV_InvoiceLine.GetFocusedRowCellValue("Qty");
+            object objQty = gV_InvoiceLine.GetFocusedRowCellValue(CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
             object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue("PosDiscount");
 
             decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice) : 0;
@@ -283,22 +289,28 @@ namespace Foxoft
                         if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
                             efMethods.InsertInvoiceHeader(trInvoiceHeader);
 
-                        #region if isReturn * (-1)
-                        //if ((bool)CheckEdit_IsReturn.EditValue)
-                        //{
-                        //    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                        //    {
-                        //        int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Qty));
-                        //        gV_InvoiceLine.SetRowCellValue(i, col_Qty, qty * (-1));
+                        if ((bool)CheckEdit_IsReturn.EditValue)
+                        {
+                            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                            {
+                                if (CustomExtensions.ProcessDir(processCode) == "In")
+                                {
+                                    int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyIn"));
+                                    gV_InvoiceLine.SetRowCellValue(i, "QtyIn", qty * (-1));
+                                }
+                                else if (CustomExtensions.ProcessDir(processCode) == "Out")
+                                {
+                                    int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyOut"));
+                                    gV_InvoiceLine.SetRowCellValue(i, "QtyOut", qty * (-1));
+                                }
 
-                        //        int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
-                        //        gV_InvoiceLine.SetRowCellValue(i, col_Amount, amount * (-1));
+                                int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
+                                gV_InvoiceLine.SetRowCellValue(i, "Amount", amount * (-1));
 
-                        //        int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
-                        //        gV_InvoiceLine.SetRowCellValue(i, col_NetAmount, netAmount * (-1));
-                        //    }
-                        //} 
-                        #endregion
+                                int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
+                                gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
+                            }
+                        }
 
                         dbContext.SaveChanges();
 

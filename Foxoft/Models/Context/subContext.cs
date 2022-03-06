@@ -503,8 +503,11 @@ namespace Foxoft.Models
                 entity.HasIndex(e => e.ProductCode)
                     .HasDatabaseName("IX_ProductCode");
 
-                entity.Property(e => e.Qty)
-                    .HasDefaultValueSql("1");
+                entity.Property(e => e.QtyIn)
+                    .HasDefaultValueSql("0"); 
+                
+                entity.Property(e => e.QtyOut)
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.CurrencyCode)
                     .HasDefaultValueSql("space(0)");

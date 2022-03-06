@@ -96,18 +96,18 @@ namespace Foxoft
                                     InvoiceHeaderId = returnInvoiceHeaderId,
                                     RelatedLineId = invoiceLineID,
                                     ProductCode = invoiceLine.ProductCode,
-                                    Qty = formQty.qty * (-1),
+                                    QtyOut = formQty.qty * (-1),
                                     Price = invoiceLine.Price,
                                     Amount = Convert.ToDecimal(formQty.qty * invoiceLine.Price * (-1)),
-                                    PosDiscount = formQty.qty * invoiceLine.PosDiscount / invoiceLine.Qty * (-1),
-                                    NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.Qty * (-1),
+                                    PosDiscount = formQty.qty * invoiceLine.PosDiscount / invoiceLine.QtyOut * (-1),
+                                    NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.QtyOut * (-1),
                                 };
 
                                 efMethods.InsertInvoiceLine(returnInvoiceLine);
                                 gC_ReturnInvoiceLine.DataSource = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
                             }
                             else
-                                efMethods.UpdateInvoiceLineQty(returnInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
+                                efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
 
                             gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
                         }
