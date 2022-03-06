@@ -1090,6 +1090,8 @@ namespace Foxoft.Migrations
                 {
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("GetNextDocNum");
                 });
 
             modelBuilder.Entity("Foxoft.Models.MigrationHistory", b =>

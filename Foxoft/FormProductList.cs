@@ -21,6 +21,9 @@ namespace Foxoft
         public FormProductList()
         {
             InitializeComponent();
+
+
+
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };

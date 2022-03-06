@@ -157,7 +157,7 @@ namespace Foxoft
             // 
             // colRetailPrice
             // 
-            this.colRetailPrice.FieldName = "TrPrices.Price";
+            this.colRetailPrice.FieldName = "RetailPrice";
             this.colRetailPrice.Name = "colRetailPrice";
             this.colRetailPrice.Visible = true;
             this.colRetailPrice.VisibleIndex = 3;
@@ -259,16 +259,6 @@ namespace Foxoft
 
         private DevExpress.XtraGrid.GridControl gC_ProductList;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_ProductList;
-        private DevExpress.XtraGrid.Columns.GridColumn col_ProductCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_Barcode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_ProductTypeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_UsePos;
-        private DevExpress.XtraGrid.Columns.GridColumn col_PromotionCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_PromotionCode2;
-        private DevExpress.XtraGrid.Columns.GridColumn col_TaxRate;
-        private DevExpress.XtraGrid.Columns.GridColumn col_IsDisabled;
-        private DevExpress.XtraGrid.Columns.GridColumn col_PosDiscountRate;
-        private DevExpress.XtraGrid.Columns.GridColumn col_RetailPrice;
         private DevExpress.XtraGrid.Columns.GridColumn colProductDescription;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcode;

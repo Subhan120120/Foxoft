@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20220305124701_initial")]
+    [Migration("20220306080848_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

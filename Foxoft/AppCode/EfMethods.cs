@@ -82,9 +82,19 @@ namespace Foxoft
         {
             using (subContext db = new subContext())
             {
-                return db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
-                                    .Include(x => x.TrPrices.OrderBy(a => a.CreatedDate).Take(1))
-                                    .ToList();
+                List<DcProduct> products = db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
+                                                        .ToList();
+
+                products.ForEach(x =>
+                {
+                    TrPrice trPrice = db.TrPrices.Where(p => p.ProductCode == x.ProductCode)
+                                              .OrderBy(p => p.CreatedDate)
+                                              .Take(1)
+                                              .FirstOrDefault();
+                    if (trPrice != null)
+                        x.RetailPrice = trPrice.Price;
+                });
+                return products;
             }
         }
 
