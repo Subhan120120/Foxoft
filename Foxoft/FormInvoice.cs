@@ -39,6 +39,10 @@ namespace Foxoft
             this.processCode = processCode;
             this.productTypeCode = productTypeCode;
             InitializeComponent();
+            if (CustomExtensions.ProcessDir(processCode) == "In")
+                gV_InvoiceLine.Columns["QtyOut"].Visible = false;
+            else
+                gV_InvoiceLine.Columns["QtyIn"].Visible = false;
 
             lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
@@ -281,8 +285,10 @@ namespace Foxoft
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
                 decimal summaryNetAmount = Convert.ToDecimal(gV_InvoiceLine.Columns["NetAmount"].SummaryItem.SummaryValue);
+                if (trInvoiceHeader.IsReturn)
+                    summaryNetAmount *= (-1);
 
-                if (summaryNetAmount > 0)
+                if (summaryNetAmount != 0)
                 {
                     using (FormPayment formPayment = new FormPayment(1, summaryNetAmount, trInvoiceHeader.InvoiceHeaderId))
                     {

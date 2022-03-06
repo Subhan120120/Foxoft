@@ -7,7 +7,6 @@ namespace Foxoft.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             migrationBuilder.CreateTable(
                 name: "__MigrationHistory",
                 columns: table => new
@@ -566,7 +565,8 @@ namespace Foxoft.Migrations
                     InvoiceHeaderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RelatedLineId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ProductCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Qty = table.Column<int>(type: "int", nullable: false, defaultValueSql: "1"),
+                    QtyIn = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    QtyOut = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
                     Price = table.Column<double>(type: "float", nullable: false, defaultValueSql: "0"),
                     Amount = table.Column<decimal>(type: "money", nullable: false, defaultValueSql: "0"),
                     PosDiscount = table.Column<decimal>(type: "money", nullable: false, defaultValueSql: "0"),
@@ -982,7 +982,6 @@ namespace Foxoft.Migrations
 
             migrationBuilder.DropTable(
                 name: "DcCurrAccTypes");
-
         }
     }
 }
