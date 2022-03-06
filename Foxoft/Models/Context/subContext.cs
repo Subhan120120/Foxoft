@@ -61,7 +61,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcCurrAcc>(entity =>
             {
                 entity.HasIndex(e => e.CurrAccTypeCode)
-                    .HasName("IX_CurrAccTypeCode");
+                    .HasDatabaseName("IX_CurrAccTypeCode");
 
                 entity.Property(e => e.Address)
                     .HasDefaultValueSql("space(0)");
@@ -240,7 +240,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcProduct>(entity =>
             {
                 entity.HasIndex(e => e.ProductTypeCode)
-                    .HasName("IX_ProductTypeCode");
+                    .HasDatabaseName("IX_ProductTypeCode");
 
                 entity.Property(e => e.Barcode)
                     .HasDefaultValueSql("space(0)");
@@ -420,7 +420,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
             {
                 entity.HasIndex(e => e.CurrAccCode)
-                    .HasName("IX_CurrAccCode");
+                    .HasDatabaseName("IX_CurrAccCode");
 
                 entity.Property(e => e.InvoiceHeaderId)
                     .ValueGeneratedNever();
@@ -498,10 +498,10 @@ namespace Foxoft.Models
                     .ValueGeneratedNever();
 
                 entity.HasIndex(e => e.InvoiceHeaderId)
-                    .HasName("IX_InvoiceHeaderId");
+                    .HasDatabaseName("IX_InvoiceHeaderId");
 
                 entity.HasIndex(e => e.ProductCode)
-                    .HasName("IX_ProductCode");
+                    .HasDatabaseName("IX_ProductCode");
 
                 entity.Property(e => e.Qty)
                     .HasDefaultValueSql("1");
@@ -681,7 +681,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrShipmentLine>(entity =>
             {
                 entity.HasIndex(e => e.ShipmentHeaderId)
-                    .HasName("IX_ShipmentHeaderID");
+                    .HasDatabaseName("IX_ShipmentHeaderID");
 
                 entity.Property(e => e.ColorCode)
                     .HasDefaultValueSql("space(0)");
