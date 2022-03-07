@@ -285,8 +285,12 @@ namespace Foxoft
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
                 decimal summaryNetAmount = Convert.ToDecimal(gV_InvoiceLine.Columns["NetAmount"].SummaryItem.SummaryValue);
+
                 if (trInvoiceHeader.IsReturn)
                     summaryNetAmount *= (-1);
+                if (CustomExtensions.ProcessDir(processCode) == "In")
+                    summaryNetAmount *= (-1);
+
 
                 if (summaryNetAmount != 0)
                 {

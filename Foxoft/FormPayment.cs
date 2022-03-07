@@ -231,7 +231,6 @@ namespace Foxoft
             //}
             //else
             //    XtraMessageBox.Show("Odenis Movcuddur");
-
             DialogResult = DialogResult.OK;
             //}
 
