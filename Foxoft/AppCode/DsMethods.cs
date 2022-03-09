@@ -90,12 +90,13 @@ namespace Foxoft
             QueryParameter queryParameter2 = new QueryParameter();
             queryParameter2.Name = "EndDate";
             queryParameter2.Type = typeof(DateTime);
-            queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
+            queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");            
 
             CustomSqlQuery sqlQueryPayment = new CustomSqlQuery();
             sqlQueryPayment.Name = "Payments";
             sqlQueryPayment.Parameters.Add(queryParameter1);
             sqlQueryPayment.Parameters.Add(queryParameter2);
+            
             sqlQueryPayment.Sql = qry;
 
             return sqlQueryPayment;

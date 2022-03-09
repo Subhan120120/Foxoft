@@ -51,9 +51,9 @@ namespace Foxoft
             this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Report = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
             this.SuspendLayout();
@@ -235,11 +235,20 @@ namespace Foxoft
             // 
             // aCE_Report
             // 
+            this.aCE_Report.Expanded = true;
             this.aCE_Report.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("aCE_Report.ImageOptions.Image")));
             this.aCE_Report.Name = "aCE_Report";
             this.aCE_Report.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_Report.Text = "Report";
             this.aCE_Report.Click += new System.EventHandler(this.aCE_Report_Click);
+            // 
+            // accordionControlElement2
+            // 
+            this.accordionControlElement2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement2.ImageOptions.SvgImage")));
+            this.accordionControlElement2.Name = "accordionControlElement2";
+            this.accordionControlElement2.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.accordionControlElement2.Text = "Element2";
+            this.accordionControlElement2.Click += new System.EventHandler(this.accordionControlElement2_Click);
             // 
             // aCE_Setting
             // 
@@ -257,14 +266,6 @@ namespace Foxoft
             this.aCE_CurrAccs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_CurrAccs.Text = "İstifadəçilər";
             this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
-            // 
-            // accordionControlElement2
-            // 
-            this.accordionControlElement2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement2.ImageOptions.SvgImage")));
-            this.accordionControlElement2.Name = "accordionControlElement2";
-            this.accordionControlElement2.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.accordionControlElement2.Text = "Element2";
-            this.accordionControlElement2.Click += new System.EventHandler(this.accordionControlElement2_Click);
             // 
             // FormERP
             // 

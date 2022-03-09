@@ -324,11 +324,12 @@ namespace Foxoft
 
                         dbContext.SaveChanges();
 
+                        SaveSession();
+                        ClearControlsAddNew();
+
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {
-                            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                            SaveSession();
-                            ClearControlsAddNew();
+                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
                             if (Settings.Default.AppSetting.GetPrint == true)
                             {
