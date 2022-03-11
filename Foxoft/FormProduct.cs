@@ -20,6 +20,11 @@ namespace Foxoft
         public FormProduct()
         {
             InitializeComponent();
+
+            ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectProductTypes();
+            ProductTypeCodeLookUpEdit.Properties.ValueMember = "ProductTypeCode";
+            ProductTypeCodeLookUpEdit.Properties.DisplayMember = "ProductTypeDesc";
+
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
         }
@@ -48,8 +53,9 @@ namespace Foxoft
                 //                    .LoadAsync()
                 //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
-                 dbContext.DcProducts.Where(x => x.ProductCode == dcProduct.ProductCode).Include(x => x.ProductTypeCode)
-                    .Load();
+                dbContext.DcProducts.Where(x => x.ProductCode == dcProduct.ProductCode)
+                                    .Include(x => x.DcProductType)
+                                    .Load();
                 dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
             }
         }
@@ -58,7 +64,7 @@ namespace Foxoft
         {
             dcProduct = dcProductsBindingSource.AddNew() as DcProduct;
 
-            string NewDocNum = efMethods.GetNextDocNum("CA", "DocumentNumber", "TrInvoiceHeaders");
+            string NewDocNum = efMethods.GetNextDocNum("PR", "ProductCode", "DcProducts");
             dcProduct.ProductCode = NewDocNum;
 
             dcProductsBindingSource.DataSource = dcProduct;
@@ -84,7 +90,7 @@ namespace Foxoft
         private void btn_Ok_Click(object sender, EventArgs e)
         {
             dcProduct = dcProductsBindingSource.Current as DcProduct;
-            if (!efMethods.CurrAccExist(dcProduct.ProductCode)) //if invoiceHeader doesnt exist
+            if (!efMethods.ProductExist(dcProduct.ProductCode)) //if invoiceHeader doesnt exist
                 efMethods.InsertProduct(dcProduct);
             else
                 dbContext.SaveChanges();

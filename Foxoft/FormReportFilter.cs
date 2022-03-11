@@ -43,8 +43,8 @@ namespace Foxoft
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
             lookUpEdit1.Properties.DataSource = adoMethods.SqlGetDt("Select Id, ReportName, ReportQuery from DcReports");
-            lookUpEdit1.Properties.DisplayMember = "ReportName";
             lookUpEdit1.Properties.ValueMember = "Id";
+            lookUpEdit1.Properties.DisplayMember = "ReportName";
         }
 
         private void lookUpEdit1_EditValueChanged(object sender, EventArgs e)

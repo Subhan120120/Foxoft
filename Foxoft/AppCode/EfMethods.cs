@@ -78,6 +78,14 @@ namespace Foxoft
             }
         }
 
+        public List<DcProductType> SelectProductTypes()
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcProductTypes.ToList();
+            }
+        }
+
         public List<DcProduct> SelectProductsByProductType(byte productTypeCode)
         {
             using (subContext db = new subContext())
@@ -457,6 +465,7 @@ namespace Foxoft
                 }
             }
         }
+
         public bool CurrAccExist(string CurrAccCode)
         {
 
@@ -464,6 +473,15 @@ namespace Foxoft
             {
                 return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                                     .Any(x => x.CurrAccCode == CurrAccCode);
+            }
+        }
+
+        public bool ProductExist(string productCode)
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcProducts.Where(x => x.IsDisabled == false)
+                                    .Any(x => x.ProductCode == productCode);
             }
         }
 
