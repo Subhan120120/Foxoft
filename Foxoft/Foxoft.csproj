@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="AppCode\GUNSONU.repx" />
     <None Remove="AppCode\GvListDefaultLayout.xml" />
     <None Remove="AppCode\Qry_Expences.sql" />
     <None Remove="AppCode\Qry_Payments.sql" />
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="AppCode\GUNSONU.repx" />
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
     <EmbeddedResource Include="AppCode\Qry_Expences.sql" />
     <EmbeddedResource Include="AppCode\Qry_Payments.sql" />

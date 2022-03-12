@@ -23,8 +23,6 @@ namespace Foxoft
             EfMethods efMethods = new EfMethods();
             AppSetting appSetting = efMethods.SelectAppSetting();
             Properties.Settings.Default.AppSetting = appSetting;
-            Properties.Settings.Default.Save();
-
             Application.Run(new FormLogin());
         }
     }

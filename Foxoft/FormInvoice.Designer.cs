@@ -82,6 +82,8 @@ namespace Foxoft
             this.bBI_SaveAndNew = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_reportDesign = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_New = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -602,9 +604,11 @@ namespace Foxoft
             this.bBI_Save,
             this.bBI_SaveAndNew,
             this.bBI_reportDesign,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.bBI_New,
+            this.barButtonItem2});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 9;
+            this.ribbonControl1.MaxItemId = 11;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -618,6 +622,7 @@ namespace Foxoft
             this.bBI_Save.Id = 1;
             this.bBI_Save.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Save.ImageOptions.SvgImage")));
             this.bBI_Save.Name = "bBI_Save";
+            this.bBI_Save.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Save_ItemClick);
             // 
             // bBI_SaveAndNew
             // 
@@ -642,6 +647,21 @@ namespace Foxoft
             this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
             this.barButtonItem1.Name = "barButtonItem1";
             // 
+            // bBI_New
+            // 
+            this.bBI_New.Caption = "Yeni";
+            this.bBI_New.Id = 9;
+            this.bBI_New.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_New.ImageOptions.SvgImage")));
+            this.bBI_New.Name = "bBI_New";
+            this.bBI_New.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_New_ItemClick);
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "barButtonItem2";
+            this.barButtonItem2.Id = 10;
+            this.barButtonItem2.Name = "barButtonItem2";
+            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -654,6 +674,7 @@ namespace Foxoft
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Save);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_SaveAndNew);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_New);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Yadda Saxla";
             // 
@@ -661,6 +682,7 @@ namespace Foxoft
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
             this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem1);
+            this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem2);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "ribbonPageGroup2";
             // 
@@ -780,5 +802,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem lbl_Payment;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyIn;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyOut;
+        private DevExpress.XtraBars.BarButtonItem bBI_New;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
     }
 }

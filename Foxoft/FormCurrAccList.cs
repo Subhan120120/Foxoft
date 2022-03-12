@@ -32,11 +32,7 @@ namespace Foxoft
             : this()
         {
             this.currAccTypeCode = currAccTypeCode;
-            if (currAccTypeCode != 0)
-                gC_CurrAccList.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
-            else
-                gC_CurrAccList.DataSource = efMethods.SelectCurrAccs();
-
+            UpdateGridViewData();
         }
 
         private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -76,8 +72,7 @@ namespace Foxoft
             FormCurrAcc form = new FormCurrAcc();
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                gC_CurrAccList.DataSource = efMethods.SelectCurrAccs();
-                gV_CurrAccList.MoveLast();
+                UpdateGridViewData();
             }
         }
 
@@ -86,10 +81,28 @@ namespace Foxoft
             FormCurrAcc form = new FormCurrAcc(dcCurrAcc.CurrAccCode);
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                int sr = gV_CurrAccList.FocusedRowHandle;
-                gC_CurrAccList.DataSource = efMethods.SelectCurrAccs();
-                gV_CurrAccList.FocusedRowHandle = sr;
+                UpdateGridViewData();
             }
+        }
+
+        private void UpdateGridViewData()
+        {
+            int fr = gV_CurrAccList.FocusedRowHandle;
+
+            if (currAccTypeCode != 0)
+                gC_CurrAccList.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
+            else
+                gC_CurrAccList.DataSource = efMethods.SelectCurrAccs();
+
+            if (fr > 0)
+                gV_CurrAccList.FocusedRowHandle = fr;
+            else
+                gV_CurrAccList.MoveLast();
+        }
+
+        private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            UpdateGridViewData();
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Foxoft
                 myform.MdiParent = this.MdiParent;
                 myform.Show();
 
-                if (object.ReferenceEquals(filterControl1.FilterCriteria, null))
+                if (!object.ReferenceEquals(filterControl1.FilterCriteria, null))
                     efMethods.UpdateReportFilter(reportId, filterControl1.FilterCriteria.ToString()); //save filter to database
             }
             else

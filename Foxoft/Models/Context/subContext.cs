@@ -745,10 +745,10 @@ namespace Foxoft.Models
                 .HasIndex(entity => new { entity.FeatureId, entity.ProductCode }).IsUnique();
 
             CustomMethods customMethods = new CustomMethods();
-            string qry = customMethods.GetDataFromFile("Foxoft.AppCode.GvListDefaultLayout.xml");
+            string gvListDefault = customMethods.GetDataFromFile("Foxoft.AppCode.GvListDefaultLayout.xml");
 
             modelBuilder.Entity<AppSetting>().HasData(
-                new AppSetting { Id = 1, GridViewLayout = qry });
+                new AppSetting { Id = 1, GridViewLayout = gvListDefault });
 
             modelBuilder.Entity<DcVariable>().HasData(
                 new DcVariable { VariableCode = "CA", VariableDesc = "Cari" },

@@ -291,7 +291,6 @@ namespace Foxoft
                 if (CustomExtensions.ProcessDir(processCode) == "In")
                     summaryNetAmount *= (-1);
 
-
                 if (summaryNetAmount != 0)
                 {
                     using (FormPayment formPayment = new FormPayment(1, summaryNetAmount, trInvoiceHeader.InvoiceHeaderId))
@@ -326,18 +325,21 @@ namespace Foxoft
 
                         SaveSession();
                         ClearControlsAddNew();
+                        LoadSession();
 
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {
                             //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                        }
 
-                            if (Settings.Default.AppSetting.GetPrint == true)
-                            {
-                                ReportClass reportClass = new ReportClass();
-                                string designPath = Settings.Default.AppSetting.PrintDesignPath;
-                                if (!File.Exists(designPath))
-                                    designPath = reportClass.SelectDesign();
-                            }
+                        if (Settings.Default.AppSetting.GetPrint == true)
+                        {
+                            ReportClass reportClass = new ReportClass();
+                            string designPath = Settings.Default.AppSetting.PrintDesignPath;
+                            if (!File.Exists(designPath))
+                                designPath = reportClass.SelectDesign();
+                            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                            printTool.PrintDialog();
                         }
                     }
                 }
@@ -361,7 +363,8 @@ namespace Foxoft
         private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
         {
             ReportClass reportClass = new ReportClass();
-            string designPath = Settings.Default.AppSetting.PrintDesignPath;
+            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+            string designPath = "Foxoft.AppCode.GUNSONU.repx";
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
@@ -371,13 +374,38 @@ namespace Foxoft
 
         private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
         {
-            MessageBox.Show("Test");
+            MessageBox.Show("Event AsyncCompleted");
         }
 
         private void gV_InvoiceLine_RowLoaded(object sender, RowEventArgs e)
         {
-            object a = sender;
-            RowEventArgs r = e;
+            //object a = sender;
+            //RowEventArgs r = e;
+            MessageBox.Show("Event RowLoaded");
+        }
+
+        private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ClearControlsAddNew();
+
+            LoadSession();
+
+            dataLayoutControl1.isValid(out List<string> errorList);
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string[] asdsa= System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            foreach (var item in asdsa)
+            {
+            MessageBox.Show(item.ToString());
+            }
+
+        }
+
+        private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }
