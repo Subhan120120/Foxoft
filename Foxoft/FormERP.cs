@@ -156,7 +156,7 @@ namespace Foxoft
 
             if (OpenFormCount == 0)
             {
-                FormInvoice formInvoice = new FormInvoice("RP", 1);
+                FormInvoice formInvoice = new FormInvoice("RP", 1, 2);
                 formInvoice.MdiParent = this;
                 formInvoice.Show();
                 ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
@@ -180,7 +180,7 @@ namespace Foxoft
 
             if (OpenFormCount == 0)
             {
-                FormInvoice formInvoice = new FormInvoice("RS", 1);
+                FormInvoice formInvoice = new FormInvoice("RS", 1, 1);
                 formInvoice.MdiParent = this;
                 formInvoice.Show();
                 ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
@@ -204,7 +204,7 @@ namespace Foxoft
 
             if (OpenFormCount == 0)
             {
-                FormInvoice formInvoice = new FormInvoice("EX", 2);
+                FormInvoice formInvoice = new FormInvoice("EX", 2, 0);
                 formInvoice.MdiParent = this;
                 formInvoice.Show();
                 ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
@@ -215,9 +215,8 @@ namespace Foxoft
 
         private void accordionControlElement2_Click(object sender, EventArgs e)
         {
-
             DsMethods dsMethods = new DsMethods();
-            ReportClass reportClass = new ReportClass(); 
+            ReportClass reportClass = new ReportClass();
 
             //object[] objInvoiceHeaders = efMethods.SelectInvoiceLineForReport(invoiceHeaderId).Cast<object>().ToArray();
 
@@ -231,12 +230,16 @@ namespace Foxoft
             dataSource.Name = "GunSonu";
 
             //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
-            SqlQuery sqlQuerySale = dsMethods.SelectSales(DateTime.Now.Date, DateTime.Now.Date);
-            SqlQuery sqlQueryPayment = dsMethods.SelectPayments(DateTime.Now.Date, DateTime.Now.Date);
-            SqlQuery sqlQueryExpences = dsMethods.SelectExpences(DateTime.Now.Date, DateTime.Now.Date);
 
+            DateTime startDate = DateTime.Now.Date; // new DateTime(2022, 03, 25); // 
+            DateTime endDate = DateTime.Now.Date; // new DateTime(2022, 03, 25); // 
 
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale, sqlQueryPayment, sqlQueryExpences });
+            SqlQuery sqlQuerySale = dsMethods.SelectSales(startDate, endDate);
+            SqlQuery sqlQueryPayment = dsMethods.SelectPayments(startDate, endDate);
+            SqlQuery sqlQueryExpences = dsMethods.SelectExpences(startDate, endDate);
+            SqlQuery sqlQueryCustomers = dsMethods.SelectCustomers();
+
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryCustomers });
             dataSource.Fill();
 
             string designPath = Settings.Default.AppSetting.PrintDesignPath;
@@ -244,6 +247,23 @@ namespace Foxoft
                 designPath = reportClass.SelectDesign();
             ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
+        }
+
+        private void aCE_Payment_Click(object sender, EventArgs e)
+        {
+            using (FormCurrAccList formCurrAcc = new FormCurrAccList(2))
+            {
+                if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+                {
+                    using (FormPayment formPayment = new FormPayment(1, 0, Guid.Empty, formCurrAcc.dcCurrAcc.CurrAccCode))
+                    {
+                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        {
+                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                        }
+                    }
+                }
+            }
         }
     }
 }

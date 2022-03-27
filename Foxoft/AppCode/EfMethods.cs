@@ -375,7 +375,7 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                            .ThenInclude(x => x.TrInvoiceHeader)
+                                            //.ThenInclude(x => x.TrInvoiceHeader)
                                         .Include(x => x.DcPaymentType)
                                         .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
                                         .ToList();

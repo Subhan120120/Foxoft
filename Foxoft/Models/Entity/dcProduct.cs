@@ -24,7 +24,6 @@ namespace Foxoft.Models
         public string ProductCode { get; set; }
 
         [DisplayName("Barkod")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string Barcode { get; set; }
 

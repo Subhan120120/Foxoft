@@ -257,7 +257,7 @@ namespace Foxoft
                         break;
                 }
 
-                using (FormPayment formPayment = new FormPayment(paymentType, summaryNetAmount, invoiceHeaderId))
+                using (FormPayment formPayment = new FormPayment(paymentType, summaryNetAmount, invoiceHeaderId, ""))
                 {
                     if (formPayment.ShowDialog(this) == DialogResult.OK)
                     {

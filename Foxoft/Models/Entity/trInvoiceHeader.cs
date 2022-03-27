@@ -106,6 +106,5 @@ namespace Foxoft.Models
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
-        public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
     }
 }

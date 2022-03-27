@@ -19,6 +19,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
+using System.Windows.Data;
 
 namespace Foxoft
 {
@@ -31,14 +33,17 @@ namespace Foxoft
         private TrInvoiceHeader trInvoiceHeader;
         public string processCode;
         private byte productTypeCode;
+        private byte currAccTypeCode;
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
 
-        public FormInvoice(string processCode, byte productTypeCode)
+        public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             this.processCode = processCode;
             this.productTypeCode = productTypeCode;
+            this.currAccTypeCode = currAccTypeCode;
             InitializeComponent();
+
             if (CustomExtensions.ProcessDir(processCode) == "In")
                 gV_InvoiceLine.Columns["QtyOut"].Visible = false;
             else
@@ -111,7 +116,8 @@ namespace Foxoft
                     dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
                     trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
-                    dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
+                    dbContext.TrInvoiceLines.Include(o => o.DcProduct)
+                                            .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
                                             .LoadAsync()
                                             .ContinueWith(loadTask =>
                                             {
@@ -128,11 +134,6 @@ namespace Foxoft
                                                 trInvoiceLinesBindingSource.DataSource = local.ToBindingList();
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
 
-                    //dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId).Load();
-                    //LocalView<TrInvoiceLine> local = dbContext.TrInvoiceLines.Local;
-                    //local.ForEach(x => x.Qty = x.Qty * (-1));
-                    //trInvoiceLinesBindingSource.DataSource = local.ToBindingList();
-
                     dataLayoutControl1.isValid(out List<string> errorList);
 
                     labelControl1.Text = "Ödənilib: " + Math.Round(efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2).ToString() + "AZN";
@@ -142,7 +143,7 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            using (FormCurrAccList form = new FormCurrAccList(2))
+            using (FormCurrAccList form = new FormCurrAccList(currAccTypeCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -217,8 +218,10 @@ namespace Foxoft
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
                         editor.EditValue = form.dcProduct.ProductCode;
+                        double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
+                        gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
 
-                        gV_InvoiceLine.SetFocusedRowCellValue("Price", this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0));
+                        gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDescription, "Fazil");
 
                         CalcInvoiceLineNetAmount();
                     }
@@ -293,55 +296,57 @@ namespace Foxoft
 
                 if (summaryNetAmount != 0)
                 {
-                    using (FormPayment formPayment = new FormPayment(1, summaryNetAmount, trInvoiceHeader.InvoiceHeaderId))
+
+                    if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
+                        efMethods.InsertInvoiceHeader(trInvoiceHeader);
+
+                    if ((bool)CheckEdit_IsReturn.EditValue)
                     {
-                        if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
-                            efMethods.InsertInvoiceHeader(trInvoiceHeader);
-
-                        if ((bool)CheckEdit_IsReturn.EditValue)
+                        for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                         {
-                            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                            if (CustomExtensions.ProcessDir(processCode) == "In")
                             {
-                                if (CustomExtensions.ProcessDir(processCode) == "In")
-                                {
-                                    int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyIn"));
-                                    gV_InvoiceLine.SetRowCellValue(i, "QtyIn", qty * (-1));
-                                }
-                                else if (CustomExtensions.ProcessDir(processCode) == "Out")
-                                {
-                                    int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyOut"));
-                                    gV_InvoiceLine.SetRowCellValue(i, "QtyOut", qty * (-1));
-                                }
-
-                                int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
-                                gV_InvoiceLine.SetRowCellValue(i, "Amount", amount * (-1));
-
-                                int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
-                                gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
+                                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyIn"));
+                                gV_InvoiceLine.SetRowCellValue(i, "QtyIn", qty * (-1));
                             }
+                            else if (CustomExtensions.ProcessDir(processCode) == "Out")
+                            {
+                                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyOut"));
+                                gV_InvoiceLine.SetRowCellValue(i, "QtyOut", qty * (-1));
+                            }
+
+                            int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
+                            gV_InvoiceLine.SetRowCellValue(i, "Amount", amount * (-1));
+
+                            int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
+                            gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
                         }
+                    }
 
-                        dbContext.SaveChanges();
+                    dbContext.SaveChanges();
 
-                        SaveSession();
-                        ClearControlsAddNew();
-                        LoadSession();
-
+                    using (FormPayment formPayment = new FormPayment(1, summaryNetAmount, trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode))
+                    {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {
                             //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
                         }
-
-                        if (Settings.Default.AppSetting.GetPrint == true)
-                        {
-                            ReportClass reportClass = new ReportClass();
-                            string designPath = Settings.Default.AppSetting.PrintDesignPath;
-                            if (!File.Exists(designPath))
-                                designPath = reportClass.SelectDesign();
-                            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-                            printTool.PrintDialog();
-                        }
                     }
+
+                    SaveSession();
+                    ClearControlsAddNew();
+                    LoadSession();
+
+                    if (Settings.Default.AppSetting.GetPrint == true)
+                    {
+                        ReportClass reportClass = new ReportClass();
+                        string designPath = Settings.Default.AppSetting.PrintDesignPath;
+                        if (!File.Exists(designPath))
+                            designPath = reportClass.SelectDesign();
+                        ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                        printTool.PrintDialog();
+                    }
+
                 }
                 else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
             }
@@ -364,7 +369,8 @@ namespace Foxoft
         {
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = "Foxoft.AppCode.GUNSONU.repx";
+            string designPath = Directory.GetCurrentDirectory() + "Foxoft.AppCode.GUNSONU.repx";
+
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
@@ -395,12 +401,11 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string[] asdsa= System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            string[] asdsa = Assembly.GetExecutingAssembly().GetManifestResourceNames();
             foreach (var item in asdsa)
             {
-            MessageBox.Show(item.ToString());
+                MessageBox.Show(item.ToString());
             }
-
         }
 
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)

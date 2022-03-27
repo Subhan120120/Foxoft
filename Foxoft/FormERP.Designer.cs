@@ -47,6 +47,7 @@ namespace Foxoft
             this.aCE_shipment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_ApproveInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_Payment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -164,7 +165,8 @@ namespace Foxoft
             this.aCE_RetailSaleInvoice,
             this.aCE_shipment,
             this.aCE_ApproveInvoice,
-            this.aCE_Expense});
+            this.aCE_Expense,
+            this.aCE_Payment});
             this.aCE_Invoices.Expanded = true;
             this.aCE_Invoices.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Invoices.ImageOptions.SvgImage")));
             this.aCE_Invoices.Name = "aCE_Invoices";
@@ -208,6 +210,14 @@ namespace Foxoft
             this.aCE_Expense.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_Expense.Text = "Xərclər";
             this.aCE_Expense.Click += new System.EventHandler(this.aCE_Expense_Click);
+            // 
+            // aCE_Payment
+            // 
+            this.aCE_Payment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement3.ImageOptions.SvgImage")));
+            this.aCE_Payment.Name = "aCE_Payment";
+            this.aCE_Payment.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_Payment.Text = "Ödəniş";
+            this.aCE_Payment.Click += new System.EventHandler(this.aCE_Payment_Click);
             // 
             // aCE_Acounting
             // 
@@ -313,7 +323,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_POS;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Expense;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement2;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Payment;
     }
 }

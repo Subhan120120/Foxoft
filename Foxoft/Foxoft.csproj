@@ -13,9 +13,9 @@
   <ItemGroup>
     <None Remove="AppCode\GUNSONU.repx" />
     <None Remove="AppCode\GvListDefaultLayout.xml" />
+    <None Remove="AppCode\Qry_Customers.sql" />
     <None Remove="AppCode\Qry_Expences.sql" />
     <None Remove="AppCode\Qry_Payments.sql" />
-    <None Remove="AppCode\Qry_Purchase.sql" />
     <None Remove="AppCode\Qry_Sales.sql" />
   </ItemGroup>
 
@@ -24,7 +24,7 @@
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
     <EmbeddedResource Include="AppCode\Qry_Expences.sql" />
     <EmbeddedResource Include="AppCode\Qry_Payments.sql" />
-    <EmbeddedResource Include="AppCode\Qry_Purchase.sql" />
+    <EmbeddedResource Include="AppCode\Qry_Customers.sql" />
     <EmbeddedResource Include="AppCode\Qry_Sales.sql" />
   </ItemGroup>
 

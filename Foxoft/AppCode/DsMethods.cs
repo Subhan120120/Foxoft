@@ -7,11 +7,11 @@ namespace Foxoft
 {
     public class DsMethods
     {
-        public CustomSqlQuery SelectPurchases(DateTime StartDate, DateTime EndDate)
+        public CustomSqlQuery SelectCustomers()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             string qry = "";
-            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_Purchase.sql"))
+            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_Customers.sql"))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
@@ -19,20 +19,8 @@ namespace Foxoft
                 }
             }
 
-            QueryParameter queryParameter1 = new QueryParameter();
-            queryParameter1.Name = "StartDate";
-            queryParameter1.Type = typeof(DateTime);
-            queryParameter1.ValueInfo = StartDate.ToString("yyyy-MM-dd");
-
-            QueryParameter queryParameter2 = new QueryParameter();
-            queryParameter2.Name = "EndDate";
-            queryParameter2.Type = typeof(DateTime);
-            queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
-
             CustomSqlQuery sqlQuerySale = new CustomSqlQuery();
-            sqlQuerySale.Name = "Purchases";
-            sqlQuerySale.Parameters.Add(queryParameter1);
-            sqlQuerySale.Parameters.Add(queryParameter2);
+            sqlQuerySale.Name = "Customers";
             sqlQuerySale.Sql = qry;
 
             return sqlQuerySale;

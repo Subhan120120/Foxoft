@@ -78,6 +78,5 @@ namespace Foxoft.Models
 
 
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
-        public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
     }
 }

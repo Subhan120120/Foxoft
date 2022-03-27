@@ -79,6 +79,7 @@ namespace Foxoft
             this.col_CreatedDate,
             this.col_InvoiceHeaderId,
             this.col_ProcessCode});
+            this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
             this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
             this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
             this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);

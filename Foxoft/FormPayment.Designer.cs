@@ -79,7 +79,7 @@ namespace Foxoft
             this.lCI_Cancel = new DevExpress.XtraLayout.LayoutControlItem();
             this.lCI_Ok = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.txt_EditCash = new DevExpress.XtraEditors.TextEdit();
+            this.txtEdit_Cash = new DevExpress.XtraEditors.TextEdit();
             this.txtEdit_Cashless = new DevExpress.XtraEditors.TextEdit();
             this.txtEdit_Bonus = new DevExpress.XtraEditors.TextEdit();
             this.txtEdit_CustomerBonus = new DevExpress.XtraEditors.TextEdit();
@@ -122,7 +122,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Cancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Ok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_EditCash.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cash.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cashless.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Bonus.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_CustomerBonus.Properties)).BeginInit();
@@ -141,7 +141,7 @@ namespace Foxoft
             // 
             // lC_Root
             // 
-            this.lC_Root.Controls.Add(this.txt_EditCash);
+            this.lC_Root.Controls.Add(this.txtEdit_Cash);
             this.lC_Root.Controls.Add(this.txtEdit_Cashless);
             this.lC_Root.Controls.Add(this.txtEdit_Bonus);
             this.lC_Root.Controls.Add(this.txtEdit_CustomerBonus);
@@ -763,21 +763,21 @@ namespace Foxoft
             // 
             // txt_EditCash
             // 
-            this.txt_EditCash.Location = new System.Drawing.Point(102, 45);
-            this.txt_EditCash.Name = "txt_EditCash";
-            this.txt_EditCash.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F);
-            this.txt_EditCash.Properties.Appearance.Options.UseFont = true;
-            this.txt_EditCash.Properties.Appearance.Options.UseTextOptions = true;
-            this.txt_EditCash.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.txt_EditCash.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.txt_EditCash.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.txt_EditCash.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            this.txt_EditCash.Size = new System.Drawing.Size(113, 32);
-            this.txt_EditCash.StyleController = this.lC_Root;
-            this.txt_EditCash.TabIndex = 4;
-            this.txt_EditCash.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.textEditCash_InvalidValue);
-            this.txt_EditCash.EditValueChanged += new System.EventHandler(this.textEditCash_EditValueChanged);
-            this.txt_EditCash.Validating += new System.ComponentModel.CancelEventHandler(this.textEditCash_Validating);
+            this.txtEdit_Cash.Location = new System.Drawing.Point(102, 45);
+            this.txtEdit_Cash.Name = "txt_EditCash";
+            this.txtEdit_Cash.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F);
+            this.txtEdit_Cash.Properties.Appearance.Options.UseFont = true;
+            this.txtEdit_Cash.Properties.Appearance.Options.UseTextOptions = true;
+            this.txtEdit_Cash.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.txtEdit_Cash.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.txtEdit_Cash.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.txtEdit_Cash.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
+            this.txtEdit_Cash.Size = new System.Drawing.Size(113, 32);
+            this.txtEdit_Cash.StyleController = this.lC_Root;
+            this.txtEdit_Cash.TabIndex = 4;
+            this.txtEdit_Cash.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.textEditCash_InvalidValue);
+            this.txtEdit_Cash.EditValueChanged += new System.EventHandler(this.textEditCash_EditValueChanged);
+            this.txtEdit_Cash.Validating += new System.ComponentModel.CancelEventHandler(this.textEditCash_Validating);
             // 
             // txtEdit_Cashless
             // 
@@ -894,7 +894,7 @@ namespace Foxoft
             // 
             // lCI_Cash
             // 
-            this.lCI_Cash.Control = this.txt_EditCash;
+            this.lCI_Cash.Control = this.txtEdit_Cash;
             this.lCI_Cash.ImageOptions.Image = global::Foxoft.Properties.Resources.Untitled_32x32x;
             this.lCI_Cash.Location = new System.Drawing.Point(0, 0);
             this.lCI_Cash.Name = "layoutControlItemCash";
@@ -1017,7 +1017,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Cancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Ok)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txt_EditCash.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cash.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cashless.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Bonus.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_CustomerBonus.Properties)).EndInit();
@@ -1040,7 +1040,7 @@ namespace Foxoft
 
         private DevExpress.XtraLayout.LayoutControl lC_Root;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
-        private DevExpress.XtraEditors.TextEdit txt_EditCash;
+        private DevExpress.XtraEditors.TextEdit txtEdit_Cash;
         private DevExpress.XtraEditors.TextEdit txtEdit_Cashless;
         private DevExpress.XtraEditors.TextEdit txtEdit_Bonus;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Cash;

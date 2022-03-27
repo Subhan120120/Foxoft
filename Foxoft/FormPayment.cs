@@ -14,13 +14,14 @@ namespace Foxoft
         public Guid InvoiceHeaderId { get; set; }
         public int PaymentType { get; set; }
         public decimal SumNetAmount { get; set; }
+        public string currAccCode { get; set; }
 
         private bool isNegativ = false;
         private decimal cashLarge = 0;
         private decimal cashless = 0;
         private decimal bonus = 0;
 
-        public FormPayment(int PaymentType, decimal SumNetAmount, Guid InvoiceHeaderId)
+        public FormPayment(int PaymentType, decimal SumNetAmount, Guid InvoiceHeaderId, string currAccCode)
         {
             InitializeComponent();
             AcceptButton = btn_Ok;
@@ -33,6 +34,7 @@ namespace Foxoft
             this.SumNetAmount = Math.Abs(SumNetAmount);
             this.InvoiceHeaderId = InvoiceHeaderId;
             this.PaymentHeaderId = Guid.NewGuid();
+            this.currAccCode = currAccCode;
         }
 
         private void FormPayment_Load(object sender, EventArgs e)
@@ -43,7 +45,7 @@ namespace Foxoft
             switch (PaymentType)
             {
                 case 1:
-                    txt_EditCash.EditValue = SumNetAmount;
+                    txtEdit_Cash.EditValue = SumNetAmount;
                     break;
                 case 2:
                     txtEdit_Cashless.EditValue = SumNetAmount;
@@ -52,16 +54,16 @@ namespace Foxoft
                     txtEdit_Bonus.EditValue = SumNetAmount;
                     break;
                 default:
-                    txt_EditCash.EditValue = SumNetAmount;
+                    txtEdit_Cash.EditValue = SumNetAmount;
                     break;
             }
         }
 
         private void textEditCash_EditValueChanged(object sender, EventArgs e)
         {
-            decimal txtCash = Convert.ToDecimal(txt_EditCash.EditValue);
+            decimal txtCash = Convert.ToDecimal(txtEdit_Cash.EditValue);
             cashLarge = txtCash;
-            txt_EditCash.DoValidate();
+            txtEdit_Cash.DoValidate();
         }
 
         private void textEditCash_Validating(object sender, CancelEventArgs e)
@@ -81,7 +83,7 @@ namespace Foxoft
         {
             decimal restAmount = SumNetAmount - cashless + bonus;
             if (restAmount >= 0)
-                txt_EditCash.EditValue = restAmount;
+                txtEdit_Cash.EditValue = restAmount;
         }
 
         private void textEditCashless_EditValueChanged(object sender, EventArgs e)
@@ -171,7 +173,7 @@ namespace Foxoft
             //else{
 
             decimal cash = SumNetAmount - cashless - bonus;
-            if (cash > cashLarge)
+            //if (cash > cashLarge)
                 cash = cashLarge;
 
             //if (!efMethods.PaymentHeaderExist(InvoiceHeaderId))
@@ -180,8 +182,12 @@ namespace Foxoft
             {
                 PaymentHeaderId = PaymentHeaderId,
                 DocumentNumber = NewDocNum,
-                InvoiceHeaderId = InvoiceHeaderId
+                CurrAccCode = currAccCode
             };
+
+            if (InvoiceHeaderId != null && InvoiceHeaderId != Guid.Empty)
+                trPayment.InvoiceHeaderId = InvoiceHeaderId;
+
             efMethods.InsertPaymentHeader(trPayment);
 
             if (cash > 0)
