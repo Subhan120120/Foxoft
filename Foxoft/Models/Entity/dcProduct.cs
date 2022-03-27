@@ -27,8 +27,9 @@ namespace Foxoft.Models
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string Barcode { get; set; }
 
-        [ForeignKey("DcProductType")]
         [DisplayName("Məhsul Tipi")]
+        [ForeignKey("DcProductType")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public byte ProductTypeCode { get; set; }
 
         [DisplayName("POSda İstifadə Et")]

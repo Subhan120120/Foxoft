@@ -22,8 +22,6 @@ namespace Foxoft
         {
             InitializeComponent();
 
-
-
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
@@ -39,8 +37,14 @@ namespace Foxoft
             else
                 gC_ProductList.DataSource = efMethods.SelectProducts();
         }
+        public FormProductList(byte productTypeCode, string productCode)
+            : this(productTypeCode)
+        { 
 
-        private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+        }
+
+
+            private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             GridView view = sender as GridView;
 

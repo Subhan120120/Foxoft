@@ -88,7 +88,6 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.col_ProductDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -129,6 +128,7 @@ namespace Foxoft
             // trInvoiceLinesBindingSource
             // 
             this.trInvoiceLinesBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceLine);
+            this.trInvoiceLinesBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trInvoiceLinesBindingSource_AddingNew);
             // 
             // dataLayoutControl1
             // 
@@ -193,8 +193,7 @@ namespace Foxoft
             this.col_PosDiscount,
             this.col_NetAmount,
             this.col_LineDesc,
-            this.col_SalesPersonCode,
-            this.col_ProductDescription});
+            this.col_SalesPersonCode});
             this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1141, 456, 264, 272);
             this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
             this.gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -695,14 +694,6 @@ namespace Foxoft
             this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
             this.ribbonStatusBar1.Size = new System.Drawing.Size(871, 24);
             // 
-            // col_ProductDescription
-            // 
-            this.col_ProductDescription.Caption = "gridColumn1";
-            this.col_ProductDescription.FieldName = "DcProduct.ProductDescription";
-            this.col_ProductDescription.Name = "col_ProductDescription";
-            this.col_ProductDescription.Visible = true;
-            this.col_ProductDescription.VisibleIndex = 9;
-            // 
             // FormInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -814,6 +805,5 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colQtyOut;
         private DevExpress.XtraBars.BarButtonItem bBI_New;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
-        private DevExpress.XtraGrid.Columns.GridColumn col_ProductDescription;
     }
 }

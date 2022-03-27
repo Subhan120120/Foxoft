@@ -89,12 +89,20 @@ namespace Foxoft
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
-            dcProduct = dcProductsBindingSource.Current as DcProduct;
-            if (!efMethods.ProductExist(dcProduct.ProductCode)) //if invoiceHeader doesnt exist
-                efMethods.InsertProduct(dcProduct);
+            if (dataLayoutControl1.isValid(out List<string> errorList))
+            {
+                dcProduct = dcProductsBindingSource.Current as DcProduct;
+                if (!efMethods.ProductExist(dcProduct.ProductCode)) //if invoiceHeader doesnt exist
+                    efMethods.InsertProduct(dcProduct);
+                else
+                    dbContext.SaveChanges();
+                DialogResult = DialogResult.OK;
+            }
             else
-                dbContext.SaveChanges();
-            DialogResult = DialogResult.OK;
+            {
+                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(combinedString);
+            }
         }
     }
 }

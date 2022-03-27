@@ -8,6 +8,8 @@ using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Foxoft
 {
@@ -15,6 +17,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new EfMethods();
         public TrInvoiceHeader trInvoiceHeader { get; set; }
+        Foxoft.Models.subContext dbContext = new Foxoft.Models.subContext();
         //public string processCode { get; set; }
 
         public FormInvoiceHeaderList()
@@ -24,13 +27,23 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
+
+
+            
         }
 
         public FormInvoiceHeaderList(string processCode)
             : this()
         {
             //this.processCode = processCode;
-            gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
+
+            dbContext.TrInvoiceHeaders.Include(x=>x.DcCurrAcc)
+                                      .Where(x => x.ProcessCode == processCode)
+                                      .OrderBy(x => x.CreatedDate)
+                                      .LoadAsync()
+                                      .ContinueWith(loadTask => trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList(), System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+
+            //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }
 
         private void gridView1_DoubleClick(object sender, EventArgs e)

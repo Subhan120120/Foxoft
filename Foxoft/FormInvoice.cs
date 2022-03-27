@@ -221,7 +221,7 @@ namespace Foxoft
                         double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                         gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
 
-                        gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDescription, "Fazil");
+                        //gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDescription, "Fazil");
 
                         CalcInvoiceLineNetAmount();
                     }
@@ -411,6 +411,13 @@ namespace Foxoft
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private void trInvoiceLinesBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
+        {
+            //TrInvoiceLine line = new TrInvoiceLine();
+            //line.DcProduct.ProductDescription = "Fazil";
+            //e.NewObject = line;
         }
     }
 }
