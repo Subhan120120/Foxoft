@@ -17,7 +17,7 @@ namespace Foxoft
         public Guid returnInvoiceHeaderId;
         public Guid invoiceHeaderId;
         public Guid invoiceLineID;
-        
+
         EfMethods efMethods = new EfMethods();
 
         public UcReturn()
@@ -142,7 +142,7 @@ namespace Foxoft
                         break;
                 }
 
-                using (FormPayment formPayment = new FormPayment(paymentType, sumNetAmount, returnInvoiceHeaderId, ""))
+                using (FormPayment formPayment = new FormPayment(paymentType, sumNetAmount, new TrInvoiceHeader() { }))
                 {
                     if (formPayment.ShowDialog(this) == DialogResult.OK)
                     {

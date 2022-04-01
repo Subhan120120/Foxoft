@@ -27,9 +27,6 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
-
-
-            
         }
 
         public FormInvoiceHeaderList(string processCode)
@@ -37,7 +34,7 @@ namespace Foxoft
         {
             //this.processCode = processCode;
 
-            dbContext.TrInvoiceHeaders.Include(x=>x.DcCurrAcc)
+            dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Where(x => x.ProcessCode == processCode)
                                       .OrderBy(x => x.CreatedDate)
                                       .LoadAsync()

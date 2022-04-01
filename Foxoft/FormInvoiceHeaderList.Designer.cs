@@ -43,6 +43,8 @@ namespace Foxoft
             this.colOperationTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceHeaderList)).BeginInit();
@@ -69,11 +71,13 @@ namespace Foxoft
             this.gV_InvoiceHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDocumentNumber,
             this.colIsReturn,
+            this.colDocumentDate,
             this.colCurrAccCode,
-            this.colOperationDate,
-            this.colOperationTime,
+            this.gridColumn1,
+            this.colDocumentTime,
             this.colStoreCode,
-            this.gridColumn1});
+            this.colOperationDate,
+            this.colOperationTime});
             this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
             this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
             this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
@@ -91,42 +95,56 @@ namespace Foxoft
             this.colIsReturn.FieldName = "IsReturn";
             this.colIsReturn.Name = "colIsReturn";
             this.colIsReturn.Visible = true;
-            this.colIsReturn.VisibleIndex = 3;
+            this.colIsReturn.VisibleIndex = 1;
             // 
             // colCurrAccCode
             // 
             this.colCurrAccCode.FieldName = "CurrAccCode";
             this.colCurrAccCode.Name = "colCurrAccCode";
             this.colCurrAccCode.Visible = true;
-            this.colCurrAccCode.VisibleIndex = 1;
+            this.colCurrAccCode.VisibleIndex = 4;
             // 
             // colOperationDate
             // 
             this.colOperationDate.FieldName = "OperationDate";
             this.colOperationDate.Name = "colOperationDate";
             this.colOperationDate.Visible = true;
-            this.colOperationDate.VisibleIndex = 5;
+            this.colOperationDate.VisibleIndex = 7;
             // 
             // colOperationTime
             // 
             this.colOperationTime.FieldName = "OperationTime";
             this.colOperationTime.Name = "colOperationTime";
             this.colOperationTime.Visible = true;
-            this.colOperationTime.VisibleIndex = 6;
+            this.colOperationTime.VisibleIndex = 8;
             // 
             // colStoreCode
             // 
             this.colStoreCode.FieldName = "StoreCode";
             this.colStoreCode.Name = "colStoreCode";
             this.colStoreCode.Visible = true;
-            this.colStoreCode.VisibleIndex = 4;
+            this.colStoreCode.VisibleIndex = 6;
             // 
             // gridColumn1
             // 
             this.gridColumn1.FieldName = "DcCurrAcc.FirstName";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 2;
+            this.gridColumn1.VisibleIndex = 5;
+            // 
+            // colDocumentDate
+            // 
+            this.colDocumentDate.FieldName = "DocumentDate";
+            this.colDocumentDate.Name = "colDocumentDate";
+            this.colDocumentDate.Visible = true;
+            this.colDocumentDate.VisibleIndex = 2;
+            // 
+            // colDocumentTime
+            // 
+            this.colDocumentTime.FieldName = "DocumentTime";
+            this.colDocumentTime.Name = "colDocumentTime";
+            this.colDocumentTime.Visible = true;
+            this.colDocumentTime.VisibleIndex = 3;
             // 
             // FormInvoiceHeaderList
             // 
@@ -170,5 +188,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn colDocumentDate;
+        private DevExpress.XtraGrid.Columns.GridColumn colDocumentTime;
     }
 }

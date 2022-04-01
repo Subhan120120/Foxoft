@@ -1,6 +1,7 @@
 ﻿using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
@@ -16,6 +17,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new EfMethods();
         public DcProduct dcProduct { get; set; }
+        public string productCode { get; set; }
         public byte productTypeCode;
 
         public FormProductList()
@@ -39,12 +41,16 @@ namespace Foxoft
         }
         public FormProductList(byte productTypeCode, string productCode)
             : this(productTypeCode)
-        { 
+        {
+            this.productCode = productCode;
+        }
+
+        private void FormProductList_Load(object sender, EventArgs e)
+        {
 
         }
 
-
-            private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+        private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             GridView view = sender as GridView;
 
@@ -104,6 +110,15 @@ namespace Foxoft
 
                 gV_ProductList.FocusedRowHandle = fr;
             }
+        }
+
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            int rowHandle = gV_ProductList.LocateByValue("ProductCode", productCode);
+
+            gV_ProductList.SelectRow(rowHandle);
+            gV_ProductList.FocusedRowHandle = rowHandle;
+            gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
         }
     }
 }

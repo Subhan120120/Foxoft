@@ -11,17 +11,16 @@ namespace Foxoft
     public partial class FormPayment : XtraForm
     {
         public Guid PaymentHeaderId;
-        public Guid InvoiceHeaderId { get; set; }
         public int PaymentType { get; set; }
         public decimal SumNetAmount { get; set; }
-        public string currAccCode { get; set; }
+        public TrInvoiceHeader trInvoiceHeader { get; set; }
 
         private bool isNegativ = false;
         private decimal cashLarge = 0;
         private decimal cashless = 0;
         private decimal bonus = 0;
 
-        public FormPayment(int PaymentType, decimal SumNetAmount, Guid InvoiceHeaderId, string currAccCode)
+        public FormPayment(int PaymentType, decimal SumNetAmount, TrInvoiceHeader trInvoiceHeader)
         {
             InitializeComponent();
             AcceptButton = btn_Ok;
@@ -32,15 +31,14 @@ namespace Foxoft
 
             this.PaymentType = PaymentType;
             this.SumNetAmount = Math.Abs(SumNetAmount);
-            this.InvoiceHeaderId = InvoiceHeaderId;
             this.PaymentHeaderId = Guid.NewGuid();
-            this.currAccCode = currAccCode;
+            this.trInvoiceHeader = trInvoiceHeader;
         }
 
         private void FormPayment_Load(object sender, EventArgs e)
         {
             EfMethods efMethods = new EfMethods();
-            decimal prepaid = Math.Round(efMethods.SelectPaymentLinesSum(InvoiceHeaderId), 2); //əvvəlcədən ödənilən
+            decimal prepaid = Math.Round(efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2); //əvvəlcədən ödənilən
 
             switch (PaymentType)
             {
@@ -174,7 +172,7 @@ namespace Foxoft
 
             decimal cash = SumNetAmount - cashless - bonus;
             //if (cash > cashLarge)
-                cash = cashLarge;
+            cash = cashLarge;
 
             //if (!efMethods.PaymentHeaderExist(InvoiceHeaderId))
             //{
@@ -182,49 +180,41 @@ namespace Foxoft
             {
                 PaymentHeaderId = PaymentHeaderId,
                 DocumentNumber = NewDocNum,
-                CurrAccCode = currAccCode
+                CurrAccCode = trInvoiceHeader.CurrAccCode,
+                DocumentDate = trInvoiceHeader.DocumentDate,
+                DocumentTime = trInvoiceHeader.DocumentTime
             };
 
-            if (InvoiceHeaderId != null && InvoiceHeaderId != Guid.Empty)
-                trPayment.InvoiceHeaderId = InvoiceHeaderId;
+            if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
+                trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
 
             efMethods.InsertPaymentHeader(trPayment);
 
+            TrPaymentLine TrPaymentLine = new TrPaymentLine()
+            {
+                PaymentLineId = Guid.NewGuid(),
+                PaymentHeaderId = PaymentHeaderId
+            };
+
             if (cash > 0)
             {
-                TrPaymentLine TrPaymentLine = new TrPaymentLine()
-                {
-                    PaymentLineId = Guid.NewGuid(),
-                    PaymentHeaderId = PaymentHeaderId,
-                    Payment = isNegativ ? cash * (-1) : cash,
-                    PaymentTypeCode = 1
-                };
-                efMethods.InsertPaymentLine(TrPaymentLine);
+                TrPaymentLine.Payment = isNegativ ? cash * (-1) : cash;
+                TrPaymentLine.PaymentTypeCode = 1;
             }
 
             if (cashless > 0)
             {
-                TrPaymentLine TrPaymentLine = new TrPaymentLine()
-                {
-                    PaymentLineId = Guid.NewGuid(),
-                    PaymentHeaderId = PaymentHeaderId,
-                    Payment = isNegativ ? cashless * (-1) : cashless,
-                    PaymentTypeCode = 2
-                };
-                efMethods.InsertPaymentLine(TrPaymentLine);
+                TrPaymentLine.Payment = isNegativ ? cashless * (-1) : cashless;
+                TrPaymentLine.PaymentTypeCode = 2;
             }
 
             if (bonus > 0)
             {
-                TrPaymentLine TrPaymentLine = new TrPaymentLine()
-                {
-                    PaymentLineId = Guid.NewGuid(),
-                    PaymentHeaderId = PaymentHeaderId,
-                    Payment = isNegativ ? bonus * (-1) : bonus,
-                    PaymentTypeCode = 3
-                };
-                efMethods.InsertPaymentLine(TrPaymentLine);
+                TrPaymentLine.Payment = isNegativ ? bonus * (-1) : bonus;
+                TrPaymentLine.PaymentTypeCode = 3;
             }
+
+            efMethods.InsertPaymentLine(TrPaymentLine);
 
             decimal change = cashLarge + cashless + bonus - SumNetAmount;
             if (change > 0)

@@ -209,11 +209,15 @@ namespace Foxoft
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
+            string productCode = "";
+            if (gV_InvoiceLine.GetFocusedRowCellValue("ProductCode") != null)
+                productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
+
             ButtonEdit editor = (ButtonEdit)sender;
             int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
             if (buttonIndex == 0)
             {
-                using (FormProductList form = new FormProductList(productTypeCode))
+                using (FormProductList form = new FormProductList(productTypeCode, productCode))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
@@ -325,7 +329,7 @@ namespace Foxoft
 
                     dbContext.SaveChanges();
 
-                    using (FormPayment formPayment = new FormPayment(1, summaryNetAmount, trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode))
+                    using (FormPayment formPayment = new FormPayment(1, summaryNetAmount, trInvoiceHeader))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {

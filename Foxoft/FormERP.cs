@@ -4,6 +4,7 @@ using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraReports.UI;
+using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
@@ -255,7 +256,8 @@ namespace Foxoft
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
-                    using (FormPayment formPayment = new FormPayment(1, 0, Guid.Empty, formCurrAcc.dcCurrAcc.CurrAccCode))
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+                    using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {
