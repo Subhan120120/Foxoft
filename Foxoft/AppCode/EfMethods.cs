@@ -140,6 +140,7 @@ namespace Foxoft
             {
                 return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                             .ThenInclude(x => x.DcCurrAcc)
+                                        .Include(x=>x.DcProduct)
                                         .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                         .ToList();
             }

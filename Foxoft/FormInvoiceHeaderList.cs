@@ -17,7 +17,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new EfMethods();
         public TrInvoiceHeader trInvoiceHeader { get; set; }
-        Foxoft.Models.subContext dbContext = new Foxoft.Models.subContext();
+        subContext dbContext = new subContext();
         //public string processCode { get; set; }
 
         public FormInvoiceHeaderList()
@@ -36,7 +36,7 @@ namespace Foxoft
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Where(x => x.ProcessCode == processCode)
-                                      .OrderBy(x => x.CreatedDate)
+                                      .OrderBy(x => x.DocumentDate)
                                       .LoadAsync()
                                       .ContinueWith(loadTask => trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList(), System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
 

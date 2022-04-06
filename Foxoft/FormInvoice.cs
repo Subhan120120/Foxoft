@@ -39,10 +39,11 @@ namespace Foxoft
 
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
+            InitializeComponent();
+
             this.processCode = processCode;
             this.productTypeCode = productTypeCode;
             this.currAccTypeCode = currAccTypeCode;
-            InitializeComponent();
 
             if (CustomExtensions.ProcessDir(processCode) == "In")
                 gV_InvoiceLine.Columns["QtyOut"].Visible = false;
@@ -110,7 +111,7 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    trInvoiceHeader.InvoiceHeaderId = form.trInvoiceHeader.InvoiceHeaderId;
+                    trInvoiceHeader = form.trInvoiceHeader;
 
                     dbContext = new subContext();
                     dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();

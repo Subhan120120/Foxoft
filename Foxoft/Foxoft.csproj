@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\New folder\**" />
+    <EmbeddedResource Remove="Migrations\New folder\**" />
+    <None Remove="Migrations\New folder\**" />
+    <Page Remove="Migrations\New folder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 
@@ -17,6 +24,10 @@
     <None Remove="AppCode\Qry_Expences.sql" />
     <None Remove="AppCode\Qry_Payments.sql" />
     <None Remove="AppCode\Qry_Sales.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\New folder\subContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>

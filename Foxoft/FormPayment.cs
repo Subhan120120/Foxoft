@@ -182,11 +182,12 @@ namespace Foxoft
                 DocumentNumber = NewDocNum,
                 CurrAccCode = trInvoiceHeader.CurrAccCode,
                 DocumentDate = trInvoiceHeader.DocumentDate,
-                DocumentTime = trInvoiceHeader.DocumentTime
+                DocumentTime = trInvoiceHeader.DocumentTime,
+                InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId
             };
 
-            if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
-                trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+            //if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
+            //    trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
 
             efMethods.InsertPaymentHeader(trPayment);
 

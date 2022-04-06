@@ -1616,8 +1616,6 @@ namespace Foxoft.Migrations
 
                     b.HasKey("PaymentHeaderId");
 
-                    b.HasIndex("InvoiceHeaderId");
-
                     b.ToTable("TrPaymentHeaders");
                 });
 
@@ -2114,15 +2112,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceHeader");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
-                {
-                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
-                        .WithMany("TrPaymentHeaders")
-                        .HasForeignKey("InvoiceHeaderId");
-
-                    b.Navigation("TrInvoiceHeader");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrPaymentLine", b =>
                 {
                     b.HasOne("Foxoft.Models.TrPaymentHeader", "TrPaymentHeader")
@@ -2234,8 +2223,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
                 {
                     b.Navigation("TrInvoiceLines");
-
-                    b.Navigation("TrPaymentHeaders");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
