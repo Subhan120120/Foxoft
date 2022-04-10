@@ -37,6 +37,8 @@ namespace Foxoft
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
 
+
+
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
@@ -119,10 +121,12 @@ namespace Foxoft
 
                     dbContext.TrInvoiceLines.Include(o => o.DcProduct)
                                             .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
+                                            .OrderBy(x => x.CreatedDate)
                                             .LoadAsync()
                                             .ContinueWith(loadTask =>
                                             {
                                                 LocalView<TrInvoiceLine> local = dbContext.TrInvoiceLines.Local;
+
                                                 if (form.trInvoiceHeader.IsReturn)
                                                     local.ForEach(x =>
                                                     {
@@ -133,6 +137,7 @@ namespace Foxoft
                                                     });
 
                                                 trInvoiceLinesBindingSource.DataSource = local.ToBindingList();
+
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
 
                     dataLayoutControl1.isValid(out List<string> errorList);
@@ -158,6 +163,11 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceHeaderId", trInvoiceHeader.InvoiceHeaderId);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
+
+            GridView view = sender as GridView;
+
+            //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
+
         }
 
         private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -223,6 +233,7 @@ namespace Foxoft
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
                         editor.EditValue = form.dcProduct.ProductCode;
+
                         double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                         gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
 
@@ -301,7 +312,6 @@ namespace Foxoft
 
                 if (summaryNetAmount != 0)
                 {
-
                     if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
                         efMethods.InsertInvoiceHeader(trInvoiceHeader);
 
@@ -351,7 +361,6 @@ namespace Foxoft
                         ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
                         printTool.PrintDialog();
                     }
-
                 }
                 else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
             }
@@ -420,7 +429,7 @@ namespace Foxoft
 
         private void trInvoiceLinesBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
         {
-            //TrInvoiceLine line = new TrInvoiceLine();
+            //line.DcProduct = new DcProduct();
             //line.DcProduct.ProductDescription = "Fazil";
             //e.NewObject = line;
         }

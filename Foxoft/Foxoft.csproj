@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\New folder\subContextModelSnapshot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="AppCode\GUNSONU.repx" />
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
     <EmbeddedResource Include="AppCode\Qry_Expences.sql" />

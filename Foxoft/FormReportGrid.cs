@@ -1,19 +1,14 @@
 ﻿using DevExpress.Utils.VisualEffects;
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
 using Foxoft.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormReportGrid : DevExpress.XtraBars.Ribbon.RibbonForm
+    public partial class FormReportGrid : RibbonForm
     {
         Badge badge1;
         Badge badge2;
@@ -44,7 +39,7 @@ namespace Foxoft
             }
         }
 
-        private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
             Stream str = new MemoryStream();
             gridView1.SaveLayoutToStream(str);
@@ -54,7 +49,7 @@ namespace Foxoft
             efMethods.UpdateReportLayout(reportId, layourTxt);
         }
 
-        private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
             DcReport dcReport = efMethods.SelectReport(reportId);
             byte[] byteArray = Encoding.ASCII.GetBytes(dcReport.ReportLayout);
