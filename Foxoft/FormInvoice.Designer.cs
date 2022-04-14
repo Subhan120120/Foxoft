@@ -83,7 +83,7 @@ namespace Foxoft
             this.bBI_reportDesign = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_New = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -607,7 +607,7 @@ namespace Foxoft
             this.bBI_reportDesign,
             this.barButtonItem1,
             this.bBI_New,
-            this.barButtonItem2});
+            this.bBI_reportPreview});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.MaxItemId = 11;
             this.ribbonControl1.Name = "ribbonControl1";
@@ -656,12 +656,13 @@ namespace Foxoft
             this.bBI_New.Name = "bBI_New";
             this.bBI_New.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_New_ItemClick);
             // 
-            // barButtonItem2
+            // bBI_reportPreview
             // 
-            this.barButtonItem2.Caption = "barButtonItem2";
-            this.barButtonItem2.Id = 10;
-            this.barButtonItem2.Name = "barButtonItem2";
-            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            this.bBI_reportPreview.Caption = "Report Görünüş";
+            this.bBI_reportPreview.Id = 10;
+            this.bBI_reportPreview.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem2.ImageOptions.SvgImage")));
+            this.bBI_reportPreview.Name = "bBI_reportPreview";
+            this.bBI_reportPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreview_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -683,7 +684,7 @@ namespace Foxoft
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
             this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem1);
-            this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem2);
+            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "ribbonPageGroup2";
             // 
@@ -804,6 +805,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colQtyIn;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyOut;
         private DevExpress.XtraBars.BarButtonItem bBI_New;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
     }
 }

@@ -232,15 +232,18 @@ namespace Foxoft
 
             //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
 
-            DateTime startDate = DateTime.Now.Date; // new DateTime(2022, 03, 25); // 
-            DateTime endDate = DateTime.Now.Date; // new DateTime(2022, 03, 25); // 
+            DateTime startDate = new DateTime(2022, 04, 13); // DateTime.Now.Date; // 
+            DateTime endDate = new DateTime(2022, 04, 13); // DateTime.Now.Date; // 
 
             SqlQuery sqlQuerySale = dsMethods.SelectSales(startDate, endDate);
             SqlQuery sqlQueryPayment = dsMethods.SelectPayments(startDate, endDate);
             SqlQuery sqlQueryExpences = dsMethods.SelectExpences(startDate, endDate);
-            SqlQuery sqlQueryCustomers = dsMethods.SelectCustomers();
+            SqlQuery sqlQueryDbtCustomers = dsMethods.SelectDebtCustomers();
+            SqlQuery sqlQueryDbtVendors = dsMethods.SelectDebtVendors();
+            SqlQuery sqlQueryPaymentCustomers = dsMethods.SelectPaymentCustomers(startDate, endDate);
+            SqlQuery sqlQueryPaymentVendors = dsMethods.SelectPaymentVendors(startDate, endDate);
 
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryCustomers });
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryDbtCustomers, sqlQueryDbtVendors, sqlQueryPaymentCustomers, sqlQueryPaymentVendors });
             dataSource.Fill();
 
             string designPath = Settings.Default.AppSetting.PrintDesignPath;
@@ -256,8 +259,9 @@ namespace Foxoft
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
-                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-                    using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode, InvoiceHeaderId = Guid.Empty };
+                    //decimal debt = 
+                    using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {

@@ -7,11 +7,11 @@ namespace Foxoft
 {
     public class DsMethods
     {
-        public CustomSqlQuery SelectCustomers()
+        public CustomSqlQuery SelectDebtCustomers()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             string qry = "";
-            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_Customers.sql"))
+            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_DebtCustomers.sql"))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
@@ -20,7 +20,88 @@ namespace Foxoft
             }
 
             CustomSqlQuery sqlQuerySale = new CustomSqlQuery();
-            sqlQuerySale.Name = "Customers";
+            sqlQuerySale.Name = "DebtCustomers";
+            sqlQuerySale.Sql = qry;
+
+            return sqlQuerySale;
+        }
+
+        public CustomSqlQuery SelectDebtVendors()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string qry = "";
+            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_DebtVendors.sql"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    qry = reader.ReadToEnd();
+                }
+            }
+
+            CustomSqlQuery sqlQuerySale = new CustomSqlQuery();
+            sqlQuerySale.Name = "DebtVendors";
+            sqlQuerySale.Sql = qry;
+
+            return sqlQuerySale;
+        }
+
+        public CustomSqlQuery SelectPaymentCustomers(DateTime StartDate, DateTime EndDate)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string qry = "";
+            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_PaymentCustomers.sql"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    qry = reader.ReadToEnd();
+                }
+            }
+
+            QueryParameter queryParameter1 = new QueryParameter();
+            queryParameter1.Name = "StartDate";
+            queryParameter1.Type = typeof(DateTime);
+            queryParameter1.ValueInfo = StartDate.ToString("yyyy-MM-dd");
+
+            QueryParameter queryParameter2 = new QueryParameter();
+            queryParameter2.Name = "EndDate";
+            queryParameter2.Type = typeof(DateTime);
+            queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
+
+            CustomSqlQuery sqlQuerySale = new CustomSqlQuery();
+            sqlQuerySale.Name = "PaymentCustomers";
+            sqlQuerySale.Parameters.Add(queryParameter1);
+            sqlQuerySale.Parameters.Add(queryParameter2);
+            sqlQuerySale.Sql = qry;
+
+            return sqlQuerySale;
+        }
+
+        public CustomSqlQuery SelectPaymentVendors(DateTime StartDate, DateTime EndDate)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string qry = "";
+            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_PaymentVendors.sql"))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    qry = reader.ReadToEnd();
+                }
+            }
+
+            QueryParameter queryParameter1 = new QueryParameter();
+            queryParameter1.Name = "StartDate";
+            queryParameter1.Type = typeof(DateTime);
+            queryParameter1.ValueInfo = StartDate.ToString("yyyy-MM-dd");
+
+            QueryParameter queryParameter2 = new QueryParameter();
+            queryParameter2.Name = "EndDate";
+            queryParameter2.Type = typeof(DateTime);
+            queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
+
+            CustomSqlQuery sqlQuerySale = new CustomSqlQuery();
+            sqlQuerySale.Name = "PaymentVendors";
+            sqlQuerySale.Parameters.Add(queryParameter1);
+            sqlQuerySale.Parameters.Add(queryParameter2);
             sqlQuerySale.Sql = qry;
 
             return sqlQuerySale;

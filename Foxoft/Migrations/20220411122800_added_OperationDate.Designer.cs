@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220411122800_added_OperationDate")]
+    partial class added_OperationDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1603,14 +1605,10 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("OperationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("date");
 
                     b.Property<TimeSpan>("OperationTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("time(0)")
-                        .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
+                        .HasColumnType("time(0)");
 
                     b.Property<string>("OperationType")
                         .HasMaxLength(10)
