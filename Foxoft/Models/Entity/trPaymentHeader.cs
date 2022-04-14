@@ -29,6 +29,14 @@ namespace Foxoft.Models
         [Column(TypeName = "time(0)")]
         public TimeSpan DocumentTime { get; set; }
 
+        [Column(TypeName = "date")]
+        [DisplayName("Sənəd Tarixi")]
+        public DateTime OperationDate { get; set; }
+
+        [DisplayName("Sənəd Vaxtı")]
+        [Column(TypeName = "time(0)")]
+        public TimeSpan OperationTime { get; set; }
+
         [DisplayName("Faktura Nömrəsi")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -43,6 +51,10 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string Description { get; set; }
+
+        [DisplayName("Əməliyat tipi")]
+        [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string OperationType { get; set; }
 
         [DisplayName("Şirkət")]
         public decimal CompanyCode { get; set; }

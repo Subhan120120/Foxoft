@@ -36,7 +36,7 @@ namespace Foxoft
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Where(x => x.ProcessCode == processCode)
-                                      .OrderBy(x => x.DocumentDate)
+                                      .OrderByDescending(x => x.DocumentDate)
                                       .LoadAsync()
                                       .ContinueWith(loadTask => trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList(), System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
 

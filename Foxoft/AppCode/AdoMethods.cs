@@ -126,5 +126,19 @@ namespace Foxoft
             return dt;
         }
 
+        public DataTable SelectDebts(DateTime StartDate, DateTime EndDate)
+        {
+            string qry = "";
+            paramArray = new SqlParameter[]
+            {
+                new SqlParameter("@StartDate", StartDate),
+                new SqlParameter("@EndDate", EndDate)
+            };
+
+            DataTable dt = SqlGetDt(qry, paramArray);
+            dt.TableName = "trPaymentLines";
+            return dt;
+        }
+
     }
 }

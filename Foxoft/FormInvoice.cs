@@ -121,7 +121,7 @@ namespace Foxoft
 
                     dbContext.TrInvoiceLines.Include(o => o.DcProduct)
                                             .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
-                                            .OrderBy(x => x.CreatedDate)
+                                            .OrderByDescending(x => x.CreatedDate)
                                             .LoadAsync()
                                             .ContinueWith(loadTask =>
                                             {
@@ -154,6 +154,7 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+                    trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                 }
             }
         }
@@ -413,13 +414,22 @@ namespace Foxoft
             dataLayoutControl1.isValid(out List<string> errorList);
         }
 
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string[] asdsa = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            foreach (var item in asdsa)
-            {
-                MessageBox.Show(item.ToString());
-            }
+            //string[] asdsa = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            //foreach (var item in asdsa)
+            //{
+            //    MessageBox.Show(item.ToString());
+            //}
+            ReportClass reportClass = new ReportClass();
+            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+            string designPath = Directory.GetCurrentDirectory() + "Foxoft.AppCode.GUNSONU.repx";
+
+            if (!File.Exists(designPath))
+                designPath = reportClass.SelectDesign();
+
+            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+            printTool.ShowRibbonPreview();
         }
 
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)

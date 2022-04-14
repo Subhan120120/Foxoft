@@ -230,8 +230,8 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcProcess>().HasData(
-                new DcProcess { ProcessCode = "RS", ProcessDescription = "Pərakəndə Satış" },
-                new DcProcess { ProcessCode = "RP", ProcessDescription = "Pərakəndə Alış" },
+                new DcProcess { ProcessCode = "RS", ProcessDescription = "Satış" },
+                new DcProcess { ProcessCode = "RP", ProcessDescription = "Alış" },
                 new DcProcess { ProcessCode = "P", ProcessDescription = "Ödəmə" },
                 new DcProcess { ProcessCode = "SB", ProcessDescription = "Toptan Alış" },
                 new DcProcess { ProcessCode = "W", ProcessDescription = "Toptan Satış" },
@@ -572,6 +572,13 @@ namespace Foxoft.Models
 
                 entity.Property(e => e.DocumentTime)
                     .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
+                
+                entity.Property(e => e.OperationDate)
+                    .HasDefaultValueSql("getdate()");
+
+                entity.Property(e => e.OperationTime)
+                    .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
+
 
                 entity.Property(e => e.InvoiceHeaderId)
                     .HasDefaultValueSql("space(0)");

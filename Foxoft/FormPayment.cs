@@ -20,17 +20,17 @@ namespace Foxoft
         private decimal cashless = 0;
         private decimal bonus = 0;
 
-        public FormPayment(int PaymentType, decimal SumNetAmount, TrInvoiceHeader trInvoiceHeader)
+        public FormPayment(int PaymentType, decimal summary, TrInvoiceHeader trInvoiceHeader)
         {
             InitializeComponent();
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
 
-            if (SumNetAmount < 0)
+            if (summary < 0)
                 isNegativ = true;
 
             this.PaymentType = PaymentType;
-            this.SumNetAmount = Math.Abs(SumNetAmount);
+            this.SumNetAmount = Math.Abs(summary);
             this.PaymentHeaderId = Guid.NewGuid();
             this.trInvoiceHeader = trInvoiceHeader;
         }
@@ -55,6 +55,8 @@ namespace Foxoft
                     txtEdit_Cash.EditValue = SumNetAmount;
                     break;
             }
+
+            dateEdit_Date.EditValue = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
         private void textEditCash_EditValueChanged(object sender, EventArgs e)
@@ -176,6 +178,11 @@ namespace Foxoft
 
             //if (!efMethods.PaymentHeaderExist(InvoiceHeaderId))
             //{
+
+            string operType = "";
+            if (trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+                operType = "payment";
+
             TrPaymentHeader trPayment = new TrPaymentHeader()
             {
                 PaymentHeaderId = PaymentHeaderId,
@@ -183,11 +190,10 @@ namespace Foxoft
                 CurrAccCode = trInvoiceHeader.CurrAccCode,
                 DocumentDate = trInvoiceHeader.DocumentDate,
                 DocumentTime = trInvoiceHeader.DocumentTime,
-                InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId
+                InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
+                OperationType = operType,
+                OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString())
             };
-
-            //if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
-            //    trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
 
             efMethods.InsertPaymentHeader(trPayment);
 
