@@ -1,6 +1,7 @@
 ﻿using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
@@ -61,7 +62,7 @@ namespace Foxoft
             #endregion
 
             GridView view = sender as GridView;
-            if (view.FocusedRowHandle >= 0)
+            if (view.SelectedRowsCount > 0)
                 DialogResult = DialogResult.OK;
         }
 
@@ -102,6 +103,17 @@ namespace Foxoft
         private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             UpdateGridViewData();
+        }
+
+        private void gC_CurrAccList_ProcessGridKey(object sender, KeyEventArgs e)
+        {            
+            ColumnView view = (sender as GridControl).FocusedView as ColumnView;
+            if (view == null) return;
+            if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
+            {
+                DialogResult = DialogResult.OK;
+            }
+
         }
     }
 }

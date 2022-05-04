@@ -10,6 +10,8 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid;
 
 namespace Foxoft
 {
@@ -55,6 +57,16 @@ namespace Foxoft
 
                 trInvoiceHeader = view.GetRow(view.FocusedRowHandle) as TrInvoiceHeader;
 
+                DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
+        {
+            ColumnView view = (sender as GridControl).FocusedView as ColumnView;
+            if (view == null) return;
+            if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
+            {
                 DialogResult = DialogResult.OK;
             }
         }

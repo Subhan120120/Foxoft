@@ -20,8 +20,8 @@
   <ItemGroup>
     <None Remove="AppCode\GUNSONU.repx" />
     <None Remove="AppCode\GvListDefaultLayout.xml" />
-    <None Remove="AppCode\Qry_DebtCustomers.sql" />
-    <None Remove="AppCode\Qry_DebtVendors.sql" />
+    <None Remove="AppCode\Qry_CurrAccExtra.sql" />
+    <None Remove="AppCode\Qry_Debts.sql" />
     <None Remove="AppCode\Qry_Expences.sql" />
     <None Remove="AppCode\Qry_PaymentCustomers.sql" />
     <None Remove="AppCode\Qry_Payments.sql" />
@@ -34,10 +34,10 @@
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
     <EmbeddedResource Include="AppCode\Qry_PaymentVendors.sql" />
     <EmbeddedResource Include="AppCode\Qry_PaymentCustomers.sql" />
-    <EmbeddedResource Include="AppCode\Qry_DebtVendors.sql" />
+    <EmbeddedResource Include="AppCode\Qry_CurrAccExtra.sql" />
     <EmbeddedResource Include="AppCode\Qry_Expences.sql" />
     <EmbeddedResource Include="AppCode\Qry_Payments.sql" />
-    <EmbeddedResource Include="AppCode\Qry_DebtCustomers.sql" />
+    <EmbeddedResource Include="AppCode\Qry_Debts.sql" />
     <EmbeddedResource Include="AppCode\Qry_Sales.sql" />
   </ItemGroup>
 

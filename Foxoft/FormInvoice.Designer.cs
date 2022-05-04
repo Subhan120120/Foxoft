@@ -52,6 +52,7 @@ namespace Foxoft
             this.col_LineDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_SalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoBtnEdit_SalesPersonCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
             this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -88,6 +89,7 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            this.UCol_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -193,7 +195,9 @@ namespace Foxoft
             this.col_PosDiscount,
             this.col_NetAmount,
             this.col_LineDesc,
-            this.col_SalesPersonCode});
+            this.col_SalesPersonCode,
+            this.colCreatedDate,
+            this.UCol_ProductDesc});
             this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1141, 456, 264, 272);
             this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
             this.gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -311,6 +315,11 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.repoBtnEdit_SalesPersonCode.Name = "repoBtnEdit_SalesPersonCode";
             this.repoBtnEdit_SalesPersonCode.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoBtnEdit_SalesPersonCode_ButtonPressed);
+            // 
+            // colCreatedDate
+            // 
+            this.colCreatedDate.FieldName = "CreatedDate";
+            this.colCreatedDate.Name = "colCreatedDate";
             // 
             // CheckEdit_IsReturn
             // 
@@ -660,7 +669,7 @@ namespace Foxoft
             // 
             this.bBI_reportPreview.Caption = "Report Görünüş";
             this.bBI_reportPreview.Id = 10;
-            this.bBI_reportPreview.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem2.ImageOptions.SvgImage")));
+            this.bBI_reportPreview.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_reportPreview.ImageOptions.SvgImage")));
             this.bBI_reportPreview.Name = "bBI_reportPreview";
             this.bBI_reportPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreview_ItemClick);
             // 
@@ -694,6 +703,13 @@ namespace Foxoft
             this.ribbonStatusBar1.Name = "ribbonStatusBar1";
             this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
             this.ribbonStatusBar1.Size = new System.Drawing.Size(871, 24);
+            // 
+            // UCol_ProductDesc
+            // 
+            this.UCol_ProductDesc.Caption = "gridColumn1";
+            this.UCol_ProductDesc.Name = "UCol_ProductDesc";
+            this.UCol_ProductDesc.Visible = true;
+            this.UCol_ProductDesc.VisibleIndex = 9;
             // 
             // FormInvoice
             // 
@@ -806,5 +822,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colQtyOut;
         private DevExpress.XtraBars.BarButtonItem bBI_New;
         private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
+        private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
+        private DevExpress.XtraGrid.Columns.GridColumn UCol_ProductDesc;
     }
 }

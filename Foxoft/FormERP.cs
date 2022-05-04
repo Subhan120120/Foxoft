@@ -232,18 +232,22 @@ namespace Foxoft
 
             //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
 
-            DateTime startDate = new DateTime(2022, 04, 14); // DateTime.Now.Date; // 
-            DateTime endDate = new DateTime(2022, 04, 14); // DateTime.Now.Date; // 
+            CustomSqlQuery sqlDepozit = new CustomSqlQuery("Depozit", "select 0 depozit");
+
+            DateTime dateTime = new DateTime(2022, 05, 04); // DateTime.Now.Date; // 
+
+            DateTime startDate = dateTime;
+            DateTime endDate = dateTime;
 
             SqlQuery sqlQuerySale = dsMethods.SelectSales(startDate, endDate);
             SqlQuery sqlQueryPayment = dsMethods.SelectPayments(startDate, endDate);
             SqlQuery sqlQueryExpences = dsMethods.SelectExpences(startDate, endDate);
             SqlQuery sqlQueryDbtCustomers = dsMethods.SelectDebtCustomers();
-            SqlQuery sqlQueryDbtVendors = dsMethods.SelectDebtVendors();
+            //SqlQuery sqlQueryDbtVendors = dsMethods.SelectDebtVendors();
             SqlQuery sqlQueryPaymentCustomers = dsMethods.SelectPaymentCustomers(startDate, endDate);
             SqlQuery sqlQueryPaymentVendors = dsMethods.SelectPaymentVendors(startDate, endDate);
 
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryDbtCustomers, sqlQueryDbtVendors, sqlQueryPaymentCustomers, sqlQueryPaymentVendors });
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlDepozit, sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryDbtCustomers, sqlQueryPaymentCustomers, sqlQueryPaymentVendors });
             dataSource.Fill();
 
             string designPath = Settings.Default.AppSetting.PrintDesignPath;
@@ -253,15 +257,34 @@ namespace Foxoft
             designTool.ShowRibbonDesignerDialog();
         }
 
-        private void aCE_Payment_Click(object sender, EventArgs e)
+        private void aCE_MakePayment_Click(object sender, EventArgs e)
         {
-            using (FormCurrAccList formCurrAcc = new FormCurrAccList(2))
+            using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
                     TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode, InvoiceHeaderId = Guid.Empty };
                     //decimal debt = 
                     using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
+                    {
+                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        {
+                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void aCE_receivePayment_Click(object sender, EventArgs e)
+        {
+            using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+            {
+                if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+                {
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode, InvoiceHeaderId = Guid.Empty };
+                    //decimal debt = 
+                    using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {

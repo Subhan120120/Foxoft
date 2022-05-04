@@ -38,13 +38,13 @@ namespace Foxoft
             this.gV_InvoiceHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIsReturn = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationTime = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceHeaderList)).BeginInit();
@@ -61,6 +61,7 @@ namespace Foxoft
             this.gC_InvoiceHeaderList.TabIndex = 0;
             this.gC_InvoiceHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceHeaderList});
+            this.gC_InvoiceHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceHeaderList_ProcessGridKey);
             // 
             // trInvoiceHeadersBindingSource
             // 
@@ -97,12 +98,40 @@ namespace Foxoft
             this.colIsReturn.Visible = true;
             this.colIsReturn.VisibleIndex = 1;
             // 
+            // colDocumentDate
+            // 
+            this.colDocumentDate.FieldName = "DocumentDate";
+            this.colDocumentDate.Name = "colDocumentDate";
+            this.colDocumentDate.Visible = true;
+            this.colDocumentDate.VisibleIndex = 2;
+            // 
             // colCurrAccCode
             // 
             this.colCurrAccCode.FieldName = "CurrAccCode";
             this.colCurrAccCode.Name = "colCurrAccCode";
             this.colCurrAccCode.Visible = true;
             this.colCurrAccCode.VisibleIndex = 4;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.FieldName = "DcCurrAcc.FirstName";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 5;
+            // 
+            // colDocumentTime
+            // 
+            this.colDocumentTime.FieldName = "DocumentTime";
+            this.colDocumentTime.Name = "colDocumentTime";
+            this.colDocumentTime.Visible = true;
+            this.colDocumentTime.VisibleIndex = 3;
+            // 
+            // colStoreCode
+            // 
+            this.colStoreCode.FieldName = "StoreCode";
+            this.colStoreCode.Name = "colStoreCode";
+            this.colStoreCode.Visible = true;
+            this.colStoreCode.VisibleIndex = 6;
             // 
             // colOperationDate
             // 
@@ -117,34 +146,6 @@ namespace Foxoft
             this.colOperationTime.Name = "colOperationTime";
             this.colOperationTime.Visible = true;
             this.colOperationTime.VisibleIndex = 8;
-            // 
-            // colStoreCode
-            // 
-            this.colStoreCode.FieldName = "StoreCode";
-            this.colStoreCode.Name = "colStoreCode";
-            this.colStoreCode.Visible = true;
-            this.colStoreCode.VisibleIndex = 6;
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.FieldName = "DcCurrAcc.FirstName";
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 5;
-            // 
-            // colDocumentDate
-            // 
-            this.colDocumentDate.FieldName = "DocumentDate";
-            this.colDocumentDate.Name = "colDocumentDate";
-            this.colDocumentDate.Visible = true;
-            this.colDocumentDate.VisibleIndex = 2;
-            // 
-            // colDocumentTime
-            // 
-            this.colDocumentTime.FieldName = "DocumentTime";
-            this.colDocumentTime.Name = "colDocumentTime";
-            this.colDocumentTime.Visible = true;
-            this.colDocumentTime.VisibleIndex = 3;
             // 
             // FormInvoiceHeaderList
             // 

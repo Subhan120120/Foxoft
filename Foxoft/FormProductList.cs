@@ -120,5 +120,15 @@ namespace Foxoft
             gV_ProductList.FocusedRowHandle = rowHandle;
             gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
         }
+
+        private void gC_ProductList_ProcessGridKey(object sender, KeyEventArgs e)
+        {
+            ColumnView view = (sender as GridControl).FocusedView as ColumnView;
+            if (view == null) return;
+            if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
+            {
+                DialogResult = DialogResult.OK;
+            }
+        }
     }
 }

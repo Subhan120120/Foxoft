@@ -142,6 +142,7 @@ namespace Foxoft
                                             .ThenInclude(x => x.DcCurrAcc)
                                         .Include(x=>x.DcProduct)
                                         .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                        .OrderBy(x=>x.CreatedDate)
                                         .ToList();
             }
         }

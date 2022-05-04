@@ -46,12 +46,12 @@ namespace Foxoft
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_refresh = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.bBI_refresh = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -67,6 +67,7 @@ namespace Foxoft
             this.gC_CurrAccList.TabIndex = 0;
             this.gC_CurrAccList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_CurrAccList});
+            this.gC_CurrAccList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_CurrAccList_ProcessGridKey);
             // 
             // gV_CurrAccList
             // 
@@ -190,6 +191,14 @@ namespace Foxoft
             this.bBI_CurAccEdit.Name = "bBI_CurAccEdit";
             this.bBI_CurAccEdit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CurrAccEdit_ItemClick);
             // 
+            // bBI_refresh
+            // 
+            this.bBI_refresh.Caption = "Yenilə";
+            this.bBI_refresh.Id = 3;
+            this.bBI_refresh.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_refresh.ImageOptions.SvgImage")));
+            this.bBI_refresh.Name = "bBI_refresh";
+            this.bBI_refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_refresh_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -222,14 +231,6 @@ namespace Foxoft
             // 
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
-            // 
-            // bBI_refresh
-            // 
-            this.bBI_refresh.Caption = "Yenilə";
-            this.bBI_refresh.Id = 3;
-            this.bBI_refresh.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-            this.bBI_refresh.Name = "bBI_refresh";
-            this.bBI_refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_refresh_ItemClick);
             // 
             // FormCurrAccList
             // 

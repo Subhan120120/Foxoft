@@ -11,7 +11,7 @@ namespace Foxoft
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             string qry = "";
-            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_DebtCustomers.sql"))
+            using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.Qry_Debts.sql"))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {

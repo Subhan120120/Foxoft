@@ -134,11 +134,15 @@ namespace Foxoft
                                                         x.QtyOut = x.QtyOut * (-1);
                                                         x.Amount = x.Amount * (-1);
                                                         x.NetAmount = x.NetAmount * (-1);
+                                                        int rowHandle = gV_InvoiceLine.LocateByValue("CustomerID", x.ProductCode);
+                                                        gV_InvoiceLine.SetRowCellValue(rowHandle, UCol_ProductDesc, x.DcProduct.ProductDescription);
                                                     });
 
                                                 trInvoiceLinesBindingSource.DataSource = local.ToBindingList();
 
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
+
+
 
                     dataLayoutControl1.isValid(out List<string> errorList);
 
@@ -164,6 +168,7 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceHeaderId", trInvoiceHeader.InvoiceHeaderId);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
 
             GridView view = sender as GridView;
 
