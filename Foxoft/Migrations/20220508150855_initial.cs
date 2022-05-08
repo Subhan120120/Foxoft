@@ -268,9 +268,12 @@ namespace Foxoft.Migrations
                     DocumentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValueSql: "space(0)"),
                     DocumentDate = table.Column<DateTime>(type: "date", nullable: false, defaultValueSql: "getdate()"),
                     DocumentTime = table.Column<TimeSpan>(type: "time(0)", nullable: false, defaultValueSql: "convert(varchar(10), GETDATE(), 108)"),
+                    OperationDate = table.Column<DateTime>(type: "date", nullable: false, defaultValueSql: "getdate()"),
+                    OperationTime = table.Column<TimeSpan>(type: "time(0)", nullable: false, defaultValueSql: "convert(varchar(10), GETDATE(), 108)"),
                     InvoiceNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, defaultValueSql: "space(0)"),
                     CurrAccCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, defaultValueSql: "space(0)"),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, defaultValueSql: "convert(varchar(10), GETDATE(), 108)"),
+                    OperationType = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     CompanyCode = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OfficeCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false, defaultValueSql: "space(0)"),
                     StoreCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, defaultValueSql: "space(0)"),
@@ -706,8 +709,8 @@ namespace Foxoft.Migrations
                 columns: new[] { "ProcessCode", "ProcessDescription" },
                 values: new object[,]
                 {
-                    { "RS", "Pərakəndə Satış" },
-                    { "RP", "Pərakəndə Alış" },
+                    { "RS", "Satış" },
+                    { "RP", "Alış" },
                     { "P", "Ödəmə" },
                     { "SB", "Toptan Alış" },
                     { "W", "Toptan Satış" },

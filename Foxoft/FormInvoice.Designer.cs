@@ -53,6 +53,7 @@ namespace Foxoft
             this.col_SalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoBtnEdit_SalesPersonCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
             this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -89,7 +90,6 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.UCol_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -197,7 +197,7 @@ namespace Foxoft
             this.col_LineDesc,
             this.col_SalesPersonCode,
             this.colCreatedDate,
-            this.UCol_ProductDesc});
+            this.col_ProductDesc});
             this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1141, 456, 264, 272);
             this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
             this.gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -248,14 +248,14 @@ namespace Foxoft
             this.colQtyIn.FieldName = "QtyIn";
             this.colQtyIn.Name = "colQtyIn";
             this.colQtyIn.Visible = true;
-            this.colQtyIn.VisibleIndex = 1;
+            this.colQtyIn.VisibleIndex = 2;
             // 
             // colQtyOut
             // 
             this.colQtyOut.FieldName = "QtyOut";
             this.colQtyOut.Name = "colQtyOut";
             this.colQtyOut.Visible = true;
-            this.colQtyOut.VisibleIndex = 2;
+            this.colQtyOut.VisibleIndex = 3;
             // 
             // col_Price
             // 
@@ -263,7 +263,7 @@ namespace Foxoft
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;
-            this.col_Price.VisibleIndex = 3;
+            this.col_Price.VisibleIndex = 4;
             // 
             // col_Amount
             // 
@@ -272,7 +272,7 @@ namespace Foxoft
             this.col_Amount.Name = "col_Amount";
             this.col_Amount.OptionsColumn.AllowEdit = false;
             this.col_Amount.Visible = true;
-            this.col_Amount.VisibleIndex = 6;
+            this.col_Amount.VisibleIndex = 7;
             // 
             // col_PosDiscount
             // 
@@ -280,7 +280,7 @@ namespace Foxoft
             this.col_PosDiscount.FieldName = "PosDiscount";
             this.col_PosDiscount.Name = "col_PosDiscount";
             this.col_PosDiscount.Visible = true;
-            this.col_PosDiscount.VisibleIndex = 7;
+            this.col_PosDiscount.VisibleIndex = 8;
             // 
             // col_NetAmount
             // 
@@ -290,7 +290,7 @@ namespace Foxoft
             this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "SUM={0:0.##}")});
             this.col_NetAmount.Visible = true;
-            this.col_NetAmount.VisibleIndex = 8;
+            this.col_NetAmount.VisibleIndex = 9;
             // 
             // col_LineDesc
             // 
@@ -298,7 +298,7 @@ namespace Foxoft
             this.col_LineDesc.FieldName = "LineDescription";
             this.col_LineDesc.Name = "col_LineDesc";
             this.col_LineDesc.Visible = true;
-            this.col_LineDesc.VisibleIndex = 5;
+            this.col_LineDesc.VisibleIndex = 6;
             // 
             // col_SalesPersonCode
             // 
@@ -306,7 +306,7 @@ namespace Foxoft
             this.col_SalesPersonCode.FieldName = "SalesPersonCode";
             this.col_SalesPersonCode.Name = "col_SalesPersonCode";
             this.col_SalesPersonCode.Visible = true;
-            this.col_SalesPersonCode.VisibleIndex = 4;
+            this.col_SalesPersonCode.VisibleIndex = 5;
             // 
             // repoBtnEdit_SalesPersonCode
             // 
@@ -320,6 +320,13 @@ namespace Foxoft
             // 
             this.colCreatedDate.FieldName = "CreatedDate";
             this.colCreatedDate.Name = "colCreatedDate";
+            // 
+            // col_ProductDesc
+            // 
+            this.col_ProductDesc.FieldName = "ProductDescription";
+            this.col_ProductDesc.Name = "col_ProductDesc";
+            this.col_ProductDesc.Visible = true;
+            this.col_ProductDesc.VisibleIndex = 1;
             // 
             // CheckEdit_IsReturn
             // 
@@ -704,13 +711,6 @@ namespace Foxoft
             this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
             this.ribbonStatusBar1.Size = new System.Drawing.Size(871, 24);
             // 
-            // UCol_ProductDesc
-            // 
-            this.UCol_ProductDesc.Caption = "gridColumn1";
-            this.UCol_ProductDesc.Name = "UCol_ProductDesc";
-            this.UCol_ProductDesc.Visible = true;
-            this.UCol_ProductDesc.VisibleIndex = 9;
-            // 
             // FormInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -823,6 +823,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_New;
         private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
-        private DevExpress.XtraGrid.Columns.GridColumn UCol_ProductDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
     }
 }

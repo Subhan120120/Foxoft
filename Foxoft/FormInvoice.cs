@@ -8,10 +8,10 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,8 +19,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
-using System.Windows.Data;
 
 namespace Foxoft
 {
@@ -127,22 +125,22 @@ namespace Foxoft
                                             {
                                                 LocalView<TrInvoiceLine> local = dbContext.TrInvoiceLines.Local;
 
-                                                if (form.trInvoiceHeader.IsReturn)
-                                                    local.ForEach(x =>
+                                                local.ForEach(x =>
+                                                {
+                                                    x.ProductDescription = x.DcProduct.ProductDescription;
+
+                                                    if (form.trInvoiceHeader.IsReturn)
                                                     {
                                                         x.QtyIn = x.QtyIn * (-1);
                                                         x.QtyOut = x.QtyOut * (-1);
                                                         x.Amount = x.Amount * (-1);
                                                         x.NetAmount = x.NetAmount * (-1);
-                                                        int rowHandle = gV_InvoiceLine.LocateByValue("CustomerID", x.ProductCode);
-                                                        gV_InvoiceLine.SetRowCellValue(rowHandle, UCol_ProductDesc, x.DcProduct.ProductDescription);
-                                                    });
+                                                    }
+                                                });
 
                                                 trInvoiceLinesBindingSource.DataSource = local.ToBindingList();
 
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
-
-
 
                     dataLayoutControl1.isValid(out List<string> errorList);
 
@@ -239,11 +237,12 @@ namespace Foxoft
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
                         editor.EditValue = form.dcProduct.ProductCode;
+                        gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
+
 
                         double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                         gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
 
-                        //gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDescription, "Fazil");
 
                         CalcInvoiceLineNetAmount();
                     }
@@ -447,6 +446,11 @@ namespace Foxoft
             //line.DcProduct = new DcProduct();
             //line.DcProduct.ProductDescription = "Fazil";
             //e.NewObject = line;
+        }
+
+        private void ribbonControl1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

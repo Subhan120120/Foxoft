@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20220411111439_added_OperationType_fix")]
-    partial class added_OperationType_fix
+    [Migration("20220508150855_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1603,6 +1603,16 @@ namespace Foxoft.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)")
                         .HasDefaultValueSql("space(0)");
+
+                    b.Property<DateTime>("OperationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<TimeSpan>("OperationTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("time(0)")
+                        .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
                     b.Property<string>("OperationType")
                         .HasMaxLength(10)
