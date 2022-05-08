@@ -36,6 +36,8 @@ namespace Foxoft
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.trInvoiceLinesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            this.lC_CurrAccDesc = new DevExpress.XtraEditors.LabelControl();
+            this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
             this.gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -55,7 +57,6 @@ namespace Foxoft
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
-            this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             this.CustomsDocumentNumberTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -79,6 +80,7 @@ namespace Foxoft
             this.ItemForWarehouseCode = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbl_Payment = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_Save = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_SaveAndNew = new DevExpress.XtraBars.BarButtonItem();
@@ -94,12 +96,12 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentTimeTimeSpanEdit.Properties)).BeginInit();
@@ -124,6 +126,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ItemForWarehouseCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Payment)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -134,6 +137,7 @@ namespace Foxoft
             // 
             // dataLayoutControl1
             // 
+            this.dataLayoutControl1.Controls.Add(this.lC_CurrAccDesc);
             this.dataLayoutControl1.Controls.Add(this.labelControl1);
             this.dataLayoutControl1.Controls.Add(this.gC_InvoiceLine);
             this.dataLayoutControl1.Controls.Add(this.CheckEdit_IsReturn);
@@ -155,6 +159,20 @@ namespace Foxoft
             this.dataLayoutControl1.Size = new System.Drawing.Size(871, 462);
             this.dataLayoutControl1.TabIndex = 4;
             this.dataLayoutControl1.Text = "dataLayoutControl1";
+            // 
+            // lC_CurrAccDesc
+            // 
+            this.lC_CurrAccDesc.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.trInvoiceHeadersBindingSource, "CurrAccDesc", true));
+            this.lC_CurrAccDesc.Location = new System.Drawing.Point(622, 12);
+            this.lC_CurrAccDesc.Name = "lC_CurrAccDesc";
+            this.lC_CurrAccDesc.Size = new System.Drawing.Size(237, 20);
+            this.lC_CurrAccDesc.StyleController = this.dataLayoutControl1;
+            this.lC_CurrAccDesc.TabIndex = 16;
+            this.lC_CurrAccDesc.Text = "labelControl2";
+            // 
+            // trInvoiceHeadersBindingSource
+            // 
+            this.trInvoiceHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceHeader);
             // 
             // labelControl1
             // 
@@ -206,12 +224,15 @@ namespace Foxoft
             this.gV_InvoiceLine.OptionsView.ShowFooter = true;
             this.gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
             this.gV_InvoiceLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_InvoiceLine_InitNewRow);
+            this.gV_InvoiceLine.HiddenEditor += new System.EventHandler(this.gridView_HiddenEditor);
+            this.gV_InvoiceLine.ShownEditor += new System.EventHandler(this.gridView_ShownEditor);
             this.gV_InvoiceLine.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceLine_CellValueChanging);
             this.gV_InvoiceLine.RowDeleted += new DevExpress.Data.RowDeletedEventHandler(this.gV_InvoiceLine_RowDeleted);
             this.gV_InvoiceLine.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gV_InvoiceLine_RowUpdated);
             this.gV_InvoiceLine.RowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.gV_InvoiceLine_RowLoaded);
             this.gV_InvoiceLine.AsyncCompleted += new System.EventHandler(this.gV_InvoiceLine_AsyncCompleted);
             this.gV_InvoiceLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gV_InvoiceLine_KeyDown);
+            this.gV_InvoiceLine.DoubleClick += new System.EventHandler(this.gV_InvoiceLine_DoubleClick);
             // 
             // col_InvoiceLineId
             // 
@@ -325,6 +346,7 @@ namespace Foxoft
             // 
             this.col_ProductDesc.FieldName = "ProductDescription";
             this.col_ProductDesc.Name = "col_ProductDesc";
+            this.col_ProductDesc.OptionsColumn.AllowEdit = false;
             this.col_ProductDesc.Visible = true;
             this.col_ProductDesc.VisibleIndex = 1;
             // 
@@ -338,10 +360,6 @@ namespace Foxoft
             this.CheckEdit_IsReturn.Size = new System.Drawing.Size(421, 20);
             this.CheckEdit_IsReturn.StyleController = this.dataLayoutControl1;
             this.CheckEdit_IsReturn.TabIndex = 4;
-            // 
-            // trInvoiceHeadersBindingSource
-            // 
-            this.trInvoiceHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceHeader);
             // 
             // DocumentDateDateEdit
             // 
@@ -408,7 +426,7 @@ namespace Foxoft
             this.btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
             this.btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnEdit_CurrAccCode.Size = new System.Drawing.Size(312, 20);
+            this.btnEdit_CurrAccCode.Size = new System.Drawing.Size(71, 20);
             this.btnEdit_CurrAccCode.StyleController = this.dataLayoutControl1;
             this.btnEdit_CurrAccCode.TabIndex = 8;
             this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
@@ -496,7 +514,8 @@ namespace Foxoft
             this.ItemForStoreCode,
             this.ItemForWarehouseCode,
             this.ItemForDescription,
-            this.lbl_Payment});
+            this.lbl_Payment,
+            this.layoutControlItem2});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "autoGeneratedGroup0";
             this.layoutControlGroup1.Size = new System.Drawing.Size(851, 442);
@@ -552,7 +571,7 @@ namespace Foxoft
             this.ItemForCurrAccCode.Control = this.btnEdit_CurrAccCode;
             this.ItemForCurrAccCode.Location = new System.Drawing.Point(425, 0);
             this.ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            this.ItemForCurrAccCode.Size = new System.Drawing.Size(426, 24);
+            this.ItemForCurrAccCode.Size = new System.Drawing.Size(185, 24);
             this.ItemForCurrAccCode.Text = "Cari Hesab";
             this.ItemForCurrAccCode.TextSize = new System.Drawing.Size(98, 13);
             // 
@@ -611,6 +630,17 @@ namespace Foxoft
             this.lbl_Payment.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lbl_Payment.TextSize = new System.Drawing.Size(0, 0);
             this.lbl_Payment.TextVisible = false;
+            // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.lC_CurrAccDesc;
+            this.layoutControlItem2.Location = new System.Drawing.Point(610, 0);
+            this.layoutControlItem2.MinSize = new System.Drawing.Size(67, 17);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(241, 24);
+            this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem2.TextVisible = false;
             // 
             // ribbonControl1
             // 
@@ -730,12 +760,12 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             this.dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentTimeTimeSpanEdit.Properties)).EndInit();
@@ -760,6 +790,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ItemForWarehouseCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Payment)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -824,5 +855,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_reportPreview;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
+        private DevExpress.XtraEditors.LabelControl lC_CurrAccDesc;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
     }
 }

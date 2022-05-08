@@ -1,6 +1,7 @@
 ﻿using DevExpress.LookAndFeel;
 using DevExpress.Skins;
 using DevExpress.UserSkins;
+using DevExpress.XtraEditors;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Foxoft
         [STAThread]
         static void Main()
         {
+            WindowsFormsSettings.DefaultFont = new System.Drawing.Font("Tahoma", 10);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

@@ -5,8 +5,10 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -15,6 +17,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,8 +37,6 @@ namespace Foxoft
         private byte currAccTypeCode;
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
-
-
 
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
@@ -61,24 +62,24 @@ namespace Foxoft
             adornerUIManager1.Elements.Add(badge2);
             badge1.TargetElement = bBI_Save;
             //badge2.TargetElement = RibbonPage_Invoice;
+
+            ClearControlsAddNew();
+
+            LoadSession();
         }
 
         public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
         private void FormInvoice_Load(object sender, EventArgs e)
         {
-            ClearControlsAddNew();
-
-            LoadSession();
-
             dataLayoutControl1.isValid(out List<string> errorList);
         }
 
         private void LoadSession()
         {
-            lUE_OfficeCode.EditValue = Settings.Default.OfficeCode;
-            lUE_StoreCode.EditValue = Settings.Default.StoreCode;
-            lUE_WarehouseCode.EditValue = Settings.Default.WarehouseCode;
+            trInvoiceHeader.OfficeCode = Settings.Default.OfficeCode;
+            trInvoiceHeader.StoreCode = Settings.Default.StoreCode;
+            trInvoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
         }
 
         private void ClearControlsAddNew()
@@ -114,8 +115,13 @@ namespace Foxoft
                     trInvoiceHeader = form.trInvoiceHeader;
 
                     dbContext = new subContext();
-                    dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
-                    trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+                    dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc).Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
+                    LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+
+                    if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
+                        lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
+
+                    trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
 
                     dbContext.TrInvoiceLines.Include(o => o.DcProduct)
                                             .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
@@ -123,9 +129,9 @@ namespace Foxoft
                                             .LoadAsync()
                                             .ContinueWith(loadTask =>
                                             {
-                                                LocalView<TrInvoiceLine> local = dbContext.TrInvoiceLines.Local;
+                                                LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
 
-                                                local.ForEach(x =>
+                                                lV_invoiceLine.ForEach(x =>
                                                 {
                                                     x.ProductDescription = x.DcProduct.ProductDescription;
 
@@ -138,7 +144,7 @@ namespace Foxoft
                                                     }
                                                 });
 
-                                                trInvoiceLinesBindingSource.DataSource = local.ToBindingList();
+                                                trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
 
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -156,7 +162,9 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+                    lC_CurrAccDesc.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
+                    trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                 }
             }
         }
@@ -229,9 +237,9 @@ namespace Foxoft
                 productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
 
             ButtonEdit editor = (ButtonEdit)sender;
-            int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            if (buttonIndex == 0)
-            {
+            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
+            //if (buttonIndex == 0)
+            //{
                 using (FormProductList form = new FormProductList(productTypeCode, productCode))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
@@ -239,15 +247,13 @@ namespace Foxoft
                         editor.EditValue = form.dcProduct.ProductCode;
                         gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
 
-
                         double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                         gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
-
 
                         CalcInvoiceLineNetAmount();
                     }
                 }
-            }
+            //}
         }
 
         private void CalcInvoiceLineNetAmount()
@@ -448,9 +454,48 @@ namespace Foxoft
             //e.NewObject = line;
         }
 
-        private void ribbonControl1_Click(object sender, EventArgs e)
+        BaseEdit editor;
+        private void gridView_ShownEditor(object sender, EventArgs e)
         {
+            GridView view = sender as GridView;
+            editor = view.ActiveEditor;
+            editor.DoubleClick += editor_DoubleClick;
+        }
 
+        void gridView_HiddenEditor(object sender, EventArgs e)
+        {
+            editor.DoubleClick -= editor_DoubleClick;
+            editor = null;
+        }
+
+        void editor_DoubleClick(object sender, EventArgs e)
+        {
+            BaseEdit editor = (BaseEdit)sender;
+            GridControl grid = editor.Parent as GridControl;
+            GridView view = grid.FocusedView as GridView;
+            Point pt = grid.PointToClient(Control.MousePosition);
+            GridHitInfo info = view.CalcHitInfo(pt);
+            if (info.InRow || info.InRowCell)
+            {
+                if (info.Column == col_ProductCode)
+                {
+                    //repoBtnEdit_ProductCode_ButtonPressed(sender, ButtonPressedEventArgs.Empty);
+                }
+                string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+                MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
+            }
+        }
+
+        private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
+        {
+            //DXMouseEventArgs ea = e as DXMouseEventArgs;
+            //GridView view = sender as GridView;
+            //GridHitInfo info = view.CalcHitInfo(ea.Location);
+            //if (info.InRow || info.InRowCell)
+            //{
+            //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+            //    MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
+            //}
         }
     }
 }
