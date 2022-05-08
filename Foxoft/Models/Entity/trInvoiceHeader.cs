@@ -104,6 +104,11 @@ namespace Foxoft.Models
         [DisplayName("Kilidlənib")]
         public bool IsLocked { get; set; }
 
+        [NotMapped]
+        [DisplayName("Cari Hesab Açıqlaması")]
+        public string CurrAccDesc { get; set; }
+
+
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
     }
