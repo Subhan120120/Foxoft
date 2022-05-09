@@ -108,17 +108,7 @@ namespace Foxoft
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            SelectDocNum();
-        }
-
-        private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)
-        {
-            SelectDocNum();
-        }
-
-        private void SelectDocNum()
-        {
-            using (FormInvoiceHeaderList form = new FormInvoiceHeaderList(processCode))
+            using (FormInvoiceHeaderList form = new FormInvoiceHeaderList(this.processCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -135,7 +125,7 @@ namespace Foxoft
 
                     dbContext.TrInvoiceLines.Include(o => o.DcProduct)
                                             .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
-                                            .OrderBy(x => x.CreatedDate)
+                                            .OrderByDescending(x => x.CreatedDate)
                                             .LoadAsync()
                                             .ContinueWith(loadTask =>
                                             {
@@ -242,11 +232,6 @@ namespace Foxoft
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            SelectProduct(sender);
-        }
-
-        private void SelectProduct(object sender)
-        {
             string productCode = "";
             if (gV_InvoiceLine.GetFocusedRowCellValue("ProductCode") != null)
                 productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
@@ -255,19 +240,19 @@ namespace Foxoft
             //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
             //if (buttonIndex == 0)
             //{
-            using (FormProductList form = new FormProductList(productTypeCode, productCode))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                using (FormProductList form = new FormProductList(productTypeCode, productCode))
                 {
-                    editor.EditValue = form.dcProduct.ProductCode;
-                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                    {
+                        editor.EditValue = form.dcProduct.ProductCode;
+                        gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
 
-                    double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
-                    gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
+                        double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
+                        gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
 
-                    CalcInvoiceLineNetAmount();
+                        CalcInvoiceLineNetAmount();
+                    }
                 }
-            }
             //}
         }
 
@@ -492,11 +477,12 @@ namespace Foxoft
             GridHitInfo info = view.CalcHitInfo(pt);
             if (info.InRow || info.InRowCell)
             {
-                if (info.Column == col_ProductCode || info.Column == col_ProductDesc)
-                    SelectProduct(sender);
-
-                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-                //MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
+                if (info.Column == col_ProductCode)
+                {
+                    //repoBtnEdit_ProductCode_ButtonPressed(sender, ButtonPressedEventArgs.Empty);
+                }
+                string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+                MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
             }
         }
 
@@ -511,6 +497,5 @@ namespace Foxoft
             //    MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
             //}
         }
-
     }
 }
