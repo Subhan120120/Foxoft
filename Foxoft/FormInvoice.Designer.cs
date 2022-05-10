@@ -415,6 +415,7 @@ namespace Foxoft
             this.btnEdit_DocNum.StyleController = this.dataLayoutControl1;
             this.btnEdit_DocNum.TabIndex = 14;
             this.btnEdit_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_DocNum_ButtonPressed);
+            this.btnEdit_DocNum.DoubleClick += new System.EventHandler(this.btnEdit_DocNum_DoubleClick);
             // 
             // memoEdit_Desc
             // 
