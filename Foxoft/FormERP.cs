@@ -251,10 +251,19 @@ namespace Foxoft
             dataSource.Fill();
 
             string designPath = Settings.Default.AppSetting.PrintDesignPath;
+
+
             if (!File.Exists(designPath))
+            {
                 designPath = reportClass.SelectDesign();
-            ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
-            designTool.ShowRibbonDesignerDialog();
+
+                if (designPath != "")
+                {
+                    ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
+                    designTool.ShowRibbonDesignerDialog();
+                }
+            }
+
         }
 
         private void aCE_MakePayment_Click(object sender, EventArgs e)
@@ -264,7 +273,7 @@ namespace Foxoft
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
                     TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode, InvoiceHeaderId = Guid.Empty };
-                    //decimal debt = 
+                  
                     using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)

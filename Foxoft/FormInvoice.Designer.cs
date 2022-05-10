@@ -92,6 +92,7 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            this.repositoryItemCalcEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -128,11 +129,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Payment)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCalcEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // trInvoiceLinesBindingSource
             // 
             this.trInvoiceLinesBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceLine);
+
             this.trInvoiceLinesBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trInvoiceLinesBindingSource_AddingNew);
             // 
             // dataLayoutControl1
@@ -174,6 +177,7 @@ namespace Foxoft
             // 
             this.trInvoiceHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceHeader);
             // 
+
             // labelControl1
             // 
             this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -194,7 +198,8 @@ namespace Foxoft
             this.gC_InvoiceLine.Name = "gC_InvoiceLine";
             this.gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repoBtnEdit_ProductCode,
-            this.repoBtnEdit_SalesPersonCode});
+            this.repoBtnEdit_SalesPersonCode,
+            this.repositoryItemCalcEdit1});
             this.gC_InvoiceLine.Size = new System.Drawing.Size(847, 289);
             this.gC_InvoiceLine.TabIndex = 13;
             this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -281,6 +286,7 @@ namespace Foxoft
             // col_Price
             // 
             this.col_Price.Caption = "Qiymət";
+            this.col_Price.ColumnEdit = this.repositoryItemCalcEdit1;
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;
@@ -741,6 +747,13 @@ namespace Foxoft
             this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
             this.ribbonStatusBar1.Size = new System.Drawing.Size(871, 24);
             // 
+            // repositoryItemCalcEdit1
+            // 
+            this.repositoryItemCalcEdit1.AutoHeight = false;
+            this.repositoryItemCalcEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemCalcEdit1.Name = "repositoryItemCalcEdit1";
+            // 
             // FormInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -792,6 +805,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Payment)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCalcEdit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -857,5 +871,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
         private DevExpress.XtraEditors.LabelControl lC_CurrAccDesc;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repositoryItemCalcEdit1;
     }
 }
