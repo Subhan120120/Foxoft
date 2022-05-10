@@ -108,6 +108,16 @@ namespace Foxoft
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
+            SelectDocNum();
+        }
+
+        private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)
+        {
+            SelectDocNum();
+        }
+
+        private void SelectDocNum()
+        {
             using (FormInvoiceHeaderList form = new FormInvoiceHeaderList(this.processCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
@@ -179,7 +189,6 @@ namespace Foxoft
             GridView view = sender as GridView;
 
             //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
-
         }
 
         private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -214,8 +223,6 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "NetAmount", Qty * Price - PosDiscount);
         }
 
-
-
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
         {
             #region Comment
@@ -232,6 +239,29 @@ namespace Foxoft
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
+            SelectProduct(sender);
+        }
+
+        void editor_DoubleClick(object sender, EventArgs e)
+        {
+            BaseEdit editor = (BaseEdit)sender;
+            GridControl grid = editor.Parent as GridControl;
+            GridView view = grid.FocusedView as GridView;
+            Point pt = grid.PointToClient(Control.MousePosition);
+            GridHitInfo info = view.CalcHitInfo(pt);
+            if (info.InRow || info.InRowCell)
+            {
+                if (info.Column == col_ProductCode)
+                {
+                    SelectProduct(sender);
+                }
+                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+                //MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
+            }
+        }
+
+        private void SelectProduct(object sender)
+        {
             string productCode = "";
             if (gV_InvoiceLine.GetFocusedRowCellValue("ProductCode") != null)
                 productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
@@ -240,19 +270,19 @@ namespace Foxoft
             //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
             //if (buttonIndex == 0)
             //{
-                using (FormProductList form = new FormProductList(productTypeCode, productCode))
+            using (FormProductList form = new FormProductList(productTypeCode, productCode))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                    {
-                        editor.EditValue = form.dcProduct.ProductCode;
-                        gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
+                    editor.EditValue = form.dcProduct.ProductCode;
+                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
 
-                        double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
-                        gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
+                    double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
+                    gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
 
-                        CalcInvoiceLineNetAmount();
-                    }
+                    CalcInvoiceLineNetAmount();
                 }
+            }
             //}
         }
 
@@ -466,24 +496,6 @@ namespace Foxoft
         {
             editor.DoubleClick -= editor_DoubleClick;
             editor = null;
-        }
-
-        void editor_DoubleClick(object sender, EventArgs e)
-        {
-            BaseEdit editor = (BaseEdit)sender;
-            GridControl grid = editor.Parent as GridControl;
-            GridView view = grid.FocusedView as GridView;
-            Point pt = grid.PointToClient(Control.MousePosition);
-            GridHitInfo info = view.CalcHitInfo(pt);
-            if (info.InRow || info.InRowCell)
-            {
-                if (info.Column == col_ProductCode)
-                {
-                    //repoBtnEdit_ProductCode_ButtonPressed(sender, ButtonPressedEventArgs.Empty);
-                }
-                string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-                MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
-            }
         }
 
         private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
