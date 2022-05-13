@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -135,7 +136,7 @@ namespace Foxoft
 
                     dbContext.TrInvoiceLines.Include(o => o.DcProduct)
                                             .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
-                                            .OrderByDescending(x => x.CreatedDate)
+                                            .OrderBy(x => x.CreatedDate)
                                             .LoadAsync()
                                             .ContinueWith(loadTask =>
                                             {
@@ -166,6 +167,16 @@ namespace Foxoft
         }
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            SelectCurrAcc();
+        }
+
+        private void btnEdit_CurrAccCode_DoubleClick(object sender, EventArgs e)
+        {
+            SelectCurrAcc();
+        }
+
+        private void SelectCurrAcc()
         {
             using (FormCurrAccList form = new FormCurrAccList(currAccTypeCode))
             {
@@ -215,7 +226,9 @@ namespace Foxoft
             if (e.Column.FieldName == "PosDiscount")
                 objPosDiscount = e.Value;
 
-            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice) : 0;
+
+
+            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty) : 0;
             decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount) : 0;
 
@@ -242,6 +255,11 @@ namespace Foxoft
             SelectProduct(sender);
         }
 
+        private void repoBtnEdit_SalesPersonCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            SelectSalesPerson(sender);
+        }
+
         void editor_DoubleClick(object sender, EventArgs e)
         {
             BaseEdit editor = (BaseEdit)sender;
@@ -255,9 +273,29 @@ namespace Foxoft
                 {
                     SelectProduct(sender);
                 }
+                else if (info.Column == col_SalesPersonCode)
+                {
+                    SelectSalesPerson(sender);
+                }
                 //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
                 //MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
             }
+        }
+
+        private void SelectSalesPerson(object sender)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
+            //if (buttonIndex == 0)
+            //{
+            using (FormCurrAccList form = new FormCurrAccList(3))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    editor.EditValue = form.dcCurrAcc.CurrAccCode;
+                }
+            }
+            //}
         }
 
         private void SelectProduct(object sender)
@@ -292,7 +330,7 @@ namespace Foxoft
             object objQty = gV_InvoiceLine.GetFocusedRowCellValue(CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
             object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue("PosDiscount");
 
-            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice) : 0;
+            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty) : 0;
             decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount) : 0;
 
@@ -300,21 +338,6 @@ namespace Foxoft
             gV_InvoiceLine.SetFocusedRowCellValue("NetAmount", Qty * Price - PosDiscount);
         }
 
-        private void repoBtnEdit_SalesPersonCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            ButtonEdit editor = (ButtonEdit)sender;
-            int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            if (buttonIndex == 0)
-            {
-                using (FormCurrAccList form = new FormCurrAccList(3))
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                    {
-                        editor.EditValue = form.dcCurrAcc.CurrAccCode;
-                    }
-                }
-            }
-        }
 
         private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
         {
@@ -381,7 +404,9 @@ namespace Foxoft
 
                     dbContext.SaveChanges();
 
-                    using (FormPayment formPayment = new FormPayment(1, summaryNetAmount, trInvoiceHeader))
+                    decimal paidAmount = Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2);
+
+                    using (FormPayment formPayment = new FormPayment(1, paidAmount, trInvoiceHeader))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {
@@ -509,5 +534,6 @@ namespace Foxoft
             //    MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
             //}
         }
+
     }
 }
