@@ -125,7 +125,9 @@ namespace Foxoft
                     trInvoiceHeader = form.trInvoiceHeader;
 
                     dbContext = new subContext();
-                    dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc).Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
+                    dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                              .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
+                                              .Load();
                     LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
                     if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
@@ -204,9 +206,14 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
-            object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "Price");
-            object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
-            object objPosDiscount = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "PosDiscount");
+            CalcNetAmount(e);
+        }
+
+        private void CalcNetAmount(CellValueChangedEventArgs e)
+        {
+            object objPrice = gV_InvoiceLine.GetFocusedRowCellValue("Price");
+            object objQty = gV_InvoiceLine.GetFocusedRowCellValue(CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
+            object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue("PosDiscount");
 
             if (e.Column.FieldName == "Price")
                 objPrice = e.Value;
@@ -215,12 +222,14 @@ namespace Foxoft
             if (e.Column.FieldName == "PosDiscount")
                 objPosDiscount = e.Value;
 
+            //decimal decimalVal = decimal.Parse(objPrice);
+
             decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice) : 0;
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty) : 0;
             decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount) : 0;
 
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "Amount", Qty * Price);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "NetAmount", Qty * Price - PosDiscount);
+            gV_InvoiceLine.SetFocusedRowCellValue("Amount", Qty * Price);
+            gV_InvoiceLine.SetFocusedRowCellValue("NetAmount", Qty * Price - PosDiscount);
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -237,50 +246,62 @@ namespace Foxoft
             #endregion
         }
 
+        BaseEdit editor;
+        private void gridView_ShownEditor(object sender, EventArgs e)
+        {
+            GridView view = sender as GridView;
+            editor = view.ActiveEditor;
+            editor.DoubleClick += editor_DoubleClick;
+        }
+
+        void gridView_HiddenEditor(object sender, EventArgs e)
+        {
+            editor.DoubleClick -= editor_DoubleClick;
+            editor = null;
+        }
+        void editor_DoubleClick(object sender, EventArgs e)
+        {
+            SelectProduct(sender);
+        }
+
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             SelectProduct(sender);
         }
 
-        void editor_DoubleClick(object sender, EventArgs e)
+        private void SelectProduct(object sender)
         {
+            //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+            //info.RowHandle
+
             BaseEdit editor = (BaseEdit)sender;
+
             GridControl grid = editor.Parent as GridControl;
             GridView view = grid.FocusedView as GridView;
             Point pt = grid.PointToClient(Control.MousePosition);
             GridHitInfo info = view.CalcHitInfo(pt);
+
+            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
+            //if (buttonIndex == 0)
+            //{
+
             if (info.InRow || info.InRowCell)
             {
                 if (info.Column == col_ProductCode)
                 {
-                    SelectProduct(sender);
-                }
-                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-                //MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
-            }
-        }
+                    using (FormProductList form = new FormProductList(productTypeCode, editor.Text))
+                    {
+                        if (form.ShowDialog(this) == DialogResult.OK)
+                        {
+                            editor.EditValue = form.dcProduct.ProductCode;
+                            gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
 
-        private void SelectProduct(object sender)
-        {
-            string productCode = "";
-            if (gV_InvoiceLine.GetFocusedRowCellValue("ProductCode") != null)
-                productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
+                            double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
+                            gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
 
-            ButtonEdit editor = (ButtonEdit)sender;
-            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            //if (buttonIndex == 0)
-            //{
-            using (FormProductList form = new FormProductList(productTypeCode, productCode))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    editor.EditValue = form.dcProduct.ProductCode;
-                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
-
-                    double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
-                    gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
-
-                    CalcInvoiceLineNetAmount();
+                            CalcNetAmount();
+                        }
+                    }
                 }
             }
             //}
@@ -289,7 +310,7 @@ namespace Foxoft
         private void CalcInvoiceLineNetAmount()
         {
             object objPrice = gV_InvoiceLine.GetFocusedRowCellValue("Price");
-            object objQty = gV_InvoiceLine.GetFocusedRowCellValue(CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
+            object objQty = gV_InvoiceLine.GetFocusedRowCellValue(CustomExtensions.ProcessDir(this.processCode) == "In" ? "QtyIn" : "QtyOut");
             object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue("PosDiscount");
 
             decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice) : 0;
@@ -396,11 +417,18 @@ namespace Foxoft
                     if (Settings.Default.AppSetting.GetPrint == true)
                     {
                         ReportClass reportClass = new ReportClass();
+
                         string designPath = Settings.Default.AppSetting.PrintDesignPath;
+
                         if (!File.Exists(designPath))
                             designPath = reportClass.SelectDesign();
-                        ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-                        printTool.PrintDialog();
+
+                        if (File.Exists(designPath))
+                        {
+                            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                            printTool.PrintDialog();
+                        }
+
                     }
                 }
                 else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
@@ -429,8 +457,11 @@ namespace Foxoft
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
-            ReportDesignTool printTool = new ReportDesignTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-            printTool.ShowRibbonDesigner();
+            if (File.Exists(designPath))
+            {
+                ReportDesignTool printTool = new ReportDesignTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                printTool.ShowRibbonDesigner();
+            }
         }
 
         private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
@@ -461,6 +492,7 @@ namespace Foxoft
             //{
             //    MessageBox.Show(item.ToString());
             //}
+
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
             string designPath = Directory.GetCurrentDirectory() + "Foxoft.AppCode.GUNSONU.repx";
@@ -468,8 +500,11 @@ namespace Foxoft
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
-            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-            printTool.ShowRibbonPreview();
+            if (File.Exists(designPath))
+            {
+                ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                printTool.ShowRibbonPreview();
+            }
         }
 
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
@@ -484,19 +519,7 @@ namespace Foxoft
             //e.NewObject = line;
         }
 
-        BaseEdit editor;
-        private void gridView_ShownEditor(object sender, EventArgs e)
-        {
-            GridView view = sender as GridView;
-            editor = view.ActiveEditor;
-            editor.DoubleClick += editor_DoubleClick;
-        }
 
-        void gridView_HiddenEditor(object sender, EventArgs e)
-        {
-            editor.DoubleClick -= editor_DoubleClick;
-            editor = null;
-        }
 
         private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
         {

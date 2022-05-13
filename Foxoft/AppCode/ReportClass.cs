@@ -40,10 +40,7 @@ namespace Foxoft
         {
             XtraReport report = new XtraReport();
 
-            if (File.Exists(reportFilePath))
-                report.LoadLayoutFromXml(reportFilePath);
-            else
-                XtraMessageBox.Show("Dizayn faylı tapılmadı.");
+            report.LoadLayoutFromXml(reportFilePath);
 
             //string styleSheetFilePath = @"C:\Temp\ReportStyleSheet1.repss";
             //if (File.Exists(styleSheetFilePath))
