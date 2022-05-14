@@ -226,8 +226,6 @@ namespace Foxoft
             if (e.Column.FieldName == "PosDiscount")
                 objPosDiscount = e.Value;
 
-
-
             decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty) : 0;
             decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount) : 0;
