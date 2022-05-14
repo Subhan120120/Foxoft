@@ -300,7 +300,6 @@ namespace Foxoft
             this.repoCalcEdit_Price.MaskSettings.Set("culture", null);
             this.repoCalcEdit_Price.MaskSettings.Set("autoHideDecimalSeparator", null);
             this.repoCalcEdit_Price.Name = "repoCalcEdit_Price";
-            this.repoCalcEdit_Price.UseMaskAsDisplayFormat = false;
             // 
             // col_Amount
             // 
