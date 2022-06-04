@@ -140,9 +140,9 @@ namespace Foxoft
             {
                 return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                             .ThenInclude(x => x.DcCurrAcc)
-                                        .Include(x=>x.DcProduct)
+                                        .Include(x => x.DcProduct)
                                         .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                        .OrderBy(x=>x.CreatedDate)
+                                        .OrderBy(x => x.CreatedDate)
                                         .ToList();
             }
         }
@@ -377,7 +377,7 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                            //.ThenInclude(x => x.TrInvoiceHeader)
+                                        //.ThenInclude(x => x.TrInvoiceHeader)
                                         .Include(x => x.DcPaymentType)
                                         .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
                                         .ToList();
@@ -513,6 +513,26 @@ namespace Foxoft
                                     .ThenInclude(x => x.DcCurrAcc)
                                  .Where(o => o.TrCurrAccRoles.Any(x => x.CurrAccCode == CurrAccCode))
                                  .ToList();
+            }
+        }
+
+        public string SelectOfficeCode(string CurrAccCode)
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
+                                    .FirstOrDefault()
+                                    .ToString();
+            }
+        }
+
+        public string SelectStoreCode(string CurrAccCode)
+        {
+            using (subContext db = new subContext())
+            {
+                DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
+                                                 .FirstOrDefault();
+                return currAcc.OfficeCode;
             }
         }
 

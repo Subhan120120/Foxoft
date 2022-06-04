@@ -202,6 +202,10 @@ namespace Foxoft.Migrations
                     b.Property<Guid>("RowGuid")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("StoreCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("TaxNum")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)

@@ -78,6 +78,8 @@ namespace Foxoft
 
             Authorization.CurrAccCode = txtEdit_UserName.Text;
             Authorization.DcRoles = efMethods.SelectRoles(txtEdit_UserName.Text);
+            Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
+            Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
         }
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)

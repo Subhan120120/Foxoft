@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
@@ -469,6 +470,7 @@ namespace Foxoft
             Settings.Default.OfficeCode = lUE_OfficeCode.EditValue.ToString();
             Settings.Default.StoreCode = lUE_StoreCode.EditValue.ToString();
             Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
+
             Settings.Default.Save();
         }
 
@@ -521,11 +523,9 @@ namespace Foxoft
 
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
-            if (!File.Exists(designPath))
-            {
-                ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-                printTool.ShowRibbonPreview();
-            }
+
+            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+            printTool.ShowRibbonPreview();
         }
 
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
@@ -533,7 +533,7 @@ namespace Foxoft
 
         }
 
-        private void trInvoiceLinesBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
+        private void trInvoiceLinesBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
             //line.DcProduct = new DcProduct();
             //line.DcProduct.ProductDescription = "Fazil";

@@ -56,5 +56,14 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             gridView1.RestoreLayoutFromStream(stream);
         }
+
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormReportGridConfig formReportGridConfig = new FormReportGridConfig(gridView1) ;
+            formReportGridConfig.Show();
+
+            //gridView1.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.VisibleAlways;
+
+        }
     }
 }

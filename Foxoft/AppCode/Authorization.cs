@@ -12,6 +12,9 @@ namespace Foxoft
 
         public static List<DcRole> DcRoles { get; set; }
 
+        public static string OfficeCode { get; set; }
+        public static string StoreCode { get; set; }
+
         public static bool Authorized(string role)
         {
             bool authorized = false;
