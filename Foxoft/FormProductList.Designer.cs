@@ -54,6 +54,7 @@ namespace Foxoft
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.Autoc = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_ProductList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -71,6 +72,7 @@ namespace Foxoft
             this.gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_ProductList});
             this.gC_ProductList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_ProductList_ProcessGridKey);
+            this.gC_ProductList.Paint += new System.Windows.Forms.PaintEventHandler(this.gridControl1_Paint);
             // 
             // gV_ProductList
             // 
@@ -180,9 +182,10 @@ namespace Foxoft
             this.ribbonControl1.SearchEditItem,
             this.BBI_ProductNew,
             this.btn_ProductEdit,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.Autoc});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 4;
+            this.ribbonControl1.MaxItemId = 5;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -207,7 +210,7 @@ namespace Foxoft
             // 
             // barButtonItem1
             // 
-            this.barButtonItem1.Caption = "barButtonItem1";
+            this.barButtonItem1.Caption = "Select Last Product";
             this.barButtonItem1.Id = 3;
             this.barButtonItem1.Name = "barButtonItem1";
             this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
@@ -230,6 +233,7 @@ namespace Foxoft
             // ribbonPageGroup2
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem1);
+            this.ribbonPageGroup2.ItemLinks.Add(this.Autoc);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "ribbonPageGroup2";
             // 
@@ -244,6 +248,13 @@ namespace Foxoft
             // 
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
+            // 
+            // Autoc
+            // 
+            this.Autoc.Caption = "Focus Find panel";
+            this.Autoc.Id = 4;
+            this.Autoc.Name = "Autoc";
+            this.Autoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.Autoc_ItemClick);
             // 
             // FormProductList
             // 
@@ -291,5 +302,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_ProductNew;
         private DevExpress.XtraBars.BarButtonItem btn_ProductEdit;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem Autoc;
     }
 }

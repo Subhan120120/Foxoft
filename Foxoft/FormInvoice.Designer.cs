@@ -284,7 +284,6 @@ namespace Foxoft
             // col_Price
             // 
             this.col_Price.Caption = "Qiymət";
-            this.col_Price.ColumnEdit = this.repoCalcEdit_Price;
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;

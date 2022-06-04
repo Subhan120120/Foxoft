@@ -61,5 +61,5 @@
   <property name="FormatConditions" iskey="true" value="0" />
   <property name="GroupSummarySortInfoState" />
   <property name="FindFilterText" />
-  <property name="FindPanelVisible">false</property>
+  <property name="FindPanelVisible">true</property>
 </XtraSerializer>

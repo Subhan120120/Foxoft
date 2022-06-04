@@ -2,6 +2,7 @@
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
@@ -28,6 +29,9 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             gV_ProductList.RestoreLayoutFromStream(stream, option);
+
+
+
         }
 
         public FormProductList(byte productTypeCode)
@@ -47,7 +51,6 @@ namespace Foxoft
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
-
         }
 
         private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -129,6 +132,23 @@ namespace Foxoft
             {
                 DialogResult = DialogResult.OK;
             }
+        }
+
+        private void Autoc_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gV_ProductList.ShowFindPanel();
+        }
+
+        bool isFirstPaint = true;
+        private void gridControl1_Paint(object sender, PaintEventArgs e)
+        {
+            if (isFirstPaint)
+            {
+                if (!gV_ProductList.FindPanelVisible)
+                    gV_ProductList.ShowFindPanel();
+                gV_ProductList.ShowFindPanel();
+            }
+            isFirstPaint = false;
         }
     }
 }
