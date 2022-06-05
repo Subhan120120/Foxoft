@@ -78,7 +78,7 @@ namespace Foxoft
 
             Authorization.CurrAccCode = txtEdit_UserName.Text;
             Authorization.DcRoles = efMethods.SelectRoles(txtEdit_UserName.Text);
-            Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
+            Authorization.StoreCode = efMethods.SelectStoreCode(txtEdit_UserName.Text);
             Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
         }
 

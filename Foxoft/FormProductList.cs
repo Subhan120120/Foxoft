@@ -2,7 +2,6 @@
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
@@ -29,9 +28,6 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             gV_ProductList.RestoreLayoutFromStream(stream, option);
-
-
-
         }
 
         public FormProductList(byte productTypeCode)
@@ -60,6 +56,7 @@ namespace Foxoft
             if (view.FocusedRowHandle >= 0)
                 dcProduct = view.GetRow(view.FocusedRowHandle) as DcProduct;
         }
+        
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {
             #region Comment
@@ -95,7 +92,6 @@ namespace Foxoft
                 else
                     gC_ProductList.DataSource = efMethods.SelectProducts();
             }
-
         }
 
         private void btn_productEdit_ItemClick(object sender, ItemClickEventArgs e)
@@ -136,9 +132,10 @@ namespace Foxoft
 
         private void Autoc_ItemClick(object sender, ItemClickEventArgs e)
         {
-            gV_ProductList.ShowFindPanel();
         }
 
+
+        // AutoFocus FindPanel
         bool isFirstPaint = true;
         private void gridControl1_Paint(object sender, PaintEventArgs e)
         {

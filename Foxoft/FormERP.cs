@@ -136,6 +136,7 @@ namespace Foxoft
                 form = new FormCurrAccList(0);
                 form.MdiParent = this;
                 form.Show();
+                form.WindowState = FormWindowState.Maximized;
                 ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
             }
         }

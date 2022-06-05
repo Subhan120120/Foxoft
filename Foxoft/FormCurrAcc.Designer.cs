@@ -37,7 +37,6 @@ namespace Foxoft
             this.CurrAccCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.dcCurrAccsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DataLanguageCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.CurrAccTypeCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.FirstNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.LastNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.FatherNameTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -76,12 +75,12 @@ namespace Foxoft
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.CurrAccTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CurrAccCodeTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dcCurrAccsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataLanguageCodeTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CurrAccTypeCodeTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FirstNameTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LastNameTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FatherNameTextEdit.Properties)).BeginInit();
@@ -121,6 +120,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CurrAccTypeCodeLookUpEdit.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // dataLayoutControl1
@@ -129,7 +129,6 @@ namespace Foxoft
             this.dataLayoutControl1.Controls.Add(this.btn_Ok);
             this.dataLayoutControl1.Controls.Add(this.CurrAccCodeTextEdit);
             this.dataLayoutControl1.Controls.Add(this.DataLanguageCodeTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.CurrAccTypeCodeTextEdit);
             this.dataLayoutControl1.Controls.Add(this.FirstNameTextEdit);
             this.dataLayoutControl1.Controls.Add(this.LastNameTextEdit);
             this.dataLayoutControl1.Controls.Add(this.FatherNameTextEdit);
@@ -144,6 +143,7 @@ namespace Foxoft
             this.dataLayoutControl1.Controls.Add(this.AddressTextEdit);
             this.dataLayoutControl1.Controls.Add(this.PhoneNumTextEdit);
             this.dataLayoutControl1.Controls.Add(this.BirthDateDateEdit);
+            this.dataLayoutControl1.Controls.Add(this.CurrAccTypeCodeLookUpEdit);
             this.dataLayoutControl1.DataSource = this.dcCurrAccsBindingSource;
             this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
@@ -160,9 +160,9 @@ namespace Foxoft
             // 
             this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             this.btn_Cancel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Cancel.ImageOptions.SvgImage")));
-            this.btn_Cancel.Location = new System.Drawing.Point(597, 318);
+            this.btn_Cancel.Location = new System.Drawing.Point(259, 318);
             this.btn_Cancel.Name = "btn_Cancel";
-            this.btn_Cancel.Size = new System.Drawing.Size(74, 65);
+            this.btn_Cancel.Size = new System.Drawing.Size(243, 65);
             this.btn_Cancel.StyleController = this.dataLayoutControl1;
             this.btn_Cancel.TabIndex = 5;
             this.btn_Cancel.Text = "simpleButton2";
@@ -171,9 +171,9 @@ namespace Foxoft
             // 
             this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             this.btn_Ok.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Ok.ImageOptions.SvgImage")));
-            this.btn_Ok.Location = new System.Drawing.Point(675, 318);
+            this.btn_Ok.Location = new System.Drawing.Point(506, 318);
             this.btn_Ok.Name = "btn_Ok";
-            this.btn_Ok.Size = new System.Drawing.Size(74, 65);
+            this.btn_Ok.Size = new System.Drawing.Size(243, 65);
             this.btn_Ok.StyleController = this.dataLayoutControl1;
             this.btn_Ok.TabIndex = 4;
             this.btn_Ok.Text = "simpleButton1";
@@ -202,20 +202,6 @@ namespace Foxoft
             this.DataLanguageCodeTextEdit.Size = new System.Drawing.Size(242, 20);
             this.DataLanguageCodeTextEdit.StyleController = this.dataLayoutControl1;
             this.DataLanguageCodeTextEdit.TabIndex = 7;
-            // 
-            // CurrAccTypeCodeTextEdit
-            // 
-            this.CurrAccTypeCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcCurrAccsBindingSource, "CurrAccTypeCode", true));
-            this.CurrAccTypeCodeTextEdit.Location = new System.Drawing.Point(125, 36);
-            this.CurrAccTypeCodeTextEdit.Name = "CurrAccTypeCodeTextEdit";
-            this.CurrAccTypeCodeTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.CurrAccTypeCodeTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.CurrAccTypeCodeTextEdit.Properties.Mask.EditMask = "N0";
-            this.CurrAccTypeCodeTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.CurrAccTypeCodeTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.CurrAccTypeCodeTextEdit.Size = new System.Drawing.Size(253, 20);
-            this.CurrAccTypeCodeTextEdit.StyleController = this.dataLayoutControl1;
-            this.CurrAccTypeCodeTextEdit.TabIndex = 9;
             // 
             // FirstNameTextEdit
             // 
@@ -586,7 +572,7 @@ namespace Foxoft
             // 
             // ItemForCurrAccTypeCode
             // 
-            this.ItemForCurrAccTypeCode.Control = this.CurrAccTypeCodeTextEdit;
+            this.ItemForCurrAccTypeCode.Control = this.CurrAccTypeCodeLookUpEdit;
             this.ItemForCurrAccTypeCode.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.ItemForCurrAccTypeCode.CustomizationFormText = "Cari Hesab Tipi Kodu";
             this.ItemForCurrAccTypeCode.Location = new System.Drawing.Point(0, 24);
@@ -620,10 +606,10 @@ namespace Foxoft
             this.layoutControlItem1.Control = this.btn_Ok;
             this.layoutControlItem1.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.layoutControlItem1.CustomizationFormText = "layoutControlItem1";
-            this.layoutControlItem1.Location = new System.Drawing.Point(663, 306);
+            this.layoutControlItem1.Location = new System.Drawing.Point(494, 306);
             this.layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(78, 69);
+            this.layoutControlItem1.Size = new System.Drawing.Size(247, 69);
             this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
@@ -633,10 +619,10 @@ namespace Foxoft
             this.layoutControlItem2.Control = this.btn_Cancel;
             this.layoutControlItem2.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.layoutControlItem2.CustomizationFormText = "layoutControlItem2";
-            this.layoutControlItem2.Location = new System.Drawing.Point(585, 306);
+            this.layoutControlItem2.Location = new System.Drawing.Point(247, 306);
             this.layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(78, 69);
+            this.layoutControlItem2.Size = new System.Drawing.Size(247, 69);
             this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
@@ -647,8 +633,22 @@ namespace Foxoft
             this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
             this.emptySpaceItem1.Location = new System.Drawing.Point(0, 306);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(585, 69);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(247, 69);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // CurrAccTypeCodeLookUpEdit
+            // 
+            this.CurrAccTypeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcCurrAccsBindingSource, "CurrAccTypeCode", true));
+            this.CurrAccTypeCodeLookUpEdit.Location = new System.Drawing.Point(125, 36);
+            this.CurrAccTypeCodeLookUpEdit.Name = "CurrAccTypeCodeLookUpEdit";
+            this.CurrAccTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
+            this.CurrAccTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.CurrAccTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.CurrAccTypeCodeLookUpEdit.Properties.NullText = "";
+            this.CurrAccTypeCodeLookUpEdit.Size = new System.Drawing.Size(253, 20);
+            this.CurrAccTypeCodeLookUpEdit.StyleController = this.dataLayoutControl1;
+            this.CurrAccTypeCodeLookUpEdit.TabIndex = 30;
             // 
             // FormCurrAcc
             // 
@@ -664,7 +664,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.CurrAccCodeTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dcCurrAccsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataLanguageCodeTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CurrAccTypeCodeTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FirstNameTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LastNameTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FatherNameTextEdit.Properties)).EndInit();
@@ -704,6 +703,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CurrAccTypeCodeLookUpEdit.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -717,7 +717,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
         private DevExpress.XtraEditors.TextEdit CurrAccCodeTextEdit;
         private DevExpress.XtraEditors.TextEdit DataLanguageCodeTextEdit;
-        private DevExpress.XtraEditors.TextEdit CurrAccTypeCodeTextEdit;
         private DevExpress.XtraEditors.TextEdit FirstNameTextEdit;
         private DevExpress.XtraEditors.TextEdit LastNameTextEdit;
         private DevExpress.XtraEditors.TextEdit FatherNameTextEdit;
@@ -755,5 +754,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+        private DevExpress.XtraEditors.LookUpEdit CurrAccTypeCodeLookUpEdit;
     }
 }

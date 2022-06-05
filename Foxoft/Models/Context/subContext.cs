@@ -123,14 +123,14 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcCurrAccType>(entity =>
             {
-                entity.Property(e => e.CurrAccTypeDescription)
+                entity.Property(e => e.CurrAccTypeDesc)
                     .HasDefaultValueSql("space(0)");
             });
 
             modelBuilder.Entity<DcCurrAccType>().HasData(
-                new DcCurrAccType { CurrAccTypeCode = 1, CurrAccTypeDescription = "Müştəri" },
-                new DcCurrAccType { CurrAccTypeCode = 2, CurrAccTypeDescription = "Tədarikçi" },
-                new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDescription = "Personal" }
+                new DcCurrAccType { CurrAccTypeCode = 1, CurrAccTypeDesc = "Müştəri" },
+                new DcCurrAccType { CurrAccTypeCode = 2, CurrAccTypeDesc = "Tədarikçi" },
+                new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" }
                 );
 
             modelBuilder.Entity<DcRole>(entity =>

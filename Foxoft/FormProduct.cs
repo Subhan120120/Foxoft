@@ -35,7 +35,7 @@ namespace Foxoft
             this.dcProduct.ProductCode = productCode;
         }
 
-        private void FormProduct_Load(object sender, System.EventArgs e)
+        private void FormProduct_Load(object sender, EventArgs e)
         {
             FillDataLayout();
             dataLayoutControl1.isValid(out List<string> errorList);

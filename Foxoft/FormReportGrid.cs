@@ -1,10 +1,12 @@
-﻿using DevExpress.Utils.VisualEffects;
+﻿using DevExpress.Utils;
+using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using Foxoft.Models;
 using System;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -57,13 +59,20 @@ namespace Foxoft
             gridView1.RestoreLayoutFromStream(stream);
         }
 
-        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormReportGridConfig formReportGridConfig = new FormReportGridConfig(gridView1) ;
-            formReportGridConfig.Show();
+            Stream str = new MemoryStream();
+            OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+            gridView1.SaveLayoutToStream(str, option);
 
-            //gridView1.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.VisibleAlways;
-
+            using (FormReportGridOptions formReportGridOptions = new FormReportGridOptions(str))
+            {
+                if (formReportGridOptions.ShowDialog(this) == DialogResult.OK)
+                {
+                    formReportGridOptions.stream.Seek(0, SeekOrigin.Begin);
+                    gridView1.RestoreLayoutFromStream(formReportGridOptions.stream, option);
+                }
+            }
         }
     }
 }

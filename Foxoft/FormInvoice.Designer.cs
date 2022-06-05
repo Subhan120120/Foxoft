@@ -48,7 +48,6 @@ namespace Foxoft
             this.colQtyIn = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colQtyOut = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_Price = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoCalcEdit_Price = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.col_Amount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_PosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_NetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -57,6 +56,7 @@ namespace Foxoft
             this.repoBtnEdit_SalesPersonCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoCalcEdit_Price = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -101,8 +101,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).BeginInit();
@@ -219,7 +219,7 @@ namespace Foxoft
             this.col_SalesPersonCode,
             this.colCreatedDate,
             this.col_ProductDesc});
-            this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1141, 456, 264, 272);
+            this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1102, 456, 264, 272);
             this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
             this.gV_InvoiceLine.Name = "gV_InvoiceLine";
             this.gV_InvoiceLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
@@ -284,21 +284,11 @@ namespace Foxoft
             // col_Price
             // 
             this.col_Price.Caption = "Qiymət";
+            this.col_Price.ColumnEdit = this.repoCalcEdit_Price;
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;
             this.col_Price.VisibleIndex = 4;
-            // 
-            // repoCalcEdit_Price
-            // 
-            this.repoCalcEdit_Price.AutoHeight = false;
-            this.repoCalcEdit_Price.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoCalcEdit_Price.MaskSettings.Set("mask", "");
-            this.repoCalcEdit_Price.MaskSettings.Set("valueType", typeof(decimal));
-            this.repoCalcEdit_Price.MaskSettings.Set("culture", null);
-            this.repoCalcEdit_Price.MaskSettings.Set("autoHideDecimalSeparator", null);
-            this.repoCalcEdit_Price.Name = "repoCalcEdit_Price";
             // 
             // col_Amount
             // 
@@ -363,6 +353,17 @@ namespace Foxoft
             this.col_ProductDesc.OptionsColumn.AllowEdit = false;
             this.col_ProductDesc.Visible = true;
             this.col_ProductDesc.VisibleIndex = 1;
+            // 
+            // repoCalcEdit_Price
+            // 
+            this.repoCalcEdit_Price.AutoHeight = false;
+            this.repoCalcEdit_Price.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoCalcEdit_Price.MaskSettings.Set("mask", "");
+            this.repoCalcEdit_Price.MaskSettings.Set("valueType", typeof(decimal));
+            this.repoCalcEdit_Price.MaskSettings.Set("culture", null);
+            this.repoCalcEdit_Price.MaskSettings.Set("autoHideDecimalSeparator", null);
+            this.repoCalcEdit_Price.Name = "repoCalcEdit_Price";
             // 
             // CheckEdit_IsReturn
             // 
@@ -780,8 +781,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).EndInit();

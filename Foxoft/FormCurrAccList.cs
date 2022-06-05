@@ -69,7 +69,7 @@ namespace Foxoft
         private void bBI_CurrAccNew_ItemClick(object sender, ItemClickEventArgs e)
         {
             dcCurrAcc = new DcCurrAcc();
-            FormCurrAcc form = new FormCurrAcc();
+            FormCurrAcc form = new FormCurrAcc(currAccTypeCode);
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 UpdateGridViewData();

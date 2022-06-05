@@ -86,6 +86,14 @@ namespace Foxoft
             }
         }
 
+        public List<DcCurrAccType> SelectCurrAccTypes()
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcCurrAccTypes.ToList();
+            }
+        }
+
         public List<DcProduct> SelectProductsByProductType(byte productTypeCode)
         {
             using (subContext db = new subContext())
@@ -520,9 +528,10 @@ namespace Foxoft
         {
             using (subContext db = new subContext())
             {
-                return db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
-                                    .FirstOrDefault()
-                                    .ToString();
+                DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
+                                                 .FirstOrDefault();
+
+                return currAcc.OfficeCode;
             }
         }
 
@@ -532,7 +541,7 @@ namespace Foxoft
             {
                 DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
                                                  .FirstOrDefault();
-                return currAcc.OfficeCode;
+                return currAcc.StoreCode;
             }
         }
 

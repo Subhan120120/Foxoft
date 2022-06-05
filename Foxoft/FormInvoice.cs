@@ -50,9 +50,9 @@ namespace Foxoft
             this.currAccTypeCode = currAccTypeCode;
 
             if (CustomExtensions.ProcessDir(processCode) == "In")
-                gV_InvoiceLine.Columns["QtyOut"].Visible = false;
+                colQtyOut.Visible = false;
             else
-                gV_InvoiceLine.Columns["QtyIn"].Visible = false;
+                colQtyIn.Visible = false;
 
             lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
@@ -76,13 +76,6 @@ namespace Foxoft
         private void FormInvoice_Load(object sender, EventArgs e)
         {
             dataLayoutControl1.isValid(out List<string> errorList);
-        }
-
-        private void LoadSession()
-        {
-            trInvoiceHeader.OfficeCode = Settings.Default.OfficeCode;
-            trInvoiceHeader.StoreCode = Settings.Default.StoreCode;
-            trInvoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
         }
 
         private void ClearControlsAddNew()
@@ -199,8 +192,7 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
 
-            GridView view = sender as GridView;
-
+            //GridView view = sender as GridView;
             //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
         }
 
@@ -237,8 +229,8 @@ namespace Foxoft
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
             decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount, CultureInfo.InvariantCulture) : 0;
 
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "Amount", Qty * Price);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "NetAmount", Qty * Price - PosDiscount);
+            gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, "Amount", Qty * Price);
+            gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, "NetAmount", Qty * Price - PosDiscount);
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -348,9 +340,9 @@ namespace Foxoft
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
 
                     double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
-                    gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
+                    gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
 
-                    CalcRowNetAmount(new CellValueChangedEventArgs(0, col_Amount, null));
+                    CalcRowNetAmount(new CellValueChangedEventArgs(0, col_Price, null));
                 }
             }
             //}
@@ -465,12 +457,16 @@ namespace Foxoft
             }
         }
 
+        private void LoadSession()
+        {
+            trInvoiceHeader.OfficeCode = Authorization.OfficeCode;
+            trInvoiceHeader.StoreCode = Authorization.StoreCode;
+            trInvoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
+        }
+
         private void SaveSession()
         {
-            Settings.Default.OfficeCode = lUE_OfficeCode.EditValue.ToString();
-            Settings.Default.StoreCode = lUE_StoreCode.EditValue.ToString();
             Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
-
             Settings.Default.Save();
         }
 
@@ -523,9 +519,11 @@ namespace Foxoft
 
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
-
-            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-            printTool.ShowRibbonPreview();
+            if (!File.Exists(designPath))
+            {
+                ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                printTool.ShowRibbonPreview();
+            }
         }
 
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)

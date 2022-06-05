@@ -20,6 +20,11 @@ namespace Foxoft
         public FormCurrAcc()
         {
             InitializeComponent();
+
+            CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectCurrAccTypes();
+            CurrAccTypeCodeLookUpEdit.Properties.ValueMember = "CurrAccTypeCode";
+            CurrAccTypeCodeLookUpEdit.Properties.DisplayMember = "CurrAccTypeDesc";
+
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
         }
@@ -28,6 +33,12 @@ namespace Foxoft
             : this()
         {
             dcCurrAcc.CurrAccCode = currAccCode;
+        }
+
+        public FormCurrAcc(byte currAccTypeCode)
+            : this()
+        {
+            dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
         }
 
         private void FormCurrAcc_Load(object sender, EventArgs e)
@@ -47,7 +58,7 @@ namespace Foxoft
                 //dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
                 //                    .LoadAsync()
                 //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-                
+
                 dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
                     .Load();
                 dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
@@ -56,7 +67,9 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
+            byte temp = dcCurrAcc.CurrAccTypeCode;
             dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
+            dcCurrAcc.CurrAccTypeCode = temp;
 
             string NewDocNum = efMethods.GetNextDocNum("CA", "CurrAccCode", "DcCurrAccs");
             dcCurrAcc.CurrAccCode = NewDocNum;

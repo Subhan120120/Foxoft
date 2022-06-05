@@ -35,6 +35,10 @@ namespace Foxoft.Models
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string OfficeCode { get; set; }
 
+        [DisplayName("Mağaza")]
+        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string StoreCode { get; set; }
+
         [DisplayName("Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -52,7 +56,6 @@ namespace Foxoft.Models
         //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         //public string Password { get; set; }
 
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [DataType(DataType.Password), Display(Name = "Yeni Şifrə")]
         public string NewPassword { get; set; }
 
