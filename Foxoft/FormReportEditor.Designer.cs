@@ -29,160 +29,222 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportEditor));
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.dcReportsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.textEdit1 = new DevExpress.XtraEditors.MemoEdit();
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.IdTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.ItemForId = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ReportNameTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.ItemForReportName = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForReportQuery = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ReportQueryMemoEdit = new DevExpress.XtraEditors.MemoEdit();
+            this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
-            this.layoutControl1.SuspendLayout();
+            this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            ((System.ComponentModel.ISupportInitialize)(this.dcReportsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
+            this.dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IdTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForId)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReportNameTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForReportName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForReportQuery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReportQueryMemoEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             this.SuspendLayout();
             // 
-            // simpleButton1
+            // dcReportsBindingSource
             // 
-            this.simpleButton1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton1.ImageOptions.SvgImage")));
-            this.simpleButton1.Location = new System.Drawing.Point(12, 495);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(940, 36);
-            this.simpleButton1.StyleController = this.layoutControl1;
-            this.simpleButton1.TabIndex = 1;
-            this.simpleButton1.Text = "Ok";
-            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            this.dcReportsBindingSource.DataSource = typeof(Foxoft.Models.DcReport);
             // 
-            // simpleButton2
+            // dataLayoutControl1
             // 
-            this.simpleButton2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton2.ImageOptions.SvgImage")));
-            this.simpleButton2.Location = new System.Drawing.Point(956, 495);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(72, 36);
-            this.simpleButton2.StyleController = this.layoutControl1;
-            this.simpleButton2.TabIndex = 1;
-            this.simpleButton2.Text = "İmtina";
-            this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
-            // 
-            // layoutControl1
-            // 
-            this.layoutControl1.Controls.Add(this.textEdit2);
-            this.layoutControl1.Controls.Add(this.simpleButton2);
-            this.layoutControl1.Controls.Add(this.simpleButton1);
-            this.layoutControl1.Controls.Add(this.textEdit1);
-            this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControl1.Name = "layoutControl1";
-            this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1040, 543);
-            this.layoutControl1.TabIndex = 2;
-            this.layoutControl1.Text = "layoutControl1";
+            this.dataLayoutControl1.Controls.Add(this.btn_Cancel);
+            this.dataLayoutControl1.Controls.Add(this.btn_Ok);
+            this.dataLayoutControl1.Controls.Add(this.IdTextEdit);
+            this.dataLayoutControl1.Controls.Add(this.ReportNameTextEdit);
+            this.dataLayoutControl1.Controls.Add(this.ReportQueryMemoEdit);
+            this.dataLayoutControl1.DataSource = this.dcReportsBindingSource;
+            this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
+            this.dataLayoutControl1.Name = "dataLayoutControl1";
+            this.dataLayoutControl1.Root = this.Root;
+            this.dataLayoutControl1.Size = new System.Drawing.Size(567, 287);
+            this.dataLayoutControl1.TabIndex = 0;
+            this.dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // Root
             // 
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             this.Root.GroupBordersVisible = false;
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3,
-            this.layoutControlItem4});
+            this.layoutControlGroup1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1040, 543);
+            this.Root.Size = new System.Drawing.Size(567, 287);
             this.Root.TextVisible = false;
             // 
-            // layoutControlItem2
+            // layoutControlGroup1
             // 
-            this.layoutControlItem2.Control = this.simpleButton1;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 483);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(944, 40);
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem2.TextVisible = false;
+            this.layoutControlGroup1.AllowDrawBackground = false;
+            this.layoutControlGroup1.GroupBordersVisible = false;
+            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.ItemForId,
+            this.ItemForReportName,
+            this.ItemForReportQuery,
+            this.layoutControlItem1,
+            this.layoutControlItem2});
+            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup1.Name = "autoGeneratedGroup0";
+            this.layoutControlGroup1.Size = new System.Drawing.Size(547, 267);
             // 
-            // layoutControlItem3
+            // IdTextEdit
             // 
-            this.layoutControlItem3.Control = this.simpleButton2;
-            this.layoutControlItem3.Location = new System.Drawing.Point(944, 483);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(76, 40);
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem3.TextVisible = false;
+            this.IdTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcReportsBindingSource, "Id", true));
+            this.IdTextEdit.Location = new System.Drawing.Point(106, 12);
+            this.IdTextEdit.Name = "IdTextEdit";
+            this.IdTextEdit.Size = new System.Drawing.Size(449, 20);
+            this.IdTextEdit.StyleController = this.dataLayoutControl1;
+            this.IdTextEdit.TabIndex = 4;
             // 
-            // textEdit1
+            // ItemForId
             // 
-            this.textEdit1.Location = new System.Drawing.Point(117, 36);
-            this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(911, 455);
-            this.textEdit1.StyleController = this.layoutControl1;
-            this.textEdit1.TabIndex = 0;
+            this.ItemForId.Control = this.IdTextEdit;
+            this.ItemForId.Location = new System.Drawing.Point(0, 0);
+            this.ItemForId.Name = "ItemForId";
+            this.ItemForId.Size = new System.Drawing.Size(547, 24);
+            this.ItemForId.Text = "Report ID";
+            this.ItemForId.TextSize = new System.Drawing.Size(82, 13);
+            // 
+            // ReportNameTextEdit
+            // 
+            this.ReportNameTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcReportsBindingSource, "ReportName", true));
+            this.ReportNameTextEdit.Location = new System.Drawing.Point(106, 36);
+            this.ReportNameTextEdit.Name = "ReportNameTextEdit";
+            this.ReportNameTextEdit.Size = new System.Drawing.Size(449, 20);
+            this.ReportNameTextEdit.StyleController = this.dataLayoutControl1;
+            this.ReportNameTextEdit.TabIndex = 5;
+            // 
+            // ItemForReportName
+            // 
+            this.ItemForReportName.Control = this.ReportNameTextEdit;
+            this.ItemForReportName.Location = new System.Drawing.Point(0, 24);
+            this.ItemForReportName.Name = "ItemForReportName";
+            this.ItemForReportName.Size = new System.Drawing.Size(547, 24);
+            this.ItemForReportName.Text = "Hesabat Adı";
+            this.ItemForReportName.TextSize = new System.Drawing.Size(82, 13);
+            // 
+            // ItemForReportQuery
+            // 
+            this.ItemForReportQuery.Control = this.ReportQueryMemoEdit;
+            this.ItemForReportQuery.Location = new System.Drawing.Point(0, 48);
+            this.ItemForReportQuery.Name = "ItemForReportQuery";
+            this.ItemForReportQuery.Size = new System.Drawing.Size(547, 166);
+            this.ItemForReportQuery.Text = "Hesabat Sorğusu";
+            this.ItemForReportQuery.TextSize = new System.Drawing.Size(82, 13);
+            // 
+            // ReportQueryMemoEdit
+            // 
+            this.ReportQueryMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcReportsBindingSource, "ReportQuery", true));
+            this.ReportQueryMemoEdit.Location = new System.Drawing.Point(106, 60);
+            this.ReportQueryMemoEdit.Name = "ReportQueryMemoEdit";
+            this.ReportQueryMemoEdit.Size = new System.Drawing.Size(449, 162);
+            this.ReportQueryMemoEdit.StyleController = this.dataLayoutControl1;
+            this.ReportQueryMemoEdit.TabIndex = 7;
+            // 
+            // btn_Ok
+            // 
+            this.btn_Ok.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton1.ImageOptions.Image")));
+            this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_Ok.Location = new System.Drawing.Point(285, 226);
+            this.btn_Ok.Name = "btn_Ok";
+            this.btn_Ok.Size = new System.Drawing.Size(270, 49);
+            this.btn_Ok.StyleController = this.dataLayoutControl1;
+            this.btn_Ok.TabIndex = 8;
+            this.btn_Ok.Text = "btn_Ok";
+            this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
             // 
             // layoutControlItem1
             // 
-            this.layoutControlItem1.Control = this.textEdit1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 24);
+            this.layoutControlItem1.Control = this.btn_Ok;
+            this.layoutControlItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("layoutControlItem1.ImageOptions.Image")));
+            this.layoutControlItem1.Location = new System.Drawing.Point(273, 214);
+            this.layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1020, 459);
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(93, 13);
+            this.layoutControlItem1.Size = new System.Drawing.Size(274, 53);
+            this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem1.TextVisible = false;
             // 
-            // textEdit2
+            // btn_Cancel
             // 
-            this.textEdit2.Location = new System.Drawing.Point(117, 12);
-            this.textEdit2.Name = "textEdit2";
-            this.textEdit2.Size = new System.Drawing.Size(911, 20);
-            this.textEdit2.StyleController = this.layoutControl1;
-            this.textEdit2.TabIndex = 4;
+            this.btn_Cancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton2.ImageOptions.Image")));
+            this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_Cancel.Location = new System.Drawing.Point(12, 226);
+            this.btn_Cancel.Name = "btn_Cancel";
+            this.btn_Cancel.Size = new System.Drawing.Size(269, 49);
+            this.btn_Cancel.StyleController = this.dataLayoutControl1;
+            this.btn_Cancel.TabIndex = 9;
+            this.btn_Cancel.Text = "btn_Cancel";
             // 
-            // layoutControlItem4
+            // layoutControlItem2
             // 
-            this.layoutControlItem4.Control = this.textEdit2;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(1020, 24);
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(93, 13);
+            this.layoutControlItem2.Control = this.btn_Cancel;
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 214);
+            this.layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(273, 53);
+            this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem2.TextVisible = false;
             // 
             // FormReportEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1040, 543);
-            this.Controls.Add(this.layoutControl1);
+            this.ClientSize = new System.Drawing.Size(567, 287);
+            this.Controls.Add(this.dataLayoutControl1);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FormReportEditor";
             this.Text = "FormQueryEditor";
             this.Load += new System.EventHandler(this.FormQueryEditor_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
-            this.layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dcReportsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
+            this.dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IdTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForId)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReportNameTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForReportName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForReportQuery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReportQueryMemoEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private DevExpress.XtraEditors.MemoEdit textEdit1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraLayout.LayoutControl layoutControl1;
+        private System.Windows.Forms.BindingSource dcReportsBindingSource;
+        private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
+        private DevExpress.XtraEditors.SimpleButton btn_Cancel;
+        private DevExpress.XtraEditors.SimpleButton btn_Ok;
+        private DevExpress.XtraEditors.TextEdit IdTextEdit;
+        private DevExpress.XtraEditors.TextEdit ReportNameTextEdit;
+        private DevExpress.XtraEditors.MemoEdit ReportQueryMemoEdit;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForId;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForReportName;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForReportQuery;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private DevExpress.XtraEditors.TextEdit textEdit2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
     }
 }

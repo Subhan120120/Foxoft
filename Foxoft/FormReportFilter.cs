@@ -65,10 +65,10 @@ namespace Foxoft
                 FormReportGrid myform = new FormReportGrid(reportId);
 
                 string qry = lookUpEdit1.GetColumnValue("ReportQuery").ToString();
-                string filterString = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl1.FilterCriteria);
-                if (!string.IsNullOrEmpty(filterString))
-                    filterString = " where " + filterString;
-                DataTable dt = adoMethods.SqlGetDt(qry + filterString);
+                string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl1.FilterCriteria);
+                if (!string.IsNullOrEmpty(queryFilter))
+                    queryFilter = " where " + queryFilter;
+                DataTable dt = adoMethods.SqlGetDt(qry + queryFilter);
                 myform.gridControl1.DataSource = dt;
                 myform.MdiParent = this.MdiParent;
                 myform.Show();
@@ -81,7 +81,7 @@ namespace Foxoft
 
         }
 
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_QueryEditor_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (lookUpEdit1.EditValue != null)
             {
