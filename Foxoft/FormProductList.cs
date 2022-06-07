@@ -38,6 +38,7 @@ namespace Foxoft
                 gC_ProductList.DataSource = efMethods.SelectProductsByProductType(productTypeCode);
             else
                 gC_ProductList.DataSource = efMethods.SelectProducts();
+            gV_ProductList.BestFitColumns();
         }
         public FormProductList(byte productTypeCode, string productCode)
             : this(productTypeCode)
@@ -56,7 +57,7 @@ namespace Foxoft
             if (view.FocusedRowHandle >= 0)
                 dcProduct = view.GetRow(view.FocusedRowHandle) as DcProduct;
         }
-        
+
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {
             #region Comment
@@ -146,6 +147,11 @@ namespace Foxoft
                 gV_ProductList.ShowFindPanel();
             }
             isFirstPaint = false;
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gC_ProductList.ExportToXlsx(@"C:\Users\Administrator\Desktop\Excel");
         }
     }
 }

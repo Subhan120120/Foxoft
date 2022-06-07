@@ -69,6 +69,10 @@ namespace Foxoft.Models
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProductDescription { get; set; }
 
+        [NotMapped]
+        [DisplayName("Qaliq")]
+        public int Balance { get; set; }
+
         public virtual DcProductType DcProductType { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }

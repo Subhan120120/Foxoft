@@ -235,7 +235,7 @@ namespace Foxoft
 
             CustomSqlQuery sqlDepozit = new CustomSqlQuery("Depozit", "select 0 depozit");
 
-            DateTime dateTime = new DateTime(2022, 05, 14); // DateTime.Now.Date; // 
+            DateTime dateTime = new DateTime(2022, 06, 07); // DateTime.Now.Date; // 
 
             DateTime startDate = dateTime;
             DateTime endDate = dateTime;
@@ -257,13 +257,13 @@ namespace Foxoft
             if (!File.Exists(designPath))
             {
                 designPath = reportClass.SelectDesign();
-
-                if (designPath != "")
-                {
-                    ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
-                    designTool.ShowRibbonDesignerDialog();
-                }
             }
+            if (File.Exists(designPath))
+            {
+                ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
+                designTool.ShowRibbonDesignerDialog();
+            }
+
 
         }
 
@@ -274,7 +274,7 @@ namespace Foxoft
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
                     TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode, InvoiceHeaderId = Guid.Empty };
-                  
+
                     using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)

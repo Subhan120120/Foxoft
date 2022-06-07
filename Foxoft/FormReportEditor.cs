@@ -1,59 +1,41 @@
-﻿using Foxoft.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using DevExpress.XtraEditors;
+using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormReportEditor : Form
+    public partial class FormReportEditor : XtraForm
     {
-        DcReport dcReport;
-        EfMethods efMethods = new EfMethods();
+        DcReport dcReport = new DcReport();
+        subContext dbContext = new subContext();
 
-        public FormReportEditor(DcReport dcReport)
+        public FormReportEditor(int reportId)
         {
-            this.dcReport = dcReport;
-
+            this.dcReport.ReportId = reportId;
 
             InitializeComponent();
+
             CancelButton = btn_Cancel;
             AcceptButton = btn_Ok;
-
-            //subContext dbContext = new subContext();
-            
-            //dbContext.DcReports.LoadAsync().ContinueWith(loadTask =>
-            //{
-            //    dcReportsBindingSource.DataSource = dbContext.DcReports.Local.ToBindingList();
-            //}, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void FormQueryEditor_Load(object sender, EventArgs e)
         {
-            //textEdit1.Text = dcReport.ReportQuery;
-            //textEdit2.Text = dcReport.ReportName;
+            FillDataLayout();
         }
 
         private void FillDataLayout()
         {
-            subContext dbContext = new subContext();
-
-            if (string.IsNullOrEmpty(dcReport.Id))
+            if (!(dcReport.ReportId > 0))
                 ClearControlsAddNew();
             else
             {
-                //dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                //                    .LoadAsync()
-                //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-
-                dbContext.DcReports.Where(x => x.Id == dcReport.Id)
-                    .Load();
+                dbContext.DcReports.Where(x => x.ReportId == dcReport.ReportId)
+                                   .Load();
                 dcReportsBindingSource.DataSource = dbContext.DcReports.Local.ToBindingList();
             }
         }
@@ -62,19 +44,22 @@ namespace Foxoft
         {
             dcReport = dcReportsBindingSource.AddNew() as DcReport;
 
-            Guid Id = Guid.NewGuid();
-            dcReport.Id = Id;
-
             dcReportsBindingSource.DataSource = dcReport;
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
             EfMethods efMethods = new EfMethods();
-            dcReport = efMethods.SelectReport(dcReport.Id);
-            dcReport.ReportQuery = ReportQueryMemoEdit.Text;
-            dcReport.ReportName = ReportNameTextEdit.Text;
-            efMethods.UpdateReport(dcReport);
+
+            //dcReport = efMethods.SelectReport(dcReport.ReportId);
+            //efMethods.UpdateReport(dcReport);
+
+            dcReport = dcReportsBindingSource.Current as DcReport;
+            if (!efMethods.ReportExist(dcReport.ReportId)) //if invoiceHeader doesnt exist
+                efMethods.InsertReport(dcReport);
+            else
+                dbContext.SaveChanges();
+
             DialogResult = DialogResult.OK;
         }
     }

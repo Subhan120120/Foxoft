@@ -55,7 +55,7 @@ namespace Foxoft.Migrations
                 columns: table => new
                 {
                     CurrAccTypeCode = table.Column<byte>(type: "tinyint", nullable: false),
-                    CurrAccTypeDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "space(0)"),
+                    CurrAccTypeDesc = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValueSql: "space(0)"),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     RowGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -136,7 +136,8 @@ namespace Foxoft.Migrations
                 name: "DcReports",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ReportName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReportQuery = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReportLayout = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -148,7 +149,7 @@ namespace Foxoft.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DcReports", x => x.Id);
+                    table.PrimaryKey("PK_DcReports", x => x.ReportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,10 +338,11 @@ namespace Foxoft.Migrations
                     CurrAccTypeCode = table.Column<byte>(type: "tinyint", nullable: false),
                     CompanyCode = table.Column<byte>(type: "tinyint", nullable: false),
                     OfficeCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false, defaultValueSql: "space(0)"),
+                    StoreCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false, defaultValueSql: "space(0)"),
                     LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true, defaultValueSql: "space(0)"),
                     FatherName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true, defaultValueSql: "space(0)"),
-                    NewPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NewPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConfirmPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdentityNum = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true, defaultValueSql: "space(0)"),
                     TaxNum = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true, defaultValueSql: "space(0)"),
@@ -669,7 +671,7 @@ namespace Foxoft.Migrations
             migrationBuilder.InsertData(
                 table: "AppSettings",
                 columns: new[] { "Id", "GetPrint", "GridViewLayout", "PrintDesignPath", "PrinterCopyNum", "PrinterName" },
-                values: new object[] { 1, false, "<XtraSerializer version=\"1.0\" application=\"View\">\r\n  <property name=\"#LayoutVersion\" />\r\n  <property name=\"#LayoutScaleFactor\">@1,Width=1@1,Height=1</property>\r\n  <property name=\"Appearance\" isnull=\"true\" iskey=\"true\">\r\n    <property name=\"Row\" iskey=\"true\" value=\"Row\">\r\n      <property name=\"Options\" isnull=\"true\" iskey=\"true\">\r\n        <property name=\"UseFont\">true</property>\r\n      </property>\r\n      <property name=\"Font\">Tahoma, 12pt</property>\r\n    </property>\r\n    <property name=\"FooterPanel\" iskey=\"true\" value=\"FooterPanel\">\r\n      <property name=\"Options\" isnull=\"true\" iskey=\"true\">\r\n        <property name=\"UseFont\">true</property>\r\n      </property>\r\n      <property name=\"Font\">Tahoma, 12pt</property>\r\n    </property>\r\n  </property>\r\n  <property name=\"OptionsBehavior\" isnull=\"true\" iskey=\"true\">\r\n    <property name=\"Editable\">false</property>\r\n  </property>\r\n  <property name=\"OptionsView\" isnull=\"true\" iskey=\"true\">\r\n    <property name=\"ColumnHeaderAutoHeight\">True</property>\r\n    <property name=\"ShowAutoFilterRow\">true</property>\r\n    <property name=\"ShowGroupPanel\">false</property>\r\n    <property name=\"ShowIndicator\">false</property>\r\n  </property>\r\n  <property name=\"FixedLineWidth\">2</property>\r\n  <property name=\"IndicatorWidth\">-1</property>\r\n  <property name=\"ColumnPanelRowHeight\">-1</property>\r\n  <property name=\"RowSeparatorHeight\">0</property>\r\n  <property name=\"FooterPanelHeight\">-1</property>\r\n  <property name=\"HorzScrollVisibility\">Auto</property>\r\n  <property name=\"VertScrollVisibility\">Auto</property>\r\n  <property name=\"RowHeight\">-1</property>\r\n  <property name=\"GroupRowHeight\">-1</property>\r\n  <property name=\"GroupFormat\">{0}: [#image]{1} {2}</property>\r\n  <property name=\"ChildGridLevelName\" />\r\n  <property name=\"VertScrollTipFieldName\" />\r\n  <property name=\"PreviewFieldName\" />\r\n  <property name=\"GroupPanelText\" />\r\n  <property name=\"NewItemRowText\" />\r\n  <property name=\"LevelIndent\">-1</property>\r\n  <property name=\"PreviewIndent\">-1</property>\r\n  <property name=\"PreviewLineCount\">-1</property>\r\n  <property name=\"ScrollStyle\">LiveVertScroll, LiveHorzScroll</property>\r\n  <property name=\"FocusRectStyle\">CellFocus</property>\r\n  <property name=\"HorzScrollStep\">0</property>\r\n  <property name=\"ActiveFilterEnabled\">true</property>\r\n  <property name=\"ViewCaptionHeight\">-1</property>\r\n  <property name=\"Columns\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"ViewCaption\" />\r\n  <property name=\"BorderStyle\">Default</property>\r\n  <property name=\"SynchronizeClones\">true</property>\r\n  <property name=\"DetailTabHeaderLocation\">Top</property>\r\n  <property name=\"Name\">gridView1</property>\r\n  <property name=\"DetailHeight\">350</property>\r\n  <property name=\"Tag\" isnull=\"true\" />\r\n  <property name=\"GroupSummary\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"ActiveFilterString\" />\r\n  <property name=\"FormatRules\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"FormatConditions\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"GroupSummarySortInfoState\" />\r\n  <property name=\"FindFilterText\" />\r\n  <property name=\"FindPanelVisible\">false</property>\r\n</XtraSerializer>", null, 0, null });
+                values: new object[] { 1, false, "<XtraSerializer version=\"1.0\" application=\"View\">\r\n  <property name=\"#LayoutVersion\" />\r\n  <property name=\"#LayoutScaleFactor\">@1,Width=1@1,Height=1</property>\r\n  <property name=\"Appearance\" isnull=\"true\" iskey=\"true\">\r\n    <property name=\"Row\" iskey=\"true\" value=\"Row\">\r\n      <property name=\"Options\" isnull=\"true\" iskey=\"true\">\r\n        <property name=\"UseFont\">true</property>\r\n      </property>\r\n      <property name=\"Font\">Tahoma, 12pt</property>\r\n    </property>\r\n    <property name=\"FooterPanel\" iskey=\"true\" value=\"FooterPanel\">\r\n      <property name=\"Options\" isnull=\"true\" iskey=\"true\">\r\n        <property name=\"UseFont\">true</property>\r\n      </property>\r\n      <property name=\"Font\">Tahoma, 12pt</property>\r\n    </property>\r\n  </property>\r\n  <property name=\"OptionsBehavior\" isnull=\"true\" iskey=\"true\">\r\n    <property name=\"Editable\">false</property>\r\n  </property>\r\n  <property name=\"OptionsView\" isnull=\"true\" iskey=\"true\">\r\n    <property name=\"ColumnHeaderAutoHeight\">True</property>\r\n    <property name=\"ShowAutoFilterRow\">true</property>\r\n    <property name=\"ShowGroupPanel\">false</property>\r\n    <property name=\"ShowIndicator\">false</property>\r\n  </property>\r\n  <property name=\"FixedLineWidth\">2</property>\r\n  <property name=\"IndicatorWidth\">-1</property>\r\n  <property name=\"ColumnPanelRowHeight\">-1</property>\r\n  <property name=\"RowSeparatorHeight\">0</property>\r\n  <property name=\"FooterPanelHeight\">-1</property>\r\n  <property name=\"HorzScrollVisibility\">Auto</property>\r\n  <property name=\"VertScrollVisibility\">Auto</property>\r\n  <property name=\"RowHeight\">-1</property>\r\n  <property name=\"GroupRowHeight\">-1</property>\r\n  <property name=\"GroupFormat\">{0}: [#image]{1} {2}</property>\r\n  <property name=\"ChildGridLevelName\" />\r\n  <property name=\"VertScrollTipFieldName\" />\r\n  <property name=\"PreviewFieldName\" />\r\n  <property name=\"GroupPanelText\" />\r\n  <property name=\"NewItemRowText\" />\r\n  <property name=\"LevelIndent\">-1</property>\r\n  <property name=\"PreviewIndent\">-1</property>\r\n  <property name=\"PreviewLineCount\">-1</property>\r\n  <property name=\"ScrollStyle\">LiveVertScroll, LiveHorzScroll</property>\r\n  <property name=\"FocusRectStyle\">CellFocus</property>\r\n  <property name=\"HorzScrollStep\">0</property>\r\n  <property name=\"ActiveFilterEnabled\">true</property>\r\n  <property name=\"ViewCaptionHeight\">-1</property>\r\n  <property name=\"Columns\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"ViewCaption\" />\r\n  <property name=\"BorderStyle\">Default</property>\r\n  <property name=\"SynchronizeClones\">true</property>\r\n  <property name=\"DetailTabHeaderLocation\">Top</property>\r\n  <property name=\"Name\">gridView1</property>\r\n  <property name=\"DetailHeight\">350</property>\r\n  <property name=\"Tag\" isnull=\"true\" />\r\n  <property name=\"GroupSummary\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"ActiveFilterString\" />\r\n  <property name=\"FormatRules\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"FormatConditions\" iskey=\"true\" value=\"0\" />\r\n  <property name=\"GroupSummarySortInfoState\" />\r\n  <property name=\"FindFilterText\" />\r\n  <property name=\"FindPanelVisible\">true</property>\r\n</XtraSerializer>", null, 0, null });
 
             migrationBuilder.InsertData(
                 table: "DcClaims",
@@ -678,7 +680,7 @@ namespace Foxoft.Migrations
 
             migrationBuilder.InsertData(
                 table: "DcCurrAccTypes",
-                columns: new[] { "CurrAccTypeCode", "CurrAccTypeDescription", "IsDisabled", "RowGuid" },
+                columns: new[] { "CurrAccTypeCode", "CurrAccTypeDesc", "IsDisabled", "RowGuid" },
                 values: new object[,]
                 {
                     { (byte)1, "Müştəri", false, new Guid("00000000-0000-0000-0000-000000000000") },
@@ -728,8 +730,8 @@ namespace Foxoft.Migrations
 
             migrationBuilder.InsertData(
                 table: "DcReports",
-                columns: new[] { "Id", "ReportFilter", "ReportLayout", "ReportName", "ReportQuery" },
-                values: new object[] { new Guid("01fdab8b-0c03-4bdb-bc07-c03ff743ce45"), null, null, "Satis", "select * from TrInvoiceLines" });
+                columns: new[] { "ReportId", "ReportFilter", "ReportLayout", "ReportName", "ReportQuery" },
+                values: new object[] { 1, null, null, "Satis", "select * from TrInvoiceLines" });
 
             migrationBuilder.InsertData(
                 table: "DcRoles",
@@ -745,8 +747,8 @@ namespace Foxoft.Migrations
                 columns: new[] { "StoreCode", "CompanyCode", "IsDisabled", "RowGuid", "StoreDesc" },
                 values: new object[,]
                 {
-                    { "mgz-01", 0m, false, new Guid("00000000-0000-0000-0000-000000000000"), "Bakıxanov" },
-                    { "mgz-02", 0m, false, new Guid("00000000-0000-0000-0000-000000000000"), "Elmlər" }
+                    { "mgz01", 0m, false, new Guid("00000000-0000-0000-0000-000000000000"), "Bakıxanov" },
+                    { "mgz02", 0m, false, new Guid("00000000-0000-0000-0000-000000000000"), "Elmlər" }
                 });
 
             migrationBuilder.InsertData(
@@ -775,13 +777,17 @@ namespace Foxoft.Migrations
 
             migrationBuilder.InsertData(
                 table: "DcCurrAccs",
-                columns: new[] { "CurrAccCode", "CompanyCode", "ConfirmPassword", "CurrAccTypeCode", "CustomerPosDiscountRate", "CustomerTypeCode", "FirstName", "IsDisabled", "LastName", "NewPassword", "PhoneNum", "RowGuid", "VendorTypeCode" },
+                columns: new[] { "CurrAccCode", "CompanyCode", "ConfirmPassword", "CurrAccTypeCode", "CustomerPosDiscountRate", "CustomerTypeCode", "FirstName", "IsDisabled", "LastName", "NewPassword", "OfficeCode", "PhoneNum", "RowGuid", "StoreCode", "VendorTypeCode" },
+                values: new object[] { "CA-1", (byte)0, null, (byte)1, 0.0, (byte)0, "Sübhan", false, "Hüseynzadə", "123", "ofs01", "0519678909", new Guid("00000000-0000-0000-0000-000000000000"), "mgz01", (byte)0 });
+
+            migrationBuilder.InsertData(
+                table: "DcCurrAccs",
+                columns: new[] { "CurrAccCode", "CompanyCode", "ConfirmPassword", "CurrAccTypeCode", "CustomerPosDiscountRate", "CustomerTypeCode", "FirstName", "IsDisabled", "LastName", "NewPassword", "PhoneNum", "RowGuid", "StoreCode", "VendorTypeCode" },
                 values: new object[,]
                 {
-                    { "CA-1", (byte)0, null, (byte)1, 0.0, (byte)0, "Sübhan", false, "Hüseynzadə", "123", "0519678909", new Guid("00000000-0000-0000-0000-000000000000"), (byte)0 },
-                    { "CA-2", (byte)0, null, (byte)1, 0.0, (byte)0, "Cemil", false, "Cavadov", "123", "0519678909", new Guid("00000000-0000-0000-0000-000000000000"), (byte)0 },
-                    { "CA-3", (byte)0, null, (byte)2, 0.0, (byte)0, "Orxan", false, "Sederek", "456", "0773628800", new Guid("00000000-0000-0000-0000-000000000000"), (byte)0 },
-                    { "CA-4", (byte)0, null, (byte)3, 0.0, (byte)0, "Vagif", false, "Mustafayev", "456", "0553628804", new Guid("00000000-0000-0000-0000-000000000000"), (byte)0 }
+                    { "CA-2", (byte)0, null, (byte)1, 0.0, (byte)0, "Cemil", false, "Cavadov", "123", "0519678909", new Guid("00000000-0000-0000-0000-000000000000"), null, (byte)0 },
+                    { "CA-3", (byte)0, null, (byte)2, 0.0, (byte)0, "Orxan", false, "Sederek", "456", "0773628800", new Guid("00000000-0000-0000-0000-000000000000"), null, (byte)0 },
+                    { "CA-4", (byte)0, null, (byte)3, 0.0, (byte)0, "Vagif", false, "Mustafayev", "456", "0553628804", new Guid("00000000-0000-0000-0000-000000000000"), null, (byte)0 }
                 });
 
             migrationBuilder.InsertData(

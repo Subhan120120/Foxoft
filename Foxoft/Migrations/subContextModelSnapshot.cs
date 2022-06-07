@@ -201,6 +201,10 @@ namespace Foxoft.Migrations
                     b.Property<Guid>("RowGuid")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("StoreCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("TaxNum")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
@@ -233,8 +237,10 @@ namespace Foxoft.Migrations
                             LastName = "Hüseynzadə",
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "123",
+                            OfficeCode = "ofs01",
                             PhoneNum = "0519678909",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
+                            StoreCode = "mgz01",
                             VendorTypeCode = (byte)0
                         },
                         new
@@ -712,9 +718,10 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("ReportId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -750,14 +757,14 @@ namespace Foxoft.Migrations
                     b.Property<string>("ReportQuery")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReportId");
 
                     b.ToTable("DcReports");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("01fdab8b-0c03-4bdb-bc07-c03ff743ce45"),
+                            ReportId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportName = "Satis",
@@ -868,7 +875,7 @@ namespace Foxoft.Migrations
                     b.HasData(
                         new
                         {
-                            StoreCode = "mgz-01",
+                            StoreCode = "mgz01",
                             CompanyCode = 0m,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
@@ -878,7 +885,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            StoreCode = "mgz-02",
+                            StoreCode = "mgz02",
                             CompanyCode = 0m,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,

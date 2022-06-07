@@ -116,7 +116,7 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcCurrAcc>().HasData(
-                new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Sübhan", LastName = "Hüseynzadə", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1 },
+                new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Sübhan", LastName = "Hüseynzadə", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1, OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "CA-2", FirstName = "Cemil", LastName = "Cavadov", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1 },
                 new DcCurrAcc { CurrAccCode = "CA-3", FirstName = "Orxan", LastName = "Sederek", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 2 },
                 new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Vagif", LastName = "Mustafayev", NewPassword = "456", PhoneNum = "0553628804", CurrAccTypeCode = 3 });
@@ -235,7 +235,8 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "P", ProcessDescription = "Ödəmə" },
                 new DcProcess { ProcessCode = "SB", ProcessDescription = "Toptan Alış" },
                 new DcProcess { ProcessCode = "W", ProcessDescription = "Toptan Satış" },
-                new DcProcess { ProcessCode = "EX", ProcessDescription = "Xərclər" }
+                new DcProcess { ProcessCode = "EX", ProcessDescription = "Xərclər" } ,
+                new DcProcess { ProcessCode = "PE", ProcessDescription = "Dovr" }
                 );
 
             modelBuilder.Entity<DcProduct>(entity =>
@@ -329,8 +330,8 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcStore>().HasData(
-                new DcStore { StoreCode = "mgz-01", StoreDesc = "Bakıxanov" },
-                new DcStore { StoreCode = "mgz-02", StoreDesc = "Elmlər" });
+                new DcStore { StoreCode = "mgz01", StoreDesc = "Bakıxanov" },
+                new DcStore { StoreCode = "mgz02", StoreDesc = "Elmlər" });
 
             modelBuilder.Entity<DcTerminal>(entity =>
             {
@@ -505,8 +506,8 @@ namespace Foxoft.Models
                     .HasDatabaseName("IX_ProductCode");
 
                 entity.Property(e => e.QtyIn)
-                    .HasDefaultValueSql("0"); 
-                
+                    .HasDefaultValueSql("0");
+
                 entity.Property(e => e.QtyOut)
                     .HasDefaultValueSql("0");
 
@@ -572,7 +573,7 @@ namespace Foxoft.Models
 
                 entity.Property(e => e.DocumentTime)
                     .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
-                
+
                 entity.Property(e => e.OperationDate)
                     .HasDefaultValueSql("getdate()");
 
@@ -747,7 +748,7 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcReport>().HasData(
-                new DcReport { ReportName = "Satis", ReportQuery = "select * from TrInvoiceLines", Id = new Guid("01fdab8b-0c03-4bdb-bc07-c03ff743ce45") });
+                new DcReport { ReportName = "Satis", ReportQuery = "select * from TrInvoiceLines", ReportId = 1 });
 
             modelBuilder.Entity<TrFeature>()
                 .HasIndex(entity => new { entity.FeatureId, entity.ProductCode }).IsUnique();

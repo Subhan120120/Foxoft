@@ -42,8 +42,8 @@ namespace Foxoft
         {
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
-            lookUpEdit1.Properties.DataSource = adoMethods.SqlGetDt("Select Id, ReportName, ReportQuery from DcReports");
-            lookUpEdit1.Properties.ValueMember = "Id";
+            lookUpEdit1.Properties.DataSource = adoMethods.SqlGetDt("Select ReportId, ReportName, ReportQuery from DcReports");
+            lookUpEdit1.Properties.ValueMember = "ReportId";
             lookUpEdit1.Properties.DisplayMember = "ReportName";
         }
 
@@ -51,9 +51,11 @@ namespace Foxoft
         {
             LookUpEdit lookUpEdit = sender as LookUpEdit;
             string qry = lookUpEdit.GetColumnValue("ReportQuery").ToString();
-            filterControl1.SourceControl = adoMethods.SqlGetDt(qry);
 
-            DcReport dcReport = efMethods.SelectReport(Guid.Parse(lookUpEdit.EditValue.ToString()));
+            if (!string.IsNullOrEmpty(qry))
+                filterControl1.SourceControl = adoMethods.SqlGetDt(qry);
+
+            DcReport dcReport = efMethods.SelectReport(Convert.ToInt32(lookUpEdit.EditValue));
             filterControl1.FilterString = dcReport.ReportFilter; // load filter from database
         }
 
@@ -61,20 +63,34 @@ namespace Foxoft
         {
             if (lookUpEdit1.EditValue != null)
             {
-                Guid reportId = Guid.Parse(lookUpEdit1.EditValue.ToString());
+                int reportId = Convert.ToInt32(lookUpEdit1.EditValue.ToString());
                 FormReportGrid myform = new FormReportGrid(reportId);
 
                 string qry = lookUpEdit1.GetColumnValue("ReportQuery").ToString();
+
+                string qryMaster = "Select * from ( " + qry + ") as master";
+
                 string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl1.FilterCriteria);
                 if (!string.IsNullOrEmpty(queryFilter))
                     queryFilter = " where " + queryFilter;
-                DataTable dt = adoMethods.SqlGetDt(qry + queryFilter);
-                myform.gridControl1.DataSource = dt;
-                myform.MdiParent = this.MdiParent;
-                myform.Show();
 
+                try
+                {
+                    DataTable dt = adoMethods.SqlGetDt(qryMaster + queryFilter);
+                    myform.gridControl1.DataSource = dt;
+                    myform.MdiParent = this.MdiParent;
+                    myform.Show();
+                }
+                catch (Exception ex)
+                {
+                    XtraMessageBox.Show(ex.ToString());
+                }
+
+                string filterCriteria = "";
                 if (!object.ReferenceEquals(filterControl1.FilterCriteria, null))
-                    efMethods.UpdateReportFilter(reportId, filterControl1.FilterCriteria.ToString()); //save filter to database
+                    filterCriteria = filterControl1.FilterCriteria.ToString();
+
+                efMethods.UpdateReportFilter(reportId, filterCriteria); //save filter to database
             }
             else
                 XtraMessageBox.Show("Hesabat Secin");
@@ -86,16 +102,9 @@ namespace Foxoft
             if (lookUpEdit1.EditValue != null)
             {
                 string qry = lookUpEdit1.GetColumnValue("ReportQuery").ToString();
-                string id = lookUpEdit1.EditValue.ToString();
-                string name = lookUpEdit1.Text;
-                DcReport dcReport = new DcReport
-                {
-                    Id = Guid.Parse(id),
-                    ReportName = name,
-                    ReportQuery = qry
-                };
+                int id = Convert.ToInt32(lookUpEdit1.EditValue);
 
-                FormReportEditor formQueryEditor = new FormReportEditor(dcReport);
+                FormReportEditor formQueryEditor = new FormReportEditor(id);
                 if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
                 {
                     lookUpEdit1.Properties.DataSource = adoMethods.SqlGetDt("Select * from DcReports");
@@ -105,7 +114,11 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            FormReportEditor formQueryEditor = new FormReportEditor(0);
+            if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
+            {
+                lookUpEdit1.Properties.DataSource = adoMethods.SqlGetDt("Select * from DcReports");
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Foxoft.Models
     {
         [Key]
         [DisplayName("Report ID")]
-        public Guid Id { get; set; }
+        public int ReportId { get; set; }
 
         [DisplayName("Hesabat Adı")]
         public string ReportName { get; set; }

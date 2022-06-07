@@ -70,13 +70,6 @@ namespace Foxoft
             }
         }
 
-        public List<DcProduct> SelectProducts()
-        {
-            using (subContext db = new subContext())
-            {
-                return db.DcProducts.ToList();
-            }
-        }
 
         public List<DcProductType> SelectProductTypes()
         {
@@ -91,6 +84,22 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 return db.DcCurrAccTypes.ToList();
+            }
+        }
+
+        public List<DcProduct> SelectProducts()
+        {
+            using (subContext db = new subContext())
+            {
+                List<DcProduct> products = db.DcProducts.ToList();
+
+                products.ForEach(x =>
+                {
+                    int balance = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut);
+
+                    x.Balance = balance;
+                });
+                return products;
             }
         }
 
@@ -109,6 +118,9 @@ namespace Foxoft
                                               .FirstOrDefault();
                     if (trPrice != null)
                         x.RetailPrice = trPrice.Price;
+
+                    int balance = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut);
+                    x.Balance = balance;
                 });
                 return products;
             }
@@ -234,6 +246,19 @@ namespace Foxoft
                 IQueryable<TrInvoiceLine> trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId);
                 if (trInvoiceLine.Any())
                     db.TrInvoiceLines.Remove(trInvoiceLine.First());
+
+                return db.SaveChanges();
+            }
+        }
+
+        public int DeletePaymentByInvoice(Guid invoiceHeaderId)
+        {
+            using (subContext db = new subContext())
+            {
+                TrPaymentHeader trPaymentHeader = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                                       .FirstOrDefault();
+                if (!object.ReferenceEquals(trPaymentHeader, null))
+                    db.TrPaymentHeaders.Remove(trPaymentHeader);
 
                 return db.SaveChanges();
             }
@@ -486,6 +511,15 @@ namespace Foxoft
             }
         }
 
+        public bool ReportExist(int Id)
+        {
+
+            using (subContext db = new subContext())
+            {
+                return db.DcReports.Any(x => x.ReportId == Id);
+            }
+        }
+
         public bool ProductExist(string productCode)
         {
             using (subContext db = new subContext())
@@ -545,29 +579,29 @@ namespace Foxoft
             }
         }
 
-        public int UpdateReportLayout(Guid id, string reportLayout)
+        public int UpdateReportLayout(int id, string reportLayout)
         {
             using (subContext db = new subContext())
             {
-                DcReport dcReport = new DcReport() { Id = id, ReportLayout = reportLayout };
+                DcReport dcReport = new DcReport() { ReportId = id, ReportLayout = reportLayout };
                 db.Entry(dcReport).Property(x => x.ReportLayout).IsModified = true;
                 return db.SaveChanges();
             }
         }
 
-        public DcReport SelectReport(Guid id)
+        public DcReport SelectReport(int id)
         {
             using (subContext db = new subContext())
             {
-                return db.DcReports.FirstOrDefault(x => x.Id == id);
+                return db.DcReports.FirstOrDefault(x => x.ReportId == id);
             }
         }
 
-        public int UpdateReportFilter(Guid id, string reportFilter)
+        public int UpdateReportFilter(int id, string reportFilter)
         {
             using (subContext db = new subContext())
             {
-                DcReport dcReport = new DcReport() { Id = id, ReportFilter = reportFilter };
+                DcReport dcReport = new DcReport() { ReportId = id, ReportFilter = reportFilter };
                 db.Entry(dcReport).Property(x => x.ReportFilter).IsModified = true;
                 return db.SaveChanges();
             }
@@ -579,6 +613,15 @@ namespace Foxoft
             {
                 db.DcReports.Update(dcReport);
                 return db.SaveChanges();
+            }
+        }
+
+        public void InsertReport(DcReport dcReport)
+        {
+            using (subContext db = new subContext())
+            {
+                db.DcReports.Add(dcReport);
+                db.SaveChanges();
             }
         }
 

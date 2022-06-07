@@ -29,7 +29,6 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportFilter));
             this.lookUpEdit1 = new DevExpress.XtraEditors.LookUpEdit();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
@@ -158,13 +157,12 @@ namespace Foxoft
             // 
             this.bBI_QueryEditor.Caption = "Edit Query";
             this.bBI_QueryEditor.Id = 1;
-            this.bBI_QueryEditor.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_QueryEditor.ImageOptions.SvgImage")));
             this.bBI_QueryEditor.Name = "bBI_QueryEditor";
             this.bBI_QueryEditor.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_QueryEditor_ItemClick);
             // 
             // barButtonItem3
             // 
-            this.barButtonItem3.Caption = "barButtonItem3";
+            this.barButtonItem3.Caption = "New Query";
             this.barButtonItem3.Id = 5;
             this.barButtonItem3.Name = "barButtonItem3";
             this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);

@@ -15,10 +15,10 @@ namespace Foxoft
         Badge badge1;
         Badge badge2;
         AdornerUIManager adornerUIManager1;
-        Guid reportId;
+        int reportId;
         EfMethods efMethods = new EfMethods();
 
-        public FormReportGrid(Guid reportId)
+        public FormReportGrid(int reportId)
         {
             this.reportId = reportId;
 
@@ -54,9 +54,13 @@ namespace Foxoft
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
             DcReport dcReport = efMethods.SelectReport(reportId);
-            byte[] byteArray = Encoding.ASCII.GetBytes(dcReport.ReportLayout);
-            MemoryStream stream = new MemoryStream(byteArray);
-            gridView1.RestoreLayoutFromStream(stream);
+
+            if (!string.IsNullOrEmpty(dcReport.ReportLayout))
+            {
+                byte[] byteArray = Encoding.ASCII.GetBytes(dcReport.ReportLayout);
+                MemoryStream stream = new MemoryStream(byteArray);
+                gridView1.RestoreLayoutFromStream(stream);
+            }
         }
 
         private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)

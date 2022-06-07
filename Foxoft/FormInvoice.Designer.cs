@@ -48,6 +48,7 @@ namespace Foxoft
             this.colQtyIn = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colQtyOut = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_Price = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoCalcEdit_Price = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.col_Amount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_PosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_NetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -56,7 +57,6 @@ namespace Foxoft
             this.repoBtnEdit_SalesPersonCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoCalcEdit_Price = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -89,8 +89,11 @@ namespace Foxoft
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_New = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -101,8 +104,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).BeginInit();
@@ -219,7 +222,7 @@ namespace Foxoft
             this.col_SalesPersonCode,
             this.colCreatedDate,
             this.col_ProductDesc});
-            this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1102, 456, 264, 272);
+            this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1096, 456, 264, 272);
             this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
             this.gV_InvoiceLine.Name = "gV_InvoiceLine";
             this.gV_InvoiceLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
@@ -258,6 +261,7 @@ namespace Foxoft
             this.col_ProductCode.Name = "col_ProductCode";
             this.col_ProductCode.Visible = true;
             this.col_ProductCode.VisibleIndex = 0;
+            this.col_ProductCode.Width = 91;
             // 
             // repoBtnEdit_ProductCode
             // 
@@ -273,6 +277,7 @@ namespace Foxoft
             this.colQtyIn.Name = "colQtyIn";
             this.colQtyIn.Visible = true;
             this.colQtyIn.VisibleIndex = 2;
+            this.colQtyIn.Width = 89;
             // 
             // colQtyOut
             // 
@@ -280,42 +285,66 @@ namespace Foxoft
             this.colQtyOut.Name = "colQtyOut";
             this.colQtyOut.Visible = true;
             this.colQtyOut.VisibleIndex = 3;
+            this.colQtyOut.Width = 89;
             // 
             // col_Price
             // 
             this.col_Price.Caption = "Qiymət";
             this.col_Price.ColumnEdit = this.repoCalcEdit_Price;
+            this.col_Price.DisplayFormat.FormatString = "{0:n2}";
+            this.col_Price.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;
             this.col_Price.VisibleIndex = 4;
+            this.col_Price.Width = 89;
+            // 
+            // repoCalcEdit_Price
+            // 
+            this.repoCalcEdit_Price.AutoHeight = false;
+            this.repoCalcEdit_Price.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoCalcEdit_Price.MaskSettings.Set("mask", "");
+            this.repoCalcEdit_Price.MaskSettings.Set("valueType", typeof(decimal));
+            this.repoCalcEdit_Price.MaskSettings.Set("culture", null);
+            this.repoCalcEdit_Price.MaskSettings.Set("autoHideDecimalSeparator", null);
+            this.repoCalcEdit_Price.Name = "repoCalcEdit_Price";
             // 
             // col_Amount
             // 
             this.col_Amount.Caption = "Tutar";
+            this.col_Amount.DisplayFormat.FormatString = "{0:n2}";
+            this.col_Amount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.col_Amount.FieldName = "Amount";
             this.col_Amount.Name = "col_Amount";
             this.col_Amount.OptionsColumn.AllowEdit = false;
             this.col_Amount.Visible = true;
-            this.col_Amount.VisibleIndex = 7;
+            this.col_Amount.VisibleIndex = 6;
+            this.col_Amount.Width = 89;
             // 
             // col_PosDiscount
             // 
             this.col_PosDiscount.Caption = "Endirim";
+            this.col_PosDiscount.DisplayFormat.FormatString = "{0:n2}";
+            this.col_PosDiscount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.col_PosDiscount.FieldName = "PosDiscount";
             this.col_PosDiscount.Name = "col_PosDiscount";
             this.col_PosDiscount.Visible = true;
-            this.col_PosDiscount.VisibleIndex = 8;
+            this.col_PosDiscount.VisibleIndex = 7;
+            this.col_PosDiscount.Width = 89;
             // 
             // col_NetAmount
             // 
             this.col_NetAmount.Caption = "Net Tutar";
+            this.col_NetAmount.DisplayFormat.FormatString = "{0:n2}";
+            this.col_NetAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.col_NetAmount.FieldName = "NetAmount";
             this.col_NetAmount.Name = "col_NetAmount";
             this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "SUM={0:0.##}")});
             this.col_NetAmount.Visible = true;
-            this.col_NetAmount.VisibleIndex = 9;
+            this.col_NetAmount.VisibleIndex = 8;
+            this.col_NetAmount.Width = 97;
             // 
             // col_LineDesc
             // 
@@ -323,15 +352,14 @@ namespace Foxoft
             this.col_LineDesc.FieldName = "LineDescription";
             this.col_LineDesc.Name = "col_LineDesc";
             this.col_LineDesc.Visible = true;
-            this.col_LineDesc.VisibleIndex = 6;
+            this.col_LineDesc.VisibleIndex = 5;
+            this.col_LineDesc.Width = 89;
             // 
             // col_SalesPersonCode
             // 
             this.col_SalesPersonCode.ColumnEdit = this.repoBtnEdit_SalesPersonCode;
             this.col_SalesPersonCode.FieldName = "SalesPersonCode";
             this.col_SalesPersonCode.Name = "col_SalesPersonCode";
-            this.col_SalesPersonCode.Visible = true;
-            this.col_SalesPersonCode.VisibleIndex = 5;
             // 
             // repoBtnEdit_SalesPersonCode
             // 
@@ -349,21 +377,12 @@ namespace Foxoft
             // col_ProductDesc
             // 
             this.col_ProductDesc.FieldName = "ProductDescription";
+            this.col_ProductDesc.MinWidth = 100;
             this.col_ProductDesc.Name = "col_ProductDesc";
             this.col_ProductDesc.OptionsColumn.AllowEdit = false;
             this.col_ProductDesc.Visible = true;
             this.col_ProductDesc.VisibleIndex = 1;
-            // 
-            // repoCalcEdit_Price
-            // 
-            this.repoCalcEdit_Price.AutoHeight = false;
-            this.repoCalcEdit_Price.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoCalcEdit_Price.MaskSettings.Set("mask", "");
-            this.repoCalcEdit_Price.MaskSettings.Set("valueType", typeof(decimal));
-            this.repoCalcEdit_Price.MaskSettings.Set("culture", null);
-            this.repoCalcEdit_Price.MaskSettings.Set("autoHideDecimalSeparator", null);
-            this.repoCalcEdit_Price.Name = "repoCalcEdit_Price";
+            this.col_ProductDesc.Width = 100;
             // 
             // CheckEdit_IsReturn
             // 
@@ -670,9 +689,11 @@ namespace Foxoft
             this.bBI_reportDesign,
             this.barButtonItem1,
             this.bBI_New,
-            this.bBI_reportPreview});
+            this.bBI_reportPreview,
+            this.bBI_DeleteInvoice,
+            this.bBI_DeletePayment});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 11;
+            this.ribbonControl1.MaxItemId = 13;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -710,6 +731,7 @@ namespace Foxoft
             this.barButtonItem1.Id = 5;
             this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
             this.barButtonItem1.Name = "barButtonItem1";
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
             // 
             // bBI_New
             // 
@@ -727,10 +749,27 @@ namespace Foxoft
             this.bBI_reportPreview.Name = "bBI_reportPreview";
             this.bBI_reportPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreview_ItemClick);
             // 
+            // bBI_DeleteInvoice
+            // 
+            this.bBI_DeleteInvoice.Caption = "Fakturani Sil";
+            this.bBI_DeleteInvoice.Id = 11;
+            this.bBI_DeleteInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeleteInvoice.ImageOptions.SvgImage")));
+            this.bBI_DeleteInvoice.Name = "bBI_DeleteInvoice";
+            this.bBI_DeleteInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeleteInvoice_ItemClick);
+            // 
+            // bBI_DeletePayment
+            // 
+            this.bBI_DeletePayment.Caption = "Odemeni Sil";
+            this.bBI_DeletePayment.Id = 12;
+            this.bBI_DeletePayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeletePayment.ImageOptions.SvgImage")));
+            this.bBI_DeletePayment.Name = "bBI_DeletePayment";
+            this.bBI_DeletePayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeletePayment_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
+            this.ribbonPageGroup3,
             this.ribbonPageGroup2});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "Faktura";
@@ -740,16 +779,23 @@ namespace Foxoft
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Save);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_SaveAndNew);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_New);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DeleteInvoice);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Yadda Saxla";
+            // 
+            // ribbonPageGroup3
+            // 
+            this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem1);
+            this.ribbonPageGroup3.ItemLinks.Add(this.bBI_DeletePayment);
+            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+            this.ribbonPageGroup3.Text = "Ödəmə";
             // 
             // ribbonPageGroup2
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
-            this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem1);
             this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Print";
             // 
             // ribbonStatusBar1
             // 
@@ -781,8 +827,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).EndInit();
@@ -876,5 +922,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.LabelControl lC_CurrAccDesc;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_Price;
+        private DevExpress.XtraBars.BarButtonItem bBI_DeleteInvoice;
+        private DevExpress.XtraBars.BarButtonItem bBI_DeletePayment;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
     }
 }

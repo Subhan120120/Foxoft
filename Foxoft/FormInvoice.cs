@@ -33,6 +33,7 @@ namespace Foxoft
         Badge badge1;
         Badge badge2;
         AdornerUIManager adornerUIManager1;
+        string designFolder = @"C:\Users\Administrator\Documents\";
 
         private TrInvoiceHeader trInvoiceHeader;
         public string processCode;
@@ -153,6 +154,7 @@ namespace Foxoft
                                                 trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
 
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
+
 
                     dataLayoutControl1.isValid(out List<string> errorList);
 
@@ -376,7 +378,7 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                decimal summaryNetAmount = Convert.ToDecimal(gV_InvoiceLine.Columns["NetAmount"].SummaryItem.SummaryValue);
+                decimal summaryNetAmount = Convert.ToDecimal(col_NetAmount.SummaryItem.SummaryValue);
 
                 if (trInvoiceHeader.IsReturn)
                     summaryNetAmount *= (-1);
@@ -435,7 +437,10 @@ namespace Foxoft
             if (Settings.Default.AppSetting.GetPrint == true)
             {
                 ReportClass reportClass = new ReportClass();
-                string designPath = Settings.Default.AppSetting.PrintDesignPath;
+                //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+                string designPath = designFolder + "InvoiceRS_A5.repx";
+
+
                 if (!File.Exists(designPath))
                     designPath = reportClass.SelectDesign();
                 if (!File.Exists(designPath))
@@ -474,11 +479,12 @@ namespace Foxoft
         {
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = Directory.GetCurrentDirectory() + "Foxoft.AppCode.GUNSONU.repx";
+            string designPath = designFolder + "InvoiceRS_A5.repx";
 
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
-            if (!File.Exists(designPath))
+
+            if (File.Exists(designPath))
             {
                 ReportDesignTool printTool = new ReportDesignTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
                 printTool.ShowRibbonDesigner();
@@ -515,11 +521,12 @@ namespace Foxoft
             //}
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = Directory.GetCurrentDirectory() + "Foxoft.AppCode.GUNSONU.repx";
+            string designPath = designFolder + "InvoiceRS_A5.repx";
 
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
-            if (!File.Exists(designPath))
+
+            if (File.Exists(designPath))
             {
                 ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
                 printTool.ShowRibbonPreview();
@@ -538,6 +545,29 @@ namespace Foxoft
             //e.NewObject = line;
         }
 
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
 
+        }
+
+        private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
+            {
+                if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
+            }
+            else
+                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+        }
+
+        private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+                labelControl1.Text = "0.00";
+            }
+        }
     }
 }
