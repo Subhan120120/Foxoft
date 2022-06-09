@@ -304,5 +304,30 @@ namespace Foxoft
                 }
             }
         }
+
+        private void aCE_Payments_Click(object sender, EventArgs e)
+        {
+            int OpenFormCount = 0;
+
+            foreach (Form form in Application.OpenForms)
+            {
+                FormInvoicePayment formInvoice = form as FormInvoicePayment;
+                if (formInvoice != null)
+                {
+                    formInvoice.BringToFront();
+                    formInvoice.Activate();
+                    OpenFormCount++;
+                }
+            }
+
+            if (OpenFormCount == 0)
+            {
+                FormInvoicePayment formInvoicePayment = new FormInvoicePayment();
+                formInvoicePayment.MdiParent = this;
+                formInvoicePayment.WindowState = FormWindowState.Maximized;
+                formInvoicePayment.Show();
+                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+            }
+        }
     }
 }

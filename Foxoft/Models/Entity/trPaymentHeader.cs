@@ -88,6 +88,11 @@ namespace Foxoft.Models
         [DisplayName("Kilidlənib")]
         public bool IsLocked { get; set; }
 
+        [NotMapped]
+        [DisplayName("Tutar")]
+        public decimal TotalNetAmount { get; set; }
+
+
 
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
     }

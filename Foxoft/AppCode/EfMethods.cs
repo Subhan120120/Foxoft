@@ -251,6 +251,19 @@ namespace Foxoft
             }
         }
 
+        public int DeletePayment(Guid paymentHeaderId)
+        {
+            using (subContext db = new subContext())
+            {
+                TrPaymentHeader trPaymentHeader = db.TrPaymentHeaders.Where(x => x.PaymentHeaderId == paymentHeaderId)
+                                                                     .FirstOrDefault();
+                if (!object.ReferenceEquals(trPaymentHeader, null))
+                    db.TrPaymentHeaders.Remove(trPaymentHeader);
+
+                return db.SaveChanges();
+            }
+        }
+
         public int DeletePaymentByInvoice(Guid invoiceHeaderId)
         {
             using (subContext db = new subContext())

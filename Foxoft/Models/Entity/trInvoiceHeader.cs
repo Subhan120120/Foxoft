@@ -108,6 +108,11 @@ namespace Foxoft.Models
         [DisplayName("Cari Hesab Açıqlaması")]
         public string CurrAccDesc { get; set; }
 
+        [NotMapped]
+        [DisplayName("Tutar")]
+        public decimal TotalNetAmount { get; set; }
+
+
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }

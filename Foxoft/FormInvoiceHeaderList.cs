@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using DevExpress.Utils.Extensions;
 
 namespace Foxoft
 {
@@ -37,15 +40,24 @@ namespace Foxoft
             //this.processCode = processCode;
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                      .Include(x => x.TrInvoiceLines)
                                       .Where(x => x.ProcessCode == processCode)
                                       .OrderByDescending(x => x.DocumentDate)
                                       .LoadAsync()
-                                      .ContinueWith(loadTask => trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList(), System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+                                      .ContinueWith(loadTask =>
+                                         {
+                                             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+
+                                             lV_invoiceHeader.ForEach(x => x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount));
+
+                                             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+
+                                         }, TaskScheduler.FromCurrentSynchronizationContext());
 
             //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }
 
-        private void gridView1_DoubleClick(object sender, EventArgs e)
+        private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
         {
             DXMouseEventArgs ea = e as DXMouseEventArgs;
             GridView view = sender as GridView;

@@ -1,8 +1,6 @@
 ﻿using DevExpress.Utils.Extensions;
-using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -15,18 +13,18 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormInvoicePayment : RibbonForm
+    public partial class FormInvoicePayment1 : XtraForm
     {
+
         private TrPaymentHeader trPaymentHeader;
-        private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
 
-        public FormInvoicePayment()
+        public FormInvoicePayment1()
         {
             InitializeComponent();
         }
 
-        private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        private void btnEdit_DocNum_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
             SelectDocNum();
         }
@@ -57,14 +55,6 @@ namespace Foxoft
 
                     //dataLayoutControl1.isValid(out List<string> errorList);
                 }
-            }
-        }
-
-        private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            {
-                efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
             }
         }
     }

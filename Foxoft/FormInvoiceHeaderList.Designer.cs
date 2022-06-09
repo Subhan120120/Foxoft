@@ -45,6 +45,7 @@ namespace Foxoft
             this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationTime = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceHeaderList)).BeginInit();
@@ -78,11 +79,12 @@ namespace Foxoft
             this.colDocumentTime,
             this.colStoreCode,
             this.colOperationDate,
-            this.colOperationTime});
+            this.colOperationTime,
+            this.colTotalNetAmount});
             this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
             this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
             this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
-            this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
+            this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gV_TrInvoiceHeaderList_DoubleClick);
             // 
             // colDocumentNumber
             // 
@@ -147,6 +149,15 @@ namespace Foxoft
             this.colOperationTime.Visible = true;
             this.colOperationTime.VisibleIndex = 8;
             // 
+            // colTotalNetAmount
+            // 
+            this.colTotalNetAmount.DisplayFormat.FormatString = "{0:n2}";
+            this.colTotalNetAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colTotalNetAmount.FieldName = "TotalNetAmount";
+            this.colTotalNetAmount.Name = "colTotalNetAmount";
+            this.colTotalNetAmount.Visible = true;
+            this.colTotalNetAmount.VisibleIndex = 9;
+            // 
             // FormInvoiceHeaderList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -191,5 +202,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentDate;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentTime;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
     }
 }

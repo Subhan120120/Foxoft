@@ -122,7 +122,8 @@ namespace Foxoft
                     trInvoiceHeader = form.trInvoiceHeader;
 
                     dbContext = new subContext();
-                    dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc).Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
+                    dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                              .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
                     LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
                     if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
@@ -387,33 +388,7 @@ namespace Foxoft
 
                 if (summaryNetAmount != 0)
                 {
-                    if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
-                        efMethods.InsertInvoiceHeader(trInvoiceHeader);
-
-                    if ((bool)CheckEdit_IsReturn.EditValue)
-                    {
-                        for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                        {
-                            if (CustomExtensions.ProcessDir(processCode) == "In")
-                            {
-                                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyIn"));
-                                gV_InvoiceLine.SetRowCellValue(i, "QtyIn", qty * (-1));
-                            }
-                            else if (CustomExtensions.ProcessDir(processCode) == "Out")
-                            {
-                                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyOut"));
-                                gV_InvoiceLine.SetRowCellValue(i, "QtyOut", qty * (-1));
-                            }
-
-                            int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
-                            gV_InvoiceLine.SetRowCellValue(i, "Amount", amount * (-1));
-
-                            int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
-                            gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
-                        }
-                    }
-
-                    dbContext.SaveChanges();
+                    CreateOrUpdateInvoice();
 
                     MakePayment(Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2));
 
@@ -430,6 +405,37 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
+        }
+
+        private void CreateOrUpdateInvoice()
+        {
+            if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
+                efMethods.InsertInvoiceHeader(trInvoiceHeader);
+
+            if ((bool)CheckEdit_IsReturn.EditValue)
+            {
+                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                {
+                    if (CustomExtensions.ProcessDir(processCode) == "In")
+                    {
+                        int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyIn"));
+                        gV_InvoiceLine.SetRowCellValue(i, "QtyIn", qty * (-1));
+                    }
+                    else if (CustomExtensions.ProcessDir(processCode) == "Out")
+                    {
+                        int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyOut"));
+                        gV_InvoiceLine.SetRowCellValue(i, "QtyOut", qty * (-1));
+                    }
+
+                    int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
+                    gV_InvoiceLine.SetRowCellValue(i, "Amount", amount * (-1));
+
+                    int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
+                    gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
+                }
+            }
+
+            dbContext.SaveChanges();
         }
 
         private void GetPrint()
