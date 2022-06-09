@@ -44,6 +44,10 @@ namespace Foxoft.Models
         [DisplayName("Bank")]
         public byte? BankId { get; set; }
 
+        [DisplayName("Ödəmə ($)")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Column(TypeName = "money")]
+        public decimal PaymentCurrency2 { get; set; }
 
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentType DcPaymentType { get; set; }
