@@ -516,9 +516,6 @@ namespace Foxoft.Models
                 entity.Property(e => e.QtyOut)
                     .HasDefaultValueSql("0");
 
-                //entity.Property(e => e.CurrencyCode)
-                //    .HasDefaultValueSql("space(0)");
-
                 entity.Property(e => e.DiscountCampaign)
                     .HasDefaultValueSql("0");
 

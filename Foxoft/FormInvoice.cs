@@ -95,8 +95,6 @@ namespace Foxoft
 
             trInvoiceHeadersBindingSource.DataSource = trInvoiceHeader;
 
-            //trInvoiceHeadersBindingSource.EndEdit();
-
             labelControl1.Text = "";
 
             dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
@@ -143,6 +141,8 @@ namespace Foxoft
                                                 lV_invoiceLine.ForEach(x =>
                                                 {
                                                     x.ProductDescription = x.DcProduct.ProductDescription;
+
+                                                    x.Price = x.Price / x.ExchangeRate; //ferqli valyutada gostermek
 
                                                     if (form.trInvoiceHeader.IsReturn)
                                                     {
@@ -233,8 +233,8 @@ namespace Foxoft
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
             decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount, CultureInfo.InvariantCulture) : 0;
 
-            gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, "Amount", Qty * Price);
-            gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, "NetAmount", Qty * Price - PosDiscount);
+            gV_InvoiceLine.SetFocusedRowCellValue("Amount", Qty * Price);
+            gV_InvoiceLine.SetFocusedRowCellValue("NetAmount", Qty * Price - PosDiscount);
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -389,7 +389,7 @@ namespace Foxoft
 
                 if (summaryNetAmount != 0)
                 {
-                    CreateOrUpdateInvoice();
+                    SaveInvoice();
 
                     MakePayment(Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2));
 
@@ -408,14 +408,15 @@ namespace Foxoft
             }
         }
 
-        private void CreateOrUpdateInvoice()
+        private void SaveInvoice()
         {
             if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
                 efMethods.InsertInvoiceHeader(trInvoiceHeader);
 
-            if ((bool)CheckEdit_IsReturn.EditValue)
+
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
             {
-                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                if ((bool)CheckEdit_IsReturn.EditValue)
                 {
                     if (CustomExtensions.ProcessDir(processCode) == "In")
                     {
@@ -434,6 +435,11 @@ namespace Foxoft
                     int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
                     gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
                 }
+
+                float exRate = (float)gV_InvoiceLine.GetRowCellValue(i, colExchangeRate);
+                double price = (double)gV_InvoiceLine.GetRowCellValue(i, col_Price);
+
+                gV_InvoiceLine.SetRowCellValue(i, "NetAmount", price * exRate);
             }
 
             dbContext.SaveChanges();
@@ -575,6 +581,13 @@ namespace Foxoft
                 efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
                 labelControl1.Text = "0.00";
             }
+        }
+
+        private void repoLUE_Currency_EditValueChanged(object sender, EventArgs e)
+        {
+            LookUpEdit textEditor = (LookUpEdit)sender;
+            float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
+            gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, exRate);
         }
     }
 }

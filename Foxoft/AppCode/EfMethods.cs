@@ -487,6 +487,16 @@ namespace Foxoft
             }
         }
 
+        public float SelectExRate(string currancyCode)
+        {
+            using (subContext db = new subContext())
+            {
+                DcCurrency dcCurrency = db.DcCurrencies.Where(x => x.CurrencyCode == currancyCode)
+                                                       .FirstOrDefault();
+                return dcCurrency.ExchangeRate;
+            }
+        }
+
         public List<DcStore> SelectStores()
         {
             using (subContext db = new subContext())

@@ -49,6 +49,9 @@ namespace Foxoft
             this.colQtyOut = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_Price = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoCalcEdit_Price = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoLUE_Currency = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_Amount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_PosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_NetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -57,9 +60,6 @@ namespace Foxoft
             this.repoBtnEdit_SalesPersonCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoLUE_Currency = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-            this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -108,8 +108,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_Currency)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).BeginInit();
@@ -317,6 +317,37 @@ namespace Foxoft
             this.repoCalcEdit_Price.MaskSettings.Set("autoHideDecimalSeparator", null);
             this.repoCalcEdit_Price.Name = "repoCalcEdit_Price";
             // 
+            // colCurrencyCode
+            // 
+            this.colCurrencyCode.ColumnEdit = this.repoLUE_Currency;
+            this.colCurrencyCode.FieldName = "CurrencyCode";
+            this.colCurrencyCode.Name = "colCurrencyCode";
+            this.colCurrencyCode.Visible = true;
+            this.colCurrencyCode.VisibleIndex = 5;
+            // 
+            // repoLUE_Currency
+            // 
+            this.repoLUE_Currency.AutoHeight = false;
+            this.repoLUE_Currency.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            this.repoLUE_Currency.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoLUE_Currency.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", "")});
+            this.repoLUE_Currency.DisplayMember = "CurrencyDesc";
+            this.repoLUE_Currency.Name = "repoLUE_Currency";
+            this.repoLUE_Currency.NullText = "";
+            this.repoLUE_Currency.ValueMember = "CurrencyCode";
+            this.repoLUE_Currency.EditValueChanged += new System.EventHandler(this.repoLUE_Currency_EditValueChanged);
+            // 
+            // colExchangeRate
+            // 
+            this.colExchangeRate.FieldName = "ExchangeRate";
+            this.colExchangeRate.Name = "colExchangeRate";
+            this.colExchangeRate.Visible = true;
+            this.colExchangeRate.VisibleIndex = 6;
+            // 
             // col_Amount
             // 
             this.col_Amount.Caption = "Tutar";
@@ -326,7 +357,7 @@ namespace Foxoft
             this.col_Amount.Name = "col_Amount";
             this.col_Amount.OptionsColumn.AllowEdit = false;
             this.col_Amount.Visible = true;
-            this.col_Amount.VisibleIndex = 6;
+            this.col_Amount.VisibleIndex = 7;
             this.col_Amount.Width = 89;
             // 
             // col_PosDiscount
@@ -337,7 +368,7 @@ namespace Foxoft
             this.col_PosDiscount.FieldName = "PosDiscount";
             this.col_PosDiscount.Name = "col_PosDiscount";
             this.col_PosDiscount.Visible = true;
-            this.col_PosDiscount.VisibleIndex = 7;
+            this.col_PosDiscount.VisibleIndex = 8;
             this.col_PosDiscount.Width = 89;
             // 
             // col_NetAmount
@@ -350,7 +381,7 @@ namespace Foxoft
             this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "SUM={0:0.##}")});
             this.col_NetAmount.Visible = true;
-            this.col_NetAmount.VisibleIndex = 8;
+            this.col_NetAmount.VisibleIndex = 9;
             this.col_NetAmount.Width = 97;
             // 
             // col_LineDesc
@@ -390,36 +421,6 @@ namespace Foxoft
             this.col_ProductDesc.Visible = true;
             this.col_ProductDesc.VisibleIndex = 1;
             this.col_ProductDesc.Width = 100;
-            // 
-            // colCurrencyCode
-            // 
-            this.colCurrencyCode.ColumnEdit = this.repoLUE_Currency;
-            this.colCurrencyCode.FieldName = "CurrencyCode";
-            this.colCurrencyCode.Name = "colCurrencyCode";
-            this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 5;
-            // 
-            // repoLUE_Currency
-            // 
-            this.repoLUE_Currency.AutoHeight = false;
-            this.repoLUE_Currency.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
-            this.repoLUE_Currency.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoLUE_Currency.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", "")});
-            this.repoLUE_Currency.DisplayMember = "CurrencyDesc";
-            this.repoLUE_Currency.Name = "repoLUE_Currency";
-            this.repoLUE_Currency.NullText = "";
-            this.repoLUE_Currency.ValueMember = "CurrencyCode";
-            // 
-            // colExchangeRate
-            // 
-            this.colExchangeRate.FieldName = "ExchangeRate";
-            this.colExchangeRate.Name = "colExchangeRate";
-            this.colExchangeRate.Visible = true;
-            this.colExchangeRate.VisibleIndex = 6;
             // 
             // CheckEdit_IsReturn
             // 
@@ -865,8 +866,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_Currency)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CheckEdit_IsReturn.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).EndInit();

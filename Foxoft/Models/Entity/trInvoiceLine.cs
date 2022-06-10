@@ -71,12 +71,13 @@ namespace Foxoft.Models
 
         [DisplayName("Valyuta")]
         [ForeignKey("DcCurrency")]
-        public string CurrencyCode { get; set; }
+        public string CurrencyCode { get; set; } = "AZN";
 
         [DisplayName("Valyuta Kursu")]
-        public float ExchangeRate { get; set; }
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public float ExchangeRate { get; set; } = 1;
 
-       
+
         [NotMapped]
         public int ReturnQty { get; set; }
 
