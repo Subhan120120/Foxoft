@@ -33,8 +33,7 @@ namespace Foxoft.Models
         public string LineDescription { get; set; }
 
         [DisplayName("Valyuta")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [ForeignKey("DcCurrency")]
         public string CurrencyCode { get; set; }
 
         [DisplayName("Valyuta Kursu")]
@@ -44,12 +43,8 @@ namespace Foxoft.Models
         [DisplayName("Bank")]
         public byte? BankId { get; set; }
 
-        [DisplayName("Ödəmə ($)")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [Column(TypeName = "money")]
-        public decimal PaymentCurrency2 { get; set; }
-
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentType DcPaymentType { get; set; }
+        public virtual DcCurrency DcCurrency { get; set; }
     }
 }

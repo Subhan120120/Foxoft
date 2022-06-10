@@ -70,12 +70,13 @@ namespace Foxoft.Models
         public string SalesPersonCode { get; set; }
 
         [DisplayName("Valyuta")]
-        [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+        [ForeignKey("DcCurrency")]
         public string CurrencyCode { get; set; }
 
-        [DisplayName("Valyuta kursu")]
-        public double ExchangeRate { get; set; }
+        [DisplayName("Valyuta Kursu")]
+        public float ExchangeRate { get; set; }
 
+       
         [NotMapped]
         public int ReturnQty { get; set; }
 
@@ -89,5 +90,6 @@ namespace Foxoft.Models
 
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
+        public virtual DcCurrency DcCurrency { get; set; }
     }
 }

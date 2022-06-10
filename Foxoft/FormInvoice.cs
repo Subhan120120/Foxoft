@@ -58,6 +58,7 @@ namespace Foxoft
             lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
+            repoLUE_Currency.DataSource = efMethods.SelectCurrencies();
 
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();

@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220610032506_addedCurrency3")]
+    partial class addedCurrency3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -354,6 +356,13 @@ namespace Foxoft.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("CreatedUserName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("CurrencyDesc")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -361,23 +370,16 @@ namespace Foxoft.Migrations
                     b.Property<float>("ExchangeRate")
                         .HasColumnType("real");
 
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.HasKey("CurrencyCode");
 
                     b.ToTable("DcCurrencies");
-
-                    b.HasData(
-                        new
-                        {
-                            CurrencyCode = "AZE",
-                            CurrencyDesc = "Azərbaycan Manatı",
-                            ExchangeRate = 1f
-                        },
-                        new
-                        {
-                            CurrencyCode = "USD",
-                            CurrencyDesc = "Amerikan Dolları",
-                            ExchangeRate = 1.703f
-                        });
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcFeature", b =>
@@ -1458,9 +1460,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
-                    b.Property<string>("CurrencyCode")
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<decimal>("DiscountCampaign")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
@@ -1536,8 +1535,6 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("0");
 
                     b.HasKey("InvoiceLineId");
-
-                    b.HasIndex("CurrencyCode");
 
                     b.HasIndex("InvoiceHeaderId")
                         .HasDatabaseName("IX_InvoiceHeaderId");
@@ -1695,9 +1692,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
-                    b.Property<string>("CurrencyCode")
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<double>("ExchangeRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
@@ -1733,8 +1727,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("tinyint");
 
                     b.HasKey("PaymentLineId");
-
-                    b.HasIndex("CurrencyCode");
 
                     b.HasIndex("PaymentHeaderId");
 
@@ -2149,10 +2141,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
-                        .WithMany("TrInvoiceLines")
-                        .HasForeignKey("CurrencyCode");
-
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrInvoiceLines")
                         .HasForeignKey("InvoiceHeaderId")
@@ -2165,8 +2153,6 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DcCurrency");
-
                     b.Navigation("DcProduct");
 
                     b.Navigation("TrInvoiceHeader");
@@ -2174,10 +2160,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentLine", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
-                        .WithMany("TrPaymentLines")
-                        .HasForeignKey("CurrencyCode");
-
                     b.HasOne("Foxoft.Models.TrPaymentHeader", "TrPaymentHeader")
                         .WithMany("TrPaymentLines")
                         .HasForeignKey("PaymentHeaderId")
@@ -2189,8 +2171,6 @@ namespace Foxoft.Migrations
                         .HasForeignKey("PaymentTypeCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DcCurrency");
 
                     b.Navigation("DcPaymentType");
 
@@ -2253,13 +2233,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcCurrAccType", b =>
                 {
                     b.Navigation("DcCurrAccs");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcCurrency", b =>
-                {
-                    b.Navigation("TrInvoiceLines");
-
-                    b.Navigation("TrPaymentLines");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcFeature", b =>

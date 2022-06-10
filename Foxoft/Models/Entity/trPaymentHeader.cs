@@ -77,7 +77,7 @@ namespace Foxoft.Models
         [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string CurrencyCode { get; set; }
 
-        [DisplayName("Valyuta Dərəcəsi")]
+        [DisplayName("Valyuta Kursu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public double ExchangeRate { get; set; }

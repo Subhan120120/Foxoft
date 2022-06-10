@@ -43,6 +43,7 @@ namespace Foxoft.Models
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<DcVariable> DcVariables { get; set; }
         public DbSet<TrPrice> TrPrices { get; set; }
+        public DbSet<DcCurrency> DcCurrencies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -132,6 +133,10 @@ namespace Foxoft.Models
                 new DcCurrAccType { CurrAccTypeCode = 2, CurrAccTypeDesc = "Tədarikçi" },
                 new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" }
                 );
+
+            modelBuilder.Entity<DcCurrency>().HasData(
+                new DcCurrency { CurrencyCode = "AZE", CurrencyDesc = "₼", ExchangeRate = 1 },
+                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$", ExchangeRate = 1.703f });
 
             modelBuilder.Entity<DcRole>(entity =>
             {
@@ -235,7 +240,7 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "P", ProcessDescription = "Ödəmə" },
                 new DcProcess { ProcessCode = "SB", ProcessDescription = "Toptan Alış" },
                 new DcProcess { ProcessCode = "W", ProcessDescription = "Toptan Satış" },
-                new DcProcess { ProcessCode = "EX", ProcessDescription = "Xərclər" } ,
+                new DcProcess { ProcessCode = "EX", ProcessDescription = "Xərclər" },
                 new DcProcess { ProcessCode = "PE", ProcessDescription = "Dovr" }
                 );
 
@@ -511,8 +516,8 @@ namespace Foxoft.Models
                 entity.Property(e => e.QtyOut)
                     .HasDefaultValueSql("0");
 
-                entity.Property(e => e.CurrencyCode)
-                    .HasDefaultValueSql("space(0)");
+                //entity.Property(e => e.CurrencyCode)
+                //    .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.DiscountCampaign)
                     .HasDefaultValueSql("0");
@@ -611,8 +616,8 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrPaymentLine>(entity =>
             {
-                entity.Property(e => e.CurrencyCode)
-                    .HasDefaultValueSql("space(0)");
+                //entity.Property(e => e.CurrencyCode)
+                //    .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.LineDescription)
                     .HasDefaultValueSql("space(0)");

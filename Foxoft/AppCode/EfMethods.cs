@@ -479,6 +479,14 @@ namespace Foxoft
             }
         }
 
+        public List<DcCurrency> SelectCurrencies()
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcCurrencies.ToList(); // burdaki kolonlari dizaynda da elave et
+            }
+        }
+
         public List<DcStore> SelectStores()
         {
             using (subContext db = new subContext())

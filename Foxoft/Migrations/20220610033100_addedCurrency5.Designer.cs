@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220610033100_addedCurrency5")]
+    partial class addedCurrency5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -354,6 +356,13 @@ namespace Foxoft.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("CreatedUserName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("CurrencyDesc")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -361,23 +370,16 @@ namespace Foxoft.Migrations
                     b.Property<float>("ExchangeRate")
                         .HasColumnType("real");
 
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.HasKey("CurrencyCode");
 
                     b.ToTable("DcCurrencies");
-
-                    b.HasData(
-                        new
-                        {
-                            CurrencyCode = "AZE",
-                            CurrencyDesc = "Azərbaycan Manatı",
-                            ExchangeRate = 1f
-                        },
-                        new
-                        {
-                            CurrencyCode = "USD",
-                            CurrencyDesc = "Amerikan Dolları",
-                            ExchangeRate = 1.703f
-                        });
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcFeature", b =>
