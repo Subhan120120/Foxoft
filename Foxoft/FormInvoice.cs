@@ -60,6 +60,7 @@ namespace Foxoft
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_Currency.DataSource = efMethods.SelectCurrencies();
 
+
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();
             badge2 = new Badge();
@@ -142,7 +143,9 @@ namespace Foxoft
                                                 {
                                                     x.ProductDescription = x.DcProduct.ProductDescription;
 
-                                                    x.Price = x.Price / x.ExchangeRate; //ferqli valyutada gostermek
+                                                    x.Price = Math.Round(x.Price / x.ExchangeRate, 4); //ferqli valyutada gostermek
+                                                    x.Amount = Math.Round(x.Amount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
+                                                    x.NetAmount = Math.Round(x.NetAmount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
 
                                                     if (form.trInvoiceHeader.IsReturn)
                                                     {
@@ -152,6 +155,8 @@ namespace Foxoft
                                                         x.NetAmount = x.NetAmount * (-1);
                                                     }
                                                 });
+
+
 
                                                 trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
 
@@ -218,9 +223,9 @@ namespace Foxoft
 
         private void CalcRowNetAmount(CellValueChangedEventArgs e)
         {
-            object objPrice = gV_InvoiceLine.GetFocusedRowCellValue("Price");
-            object objQty = gV_InvoiceLine.GetFocusedRowCellValue(CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
-            object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue("PosDiscount");
+            object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, col_Price);
+            object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut);
+            object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue(col_PosDiscount);
 
             if (e.Value != null && e.Column == col_Price)
                 objPrice = e.Value;
@@ -233,8 +238,8 @@ namespace Foxoft
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
             decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount, CultureInfo.InvariantCulture) : 0;
 
-            gV_InvoiceLine.SetFocusedRowCellValue("Amount", Qty * Price);
-            gV_InvoiceLine.SetFocusedRowCellValue("NetAmount", Qty * Price - PosDiscount);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Qty * Price);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price - PosDiscount);
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -346,7 +351,7 @@ namespace Foxoft
                     double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
 
-                    CalcRowNetAmount(new CellValueChangedEventArgs(0, col_Price, null));
+                    CalcRowNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, col_Price, null));
                 }
             }
             //}
@@ -380,6 +385,8 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
+                MakeCellsAbs();
+
                 decimal summaryNetAmount = Convert.ToDecimal(col_NetAmount.SummaryItem.SummaryValue);
 
                 if (trInvoiceHeader.IsReturn)
@@ -389,12 +396,15 @@ namespace Foxoft
 
                 if (summaryNetAmount != 0)
                 {
+
                     SaveInvoice();
 
                     MakePayment(Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2));
 
                     SaveSession();
+
                     ClearControlsAddNew();
+
                     LoadSession();
 
                     GetPrint();
@@ -413,7 +423,11 @@ namespace Foxoft
             if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
                 efMethods.InsertInvoiceHeader(trInvoiceHeader);
 
+            dbContext.SaveChanges();
+        }
 
+        private void MakeCellsAbs()
+        {
             for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
             {
                 if ((bool)CheckEdit_IsReturn.EditValue)
@@ -439,10 +453,11 @@ namespace Foxoft
                 float exRate = (float)gV_InvoiceLine.GetRowCellValue(i, colExchangeRate);
                 double price = (double)gV_InvoiceLine.GetRowCellValue(i, col_Price);
 
-                gV_InvoiceLine.SetRowCellValue(i, "NetAmount", price * exRate);
-            }
+                price = Math.Round(price * exRate, 4);
 
-            dbContext.SaveChanges();
+                gV_InvoiceLine.SetRowCellValue(i, col_Price, price);
+                CalcRowNetAmount(new CellValueChangedEventArgs(i, col_Price, price));
+            }
         }
 
         private void GetPrint()
@@ -464,9 +479,9 @@ namespace Foxoft
             }
         }
 
-        private void MakePayment(decimal paidAmount)
+        private void MakePayment(decimal bePaidAmount)
         {
-            using (FormPayment formPayment = new FormPayment(1, paidAmount, trInvoiceHeader))
+            using (FormPayment formPayment = new FormPayment(1, bePaidAmount, trInvoiceHeader))
             {
                 if (formPayment.ShowDialog(this) == DialogResult.OK)
                 {
@@ -568,7 +583,16 @@ namespace Foxoft
             if (efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
             {
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
                     efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
+                    efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+                    ClearControlsAddNew();
+
+                    LoadSession();
+
+                    dataLayoutControl1.isValid(out List<string> errorList);
+                }
             }
             else
                 XtraMessageBox.Show("Silinmeli olan faktura yoxdur");

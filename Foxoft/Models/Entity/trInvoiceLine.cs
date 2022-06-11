@@ -75,7 +75,7 @@ namespace Foxoft.Models
 
         [DisplayName("Valyuta Kursu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public float ExchangeRate { get; set; } = 1;
+        public float ExchangeRate { get; set; } = 1; 
 
 
         [NotMapped]

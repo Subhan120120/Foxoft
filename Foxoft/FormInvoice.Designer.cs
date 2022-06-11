@@ -333,11 +333,13 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.repoLUE_Currency.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", "")});
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "")});
             this.repoLUE_Currency.DisplayMember = "CurrencyDesc";
             this.repoLUE_Currency.Name = "repoLUE_Currency";
             this.repoLUE_Currency.NullText = "";
+            this.repoLUE_Currency.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoSuggest;
+            this.repoLUE_Currency.ShowFooter = false;
+            this.repoLUE_Currency.ShowHeader = false;
             this.repoLUE_Currency.ValueMember = "CurrencyCode";
             this.repoLUE_Currency.EditValueChanged += new System.EventHandler(this.repoLUE_Currency_EditValueChanged);
             // 

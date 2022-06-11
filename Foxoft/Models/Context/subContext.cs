@@ -135,7 +135,7 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcCurrency>().HasData(
-                new DcCurrency { CurrencyCode = "AZE", CurrencyDesc = "₼", ExchangeRate = 1 },
+                new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "₼", ExchangeRate = 1 },
                 new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$", ExchangeRate = 1.703f });
 
             modelBuilder.Entity<DcRole>(entity =>
