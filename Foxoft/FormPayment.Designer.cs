@@ -30,15 +30,16 @@ namespace Foxoft
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPayment));
-            DevExpress.XtraLayout.ColumnDefinition columnDefinition5 = new DevExpress.XtraLayout.ColumnDefinition();
-            DevExpress.XtraLayout.ColumnDefinition columnDefinition6 = new DevExpress.XtraLayout.ColumnDefinition();
-            DevExpress.XtraLayout.ColumnDefinition columnDefinition7 = new DevExpress.XtraLayout.ColumnDefinition();
-            DevExpress.XtraLayout.ColumnDefinition columnDefinition8 = new DevExpress.XtraLayout.ColumnDefinition();
-            DevExpress.XtraLayout.RowDefinition rowDefinition5 = new DevExpress.XtraLayout.RowDefinition();
-            DevExpress.XtraLayout.RowDefinition rowDefinition6 = new DevExpress.XtraLayout.RowDefinition();
-            DevExpress.XtraLayout.RowDefinition rowDefinition7 = new DevExpress.XtraLayout.RowDefinition();
-            DevExpress.XtraLayout.RowDefinition rowDefinition8 = new DevExpress.XtraLayout.RowDefinition();
+            DevExpress.XtraLayout.ColumnDefinition columnDefinition1 = new DevExpress.XtraLayout.ColumnDefinition();
+            DevExpress.XtraLayout.ColumnDefinition columnDefinition2 = new DevExpress.XtraLayout.ColumnDefinition();
+            DevExpress.XtraLayout.ColumnDefinition columnDefinition3 = new DevExpress.XtraLayout.ColumnDefinition();
+            DevExpress.XtraLayout.ColumnDefinition columnDefinition4 = new DevExpress.XtraLayout.ColumnDefinition();
+            DevExpress.XtraLayout.RowDefinition rowDefinition1 = new DevExpress.XtraLayout.RowDefinition();
+            DevExpress.XtraLayout.RowDefinition rowDefinition2 = new DevExpress.XtraLayout.RowDefinition();
+            DevExpress.XtraLayout.RowDefinition rowDefinition3 = new DevExpress.XtraLayout.RowDefinition();
+            DevExpress.XtraLayout.RowDefinition rowDefinition4 = new DevExpress.XtraLayout.RowDefinition();
             this.lC_Root = new DevExpress.XtraLayout.LayoutControl();
+            this.dateEdit_Date = new DevExpress.XtraEditors.DateEdit();
             this.txtEdit_Cash = new DevExpress.XtraEditors.TextEdit();
             this.txtEdit_Cashless = new DevExpress.XtraEditors.TextEdit();
             this.txtEdit_Bonus = new DevExpress.XtraEditors.TextEdit();
@@ -63,7 +64,7 @@ namespace Foxoft
             this.btn_Enter = new DevExpress.XtraEditors.SimpleButton();
             this.btn_C = new DevExpress.XtraEditors.SimpleButton();
             this.btn_BackSpace = new DevExpress.XtraEditors.SimpleButton();
-            this.comboEdit_Currency = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.lUE_cashCurrency = new DevExpress.XtraEditors.LookUpEdit();
             this.btn_UpdateBonus = new DevExpress.XtraEditors.SimpleButton();
             this.lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lCG_Cash = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -97,16 +98,17 @@ namespace Foxoft
             this.lCI_Cancel = new DevExpress.XtraLayout.LayoutControlItem();
             this.lCI_Ok = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.dateEdit_Date = new DevExpress.XtraEditors.DateEdit();
             this.lCI_Date = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.lC_Root)).BeginInit();
             this.lC_Root.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cash.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cashless.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Bonus.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_CustomerBonus.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Bank.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comboEdit_Currency.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lUE_cashCurrency.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCG_Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCG_Cash)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Cash)).BeginInit();
@@ -139,8 +141,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Cancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Ok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Date)).BeginInit();
             this.SuspendLayout();
             // 
@@ -171,7 +171,7 @@ namespace Foxoft
             this.lC_Root.Controls.Add(this.btn_Enter);
             this.lC_Root.Controls.Add(this.btn_C);
             this.lC_Root.Controls.Add(this.btn_BackSpace);
-            this.lC_Root.Controls.Add(this.comboEdit_Currency);
+            this.lC_Root.Controls.Add(this.lUE_cashCurrency);
             this.lC_Root.Controls.Add(this.btn_UpdateBonus);
             this.lC_Root.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lC_Root.Location = new System.Drawing.Point(0, 0);
@@ -181,6 +181,19 @@ namespace Foxoft
             this.lC_Root.Size = new System.Drawing.Size(612, 435);
             this.lC_Root.TabIndex = 0;
             this.lC_Root.Text = "layoutControl1";
+            // 
+            // dateEdit_Date
+            // 
+            this.dateEdit_Date.EditValue = null;
+            this.dateEdit_Date.Location = new System.Drawing.Point(344, 12);
+            this.dateEdit_Date.Name = "dateEdit_Date";
+            this.dateEdit_Date.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_Date.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_Date.Size = new System.Drawing.Size(256, 20);
+            this.dateEdit_Date.StyleController = this.lC_Root;
+            this.dateEdit_Date.TabIndex = 25;
             // 
             // txtEdit_Cash
             // 
@@ -513,22 +526,25 @@ namespace Foxoft
             this.btn_BackSpace.Text = "←";
             this.btn_BackSpace.Click += new System.EventHandler(this.simpleButtonNum_Click);
             // 
-            // comboEdit_Currency
+            // lUE_cashCurrency
             // 
-            this.comboEdit_Currency.Location = new System.Drawing.Point(102, 81);
-            this.comboEdit_Currency.Name = "comboEdit_Currency";
-            this.comboEdit_Currency.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.comboEdit_Currency.Properties.Appearance.Options.UseFont = true;
-            this.comboEdit_Currency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.lUE_cashCurrency.Location = new System.Drawing.Point(102, 81);
+            this.lUE_cashCurrency.Name = "lUE_cashCurrency";
+            this.lUE_cashCurrency.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lUE_cashCurrency.Properties.Appearance.Options.UseFont = true;
+            this.lUE_cashCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboEdit_Currency.Properties.DropDownRows = 3;
-            this.comboEdit_Currency.Properties.Items.AddRange(new object[] {
-            "AZN",
-            "EUR",
-            "ABD"});
-            this.comboEdit_Currency.Size = new System.Drawing.Size(148, 32);
-            this.comboEdit_Currency.StyleController = this.lC_Root;
-            this.comboEdit_Currency.TabIndex = 23;
+            this.lUE_cashCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", "")});
+            this.lUE_cashCurrency.Properties.DisplayMember = "CurrencyDesc";
+            this.lUE_cashCurrency.Properties.NullText = "";
+            this.lUE_cashCurrency.Properties.ValueMember = "CurrencyCode";
+            this.lUE_cashCurrency.Size = new System.Drawing.Size(148, 32);
+            this.lUE_cashCurrency.StyleController = this.lC_Root;
+            this.lUE_cashCurrency.TabIndex = 23;
+            this.lUE_cashCurrency.EditValueChanged += new System.EventHandler(this.lUE_cashCurrency_EditValueChanged);
             // 
             // btn_UpdateBonus
             // 
@@ -583,7 +599,7 @@ namespace Foxoft
             // 
             // lCI_Currency
             // 
-            this.lCI_Currency.Control = this.comboEdit_Currency;
+            this.lCI_Currency.Control = this.lUE_cashCurrency;
             this.lCI_Currency.Location = new System.Drawing.Point(0, 36);
             this.lCI_Currency.Name = "layoutControlItemCurrency";
             this.lCI_Currency.Size = new System.Drawing.Size(230, 36);
@@ -666,32 +682,32 @@ namespace Foxoft
             this.lCG_Barcode.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
             this.lCG_Barcode.Location = new System.Drawing.Point(254, 24);
             this.lCG_Barcode.Name = "layoutControlGroupBarcode";
-            columnDefinition5.SizeType = System.Windows.Forms.SizeType.Percent;
-            columnDefinition5.Width = 25D;
-            columnDefinition6.SizeType = System.Windows.Forms.SizeType.Percent;
-            columnDefinition6.Width = 25D;
-            columnDefinition7.SizeType = System.Windows.Forms.SizeType.Percent;
-            columnDefinition7.Width = 25D;
-            columnDefinition8.SizeType = System.Windows.Forms.SizeType.Percent;
-            columnDefinition8.Width = 25D;
+            columnDefinition1.SizeType = System.Windows.Forms.SizeType.Percent;
+            columnDefinition1.Width = 25D;
+            columnDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
+            columnDefinition2.Width = 25D;
+            columnDefinition3.SizeType = System.Windows.Forms.SizeType.Percent;
+            columnDefinition3.Width = 25D;
+            columnDefinition4.SizeType = System.Windows.Forms.SizeType.Percent;
+            columnDefinition4.Width = 25D;
             this.lCG_Barcode.OptionsTableLayoutGroup.ColumnDefinitions.AddRange(new DevExpress.XtraLayout.ColumnDefinition[] {
-            columnDefinition5,
-            columnDefinition6,
-            columnDefinition7,
-            columnDefinition8});
-            rowDefinition5.Height = 25D;
-            rowDefinition5.SizeType = System.Windows.Forms.SizeType.Percent;
-            rowDefinition6.Height = 25D;
-            rowDefinition6.SizeType = System.Windows.Forms.SizeType.Percent;
-            rowDefinition7.Height = 25D;
-            rowDefinition7.SizeType = System.Windows.Forms.SizeType.Percent;
-            rowDefinition8.Height = 25D;
-            rowDefinition8.SizeType = System.Windows.Forms.SizeType.Percent;
+            columnDefinition1,
+            columnDefinition2,
+            columnDefinition3,
+            columnDefinition4});
+            rowDefinition1.Height = 25D;
+            rowDefinition1.SizeType = System.Windows.Forms.SizeType.Percent;
+            rowDefinition2.Height = 25D;
+            rowDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
+            rowDefinition3.Height = 25D;
+            rowDefinition3.SizeType = System.Windows.Forms.SizeType.Percent;
+            rowDefinition4.Height = 25D;
+            rowDefinition4.SizeType = System.Windows.Forms.SizeType.Percent;
             this.lCG_Barcode.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
-            rowDefinition5,
-            rowDefinition6,
-            rowDefinition7,
-            rowDefinition8});
+            rowDefinition1,
+            rowDefinition2,
+            rowDefinition3,
+            rowDefinition4});
             this.lCG_Barcode.Size = new System.Drawing.Size(338, 327);
             this.lCG_Barcode.Text = "Barcode";
             // 
@@ -985,19 +1001,6 @@ namespace Foxoft
             this.emptySpaceItem1.Size = new System.Drawing.Size(436, 64);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
-            // dateEdit_Date
-            // 
-            this.dateEdit_Date.EditValue = null;
-            this.dateEdit_Date.Location = new System.Drawing.Point(344, 12);
-            this.dateEdit_Date.Name = "dateEdit_Date";
-            this.dateEdit_Date.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit_Date.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit_Date.Size = new System.Drawing.Size(256, 20);
-            this.dateEdit_Date.StyleController = this.lC_Root;
-            this.dateEdit_Date.TabIndex = 25;
-            // 
             // lCI_Date
             // 
             this.lCI_Date.Control = this.dateEdit_Date;
@@ -1019,12 +1022,14 @@ namespace Foxoft
             this.Load += new System.EventHandler(this.FormPayment_Load);
             ((System.ComponentModel.ISupportInitialize)(this.lC_Root)).EndInit();
             this.lC_Root.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cash.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Cashless.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Bonus.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_CustomerBonus.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Bank.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comboEdit_Currency.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lUE_cashCurrency.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCG_Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCG_Cash)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Cash)).EndInit();
@@ -1057,8 +1062,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Cancel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Ok)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Date.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lCI_Date)).EndInit();
             this.ResumeLayout(false);
 
@@ -1121,7 +1124,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem lCI_Enter;
         private DevExpress.XtraLayout.LayoutControlItem lCI_C;
         private DevExpress.XtraLayout.LayoutControlItem lCI_BackSpace;
-        private DevExpress.XtraEditors.ComboBoxEdit comboEdit_Currency;
+        private DevExpress.XtraEditors.LookUpEdit lUE_cashCurrency;
         private DevExpress.XtraLayout.LayoutControlItem lCI_Currency;
         private DevExpress.XtraEditors.SimpleButton btn_UpdateBonus;
         private DevExpress.XtraLayout.LayoutControlItem lCI_UpdateBonus;

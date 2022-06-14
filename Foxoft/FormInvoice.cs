@@ -6,7 +6,9 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
@@ -143,9 +145,9 @@ namespace Foxoft
                                                 {
                                                     x.ProductDescription = x.DcProduct.ProductDescription;
 
-                                                    x.Price = Math.Round(x.Price / x.ExchangeRate, 4); //ferqli valyutada gostermek
-                                                    x.Amount = Math.Round(x.Amount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
-                                                    x.NetAmount = Math.Round(x.NetAmount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
+                                                    //x.Price = Math.Round(x.Price / x.ExchangeRate, 4); //ferqli valyutada gostermek
+                                                    //x.Amount = Math.Round(x.Amount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
+                                                    //x.NetAmount = Math.Round(x.NetAmount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
 
                                                     if (form.trInvoiceHeader.IsReturn)
                                                     {
@@ -207,39 +209,89 @@ namespace Foxoft
 
         private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
         {
+            GridView gV = sender as GridView;
+
             if (e.KeyCode == Keys.Delete)
             {
                 if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
                     return;
-                GridView gV = sender as GridView;
+
                 gV.DeleteSelectedRows();
+            }
+
+            if (e.KeyCode == Keys.F1)
+            {
+                gV_InvoiceLine.OptionsNavigation.AutoFocusNewRow = true;
+            }
+
+            if (e.KeyCode == Keys.F2)
+            {
+                repoBtnEdit_ProductCode.Buttons[0].PerformClick();
+                //if (gV.FocusedRowHandle >= 0 && gV.FocusedColumn != null)
+                //{
+                //    GridViewInfo viewInfo = gV.GetViewInfo() as GridViewInfo;
+                //    GridCellInfo cellInfo = viewInfo.GetGridCellInfo(gV.FocusedRowHandle, col_ProductCode);
+                //    if (cellInfo != null)
+                //    {
+                //        RepositoryItem item = cellInfo.Editor;
+                //        SelectProduct(item);
+                            
+                //        //propertyGridControl1.SelectedObject = item;
+                //        //propertyGridControl1.RetrieveFields();
+                //    }
+                //}
             }
         }
 
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
-            CalcRowNetAmount(e);
+            CalcRowLocNetAmount(e);
         }
 
-        private void CalcRowNetAmount(CellValueChangedEventArgs e)
+        private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
         {
             object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, col_Price);
             object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut);
-            object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue(col_PosDiscount);
+            object objExRate = gV_InvoiceLine.GetFocusedRowCellValue(colExchangeRate);
+            object objPriceLoc = gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc);
+
+
+            decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
+            decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
+            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
+            decimal PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
 
             if (e.Value != null && e.Column == col_Price)
+            {
                 objPrice = e.Value;
-            if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
+                Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Price * exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * Price * exRate);
+
+            }
+            else if (e.Value != null && e.Column == colPriceLoc)
+            {
+                objPriceLoc = e.Value;
+                PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Price, PriceLoc / exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * PriceLoc / exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * PriceLoc);
+            }
+            else if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
+            {
                 objQty = e.Value;
-            if (e.Value != null && e.Column == col_PosDiscount)
-                objPosDiscount = e.Value;
-
-            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
-            decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
-            decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount, CultureInfo.InvariantCulture) : 0;
-
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Qty * Price);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price - PosDiscount);
+                Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * PriceLoc);
+            }
+            else if (e.Value != null && e.Column == colExchangeRate)
+            {
+                objExRate = e.Value;
+                exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Price * exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * Price * exRate);
+            }
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -346,12 +398,14 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
+                    //gV_InvoiceLine.AddNewRow();
+                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, form.dcProduct.ProductCode);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
 
                     double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
 
-                    CalcRowNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, col_Price, null));
+                    CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, col_Price, price));
                 }
             }
             //}
@@ -385,23 +439,16 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                MakeCellsAbs();
-
-                decimal summaryNetAmount = Convert.ToDecimal(col_NetAmount.SummaryItem.SummaryValue);
-
-                if (trInvoiceHeader.IsReturn)
-                    summaryNetAmount *= (-1);
-                if (CustomExtensions.ProcessDir(processCode) == "In")
-                    summaryNetAmount *= (-1);
+                decimal summaryNetAmount = CalcSumNetAmount();
 
                 if (summaryNetAmount != 0)
                 {
-
                     SaveInvoice();
 
-                    MakePayment(Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2));
-
                     SaveSession();
+
+                    decimal bePaidAmount = Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2);
+                    MakePayment(bePaidAmount);
 
                     ClearControlsAddNew();
 
@@ -418,45 +465,55 @@ namespace Foxoft
             }
         }
 
+        private decimal CalcSumNetAmount()
+        {
+            decimal summaryNetAmount = 0;
+
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            {
+                decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
+                summaryNetAmount += netAmount;
+            }
+
+            if ((bool)CheckEdit_IsReturn.EditValue)
+                summaryNetAmount *= (-1);
+            return summaryNetAmount;
+        }
+
+        //private void ConvertCurrency(int rowInd)
+        //{
+        //    float exRate = (float)gV_InvoiceLine.GetRowCellValue(rowInd, colExchangeRate);
+        //    double price = (double)gV_InvoiceLine.GetRowCellValue(rowInd, col_Price);
+
+        //    price = Math.Round(price * exRate, 4);
+
+        //    gV_InvoiceLine.SetRowCellValue(rowInd, col_Price, price);
+        //    CalcRowLocNetAmount(new CellValueChangedEventArgs(rowInd, col_Price, price));
+        //}
+
         private void SaveInvoice()
         {
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            {
+                MakeReturnIsNegativ(i);
+            }
+
             if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
                 efMethods.InsertInvoiceHeader(trInvoiceHeader);
 
             dbContext.SaveChanges();
         }
 
-        private void MakeCellsAbs()
+        private void MakeReturnIsNegativ(int rowInd)
         {
-            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            if ((bool)CheckEdit_IsReturn.EditValue)
             {
-                if ((bool)CheckEdit_IsReturn.EditValue)
-                {
-                    if (CustomExtensions.ProcessDir(processCode) == "In")
-                    {
-                        int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyIn"));
-                        gV_InvoiceLine.SetRowCellValue(i, "QtyIn", qty * (-1));
-                    }
-                    else if (CustomExtensions.ProcessDir(processCode) == "Out")
-                    {
-                        int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyOut"));
-                        gV_InvoiceLine.SetRowCellValue(i, "QtyOut", qty * (-1));
-                    }
+                GridColumn qtyColumn = CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut;
 
-                    int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
-                    gV_InvoiceLine.SetRowCellValue(i, "Amount", amount * (-1));
+                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowInd, qtyColumn));
+                gV_InvoiceLine.SetRowCellValue(rowInd, qtyColumn, qty * (-1));
 
-                    int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
-                    gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
-                }
-
-                float exRate = (float)gV_InvoiceLine.GetRowCellValue(i, colExchangeRate);
-                double price = (double)gV_InvoiceLine.GetRowCellValue(i, col_Price);
-
-                price = Math.Round(price * exRate, 4);
-
-                gV_InvoiceLine.SetRowCellValue(i, col_Price, price);
-                CalcRowNetAmount(new CellValueChangedEventArgs(i, col_Price, price));
+                CalcRowLocNetAmount(new CellValueChangedEventArgs(rowInd, qtyColumn, qty * (-1)));
             }
         }
 
@@ -563,7 +620,20 @@ namespace Foxoft
 
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            if (dataLayoutControl1.isValid(out List<string> errorList))
+            {
+                decimal summaryNetAmount = CalcSumNetAmount();
+                if (summaryNetAmount != 0)
+                {
+                    SaveInvoice();
+                    SaveSession();
+                }
+            }
+            else
+            {
+                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(combinedString);
+            }
         }
 
         private void trInvoiceLinesBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -573,9 +643,29 @@ namespace Foxoft
             //e.NewObject = line;
         }
 
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
         {
+            DialogResult dialogResult = MessageBox.Show("Qaimə yadda saxlanılsınmı?");
+            if (dialogResult == DialogResult.OK)
+            {
+                if (dataLayoutControl1.isValid(out List<string> errorList))
+                {
+                    decimal summaryNetAmount = CalcSumNetAmount();
+                    if (summaryNetAmount != 0)
+                    {
+                        SaveInvoice();
+                        SaveSession();
+                    }
 
+                    decimal bePaidAmount = Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2);
+                    MakePayment(bePaidAmount);
+                }
+                else
+                {
+                    string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                    XtraMessageBox.Show(combinedString);
+                }
+            }
         }
 
         private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
@@ -612,6 +702,14 @@ namespace Foxoft
             LookUpEdit textEditor = (LookUpEdit)sender;
             float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
             gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, exRate);
+
+            CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, colExchangeRate, exRate));
+
+        }
+
+        private void repoBtnEdit_ProductCode_ButtonPressed(object sender, EventArgs e)
+        {
+            SelectProduct(sender);
         }
     }
 }

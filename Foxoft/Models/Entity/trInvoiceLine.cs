@@ -41,9 +41,17 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public double Price { get; set; }
 
+        [DisplayName("Qiymət (AZN)")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public double PriceLoc { get; set; }
+
         [Column(TypeName = "money")]
         [DisplayName("Tutar")]
         public decimal Amount { get; set; }
+
+        [Column(TypeName = "money")]
+        [DisplayName("Tutar (AZN)")]
+        public decimal AmountLoc { get; set; }
 
         [DisplayName("Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
@@ -51,12 +59,16 @@ namespace Foxoft.Models
         public decimal PosDiscount { get; set; }
 
         [Column(TypeName = "money")]
-        [DisplayName("Kampaniya Endirimi")]
-        public decimal DiscountCampaign { get; set; }
-
-        [Column(TypeName = "money")]
         [DisplayName("Net Tutar")]
         public decimal NetAmount { get; set; }
+
+        [Column(TypeName = "money")]
+        [DisplayName("Net Tutar (AZN)")]
+        public decimal NetAmountLoc { get; set; }
+
+        [Column(TypeName = "money")]
+        [DisplayName("Kampaniya Endirimi")]
+        public decimal DiscountCampaign { get; set; }
 
         [DisplayName("ƏDV")]
         public float VatRate { get; set; }
@@ -75,7 +87,7 @@ namespace Foxoft.Models
 
         [DisplayName("Valyuta Kursu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public float ExchangeRate { get; set; } = 1; 
+        public float ExchangeRate { get; set; } = 1.703f;
 
 
         [NotMapped]

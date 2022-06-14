@@ -3,7 +3,7 @@
 namespace Foxoft.Models
 {
  
-    public class GetNextDocNum
+    public partial class GetNextDocNum
     {
         public string Value { get; set; }
     }

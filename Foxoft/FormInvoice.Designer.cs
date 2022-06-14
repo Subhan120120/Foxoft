@@ -47,6 +47,8 @@ namespace Foxoft
             this.repoBtnEdit_ProductCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colQtyIn = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colQtyOut = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colPriceLoc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoCalcEdit_PriceLoc = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.col_Price = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoCalcEdit_Price = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -60,6 +62,8 @@ namespace Foxoft
             this.repoBtnEdit_SalesPersonCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colAmountLoc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colNetAmountLoc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -89,7 +93,7 @@ namespace Foxoft
             this.bBI_Save = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_SaveAndNew = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_reportDesign = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_Payment = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_New = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
@@ -107,6 +111,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_PriceLoc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_Currency)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).BeginInit();
@@ -205,7 +210,8 @@ namespace Foxoft
             this.repoBtnEdit_ProductCode,
             this.repoBtnEdit_SalesPersonCode,
             this.repoCalcEdit_Price,
-            this.repoLUE_Currency});
+            this.repoLUE_Currency,
+            this.repoCalcEdit_PriceLoc});
             this.gC_InvoiceLine.Size = new System.Drawing.Size(847, 289);
             this.gC_InvoiceLine.TabIndex = 13;
             this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -219,6 +225,7 @@ namespace Foxoft
             this.col_ProductCode,
             this.colQtyIn,
             this.colQtyOut,
+            this.colPriceLoc,
             this.col_Price,
             this.colCurrencyCode,
             this.colExchangeRate,
@@ -228,7 +235,9 @@ namespace Foxoft
             this.col_LineDesc,
             this.col_SalesPersonCode,
             this.colCreatedDate,
-            this.col_ProductDesc});
+            this.col_ProductDesc,
+            this.colAmountLoc,
+            this.colNetAmountLoc});
             this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1096, 456, 264, 272);
             this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
             this.gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -277,6 +286,7 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
             this.repoBtnEdit_ProductCode.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoBtnEdit_ProductCode_ButtonPressed);
+
             // 
             // colQtyIn
             // 
@@ -294,6 +304,21 @@ namespace Foxoft
             this.colQtyOut.VisibleIndex = 3;
             this.colQtyOut.Width = 89;
             // 
+            // colPriceLoc
+            // 
+            this.colPriceLoc.ColumnEdit = this.repoCalcEdit_PriceLoc;
+            this.colPriceLoc.FieldName = "PriceLoc";
+            this.colPriceLoc.Name = "colPriceLoc";
+            this.colPriceLoc.Visible = true;
+            this.colPriceLoc.VisibleIndex = 4;
+            // 
+            // repoCalcEdit_PriceLoc
+            // 
+            this.repoCalcEdit_PriceLoc.AutoHeight = false;
+            this.repoCalcEdit_PriceLoc.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoCalcEdit_PriceLoc.Name = "repoCalcEdit_PriceLoc";
+            // 
             // col_Price
             // 
             this.col_Price.Caption = "Qiymət";
@@ -303,7 +328,7 @@ namespace Foxoft
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;
-            this.col_Price.VisibleIndex = 4;
+            this.col_Price.VisibleIndex = 5;
             this.col_Price.Width = 89;
             // 
             // repoCalcEdit_Price
@@ -323,7 +348,7 @@ namespace Foxoft
             this.colCurrencyCode.FieldName = "CurrencyCode";
             this.colCurrencyCode.Name = "colCurrencyCode";
             this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 5;
+            this.colCurrencyCode.VisibleIndex = 6;
             // 
             // repoLUE_Currency
             // 
@@ -348,7 +373,7 @@ namespace Foxoft
             this.colExchangeRate.FieldName = "ExchangeRate";
             this.colExchangeRate.Name = "colExchangeRate";
             this.colExchangeRate.Visible = true;
-            this.colExchangeRate.VisibleIndex = 6;
+            this.colExchangeRate.VisibleIndex = 7;
             // 
             // col_Amount
             // 
@@ -358,8 +383,6 @@ namespace Foxoft
             this.col_Amount.FieldName = "Amount";
             this.col_Amount.Name = "col_Amount";
             this.col_Amount.OptionsColumn.AllowEdit = false;
-            this.col_Amount.Visible = true;
-            this.col_Amount.VisibleIndex = 7;
             this.col_Amount.Width = 89;
             // 
             // col_PosDiscount
@@ -369,8 +392,6 @@ namespace Foxoft
             this.col_PosDiscount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.col_PosDiscount.FieldName = "PosDiscount";
             this.col_PosDiscount.Name = "col_PosDiscount";
-            this.col_PosDiscount.Visible = true;
-            this.col_PosDiscount.VisibleIndex = 8;
             this.col_PosDiscount.Width = 89;
             // 
             // col_NetAmount
@@ -383,7 +404,7 @@ namespace Foxoft
             this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "SUM={0:0.##}")});
             this.col_NetAmount.Visible = true;
-            this.col_NetAmount.VisibleIndex = 9;
+            this.col_NetAmount.VisibleIndex = 8;
             this.col_NetAmount.Width = 97;
             // 
             // col_LineDesc
@@ -423,6 +444,18 @@ namespace Foxoft
             this.col_ProductDesc.Visible = true;
             this.col_ProductDesc.VisibleIndex = 1;
             this.col_ProductDesc.Width = 100;
+            // 
+            // colAmountLoc
+            // 
+            this.colAmountLoc.FieldName = "AmountLoc";
+            this.colAmountLoc.Name = "colAmountLoc";
+            // 
+            // colNetAmountLoc
+            // 
+            this.colNetAmountLoc.FieldName = "NetAmountLoc";
+            this.colNetAmountLoc.Name = "colNetAmountLoc";
+            this.colNetAmountLoc.Visible = true;
+            this.colNetAmountLoc.VisibleIndex = 9;
             // 
             // CheckEdit_IsReturn
             // 
@@ -727,7 +760,7 @@ namespace Foxoft
             this.bBI_Save,
             this.bBI_SaveAndNew,
             this.bBI_reportDesign,
-            this.barButtonItem1,
+            this.bBI_Payment,
             this.bBI_New,
             this.bBI_reportPreview,
             this.bBI_DeleteInvoice,
@@ -765,13 +798,13 @@ namespace Foxoft
             this.bBI_reportDesign.Name = "bBI_reportDesign";
             this.bBI_reportDesign.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportDesign_ItemClick);
             // 
-            // barButtonItem1
+            // bBI_Payment
             // 
-            this.barButtonItem1.Caption = "Ödəmə";
-            this.barButtonItem1.Id = 5;
-            this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-            this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            this.bBI_Payment.Caption = "Ödəmə";
+            this.bBI_Payment.Id = 5;
+            this.bBI_Payment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Payment.ImageOptions.SvgImage")));
+            this.bBI_Payment.Name = "bBI_Payment";
+            this.bBI_Payment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Payment_ItemClick);
             // 
             // bBI_New
             // 
@@ -825,7 +858,7 @@ namespace Foxoft
             // 
             // ribbonPageGroup3
             // 
-            this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem1);
+            this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Payment);
             this.ribbonPageGroup3.ItemLinks.Add(this.bBI_DeletePayment);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "Ödəmə";
@@ -867,6 +900,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_PriceLoc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Price)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_Currency)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_SalesPersonCode)).EndInit();
@@ -951,7 +985,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SalesPersonCode;
         private DevExpress.XtraBars.BarButtonItem bBI_reportDesign;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem bBI_Payment;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraLayout.LayoutControlItem lbl_Payment;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyIn;
@@ -969,5 +1003,9 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_Currency;
         private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
+        private DevExpress.XtraGrid.Columns.GridColumn colPriceLoc;
+        private DevExpress.XtraGrid.Columns.GridColumn colAmountLoc;
+        private DevExpress.XtraGrid.Columns.GridColumn colNetAmountLoc;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PriceLoc;
     }
 }
