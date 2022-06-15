@@ -1,4 +1,6 @@
 ﻿using DevExpress.Data;
+using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.DataAccess.Sql;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.VisualEffects;
@@ -235,7 +237,7 @@ namespace Foxoft
                 //    {
                 //        RepositoryItem item = cellInfo.Editor;
                 //        SelectProduct(item);
-                            
+
                 //        //propertyGridControl1.SelectedObject = item;
                 //        //propertyGridControl1.RetrieveFields();
                 //    }
@@ -274,8 +276,8 @@ namespace Foxoft
             {
                 objPriceLoc = e.Value;
                 PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Price, PriceLoc / exRate);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * PriceLoc / exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Price, Math.Round(PriceLoc / exRate, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * PriceLoc / exRate, 2));
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * PriceLoc);
             }
             else if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
@@ -560,21 +562,7 @@ namespace Foxoft
             Settings.Default.Save();
         }
 
-        private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ReportClass reportClass = new ReportClass();
-            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = designFolder + "InvoiceRS_A5.repx";
 
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
-
-            if (File.Exists(designPath))
-            {
-                ReportDesignTool printTool = new ReportDesignTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-                printTool.ShowRibbonDesigner();
-            }
-        }
 
         private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
         {
@@ -597,23 +585,52 @@ namespace Foxoft
             dataLayoutControl1.isValid(out List<string> errorList);
         }
 
-        private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
+        private string subConnString = Settings.Default.subConnString;
+
+        private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //string[] asdsa = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            //foreach (var item in asdsa)
-            //{
-            //    MessageBox.Show(item.ToString());
-            //}
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = designFolder + "InvoiceRS_A5.repx";
+            string designPath = designFolder + "InvoiceRS_Tokla.repx";
 
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
             if (File.Exists(designPath))
             {
-                ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                DsMethods dsMethods = new DsMethods();
+                SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+                SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+                dataSource.Name = "Invoice";
+                dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+                dataSource.Fill();
+
+                ReportDesignTool printTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
+                printTool.ShowRibbonDesigner();
+            }
+        }
+
+        private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ReportClass reportClass = new ReportClass();
+            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+            string designPath = designFolder + "InvoiceRS_Tokla.repx";
+
+            if (!File.Exists(designPath))
+                designPath = reportClass.SelectDesign();
+
+            if (File.Exists(designPath))
+            {
+                DsMethods dsMethods = new DsMethods();
+                SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+
+                dataSource.Name = "Invoice";
+
+                SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+                dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+                dataSource.Fill();
+
+                ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(dataSource, designPath));
                 printTool.ShowRibbonPreview();
             }
         }

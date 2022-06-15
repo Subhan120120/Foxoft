@@ -30,9 +30,6 @@ namespace Foxoft
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            EfMethods efMethods = new EfMethods();
-            AppSetting appSetting = efMethods.SelectAppSetting();
-            Properties.Settings.Default.AppSetting = appSetting;
             Application.Run(new FormLogin());
         }
     }

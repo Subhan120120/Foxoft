@@ -287,6 +287,16 @@ namespace Foxoft
             }
         }
 
+        public int DeleteReport(int ReportId)
+        {
+            using (subContext db = new subContext())
+            {
+                DcReport dcReport = new DcReport() { ReportId = ReportId };
+                db.DcReports.Remove(dcReport);
+                return db.SaveChanges();
+            }
+        }
+
         public int UpdateInvoiceIsCompleted(Guid invoiceHeaderId)
         {
             using (subContext db = new subContext())
@@ -625,6 +635,14 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 return db.DcReports.FirstOrDefault(x => x.ReportId == id);
+            }
+        }
+
+        public List<DcReport> SelectReports()
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcReports.ToList();
             }
         }
 

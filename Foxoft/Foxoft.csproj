@@ -27,18 +27,20 @@
     <None Remove="AppCode\Qry_Payments.sql" />
     <None Remove="AppCode\Qry_PaymentVendors.sql" />
     <None Remove="AppCode\Qry_Sales.sql" />
+    <None Remove="AppCode\SqlQuery\Qry_Invoice.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="AppCode\GUNSONU.repx" />
+    <EmbeddedResource Include="AppCode\ReportDesign\GUNSONU.repx" />
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
-    <EmbeddedResource Include="AppCode\Qry_PaymentVendors.sql" />
-    <EmbeddedResource Include="AppCode\Qry_PaymentCustomers.sql" />
-    <EmbeddedResource Include="AppCode\Qry_CurrAccExtra.sql" />
-    <EmbeddedResource Include="AppCode\Qry_Expences.sql" />
-    <EmbeddedResource Include="AppCode\Qry_Payments.sql" />
-    <EmbeddedResource Include="AppCode\Qry_Debts.sql" />
-    <EmbeddedResource Include="AppCode\Qry_Sales.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentVendors.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentCustomers.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_CurrAccExtra.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Expences.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Payments.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Debts.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Invoice.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Sales.sql" />
   </ItemGroup>
 
   <ItemGroup>

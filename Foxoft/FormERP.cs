@@ -1,13 +1,17 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Utils;
+using DevExpress.Utils.Svg;
 using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 
@@ -21,6 +25,28 @@ namespace Foxoft
         public FormERP()
         {
             InitializeComponent();
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(FormERP));
+            EfMethods efMethods = new EfMethods();
+
+            List<DcReport> dcReports = efMethods.SelectReports();
+
+            foreach (var dcReport in dcReports)
+            {
+                AccordionControlElement aCE = new AccordionControlElement();
+                aCE.ImageOptions.SvgImage = ((SvgImage)(resources.GetObject("aCE_ReportGeneral.ImageOptions.SvgImage")));
+                aCE.Name = dcReport.ReportName;
+                aCE.Style = ElementStyle.Item;
+                aCE.Text = dcReport.ReportName;
+                aCE.Click += (sender, e) =>
+                {
+                    FormReportFilter formReport = new FormReportFilter(dcReport);
+                    formReport.MdiParent = this;
+                    formReport.Show();
+                    ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+                };
+
+                this.aCE_Reports.Elements.Add(aCE);
+            }
 
             adorners1 = new List<AdornerElement>();
             adornerUIManager1 = new AdornerUIManager(this.components);
@@ -81,7 +107,7 @@ namespace Foxoft
         {
             try
             {
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0]; // child form acanda ona aid olan ribbon acilsin
+                ribbonControl.SelectedPage = ribbonControl.MergedPages[0]; 
             }
             catch (Exception) { }
         }
@@ -106,20 +132,7 @@ namespace Foxoft
 
         private void aCE_Report_Click(object sender, EventArgs e)
         {
-            FormReportFilter formReport = Application.OpenForms["FormReportFilter"] as FormReportFilter;
 
-            if (formReport != null)
-            {
-                formReport.BringToFront();
-                formReport.Activate();
-            }
-            else
-            {
-                formReport = new FormReportFilter();
-                formReport.MdiParent = this;
-                formReport.Show();
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
-            }
         }
 
         private void aCE_CurrAccs_Click(object sender, EventArgs e)
@@ -251,8 +264,9 @@ namespace Foxoft
             dataSource.Queries.AddRange(new SqlQuery[] { sqlDepozit, sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryDbtCustomers, sqlQueryPaymentCustomers, sqlQueryPaymentVendors });
             dataSource.Fill();
 
-            string designPath = Settings.Default.AppSetting.PrintDesignPath;
+            // string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
+            string designPath = Path.Combine(Environment.CurrentDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
 
             if (!File.Exists(designPath))
             {
