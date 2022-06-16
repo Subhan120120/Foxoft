@@ -28,9 +28,9 @@ namespace Foxoft
             return (T)attribute;
         }
 
-        public static string GetPropertyDisplayName<T>(Expression<Func<T, object>> propertyExpression)
+        public static string GetPropertyDisplayName<T>(Expression<Func<T, object>> expression)
         {
-            var memberInfo = GetPropertyInformation(propertyExpression.Body);
+            var memberInfo = GetPropertyInformation(expression.Body);
             if (memberInfo == null)
             {
                 throw new ArgumentException(
@@ -47,13 +47,13 @@ namespace Foxoft
             return attr.DisplayName;
         }
 
-        public static MemberInfo GetPropertyInformation(Expression propertyExpression)
+        public static MemberInfo GetPropertyInformation(Expression expression)
         {
-            Debug.Assert(propertyExpression != null, "propertyExpression != null");
-            MemberExpression memberExpr = propertyExpression as MemberExpression;
+            Debug.Assert(expression != null, "propertyExpression != null");
+            MemberExpression memberExpr = expression as MemberExpression;
             if (memberExpr == null)
             {
-                UnaryExpression unaryExpr = propertyExpression as UnaryExpression;
+                UnaryExpression unaryExpr = expression as UnaryExpression;
                 if (unaryExpr != null && unaryExpr.NodeType == ExpressionType.Convert)
                 {
                     memberExpr = unaryExpr.Operand as MemberExpression;
