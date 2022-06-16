@@ -33,7 +33,13 @@ namespace Foxoft
             foreach (var dcReport in dcReports)
             {
                 AccordionControlElement aCE = new AccordionControlElement();
-                aCE.ImageOptions.SvgImage = ((SvgImage)(resources.GetObject("aCE_ReportGeneral.ImageOptions.SvgImage")));
+
+                aCE.ImageOptions.SvgImage = ((SvgImage)(resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage")));
+
+
+                //SvgImageCollection collection = SvgImageCollection.FromResources(typeof(FormERP).Assembly);
+                //aCE.ImageOptions.SvgImage = collection["bo_report"];
+
                 aCE.Name = dcReport.ReportName;
                 aCE.Style = ElementStyle.Item;
                 aCE.Text = dcReport.ReportName;
@@ -41,6 +47,7 @@ namespace Foxoft
                 {
                     FormReportFilter formReport = new FormReportFilter(dcReport);
                     formReport.MdiParent = this;
+                    formReport.Text = dcReport.ReportName;
                     formReport.Show();
                     ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
                 };
@@ -107,7 +114,7 @@ namespace Foxoft
         {
             try
             {
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0]; 
+                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
             }
             catch (Exception) { }
         }

@@ -4,6 +4,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using Foxoft.Models;
 using System;
+using System.Data;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -17,12 +18,16 @@ namespace Foxoft
         AdornerUIManager adornerUIManager1;
         int reportId;
         EfMethods efMethods = new EfMethods();
+        AdoMethods adoMethods = new AdoMethods();
 
-        public FormReportGrid(int reportId)
+        public FormReportGrid(string qry)
         {
-            this.reportId = reportId;
-
             InitializeComponent();
+
+            DataTable dt = adoMethods.SqlGetDt(qry);
+            gridControl1.DataSource = dt;
+
+            LoadLayout();
 
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();
@@ -32,6 +37,13 @@ namespace Foxoft
             badge1.TargetElement = barButtonItem1;
             badge2.TargetElement = ribbonPage1;
         }
+
+        public FormReportGrid(string qry, int reportId)
+            : this(qry)
+        {
+            this.reportId = reportId;
+        }
+
 
         public AdornerElement[] Badges
         {
@@ -43,23 +55,33 @@ namespace Foxoft
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Stream str = new MemoryStream();
-            gridView1.SaveLayoutToStream(str);
-            str.Seek(0, SeekOrigin.Begin);
-            StreamReader reader = new StreamReader(str);
-            string layourTxt = reader.ReadToEnd();
-            efMethods.UpdateReportLayout(reportId, layourTxt);
+            if (reportId > 0)
+            {
+                Stream str = new MemoryStream();
+                gV_Report.SaveLayoutToStream(str);
+                str.Seek(0, SeekOrigin.Begin);
+                StreamReader reader = new StreamReader(str);
+                string layourTxt = reader.ReadToEnd();
+                efMethods.UpdateReportLayout(reportId, layourTxt);
+            }
         }
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcReport dcReport = efMethods.SelectReport(reportId);
+            LoadLayout();
+        }
 
-            if (!string.IsNullOrEmpty(dcReport.ReportLayout))
+        private void LoadLayout()
+        {
+            if (reportId > 0)
             {
-                byte[] byteArray = Encoding.ASCII.GetBytes(dcReport.ReportLayout);
-                MemoryStream stream = new MemoryStream(byteArray);
-                gridView1.RestoreLayoutFromStream(stream);
+                DcReport dcReport = efMethods.SelectReport(reportId);
+                if (!string.IsNullOrEmpty(dcReport.ReportLayout))
+                {
+                    byte[] byteArray = Encoding.ASCII.GetBytes(dcReport.ReportLayout);
+                    MemoryStream stream = new MemoryStream(byteArray);
+                    gV_Report.RestoreLayoutFromStream(stream);
+                }
             }
         }
 
@@ -67,14 +89,14 @@ namespace Foxoft
         {
             Stream str = new MemoryStream();
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
-            gridView1.SaveLayoutToStream(str, option);
+            gV_Report.SaveLayoutToStream(str, option);
 
-            using (FormReportGridOptions formReportGridOptions = new FormReportGridOptions(str))
+            using (FormReportGridOptions formGridOptions = new FormReportGridOptions(str))
             {
-                if (formReportGridOptions.ShowDialog(this) == DialogResult.OK)
+                if (formGridOptions.ShowDialog(this) == DialogResult.OK)
                 {
-                    formReportGridOptions.stream.Seek(0, SeekOrigin.Begin);
-                    gridView1.RestoreLayoutFromStream(formReportGridOptions.stream, option);
+                    formGridOptions.stream.Seek(0, SeekOrigin.Begin);
+                    gV_Report.RestoreLayoutFromStream(formGridOptions.stream, option);
                 }
             }
         }

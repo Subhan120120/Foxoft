@@ -129,6 +129,23 @@ namespace Foxoft
             {
                 DialogResult = DialogResult.OK;
             }
+
+            if (e.KeyCode == Keys.F9 && view.SelectedRowsCount > 0)
+            {
+                object productCode = view.GetFocusedRowCellValue(colProductCode).ToString();
+                if (productCode != null)
+                {
+                    DcReport dcReport = efMethods.SelectReport(1004);
+
+                    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+                    
+                    string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, 1004);
+                    formGrid.Text = dcReport.ReportName;
+                    formGrid.Show();
+                }
+            }
         }
 
         private void Autoc_ItemClick(object sender, ItemClickEventArgs e)

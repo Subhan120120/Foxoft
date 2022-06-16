@@ -20,7 +20,7 @@ namespace Foxoft
         AdornerUIManager adornerUIManager1;
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
-        DcReport DcReport = new DcReport();
+        DcReport dcReport = new DcReport();
 
         readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
         readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
@@ -28,9 +28,10 @@ namespace Foxoft
         public FormReportFilter(DcReport DcReport)
         {
             InitializeComponent();
-            this.DcReport = DcReport;
+            this.dcReport = DcReport;
 
             filterControl1.SourceControl = adoMethods.SqlGetDt(DcReport.ReportQuery);
+            filterControl1.FilterString = DcReport.ReportFilter;
 
             this.repoBtnEdit_ProductCode.AutoHeight = false;
             this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
@@ -61,10 +62,9 @@ namespace Foxoft
 
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
-            int reportId = DcReport.ReportId;
-            FormReportGrid myform = new FormReportGrid(reportId);
+            int reportId = dcReport.ReportId;            
 
-            string qryMaster = "Select * from ( " + DcReport.ReportQuery + ") as master";
+            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
             string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl1.FilterCriteria);
             if (!string.IsNullOrEmpty(queryFilter))
@@ -72,9 +72,11 @@ namespace Foxoft
 
             try
             {
-                DataTable dt = adoMethods.SqlGetDt(qryMaster + queryFilter);
-                myform.gridControl1.DataSource = dt;
+                FormReportGrid myform = new FormReportGrid(qryMaster + queryFilter, reportId);
+                //DataTable dt = adoMethods.SqlGetDt(qryMaster + queryFilter);
+                //myform.gridControl1.DataSource = dt;
                 myform.MdiParent = this.MdiParent;
+                myform.Text = dcReport.ReportName;
                 myform.Show();
             }
             catch (Exception ex)
@@ -91,8 +93,8 @@ namespace Foxoft
 
         private void bBI_ReportEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string qry = DcReport.ReportQuery;
-            int id = DcReport.ReportId;
+            string qry = dcReport.ReportQuery;
+            int id = dcReport.ReportId;
 
             FormReportEditor formQueryEditor = new FormReportEditor(id);
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
@@ -113,15 +115,15 @@ namespace Foxoft
         {
             if (MessageBox.Show("Silmək İstəyirsiniz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                efMethods.DeleteReport(DcReport.ReportId);
+                efMethods.DeleteReport(dcReport.ReportId);
             }
         }
 
         private void filterControl1_CustomValueEditor(object sender, CustomValueEditorArgs e)
         {
-            if (e.Node.FirstOperand.PropertyName == "Məhsul Kodu")
+            if (e.Node.FirstOperand.PropertyName == "Məhsul Kodu" || e.Node.FirstOperand.PropertyName == "ProductCode")
                 e.RepositoryItem = repoBtnEdit_ProductCode;
-            if (e.Node.FirstOperand.PropertyName == "Cari Hesab Kodu")
+            if (e.Node.FirstOperand.PropertyName == "Cari Hesab Kodu" || e.Node.FirstOperand.PropertyName == "CurrAccCode")
                 e.RepositoryItem = repoBtnEdit_CurrAccCode;
         }
 

@@ -50,13 +50,13 @@ namespace Foxoft
             this.aCE_MakePayment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_receivePayment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Payments = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
             this.SuspendLayout();
@@ -241,6 +241,10 @@ namespace Foxoft
             this.aCE_Payments.Text = "Ödənişlər";
             this.aCE_Payments.Click += new System.EventHandler(this.aCE_Payments_Click);
             // 
+            // accordionControlSeparator1
+            // 
+            this.accordionControlSeparator1.Name = "accordionControlSeparator1";
+            // 
             // aCE_ReportZet
             // 
             this.aCE_ReportZet.HeaderTemplate.AddRange(new DevExpress.XtraBars.Navigation.HeaderElementInfo[] {
@@ -291,10 +295,6 @@ namespace Foxoft
             this.aCE_CurrAccs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_CurrAccs.Text = "İstifadəçilər";
             this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
-            // 
-            // accordionControlSeparator1
-            // 
-            this.accordionControlSeparator1.Name = "accordionControlSeparator1";
             // 
             // FormERP
             // 
