@@ -73,8 +73,7 @@ namespace Foxoft
             try
             {
                 FormReportGrid myform = new FormReportGrid(qryMaster + queryFilter, reportId);
-                //DataTable dt = adoMethods.SqlGetDt(qryMaster + queryFilter);
-                //myform.gridControl1.DataSource = dt;
+
                 myform.MdiParent = this.MdiParent;
                 myform.Text = dcReport.ReportName;
                 myform.Show();

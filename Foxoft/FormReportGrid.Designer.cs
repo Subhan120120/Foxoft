@@ -38,7 +38,6 @@ namespace Foxoft
             this.bBI_GridOptions = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
@@ -83,7 +82,7 @@ namespace Foxoft
             // 
             // barButtonItem1
             // 
-            this.barButtonItem1.Caption = "Save Layout";
+            this.barButtonItem1.Caption = "Dizaynı Saxla";
             this.barButtonItem1.Id = 1;
             this.barButtonItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
             this.barButtonItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
@@ -92,7 +91,7 @@ namespace Foxoft
             // 
             // barButtonItem2
             // 
-            this.barButtonItem2.Caption = "Load Layout";
+            this.barButtonItem2.Caption = "Dizaynı Al";
             this.barButtonItem2.Id = 2;
             this.barButtonItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
             this.barButtonItem2.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.LargeImage")));
@@ -101,31 +100,26 @@ namespace Foxoft
             // 
             // bBI_GridOptions
             // 
-            this.bBI_GridOptions.Caption = "Grid Dizayn";
+            this.bBI_GridOptions.Caption = "Dizayn Düzəltmə";
             this.bBI_GridOptions.Id = 3;
+            this.bBI_GridOptions.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_GridOptions.ImageOptions.SvgImage")));
             this.bBI_GridOptions.Name = "bBI_GridOptions";
             this.bBI_GridOptions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_gridOptions_ItemClick);
             // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "ribbonPage1";
+            this.ribbonPage1.Text = "Hesabat";
             // 
             // ribbonPageGroup1
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
             this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem2);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_GridOptions);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
-            // 
-            // ribbonPageGroup2
-            // 
-            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_GridOptions);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "ribbonPageGroup2";
+            this.ribbonPageGroup1.Text = "Dizayn";
             // 
             // ribbonStatusBar1
             // 
@@ -167,7 +161,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;

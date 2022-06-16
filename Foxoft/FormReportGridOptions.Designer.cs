@@ -34,12 +34,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit_GroupFooter.Properties)).BeginInit();
             this.SuspendLayout();
             // 
-            // checkEdit1
+            // checkEdit_GroupFooter
             // 
-            this.checkEdit_GroupFooter.Location = new System.Drawing.Point(52, 13);
-            this.checkEdit_GroupFooter.Name = "checkEdit1";
-            this.checkEdit_GroupFooter.Properties.Caption = "Editable";
-            this.checkEdit_GroupFooter.Size = new System.Drawing.Size(75, 20);
+            this.checkEdit_GroupFooter.Location = new System.Drawing.Point(51, 36);
+            this.checkEdit_GroupFooter.Name = "checkEdit_GroupFooter";
+            this.checkEdit_GroupFooter.Properties.AutoWidth = true;
+            this.checkEdit_GroupFooter.Properties.Caption = "Group Footer";
+            this.checkEdit_GroupFooter.Size = new System.Drawing.Size(87, 20);
             this.checkEdit_GroupFooter.TabIndex = 0;
             this.checkEdit_GroupFooter.CheckedChanged += new System.EventHandler(this.checkEdit_GroupFooter_CheckedChanged);
             // 
@@ -52,18 +53,19 @@ namespace Foxoft
             this.simpleButton1.Text = "Ok";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton_Ok_Click);
             // 
-            // FormReportGridConfig
+            // FormReportGridOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(488, 223);
             this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.checkEdit_GroupFooter);
-            this.Name = "FormReportGridConfig";
+            this.Name = "FormReportGridOptions";
             this.Text = "FormReportGridConfig";
             this.Load += new System.EventHandler(this.FormReportGridOptions_Load);
             ((System.ComponentModel.ISupportInitialize)(this.checkEdit_GroupFooter.Properties)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
