@@ -130,9 +130,9 @@ namespace Foxoft
                 DialogResult = DialogResult.OK;
             }
 
-            if (e.KeyCode == Keys.F9 && view.SelectedRowsCount > 0)
+            if (e.KeyCode == Keys.F10 && view.SelectedRowsCount > 0)
             {
-                object productCode = view.GetFocusedRowCellValue(colProductCode).ToString();
+                object productCode = view.GetFocusedRowCellValue(colProductCode);
                 if (productCode != null)
                 {
                     DcReport dcReport = efMethods.SelectReport(1004);

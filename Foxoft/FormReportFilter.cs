@@ -25,13 +25,17 @@ namespace Foxoft
         readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
         readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
 
-        public FormReportFilter(DcReport DcReport)
+        public FormReportFilter(DcReport dcReport)
         {
             InitializeComponent();
-            this.dcReport = DcReport;
+            WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
-            filterControl1.SourceControl = adoMethods.SqlGetDt(DcReport.ReportQuery);
-            filterControl1.FilterString = DcReport.ReportFilter;
+            dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
+
+            this.dcReport = dcReport;
+
+            filterControl1.SourceControl = adoMethods.SqlGetDt(dcReport.ReportQuery);
+            filterControl1.FilterString = dcReport.ReportFilter;
 
             this.repoBtnEdit_ProductCode.AutoHeight = false;
             this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
@@ -57,7 +61,6 @@ namespace Foxoft
 
         private void FormReport_Load(object sender, EventArgs e)
         {
-            WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
         }
 
         private void btn_ShowReport_Click(object sender, EventArgs e)

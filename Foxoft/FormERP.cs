@@ -30,12 +30,11 @@ namespace Foxoft
 
             List<DcReport> dcReports = efMethods.SelectReports();
 
-            foreach (var dcReport in dcReports)
+            foreach (DcReport dcReport in dcReports)
             {
                 AccordionControlElement aCE = new AccordionControlElement();
 
                 aCE.ImageOptions.SvgImage = ((SvgImage)(resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage")));
-
 
                 //SvgImageCollection collection = SvgImageCollection.FromResources(typeof(FormERP).Assembly);
                 //aCE.ImageOptions.SvgImage = collection["bo_report"];

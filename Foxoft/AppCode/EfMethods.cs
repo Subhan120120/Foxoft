@@ -656,15 +656,6 @@ namespace Foxoft
             }
         }
 
-        public int UpdateReport(DcReport dcReport)
-        {
-            using (subContext db = new subContext())
-            {
-                db.DcReports.Update(dcReport);
-                return db.SaveChanges();
-            }
-        }
-
         public void InsertReport(DcReport dcReport)
         {
             using (subContext db = new subContext())

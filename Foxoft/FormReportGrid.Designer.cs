@@ -33,8 +33,8 @@ namespace Foxoft
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gV_Report = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_GridOptions = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -61,6 +61,11 @@ namespace Foxoft
             this.gV_Report.GridControl = this.gridControl1;
             this.gV_Report.Name = "gV_Report";
             this.gV_Report.OptionsBehavior.Editable = false;
+            this.gV_Report.OptionsLayout.Columns.StoreAllOptions = true;
+            this.gV_Report.OptionsLayout.Columns.StoreAppearance = true;
+            this.gV_Report.OptionsLayout.StoreAllOptions = true;
+            this.gV_Report.OptionsLayout.StoreAppearance = true;
+            this.gV_Report.OptionsLayout.StoreFormatRules = true;
             this.gV_Report.OptionsView.ShowFooter = true;
             // 
             // ribbonControl1
@@ -69,8 +74,8 @@ namespace Foxoft
             this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.ribbonControl1.SearchEditItem,
-            this.barButtonItem1,
-            this.barButtonItem2,
+            this.bBI_LayoutSave,
+            this.bBI_LayoutLoad,
             this.bBI_GridOptions});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.MaxItemId = 4;
@@ -80,23 +85,23 @@ namespace Foxoft
             this.ribbonControl1.Size = new System.Drawing.Size(820, 158);
             this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
             // 
-            // barButtonItem1
+            // bBI_LayoutSave
             // 
-            this.barButtonItem1.Caption = "Dizaynı Saxla";
-            this.barButtonItem1.Id = 1;
-            this.barButtonItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
-            this.barButtonItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
-            this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            this.bBI_LayoutSave.Caption = "Dizaynı Saxla";
+            this.bBI_LayoutSave.Id = 1;
+            this.bBI_LayoutSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bBI_LayoutSave.ImageOptions.Image")));
+            this.bBI_LayoutSave.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bBI_LayoutSave.ImageOptions.LargeImage")));
+            this.bBI_LayoutSave.Name = "bBI_LayoutSave";
+            this.bBI_LayoutSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_LayoutSave_ItemClick);
             // 
-            // barButtonItem2
+            // bBI_LayoutLoad
             // 
-            this.barButtonItem2.Caption = "Dizaynı Al";
-            this.barButtonItem2.Id = 2;
-            this.barButtonItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
-            this.barButtonItem2.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.LargeImage")));
-            this.barButtonItem2.Name = "barButtonItem2";
-            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            this.bBI_LayoutLoad.Caption = "Dizaynı Al";
+            this.bBI_LayoutLoad.Id = 2;
+            this.bBI_LayoutLoad.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bBI_LayoutLoad.ImageOptions.Image")));
+            this.bBI_LayoutLoad.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bBI_LayoutLoad.ImageOptions.LargeImage")));
+            this.bBI_LayoutLoad.Name = "bBI_LayoutLoad";
+            this.bBI_LayoutLoad.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_LayoutLoad_ItemClick);
             // 
             // bBI_GridOptions
             // 
@@ -115,8 +120,8 @@ namespace Foxoft
             // 
             // ribbonPageGroup1
             // 
-            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
-            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem2);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_LayoutSave);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_LayoutLoad);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_GridOptions);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Dizayn";
@@ -166,5 +171,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.BarButtonItem bBI_GridOptions;
+        private DevExpress.XtraBars.BarButtonItem bBI_LayoutSave;
+        private DevExpress.XtraBars.BarButtonItem bBI_LayoutLoad;
     }
 }

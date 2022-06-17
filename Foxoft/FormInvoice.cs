@@ -226,22 +226,38 @@ namespace Foxoft
                 gV_InvoiceLine.OptionsNavigation.AutoFocusNewRow = true;
             }
 
-            if (e.KeyCode == Keys.F2)
+            if (e.KeyCode == Keys.F9 && gV.SelectedRowsCount > 0)
             {
-                repoBtnEdit_ProductCode.Buttons[0].PerformClick();
-                //if (gV.FocusedRowHandle >= 0 && gV.FocusedColumn != null)
-                //{
-                //    GridViewInfo viewInfo = gV.GetViewInfo() as GridViewInfo;
-                //    GridCellInfo cellInfo = viewInfo.GetGridCellInfo(gV.FocusedRowHandle, col_ProductCode);
-                //    if (cellInfo != null)
-                //    {
-                //        RepositoryItem item = cellInfo.Editor;
-                //        SelectProduct(item);
+                object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
+                if (productCode != null)
+                {
+                    DcReport dcReport = efMethods.SelectReport(1005);
 
-                //        //propertyGridControl1.SelectedObject = item;
-                //        //propertyGridControl1.RetrieveFields();
-                //    }
-                //}
+                    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                    string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport.ReportId);
+                    formGrid.Text = dcReport.ReportName;
+                    formGrid.Show();
+                }
+            }
+
+            if (e.KeyCode == Keys.F10 && gV.SelectedRowsCount > 0)
+            {
+                object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
+                if (productCode != null)
+                {
+                    DcReport dcReport = efMethods.SelectReport(1004);
+
+                    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                    string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport.ReportId);
+                    formGrid.Text = dcReport.ReportName;
+                    formGrid.Show();
+                }
             }
         }
 

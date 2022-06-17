@@ -217,6 +217,7 @@ namespace Foxoft
             this.ClientSize = new System.Drawing.Size(1156, 557);
             this.Controls.Add(this.dataLayoutControl1);
             this.Name = "FormReportEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormQueryEditor";
             this.Load += new System.EventHandler(this.FormQueryEditor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();

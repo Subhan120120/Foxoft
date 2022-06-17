@@ -28,6 +28,7 @@
     <None Remove="AppCode\Qry_PaymentVendors.sql" />
     <None Remove="AppCode\Qry_Sales.sql" />
     <None Remove="AppCode\SqlQuery\Qry_Invoice.sql" />
+    <None Remove="Resources\fox_007.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +42,7 @@
     <EmbeddedResource Include="AppCode\SqlQuery\Qry_Debts.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\Qry_Invoice.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\Qry_Sales.sql" />
+    <EmbeddedResource Include="Resources\fox_007.ico" />
   </ItemGroup>
 
   <ItemGroup>

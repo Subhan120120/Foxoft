@@ -27,8 +27,6 @@ namespace Foxoft
             DataTable dt = adoMethods.SqlGetDt(qry);
             gridControl1.DataSource = dt;
 
-            LoadLayout();
-
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();
             badge2 = new Badge();
@@ -42,6 +40,8 @@ namespace Foxoft
             : this(qry)
         {
             this.reportId = reportId;
+
+            LoadLayout();
         }
 
 
@@ -53,7 +53,7 @@ namespace Foxoft
             }
         }
 
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (reportId > 0)
             {
@@ -61,12 +61,12 @@ namespace Foxoft
                 gV_Report.SaveLayoutToStream(str);
                 str.Seek(0, SeekOrigin.Begin);
                 StreamReader reader = new StreamReader(str);
-                string layourTxt = reader.ReadToEnd();
-                efMethods.UpdateReportLayout(reportId, layourTxt);
+                string layoutTxt = reader.ReadToEnd();
+                efMethods.UpdateReportLayout(reportId, layoutTxt);
             }
         }
 
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_LayoutLoad_ItemClick(object sender, ItemClickEventArgs e)
         {
             LoadLayout();
         }
@@ -78,7 +78,7 @@ namespace Foxoft
                 DcReport dcReport = efMethods.SelectReport(reportId);
                 if (!string.IsNullOrEmpty(dcReport.ReportLayout))
                 {
-                    byte[] byteArray = Encoding.ASCII.GetBytes(dcReport.ReportLayout);
+                    byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
                     MemoryStream stream = new MemoryStream(byteArray);
                     gV_Report.RestoreLayoutFromStream(stream);
                 }
