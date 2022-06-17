@@ -284,7 +284,9 @@ namespace Foxoft
                 objPrice = e.Value;
                 Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Price * exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Qty * Price);
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * Price * exRate);
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * Price * exRate);
 
             }
@@ -293,14 +295,18 @@ namespace Foxoft
                 objPriceLoc = e.Value;
                 PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Price, Math.Round(PriceLoc / exRate, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * PriceLoc / exRate, 2));
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * PriceLoc / exRate, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * PriceLoc);
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * PriceLoc);
             }
             else if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
             {
                 objQty = e.Value;
                 Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Qty * Price);
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * PriceLoc);
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * PriceLoc);
             }
             else if (e.Value != null && e.Column == colExchangeRate)
@@ -308,6 +314,7 @@ namespace Foxoft
                 objExRate = e.Value;
                 exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Price * exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * Price * exRate);
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * Price * exRate);
             }
         }
