@@ -49,6 +49,9 @@ namespace Foxoft
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
+            bBI_Save.Enabled = false;
+
+            bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             this.processCode = processCode;
             this.productTypeCode = productTypeCode;
@@ -100,7 +103,7 @@ namespace Foxoft
 
             trInvoiceHeadersBindingSource.DataSource = trInvoiceHeader;
 
-            labelControl1.Text = "";
+            lbl_InvoicePaidSum.Text = "";
 
             dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
@@ -160,16 +163,18 @@ namespace Foxoft
                                                     }
                                                 });
 
-
-
                                                 trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
+
+                                                gV_InvoiceLine.BestFitColumns();
 
                                             }, TaskScheduler.FromCurrentSynchronizationContext());
 
 
                     dataLayoutControl1.isValid(out List<string> errorList);
 
-                    labelControl1.Text = "Ödənilib: " + Math.Round(efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2).ToString() + "AZN";
+
+                    decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) / (decimal)1.703 * (CustomExtensions.ProcessDir(processCode) == "In" ? (-1) : 1);
+                    lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + "USD";
                 }
             }
         }
@@ -268,14 +273,13 @@ namespace Foxoft
 
         private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
         {
-            object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, col_Price);
             object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut);
             object objExRate = gV_InvoiceLine.GetFocusedRowCellValue(colExchangeRate);
+            object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, col_Price);
             object objPriceLoc = gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc);
 
-
-            decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
             decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
+            decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
             decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
             decimal PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
 
@@ -283,11 +287,11 @@ namespace Foxoft
             {
                 objPrice = e.Value;
                 Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Price * exRate);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Qty * Price);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * Price * exRate);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * Price * exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Math.Round(Price * exRate, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * Price, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * Price, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * Price * exRate, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * Price * exRate, 2));
 
             }
             else if (e.Value != null && e.Column == colPriceLoc)
@@ -297,25 +301,25 @@ namespace Foxoft
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Price, Math.Round(PriceLoc / exRate, 2));
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * PriceLoc / exRate, 2));
                 gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * PriceLoc / exRate, 2));
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * PriceLoc);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * PriceLoc);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * PriceLoc, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * PriceLoc, 2));
             }
             else if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
             {
                 objQty = e.Value;
                 Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Qty * Price);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Qty * Price);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * PriceLoc);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * PriceLoc);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * Price, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * Price, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * PriceLoc, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * PriceLoc, 2));
             }
             else if (e.Value != null && e.Column == colExchangeRate)
             {
                 objExRate = e.Value;
                 exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Price * exRate);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Qty * Price * exRate);
-                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Qty * Price * exRate);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Math.Round(Price * exRate, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * Price * exRate, 2));
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * Price * exRate, 2));
             }
         }
 
@@ -464,16 +468,15 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                decimal summaryNetAmount = CalcSumNetAmount();
+                decimal summaryInvoice = CalcSumInvoice();
 
-                if (summaryNetAmount != 0)
+                if (summaryInvoice != 0)
                 {
                     SaveInvoice();
 
                     SaveSession();
 
-                    decimal bePaidAmount = Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2);
-                    MakePayment(bePaidAmount);
+                    MakePayment(summaryInvoice);
 
                     ClearControlsAddNew();
 
@@ -490,18 +493,21 @@ namespace Foxoft
             }
         }
 
-        private decimal CalcSumNetAmount()
+        private decimal CalcSumInvoice()
         {
             decimal summaryNetAmount = 0;
 
             for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
             {
-                decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
+                decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc));
                 summaryNetAmount += netAmount;
             }
 
-            if ((bool)CheckEdit_IsReturn.EditValue)
-                summaryNetAmount *= (-1);
+            //if ((bool)CheckEdit_IsReturn.EditValue)
+            //    summaryNetAmount *= (-1);
+            //if (CustomExtensions.ProcessDir(processCode) != "In")
+            //    summaryNetAmount *= (-1);
+
             return summaryNetAmount;
         }
 
@@ -550,7 +556,6 @@ namespace Foxoft
                 //string designPath = Settings.Default.AppSetting.PrintDesignPath;
                 string designPath = designFolder + "InvoiceRS_A5.repx";
 
-
                 if (!File.Exists(designPath))
                     designPath = reportClass.SelectDesign();
                 if (!File.Exists(designPath))
@@ -561,9 +566,9 @@ namespace Foxoft
             }
         }
 
-        private void MakePayment(decimal bePaidAmount)
-        {
-            using (FormPayment formPayment = new FormPayment(1, bePaidAmount, trInvoiceHeader))
+        private void MakePayment(decimal summaryInvoice)
+        {            
+            using (FormPayment formPayment = new FormPayment(1, summaryInvoice, trInvoiceHeader))
             {
                 if (formPayment.ShowDialog(this) == DialogResult.OK)
                 {
@@ -584,8 +589,6 @@ namespace Foxoft
             Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
             Settings.Default.Save();
         }
-
-
 
         private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
         {
@@ -662,10 +665,11 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                decimal summaryNetAmount = CalcSumNetAmount();
-                if (summaryNetAmount != 0)
+                decimal summaryInvoice = CalcSumInvoice();
+                if (summaryInvoice != 0)
                 {
                     SaveInvoice();
+
                     SaveSession();
                 }
             }
@@ -690,15 +694,15 @@ namespace Foxoft
             {
                 if (dataLayoutControl1.isValid(out List<string> errorList))
                 {
-                    decimal summaryNetAmount = CalcSumNetAmount();
-                    if (summaryNetAmount != 0)
+                    decimal summaryInvoice = CalcSumInvoice();
+                    if (summaryInvoice != 0)
                     {
                         SaveInvoice();
+
                         SaveSession();
                     }
 
-                    decimal bePaidAmount = Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2);
-                    MakePayment(bePaidAmount);
+                    MakePayment(summaryInvoice);
                 }
                 else
                 {
@@ -733,7 +737,7 @@ namespace Foxoft
             if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
-                labelControl1.Text = "0.00";
+                lbl_InvoicePaidSum.Text = "0.00";
             }
         }
 
@@ -750,6 +754,38 @@ namespace Foxoft
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, EventArgs e)
         {
             SelectProduct(sender);
+        }
+
+        private void bBI_SaveQuit_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (dataLayoutControl1.isValid(out List<string> errorList))
+            {
+                decimal summaryInvoice = CalcSumInvoice();
+
+                if (summaryInvoice != 0)
+                {
+                    SaveInvoice();
+
+                    SaveSession();
+
+                    MakePayment(summaryInvoice);
+
+                    GetPrint();
+
+                    this.Close();
+                }
+                else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+            }
+            else
+            {
+                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(combinedString);
+            }
+        }
+
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gV_InvoiceLine.BestFitColumns();
         }
     }
 }

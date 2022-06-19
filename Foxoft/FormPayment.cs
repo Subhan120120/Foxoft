@@ -35,6 +35,12 @@ namespace Foxoft
             if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
                 summary *= (-1);
 
+            if (trInvoiceHeader.IsReturn)
+                summary *= (-1);
+
+            decimal paid = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId);
+            summary = Math.Round(summary + paid, 2);
+
             if (summary < 0)
                 isNegativ = true;
 
@@ -247,7 +253,7 @@ namespace Foxoft
             LookUpEdit editor = sender as LookUpEdit;
             currency = lUE_cashCurrency.EditValue.ToString();
             exRate = (float)editor.GetColumnValue("ExchangeRate");
-            bePaid = Math.Round(summary / (decimal)exRate, 4);
+            bePaid = Math.Round(summary / (decimal)exRate, 2);
             FillControls();
         }
     }

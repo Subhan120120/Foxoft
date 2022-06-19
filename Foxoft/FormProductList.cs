@@ -85,7 +85,7 @@ namespace Foxoft
 
         private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormProduct formProduct = new FormProduct();
+            FormProduct formProduct = new FormProduct(productTypeCode);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
                 if (productTypeCode != 0)
@@ -97,7 +97,7 @@ namespace Foxoft
 
         private void btn_productEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormProduct formProduct = new FormProduct(dcProduct.ProductCode);
+            FormProduct formProduct = new FormProduct(productTypeCode, dcProduct.ProductCode);
 
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {

@@ -38,7 +38,7 @@ namespace Foxoft
             this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             this.lC_CurrAccDesc = new DevExpress.XtraEditors.LabelControl();
             this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.lbl_InvoicePaidSum = new DevExpress.XtraEditors.LabelControl();
             this.gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
             this.gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -98,8 +98,9 @@ namespace Foxoft
             this.bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_SaveQuit = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -152,7 +153,7 @@ namespace Foxoft
             // dataLayoutControl1
             // 
             this.dataLayoutControl1.Controls.Add(this.lC_CurrAccDesc);
-            this.dataLayoutControl1.Controls.Add(this.labelControl1);
+            this.dataLayoutControl1.Controls.Add(this.lbl_InvoicePaidSum);
             this.dataLayoutControl1.Controls.Add(this.gC_InvoiceLine);
             this.dataLayoutControl1.Controls.Add(this.CheckEdit_IsReturn);
             this.dataLayoutControl1.Controls.Add(this.DocumentDateDateEdit);
@@ -190,15 +191,15 @@ namespace Foxoft
             // 
             // labelControl1
             // 
-            this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelControl1.Appearance.Options.UseFont = true;
-            this.labelControl1.Appearance.Options.UseTextOptions = true;
-            this.labelControl1.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.labelControl1.Location = new System.Drawing.Point(12, 425);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(847, 25);
-            this.labelControl1.StyleController = this.dataLayoutControl1;
-            this.labelControl1.TabIndex = 15;
+            this.lbl_InvoicePaidSum.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_InvoicePaidSum.Appearance.Options.UseFont = true;
+            this.lbl_InvoicePaidSum.Appearance.Options.UseTextOptions = true;
+            this.lbl_InvoicePaidSum.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.lbl_InvoicePaidSum.Location = new System.Drawing.Point(12, 425);
+            this.lbl_InvoicePaidSum.Name = "labelControl1";
+            this.lbl_InvoicePaidSum.Size = new System.Drawing.Size(847, 25);
+            this.lbl_InvoicePaidSum.StyleController = this.dataLayoutControl1;
+            this.lbl_InvoicePaidSum.TabIndex = 15;
             // 
             // gC_InvoiceLine
             // 
@@ -286,7 +287,6 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
             this.repoBtnEdit_ProductCode.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoBtnEdit_ProductCode_ButtonPressed);
-
             // 
             // colQtyIn
             // 
@@ -731,7 +731,7 @@ namespace Foxoft
             // 
             // lbl_Payment
             // 
-            this.lbl_Payment.Control = this.labelControl1;
+            this.lbl_Payment.Control = this.lbl_InvoicePaidSum;
             this.lbl_Payment.Location = new System.Drawing.Point(0, 413);
             this.lbl_Payment.MinSize = new System.Drawing.Size(67, 17);
             this.lbl_Payment.Name = "lbl_Payment";
@@ -764,9 +764,10 @@ namespace Foxoft
             this.bBI_New,
             this.bBI_reportPreview,
             this.bBI_DeleteInvoice,
-            this.bBI_DeletePayment});
+            this.bBI_DeletePayment,
+            this.bBI_SaveQuit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 13;
+            this.ribbonControl1.MaxItemId = 15;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -838,23 +839,32 @@ namespace Foxoft
             this.bBI_DeletePayment.Name = "bBI_DeletePayment";
             this.bBI_DeletePayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeletePayment_ItemClick);
             // 
+            // bBI_SaveQuit
+            // 
+            this.bBI_SaveQuit.Caption = "Yadda Saxla Bağla";
+            this.bBI_SaveQuit.Id = 13;
+            this.bBI_SaveQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
+            this.bBI_SaveQuit.Name = "bBI_SaveQuit";
+            this.bBI_SaveQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveQuit_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
+            this.Faktura,
             this.ribbonPageGroup3,
             this.ribbonPageGroup2});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "Faktura";
             // 
-            // ribbonPageGroup1
+            // Faktura
             // 
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Save);
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_SaveAndNew);
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_New);
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DeleteInvoice);
-            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "Yadda Saxla";
+            this.Faktura.ItemLinks.Add(this.bBI_Save);
+            this.Faktura.ItemLinks.Add(this.bBI_SaveQuit);
+            this.Faktura.ItemLinks.Add(this.bBI_SaveAndNew);
+            this.Faktura.ItemLinks.Add(this.bBI_New);
+            this.Faktura.ItemLinks.Add(this.bBI_DeleteInvoice);
+            this.Faktura.Name = "Faktura";
+            this.Faktura.Text = "Faktura";
             // 
             // ribbonPageGroup3
             // 
@@ -986,7 +996,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_reportDesign;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem bBI_Payment;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraEditors.LabelControl lbl_InvoicePaidSum;
         private DevExpress.XtraLayout.LayoutControlItem lbl_Payment;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyIn;
         private DevExpress.XtraGrid.Columns.GridColumn colQtyOut;
@@ -1007,5 +1017,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colAmountLoc;
         private DevExpress.XtraGrid.Columns.GridColumn colNetAmountLoc;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PriceLoc;
+        private DevExpress.XtraBars.BarButtonItem bBI_SaveQuit;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup Faktura;
     }
 }

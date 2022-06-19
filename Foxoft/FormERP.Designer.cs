@@ -46,6 +46,7 @@ namespace Foxoft
             this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_shipment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_ApproveInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_MakePayment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_receivePayment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -167,6 +168,7 @@ namespace Foxoft
             this.aCE_RetailSaleInvoice,
             this.aCE_shipment,
             this.aCE_ApproveInvoice,
+            this.accordionControlSeparator2,
             this.aCE_Expense,
             this.aCE_MakePayment,
             this.aCE_receivePayment,
@@ -208,6 +210,10 @@ namespace Foxoft
             this.aCE_ApproveInvoice.Name = "aCE_ApproveInvoice";
             this.aCE_ApproveInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_ApproveInvoice.Text = "Transferi Təsdiqlə";
+            // 
+            // accordionControlSeparator2
+            // 
+            this.accordionControlSeparator2.Name = "accordionControlSeparator2";
             // 
             // aCE_Expense
             // 
@@ -255,7 +261,7 @@ namespace Foxoft
             this.aCE_ReportZet.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage")));
             this.aCE_ReportZet.Name = "aCE_ReportZet";
             this.aCE_ReportZet.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.aCE_ReportZet.Text = "Element2";
+            this.aCE_ReportZet.Text = "Gün Sonu";
             this.aCE_ReportZet.Click += new System.EventHandler(this.accordionControlElement2_Click);
             // 
             // aCE_Acounting
@@ -308,7 +314,7 @@ namespace Foxoft
             this.Name = "FormERP";
             this.Ribbon = this.ribbonControl;
             this.StatusBar = this.ribbonStatusBar;
-            this.Text = "ERP";
+            this.Text = "Foxoft";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.MdiChildActivate += new System.EventHandler(this.FormERP_MdiChildActivate);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
@@ -346,5 +352,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_receivePayment;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Payments;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator1;
+        private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator2;
     }
 }

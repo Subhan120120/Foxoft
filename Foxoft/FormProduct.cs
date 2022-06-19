@@ -15,11 +15,13 @@ namespace Foxoft
     {
         subContext dbContext = new subContext();
         EfMethods efMethods = new EfMethods();
-        public DcProduct dcProduct = new DcProduct();
+        private DcProduct dcProduct = new DcProduct();
+        private byte productTypeCode;
 
-        public FormProduct()
+        public FormProduct(byte productTypeCode)
         {
             InitializeComponent();
+            this.productTypeCode = productTypeCode;
 
             ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectProductTypes();
             ProductTypeCodeLookUpEdit.Properties.ValueMember = "ProductTypeCode";
@@ -29,8 +31,8 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
-        public FormProduct(string productCode)
-            : this()
+        public FormProduct(byte productTypeCode, string productCode)
+            : this(productTypeCode)
         {
             this.dcProduct.ProductCode = productCode;
         }
@@ -66,6 +68,7 @@ namespace Foxoft
 
             string NewDocNum = efMethods.GetNextDocNum("PR", "ProductCode", "DcProducts");
             dcProduct.ProductCode = NewDocNum;
+            dcProduct.ProductTypeCode = productTypeCode;
 
             dcProductsBindingSource.DataSource = dcProduct;
         }
