@@ -47,6 +47,7 @@ namespace Foxoft
             this.ProductDescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
+            this.ProductTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.ItemForProductCode = new DevExpress.XtraLayout.LayoutControlItem();
@@ -66,11 +67,10 @@ namespace Foxoft
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.BarcodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            this.ProductTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            this.ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
+            this.BarcodeTextEdit = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProductCodeTextEdit.Properties)).BeginInit();
@@ -86,6 +86,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.WholesalePriceTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ProductDescriptionTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForProductCode)).BeginInit();
@@ -105,11 +106,10 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForUsePos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BarcodeLookUpEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BarcodeTextEdit.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // dataLayoutControl1
@@ -128,8 +128,8 @@ namespace Foxoft
             this.dataLayoutControl1.Controls.Add(this.ProductDescriptionTextEdit);
             this.dataLayoutControl1.Controls.Add(this.btn_Ok);
             this.dataLayoutControl1.Controls.Add(this.btn_Cancel);
-            this.dataLayoutControl1.Controls.Add(this.BarcodeLookUpEdit);
             this.dataLayoutControl1.Controls.Add(this.ProductTypeCodeLookUpEdit);
+            this.dataLayoutControl1.Controls.Add(this.BarcodeTextEdit);
             this.dataLayoutControl1.DataSource = this.dcProductsBindingSource;
             this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
@@ -297,6 +297,20 @@ namespace Foxoft
             this.btn_Cancel.TabIndex = 15;
             this.btn_Cancel.Text = "simpleButton2";
             // 
+            // ProductTypeCodeLookUpEdit
+            // 
+            this.ProductTypeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductTypeCode", true));
+            this.ProductTypeCodeLookUpEdit.Location = new System.Drawing.Point(476, 12);
+            this.ProductTypeCodeLookUpEdit.Name = "ProductTypeCodeLookUpEdit";
+            this.ProductTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
+            this.ProductTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.ProductTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.ProductTypeCodeLookUpEdit.Properties.NullText = "";
+            this.ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(232, 20);
+            this.ProductTypeCodeLookUpEdit.StyleController = this.dataLayoutControl1;
+            this.ProductTypeCodeLookUpEdit.TabIndex = 2;
+            // 
             // Root
             // 
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -390,7 +404,7 @@ namespace Foxoft
             // 
             // ItemForBarcode
             // 
-            this.ItemForBarcode.Control = this.BarcodeLookUpEdit;
+            this.ItemForBarcode.Control = this.BarcodeTextEdit;
             this.ItemForBarcode.Location = new System.Drawing.Point(0, 48);
             this.ItemForBarcode.Name = "ItemForBarcode";
             this.ItemForBarcode.Size = new System.Drawing.Size(359, 24);
@@ -493,6 +507,15 @@ namespace Foxoft
             this.ItemForUsePos.TextSize = new System.Drawing.Size(0, 0);
             this.ItemForUsePos.TextVisible = false;
             // 
+            // ItemForProductTypeCode
+            // 
+            this.ItemForProductTypeCode.Control = this.ProductTypeCodeLookUpEdit;
+            this.ItemForProductTypeCode.Location = new System.Drawing.Point(359, 0);
+            this.ItemForProductTypeCode.Name = "ItemForProductTypeCode";
+            this.ItemForProductTypeCode.Size = new System.Drawing.Size(341, 24);
+            this.ItemForProductTypeCode.Text = "Məhsul Tipi";
+            this.ItemForProductTypeCode.TextSize = new System.Drawing.Size(93, 13);
+            // 
             // gridControl1
             // 
             this.gridControl1.Location = new System.Drawing.Point(0, 0);
@@ -508,41 +531,14 @@ namespace Foxoft
             this.gridView2.GridControl = this.gridControl1;
             this.gridView2.Name = "gridView2";
             // 
-            // BarcodeLookUpEdit
+            // BarcodeTextEdit
             // 
-            this.BarcodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "Barcode", true));
-            this.BarcodeLookUpEdit.Location = new System.Drawing.Point(117, 60);
-            this.BarcodeLookUpEdit.Name = "BarcodeLookUpEdit";
-            this.BarcodeLookUpEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.BarcodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.BarcodeLookUpEdit.Properties.NullText = "";
-            this.BarcodeLookUpEdit.Size = new System.Drawing.Size(250, 20);
-            this.BarcodeLookUpEdit.StyleController = this.dataLayoutControl1;
-            this.BarcodeLookUpEdit.TabIndex = 7;
-            // 
-            // ProductTypeCodeLookUpEdit
-            // 
-            this.ProductTypeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductTypeCode", true));
-            this.ProductTypeCodeLookUpEdit.Location = new System.Drawing.Point(476, 12);
-            this.ProductTypeCodeLookUpEdit.Name = "ProductTypeCodeLookUpEdit";
-            this.ProductTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.ProductTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.ProductTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.ProductTypeCodeLookUpEdit.Properties.NullText = "";
-            this.ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(232, 20);
-            this.ProductTypeCodeLookUpEdit.StyleController = this.dataLayoutControl1;
-            this.ProductTypeCodeLookUpEdit.TabIndex = 2;
-            // 
-            // ItemForProductTypeCode
-            // 
-            this.ItemForProductTypeCode.Control = this.ProductTypeCodeLookUpEdit;
-            this.ItemForProductTypeCode.Location = new System.Drawing.Point(359, 0);
-            this.ItemForProductTypeCode.Name = "ItemForProductTypeCode";
-            this.ItemForProductTypeCode.Size = new System.Drawing.Size(341, 24);
-            this.ItemForProductTypeCode.Text = "Məhsul Tipi";
-            this.ItemForProductTypeCode.TextSize = new System.Drawing.Size(93, 13);
+            this.BarcodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "Barcode", true));
+            this.BarcodeTextEdit.Location = new System.Drawing.Point(117, 60);
+            this.BarcodeTextEdit.Name = "BarcodeTextEdit";
+            this.BarcodeTextEdit.Size = new System.Drawing.Size(250, 20);
+            this.BarcodeTextEdit.StyleController = this.dataLayoutControl1;
+            this.BarcodeTextEdit.TabIndex = 17;
             // 
             // FormProduct
             // 
@@ -551,7 +547,7 @@ namespace Foxoft
             this.ClientSize = new System.Drawing.Size(720, 247);
             this.Controls.Add(this.dataLayoutControl1);
             this.Name = "FormProduct";
-            this.Text = "XtraForm1";
+            this.Text = "Məhsul";
             this.Load += new System.EventHandler(this.FormProduct_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             this.dataLayoutControl1.ResumeLayout(false);
@@ -568,6 +564,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.WholesalePriceTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ProductDescriptionTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForProductCode)).EndInit();
@@ -587,11 +584,10 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForUsePos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BarcodeLookUpEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BarcodeTextEdit.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -638,5 +634,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit BarcodeLookUpEdit;
         private DevExpress.XtraEditors.LookUpEdit ProductTypeCodeLookUpEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
+        private DevExpress.XtraEditors.TextEdit BarcodeTextEdit;
     }
 }

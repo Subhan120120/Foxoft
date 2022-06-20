@@ -31,8 +31,8 @@ namespace Foxoft
         {
             this.components = new System.ComponentModel.Container();
             this.gC_PaymentHeaderList = new DevExpress.XtraGrid.GridControl();
-            this.gV_PaymentHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gV_PaymentHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -46,8 +46,8 @@ namespace Foxoft
             this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
             this.SuspendLayout();
             // 
             // gC_PaymentHeaderList
@@ -62,6 +62,10 @@ namespace Foxoft
             this.gC_PaymentHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_PaymentHeaderList});
             this.gC_PaymentHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_PaymentHeaderList_ProcessGridKey);
+            // 
+            // trPaymentHeadersBindingSource
+            // 
+            this.trPaymentHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentHeader);
             // 
             // gV_PaymentHeaderList
             // 
@@ -82,10 +86,6 @@ namespace Foxoft
             this.gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
             this.gV_PaymentHeaderList.DoubleClick += new System.EventHandler(this.gV_PaymentHeaderList_DoubleClick);
             // 
-            // trPaymentHeadersBindingSource
-            // 
-            this.trPaymentHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentHeader);
-            // 
             // colPaymentHeaderId
             // 
             this.colPaymentHeaderId.FieldName = "PaymentHeaderId";
@@ -98,77 +98,77 @@ namespace Foxoft
             this.colDocumentNumber.FieldName = "DocumentNumber";
             this.colDocumentNumber.Name = "colDocumentNumber";
             this.colDocumentNumber.Visible = true;
-            this.colDocumentNumber.VisibleIndex = 2;
+            this.colDocumentNumber.VisibleIndex = 1;
             // 
             // colOperationDate
             // 
             this.colOperationDate.FieldName = "OperationDate";
             this.colOperationDate.Name = "colOperationDate";
             this.colOperationDate.Visible = true;
-            this.colOperationDate.VisibleIndex = 5;
+            this.colOperationDate.VisibleIndex = 2;
             // 
             // colOperationTime
             // 
             this.colOperationTime.FieldName = "OperationTime";
             this.colOperationTime.Name = "colOperationTime";
             this.colOperationTime.Visible = true;
-            this.colOperationTime.VisibleIndex = 6;
+            this.colOperationTime.VisibleIndex = 3;
             // 
             // colInvoiceNumber
             // 
             this.colInvoiceNumber.FieldName = "InvoiceNumber";
             this.colInvoiceNumber.Name = "colInvoiceNumber";
             this.colInvoiceNumber.Visible = true;
-            this.colInvoiceNumber.VisibleIndex = 7;
+            this.colInvoiceNumber.VisibleIndex = 4;
             // 
             // colCurrAccCode
             // 
             this.colCurrAccCode.FieldName = "CurrAccCode";
             this.colCurrAccCode.Name = "colCurrAccCode";
             this.colCurrAccCode.Visible = true;
-            this.colCurrAccCode.VisibleIndex = 8;
+            this.colCurrAccCode.VisibleIndex = 5;
             // 
             // colDescription
             // 
             this.colDescription.FieldName = "Description";
             this.colDescription.Name = "colDescription";
             this.colDescription.Visible = true;
-            this.colDescription.VisibleIndex = 9;
+            this.colDescription.VisibleIndex = 6;
             // 
             // colOfficeCode
             // 
             this.colOfficeCode.FieldName = "OfficeCode";
             this.colOfficeCode.Name = "colOfficeCode";
             this.colOfficeCode.Visible = true;
-            this.colOfficeCode.VisibleIndex = 12;
+            this.colOfficeCode.VisibleIndex = 7;
             // 
             // colStoreCode
             // 
             this.colStoreCode.FieldName = "StoreCode";
             this.colStoreCode.Name = "colStoreCode";
             this.colStoreCode.Visible = true;
-            this.colStoreCode.VisibleIndex = 13;
+            this.colStoreCode.VisibleIndex = 8;
             // 
             // colPosterminalId
             // 
             this.colPosterminalId.FieldName = "PosterminalId";
             this.colPosterminalId.Name = "colPosterminalId";
             this.colPosterminalId.Visible = true;
-            this.colPosterminalId.VisibleIndex = 14;
+            this.colPosterminalId.VisibleIndex = 9;
             // 
             // colCurrencyCode
             // 
             this.colCurrencyCode.FieldName = "CurrencyCode";
             this.colCurrencyCode.Name = "colCurrencyCode";
             this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 15;
+            this.colCurrencyCode.VisibleIndex = 10;
             // 
             // colExchangeRate
             // 
             this.colExchangeRate.FieldName = "ExchangeRate";
             this.colExchangeRate.Name = "colExchangeRate";
             this.colExchangeRate.Visible = true;
-            this.colExchangeRate.VisibleIndex = 16;
+            this.colExchangeRate.VisibleIndex = 11;
             // 
             // FormPaymentHeaderList
             // 
@@ -179,8 +179,8 @@ namespace Foxoft
             this.Name = "FormPaymentHeaderList";
             this.Text = "FormPaymentHeaderList";
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).EndInit();
             this.ResumeLayout(false);
 
         }

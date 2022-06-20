@@ -49,7 +49,6 @@ namespace Foxoft
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
-            bBI_Save.Enabled = false;
 
             bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
@@ -77,8 +76,6 @@ namespace Foxoft
             //badge2.TargetElement = RibbonPage_Invoice;
 
             ClearControlsAddNew();
-
-            LoadSession();
         }
 
         public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
@@ -101,6 +98,8 @@ namespace Foxoft
             trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
             trInvoiceHeader.ProcessCode = this.processCode;
 
+            LoadSession();
+
             trInvoiceHeadersBindingSource.DataSource = trInvoiceHeader;
 
             lbl_InvoicePaidSum.Text = "";
@@ -108,6 +107,15 @@ namespace Foxoft
             dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+
+            dataLayoutControl1.isValid(out List<string> errorList);
+        }
+
+        private void LoadSession()
+        {
+            trInvoiceHeader.OfficeCode = Authorization.OfficeCode;
+            trInvoiceHeader.StoreCode = Authorization.StoreCode;
+            trInvoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -154,13 +162,13 @@ namespace Foxoft
                                                     //x.Amount = Math.Round(x.Amount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
                                                     //x.NetAmount = Math.Round(x.NetAmount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
 
-                                                    if (form.trInvoiceHeader.IsReturn)
-                                                    {
-                                                        x.QtyIn = x.QtyIn * (-1);
-                                                        x.QtyOut = x.QtyOut * (-1);
-                                                        x.Amount = x.Amount * (-1);
-                                                        x.NetAmount = x.NetAmount * (-1);
-                                                    }
+                                                    //if (form.trInvoiceHeader.IsReturn)
+                                                    //{
+                                                    //x.QtyIn = x.QtyIn * (-1);
+                                                    //x.QtyOut = x.QtyOut * (-1);
+                                                    //x.Amount = x.Amount * (-1);
+                                                    //x.NetAmount = x.NetAmount * (-1);
+                                                    //}
                                                 });
 
                                                 trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
@@ -228,7 +236,16 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.F1)
             {
-                gV_InvoiceLine.OptionsNavigation.AutoFocusNewRow = true;
+                gV_InvoiceLine.FocusedColumn = col_ProductCode;
+                gV_InvoiceLine.ShowEditor();
+                if (gV_InvoiceLine.ActiveEditor is ButtonEdit)
+                {
+                    //ButtonEdit button = (ButtonEdit)gV_InvoiceLine.ActiveEditor;
+                    //button.PerformClick(button.Properties.Buttons[0]);
+                    SelectProduct(gV_InvoiceLine.ActiveEditor);
+                }
+                gV_InvoiceLine.CloseEditor();
+                e.Handled = true;
             }
 
             if (e.KeyCode == Keys.F9 && gV.SelectedRowsCount > 0)
@@ -269,6 +286,11 @@ namespace Foxoft
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
             CalcRowLocNetAmount(e);
+        }
+
+        private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            //CalcRowLocNetAmount(e);
         }
 
         private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
@@ -427,7 +449,7 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
-                    //gV_InvoiceLine.AddNewRow();
+
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, form.dcProduct.ProductCode);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
 
@@ -451,12 +473,12 @@ namespace Foxoft
             //DataRowView rowView = e.Row as DataRowView;
             //DataRow row = rowView.Row;
 
-            //dbContext.SaveChanges();
+            SaveInvoice();
         }
 
         private void gV_InvoiceLine_RowDeleted(object sender, RowDeletedEventArgs e)
         {
-            //dbContext.SaveChanges();
+            SaveInvoice();
         }
 
         private void FormInvoice_FormClosed(object sender, FormClosedEventArgs e)
@@ -474,13 +496,9 @@ namespace Foxoft
                 {
                     SaveInvoice();
 
-                    SaveSession();
-
                     MakePayment(summaryInvoice);
 
                     ClearControlsAddNew();
-
-                    LoadSession();
 
                     GetPrint();
                 }
@@ -524,29 +542,37 @@ namespace Foxoft
 
         private void SaveInvoice()
         {
-            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-            {
-                MakeReturnIsNegativ(i);
-            }
+            //for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            //{
+            //    //MakeReturnIsNegativ(i);
+            //}
 
             if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
                 efMethods.InsertInvoiceHeader(trInvoiceHeader);
 
             dbContext.SaveChanges();
+
+            SaveSession();
         }
 
-        private void MakeReturnIsNegativ(int rowInd)
+        private void SaveSession()
         {
-            if ((bool)CheckEdit_IsReturn.EditValue)
-            {
-                GridColumn qtyColumn = CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut;
-
-                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowInd, qtyColumn));
-                gV_InvoiceLine.SetRowCellValue(rowInd, qtyColumn, qty * (-1));
-
-                CalcRowLocNetAmount(new CellValueChangedEventArgs(rowInd, qtyColumn, qty * (-1)));
-            }
+            Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
+            Settings.Default.Save();
         }
+
+        //private void MakeReturnIsNegativ(int rowInd)
+        //{
+        //    if ((bool)CheckEdit_IsReturn.EditValue)
+        //    {
+        //        GridColumn qtyColumn = CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut;
+
+        //        int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowInd, qtyColumn));
+        //        gV_InvoiceLine.SetRowCellValue(rowInd, qtyColumn, qty * (-1));
+
+        //        CalcRowLocNetAmount(new CellValueChangedEventArgs(rowInd, qtyColumn, qty * (-1)));
+        //    }
+        //}
 
         private void GetPrint()
         {
@@ -567,7 +593,7 @@ namespace Foxoft
         }
 
         private void MakePayment(decimal summaryInvoice)
-        {            
+        {
             using (FormPayment formPayment = new FormPayment(1, summaryInvoice, trInvoiceHeader))
             {
                 if (formPayment.ShowDialog(this) == DialogResult.OK)
@@ -575,19 +601,6 @@ namespace Foxoft
                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
-        }
-
-        private void LoadSession()
-        {
-            trInvoiceHeader.OfficeCode = Authorization.OfficeCode;
-            trInvoiceHeader.StoreCode = Authorization.StoreCode;
-            trInvoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
-        }
-
-        private void SaveSession()
-        {
-            Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
-            Settings.Default.Save();
         }
 
         private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
@@ -605,10 +618,6 @@ namespace Foxoft
         private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
         {
             ClearControlsAddNew();
-
-            LoadSession();
-
-            dataLayoutControl1.isValid(out List<string> errorList);
         }
 
         private string subConnString = Settings.Default.subConnString;
@@ -669,8 +678,6 @@ namespace Foxoft
                 if (summaryInvoice != 0)
                 {
                     SaveInvoice();
-
-                    SaveSession();
                 }
             }
             else
@@ -689,26 +696,19 @@ namespace Foxoft
 
         private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Qaimə yadda saxlanılsınmı?");
-            if (dialogResult == DialogResult.OK)
+            if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                if (dataLayoutControl1.isValid(out List<string> errorList))
+                decimal summaryInvoice = CalcSumInvoice();
+                if (summaryInvoice != 0)
                 {
-                    decimal summaryInvoice = CalcSumInvoice();
-                    if (summaryInvoice != 0)
-                    {
-                        SaveInvoice();
-
-                        SaveSession();
-                    }
-
+                    SaveInvoice();
                     MakePayment(summaryInvoice);
                 }
-                else
-                {
-                    string combinedString = errorList.Aggregate((x, y) => x + "" + y);
-                    XtraMessageBox.Show(combinedString);
-                }
+            }
+            else
+            {
+                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(combinedString);
             }
         }
 
@@ -722,10 +722,6 @@ namespace Foxoft
                     efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
 
                     ClearControlsAddNew();
-
-                    LoadSession();
-
-                    dataLayoutControl1.isValid(out List<string> errorList);
                 }
             }
             else
@@ -748,7 +744,6 @@ namespace Foxoft
             gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, exRate);
 
             CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, colExchangeRate, exRate));
-
         }
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, EventArgs e)
@@ -766,8 +761,6 @@ namespace Foxoft
                 {
                     SaveInvoice();
 
-                    SaveSession();
-
                     MakePayment(summaryInvoice);
 
                     GetPrint();
@@ -781,11 +774,6 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
-        }
-
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            gV_InvoiceLine.BestFitColumns();
         }
     }
 }

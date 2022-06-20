@@ -23,6 +23,7 @@ namespace Foxoft
         public FormProductList()
         {
             InitializeComponent();
+            bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new MemoryStream(byteArray);
@@ -169,6 +170,11 @@ namespace Foxoft
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
             gC_ProductList.ExportToXlsx(@"C:\Users\Administrator\Desktop\Excel");
+        }
+
+        private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Close();
         }
     }
 }

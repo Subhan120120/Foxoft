@@ -189,14 +189,14 @@ namespace Foxoft
             // 
             this.trInvoiceHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceHeader);
             // 
-            // labelControl1
+            // lbl_InvoicePaidSum
             // 
             this.lbl_InvoicePaidSum.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_InvoicePaidSum.Appearance.Options.UseFont = true;
             this.lbl_InvoicePaidSum.Appearance.Options.UseTextOptions = true;
             this.lbl_InvoicePaidSum.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             this.lbl_InvoicePaidSum.Location = new System.Drawing.Point(12, 425);
-            this.lbl_InvoicePaidSum.Name = "labelControl1";
+            this.lbl_InvoicePaidSum.Name = "lbl_InvoicePaidSum";
             this.lbl_InvoicePaidSum.Size = new System.Drawing.Size(847, 25);
             this.lbl_InvoicePaidSum.StyleController = this.dataLayoutControl1;
             this.lbl_InvoicePaidSum.TabIndex = 15;

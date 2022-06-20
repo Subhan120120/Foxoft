@@ -22,6 +22,8 @@ namespace Foxoft
         public FormCurrAccList()
         {
             InitializeComponent();
+            bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
+
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
@@ -106,7 +108,7 @@ namespace Foxoft
         }
 
         private void gC_CurrAccList_ProcessGridKey(object sender, KeyEventArgs e)
-        {            
+        {
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
             if (view == null) return;
             if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
@@ -114,6 +116,11 @@ namespace Foxoft
                 DialogResult = DialogResult.OK;
             }
 
+        }
+
+        private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Close();
         }
     }
 }

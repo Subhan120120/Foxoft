@@ -54,6 +54,7 @@ namespace Foxoft
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.Autoc = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -203,10 +204,12 @@ namespace Foxoft
             this.btn_ProductEdit,
             this.barButtonItem1,
             this.Autoc,
-            this.barButtonItem2});
+            this.barButtonItem2,
+            this.bBI_quit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 6;
+            this.ribbonControl1.MaxItemId = 7;
             this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl1.Size = new System.Drawing.Size(865, 158);
@@ -248,6 +251,14 @@ namespace Foxoft
             this.barButtonItem2.Id = 5;
             this.barButtonItem2.Name = "barButtonItem2";
             this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            // 
+            // bBI_quit
+            // 
+            this.bBI_quit.Caption = "Bağla";
+            this.bBI_quit.Id = 6;
+            this.bBI_quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_quit.ImageOptions.SvgImage")));
+            this.bBI_quit.Name = "bBI_quit";
+            this.bBI_quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_quit_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -326,5 +337,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colPurchasePrice;
         private DevExpress.XtraGrid.Columns.GridColumn colWholesalePrice;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarButtonItem bBI_quit;
     }
 }

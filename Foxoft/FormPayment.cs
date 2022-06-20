@@ -16,39 +16,40 @@ namespace Foxoft
         private decimal summary { get; set; }
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private EfMethods efMethods = new EfMethods();
+
         private string currency;
         private float exRate = 1;
 
         private bool isNegativ = false;
+
         private decimal cashLarge = 0;
         private decimal cashless = 0;
         private decimal bonus = 0;
 
-        public FormPayment(int PaymentType, decimal summary, TrInvoiceHeader trInvoiceHeader)
+        public FormPayment(int PaymentType, decimal invoiceSum, TrInvoiceHeader trInvoiceHeader)
         {
             InitializeComponent();
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+
             lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
 
-
             if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
-                summary *= (-1);
+                invoiceSum *= (-1);
 
             if (trInvoiceHeader.IsReturn)
-                summary *= (-1);
+                invoiceSum *= (-1);
 
-            decimal paid = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId);
-            summary = Math.Round(summary + paid, 2);
+            decimal prePaid = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId);
+            invoiceSum = Math.Round(invoiceSum - prePaid, 2);
 
-            if (summary < 0)
+            if (invoiceSum < 0)
                 isNegativ = true;
 
             currency = "USD";
 
-
             this.PaymentType = PaymentType;
-            this.summary = Math.Abs(summary);
+            this.summary = Math.Abs(invoiceSum);
             this.PaymentHeaderId = Guid.NewGuid();
             this.trInvoiceHeader = trInvoiceHeader;
         }

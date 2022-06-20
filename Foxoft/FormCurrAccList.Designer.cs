@@ -52,6 +52,7 @@ namespace Foxoft
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -166,10 +167,12 @@ namespace Foxoft
             this.ribbonControl1.SearchEditItem,
             this.bBI_CurrAccNew,
             this.bBI_CurAccEdit,
-            this.bBI_refresh});
+            this.bBI_refresh,
+            this.bBI_quit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 4;
+            this.ribbonControl1.MaxItemId = 5;
             this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl1.Size = new System.Drawing.Size(858, 158);
@@ -232,6 +235,14 @@ namespace Foxoft
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
             // 
+            // bBI_quit
+            // 
+            this.bBI_quit.Caption = "Bağla";
+            this.bBI_quit.Id = 4;
+            this.bBI_quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+            this.bBI_quit.Name = "bBI_quit";
+            this.bBI_quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_quit_ItemClick);
+            // 
             // FormCurrAccList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -274,5 +285,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_CurrAccNew;
         private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
         private DevExpress.XtraBars.BarButtonItem bBI_refresh;
+        private DevExpress.XtraBars.BarButtonItem bBI_quit;
     }
 }
