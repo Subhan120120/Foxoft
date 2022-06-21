@@ -52,20 +52,20 @@ namespace Foxoft
             gV_PaymentHeaderList.BestFitColumns();
         }
 
-        private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
-        {
-            DXMouseEventArgs ea = e as DXMouseEventArgs;
-            GridView view = sender as GridView;
-            GridHitInfo info = view.CalcHitInfo(ea.Location);
-            if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
-            {
-                string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+        //private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
+        //{
+        //    DXMouseEventArgs ea = e as DXMouseEventArgs;
+        //    GridView view = sender as GridView;
+        //    GridHitInfo info = view.CalcHitInfo(ea.Location);
+        //    if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
+        //    {
+        //        string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
-                trPaymentHeader = view.GetRow(view.FocusedRowHandle) as TrPaymentHeader;
+        //        trPaymentHeader = view.GetRow(view.FocusedRowHandle) as TrPaymentHeader;
 
-                DialogResult = DialogResult.OK;
-            }
-        }
+        //        DialogResult = DialogResult.OK;
+        //    }
+        //}
 
         private void gC_PaymentHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
         {
@@ -133,6 +133,29 @@ namespace Foxoft
                 formInvoice.WindowState = FormWindowState.Maximized;
                 formInvoice.Show();
             }
+        }
+
+        private void repositoryItemHypertextLabel1_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            MessageBox.Show("btn klik");
+        }
+
+        private void repositoryItemHypertextLabel1_OpenHyperlink(object sender, OpenHyperlinkEventArgs e)
+        {
+
+            MessageBox.Show("openHyperLink");
+        }
+
+        private void repositoryItemHyperLinkEdit1_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+
+            MessageBox.Show("btn klik");
+        }
+
+        private void repositoryItemHyperLinkEdit1_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+
+            MessageBox.Show("openLink");
         }
     }
 }

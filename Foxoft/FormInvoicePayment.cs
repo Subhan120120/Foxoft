@@ -67,5 +67,20 @@ namespace Foxoft
                 efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
             }
         }
+
+        private void repositoryItemHyperLinkEdit1_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            MessageBox.Show("OpenLink");
+        }
+
+        private void repositoryItemHyperLinkEdit1_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            MessageBox.Show("Buton Klik");
+        }
+
+        private void repositoryItemHyperLinkEdit1_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            MessageBox.Show("Buton Pressed");
+        }
     }
 }

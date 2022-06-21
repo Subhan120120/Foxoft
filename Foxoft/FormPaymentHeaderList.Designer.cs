@@ -34,6 +34,7 @@ namespace Foxoft
             this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gV_PaymentHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemHypertextLabel1 = new DevExpress.XtraEditors.Repository.RepositoryItemHypertextLabel();
             this.colOperationDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -41,12 +42,13 @@ namespace Foxoft
             this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPosterminalId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemHyperLinkEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.colInvoiceNumber = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoHLE_DocNum = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoHLE_DocNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHypertextLabel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // gC_PaymentHeaderList
@@ -57,7 +59,8 @@ namespace Foxoft
             this.gC_PaymentHeaderList.MainView = this.gV_PaymentHeaderList;
             this.gC_PaymentHeaderList.Name = "gC_PaymentHeaderList";
             this.gC_PaymentHeaderList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repoHLE_DocNum});
+            this.repositoryItemHypertextLabel1,
+            this.repositoryItemHyperLinkEdit1});
             this.gC_PaymentHeaderList.Size = new System.Drawing.Size(980, 268);
             this.gC_PaymentHeaderList.TabIndex = 0;
             this.gC_PaymentHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -82,14 +85,21 @@ namespace Foxoft
             this.colInvoiceNumber});
             this.gV_PaymentHeaderList.GridControl = this.gC_PaymentHeaderList;
             this.gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
-            this.gV_PaymentHeaderList.DoubleClick += new System.EventHandler(this.gV_PaymentHeaderList_DoubleClick);
+            //this.gV_PaymentHeaderList.DoubleClick += new System.EventHandler(this.gV_PaymentHeaderList_DoubleClick);
             // 
             // colPaymentHeaderId
             // 
+            this.colPaymentHeaderId.ColumnEdit = this.repositoryItemHypertextLabel1;
             this.colPaymentHeaderId.FieldName = "PaymentHeaderId";
             this.colPaymentHeaderId.Name = "colPaymentHeaderId";
             this.colPaymentHeaderId.Visible = true;
             this.colPaymentHeaderId.VisibleIndex = 0;
+            // 
+            // repositoryItemHypertextLabel1
+            // 
+            this.repositoryItemHypertextLabel1.Name = "repositoryItemHypertextLabel1";
+            this.repositoryItemHypertextLabel1.OpenHyperlink += new DevExpress.Utils.OpenHyperlinkEventHandler(this.repositoryItemHypertextLabel1_OpenHyperlink);
+            this.repositoryItemHypertextLabel1.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repositoryItemHypertextLabel1_ButtonClick);
             // 
             // colOperationDate
             // 
@@ -135,30 +145,27 @@ namespace Foxoft
             // 
             // colInvoiceHeaderId
             // 
+            this.colInvoiceHeaderId.ColumnEdit = this.repositoryItemHyperLinkEdit1;
             this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
             this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
             this.colInvoiceHeaderId.Visible = true;
             this.colInvoiceHeaderId.VisibleIndex = 7;
             // 
+            // repositoryItemHyperLinkEdit1
+            // 
+            this.repositoryItemHyperLinkEdit1.AutoHeight = false;
+            this.repositoryItemHyperLinkEdit1.Name = "repositoryItemHyperLinkEdit1";
+            this.repositoryItemHyperLinkEdit1.SingleClick = true;
+            this.repositoryItemHyperLinkEdit1.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.repositoryItemHyperLinkEdit1_OpenLink);
+            this.repositoryItemHyperLinkEdit1.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repositoryItemHyperLinkEdit1_ButtonClick);
+            // 
             // colInvoiceNumber
             // 
-            this.colInvoiceNumber.ColumnEdit = this.repoHLE_DocNum;
             this.colInvoiceNumber.FieldName = "TrInvoiceHeader.DocumentNumber";
             this.colInvoiceNumber.Name = "colInvoiceNumber";
             this.colInvoiceNumber.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
             this.colInvoiceNumber.Visible = true;
             this.colInvoiceNumber.VisibleIndex = 8;
-            // 
-            // repoHLE_DocNum
-            // 
-            this.repoHLE_DocNum.AutoHeight = false;
-            this.repoHLE_DocNum.Name = "repoHLE_DocNum";
-            this.repoHLE_DocNum.SingleClick = true;
-            this.repoHLE_DocNum.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
-            this.repoHLE_DocNum.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.repoHLE_DocNum_OpenLink);
-            this.repoHLE_DocNum.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoHLE_DocNum_ButtonClick);
-            this.repoHLE_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoHLE_DocNum_ButtonPressed);
-            this.repoHLE_DocNum.Click += new System.EventHandler(this.repoHLE_DocNum_Click);
             // 
             // FormPaymentHeaderList
             // 
@@ -172,7 +179,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoHLE_DocNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHypertextLabel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -189,8 +197,9 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colDescription;
         private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
         private DevExpress.XtraGrid.Columns.GridColumn colPosterminalId;
-        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHypertextLabel repositoryItemHypertextLabel1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
     }
 }
