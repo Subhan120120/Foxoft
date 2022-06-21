@@ -16,6 +16,7 @@ namespace Foxoft.Models
         public DcCurrAcc()
         {
             TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
+            TrPaymentHeaders = new HashSet<TrPaymentHeader>();
         }
 
         [Key]
@@ -120,6 +121,7 @@ namespace Foxoft.Models
 
         public virtual DcCurrAccType DcCurrAccType { get; set; }
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
+        public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public virtual ICollection<TrCurrAccRole> TrCurrAccRole { get; set; }
     }
 }

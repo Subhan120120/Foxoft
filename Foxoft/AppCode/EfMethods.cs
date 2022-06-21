@@ -136,6 +136,17 @@ namespace Foxoft
             }
         }
 
+        public TrInvoiceHeader SelectInvoiceHeader(Guid invoiceHeaderId)
+        {
+            using (subContext db = new subContext())
+            {
+                return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                          .Include(x => x.TrInvoiceLines)
+                                          .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                          .FirstOrDefault();
+            }
+        }
+
         public List<TrInvoiceHeader> SelectInvoiceHeadersByProcessCode(string processCode)
         {
             using (subContext db = new subContext())

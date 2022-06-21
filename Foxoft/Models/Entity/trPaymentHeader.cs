@@ -12,9 +12,15 @@ namespace Foxoft.Models
 {
     public partial class TrPaymentHeader : BaseEntity
     {
+        public TrPaymentHeader()
+        {
+            TrPaymentLines = new HashSet<TrPaymentLine>();
+        }
+
         [Key]
         public Guid PaymentHeaderId { get; set; }
 
+        [DisplayName("Faktura İd")]
         [ForeignKey("TrInvoiceHeader")]
         public Guid? InvoiceHeaderId { get; set; }
 
@@ -42,12 +48,14 @@ namespace Foxoft.Models
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string InvoiceNumber { get; set; }
 
+
         [DisplayName("Cari Hesab")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [ForeignKey("DcCurrAcc")]
         public string CurrAccCode { get; set; }
 
-        [DisplayName("Adı")]
+
+        [DisplayName("Açıqlama")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string Description { get; set; }
@@ -93,7 +101,8 @@ namespace Foxoft.Models
         public decimal TotalNetAmount { get; set; }
 
 
-
+        public virtual DcCurrAcc DcCurrAcc { get; set; }
+        public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
     }
 }

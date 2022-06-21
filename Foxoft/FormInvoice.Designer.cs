@@ -99,10 +99,12 @@ namespace Foxoft
             this.bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_SaveQuit = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_test = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
@@ -217,6 +219,8 @@ namespace Foxoft
             this.gC_InvoiceLine.TabIndex = 13;
             this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceLine});
+            this.gC_InvoiceLine.EditorKeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
+            this.gC_InvoiceLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
             // 
             // gV_InvoiceLine
             // 
@@ -254,7 +258,6 @@ namespace Foxoft
             this.gV_InvoiceLine.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gV_InvoiceLine_RowUpdated);
             this.gV_InvoiceLine.RowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.gV_InvoiceLine_RowLoaded);
             this.gV_InvoiceLine.AsyncCompleted += new System.EventHandler(this.gV_InvoiceLine_AsyncCompleted);
-            this.gV_InvoiceLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gV_InvoiceLine_KeyDown);
             this.gV_InvoiceLine.DoubleClick += new System.EventHandler(this.gV_InvoiceLine_DoubleClick);
             // 
             // col_InvoiceLineId
@@ -765,9 +768,10 @@ namespace Foxoft
             this.bBI_reportPreview,
             this.bBI_DeleteInvoice,
             this.bBI_DeletePayment,
-            this.bBI_SaveQuit});
+            this.bBI_SaveQuit,
+            this.bBI_test});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 15;
+            this.ribbonControl1.MaxItemId = 16;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -844,15 +848,24 @@ namespace Foxoft
             this.bBI_SaveQuit.Caption = "Yadda Saxla Bağla";
             this.bBI_SaveQuit.Id = 13;
             this.bBI_SaveQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
+            this.bBI_SaveQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
             this.bBI_SaveQuit.Name = "bBI_SaveQuit";
             this.bBI_SaveQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveQuit_ItemClick);
+            // 
+            // bBI_test
+            // 
+            this.bBI_test.Caption = "Test";
+            this.bBI_test.Id = 15;
+            this.bBI_test.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_test.ImageOptions.SvgImage")));
+            this.bBI_test.Name = "bBI_test";
             // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.Faktura,
             this.ribbonPageGroup3,
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "Faktura";
             // 
@@ -880,6 +893,12 @@ namespace Foxoft
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "Print";
             // 
+            // ribbonPageGroup1
+            // 
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_test);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
+            // 
             // ribbonStatusBar1
             // 
             this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 620);
@@ -902,6 +921,7 @@ namespace Foxoft
             this.Text = "Faktura";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormInvoice_Load);
+            this.Shown += new System.EventHandler(this.FormInvoice_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
@@ -1019,5 +1039,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PriceLoc;
         private DevExpress.XtraBars.BarButtonItem bBI_SaveQuit;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup Faktura;
+        private DevExpress.XtraBars.BarButtonItem bBI_test;
     }
 }

@@ -50,7 +50,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
+            //bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             this.processCode = processCode;
             this.productTypeCode = productTypeCode;
@@ -66,7 +66,6 @@ namespace Foxoft
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_Currency.DataSource = efMethods.SelectCurrencies();
 
-
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();
             badge2 = new Badge();
@@ -78,11 +77,23 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
+        public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode, Guid invoiceHeaderId)
+            : this(processCode, productTypeCode, currAccTypeCode)
+        {
+            trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+            LoadInvoice(invoiceHeaderId);
+        }
+
         public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
         private void FormInvoice_Load(object sender, EventArgs e)
         {
             dataLayoutControl1.isValid(out List<string> errorList);
+        }
+
+        private void FormInvoice_Shown(object sender, EventArgs e)
+        {
+            gC_InvoiceLine.Focus();
         }
 
         private void ClearControlsAddNew()
@@ -135,56 +146,60 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     trInvoiceHeader = form.trInvoiceHeader;
-
-                    dbContext = new subContext();
-                    dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
-                                              .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
-                    LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-
-                    if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
-                        lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
-
-                    trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
-
-                    dbContext.TrInvoiceLines.Include(o => o.DcProduct)
-                                            .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
-                                            .OrderBy(x => x.CreatedDate)
-                                            .LoadAsync()
-                                            .ContinueWith(loadTask =>
-                                            {
-                                                LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
-
-                                                lV_invoiceLine.ForEach(x =>
-                                                {
-                                                    x.ProductDescription = x.DcProduct.ProductDescription;
-
-                                                    //x.Price = Math.Round(x.Price / x.ExchangeRate, 4); //ferqli valyutada gostermek
-                                                    //x.Amount = Math.Round(x.Amount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
-                                                    //x.NetAmount = Math.Round(x.NetAmount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
-
-                                                    //if (form.trInvoiceHeader.IsReturn)
-                                                    //{
-                                                    //x.QtyIn = x.QtyIn * (-1);
-                                                    //x.QtyOut = x.QtyOut * (-1);
-                                                    //x.Amount = x.Amount * (-1);
-                                                    //x.NetAmount = x.NetAmount * (-1);
-                                                    //}
-                                                });
-
-                                                trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
-
-                                                gV_InvoiceLine.BestFitColumns();
-
-                                            }, TaskScheduler.FromCurrentSynchronizationContext());
-
-
-                    dataLayoutControl1.isValid(out List<string> errorList);
-
-
-                    decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) / (decimal)1.703 * (CustomExtensions.ProcessDir(processCode) == "In" ? (-1) : 1);
-                    lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + "USD";
+                    LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
+        }
+
+        private void LoadInvoice(Guid InvoiceHeaderId)
+        {
+            dbContext = new subContext();
+            dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                      .Where(x => x.InvoiceHeaderId == InvoiceHeaderId).Load();
+            LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+
+            if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
+                lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
+
+            trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+
+            dbContext.TrInvoiceLines.Include(o => o.DcProduct)
+                                    .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
+                                    .OrderBy(x => x.CreatedDate)
+                                    .LoadAsync()
+                                    .ContinueWith(loadTask =>
+                                    {
+                                        LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
+
+                                        lV_invoiceLine.ForEach(x =>
+                                        {
+                                            x.ProductDescription = x.DcProduct.ProductDescription;
+
+                                            //x.Price = Math.Round(x.Price / x.ExchangeRate, 4); //ferqli valyutada gostermek
+                                            //x.Amount = Math.Round(x.Amount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
+                                            //x.NetAmount = Math.Round(x.NetAmount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
+
+                                            //if (form.trInvoiceHeader.IsReturn)
+                                            //{
+                                            //x.QtyIn = x.QtyIn * (-1);
+                                            //x.QtyOut = x.QtyOut * (-1);
+                                            //x.Amount = x.Amount * (-1);
+                                            //x.NetAmount = x.NetAmount * (-1);
+                                            //}
+                                        });
+
+                                        trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
+
+                                        gV_InvoiceLine.BestFitColumns();
+
+                                    }, TaskScheduler.FromCurrentSynchronizationContext());
+
+
+            dataLayoutControl1.isValid(out List<string> errorList);
+
+
+            decimal paidSum = efMethods.SelectPaymentLinesSum(InvoiceHeaderId) / (decimal)1.703 * (CustomExtensions.ProcessDir(processCode) == "In" ? (-1) : 1);
+            lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + "USD";
         }
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -222,7 +237,7 @@ namespace Foxoft
             //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
         }
 
-        private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
+        private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
         {
             GridView gV = sender as GridView;
 
@@ -239,11 +254,8 @@ namespace Foxoft
                 gV_InvoiceLine.FocusedColumn = col_ProductCode;
                 gV_InvoiceLine.ShowEditor();
                 if (gV_InvoiceLine.ActiveEditor is ButtonEdit)
-                {
-                    //ButtonEdit button = (ButtonEdit)gV_InvoiceLine.ActiveEditor;
-                    //button.PerformClick(button.Properties.Buttons[0]);
                     SelectProduct(gV_InvoiceLine.ActiveEditor);
-                }
+
                 gV_InvoiceLine.CloseEditor();
                 e.Handled = true;
             }
@@ -459,6 +471,8 @@ namespace Foxoft
                     CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, col_Price, price));
                 }
             }
+
+            gV_InvoiceLine.UpdateCurrentRow();
             //}
         }
 
@@ -472,7 +486,6 @@ namespace Foxoft
         {
             //DataRowView rowView = e.Row as DataRowView;
             //DataRow row = rowView.Row;
-
             SaveInvoice();
         }
 
@@ -498,11 +511,14 @@ namespace Foxoft
 
                     MakePayment(summaryInvoice);
 
-                    ClearControlsAddNew();
-
                     GetPrint();
+
+                    ClearControlsAddNew();
                 }
-                else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+                else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                {
+                    ClearControlsAddNew();
+                }
             }
             else
             {
@@ -718,8 +734,8 @@ namespace Foxoft
             {
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
                     efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+                    efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
 
                     ClearControlsAddNew();
                 }
@@ -767,7 +783,10 @@ namespace Foxoft
 
                     this.Close();
                 }
-                else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+                else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                {
+                    this.Close();
+                };
             }
             else
             {

@@ -15,6 +15,7 @@ using DevExpress.XtraGrid;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using DevExpress.Utils.Extensions;
+using DevExpress.XtraEditors.Controls;
 
 namespace Foxoft
 {
@@ -34,17 +35,21 @@ namespace Foxoft
 
 
             dbContext.TrPaymentHeaders.Include(x => x.TrPaymentLines)
-                          .OrderByDescending(x => x.OperationDate)
-                          .LoadAsync()
-                          .ContinueWith(loadTask =>
-                          {
-                              LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
+                                      .Include(x => x.TrInvoiceHeader)
+                                      .Include(x => x.DcCurrAcc)
+                                      .OrderByDescending(x => x.OperationDate)
+                                      .LoadAsync()
+                                      .ContinueWith(loadTask =>
+                                      {
+                                          LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
 
-                              lV_trPaymentHeaders.ForEach(x => x.TotalNetAmount = x.TrPaymentLines.Sum(x => x.Payment));
+                                          lV_trPaymentHeaders.ForEach(x => x.TotalNetAmount = x.TrPaymentLines.Sum(x => x.Payment));
 
-                              trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
+                                          trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
 
-                          }, TaskScheduler.FromCurrentSynchronizationContext());
+                                      }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            gV_PaymentHeaderList.BestFitColumns();
         }
 
         private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
@@ -69,6 +74,64 @@ namespace Foxoft
             if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
             {
                 DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void repoHLE_DocNum_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+
+            object objHeaderId = gV_PaymentHeaderList.GetFocusedRowCellValue(colInvoiceHeaderId);
+
+            if (!object.ReferenceEquals(objHeaderId, null))
+            {
+                Guid trInvoiceHeaderId = Guid.Parse(objHeaderId.ToString());
+                FormInvoice formInvoice = new FormInvoice("RP", 1, 2, trInvoiceHeaderId);
+                formInvoice.MdiParent = this;
+                formInvoice.WindowState = FormWindowState.Maximized;
+                formInvoice.Show();
+            }
+
+        }
+
+        private void repoHLE_DocNum_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            object objHeaderId = gV_PaymentHeaderList.GetFocusedRowCellValue(colInvoiceHeaderId);
+
+            if (!object.ReferenceEquals(objHeaderId, null))
+            {
+                Guid trInvoiceHeaderId = Guid.Parse(objHeaderId.ToString());
+                FormInvoice formInvoice = new FormInvoice("RP", 1, 2, trInvoiceHeaderId);
+                formInvoice.MdiParent = this;
+                formInvoice.WindowState = FormWindowState.Maximized;
+                formInvoice.Show();
+            }
+        }
+
+        private void repoHLE_DocNum_Click(object sender, EventArgs e)
+        {
+            object objHeaderId = gV_PaymentHeaderList.GetFocusedRowCellValue(colInvoiceHeaderId);
+
+            if (!object.ReferenceEquals(objHeaderId, null))
+            {
+                Guid trInvoiceHeaderId = Guid.Parse(objHeaderId.ToString());
+                FormInvoice formInvoice = new FormInvoice("RP", 1, 2, trInvoiceHeaderId);
+                formInvoice.MdiParent = this;
+                formInvoice.WindowState = FormWindowState.Maximized;
+                formInvoice.Show();
+            }
+        }
+
+        private void repoHLE_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            object objHeaderId = gV_PaymentHeaderList.GetFocusedRowCellValue(colInvoiceHeaderId);
+
+            if (!object.ReferenceEquals(objHeaderId, null))
+            {
+                Guid trInvoiceHeaderId = Guid.Parse(objHeaderId.ToString());
+                FormInvoice formInvoice = new FormInvoice("RP", 1, 2, trInvoiceHeaderId);
+                formInvoice.MdiParent = this;
+                formInvoice.WindowState = FormWindowState.Maximized;
+                formInvoice.Show();
             }
         }
     }

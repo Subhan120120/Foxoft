@@ -34,20 +34,19 @@ namespace Foxoft
             this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gV_PaymentHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationTime = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colInvoiceNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colOfficeCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPosterminalId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colInvoiceNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoHLE_DocNum = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoHLE_DocNum)).BeginInit();
             this.SuspendLayout();
             // 
             // gC_PaymentHeaderList
@@ -57,7 +56,9 @@ namespace Foxoft
             this.gC_PaymentHeaderList.Location = new System.Drawing.Point(0, 0);
             this.gC_PaymentHeaderList.MainView = this.gV_PaymentHeaderList;
             this.gC_PaymentHeaderList.Name = "gC_PaymentHeaderList";
-            this.gC_PaymentHeaderList.Size = new System.Drawing.Size(521, 268);
+            this.gC_PaymentHeaderList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repoHLE_DocNum});
+            this.gC_PaymentHeaderList.Size = new System.Drawing.Size(980, 268);
             this.gC_PaymentHeaderList.TabIndex = 0;
             this.gC_PaymentHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_PaymentHeaderList});
@@ -71,17 +72,14 @@ namespace Foxoft
             // 
             this.gV_PaymentHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colPaymentHeaderId,
-            this.colDocumentNumber,
             this.colOperationDate,
             this.colOperationTime,
-            this.colInvoiceNumber,
             this.colCurrAccCode,
             this.colDescription,
-            this.colOfficeCode,
             this.colStoreCode,
             this.colPosterminalId,
-            this.colCurrencyCode,
-            this.colExchangeRate});
+            this.colInvoiceHeaderId,
+            this.colInvoiceNumber});
             this.gV_PaymentHeaderList.GridControl = this.gC_PaymentHeaderList;
             this.gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
             this.gV_PaymentHeaderList.DoubleClick += new System.EventHandler(this.gV_PaymentHeaderList_DoubleClick);
@@ -93,94 +91,88 @@ namespace Foxoft
             this.colPaymentHeaderId.Visible = true;
             this.colPaymentHeaderId.VisibleIndex = 0;
             // 
-            // colDocumentNumber
-            // 
-            this.colDocumentNumber.FieldName = "DocumentNumber";
-            this.colDocumentNumber.Name = "colDocumentNumber";
-            this.colDocumentNumber.Visible = true;
-            this.colDocumentNumber.VisibleIndex = 1;
-            // 
             // colOperationDate
             // 
             this.colOperationDate.FieldName = "OperationDate";
             this.colOperationDate.Name = "colOperationDate";
             this.colOperationDate.Visible = true;
-            this.colOperationDate.VisibleIndex = 2;
+            this.colOperationDate.VisibleIndex = 1;
             // 
             // colOperationTime
             // 
             this.colOperationTime.FieldName = "OperationTime";
             this.colOperationTime.Name = "colOperationTime";
             this.colOperationTime.Visible = true;
-            this.colOperationTime.VisibleIndex = 3;
-            // 
-            // colInvoiceNumber
-            // 
-            this.colInvoiceNumber.FieldName = "InvoiceNumber";
-            this.colInvoiceNumber.Name = "colInvoiceNumber";
-            this.colInvoiceNumber.Visible = true;
-            this.colInvoiceNumber.VisibleIndex = 4;
+            this.colOperationTime.VisibleIndex = 2;
             // 
             // colCurrAccCode
             // 
             this.colCurrAccCode.FieldName = "CurrAccCode";
             this.colCurrAccCode.Name = "colCurrAccCode";
             this.colCurrAccCode.Visible = true;
-            this.colCurrAccCode.VisibleIndex = 5;
+            this.colCurrAccCode.VisibleIndex = 3;
             // 
             // colDescription
             // 
             this.colDescription.FieldName = "Description";
             this.colDescription.Name = "colDescription";
             this.colDescription.Visible = true;
-            this.colDescription.VisibleIndex = 6;
-            // 
-            // colOfficeCode
-            // 
-            this.colOfficeCode.FieldName = "OfficeCode";
-            this.colOfficeCode.Name = "colOfficeCode";
-            this.colOfficeCode.Visible = true;
-            this.colOfficeCode.VisibleIndex = 7;
+            this.colDescription.VisibleIndex = 4;
             // 
             // colStoreCode
             // 
             this.colStoreCode.FieldName = "StoreCode";
             this.colStoreCode.Name = "colStoreCode";
             this.colStoreCode.Visible = true;
-            this.colStoreCode.VisibleIndex = 8;
+            this.colStoreCode.VisibleIndex = 5;
             // 
             // colPosterminalId
             // 
             this.colPosterminalId.FieldName = "PosterminalId";
             this.colPosterminalId.Name = "colPosterminalId";
             this.colPosterminalId.Visible = true;
-            this.colPosterminalId.VisibleIndex = 9;
+            this.colPosterminalId.VisibleIndex = 6;
             // 
-            // colCurrencyCode
+            // colInvoiceHeaderId
             // 
-            this.colCurrencyCode.FieldName = "CurrencyCode";
-            this.colCurrencyCode.Name = "colCurrencyCode";
-            this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 10;
+            this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
+            this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
+            this.colInvoiceHeaderId.Visible = true;
+            this.colInvoiceHeaderId.VisibleIndex = 7;
             // 
-            // colExchangeRate
+            // colInvoiceNumber
             // 
-            this.colExchangeRate.FieldName = "ExchangeRate";
-            this.colExchangeRate.Name = "colExchangeRate";
-            this.colExchangeRate.Visible = true;
-            this.colExchangeRate.VisibleIndex = 11;
+            this.colInvoiceNumber.ColumnEdit = this.repoHLE_DocNum;
+            this.colInvoiceNumber.FieldName = "TrInvoiceHeader.DocumentNumber";
+            this.colInvoiceNumber.Name = "colInvoiceNumber";
+            this.colInvoiceNumber.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+            this.colInvoiceNumber.Visible = true;
+            this.colInvoiceNumber.VisibleIndex = 8;
+            // 
+            // repoHLE_DocNum
+            // 
+            this.repoHLE_DocNum.AutoHeight = false;
+            this.repoHLE_DocNum.Name = "repoHLE_DocNum";
+            this.repoHLE_DocNum.SingleClick = true;
+            this.repoHLE_DocNum.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+            this.repoHLE_DocNum.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.repoHLE_DocNum_OpenLink);
+            this.repoHLE_DocNum.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoHLE_DocNum_ButtonClick);
+            this.repoHLE_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoHLE_DocNum_ButtonPressed);
+            this.repoHLE_DocNum.Click += new System.EventHandler(this.repoHLE_DocNum_Click);
             // 
             // FormPaymentHeaderList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(521, 268);
+            this.ClientSize = new System.Drawing.Size(980, 268);
             this.Controls.Add(this.gC_PaymentHeaderList);
             this.Name = "FormPaymentHeaderList";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormPaymentHeaderList";
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoHLE_DocNum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -191,28 +183,14 @@ namespace Foxoft
         private System.Windows.Forms.BindingSource trPaymentHeadersBindingSource;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentHeaderList;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentHeaderId;
-        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
-        private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
-        private DevExpress.XtraGrid.Columns.GridColumn colDocumentDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colDocumentTime;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationTime;
-        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colDescription;
-        private DevExpress.XtraGrid.Columns.GridColumn colOperationType;
-        private DevExpress.XtraGrid.Columns.GridColumn colCompanyCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colOfficeCode;
         private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
         private DevExpress.XtraGrid.Columns.GridColumn colPosterminalId;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsCompleted;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsLocked;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrPaymentLines;
-        private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
-        private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
+        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
     }
 }

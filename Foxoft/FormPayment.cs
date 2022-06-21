@@ -173,7 +173,7 @@ namespace Foxoft
         {
             EfMethods efMethods = new EfMethods();
 
-            string NewDocNum = efMethods.GetNextDocNum("P", "DocumentNumber", "TrPaymentHeaders");
+            
 
             //if ((cashLarge + cashless + bonus) < bePaid)
             //    XtraMessageBox.Show("Ödəmə ödənilməli olan məbləğdən azdır");
@@ -185,22 +185,25 @@ namespace Foxoft
 
             //if (!efMethods.PaymentHeaderExist(InvoiceHeaderId))
             //{
+            string NewDocNum = efMethods.GetNextDocNum("P", "DocumentNumber", "TrPaymentHeaders");
 
             string operType = "";
             if (trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
                 operType = "payment";
 
-            TrPaymentHeader trPayment = new TrPaymentHeader()
-            {
-                PaymentHeaderId = PaymentHeaderId,
-                DocumentNumber = NewDocNum,
-                CurrAccCode = trInvoiceHeader.CurrAccCode,
-                DocumentDate = trInvoiceHeader.DocumentDate,
-                DocumentTime = trInvoiceHeader.DocumentTime,
-                InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
-                OperationType = operType,
-                OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString())
-            };
+            TrPaymentHeader trPayment = new TrPaymentHeader();
+
+            trPayment.PaymentHeaderId = PaymentHeaderId;
+            trPayment.DocumentNumber = NewDocNum;
+            trPayment.CurrAccCode = trInvoiceHeader.CurrAccCode;
+            trPayment.DocumentDate = trInvoiceHeader.DocumentDate;
+            trPayment.DocumentTime = trInvoiceHeader.DocumentTime;
+            if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
+                trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+            trPayment.OperationType = operType;
+            trPayment.OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString());
+
+
 
             efMethods.InsertPaymentHeader(trPayment);
 
@@ -215,6 +218,7 @@ namespace Foxoft
                 cash = cash * (decimal)exRate; //convert currency to local
                 TrPaymentLine.Payment = isNegativ ? cash * (-1) : cash;
                 TrPaymentLine.PaymentTypeCode = 1;
+                efMethods.InsertPaymentLine(TrPaymentLine);
             }
 
             if (cashless > 0)
@@ -222,6 +226,7 @@ namespace Foxoft
                 cashless = cashless * (decimal)exRate; //convert currency to local
                 TrPaymentLine.Payment = isNegativ ? cashless * (-1) : cashless;
                 TrPaymentLine.PaymentTypeCode = 2;
+                efMethods.InsertPaymentLine(TrPaymentLine);
             }
 
             if (bonus > 0)
@@ -229,9 +234,9 @@ namespace Foxoft
                 bonus = bonus * (decimal)exRate; //convert currency to local
                 TrPaymentLine.Payment = isNegativ ? bonus * (-1) : bonus;
                 TrPaymentLine.PaymentTypeCode = 3;
+                efMethods.InsertPaymentLine(TrPaymentLine);
             }
 
-            efMethods.InsertPaymentLine(TrPaymentLine);
 
             decimal change = cashLarge + cashless + bonus - bePaid;
             //if (change > 0)

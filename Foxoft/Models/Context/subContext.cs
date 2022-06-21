@@ -558,9 +558,6 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrPaymentHeader>(entity =>
             {
-                entity.Property(e => e.CurrAccCode)
-                    .HasDefaultValueSql("space(0)");
-
                 entity.Property(e => e.CurrencyCode)
                     .HasDefaultValueSql("space(0)");
 
@@ -581,10 +578,6 @@ namespace Foxoft.Models
 
                 entity.Property(e => e.OperationTime)
                     .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
-
-
-                entity.Property(e => e.InvoiceHeaderId)
-                    .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.InvoiceNumber)
                     .HasDefaultValueSql("space(0)");

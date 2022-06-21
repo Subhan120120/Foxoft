@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220620214612_hello")]
+    partial class hello
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1578,8 +1580,11 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
                     b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
@@ -1675,8 +1680,6 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("space(0)");
 
                     b.HasKey("PaymentHeaderId");
-
-                    b.HasIndex("CurrAccCode");
 
                     b.HasIndex("InvoiceHeaderId");
 
@@ -2182,15 +2185,9 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
-                        .WithMany("TrPaymentHeaders")
-                        .HasForeignKey("CurrAccCode");
-
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrPaymentHeaders")
                         .HasForeignKey("InvoiceHeaderId");
-
-                    b.Navigation("DcCurrAcc");
 
                     b.Navigation("TrInvoiceHeader");
                 });
@@ -2271,8 +2268,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrCurrAccRole");
 
                     b.Navigation("TrInvoiceHeaders");
-
-                    b.Navigation("TrPaymentHeaders");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAccType", b =>

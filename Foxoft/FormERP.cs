@@ -162,50 +162,22 @@ namespace Foxoft
 
         private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
         {
-            int OpenFormCount = 0;
+            FormInvoice formInvoice = new FormInvoice("RP", 1, 2);
+            formInvoice.MdiParent = this;
+            formInvoice.WindowState = FormWindowState.Maximized;
+            formInvoice.Show();
+            ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
 
-            foreach (Form form in Application.OpenForms)
-            {
-                FormInvoice formInvoice = form as FormInvoice;
-                if (formInvoice != null && formInvoice.processCode == "RP")
-                {
-                    formInvoice.BringToFront();
-                    formInvoice.Activate();
-                    OpenFormCount++;
-                }
-            }
-
-            if (OpenFormCount == 0)
-            {
-                FormInvoice formInvoice = new FormInvoice("RP", 1, 2);
-                formInvoice.MdiParent = this;
-                formInvoice.Show();
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
-            }
         }
 
         private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
         {
-            int OpenFormCount = 0;
+            FormInvoice formInvoice = new FormInvoice("RS", 1, 1);
+            formInvoice.MdiParent = this;
+            formInvoice.WindowState = FormWindowState.Maximized;
+            formInvoice.Show();
+            ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
 
-            foreach (Form form in Application.OpenForms)
-            {
-                FormInvoice formInvoice = form as FormInvoice;
-                if (formInvoice != null && formInvoice.processCode == "RS")
-                {
-                    formInvoice.BringToFront();
-                    formInvoice.Activate();
-                    OpenFormCount++;
-                }
-            }
-
-            if (OpenFormCount == 0)
-            {
-                FormInvoice formInvoice = new FormInvoice("RS", 1, 1);
-                formInvoice.MdiParent = this;
-                formInvoice.Show();
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
-            }
         }
 
         private void aCE_Expense_Click(object sender, EventArgs e)
@@ -293,7 +265,7 @@ namespace Foxoft
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
-                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode, InvoiceHeaderId = Guid.Empty };
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
                     using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
                     {
@@ -312,7 +284,7 @@ namespace Foxoft
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
-                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode, InvoiceHeaderId = Guid.Empty };
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
                     //decimal debt = 
                     using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
                     {
