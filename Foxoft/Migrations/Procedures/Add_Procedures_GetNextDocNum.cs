@@ -2,7 +2,7 @@
 
 namespace Foxoft.Migrations
 {
-    public partial class Add_procedures : Migration
+    public partial class Add_procedures_GetNextDocNum : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

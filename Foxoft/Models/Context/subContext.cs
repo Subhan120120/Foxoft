@@ -56,8 +56,8 @@ namespace Foxoft.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GetNextDocNum>() //procedure
-                        .HasNoKey()
-                        .ToView(null);
+                        .HasNoKey();
+                        //.ToView(null);
 
             modelBuilder.Entity<DcCurrAcc>(entity =>
             {
