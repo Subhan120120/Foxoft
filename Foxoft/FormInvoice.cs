@@ -239,7 +239,8 @@ namespace Foxoft
 
         private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
         {
-            GridView gV = sender as GridView;
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
 
             if (e.KeyCode == Keys.Delete)
             {

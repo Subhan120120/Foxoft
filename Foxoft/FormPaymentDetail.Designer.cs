@@ -1,7 +1,7 @@
 ﻿
 namespace Foxoft
 {
-    partial class FormInvoicePayment
+    partial class FormPaymentDetail
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInvoicePayment));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaymentDetail));
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -41,7 +41,6 @@ namespace Foxoft
             this.trPaymentLinesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colPaymentLineId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repositoryItemHyperLinkEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPaymentTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -83,7 +82,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
@@ -180,8 +178,6 @@ namespace Foxoft
             this.gridControl1.MainView = this.gridView1;
             this.gridControl1.MenuManager = this.ribbon;
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemHyperLinkEdit1});
             this.gridControl1.Size = new System.Drawing.Size(706, 123);
             this.gridControl1.TabIndex = 10;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -214,20 +210,10 @@ namespace Foxoft
             // 
             // colPaymentLineId
             // 
-            this.colPaymentLineId.ColumnEdit = this.repositoryItemHyperLinkEdit1;
             this.colPaymentLineId.FieldName = "PaymentLineId";
             this.colPaymentLineId.Name = "colPaymentLineId";
             this.colPaymentLineId.Visible = true;
             this.colPaymentLineId.VisibleIndex = 0;
-            // 
-            // repositoryItemHyperLinkEdit1
-            // 
-            this.repositoryItemHyperLinkEdit1.AutoHeight = false;
-            this.repositoryItemHyperLinkEdit1.Name = "repositoryItemHyperLinkEdit1";
-            this.repositoryItemHyperLinkEdit1.SingleClick = true;
-            this.repositoryItemHyperLinkEdit1.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.repositoryItemHyperLinkEdit1_OpenLink);
-            this.repositoryItemHyperLinkEdit1.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repositoryItemHyperLinkEdit1_ButtonClick);
-            this.repositoryItemHyperLinkEdit1.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repositoryItemHyperLinkEdit1_ButtonPressed);
             // 
             // colPaymentHeaderId
             // 
@@ -554,7 +540,7 @@ namespace Foxoft
             this.ItemForPosterminalId.Text = "POS Terminal";
             this.ItemForPosterminalId.TextSize = new System.Drawing.Size(78, 13);
             // 
-            // FormInvoicePayment
+            // FormPaymentDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -562,17 +548,16 @@ namespace Foxoft
             this.Controls.Add(this.dataLayoutControl1);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbon);
-            this.Name = "FormInvoicePayment";
+            this.Name = "FormPaymentDetail";
             this.Ribbon = this.ribbon;
             this.StatusBar = this.ribbonStatusBar;
-            this.Text = "FormInvoicePayment";
+            this.Text = "FormPaymentDetail";
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             this.dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
@@ -648,6 +633,5 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraBars.BarButtonItem bBI_DeletePayment;
-        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
     }
 }

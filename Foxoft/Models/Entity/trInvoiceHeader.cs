@@ -27,7 +27,7 @@ namespace Foxoft.Models
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProcessCode { get; set; }
 
-        [DisplayName("Sənəd Nömrəsi")]
+        [DisplayName("Faktura Nömrəsi")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string DocumentNumber { get; set; }
@@ -36,11 +36,11 @@ namespace Foxoft.Models
         public bool IsReturn { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayName("Sənəd Tarixi")]
+        [DisplayName("Faktura Tarixi")]
         public DateTime DocumentDate { get; set; }
 
         [Column(TypeName = "time(0)")]
-        [DisplayName("Sənəd Vaxtı")]
+        [DisplayName("Faktura Vaxtı")]
         public TimeSpan DocumentTime { get; set; }
 
         [Column(TypeName = "date")]

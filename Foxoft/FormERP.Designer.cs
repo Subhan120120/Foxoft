@@ -31,7 +31,7 @@ namespace Foxoft
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
-            this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
             this.skinPaletteDropDownButtonItem = new DevExpress.XtraBars.SkinPaletteDropDownButtonItem();
             this.bBI_MdiChildrenList = new DevExpress.XtraBars.BarMdiChildrenListItem();
@@ -58,33 +58,33 @@ namespace Foxoft
             this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl
             // 
-            this.ribbonControl.ExpandCollapseItem.Id = 0;
-            this.ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbonControl.ExpandCollapseItem,
-            this.ribbonControl.SearchEditItem,
+            this.parentRibbonControl.ExpandCollapseItem.Id = 0;
+            this.parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.parentRibbonControl.ExpandCollapseItem,
+            this.parentRibbonControl.SearchEditItem,
             this.skinRibbonGalleryBarItem,
             this.skinPaletteDropDownButtonItem,
             this.bBI_MdiChildrenList,
             this.bBI_CloseWindows,
             this.bBI_POS});
-            this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 13;
-            this.ribbonControl.Name = "ribbonControl";
-            this.ribbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
-            this.ribbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
-            this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
+            this.parentRibbonControl.MaxItemId = 13;
+            this.parentRibbonControl.Name = "ribbonControl";
+            this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
+            this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
+            this.parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage_Home});
-            this.ribbonControl.QuickToolbarItemLinks.Add(this.skinRibbonGalleryBarItem);
-            this.ribbonControl.QuickToolbarItemLinks.Add(this.skinPaletteDropDownButtonItem);
-            this.ribbonControl.QuickToolbarItemLinks.Add(this.bBI_POS);
-            this.ribbonControl.Size = new System.Drawing.Size(1023, 158);
-            this.ribbonControl.StatusBar = this.ribbonStatusBar;
+            this.parentRibbonControl.QuickToolbarItemLinks.Add(this.skinRibbonGalleryBarItem);
+            this.parentRibbonControl.QuickToolbarItemLinks.Add(this.skinPaletteDropDownButtonItem);
+            this.parentRibbonControl.QuickToolbarItemLinks.Add(this.bBI_POS);
+            this.parentRibbonControl.Size = new System.Drawing.Size(1023, 158);
+            this.parentRibbonControl.StatusBar = this.ribbonStatusBar;
             // 
             // skinRibbonGalleryBarItem
             // 
@@ -140,7 +140,7 @@ namespace Foxoft
             // 
             this.ribbonStatusBar.Location = new System.Drawing.Point(0, 608);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
-            this.ribbonStatusBar.Ribbon = this.ribbonControl;
+            this.ribbonStatusBar.Ribbon = this.parentRibbonControl;
             this.ribbonStatusBar.Size = new System.Drawing.Size(1023, 24);
             // 
             // aC_Root
@@ -309,15 +309,15 @@ namespace Foxoft
             this.ClientSize = new System.Drawing.Size(1023, 632);
             this.Controls.Add(this.aC_Root);
             this.Controls.Add(this.ribbonStatusBar);
-            this.Controls.Add(this.ribbonControl);
+            this.Controls.Add(this.parentRibbonControl);
             this.IsMdiContainer = true;
             this.Name = "FormERP";
-            this.Ribbon = this.ribbonControl;
+            this.Ribbon = this.parentRibbonControl;
             this.StatusBar = this.ribbonStatusBar;
             this.Text = "Foxoft";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.MdiChildActivate += new System.EventHandler(this.FormERP_MdiChildActivate);
-            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -326,7 +326,7 @@ namespace Foxoft
 
         #endregion
 
-        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl;
+        public DevExpress.XtraBars.Ribbon.RibbonControl parentRibbonControl;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage_Home;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGr_Control;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;

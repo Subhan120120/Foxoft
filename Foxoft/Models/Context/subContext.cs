@@ -579,9 +579,6 @@ namespace Foxoft.Models
                 entity.Property(e => e.OperationTime)
                     .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
-                entity.Property(e => e.InvoiceNumber)
-                    .HasDefaultValueSql("space(0)");
-
                 entity.Property(e => e.OfficeCode)
                     .HasDefaultValueSql("space(0)");
 

@@ -48,7 +48,7 @@ namespace Foxoft
                     formReport.MdiParent = this;
                     formReport.Text = dcReport.ReportName;
                     formReport.Show();
-                    ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
                 };
 
                 this.aCE_Reports.Elements.Add(aCE);
@@ -68,7 +68,7 @@ namespace Foxoft
                 if (badge.TargetElement is BarItem)
                     clone.TargetElement = badge.TargetElement;
                 if (badge.TargetElement is RibbonPage)
-                    clone.TargetElement = ribbonControl.MergedPages.GetPageByName((badge.TargetElement as RibbonPage).Name);
+                    clone.TargetElement = parentRibbonControl.MergedPages.GetPageByName((badge.TargetElement as RibbonPage).Name);
                 adornerUIManager1.Elements.Add(clone);
                 adorners1.Add(clone);
             }
@@ -113,7 +113,7 @@ namespace Foxoft
         {
             try
             {
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
             catch (Exception) { }
         }
@@ -132,7 +132,7 @@ namespace Foxoft
                 formTransfer = new FormTransfer();
                 formTransfer.MdiParent = this;
                 formTransfer.Show();
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
         }
 
@@ -156,7 +156,7 @@ namespace Foxoft
                 form.MdiParent = this;
                 form.Show();
                 form.WindowState = FormWindowState.Maximized;
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
         }
 
@@ -166,7 +166,7 @@ namespace Foxoft
             formInvoice.MdiParent = this;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();
-            ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
 
         }
 
@@ -176,7 +176,7 @@ namespace Foxoft
             formInvoice.MdiParent = this;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();
-            ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
 
         }
 
@@ -200,7 +200,7 @@ namespace Foxoft
                 FormInvoice formInvoice = new FormInvoice("EX", 2, 0);
                 formInvoice.MdiParent = this;
                 formInvoice.Show();
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
         }
 
@@ -303,7 +303,7 @@ namespace Foxoft
 
             foreach (Form form in Application.OpenForms)
             {
-                FormInvoicePayment formInvoice = form as FormInvoicePayment;
+                FormPaymentDetail formInvoice = form as FormPaymentDetail;
                 if (formInvoice != null)
                 {
                     formInvoice.BringToFront();
@@ -314,11 +314,11 @@ namespace Foxoft
 
             if (OpenFormCount == 0)
             {
-                FormInvoicePayment formInvoicePayment = new FormInvoicePayment();
-                formInvoicePayment.MdiParent = this;
-                formInvoicePayment.WindowState = FormWindowState.Maximized;
-                formInvoicePayment.Show();
-                ribbonControl.SelectedPage = ribbonControl.MergedPages[0];
+                FormPaymentDetail formPaymentDetail = new FormPaymentDetail();
+                formPaymentDetail.MdiParent = this;
+                formPaymentDetail.WindowState = FormWindowState.Maximized;
+                formPaymentDetail.Show();
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
         }
     }

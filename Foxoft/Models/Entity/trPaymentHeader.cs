@@ -24,30 +24,29 @@ namespace Foxoft.Models
         [ForeignKey("TrInvoiceHeader")]
         public Guid? InvoiceHeaderId { get; set; }
 
-        [DisplayName("Sənəd Nömrəsi")]
+        [DisplayName("Ödəniş Nömrəsi")]
         public string DocumentNumber { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayName("Sənəd Tarixi")]
+        [DisplayName("Ödəniş Tarixi")]
         public DateTime DocumentDate { get; set; }
 
-        [DisplayName("Sənəd Vaxtı")]
+        [DisplayName("Ödəniş Vaxtı")]
         [Column(TypeName = "time(0)")]
         public TimeSpan DocumentTime { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayName("Sənəd Tarixi")]
+        [DisplayName("Əməliyat Tarixi")]
         public DateTime OperationDate { get; set; }
 
-        [DisplayName("Sənəd Vaxtı")]
+        [DisplayName("Əməliyat Vaxtı")]
         [Column(TypeName = "time(0)")]
         public TimeSpan OperationTime { get; set; }
 
-        [DisplayName("Faktura Nömrəsi")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string InvoiceNumber { get; set; }
-
+        //[DisplayName("Faktura Nömrəsi")]
+        //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        //[StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        //public string InvoiceNumber { get; set; }
 
         [DisplayName("Cari Hesab")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]

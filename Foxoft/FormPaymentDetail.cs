@@ -15,13 +15,13 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormInvoicePayment : RibbonForm
+    public partial class FormPaymentDetail : RibbonForm
     {
         private TrPaymentHeader trPaymentHeader;
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
 
-        public FormInvoicePayment()
+        public FormPaymentDetail()
         {
             InitializeComponent();
         }
@@ -66,21 +66,6 @@ namespace Foxoft
             {
                 efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
             }
-        }
-
-        private void repositoryItemHyperLinkEdit1_OpenLink(object sender, OpenLinkEventArgs e)
-        {
-            MessageBox.Show("OpenLink");
-        }
-
-        private void repositoryItemHyperLinkEdit1_ButtonClick(object sender, ButtonPressedEventArgs e)
-        {
-            MessageBox.Show("Buton Klik");
-        }
-
-        private void repositoryItemHyperLinkEdit1_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            MessageBox.Show("Buton Pressed");
         }
     }
 }
