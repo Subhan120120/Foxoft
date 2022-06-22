@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20220622042641_add_view_retailSales")]
-    partial class add_view_retailSales
+    [Migration("20220622075532_yenilik")]
+    partial class yenilik
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1180,6 +1180,16 @@ namespace Foxoft.Migrations
                         .HasName("PK_dbo.__MigrationHistory");
 
                     b.ToTable("__MigrationHistory");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.RetailSale", b =>
+                {
+                    b.Property<string>("trInvoiceLineId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("trInvoiceLineId");
+
+                    b.ToView("RetailSale");
                 });
 
             modelBuilder.Entity("Foxoft.Models.Sysdiagrams", b =>

@@ -44,6 +44,7 @@ namespace Foxoft.Models
         public DbSet<DcVariable> DcVariables { get; set; }
         public DbSet<TrPrice> TrPrices { get; set; }
         public DbSet<DcCurrency> DcCurrencies { get; set; }
+        public DbSet<RetailSale> RetailSales { get; set; } // view
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -55,9 +56,12 @@ namespace Foxoft.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<RetailSale>() //view
+                        .ToView(nameof(RetailSale));
+
             modelBuilder.Entity<GetNextDocNum>() //procedure
                         .HasNoKey();
-                        //.ToView(null);
+            //.ToView(null);
 
             modelBuilder.Entity<DcCurrAcc>(entity =>
             {

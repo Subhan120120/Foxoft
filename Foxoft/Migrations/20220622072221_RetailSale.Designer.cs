@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220622072221_RetailSale")]
+    partial class RetailSale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1184,6 +1186,9 @@ namespace Foxoft.Migrations
                 {
                     b.Property<string>("trInvoiceLineId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClaimDesc")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("trInvoiceLineId");
 
