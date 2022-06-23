@@ -54,7 +54,8 @@ namespace Foxoft
         private static void CreateViews(DatabaseFacade db)
         {
             InjectView(db, "View_RetailSales.sql", "RetailSales");
-            InjectView(db, "View_Payments.sql", "AllPayments");
+            InjectView(db, "View_AllPayments.sql", "AllPayments");
+            InjectView(db, "View_Transactions.sql", "Transactions");
         }
 
         private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)
