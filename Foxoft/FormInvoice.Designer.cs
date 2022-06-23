@@ -190,6 +190,7 @@ namespace Foxoft
             // trInvoiceHeadersBindingSource
             // 
             this.trInvoiceHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceHeader);
+            this.trInvoiceHeadersBindingSource.CurrentItemChanged += new System.EventHandler(this.trInvoiceHeadersBindingSource_CurrentItemChanged);
             // 
             // lbl_InvoicePaidSum
             // 
@@ -455,6 +456,8 @@ namespace Foxoft
             // 
             // colNetAmountLoc
             // 
+            this.colNetAmountLoc.DisplayFormat.FormatString = "{0:n2}";
+            this.colNetAmountLoc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colNetAmountLoc.FieldName = "NetAmountLoc";
             this.colNetAmountLoc.Name = "colNetAmountLoc";
             this.colNetAmountLoc.Visible = true;

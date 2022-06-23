@@ -50,6 +50,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            //gV_InvoiceLine.OptionsNavigation.AutoFocusNewRow = true;
             //bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             this.processCode = processCode;
@@ -191,6 +192,7 @@ namespace Foxoft
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
 
                                         gV_InvoiceLine.BestFitColumns();
+                                        gV_InvoiceLine.Focus();
 
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -251,6 +253,11 @@ namespace Foxoft
             }
 
             if (e.KeyCode == Keys.F1)
+            {
+                gV_InvoiceLine.FocusedRowHandle = GridControl.NewItemRowHandle;
+            }
+            
+            if (e.KeyCode == Keys.F2)
             {
                 gV_InvoiceLine.FocusedColumn = col_ProductCode;
                 gV_InvoiceLine.ShowEditor();
@@ -483,6 +490,16 @@ namespace Foxoft
             //e.ErrorText = "Deyer 10dan az ola bilmez";
         }
 
+        private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
+        {
+            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+            {
+                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
+                if (count > 0)
+                    SaveInvoice();
+            }
+        }
+
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
             //DataRowView rowView = e.Row as DataRowView;
@@ -493,6 +510,27 @@ namespace Foxoft
         private void gV_InvoiceLine_RowDeleted(object sender, RowDeletedEventArgs e)
         {
             SaveInvoice();
+        }
+
+        private void SaveInvoice()
+        {
+            //for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            //{
+            //    //MakeReturnIsNegativ(i);
+            //}
+
+            if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
+                efMethods.InsertInvoiceHeader(trInvoiceHeader);
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+            }
+
+            SaveSession();
         }
 
         private void FormInvoice_FormClosed(object sender, FormClosedEventArgs e)
@@ -557,25 +595,16 @@ namespace Foxoft
         //    CalcRowLocNetAmount(new CellValueChangedEventArgs(rowInd, col_Price, price));
         //}
 
-        private void SaveInvoice()
-        {
-            //for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-            //{
-            //    //MakeReturnIsNegativ(i);
-            //}
 
-            if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
-                efMethods.InsertInvoiceHeader(trInvoiceHeader);
-
-            dbContext.SaveChanges();
-
-            SaveSession();
-        }
 
         private void SaveSession()
         {
-            Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
-            Settings.Default.Save();
+            object warehouseCode = lUE_WarehouseCode.EditValue;
+            if (!object.ReferenceEquals(warehouseCode, null))
+            {
+                Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
+                Settings.Default.Save();
+            }
         }
 
         //private void MakeReturnIsNegativ(int rowInd)

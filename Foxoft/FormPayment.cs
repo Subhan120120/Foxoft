@@ -173,7 +173,7 @@ namespace Foxoft
         {
             EfMethods efMethods = new EfMethods();
 
-            
+
 
             //if ((cashLarge + cashless + bonus) < bePaid)
             //    XtraMessageBox.Show("Ödəmə ödənilməli olan məbləğdən azdır");
@@ -188,24 +188,25 @@ namespace Foxoft
             string NewDocNum = efMethods.GetNextDocNum("P", "DocumentNumber", "TrPaymentHeaders");
 
             string operType = "";
-            if (trInvoiceHeader.InvoiceHeaderId == Guid.Empty)
+            if (trInvoiceHeader.InvoiceHeaderId == Guid.Empty || trInvoiceHeader == null)
                 operType = "payment";
 
-            TrPaymentHeader trPayment = new TrPaymentHeader();
 
-            trPayment.PaymentHeaderId = PaymentHeaderId;
-            trPayment.DocumentNumber = NewDocNum;
-            trPayment.CurrAccCode = trInvoiceHeader.CurrAccCode;
-            trPayment.DocumentDate = trInvoiceHeader.DocumentDate;
-            trPayment.DocumentTime = trInvoiceHeader.DocumentTime;
-            if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
-                trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
-            trPayment.OperationType = operType;
-            trPayment.OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString());
+            if ((cash + cashless + bonus) > 0)
+            {
+                TrPaymentHeader trPayment = new TrPaymentHeader();
 
-
-
-            efMethods.InsertPaymentHeader(trPayment);
+                trPayment.PaymentHeaderId = PaymentHeaderId;
+                trPayment.DocumentNumber = NewDocNum;
+                trPayment.CurrAccCode = trInvoiceHeader.CurrAccCode;
+                trPayment.DocumentDate = trInvoiceHeader.DocumentDate;
+                trPayment.DocumentTime = trInvoiceHeader.DocumentTime;
+                if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
+                    trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+                trPayment.OperationType = operType;
+                trPayment.OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString());
+                efMethods.InsertPaymentHeader(trPayment);
+            }
 
             TrPaymentLine TrPaymentLine = new TrPaymentLine()
             {

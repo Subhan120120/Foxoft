@@ -28,10 +28,9 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 db.Database.EnsureCreated();
+                db.Database.Migrate();
 
                 //string sql = db.Database.GenerateCreateScript();
-
-                RelationalDatabaseFacadeExtensions.Migrate(db.Database);
 
                 //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
                 //databaseCreator.CreateTables();
@@ -41,9 +40,9 @@ namespace Foxoft
 
             CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
             Thread.CurrentThread.CurrentUICulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            //Thread.CurrentThread.CurrentCulture = culture;
+            //CultureInfo.DefaultThreadCurrentCulture = culture;
+            //CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             WindowsFormsSettings.DefaultFont = new System.Drawing.Font("Tahoma", 10);
             Application.EnableVisualStyles();
@@ -55,6 +54,7 @@ namespace Foxoft
         private static void CreateViews(DatabaseFacade db)
         {
             InjectView(db, "View_RetailSales.sql", "RetailSales");
+            InjectView(db, "View_Payments.sql", "AllPayments");
         }
 
         private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)

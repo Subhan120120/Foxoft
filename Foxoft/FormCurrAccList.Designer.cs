@@ -47,12 +47,11 @@ namespace Foxoft
             this.bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_refresh = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -202,26 +201,28 @@ namespace Foxoft
             this.bBI_refresh.Name = "bBI_refresh";
             this.bBI_refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_refresh_ItemClick);
             // 
+            // bBI_quit
+            // 
+            this.bBI_quit.Caption = "Bağla";
+            this.bBI_quit.Id = 4;
+            this.bBI_quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_quit.ImageOptions.SvgImage")));
+            this.bBI_quit.Name = "bBI_quit";
+            this.bBI_quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_quit_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "ribbonPage1";
+            this.ribbonPage1.Text = "Cari Hesab";
             // 
             // ribbonPageGroup1
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CurrAccNew);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CurAccEdit);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_refresh);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
-            // 
-            // ribbonPageGroup2
-            // 
-            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_refresh);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "ribbonPageGroup2";
+            this.ribbonPageGroup1.Text = "İdarə Et";
             // 
             // ribbonStatusBar1
             // 
@@ -235,14 +236,6 @@ namespace Foxoft
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
             // 
-            // bBI_quit
-            // 
-            this.bBI_quit.Caption = "Bağla";
-            this.bBI_quit.Id = 4;
-            this.bBI_quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-            this.bBI_quit.Name = "bBI_quit";
-            this.bBI_quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_quit_ItemClick);
-            // 
             // FormCurrAccList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,7 +247,7 @@ namespace Foxoft
             this.Name = "FormCurrAccList";
             this.Ribbon = this.ribbonControl1;
             this.StatusBar = this.ribbonStatusBar1;
-            this.Text = "XtraForm1";
+            this.Text = "Cari Hesablar";
             ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();

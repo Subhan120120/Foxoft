@@ -62,7 +62,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
             this.SuspendLayout();
             // 
-            // ribbonControl
+            // parentRibbonControl
             // 
             this.parentRibbonControl.ExpandCollapseItem.Id = 0;
             this.parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
@@ -75,7 +75,7 @@ namespace Foxoft
             this.bBI_POS});
             this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
             this.parentRibbonControl.MaxItemId = 13;
-            this.parentRibbonControl.Name = "ribbonControl";
+            this.parentRibbonControl.Name = "parentRibbonControl";
             this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
             this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
             this.parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -178,7 +178,7 @@ namespace Foxoft
             this.aCE_Invoices.Expanded = true;
             this.aCE_Invoices.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Invoices.ImageOptions.SvgImage")));
             this.aCE_Invoices.Name = "aCE_Invoices";
-            this.aCE_Invoices.Text = "Report";
+            this.aCE_Invoices.Text = "Əməliyatlar";
             // 
             // aCE_RetailPurchaseInvoice
             // 

@@ -220,8 +220,8 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcOffice>().HasData(
-                new DcOffice { OfficeCode = "OFS01", OfficeDesc = "Bakıxanov Ofisi" },
-                new DcOffice { OfficeCode = "OFS02", OfficeDesc = "Elmlər Ofisi" });
+                new DcOffice { OfficeCode = "ofs01", OfficeDesc = "Bakıxanov Ofisi" },
+                new DcOffice { OfficeCode = "ofs02", OfficeDesc = "Elmlər Ofisi" });
 
             modelBuilder.Entity<DcPaymentType>(entity =>
             {
