@@ -1,16 +1,13 @@
 ﻿using DevExpress.Data;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
-using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
@@ -256,7 +253,7 @@ namespace Foxoft
             {
                 gV_InvoiceLine.FocusedRowHandle = GridControl.NewItemRowHandle;
             }
-            
+
             if (e.KeyCode == Keys.F2)
             {
                 gV_InvoiceLine.FocusedColumn = col_ProductCode;
@@ -518,6 +515,9 @@ namespace Foxoft
             //{
             //    //MakeReturnIsNegativ(i);
             //}
+
+            efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+
 
             if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
                 efMethods.InsertInvoiceHeader(trInvoiceHeader);

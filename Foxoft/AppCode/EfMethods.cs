@@ -377,6 +377,22 @@ namespace Foxoft
             }
         }
 
+        public int UpdatePaymentsCurrAccCode(Guid invoiceHeaderId, string currAccCode)
+        {
+            using (subContext db = new subContext())
+            {
+                List<TrPaymentHeader> trPaymentHeaders = SelectPaymentHeaders(invoiceHeaderId);
+
+                foreach (TrPaymentHeader entity in trPaymentHeaders)
+                {
+                    entity.CurrAccCode = currAccCode;
+                    db.Entry(entity).Property(x => x.CurrAccCode).IsModified = true;
+                }
+
+                return db.SaveChanges();
+            }
+        }
+
         public int UpdateInvoiceSalesPerson(Guid invoiceLineId, string currAccCode)
         {
             using (subContext db = new subContext())
@@ -447,6 +463,15 @@ namespace Foxoft
                                         //.ThenInclude(x => x.TrInvoiceHeader)
                                         .Include(x => x.DcPaymentType)
                                         .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                        .ToList();
+            }
+        }
+
+        public List<TrPaymentHeader> SelectPaymentHeaders(Guid invoiceHeaderId)
+        {
+            using (subContext db = new subContext())
+            {
+                return db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                         .ToList();
             }
         }

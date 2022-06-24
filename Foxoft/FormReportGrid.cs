@@ -100,5 +100,13 @@ namespace Foxoft
                 }
             }
         }
+
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            //MyGridControlDesigner myDesigner = new MyGridControlDesigner(gridControl1);
+            //myDesigner.LevelDesignerVisible = false;
+            //myDesigner.Selector.AllowDesignerButton = false;
+            //myDesigner.ShowDesigner(null, null);
+        }
     }
 }

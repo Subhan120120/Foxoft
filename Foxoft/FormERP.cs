@@ -226,7 +226,7 @@ namespace Foxoft
 
             CustomSqlQuery sqlDepozit = new CustomSqlQuery("Depozit", "select 0 depozit");
 
-            DateTime dateTime = new DateTime(2022, 06, 22); // DateTime.Now.Date; // 
+            DateTime dateTime = new DateTime(2022, 06, 23); // DateTime.Now.Date; // 
 
             DateTime startDate = dateTime;
             DateTime endDate = dateTime;
