@@ -79,6 +79,10 @@ namespace Foxoft
                 return "In";
             else if (processCode == "W")
                 return "Out";
+            else if (processCode == "CI")
+                return "In";
+            else if (processCode == "CO")
+                return "Out";
             else
                 return "";
         }

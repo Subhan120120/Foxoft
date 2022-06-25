@@ -44,8 +44,8 @@ namespace Foxoft
             this.aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.aCE_shipment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.aCE_ApproveInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_MakePayment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -166,8 +166,8 @@ namespace Foxoft
             this.aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.aCE_RetailPurchaseInvoice,
             this.aCE_RetailSaleInvoice,
-            this.aCE_shipment,
-            this.aCE_ApproveInvoice,
+            this.aCE_CountIn,
+            this.aCE_CountOut,
             this.accordionControlSeparator2,
             this.aCE_Expense,
             this.aCE_MakePayment,
@@ -196,20 +196,21 @@ namespace Foxoft
             this.aCE_RetailSaleInvoice.Text = "Satış Fakturası";
             this.aCE_RetailSaleInvoice.Click += new System.EventHandler(this.aCE_RetailSaleInvoice_Click);
             // 
-            // aCE_shipment
+            // aCE_CountOut
             // 
-            this.aCE_shipment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_shipment.ImageOptions.SvgImage")));
-            this.aCE_shipment.Name = "aCE_shipment";
-            this.aCE_shipment.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.aCE_shipment.Text = "Transfer Qəbzi";
-            this.aCE_shipment.Click += new System.EventHandler(this.aCE_shipment_Click);
+            this.aCE_CountOut.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_shipment.ImageOptions.SvgImage")));
+            this.aCE_CountOut.Name = "aCE_CountOut";
+            this.aCE_CountOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CountOut.Text = "Sayım Azaltma";
+            this.aCE_CountOut.Click += new System.EventHandler(this.aCE_CountOut_Click);
             // 
-            // aCE_ApproveInvoice
+            // aCE_CountIn
             // 
-            this.aCE_ApproveInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_ApproveInvoice.ImageOptions.SvgImage")));
-            this.aCE_ApproveInvoice.Name = "aCE_ApproveInvoice";
-            this.aCE_ApproveInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.aCE_ApproveInvoice.Text = "Transferi Təsdiqlə";
+            this.aCE_CountIn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_ApproveInvoice.ImageOptions.SvgImage")));
+            this.aCE_CountIn.Name = "aCE_CountIn";
+            this.aCE_CountIn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CountIn.Text = "Sayım Artırma";
+            this.aCE_CountIn.Click += new System.EventHandler(this.aCE_CountIn_Click);
             // 
             // accordionControlSeparator2
             // 
@@ -337,8 +338,8 @@ namespace Foxoft
         private DevExpress.XtraBars.SkinPaletteDropDownButtonItem skinPaletteDropDownButtonItem;
         private DevExpress.XtraBars.BarMdiChildrenListItem bBI_MdiChildrenList;
         private DevExpress.XtraBars.BarButtonItem bBI_CloseWindows;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_shipment;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_ApproveInvoice;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CountOut;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CountIn;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Acounting;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_HumanResource;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Reports;

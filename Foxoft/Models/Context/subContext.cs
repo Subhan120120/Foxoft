@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Foxoft.AppCode;
 using System;
+using System.Linq;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -56,6 +57,14 @@ namespace Foxoft.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //All foreignkeys behaviour to NoAction
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
+            }
+
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<RetailSale>() //view
                         .ToView(nameof(RetailSale));
 
@@ -245,13 +254,31 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "SB", ProcessDescription = "Toptan Alış" },
                 new DcProcess { ProcessCode = "W", ProcessDescription = "Toptan Satış" },
                 new DcProcess { ProcessCode = "EX", ProcessDescription = "Xərclər" },
-                new DcProcess { ProcessCode = "PE", ProcessDescription = "Dovr" }
+                new DcProcess { ProcessCode = "PE", ProcessDescription = "Dovr" },
+                new DcProcess { ProcessCode = "CI", ProcessDescription = "Sayım Artırma" },
+                new DcProcess { ProcessCode = "CO", ProcessDescription = "Sayım Azaltma" }
                 );
+
+
+            //modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
+            //{
+            //    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+            //        .WithMany("TrInvoiceLines")
+            //        .HasForeignKey("ProductCode")
+            //        .OnDelete(DeleteBehavior.Cascade)
+            //        .IsRequired();
+            //});
 
             modelBuilder.Entity<DcProduct>(entity =>
             {
+                //entity.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+                //      .WithMany("TrInvoiceLines")
+                //      .HasForeignKey("ProductCode")
+                //      .OnDelete(DeleteBehavior.Cascade)
+                //      .IsRequired();
+
                 entity.HasIndex(e => e.ProductTypeCode)
-                    .HasDatabaseName("IX_ProductTypeCode");
+                .HasDatabaseName("IX_ProductTypeCode");
 
                 entity.Property(e => e.Barcode)
                     .HasDefaultValueSql("space(0)");
@@ -303,10 +330,10 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcProduct>().HasData(
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDescription = "Papaq", Barcode = "123456", RetailPrice = 4.5 },
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDescription = "Salvar", Barcode = "2000000000013", RetailPrice = 2.5 },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDescription = "Yol Xerci", Barcode = "", RetailPrice = 0 },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDescription = "Isiq Pulu", Barcode = "", RetailPrice = 0 }
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDescription = "Papaq", Barcode = "123456", RetailPrice = 4.5, CreatedDate = new DateTime(1900, 01, 01) },
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDescription = "Salvar", Barcode = "2000000000013", RetailPrice = 2.5, CreatedDate = new DateTime(1900, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDescription = "Yol Xerci", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1900, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDescription = "Isiq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1900, 01, 01) }
             );
 
             modelBuilder.Entity<DcProductType>(entity =>
@@ -503,8 +530,17 @@ namespace Foxoft.Models
                     .HasDefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))");
             });
 
+            //modelBuilder.Entity<TrInvoiceLine>()
+            //.HasOne(x=>x.DcProduct)
+            //.WithMany()
+            //.OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<TrInvoiceLine>(entity =>
             {
+                entity.HasOne(x=>x.TrInvoiceHeader)
+                    .WithMany(x=>x.TrInvoiceLines)
+                    .OnDelete(DeleteBehavior.Cascade);
+
                 entity.Property(e => e.InvoiceLineId)
                     .ValueGeneratedNever();
 
@@ -605,8 +641,14 @@ namespace Foxoft.Models
                     .HasDefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))");
             });
 
+
+
             modelBuilder.Entity<TrPaymentLine>(entity =>
             {
+                entity.HasOne(x => x.TrPaymentHeader)
+                    .WithMany(x => x.TrPaymentLines)
+                    .OnDelete(DeleteBehavior.Cascade);
+
                 //entity.Property(e => e.CurrencyCode)
                 //    .HasDefaultValueSql("space(0)");
 

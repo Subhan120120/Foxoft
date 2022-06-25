@@ -118,29 +118,6 @@ namespace Foxoft
             catch (Exception) { }
         }
 
-        private void aCE_shipment_Click(object sender, EventArgs e)
-        {
-            FormTransfer formTransfer = Application.OpenForms["FormTransfer"] as FormTransfer;
-
-            if (formTransfer != null)
-            {
-                formTransfer.BringToFront();
-                formTransfer.Activate();
-            }
-            else
-            {
-                formTransfer = new FormTransfer();
-                formTransfer.MdiParent = this;
-                formTransfer.Show();
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-        }
-
-        private void aCE_Report_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void aCE_CurrAccs_Click(object sender, EventArgs e)
         {
             FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
@@ -320,6 +297,24 @@ namespace Foxoft
                 formPaymentDetail.Show();
                 parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
+        }
+
+        private void aCE_CountIn_Click(object sender, EventArgs e)
+        {
+            FormInvoice formInvoice = new FormInvoice("CI", 1, 0);
+            formInvoice.MdiParent = this;
+            formInvoice.WindowState = FormWindowState.Maximized;
+            formInvoice.Show();
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+        }
+
+        private void aCE_CountOut_Click(object sender, EventArgs e)
+        {
+            FormInvoice formInvoice = new FormInvoice("CO", 1, 0);
+            formInvoice.MdiParent = this;
+            formInvoice.WindowState = FormWindowState.Maximized;
+            formInvoice.Show();
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
         }
     }
 }

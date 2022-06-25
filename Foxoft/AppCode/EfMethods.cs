@@ -284,7 +284,8 @@ namespace Foxoft
                 if (!object.ReferenceEquals(trPaymentHeader, null))
                     db.TrPaymentHeaders.Remove(trPaymentHeader);
 
-                return db.SaveChanges();
+                int result = db.SaveChanges();
+                return result;
             }
         }
 

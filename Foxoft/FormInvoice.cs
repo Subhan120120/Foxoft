@@ -218,9 +218,10 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-                    lC_CurrAccDesc.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-                    trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+                    trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.PhoneNum;
+                    //lC_CurrAccDesc.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+                    CurrAccDescTextEdit.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                 }
             }
         }

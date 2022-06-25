@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220624163758_CI")]
+    partial class CI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -668,7 +670,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "test01",
                             Barcode = "123456",
-                            CreatedDate = new DateTime(1900, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -685,7 +687,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "test02",
                             Barcode = "2000000000013",
-                            CreatedDate = new DateTime(1900, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -702,7 +704,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "xerc01",
                             Barcode = "",
-                            CreatedDate = new DateTime(1900, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -719,7 +721,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "xerc02",
                             Barcode = "",
-                            CreatedDate = new DateTime(1900, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -2112,7 +2114,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcCurrAccType", "DcCurrAccType")
                         .WithMany("DcCurrAccs")
                         .HasForeignKey("CurrAccTypeCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcCurrAccType");
@@ -2123,7 +2125,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcProductType", "DcProductType")
                         .WithMany("DcProducts")
                         .HasForeignKey("ProductTypeCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcProductType");
@@ -2133,13 +2135,11 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
                         .WithMany("TrCurrAccRole")
-                        .HasForeignKey("CurrAccCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CurrAccCode");
 
                     b.HasOne("Foxoft.Models.DcRole", "DcRole")
                         .WithMany("TrCurrAccRoles")
-                        .HasForeignKey("RoleCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("RoleCode");
 
                     b.Navigation("DcCurrAcc");
 
@@ -2151,13 +2151,12 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcFeature", "DcFeature")
                         .WithMany("TrFeatures")
                         .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
                         .WithMany("TrFeature")
-                        .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ProductCode");
 
                     b.Navigation("DcFeature");
 
@@ -2168,8 +2167,7 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
                         .WithMany("TrInvoiceHeaders")
-                        .HasForeignKey("CurrAccCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CurrAccCode");
 
                     b.Navigation("DcCurrAcc");
                 });
@@ -2178,8 +2176,7 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
                         .WithMany("TrInvoiceLines")
-                        .HasForeignKey("CurrencyCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CurrencyCode");
 
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrInvoiceLines")
@@ -2190,7 +2187,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
                         .WithMany("TrInvoiceLines")
                         .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcCurrency");
@@ -2204,13 +2201,11 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
                         .WithMany("TrPaymentHeaders")
-                        .HasForeignKey("CurrAccCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CurrAccCode");
 
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrPaymentHeaders")
-                        .HasForeignKey("InvoiceHeaderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("InvoiceHeaderId");
 
                     b.Navigation("DcCurrAcc");
 
@@ -2221,8 +2216,7 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
                         .WithMany("TrPaymentLines")
-                        .HasForeignKey("CurrencyCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CurrencyCode");
 
                     b.HasOne("Foxoft.Models.TrPaymentHeader", "TrPaymentHeader")
                         .WithMany("TrPaymentLines")
@@ -2233,7 +2227,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcPaymentType", "DcPaymentType")
                         .WithMany("TrPaymentLines")
                         .HasForeignKey("PaymentTypeCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcCurrency");
@@ -2248,7 +2242,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
                         .WithMany("TrPrices")
                         .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcProduct");
@@ -2259,13 +2253,13 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcClaim", "DcClaim")
                         .WithMany("TrRoleClaims")
                         .HasForeignKey("ClaimCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcRole", "DcRole")
                         .WithMany("TrRoleClaims")
                         .HasForeignKey("RoleCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcClaim");
@@ -2278,7 +2272,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.TrShipmentHeader", "TrShipmentHeader")
                         .WithMany("TrShipmentLines")
                         .HasForeignKey("ShipmentHeaderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TrShipmentHeader");
