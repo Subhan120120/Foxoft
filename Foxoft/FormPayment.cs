@@ -185,7 +185,7 @@ namespace Foxoft
 
             //if (!efMethods.PaymentHeaderExist(InvoiceHeaderId))
             //{
-            string NewDocNum = efMethods.GetNextDocNum("P", "DocumentNumber", "TrPaymentHeaders");
+            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders");
 
             string operType = "invoice";
             if (trInvoiceHeader.InvoiceHeaderId == Guid.Empty || trInvoiceHeader == null)

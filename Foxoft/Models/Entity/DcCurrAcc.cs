@@ -73,7 +73,6 @@ namespace Foxoft.Models
         public string TaxNum { get; set; }
 
         [DisplayName("İstifadəçi Dili")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string DataLanguageCode { get; set; }
 
@@ -86,10 +85,10 @@ namespace Foxoft.Models
         public bool IsVip { get; set; }
 
         [DisplayName("Müştəri Tipi")]
-        public byte CustomerTypeCode { get; set; }
+        public byte? CustomerTypeCode { get; set; }
 
         [DisplayName("Tədarikçi Tipi")]
-        public byte VendorTypeCode { get; set; }
+        public byte? VendorTypeCode { get; set; }
 
         [DisplayName("Müştəri Endirim Dərəcəsi")]
         public double CustomerPosDiscountRate { get; set; }

@@ -86,6 +86,9 @@ namespace Foxoft.Models
                 entity.Property(e => e.BonusCardNum)
                     .HasDefaultValueSql("space(0)");
 
+                entity.Property(e => e.CustomerPosDiscountRate)
+                    .HasDefaultValueSql("0");
+
                 entity.Property(e => e.CreditLimit)
                     .HasDefaultValueSql("0");
 
@@ -116,6 +119,9 @@ namespace Foxoft.Models
                 entity.Property(e => e.TaxNum)
                     .HasDefaultValueSql("space(0)");
 
+                entity.Property(e => e.IsDisabled)
+                    .HasDefaultValueSql("0");
+
                 entity.Property(e => e.CreatedDate)
                     .HasDefaultValueSql("getdate()");
 
@@ -139,6 +145,7 @@ namespace Foxoft.Models
             {
                 entity.Property(e => e.CurrAccTypeDesc)
                     .HasDefaultValueSql("space(0)");
+                
             });
 
             modelBuilder.Entity<DcCurrAccType>().HasData(
@@ -250,9 +257,9 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcProcess>().HasData(
                 new DcProcess { ProcessCode = "RS", ProcessDescription = "Satış" },
                 new DcProcess { ProcessCode = "RP", ProcessDescription = "Alış" },
-                new DcProcess { ProcessCode = "P", ProcessDescription = "Ödəmə" },
+                new DcProcess { ProcessCode = "PA", ProcessDescription = "Ödəmə" },
                 new DcProcess { ProcessCode = "SB", ProcessDescription = "Toptan Alış" },
-                new DcProcess { ProcessCode = "W", ProcessDescription = "Toptan Satış" },
+                new DcProcess { ProcessCode = "WS", ProcessDescription = "Toptan Satış" },
                 new DcProcess { ProcessCode = "EX", ProcessDescription = "Xərclər" },
                 new DcProcess { ProcessCode = "PE", ProcessDescription = "Dovr" },
                 new DcProcess { ProcessCode = "CI", ProcessDescription = "Sayım Artırma" },
@@ -798,13 +805,13 @@ namespace Foxoft.Models
                 new AppSetting { Id = 1, GridViewLayout = gvListDefault });
 
             modelBuilder.Entity<DcVariable>().HasData(
-                new DcVariable { VariableCode = "CA", VariableDesc = "Cari" },
-                new DcVariable { VariableCode = "PR", VariableDesc = "Məhsul" },
+                new DcVariable { VariableCode = "C", VariableDesc = "Cari" },
+                new DcVariable { VariableCode = "P", VariableDesc = "Məhsul" },
                 new DcVariable { VariableCode = "RS", VariableDesc = "Pərakəndə Satış" },
                 new DcVariable { VariableCode = "RP", VariableDesc = "Pərakəndə Alış" },
-                new DcVariable { VariableCode = "P", VariableDesc = "Ödəmə" },
+                new DcVariable { VariableCode = "PA", VariableDesc = "Ödəmə" },
                 new DcVariable { VariableCode = "SB", VariableDesc = "Toptan Alış" },
-                new DcVariable { VariableCode = "W", VariableDesc = "Toptan Satış" },
+                new DcVariable { VariableCode = "WS", VariableDesc = "Toptan Satış" },
                 new DcVariable { VariableCode = "EX", VariableDesc = "Xərclər" });
 
             modelBuilder.Entity<TrPrice>(entity =>

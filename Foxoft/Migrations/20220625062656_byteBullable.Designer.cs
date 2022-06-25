@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220625062656_byteBullable")]
+    partial class byteBullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,14 +127,13 @@ namespace Foxoft.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<double>("CustomerPosDiscountRate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("float");
 
                     b.Property<byte?>("CustomerTypeCode")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("DataLanguageCode")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)")
@@ -158,9 +159,7 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("space(0)");
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsVip")
                         .ValueGeneratedOnAdd()
@@ -214,7 +213,7 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("space(0)");
 
-                    b.Property<byte?>("VendorTypeCode")
+                    b.Property<byte>("VendorTypeCode")
                         .HasColumnType("tinyint");
 
                     b.HasKey("CurrAccCode");
@@ -242,7 +241,8 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PhoneNum = "0519678909",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01"
+                            StoreCode = "mgz01",
+                            VendorTypeCode = (byte)0
                         },
                         new
                         {
@@ -259,7 +259,8 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "123",
                             PhoneNum = "0519678909",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
+                            VendorTypeCode = (byte)0
                         },
                         new
                         {
@@ -276,7 +277,8 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "456",
                             PhoneNum = "0773628800",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
+                            VendorTypeCode = (byte)0
                         },
                         new
                         {
@@ -293,7 +295,8 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "456",
                             PhoneNum = "0553628804",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
+                            VendorTypeCode = (byte)0
                         });
                 });
 
