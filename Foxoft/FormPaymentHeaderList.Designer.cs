@@ -43,6 +43,8 @@ namespace Foxoft
             this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoHLE_InvoiceNumber = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
+            this.colCurrAccFirstName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
@@ -62,6 +64,7 @@ namespace Foxoft
             this.gC_PaymentHeaderList.TabIndex = 0;
             this.gC_PaymentHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_PaymentHeaderList});
+            this.gC_PaymentHeaderList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_ProductList_Paint);
             this.gC_PaymentHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_PaymentHeaderList_ProcessGridKey);
             // 
             // trPaymentHeadersBindingSource
@@ -79,7 +82,9 @@ namespace Foxoft
             this.colStoreCode,
             this.colPosterminalId,
             this.colInvoiceHeaderId,
-            this.colInvoiceNumber});
+            this.colInvoiceNumber,
+            this.colCurrAccFirstName,
+            this.colTotalNetAmount});
             this.gV_PaymentHeaderList.GridControl = this.gC_PaymentHeaderList;
             this.gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
             this.gV_PaymentHeaderList.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gV_PaymentHeaderList_ShowingEditor);
@@ -89,57 +94,47 @@ namespace Foxoft
             // 
             this.colPaymentHeaderId.FieldName = "PaymentHeaderId";
             this.colPaymentHeaderId.Name = "colPaymentHeaderId";
-            this.colPaymentHeaderId.Visible = true;
-            this.colPaymentHeaderId.VisibleIndex = 0;
             // 
             // colOperationDate
             // 
             this.colOperationDate.FieldName = "OperationDate";
             this.colOperationDate.Name = "colOperationDate";
             this.colOperationDate.Visible = true;
-            this.colOperationDate.VisibleIndex = 1;
+            this.colOperationDate.VisibleIndex = 0;
             // 
             // colOperationTime
             // 
             this.colOperationTime.FieldName = "OperationTime";
             this.colOperationTime.Name = "colOperationTime";
             this.colOperationTime.Visible = true;
-            this.colOperationTime.VisibleIndex = 2;
+            this.colOperationTime.VisibleIndex = 1;
             // 
             // colCurrAccCode
             // 
             this.colCurrAccCode.FieldName = "CurrAccCode";
             this.colCurrAccCode.Name = "colCurrAccCode";
             this.colCurrAccCode.Visible = true;
-            this.colCurrAccCode.VisibleIndex = 3;
+            this.colCurrAccCode.VisibleIndex = 2;
             // 
             // colDescription
             // 
             this.colDescription.FieldName = "Description";
             this.colDescription.Name = "colDescription";
-            this.colDescription.Visible = true;
-            this.colDescription.VisibleIndex = 4;
             // 
             // colStoreCode
             // 
             this.colStoreCode.FieldName = "StoreCode";
             this.colStoreCode.Name = "colStoreCode";
-            this.colStoreCode.Visible = true;
-            this.colStoreCode.VisibleIndex = 5;
             // 
             // colPosterminalId
             // 
             this.colPosterminalId.FieldName = "PosterminalId";
             this.colPosterminalId.Name = "colPosterminalId";
-            this.colPosterminalId.Visible = true;
-            this.colPosterminalId.VisibleIndex = 6;
             // 
             // colInvoiceHeaderId
             // 
             this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
             this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
-            this.colInvoiceHeaderId.Visible = true;
-            this.colInvoiceHeaderId.VisibleIndex = 7;
             // 
             // colInvoiceNumber
             // 
@@ -148,7 +143,7 @@ namespace Foxoft
             this.colInvoiceNumber.Name = "colInvoiceNumber";
             this.colInvoiceNumber.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
             this.colInvoiceNumber.Visible = true;
-            this.colInvoiceNumber.VisibleIndex = 8;
+            this.colInvoiceNumber.VisibleIndex = 5;
             // 
             // repoHLE_InvoiceNumber
             // 
@@ -157,6 +152,20 @@ namespace Foxoft
             this.repoHLE_InvoiceNumber.SingleClick = true;
             this.repoHLE_InvoiceNumber.OpenLink += new DevExpress.XtraEditors.Controls.OpenLinkEventHandler(this.repoHLE_InvoiceNumber_OpenLink);
             this.repoHLE_InvoiceNumber.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repositoryItemHyperLinkEdit1_ButtonClick);
+            // 
+            // colCurrAccFirstName
+            // 
+            this.colCurrAccFirstName.FieldName = "DcCurrAcc.FirstName";
+            this.colCurrAccFirstName.Name = "colCurrAccFirstName";
+            this.colCurrAccFirstName.Visible = true;
+            this.colCurrAccFirstName.VisibleIndex = 3;
+            // 
+            // colTotalNetAmount
+            // 
+            this.colTotalNetAmount.FieldName = "TotalNetAmount";
+            this.colTotalNetAmount.Name = "colTotalNetAmount";
+            this.colTotalNetAmount.Visible = true;
+            this.colTotalNetAmount.VisibleIndex = 4;
             // 
             // FormPaymentHeaderList
             // 
@@ -191,5 +200,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_InvoiceNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccFirstName;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
     }
 }

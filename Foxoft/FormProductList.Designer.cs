@@ -75,7 +75,7 @@ namespace Foxoft
             this.gC_ProductList.TabIndex = 0;
             this.gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_ProductList});
-            this.gC_ProductList.Paint += new System.Windows.Forms.PaintEventHandler(this.gridControl1_Paint);
+            this.gC_ProductList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_ProductList_Paint);
             this.gC_ProductList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_ProductList_ProcessGridKey);
             // 
             // gV_ProductList

@@ -41,6 +41,7 @@ namespace Foxoft
                 gC_ProductList.DataSource = efMethods.SelectProducts();
             gV_ProductList.BestFitColumns();
         }
+
         public FormProductList(byte productTypeCode, string productCode)
             : this(productTypeCode)
         {
@@ -156,7 +157,7 @@ namespace Foxoft
 
         // AutoFocus FindPanel
         bool isFirstPaint = true;
-        private void gridControl1_Paint(object sender, PaintEventArgs e)
+        private void gC_ProductList_Paint(object sender, PaintEventArgs e)
         {
             if (isFirstPaint)
             {

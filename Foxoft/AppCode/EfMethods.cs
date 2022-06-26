@@ -108,20 +108,46 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 List<DcProduct> products = db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
+                    .Select(x => new DcProduct
+                    {
+                        Barcode = x.Barcode,
+                        Balance = x.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut),
+                        DcProductType = x.DcProductType,
+                        ProductCode = x.ProductCode,
+                        ProductDescription = x.ProductDescription,
+                        PosDiscount = x.PosDiscount,
+                        RetailPrice = x.RetailPrice,
+                        PurchasePrice = x.PurchasePrice,
+                        ProductTypeCode = x.ProductTypeCode,
+                        WholesalePrice = x.WholesalePrice,
+                        UsePos = x.UsePos,
+                        UseInternet = x.UseInternet,
+                        CreatedDate = x.CreatedDate,
+                        CreatedUserName = x.CreatedUserName,
+                        IsDisabled = x.IsDisabled,
+                        TrInvoiceLines = x.TrInvoiceLines,
+                        TrPrices = x.TrPrices,
+                        LastUpdatedDate = x.LastUpdatedDate,
+                        LastUpdatedUserName = x.LastUpdatedUserName,
+                        PromotionCode = x.PromotionCode,
+                        PromotionCode2 = x.PromotionCode2,
+                        TaxRate = x.TaxRate,
+                        TrFeature = x.TrFeature
+                    })
                                                         .ToList();
 
-                products.ForEach(x =>
-                {
-                    TrPrice trPrice = db.TrPrices.Where(p => p.ProductCode == x.ProductCode)
-                                              .OrderBy(p => p.CreatedDate)
-                                              .Take(1)
-                                              .FirstOrDefault();
-                    if (trPrice != null)
-                        x.RetailPrice = trPrice.Price;
+                //products.ForEach(x =>
+                //{
+                //    TrPrice trPrice = db.TrPrices.Where(p => p.ProductCode == x.ProductCode)
+                //                              .OrderBy(p => p.CreatedDate)
+                //                              .Take(1)
+                //                              .FirstOrDefault();
+                //    if (trPrice != null)
+                //        x.RetailPrice = trPrice.Price;
 
-                    int balance = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut);
-                    x.Balance = balance;
-                });
+                //    int balance = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut);
+                //    x.Balance = balance;
+                //});
                 return products;
             }
         }

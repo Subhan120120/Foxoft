@@ -485,9 +485,6 @@ namespace Foxoft.Models
                 entity.Property(e => e.DocumentTime)
                     .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
-                entity.Property(e => e.OfficeCode)
-                    .HasDefaultValueSql("space(0)");
-
                 entity.Property(e => e.OperationDate)
                     .HasDefaultValueSql("getdate()");
 
@@ -498,12 +495,6 @@ namespace Foxoft.Models
                     .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.ProcessCode)
-                    .HasDefaultValueSql("space(0)");
-
-                entity.Property(e => e.StoreCode)
-                    .HasDefaultValueSql("space(0)");
-
-                entity.Property(e => e.WarehouseCode)
                     .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.IsSuspended)
@@ -519,7 +510,7 @@ namespace Foxoft.Models
                     .HasDefaultValueSql("0");
 
                 entity.Property(e => e.FiscalPrintedState)
-                    .HasDefaultValueSql("space(0)");
+                    .HasDefaultValueSql("0");
 
                 entity.Property(e => e.IsSalesViaInternet)
                     .HasDefaultValueSql("0");
@@ -579,15 +570,12 @@ namespace Foxoft.Models
                     .HasDefaultValueSql("0");
 
                 entity.Property(e => e.ExchangeRate)
-                    .HasDefaultValueSql("0");
+                    .HasDefaultValueSql("1");
 
                 entity.Property(e => e.PosDiscount)
                     .HasDefaultValueSql("0");
 
                 entity.Property(e => e.LineDescription)
-                    .HasDefaultValueSql("space(0)");
-
-                entity.Property(e => e.SalesPersonCode)
                     .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.CreatedDate)
@@ -609,7 +597,7 @@ namespace Foxoft.Models
                     .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.Description)
-                        .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
+                        .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.DocumentDate)
                     .HasDefaultValueSql("getdate()");
@@ -623,17 +611,20 @@ namespace Foxoft.Models
                 entity.Property(e => e.OperationDate)
                     .HasDefaultValueSql("getdate()");
 
+                entity.Property(e => e.IsCompleted)
+                    .HasDefaultValueSql("0"); 
+                
+                entity.Property(e => e.IsLocked)
+                    .HasDefaultValueSql("0");
+
                 entity.Property(e => e.OperationTime)
                     .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
-
-                entity.Property(e => e.OfficeCode)
-                    .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.PosterminalId)
                     .HasDefaultValueSql("space(0)");
 
-                entity.Property(e => e.StoreCode)
-                    .HasDefaultValueSql("space(0)");
+                entity.Property(e => e.ExchangeRate)
+                    .HasDefaultValueSql("1");
 
                 entity.Property(e => e.CreatedDate)
                     .HasDefaultValueSql("getdate()");
@@ -666,7 +657,7 @@ namespace Foxoft.Models
                     .HasDefaultValueSql("0");
 
                 entity.Property(e => e.ExchangeRate)
-                    .HasDefaultValueSql("0");
+                    .HasDefaultValueSql("1");
 
                 entity.Property(e => e.CreatedDate)
                     .HasDefaultValueSql("getdate()");

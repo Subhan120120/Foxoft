@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220625183616_asdasssa")]
+    partial class asdasssa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1483,7 +1485,7 @@ namespace Foxoft.Migrations
                     b.Property<float>("ExchangeRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
-                        .HasDefaultValueSql("1");
+                        .HasDefaultValueSql("0");
 
                     b.Property<Guid>("InvoiceHeaderId")
                         .HasColumnType("uniqueidentifier");
@@ -1545,8 +1547,10 @@ namespace Foxoft.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SalesPersonCode")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<float>("VatRate")
                         .ValueGeneratedOnAdd()
@@ -1610,7 +1614,6 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("DocumentNumber")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValueSql("space(0)");
@@ -1714,7 +1717,7 @@ namespace Foxoft.Migrations
                     b.Property<double>("ExchangeRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
-                        .HasDefaultValueSql("1");
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()

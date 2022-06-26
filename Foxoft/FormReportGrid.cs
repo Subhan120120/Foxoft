@@ -2,8 +2,13 @@
 using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -20,12 +25,18 @@ namespace Foxoft
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
 
+        RepositoryItemHyperLinkEdit hyperLinkEdit = new RepositoryItemHyperLinkEdit();
+
         public FormReportGrid(string qry)
         {
             InitializeComponent();
-
+            
             DataTable dt = adoMethods.SqlGetDt(qry);
             gridControl1.DataSource = dt;
+
+            GridColumn column = gV_Report.Columns["InvoiceNumber"];
+            column.ColumnEdit = hyperLinkEdit;
+            hyperLinkEdit.OpenLink += repoHLE_InvoiceNumber_OpenLink;
 
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();
@@ -37,7 +48,7 @@ namespace Foxoft
         }
 
         public FormReportGrid(string qry, int reportId)
-            : this(qry)
+        : this(qry)
         {
             this.reportId = reportId;
 
@@ -107,6 +118,39 @@ namespace Foxoft
             //myDesigner.LevelDesignerVisible = false;
             //myDesigner.Selector.AllowDesignerButton = false;
             //myDesigner.ShowDesigner(null, null);
+        }
+
+        GridColumn prevColumn = null; // Disable the Immediate Edit Cell
+        int prevRow = -1;
+        private void gV_Report_ShowingEditor(object sender, CancelEventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (prevColumn != view.FocusedColumn || prevRow != view.FocusedRowHandle)
+                e.Cancel = true;
+            prevColumn = view.FocusedColumn;
+            prevRow = view.FocusedRowHandle;
+        }
+
+
+
+        private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            object obj = gV_Report.GetFocusedRowCellValue("InvoiceHeaderId");
+
+            if (!object.ReferenceEquals(obj, null))
+            {
+                Guid invoiceHeaderId = Guid.Parse(obj.ToString());
+                TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+
+                this.Close();
+
+                FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+                FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                formInvoice.MdiParent = formERP;
+                formInvoice.WindowState = FormWindowState.Maximized;
+                formInvoice.Show();
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
         }
     }
 }

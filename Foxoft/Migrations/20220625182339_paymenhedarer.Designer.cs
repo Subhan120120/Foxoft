@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220625182339_paymenhedarer")]
+    partial class paymenhedarer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1355,7 +1357,7 @@ namespace Foxoft.Migrations
                     b.Property<byte>("FiscalPrintedState")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint")
-                        .HasDefaultValueSql("0");
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<bool>("IsCompleted")
                         .ValueGeneratedOnAdd()
@@ -1400,8 +1402,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("OfficeCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("OperationDate")
                         .ValueGeneratedOnAdd()
@@ -1432,13 +1436,17 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("StoreCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("WarehouseCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.HasKey("InvoiceHeaderId");
 
@@ -1483,7 +1491,7 @@ namespace Foxoft.Migrations
                     b.Property<float>("ExchangeRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
-                        .HasDefaultValueSql("1");
+                        .HasDefaultValueSql("0");
 
                     b.Property<Guid>("InvoiceHeaderId")
                         .HasColumnType("uniqueidentifier");
@@ -1545,8 +1553,10 @@ namespace Foxoft.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SalesPersonCode")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<float>("VatRate")
                         .ValueGeneratedOnAdd()
@@ -1610,7 +1620,6 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("DocumentNumber")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValueSql("space(0)");
@@ -1714,7 +1723,7 @@ namespace Foxoft.Migrations
                     b.Property<double>("ExchangeRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
-                        .HasDefaultValueSql("1");
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()

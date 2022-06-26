@@ -25,6 +25,7 @@ namespace Foxoft.Models
         public Guid? InvoiceHeaderId { get; set; }
 
         [DisplayName("Ödəniş Nömrəsi")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string DocumentNumber { get; set; }
 
         [Column(TypeName = "date")]

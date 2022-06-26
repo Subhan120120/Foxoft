@@ -36,11 +36,11 @@ namespace Foxoft
             this.bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_GridOptions = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_Report)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -68,6 +68,7 @@ namespace Foxoft
             this.gV_Report.OptionsLayout.StoreAppearance = true;
             this.gV_Report.OptionsLayout.StoreFormatRules = true;
             this.gV_Report.OptionsView.ShowFooter = true;
+            this.gV_Report.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gV_Report_ShowingEditor);
             // 
             // ribbonControl1
             // 
@@ -113,6 +114,13 @@ namespace Foxoft
             this.bBI_GridOptions.Name = "bBI_GridOptions";
             this.bBI_GridOptions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_gridOptions_ItemClick);
             // 
+            // barButtonItem3
+            // 
+            this.barButtonItem3.Caption = "barButtonItem3";
+            this.barButtonItem3.Id = 4;
+            this.barButtonItem3.Name = "barButtonItem3";
+            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -140,13 +148,6 @@ namespace Foxoft
             // 
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
-            // 
-            // barButtonItem3
-            // 
-            this.barButtonItem3.Caption = "barButtonItem3";
-            this.barButtonItem3.Id = 4;
-            this.barButtonItem3.Name = "barButtonItem3";
-            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
             // 
             // FormReportGrid
             // 

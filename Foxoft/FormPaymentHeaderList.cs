@@ -50,9 +50,9 @@ namespace Foxoft
 
                                           trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
 
-                                      }, TaskScheduler.FromCurrentSynchronizationContext());
+                                          gV_PaymentHeaderList.BestFitColumns();
 
-            gV_PaymentHeaderList.BestFitColumns();
+                                      }, TaskScheduler.FromCurrentSynchronizationContext());            
         }
 
         private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
@@ -80,9 +80,8 @@ namespace Foxoft
             }
         }
 
-        GridColumn prevColumn = null;
+        GridColumn prevColumn = null; // Disable the Immediate Edit Cell
         int prevRow = -1;
-
         private void gV_PaymentHeaderList_ShowingEditor(object sender, CancelEventArgs e)
         {
             GridView view = sender as GridView;
@@ -90,6 +89,18 @@ namespace Foxoft
                 e.Cancel = true;
             prevColumn = view.FocusedColumn;
             prevRow = view.FocusedRowHandle;
+        }
+
+        bool isFirstPaint = true; // Focus FindPanel
+        private void gC_ProductList_Paint(object sender, PaintEventArgs e)
+        {
+            if (isFirstPaint)
+            {
+                if (!gV_PaymentHeaderList.FindPanelVisible)
+                    gV_PaymentHeaderList.ShowFindPanel();
+                gV_PaymentHeaderList.ShowFindPanel();
+            }
+            isFirstPaint = false;
         }
 
         private void repositoryItemHyperLinkEdit1_ButtonClick(object sender, ButtonPressedEventArgs e)

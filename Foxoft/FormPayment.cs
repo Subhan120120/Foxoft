@@ -199,6 +199,8 @@ namespace Foxoft
                 trPayment.PaymentHeaderId = PaymentHeaderId;
                 trPayment.DocumentNumber = NewDocNum;
                 trPayment.CurrAccCode = trInvoiceHeader.CurrAccCode;
+                trPayment.OfficeCode = trInvoiceHeader.OfficeCode;
+                trPayment.StoreCode = trInvoiceHeader.StoreCode;
                 trPayment.DocumentDate = trInvoiceHeader.DocumentDate;
                 trPayment.DocumentTime = trInvoiceHeader.DocumentTime;
                 if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)

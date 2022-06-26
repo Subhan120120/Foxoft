@@ -246,6 +246,7 @@ namespace Foxoft
             this.Controls.Add(this.ribbonControl1);
             this.Name = "FormCurrAccList";
             this.Ribbon = this.ribbonControl1;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar1;
             this.Text = "Cari Hesablar";
             ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).EndInit();

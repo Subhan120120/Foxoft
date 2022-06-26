@@ -24,6 +24,22 @@ namespace Foxoft
 
             if (gridView.OptionsView.GroupFooterShowMode == GroupFooterShowMode.VisibleAlways)
                 checkEdit_GroupFooter.Checked = true;
+
+            if (gridView.OptionsBehavior.ReadOnly == true)
+                checkEdit_CellReadOnly.Checked = true;
+
+            if (gridView.OptionsBehavior.Editable == true)
+                checkEdit_Editable.Checked = true;
+        }
+
+
+
+        private void simpleButton_Ok_Click(object sender, EventArgs e)
+        {
+            stream = new MemoryStream();
+            OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+            gridView.SaveLayoutToStream(stream, option);
+            DialogResult = DialogResult.OK;
         }
 
         private void checkEdit_GroupFooter_CheckedChanged(object sender, EventArgs e)
@@ -38,13 +54,28 @@ namespace Foxoft
             }
         }
 
-
-        private void simpleButton_Ok_Click(object sender, EventArgs e)
+        private void checkEdit_CellReadOnly_CheckedChanged(object sender, EventArgs e)
         {
-            stream = new MemoryStream();
-            OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
-            gridView.SaveLayoutToStream(stream, option);
-            DialogResult = DialogResult.OK;
+            if (checkEdit_CellReadOnly.Checked == true)
+            {
+                gridView.OptionsBehavior.ReadOnly = true;
+            }
+            if (checkEdit_CellReadOnly.Checked == false)
+            {
+                gridView.OptionsBehavior.ReadOnly = false;
+            }
+        }
+
+        private void checkEdit_Editable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkEdit_Editable.Checked == true)
+            {
+                gridView.OptionsBehavior.Editable = true;
+            }
+            if (checkEdit_Editable.Checked == false)
+            {
+                gridView.OptionsBehavior.Editable = false;
+            }
         }
     }
 }
