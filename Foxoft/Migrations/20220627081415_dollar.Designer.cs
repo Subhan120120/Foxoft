@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220627081415_dollar")]
+    partial class dollar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -384,9 +386,7 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("FeatureName")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("400");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1743,9 +1743,6 @@ namespace Foxoft.Migrations
 
                     b.Property<Guid>("PaymentHeaderId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("PaymentLoc")
-                        .HasColumnType("money");
 
                     b.Property<byte>("PaymentTypeCode")
                         .HasColumnType("tinyint");

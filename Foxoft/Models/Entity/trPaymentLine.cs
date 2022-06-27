@@ -23,9 +23,14 @@ namespace Foxoft.Models
         public byte PaymentTypeCode { get; set; }
 
         [DisplayName("Ödəmə")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [Column(TypeName = "money")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal Payment { get; set; }
+
+        [DisplayName("Ödəmə")]
+        [Column(TypeName = "money")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public decimal PaymentLoc { get; set; }
 
         [DisplayName("Sətir Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]

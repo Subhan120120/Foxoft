@@ -328,7 +328,7 @@ namespace Foxoft
             this.btn_Star.StyleController = this.lC_Root;
             this.btn_Star.TabIndex = 14;
             this.btn_Star.Text = "*";
-            this.btn_Star.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Star.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Comma
             // 
@@ -342,7 +342,7 @@ namespace Foxoft
             this.btn_Comma.StyleController = this.lC_Root;
             this.btn_Comma.TabIndex = 15;
             this.btn_Comma.Text = ",";
-            this.btn_Comma.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Comma.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num0
             // 
@@ -356,7 +356,7 @@ namespace Foxoft
             this.btn_Num0.StyleController = this.lC_Root;
             this.btn_Num0.TabIndex = 13;
             this.btn_Num0.Text = "0";
-            this.btn_Num0.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num0.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num1
             // 
@@ -370,7 +370,7 @@ namespace Foxoft
             this.btn_Num1.StyleController = this.lC_Root;
             this.btn_Num1.TabIndex = 6;
             this.btn_Num1.Text = "1";
-            this.btn_Num1.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num1.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num2
             // 
@@ -384,7 +384,7 @@ namespace Foxoft
             this.btn_Num2.StyleController = this.lC_Root;
             this.btn_Num2.TabIndex = 7;
             this.btn_Num2.Text = "2";
-            this.btn_Num2.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num2.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num3
             // 
@@ -398,7 +398,7 @@ namespace Foxoft
             this.btn_Num3.StyleController = this.lC_Root;
             this.btn_Num3.TabIndex = 8;
             this.btn_Num3.Text = "3";
-            this.btn_Num3.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num3.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num4
             // 
@@ -412,7 +412,7 @@ namespace Foxoft
             this.btn_Num4.StyleController = this.lC_Root;
             this.btn_Num4.TabIndex = 5;
             this.btn_Num4.Text = "4";
-            this.btn_Num4.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num4.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num5
             // 
@@ -426,7 +426,7 @@ namespace Foxoft
             this.btn_Num5.StyleController = this.lC_Root;
             this.btn_Num5.TabIndex = 5;
             this.btn_Num5.Text = "5";
-            this.btn_Num5.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num5.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num6
             // 
@@ -440,7 +440,7 @@ namespace Foxoft
             this.btn_Num6.StyleController = this.lC_Root;
             this.btn_Num6.TabIndex = 9;
             this.btn_Num6.Text = "6";
-            this.btn_Num6.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num6.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num8
             // 
@@ -454,7 +454,7 @@ namespace Foxoft
             this.btn_Num8.StyleController = this.lC_Root;
             this.btn_Num8.TabIndex = 10;
             this.btn_Num8.Text = "8";
-            this.btn_Num8.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num8.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num9
             // 
@@ -468,7 +468,7 @@ namespace Foxoft
             this.btn_Num9.StyleController = this.lC_Root;
             this.btn_Num9.TabIndex = 12;
             this.btn_Num9.Text = "9";
-            this.btn_Num9.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num9.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Num7
             // 
@@ -482,7 +482,7 @@ namespace Foxoft
             this.btn_Num7.StyleController = this.lC_Root;
             this.btn_Num7.TabIndex = 22;
             this.btn_Num7.Text = "7";
-            this.btn_Num7.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Num7.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_Enter
             // 
@@ -496,7 +496,7 @@ namespace Foxoft
             this.btn_Enter.StyleController = this.lC_Root;
             this.btn_Enter.TabIndex = 18;
             this.btn_Enter.Text = "↵";
-            this.btn_Enter.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_Enter.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_C
             // 
@@ -510,7 +510,7 @@ namespace Foxoft
             this.btn_C.StyleController = this.lC_Root;
             this.btn_C.TabIndex = 17;
             this.btn_C.Text = "C";
-            this.btn_C.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_C.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // btn_BackSpace
             // 
@@ -524,7 +524,7 @@ namespace Foxoft
             this.btn_BackSpace.StyleController = this.lC_Root;
             this.btn_BackSpace.TabIndex = 16;
             this.btn_BackSpace.Text = "←";
-            this.btn_BackSpace.Click += new System.EventHandler(this.simpleButtonNum_Click);
+            this.btn_BackSpace.Click += new System.EventHandler(this.btn_Num_Click);
             // 
             // lUE_cashCurrency
             // 

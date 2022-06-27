@@ -2,6 +2,8 @@
 using Foxoft.AppCode;
 using System;
 using System.Linq;
+using System.Reflection;
+using System.ComponentModel;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -57,6 +59,21 @@ namespace Foxoft.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //for DefaultValue Attribute for Entity propertires. Usage:
+            // [DefaultValue("400")]
+            // public int LengthInMeters { get; set; }
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    var memberInfo = property.PropertyInfo ?? (MemberInfo)property.FieldInfo;
+                    if (memberInfo == null) continue;
+                    var defaultValue = Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) as DefaultValueAttribute;
+                    if (defaultValue == null) continue;
+                    property.SetDefaultValueSql(defaultValue.Value.ToString());
+                }
+            }
+
             //All foreignkeys behaviour to NoAction
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
@@ -145,7 +162,6 @@ namespace Foxoft.Models
             {
                 entity.Property(e => e.CurrAccTypeDesc)
                     .HasDefaultValueSql("space(0)");
-                
             });
 
             modelBuilder.Entity<DcCurrAccType>().HasData(
@@ -155,8 +171,8 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcCurrency>().HasData(
-                new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "₼ AZN", ExchangeRate = 1 },
-                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$ Dollar", ExchangeRate = 1.703f });
+                new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "AZN ₼", ExchangeRate = 1 },
+                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "DOLLAR $", ExchangeRate = 1.703f });
 
             modelBuilder.Entity<DcRole>(entity =>
             {
@@ -535,8 +551,8 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrInvoiceLine>(entity =>
             {
-                entity.HasOne(x=>x.TrInvoiceHeader)
-                    .WithMany(x=>x.TrInvoiceLines)
+                entity.HasOne(x => x.TrInvoiceHeader)
+                    .WithMany(x => x.TrInvoiceLines)
                     .OnDelete(DeleteBehavior.Cascade);
 
                 entity.Property(e => e.InvoiceLineId)
@@ -612,8 +628,8 @@ namespace Foxoft.Models
                     .HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.IsCompleted)
-                    .HasDefaultValueSql("0"); 
-                
+                    .HasDefaultValueSql("0");
+
                 entity.Property(e => e.IsLocked)
                     .HasDefaultValueSql("0");
 

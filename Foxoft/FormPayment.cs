@@ -17,7 +17,7 @@ namespace Foxoft
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private EfMethods efMethods = new EfMethods();
 
-        private string currency;
+        private string defaultCurrency;
         private float exRate = 1;
 
         private bool isNegativ = false;
@@ -46,7 +46,7 @@ namespace Foxoft
             if (invoiceSum < 0)
                 isNegativ = true;
 
-            currency = "USD";
+            defaultCurrency = "USD";
 
             this.PaymentType = PaymentType;
             this.summary = Math.Abs(invoiceSum);
@@ -72,7 +72,7 @@ namespace Foxoft
             }
 
             dateEdit_Date.EditValue = DateTime.Now.ToString("yyyy-MM-dd");
-            lUE_cashCurrency.EditValue = currency;
+            lUE_cashCurrency.EditValue = defaultCurrency;
         }
 
         private void textEditCash_EditValueChanged(object sender, EventArgs e)
@@ -156,7 +156,7 @@ namespace Foxoft
                 txtEdit_Bonus.EditValue = restAmount;
         }
 
-        private void simpleButtonNum_Click(object sender, EventArgs e)
+        private void btn_Num_Click(object sender, EventArgs e)
         {
             string key = (sender as SimpleButton).Text;
 
@@ -208,59 +208,67 @@ namespace Foxoft
                 trPayment.OperationType = operType;
                 trPayment.OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString());
                 efMethods.InsertPaymentHeader(trPayment);
+
+
+                TrPaymentLine TrPaymentLine = new TrPaymentLine()
+                {
+                    PaymentHeaderId = PaymentHeaderId
+                };
+
+                if (cash > 0)
+                {
+                    decimal cashLoc = cash * (decimal)exRate; //convert currency to local
+
+                    TrPaymentLine.PaymentLineId = Guid.NewGuid();
+                    TrPaymentLine.Payment = isNegativ ? cash * (-1) : cash;
+                    TrPaymentLine.PaymentLoc = isNegativ ? cashLoc * (-1) : cashLoc;
+                    TrPaymentLine.PaymentTypeCode = 1;
+                    efMethods.InsertPaymentLine(TrPaymentLine);
+                }
+
+                if (cashless > 0)
+                {
+                    decimal cashlessLoc = cashless * (decimal)exRate; //convert currency to local
+
+                    TrPaymentLine.PaymentLineId = Guid.NewGuid();
+                    TrPaymentLine.Payment = isNegativ ? cashless * (-1) : cashless;
+                    TrPaymentLine.PaymentLoc = isNegativ ? cashlessLoc * (-1) : cashlessLoc;
+                    TrPaymentLine.PaymentTypeCode = 2;
+                    efMethods.InsertPaymentLine(TrPaymentLine);
+                }
+
+                if (bonus > 0)
+                {
+                    decimal bonusLoc = bonus * (decimal)exRate; //convert currency to local
+
+                    TrPaymentLine.PaymentLineId = Guid.NewGuid();
+                    TrPaymentLine.Payment = isNegativ ? bonus * (-1) : bonus;
+                    TrPaymentLine.PaymentLoc = isNegativ ? bonusLoc * (-1) : bonusLoc;
+                    TrPaymentLine.PaymentTypeCode = 3;
+                    efMethods.InsertPaymentLine(TrPaymentLine);
+                }
+
+
+                decimal change = cashLarge + cashless + bonus - bePaid;
+                //if (change > 0)
+                //{
+                //    using (FormChange formChange = new FormChange(cashLarge, change))
+                //    {
+                //        formChange.ShowDialog(this);
+                //    }
+                //}
+                //}
+                //else
+                //    XtraMessageBox.Show("Odenis Movcuddur");
+                DialogResult = DialogResult.OK;
+                //}
             }
-
-            TrPaymentLine TrPaymentLine = new TrPaymentLine()
-            {
-                PaymentLineId = Guid.NewGuid(),
-                PaymentHeaderId = PaymentHeaderId
-            };
-
-            if (cash > 0)
-            {
-                cash = cash * (decimal)exRate; //convert currency to local
-                TrPaymentLine.Payment = isNegativ ? cash * (-1) : cash;
-                TrPaymentLine.PaymentTypeCode = 1;
-                efMethods.InsertPaymentLine(TrPaymentLine);
-            }
-
-            if (cashless > 0)
-            {
-                cashless = cashless * (decimal)exRate; //convert currency to local
-                TrPaymentLine.Payment = isNegativ ? cashless * (-1) : cashless;
-                TrPaymentLine.PaymentTypeCode = 2;
-                efMethods.InsertPaymentLine(TrPaymentLine);
-            }
-
-            if (bonus > 0)
-            {
-                bonus = bonus * (decimal)exRate; //convert currency to local
-                TrPaymentLine.Payment = isNegativ ? bonus * (-1) : bonus;
-                TrPaymentLine.PaymentTypeCode = 3;
-                efMethods.InsertPaymentLine(TrPaymentLine);
-            }
-
-
-            decimal change = cashLarge + cashless + bonus - bePaid;
-            //if (change > 0)
-            //{
-            //    using (FormChange formChange = new FormChange(cashLarge, change))
-            //    {
-            //        formChange.ShowDialog(this);
-            //    }
-            //}
-            //}
-            //else
-            //    XtraMessageBox.Show("Odenis Movcuddur");
-            DialogResult = DialogResult.OK;
-            //}
-
         }
 
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit editor = sender as LookUpEdit;
-            currency = lUE_cashCurrency.EditValue.ToString();
+            defaultCurrency = lUE_cashCurrency.EditValue.ToString();
             exRate = (float)editor.GetColumnValue("ExchangeRate");
             bePaid = Math.Round(summary / (decimal)exRate, 2);
             FillControls();
