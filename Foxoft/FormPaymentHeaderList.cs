@@ -46,7 +46,7 @@ namespace Foxoft
                                       {
                                           LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
 
-                                          lV_trPaymentHeaders.ForEach(x => x.TotalNetAmount = x.TrPaymentLines.Sum(x => x.Payment));
+                                          lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => x.PaymentLoc));
 
                                           trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
 

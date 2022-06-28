@@ -118,6 +118,19 @@ namespace Foxoft
 
         }
 
+        // AutoFocus FindPanel
+        bool isFirstPaint = true;
+        private void gC_CurrAccList_Paint(object sender, PaintEventArgs e)
+        {
+            if (isFirstPaint)
+            {
+                if (!gV_CurrAccList.FindPanelVisible)
+                    gV_CurrAccList.ShowFindPanel();
+                gV_CurrAccList.ShowFindPanel();
+            }
+            isFirstPaint = false;
+        }
+
         private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.Close();

@@ -260,7 +260,7 @@ namespace Foxoft
             this.txtEdit_Cash.TabIndex = 2;
             this.txtEdit_Cash.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.textEditCash_InvalidValue);
             this.txtEdit_Cash.EditValueChanged += new System.EventHandler(this.textEditCash_EditValueChanged);
-            this.txtEdit_Cash.Validating += new System.ComponentModel.CancelEventHandler(this.textEditCash_Validating);
+            this.txtEdit_Cash.Validating += new System.ComponentModel.CancelEventHandler(this.txtEdit_Cash_Validating);
             // 
             // txtEdit_Cashless
             // 
@@ -575,9 +575,6 @@ namespace Foxoft
             this.lUE_cashCurrency.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", ""),
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ExchangeRate", "")});
             this.lUE_cashCurrency.Properties.DisplayMember = "CurrencyDesc";
             this.lUE_cashCurrency.Properties.NullText = "";
@@ -672,6 +669,7 @@ namespace Foxoft
             // 
             // lCG_Cashless
             // 
+            this.lCG_Cashless.Enabled = false;
             this.lCG_Cashless.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             this.lCG_Cashless.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lCI_Cashless,
@@ -994,6 +992,7 @@ namespace Foxoft
             // 
             // lCG_CustomerBonus
             // 
+            this.lCG_CustomerBonus.Enabled = false;
             this.lCG_CustomerBonus.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             this.lCG_CustomerBonus.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lCI_CustomerBonus,

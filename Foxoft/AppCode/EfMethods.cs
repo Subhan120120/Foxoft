@@ -305,10 +305,10 @@ namespace Foxoft
         {
             using (subContext db = new subContext())
             {
-                TrPaymentHeader trPaymentHeader = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                                       .FirstOrDefault();
-                if (!object.ReferenceEquals(trPaymentHeader, null))
-                    db.TrPaymentHeaders.Remove(trPaymentHeader);
+                List<TrPaymentHeader> trPaymentHeaders = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                                       .ToList();
+                if (!object.ReferenceEquals(trPaymentHeaders, null))
+                    db.TrPaymentHeaders.RemoveRange(trPaymentHeaders);
 
                 int result = db.SaveChanges();
                 return result;

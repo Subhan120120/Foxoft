@@ -74,7 +74,7 @@ namespace Foxoft.Models
                 }
             }
 
-            //All foreignkeys behaviour to NoAction
+            //All foreignkeys DeleteBehavior to Restrict (NoAction)
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
@@ -288,24 +288,8 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "CO", ProcessDescription = "Sayım Azaltma" }
                 );
 
-
-            //modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
-            //{
-            //    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-            //        .WithMany("TrInvoiceLines")
-            //        .HasForeignKey("ProductCode")
-            //        .OnDelete(DeleteBehavior.Cascade)
-            //        .IsRequired();
-            //});
-
             modelBuilder.Entity<DcProduct>(entity =>
             {
-                //entity.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                //      .WithMany("TrInvoiceLines")
-                //      .HasForeignKey("ProductCode")
-                //      .OnDelete(DeleteBehavior.Cascade)
-                //      .IsRequired();
-
                 entity.HasIndex(e => e.ProductTypeCode)
                 .HasDatabaseName("IX_ProductTypeCode");
 
@@ -669,13 +653,13 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrPaymentLines)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                //entity.Property(e => e.CurrencyCode)
-                //    .HasDefaultValueSql("space(0)");
-
                 entity.Property(e => e.LineDescription)
                     .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.Payment)
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.PaymentLoc)
                     .HasDefaultValueSql("0");
 
                 entity.Property(e => e.ExchangeRate)

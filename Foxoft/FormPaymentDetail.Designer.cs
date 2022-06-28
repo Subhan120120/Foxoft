@@ -43,11 +43,9 @@ namespace Foxoft
             this.colPaymentLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPaymentTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colBankId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDcPaymentType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -60,19 +58,20 @@ namespace Foxoft
             this.DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.OfficeCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.StoreCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.PosterminalIdTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.DocumentNumberButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.ItemForOperationTime = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForPosterminalId = new DevExpress.XtraLayout.LayoutControlItem();
-            this.PosterminalIdTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
+            this.colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
@@ -87,19 +86,19 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OfficeCodeTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreCodeTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PosterminalIdTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentNumberButtonEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForOfficeCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForStoreCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForPosterminalId)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PosterminalIdTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForOfficeCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
@@ -187,16 +186,15 @@ namespace Foxoft
             this.colPaymentLineId,
             this.colPaymentHeaderId,
             this.colPaymentTypeCode,
-            this.colPayment,
             this.colLineDescription,
             this.colCurrencyCode,
             this.colExchangeRate,
-            this.colBankId,
             this.colDcPaymentType,
             this.colCreatedUserName,
             this.colCreatedDate,
             this.colLastUpdatedUserName,
-            this.colLastUpdatedDate});
+            this.colLastUpdatedDate,
+            this.colPayment});
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsView.ShowGroupPanel = false;
@@ -222,13 +220,6 @@ namespace Foxoft
             this.colPaymentTypeCode.Visible = true;
             this.colPaymentTypeCode.VisibleIndex = 2;
             // 
-            // colPayment
-            // 
-            this.colPayment.FieldName = "Payment";
-            this.colPayment.Name = "colPayment";
-            this.colPayment.Visible = true;
-            this.colPayment.VisibleIndex = 3;
-            // 
             // colLineDescription
             // 
             this.colLineDescription.FieldName = "LineDescription";
@@ -250,47 +241,40 @@ namespace Foxoft
             this.colExchangeRate.Visible = true;
             this.colExchangeRate.VisibleIndex = 6;
             // 
-            // colBankId
-            // 
-            this.colBankId.FieldName = "BankId";
-            this.colBankId.Name = "colBankId";
-            this.colBankId.Visible = true;
-            this.colBankId.VisibleIndex = 7;
-            // 
             // colDcPaymentType
             // 
             this.colDcPaymentType.FieldName = "DcPaymentType";
             this.colDcPaymentType.Name = "colDcPaymentType";
             this.colDcPaymentType.Visible = true;
-            this.colDcPaymentType.VisibleIndex = 8;
+            this.colDcPaymentType.VisibleIndex = 7;
             // 
             // colCreatedUserName
             // 
             this.colCreatedUserName.FieldName = "CreatedUserName";
             this.colCreatedUserName.Name = "colCreatedUserName";
             this.colCreatedUserName.Visible = true;
-            this.colCreatedUserName.VisibleIndex = 9;
+            this.colCreatedUserName.VisibleIndex = 8;
             // 
             // colCreatedDate
             // 
             this.colCreatedDate.FieldName = "CreatedDate";
             this.colCreatedDate.Name = "colCreatedDate";
             this.colCreatedDate.Visible = true;
-            this.colCreatedDate.VisibleIndex = 10;
+            this.colCreatedDate.VisibleIndex = 9;
             // 
             // colLastUpdatedUserName
             // 
             this.colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
             this.colLastUpdatedUserName.Name = "colLastUpdatedUserName";
             this.colLastUpdatedUserName.Visible = true;
-            this.colLastUpdatedUserName.VisibleIndex = 11;
+            this.colLastUpdatedUserName.VisibleIndex = 10;
             // 
             // colLastUpdatedDate
             // 
             this.colLastUpdatedDate.FieldName = "LastUpdatedDate";
             this.colLastUpdatedDate.Name = "colLastUpdatedDate";
             this.colLastUpdatedDate.Visible = true;
-            this.colLastUpdatedDate.VisibleIndex = 12;
+            this.colLastUpdatedDate.VisibleIndex = 11;
             // 
             // OperationDateDateEdit
             // 
@@ -368,6 +352,21 @@ namespace Foxoft
             this.StoreCodeTextEdit.StyleController = this.dataLayoutControl1;
             this.StoreCodeTextEdit.TabIndex = 3;
             // 
+            // PosterminalIdTextEdit
+            // 
+            this.PosterminalIdTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "PosterminalId", true));
+            this.PosterminalIdTextEdit.Location = new System.Drawing.Point(450, 60);
+            this.PosterminalIdTextEdit.MenuManager = this.ribbon;
+            this.PosterminalIdTextEdit.Name = "PosterminalIdTextEdit";
+            this.PosterminalIdTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            this.PosterminalIdTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.PosterminalIdTextEdit.Properties.Mask.EditMask = "N0";
+            this.PosterminalIdTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.PosterminalIdTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.PosterminalIdTextEdit.Size = new System.Drawing.Size(268, 20);
+            this.PosterminalIdTextEdit.StyleController = this.dataLayoutControl1;
+            this.PosterminalIdTextEdit.TabIndex = 6;
+            // 
             // DocumentNumberButtonEdit
             // 
             this.DocumentNumberButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "DocumentNumber", true));
@@ -417,24 +416,6 @@ namespace Foxoft
             this.ItemForOperationTime.Size = new System.Drawing.Size(355, 24);
             this.ItemForOperationTime.Text = "Sənəd Vaxtı";
             this.ItemForOperationTime.TextSize = new System.Drawing.Size(71, 13);
-            // 
-            // ItemForDescription
-            // 
-            this.ItemForDescription.Control = this.DescriptionTextEdit;
-            this.ItemForDescription.Location = new System.Drawing.Point(355, 72);
-            this.ItemForDescription.Name = "ItemForDescription";
-            this.ItemForDescription.Size = new System.Drawing.Size(355, 24);
-            this.ItemForDescription.Text = "Açıqlama";
-            this.ItemForDescription.TextSize = new System.Drawing.Size(71, 13);
-            // 
-            // ItemForOfficeCode
-            // 
-            this.ItemForOfficeCode.Control = this.OfficeCodeTextEdit;
-            this.ItemForOfficeCode.Location = new System.Drawing.Point(355, 24);
-            this.ItemForOfficeCode.Name = "ItemForOfficeCode";
-            this.ItemForOfficeCode.Size = new System.Drawing.Size(355, 24);
-            this.ItemForOfficeCode.Text = "Ofis";
-            this.ItemForOfficeCode.TextSize = new System.Drawing.Size(71, 13);
             // 
             // ItemForCurrAccCode
             // 
@@ -490,20 +471,30 @@ namespace Foxoft
             this.ItemForPosterminalId.Text = "POS Terminal";
             this.ItemForPosterminalId.TextSize = new System.Drawing.Size(71, 13);
             // 
-            // PosterminalIdTextEdit
+            // ItemForOfficeCode
             // 
-            this.PosterminalIdTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "PosterminalId", true));
-            this.PosterminalIdTextEdit.Location = new System.Drawing.Point(450, 60);
-            this.PosterminalIdTextEdit.MenuManager = this.ribbon;
-            this.PosterminalIdTextEdit.Name = "PosterminalIdTextEdit";
-            this.PosterminalIdTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.PosterminalIdTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.PosterminalIdTextEdit.Properties.Mask.EditMask = "N0";
-            this.PosterminalIdTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.PosterminalIdTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.PosterminalIdTextEdit.Size = new System.Drawing.Size(268, 20);
-            this.PosterminalIdTextEdit.StyleController = this.dataLayoutControl1;
-            this.PosterminalIdTextEdit.TabIndex = 6;
+            this.ItemForOfficeCode.Control = this.OfficeCodeTextEdit;
+            this.ItemForOfficeCode.Location = new System.Drawing.Point(355, 24);
+            this.ItemForOfficeCode.Name = "ItemForOfficeCode";
+            this.ItemForOfficeCode.Size = new System.Drawing.Size(355, 24);
+            this.ItemForOfficeCode.Text = "Ofis";
+            this.ItemForOfficeCode.TextSize = new System.Drawing.Size(71, 13);
+            // 
+            // ItemForDescription
+            // 
+            this.ItemForDescription.Control = this.DescriptionTextEdit;
+            this.ItemForDescription.Location = new System.Drawing.Point(355, 72);
+            this.ItemForDescription.Name = "ItemForDescription";
+            this.ItemForDescription.Size = new System.Drawing.Size(355, 24);
+            this.ItemForDescription.Text = "Açıqlama";
+            this.ItemForDescription.TextSize = new System.Drawing.Size(71, 13);
+            // 
+            // colPayment
+            // 
+            this.colPayment.FieldName = "Payment";
+            this.colPayment.Name = "colPayment";
+            this.colPayment.Visible = true;
+            this.colPayment.VisibleIndex = 3;
             // 
             // FormPaymentDetail
             // 
@@ -531,19 +522,19 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OfficeCodeTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreCodeTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PosterminalIdTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DocumentNumberButtonEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForOfficeCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForStoreCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForPosterminalId)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PosterminalIdTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForOfficeCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

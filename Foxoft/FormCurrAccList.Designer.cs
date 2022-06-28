@@ -67,6 +67,7 @@ namespace Foxoft
             this.gC_CurrAccList.TabIndex = 0;
             this.gC_CurrAccList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_CurrAccList});
+            this.gC_CurrAccList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_CurrAccList_Paint);
             this.gC_CurrAccList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_CurrAccList_ProcessGridKey);
             // 
             // gV_CurrAccList

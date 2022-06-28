@@ -30,7 +30,7 @@ namespace Foxoft
         public FormReportGrid(string qry)
         {
             InitializeComponent();
-            
+
             DataTable dt = adoMethods.SqlGetDt(qry);
             gridControl1.DataSource = dt;
 
@@ -131,25 +131,24 @@ namespace Foxoft
             prevRow = view.FocusedRowHandle;
         }
 
-
-
         private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
         {
             object obj = gV_Report.GetFocusedRowCellValue("InvoiceHeaderId");
 
             if (!object.ReferenceEquals(obj, null))
             {
-                Guid invoiceHeaderId = Guid.Parse(obj.ToString());
-                TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+                if (!String.IsNullOrEmpty(obj.ToString()))
+                {
+                    Guid invoiceHeaderId = Guid.Parse(obj.ToString());
+                    TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-                this.Close();
-
-                FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
-                FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
-                formInvoice.MdiParent = formERP;
-                formInvoice.WindowState = FormWindowState.Maximized;
-                formInvoice.Show();
-                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                    FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+                    FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                    formInvoice.MdiParent = formERP;
+                    formInvoice.WindowState = FormWindowState.Maximized;
+                    formInvoice.Show();
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }                    
             }
         }
     }

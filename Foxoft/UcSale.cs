@@ -239,7 +239,7 @@ namespace Foxoft
 
             if (summaryNetAmount > 0)
             {
-                int paymentType = 0;
+                byte paymentType = 0;
 
                 SimpleButton simpleButton = sender as SimpleButton;
                 switch (simpleButton.Name)

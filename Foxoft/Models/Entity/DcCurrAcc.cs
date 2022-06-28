@@ -25,7 +25,7 @@ namespace Foxoft.Models
         [DisplayName("Cari Hesab Kodu")]
         public string CurrAccCode { get; set; }
 
-        [DisplayName("Adı")]
+        [DisplayName("Cari Hesab Açıqlaması")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string CurrAccDesc { get; set; }
 

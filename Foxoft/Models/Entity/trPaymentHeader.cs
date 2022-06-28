@@ -98,7 +98,7 @@ namespace Foxoft.Models
 
         [NotMapped]
         [DisplayName("Tutar")]
-        public decimal TotalNetAmount { get; set; }
+        public decimal TotalNetAmountLoc { get; set; }
 
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
