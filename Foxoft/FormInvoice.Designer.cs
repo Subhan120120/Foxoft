@@ -299,8 +299,6 @@ namespace Foxoft
             this.colPriceLoc.ColumnEdit = this.repoCalcEdit_PriceLoc;
             this.colPriceLoc.FieldName = "PriceLoc";
             this.colPriceLoc.Name = "colPriceLoc";
-            this.colPriceLoc.Visible = true;
-            this.colPriceLoc.VisibleIndex = 4;
             // 
             // repoCalcEdit_PriceLoc
             // 
@@ -318,7 +316,7 @@ namespace Foxoft
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;
-            this.col_Price.VisibleIndex = 5;
+            this.col_Price.VisibleIndex = 4;
             this.col_Price.Width = 89;
             // 
             // repoCalcEdit_Price
@@ -338,7 +336,7 @@ namespace Foxoft
             this.colCurrencyCode.FieldName = "CurrencyCode";
             this.colCurrencyCode.Name = "colCurrencyCode";
             this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 6;
+            this.colCurrencyCode.VisibleIndex = 5;
             // 
             // repoLUE_Currency
             // 
@@ -352,6 +350,7 @@ namespace Foxoft
             this.repoLUE_Currency.DisplayMember = "CurrencyDesc";
             this.repoLUE_Currency.Name = "repoLUE_Currency";
             this.repoLUE_Currency.NullText = "";
+            this.repoLUE_Currency.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
             this.repoLUE_Currency.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
             this.repoLUE_Currency.ShowFooter = false;
             this.repoLUE_Currency.ShowHeader = false;
@@ -363,7 +362,7 @@ namespace Foxoft
             this.colExchangeRate.FieldName = "ExchangeRate";
             this.colExchangeRate.Name = "colExchangeRate";
             this.colExchangeRate.Visible = true;
-            this.colExchangeRate.VisibleIndex = 7;
+            this.colExchangeRate.VisibleIndex = 6;
             // 
             // col_Amount
             // 
@@ -394,7 +393,7 @@ namespace Foxoft
             this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "SUM={0:0.##}")});
             this.col_NetAmount.Visible = true;
-            this.col_NetAmount.VisibleIndex = 8;
+            this.col_NetAmount.VisibleIndex = 7;
             this.col_NetAmount.Width = 97;
             // 
             // col_LineDesc
@@ -403,7 +402,7 @@ namespace Foxoft
             this.col_LineDesc.FieldName = "LineDescription";
             this.col_LineDesc.Name = "col_LineDesc";
             this.col_LineDesc.Visible = true;
-            this.col_LineDesc.VisibleIndex = 10;
+            this.col_LineDesc.VisibleIndex = 8;
             this.col_LineDesc.Width = 89;
             // 
             // col_SalesPersonCode
@@ -446,8 +445,6 @@ namespace Foxoft
             this.colNetAmountLoc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colNetAmountLoc.FieldName = "NetAmountLoc";
             this.colNetAmountLoc.Name = "colNetAmountLoc";
-            this.colNetAmountLoc.Visible = true;
-            this.colNetAmountLoc.VisibleIndex = 9;
             // 
             // CheckEdit_IsReturn
             // 
@@ -565,12 +562,12 @@ namespace Foxoft
             this.lUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.lUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("StoreCode", "Mağaza Kodu"),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("StoreDesc", "Mağaza Adı")});
-            this.lUE_StoreCode.Properties.DisplayMember = "StoreDesc";
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Mağaza Kodu"),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Mağaza Adı")});
+            this.lUE_StoreCode.Properties.DisplayMember = "CurrAccDesc";
             this.lUE_StoreCode.Properties.NullText = "";
             this.lUE_StoreCode.Properties.ShowHeader = false;
-            this.lUE_StoreCode.Properties.ValueMember = "StoreCode";
+            this.lUE_StoreCode.Properties.ValueMember = "CurrAccCode";
             this.lUE_StoreCode.Size = new System.Drawing.Size(306, 20);
             this.lUE_StoreCode.StyleController = this.dataLayoutControl1;
             this.lUE_StoreCode.TabIndex = 6;

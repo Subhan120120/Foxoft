@@ -509,7 +509,7 @@ namespace Foxoft
             {
                 return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                         .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
-                                        .Sum(s => s.Payment);
+                                        .Sum(s => s.PaymentLoc);
             }
         }
 
@@ -570,13 +570,14 @@ namespace Foxoft
             }
         }
 
-        public List<DcStore> SelectStores()
+        public List<DcCurrAcc> SelectStores()
         {
             using (subContext db = new subContext())
             {
-                return db.DcStores.Where(x => x.IsDisabled == false)
-                                  .OrderBy(x => x.CreatedDate)
-                                  .ToList(); // burdaki kolonlari dizaynda da elave et
+                return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                                    .Where(x => x.CurrAccTypeCode == 4)
+                                    .OrderBy(x => x.CreatedDate)
+                                    .ToList(); // burdaki kolonlari dizaynda da elave et
             }
         }
 

@@ -17,12 +17,17 @@ namespace Foxoft.Models
         {
             TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
             TrPaymentHeaders = new HashSet<TrPaymentHeader>();
+            TrPaymentLines = new HashSet<TrPaymentLine>();
         }
 
         [Key]
         [StringLength(30)]
         [DisplayName("Cari Hesab Kodu")]
         public string CurrAccCode { get; set; }
+
+        [DisplayName("Adı")]
+        [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string CurrAccDesc { get; set; }
 
         [ForeignKey("DcCurrAccType")]
         [DisplayName("Cari Hesab Tipi Kodu")]
@@ -41,7 +46,6 @@ namespace Foxoft.Models
         public string StoreCode { get; set; }
 
         [DisplayName("Adı")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string FirstName { get; set; }
 
@@ -121,6 +125,7 @@ namespace Foxoft.Models
         public virtual DcCurrAccType DcCurrAccType { get; set; }
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
+        public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
         public virtual ICollection<TrCurrAccRole> TrCurrAccRole { get; set; }
     }
 }

@@ -12,12 +12,13 @@ namespace Foxoft
     {
         private Guid PaymentHeaderId;
         private int PaymentType { get; set; }
-        private decimal bePaid { get; set; }
-        private decimal summary { get; set; }
+        private decimal PaymentLoc { get; set; }
+        private decimal Payment { get; set; }
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private EfMethods efMethods = new EfMethods();
 
-        private string defaultCurrency;
+        private string CurrencyCode;
+        private string CashRegisterCode;
         private float exRate = 1;
 
         private bool isNegativ = false;
@@ -26,38 +27,41 @@ namespace Foxoft
         private decimal cashless = 0;
         private decimal bonus = 0;
 
-        public FormPayment(int PaymentType, decimal invoiceSum, TrInvoiceHeader trInvoiceHeader)
+        public FormPayment(int PaymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader)
         {
             InitializeComponent();
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
 
             lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
+            lUE_CashlessCurrency.Properties.DataSource = efMethods.SelectCurrencies();
+
+            CurrencyCode = "USD";
+            exRate = 1.703f;
+            CashRegisterCode = "kassa01";
+
+            this.trInvoiceHeader = trInvoiceHeader;
+            this.PaymentType = PaymentType;
+            PaymentHeaderId = Guid.NewGuid();
 
             if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
-                invoiceSum *= (-1);
+                invoiceSumLoc *= (-1);
 
             if (trInvoiceHeader.IsReturn)
-                invoiceSum *= (-1);
+                invoiceSumLoc *= (-1);
 
             decimal prePaid = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId);
-            invoiceSum = Math.Round(invoiceSum - prePaid, 2);
+            decimal mustPaid = Math.Round(invoiceSumLoc - prePaid, 2);
 
-            if (invoiceSum < 0)
+            if (mustPaid < 0)
                 isNegativ = true;
 
-            defaultCurrency = "USD";
-
-            this.PaymentType = PaymentType;
-            this.summary = Math.Abs(invoiceSum);
-            this.PaymentHeaderId = Guid.NewGuid();
-            this.trInvoiceHeader = trInvoiceHeader;
+            PaymentLoc = Math.Abs(mustPaid);
+            Payment = Math.Abs(Math.Round(PaymentLoc / (decimal)exRate, 2));
         }
 
         private void FormPayment_Load(object sender, EventArgs e)
         {
-            //decimal prePaid = Math.Round(efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2); //əvvəlcədən ödənilən
-
             FillControls();
         }
 
@@ -65,14 +69,16 @@ namespace Foxoft
         {
             switch (PaymentType)
             {
-                case 1: txtEdit_Cash.EditValue = bePaid; break;
-                case 2: txtEdit_Cashless.EditValue = bePaid; break;
-                case 3: txtEdit_Bonus.EditValue = bePaid; break;
-                default: txtEdit_Cash.EditValue = bePaid; break;
+                case 1: txtEdit_Cash.EditValue = Payment; break;
+                case 2: txtEdit_Cashless.EditValue = Payment; break;
+                case 3: txtEdit_Bonus.EditValue = Payment; break;
+                default: txtEdit_Cash.EditValue = Payment; break;
             }
 
             dateEdit_Date.EditValue = DateTime.Now.ToString("yyyy-MM-dd");
-            lUE_cashCurrency.EditValue = defaultCurrency;
+            btnEdit_CashRegister.EditValue = CashRegisterCode;
+            lUE_cashCurrency.EditValue = CurrencyCode;
+            lUE_CashlessCurrency.EditValue = CurrencyCode;
         }
 
         private void textEditCash_EditValueChanged(object sender, EventArgs e)
@@ -97,7 +103,7 @@ namespace Foxoft
 
         private void simpleButtonUpdateCash_Click(object sender, EventArgs e)
         {
-            decimal restAmount = bePaid - cashless + bonus;
+            decimal restAmount = PaymentLoc - cashless + bonus;
             if (restAmount >= 0)
                 txtEdit_Cash.EditValue = restAmount;
         }
@@ -111,7 +117,7 @@ namespace Foxoft
 
         private void textEditCashless_Validating(object sender, CancelEventArgs e)
         {
-            if (!cashless.Between(0, bePaid, true))
+            if (!cashless.Between(0, PaymentLoc, true))
                 e.Cancel = true;
         }
 
@@ -119,12 +125,12 @@ namespace Foxoft
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
             e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər ödenilmeli məbləğdən (" + bePaid + "'dan) çox olmamalıdır";
+            e.ErrorText = "Dəyər ödenilmeli məbləğdən (" + PaymentLoc + "'dan) çox olmamalıdır";
         }
 
         private void simpleButtonUpdateCashless_Click(object sender, EventArgs e)
         {
-            decimal restAmount = bePaid - cashLarge + bonus;
+            decimal restAmount = PaymentLoc - cashLarge + bonus;
             if (restAmount >= 0)
                 txtEdit_Cashless.EditValue = restAmount;
         }
@@ -138,7 +144,7 @@ namespace Foxoft
 
         private void textEditBonus_Validating(object sender, CancelEventArgs e)
         {
-            if (!cashless.Between(0, bePaid, true))
+            if (!cashless.Between(0, PaymentLoc, true))
                 e.Cancel = true;
         }
 
@@ -146,12 +152,12 @@ namespace Foxoft
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
             e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər ödenilmeli məbləğdən " + bePaid + "dan çox olmamalıdır";
+            e.ErrorText = "Dəyər ödenilmeli məbləğdən " + PaymentLoc + "dan çox olmamalıdır";
         }
 
         private void simpleButtonUpdateBonus_Click(object sender, EventArgs e)
         {
-            decimal restAmount = bePaid - cashLarge + cashless;
+            decimal restAmount = PaymentLoc - cashLarge + cashless;
             if (restAmount >= 0)
                 txtEdit_Bonus.EditValue = restAmount;
         }
@@ -173,13 +179,11 @@ namespace Foxoft
         {
             EfMethods efMethods = new EfMethods();
 
-
-
             //if ((cashLarge + cashless + bonus) < bePaid)
             //    XtraMessageBox.Show("Ödəmə ödənilməli olan məbləğdən azdır");
             //else{
 
-            decimal cash = bePaid - cashless - bonus;
+            decimal cash = PaymentLoc - cashless - bonus;
             //if (cash > cashLarge)
             cash = cashLarge;
 
@@ -222,7 +226,10 @@ namespace Foxoft
                     TrPaymentLine.PaymentLineId = Guid.NewGuid();
                     TrPaymentLine.Payment = isNegativ ? cash * (-1) : cash;
                     TrPaymentLine.PaymentLoc = isNegativ ? cashLoc * (-1) : cashLoc;
+                    TrPaymentLine.ExchangeRate = exRate;
+                    TrPaymentLine.CurrencyCode = lUE_cashCurrency.EditValue.ToString();
                     TrPaymentLine.PaymentTypeCode = 1;
+                    TrPaymentLine.CashRegisterCode = CashRegisterCode;
                     efMethods.InsertPaymentLine(TrPaymentLine);
                 }
 
@@ -234,6 +241,7 @@ namespace Foxoft
                     TrPaymentLine.Payment = isNegativ ? cashless * (-1) : cashless;
                     TrPaymentLine.PaymentLoc = isNegativ ? cashlessLoc * (-1) : cashlessLoc;
                     TrPaymentLine.PaymentTypeCode = 2;
+                    TrPaymentLine.CashRegisterCode = CashRegisterCode;
                     efMethods.InsertPaymentLine(TrPaymentLine);
                 }
 
@@ -245,11 +253,12 @@ namespace Foxoft
                     TrPaymentLine.Payment = isNegativ ? bonus * (-1) : bonus;
                     TrPaymentLine.PaymentLoc = isNegativ ? bonusLoc * (-1) : bonusLoc;
                     TrPaymentLine.PaymentTypeCode = 3;
+                    TrPaymentLine.CashRegisterCode = CashRegisterCode;
                     efMethods.InsertPaymentLine(TrPaymentLine);
                 }
 
 
-                decimal change = cashLarge + cashless + bonus - bePaid;
+                decimal change = cashLarge + cashless + bonus - PaymentLoc;
                 //if (change > 0)
                 //{
                 //    using (FormChange formChange = new FormChange(cashLarge, change))
@@ -268,10 +277,38 @@ namespace Foxoft
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit editor = sender as LookUpEdit;
-            defaultCurrency = lUE_cashCurrency.EditValue.ToString();
+            CurrencyCode = lUE_cashCurrency.EditValue.ToString();
             exRate = (float)editor.GetColumnValue("ExchangeRate");
-            bePaid = Math.Round(summary / (decimal)exRate, 2);
+            Payment = Math.Round(PaymentLoc / (decimal)exRate, 2);
             FillControls();
+        }
+
+        private void lUE_CashlessCurrency_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            SelectCurrAcc(sender);
+        }
+
+        private void btnEdit_BankAccout_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            SelectCurrAcc(sender);
+        }
+        private void SelectCurrAcc(object sender)
+        {
+            ButtonEdit buttonEdit = (ButtonEdit)sender;
+
+            using (FormCurrAccList form = new FormCurrAccList(5))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
+                    CashRegisterCode = form.dcCurrAcc.CurrAccCode;
+                }
+            }
         }
     }
 }

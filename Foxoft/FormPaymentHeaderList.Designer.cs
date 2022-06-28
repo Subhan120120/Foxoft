@@ -123,7 +123,7 @@ namespace Foxoft
             // 
             // colStoreCode
             // 
-            this.colStoreCode.FieldName = "StoreCode";
+            this.colStoreCode.FieldName = "CurrAccCode";
             this.colStoreCode.Name = "colStoreCode";
             // 
             // colPosterminalId

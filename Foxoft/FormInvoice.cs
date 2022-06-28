@@ -195,10 +195,13 @@ namespace Foxoft
 
 
             dataLayoutControl1.isValid(out List<string> errorList);
+            CalcPaidAmount();
+        }
 
-
-            decimal paidSum = efMethods.SelectPaymentLinesSum(InvoiceHeaderId) / (decimal)1.703 * (CustomExtensions.ProcessDir(processCode) == "In" ? (-1) : 1);
-            lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + "USD";
+        private void CalcPaidAmount()
+        {
+            decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) / (decimal)1.703 * (CustomExtensions.ProcessDir(processCode) == "In" ? (-1) : 1);
+            lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
         }
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -232,7 +235,7 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
-
+            
             //GridView view = sender as GridView;
             //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
         }
@@ -645,6 +648,7 @@ namespace Foxoft
             {
                 if (formPayment.ShowDialog(this) == DialogResult.OK)
                 {
+                    CalcPaidAmount();
                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
@@ -780,7 +784,7 @@ namespace Foxoft
             if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
-                lbl_InvoicePaidSum.Text = "0.00";
+                CalcPaidAmount();
             }
         }
 

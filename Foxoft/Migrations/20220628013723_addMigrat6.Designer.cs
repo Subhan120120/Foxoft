@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220628013723_addMigrat6")]
+    partial class addMigrat6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,7 +322,7 @@ namespace Foxoft.Migrations
                             CompanyCode = (byte)0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreditLimit = 0m,
-                            CurrAccDesc = "Nağd Kassa",
+                            CurrAccDesc = "Merkez Kassa",
                             CurrAccTypeCode = (byte)5,
                             CustomerPosDiscountRate = 0.0,
                             IsDisabled = false,
@@ -372,14 +374,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             CurrAccTypeCode = (byte)3,
-                            CurrAccTypeDesc = "Personal",
+                            CurrAccTypeDesc = "Mağaza",
                             IsDisabled = false,
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
                         },
                         new
                         {
                             CurrAccTypeCode = (byte)4,
-                            CurrAccTypeDesc = "Mağaza",
+                            CurrAccTypeDesc = "Personal",
                             IsDisabled = false,
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
                         },
@@ -413,20 +415,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             CurrencyCode = "AZN",
-                            CurrencyDesc = "₼ AZN",
+                            CurrencyDesc = "AZN ₼",
                             ExchangeRate = 1f
                         },
                         new
                         {
                             CurrencyCode = "USD",
-                            CurrencyDesc = "$ DOLLAR",
+                            CurrencyDesc = "DOLLAR $",
                             ExchangeRate = 1.703f
-                        },
-                        new
-                        {
-                            CurrencyCode = "EUR",
-                            CurrencyDesc = "€ EURO",
-                            ExchangeRate = 1.798f
                         });
                 });
 
@@ -1696,12 +1692,11 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
                     b.Property<string>("CurrencyCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<float>("ExchangeRate")
+                    b.Property<double>("ExchangeRate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("real")
+                        .HasColumnType("float")
                         .HasDefaultValueSql("1");
 
                     b.Property<DateTime>("LastUpdatedDate")
@@ -2211,8 +2206,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
                         .WithMany("TrPaymentLines")
                         .HasForeignKey("CurrencyCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Foxoft.Models.TrPaymentHeader", "TrPaymentHeader")
                         .WithMany("TrPaymentLines")

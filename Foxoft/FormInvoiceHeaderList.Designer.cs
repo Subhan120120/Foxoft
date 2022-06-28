@@ -130,7 +130,7 @@ namespace Foxoft
             // 
             // colStoreCode
             // 
-            this.colStoreCode.FieldName = "StoreCode";
+            this.colStoreCode.FieldName = "CurrAccCode";
             this.colStoreCode.Name = "colStoreCode";
             this.colStoreCode.Visible = true;
             this.colStoreCode.VisibleIndex = 6;

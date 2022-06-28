@@ -359,7 +359,7 @@ namespace Foxoft
             // 
             // StoreCodeTextEdit
             // 
-            this.StoreCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "StoreCode", true));
+            this.StoreCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "CurrAccCode", true));
             this.StoreCodeTextEdit.Location = new System.Drawing.Point(95, 36);
             this.StoreCodeTextEdit.MenuManager = this.ribbon;
             this.StoreCodeTextEdit.Name = "StoreCodeTextEdit";

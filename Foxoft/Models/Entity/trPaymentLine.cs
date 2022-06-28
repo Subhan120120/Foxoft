@@ -39,17 +39,21 @@ namespace Foxoft.Models
 
         [DisplayName("Valyuta")]
         [ForeignKey("DcCurrency")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string CurrencyCode { get; set; }
 
         [DisplayName("Valyuta Kursu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public double ExchangeRate { get; set; }
+        public float ExchangeRate { get; set; }
 
-        [DisplayName("Bank")]
-        public byte? BankId { get; set; }
+        [DisplayName("Kassa")]
+        [ForeignKey("DcCurrAcc")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public string CashRegisterCode { get; set; }
 
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentType DcPaymentType { get; set; }
+        public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
     }
 }

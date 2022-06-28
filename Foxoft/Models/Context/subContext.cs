@@ -27,7 +27,7 @@ namespace Foxoft.Models
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
         public DbSet<DcRole> DcRoles { get; set; }
-        public DbSet<DcStore> DcStores { get; set; }
+        //public DbSet<DcStore> DcStores { get; set; }
         public DbSet<DcTerminal> DcTerminals { get; set; }
         public DbSet<DcWarehouse> DcWarehouses { get; set; }
         public DbSet<MigrationHistory> MigrationHistory { get; set; }
@@ -156,7 +156,9 @@ namespace Foxoft.Models
                 new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Sübhan", LastName = "Hüseynzadə", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1, OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "CA-2", FirstName = "Cemil", LastName = "Cavadov", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1 },
                 new DcCurrAcc { CurrAccCode = "CA-3", FirstName = "Orxan", LastName = "Sederek", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 2 },
-                new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Vagif", LastName = "Mustafayev", NewPassword = "456", PhoneNum = "0553628804", CurrAccTypeCode = 3 });
+                new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Vagif", LastName = "Mustafayev", NewPassword = "456", PhoneNum = "0553628804", CurrAccTypeCode = 3 },
+                new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 4 },
+                new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 5 });
 
             modelBuilder.Entity<DcCurrAccType>(entity =>
             {
@@ -167,12 +169,16 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcCurrAccType>().HasData(
                 new DcCurrAccType { CurrAccTypeCode = 1, CurrAccTypeDesc = "Müştəri" },
                 new DcCurrAccType { CurrAccTypeCode = 2, CurrAccTypeDesc = "Tədarikçi" },
-                new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" }
+                new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" },
+                new DcCurrAccType { CurrAccTypeCode = 4, CurrAccTypeDesc = "Mağaza" },
+                new DcCurrAccType { CurrAccTypeCode = 5, CurrAccTypeDesc = "Kassa" }
                 );
 
             modelBuilder.Entity<DcCurrency>().HasData(
-                new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "AZN ₼", ExchangeRate = 1 },
-                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "DOLLAR $", ExchangeRate = 1.703f });
+                new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "₼ AZN", ExchangeRate = 1 },
+                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$ DOLLAR", ExchangeRate = 1.703f },
+                new DcCurrency { CurrencyCode = "EUR", CurrencyDesc = "€ EURO", ExchangeRate = 1.798f }
+                );
 
             modelBuilder.Entity<DcRole>(entity =>
             {
@@ -370,27 +376,27 @@ namespace Foxoft.Models
                 new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" }
                 );
 
-            modelBuilder.Entity<DcStore>(entity =>
-            {
-                entity.Property(e => e.CreatedDate)
-                    .HasDefaultValueSql("getdate()");
+            //modelBuilder.Entity<DcStore>(entity =>
+            //{
+            //    entity.Property(e => e.CreatedDate)
+            //        .HasDefaultValueSql("getdate()");
 
-                entity.Property(e => e.CreatedUserName)
-                    .HasDefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))");
+            //    entity.Property(e => e.CreatedUserName)
+            //        .HasDefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))");
 
-                entity.Property(e => e.LastUpdatedDate)
-                    .HasDefaultValueSql("getdate()");
+            //    entity.Property(e => e.LastUpdatedDate)
+            //        .HasDefaultValueSql("getdate()");
 
-                entity.Property(e => e.LastUpdatedUserName)
-                    .HasDefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))");
+            //    entity.Property(e => e.LastUpdatedUserName)
+            //        .HasDefaultValueSql(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))");
 
-                entity.Property(e => e.StoreDesc)
-                    .HasDefaultValueSql("space(0)");
-            });
+            //    entity.Property(e => e.StoreDesc)
+            //        .HasDefaultValueSql("space(0)");
+            //});
 
-            modelBuilder.Entity<DcStore>().HasData(
-                new DcStore { StoreCode = "mgz01", StoreDesc = "Bakıxanov" },
-                new DcStore { StoreCode = "mgz02", StoreDesc = "Elmlər" });
+            //modelBuilder.Entity<DcStore>().HasData(
+            //    new DcStore { StoreCode = "mgz01", StoreDesc = "Bakıxanov" },
+            //    new DcStore { StoreCode = "mgz02", StoreDesc = "Elmlər" });
 
             modelBuilder.Entity<DcTerminal>(entity =>
             {
