@@ -24,6 +24,29 @@ namespace Foxoft
         public FormPaymentDetail()
         {
             InitializeComponent();
+
+            ClearControlsAddNew();
+        }
+
+        private void ClearControlsAddNew()
+        {
+            dbContext = new subContext();
+
+            trPaymentHeader = trPaymentHeadersBindingSource.AddNew() as TrPaymentHeader;
+
+            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders");
+            trPaymentHeader.InvoiceHeaderId = Guid.NewGuid();
+            trPaymentHeader.DocumentNumber = NewDocNum;
+            trPaymentHeader.DocumentDate = DateTime.Now;
+            trPaymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+
+            trPaymentHeadersBindingSource.DataSource = trPaymentHeader;
+
+            dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == trPaymentHeader.InvoiceHeaderId)
+                                    .LoadAsync()
+                                    .ContinueWith(loadTask => trPaymentLinesBindingSource.DataSource = dbContext.TrPaymentLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+
+            dataLayoutControl1.isValid(out List<string> errorList);
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)

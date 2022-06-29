@@ -42,7 +42,7 @@ namespace Foxoft
         private byte currAccTypeCode;
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
-
+        Guid guid;
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
@@ -98,18 +98,29 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
+
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-            string NewDocNum = efMethods.GetNextDocNum(this.processCode, "DocumentNumber", "TrInvoiceHeaders");
-            trInvoiceHeader.InvoiceHeaderId = Guid.NewGuid();
-            trInvoiceHeader.DocumentNumber = NewDocNum;
-            trInvoiceHeader.DocumentDate = DateTime.Now;
-            trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-            trInvoiceHeader.ProcessCode = this.processCode;
+            //guid = Guid.NewGuid();
 
-            LoadSession();
+            dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+              .Load();
+            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
-            trInvoiceHeadersBindingSource.DataSource = trInvoiceHeader;
+
+
+
+            //string NewDocNum = efMethods.GetNextDocNum(this.processCode, "DocumentNumber", "TrInvoiceHeaders");
+            //trInvoiceHeader.DocumentNumber = NewDocNum;
+            //trInvoiceHeader.DocumentDate = DateTime.Now;
+            //trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+            //trInvoiceHeader.ProcessCode = this.processCode;
+
+
+            //LoadSession();
+
+            //trInvoiceHeadersBindingSource.DataSource = trInvoiceHeader;
+
 
             lbl_InvoicePaidSum.Text = "";
 
@@ -118,6 +129,30 @@ namespace Foxoft
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.isValid(out List<string> errorList);
+        }
+
+        private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
+        {
+            TrInvoiceHeader invoiceHeader = new TrInvoiceHeader();
+            invoiceHeader.InvoiceHeaderId = Guid.NewGuid();
+            string NewDocNum = efMethods.GetNextDocNum(this.processCode, "DocumentNumber", "TrInvoiceHeaders");
+            invoiceHeader.DocumentNumber = NewDocNum;
+            invoiceHeader.DocumentDate = DateTime.Now;
+            invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+            invoiceHeader.ProcessCode = this.processCode;
+            invoiceHeader.OfficeCode = Authorization.OfficeCode;
+            invoiceHeader.StoreCode = Authorization.StoreCode;
+            invoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
+            //LoadSession();
+
+            e.NewObject = invoiceHeader;
+        }
+
+        private void trInvoiceLinesBindingSource_AddingNew(object sender, AddingNewEventArgs e)
+        {
+            //line.DcProduct = new DcProduct();
+            //line.DcProduct.ProductDescription = "Fazil";
+            //e.NewObject = line;
         }
 
         private void LoadSession()
@@ -235,7 +270,7 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
-            
+
             //GridView view = sender as GridView;
             //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
         }
@@ -738,12 +773,7 @@ namespace Foxoft
             }
         }
 
-        private void trInvoiceLinesBindingSource_AddingNew(object sender, AddingNewEventArgs e)
-        {
-            //line.DcProduct = new DcProduct();
-            //line.DcProduct.ProductDescription = "Fazil";
-            //e.NewObject = line;
-        }
+
 
         private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
         {

@@ -306,7 +306,7 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 List<TrPaymentHeader> trPaymentHeaders = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                                       .ToList();
+                                                                            .ToList();
                 if (!object.ReferenceEquals(trPaymentHeaders, null))
                     db.TrPaymentHeaders.RemoveRange(trPaymentHeaders);
 

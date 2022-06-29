@@ -54,9 +54,7 @@ namespace Foxoft.Models
         [ForeignKey("DcCurrAcc")]
         public string CurrAccCode { get; set; }
 
-
         [DisplayName("Açıqlama")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string Description { get; set; }
 
