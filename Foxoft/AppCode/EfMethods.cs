@@ -482,7 +482,18 @@ namespace Foxoft
             }
         }
 
-        public List<TrPaymentLine> SelectPaymentLines(Guid invoiceHeaderId)
+        public List<TrPaymentLine> SelectPaymentLines(Guid paymentHeaderId)
+        {
+            using (subContext db = new subContext())
+            {
+                return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                        .Include(x => x.DcPaymentType)
+                                        .Where(x => x.TrPaymentHeader.PaymentHeaderId == paymentHeaderId)
+                                        .ToList();
+            }
+        }
+
+        public List<TrPaymentLine> SelectPaymentLinesByInvoice(Guid invoiceHeaderId)
         {
             using (subContext db = new subContext())
             {

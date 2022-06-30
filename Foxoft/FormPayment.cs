@@ -110,7 +110,7 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCurrAccList form = new FormCurrAccList(5))
+            using (FormCurrAccList form = new FormCurrAccList(0))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {

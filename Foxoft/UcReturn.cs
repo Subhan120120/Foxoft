@@ -51,7 +51,7 @@ namespace Foxoft
 
                     gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
 
-                    gC_PaymentLine.DataSource = efMethods.SelectPaymentLines(invoiceHeaderId);
+                    gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeaderId);
                     gC_ReturnInvoiceLine.DataSource = null;
                 }
             }

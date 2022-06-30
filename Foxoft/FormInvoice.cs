@@ -195,18 +195,6 @@ namespace Foxoft
                                         lV_invoiceLine.ForEach(x =>
                                         {
                                             x.ProductDescription = x.DcProduct.ProductDescription;
-
-                                            //x.Price = Math.Round(x.Price / x.ExchangeRate, 4); //ferqli valyutada gostermek
-                                            //x.Amount = Math.Round(x.Amount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
-                                            //x.NetAmount = Math.Round(x.NetAmount / (decimal)x.ExchangeRate, 4); //ferqli valyutada gostermek
-
-                                            //if (form.trInvoiceHeader.IsReturn)
-                                            //{
-                                            //x.QtyIn = x.QtyIn * (-1);
-                                            //x.QtyOut = x.QtyOut * (-1);
-                                            //x.Amount = x.Amount * (-1);
-                                            //x.NetAmount = x.NetAmount * (-1);
-                                            //}
                                         });
 
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
@@ -239,14 +227,13 @@ namespace Foxoft
 
         private void SelectCurrAcc()
         {
-            using (FormCurrAccList form = new FormCurrAccList(currAccTypeCode))
+            using (FormCurrAccList form = new FormCurrAccList(0))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                     trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.PhoneNum;
-                    //lC_CurrAccDesc.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                     CurrAccDescTextEdit.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                 }
             }
@@ -254,13 +241,13 @@ namespace Foxoft
 
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceHeaderId", trInvoiceHeader.InvoiceHeaderId);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
+            //GridView gv = sender as GridView;
+
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut, 1);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
 
-            //GridView view = sender as GridView;
-            //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
         }
 
         private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -468,7 +455,7 @@ namespace Foxoft
             //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
             //if (buttonIndex == 0)
             //{
-            using (FormCurrAccList form = new FormCurrAccList(3))
+            using (FormCurrAccList form = new FormCurrAccList(0))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -777,10 +764,6 @@ namespace Foxoft
             CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, colExchangeRate, exRate));
         }
 
-        private void repoBtnEdit_ProductCode_ButtonPressed(object sender, EventArgs e)
-        {
-            SelectProduct(sender);
-        }
 
         private void bBI_SaveQuit_ItemClick(object sender, ItemClickEventArgs e)
         {

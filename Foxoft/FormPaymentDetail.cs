@@ -3,12 +3,16 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,10 +24,14 @@ namespace Foxoft
         private TrPaymentHeader trPaymentHeader;
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
+        private Guid paymentHeaderId;
 
         public FormPaymentDetail()
         {
             InitializeComponent();
+
+            OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
+            StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
 
             ClearControlsAddNew();
         }
@@ -32,15 +40,14 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
+            paymentHeaderId = Guid.NewGuid();
+
+            dbContext.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == paymentHeaderId)
+                                      .Load();
+            trPaymentHeadersBindingSource.DataSource = dbContext.TrPaymentHeaders.Local.ToBindingList();
+
             trPaymentHeader = trPaymentHeadersBindingSource.AddNew() as TrPaymentHeader;
 
-            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders");
-            trPaymentHeader.InvoiceHeaderId = Guid.NewGuid();
-            trPaymentHeader.DocumentNumber = NewDocNum;
-            trPaymentHeader.DocumentDate = DateTime.Now;
-            trPaymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-
-            trPaymentHeadersBindingSource.DataSource = trPaymentHeader;
 
             dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == trPaymentHeader.InvoiceHeaderId)
                                     .LoadAsync()
@@ -49,7 +56,46 @@ namespace Foxoft
             dataLayoutControl1.isValid(out List<string> errorList);
         }
 
+        private void trPaymentHeadersBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
+        {
+            TrPaymentHeader paymentHeader = new TrPaymentHeader();
+            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders");
+            paymentHeader.InvoiceHeaderId = Guid.NewGuid();
+            paymentHeader.DocumentNumber = NewDocNum;
+            paymentHeader.DocumentDate = DateTime.Now;
+            paymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+
+            e.NewObject = paymentHeader;
+        }
+
+        private void trPaymentHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
+        {
+            if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+            {
+                int count = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).Count;
+                if (count > 0)
+                    SavePayment();
+            }
+        }
+
+        private void SavePayment()
+        {
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+            }
+        }
+
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            SelectDocNum();
+        }
+
+        private void CurrAccCodeButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             SelectDocNum();
         }
@@ -61,26 +107,30 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     trPaymentHeader = form.trPaymentHeader;
-
-                    dbContext = new subContext();
-
-                    dbContext.TrPaymentHeaders.Where(x => x.PaymentHeaderId == form.trPaymentHeader.PaymentHeaderId).Load();
-                    LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
-                    trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
-
-                    dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == form.trPaymentHeader.PaymentHeaderId)
-                                            .OrderBy(x => x.CreatedDate)
-                                            .LoadAsync()
-                                            .ContinueWith(loadTask =>
-                                            {
-                                                LocalView<TrPaymentLine> lV_paymentLine = dbContext.TrPaymentLines.Local;
-                                                trPaymentLinesBindingSource.DataSource = lV_paymentLine.ToBindingList();
-
-                                            }, TaskScheduler.FromCurrentSynchronizationContext());
-
-                    //dataLayoutControl1.isValid(out List<string> errorList);
+                    LoadPayment(trPaymentHeader.PaymentHeaderId);
                 }
             }
+        }
+
+        private void LoadPayment(Guid paymentHeaderId)
+        {
+            dbContext = new subContext();
+
+            dbContext.TrPaymentHeaders.Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
+            LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
+            trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
+
+            dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == paymentHeaderId)
+                                    .OrderBy(x => x.CreatedDate)
+                                    .LoadAsync()
+                                    .ContinueWith(loadTask =>
+                                    {
+                                        LocalView<TrPaymentLine> lV_paymentLine = dbContext.TrPaymentLines.Local;
+                                        trPaymentLinesBindingSource.DataSource = lV_paymentLine.ToBindingList();
+
+                                    }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            //dataLayoutControl1.isValid(out List<string> errorList);
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -89,6 +139,94 @@ namespace Foxoft
             {
                 efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
             }
+        }
+        private void SelectCurrAcc()
+        {
+            using (FormCurrAccList form = new FormCurrAccList(0))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    CurrAccCodeButtonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
+                    trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
+                }
+            }
+        }
+
+        private void DocumentNumberButtonEdit_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gV_PaymentLine_InitNewRow(object sender, DevExpress.XtraGrid.Views.Grid.InitNewRowEventArgs e)
+        {
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentHeaderId, trPaymentHeader.PaymentHeaderId);
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, 1);
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, "USD");
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLineId, Guid.NewGuid());
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
+        }
+
+        private void gC_PaymentLine_KeyDown(object sender, KeyEventArgs e)
+        {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    return;
+
+                gV.DeleteSelectedRows();
+            }
+        }
+
+        private void gV_PaymentLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
+        {
+            CalcRowLocNetAmount(e);
+        }
+
+        private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
+        {
+            object objExRate = gV_PaymentLine.GetFocusedRowCellValue(colExchangeRate);
+            object objPayment = gV_PaymentLine.GetRowCellValue(e.RowHandle, colPayment);
+            object objPaymentLoc = gV_PaymentLine.GetFocusedRowCellValue(colPaymentLoc);
+
+            decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
+            decimal Payment = objPayment.IsNumeric() ? Convert.ToDecimal(objPayment, CultureInfo.InvariantCulture) : 0;
+            decimal PaymentLoc = objPaymentLoc.IsNumeric() ? Convert.ToDecimal(objPaymentLoc, CultureInfo.InvariantCulture) : 0;
+
+            if (e.Value != null && e.Column == colPayment)
+            {
+                objPayment = e.Value;
+                Payment = objPayment.IsNumeric() ? Convert.ToDecimal(objPayment, CultureInfo.InvariantCulture) : 0;
+                gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLoc, Math.Round(Payment * exRate, 2));
+            }
+            else if (e.Value != null && e.Column == colExchangeRate)
+            {
+                objExRate = e.Value;
+                exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
+                gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLoc, Math.Round(Payment * exRate, 2));
+            }
+        }
+
+        private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
+        {
+            SavePayment();
+        }
+
+        private void gV_PaymentLine_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
+        {
+            SavePayment();
+        }
+
+        private void repoLUE_Currency_EditValueChanged(object sender, EventArgs e)
+        {
+            LookUpEdit textEditor = (LookUpEdit)sender;
+            float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
+            gV_PaymentLine.SetFocusedRowCellValue(colExchangeRate, exRate);
+
+            CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_PaymentLine.FocusedRowHandle, colExchangeRate, exRate));
         }
     }
 }
