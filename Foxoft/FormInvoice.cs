@@ -42,7 +42,7 @@ namespace Foxoft
         private byte currAccTypeCode;
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
-        Guid guid;
+        Guid invoiceHeaderId;
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
@@ -98,28 +98,13 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
+            invoiceHeaderId = Guid.NewGuid();
 
-            trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
-
-            //guid = Guid.NewGuid();
-
-            dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-              .Load();
+            dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                      .Load();
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
-
-
-
-            //string NewDocNum = efMethods.GetNextDocNum(this.processCode, "DocumentNumber", "TrInvoiceHeaders");
-            //trInvoiceHeader.DocumentNumber = NewDocNum;
-            //trInvoiceHeader.DocumentDate = DateTime.Now;
-            //trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-            //trInvoiceHeader.ProcessCode = this.processCode;
-
-
-            //LoadSession();
-
-            //trInvoiceHeadersBindingSource.DataSource = trInvoiceHeader;
+            trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
 
             lbl_InvoicePaidSum.Text = "";
@@ -134,7 +119,7 @@ namespace Foxoft
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
             TrInvoiceHeader invoiceHeader = new TrInvoiceHeader();
-            invoiceHeader.InvoiceHeaderId = Guid.NewGuid();
+            invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
             string NewDocNum = efMethods.GetNextDocNum(this.processCode, "DocumentNumber", "TrInvoiceHeaders");
             invoiceHeader.DocumentNumber = NewDocNum;
             invoiceHeader.DocumentDate = DateTime.Now;
@@ -143,7 +128,7 @@ namespace Foxoft
             invoiceHeader.OfficeCode = Authorization.OfficeCode;
             invoiceHeader.StoreCode = Authorization.StoreCode;
             invoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
-            //LoadSession();
+            invoiceHeader.CurrAccCode = "111";
 
             e.NewObject = invoiceHeader;
         }
@@ -155,11 +140,14 @@ namespace Foxoft
             //e.NewObject = line;
         }
 
-        private void LoadSession()
+        private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            trInvoiceHeader.OfficeCode = Authorization.OfficeCode;
-            trInvoiceHeader.StoreCode = Authorization.StoreCode;
-            trInvoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
+            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+            {
+                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
+                if (count > 0)
+                    SaveInvoice();
+            }
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -526,16 +514,6 @@ namespace Foxoft
             //e.ErrorText = "Deyer 10dan az ola bilmez";
         }
 
-        private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
-        {
-            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
-            {
-                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
-                if (count > 0)
-                    SaveInvoice();
-            }
-        }
-
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
             //DataRowView rowView = e.Row as DataRowView;
@@ -558,8 +536,8 @@ namespace Foxoft
             efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
 
 
-            if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
-                efMethods.InsertInvoiceHeader(trInvoiceHeader);
+            //if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
+            //    efMethods.InsertInvoiceHeader(trInvoiceHeader);
             try
             {
                 dbContext.SaveChanges();
@@ -623,19 +601,6 @@ namespace Foxoft
             return summaryNetAmount;
         }
 
-        //private void ConvertCurrency(int rowInd)
-        //{
-        //    float exRate = (float)gV_InvoiceLine.GetRowCellValue(rowInd, colExchangeRate);
-        //    double price = (double)gV_InvoiceLine.GetRowCellValue(rowInd, col_Price);
-
-        //    price = Math.Round(price * exRate, 4);
-
-        //    gV_InvoiceLine.SetRowCellValue(rowInd, col_Price, price);
-        //    CalcRowLocNetAmount(new CellValueChangedEventArgs(rowInd, col_Price, price));
-        //}
-
-
-
         private void SaveSession()
         {
             object warehouseCode = lUE_WarehouseCode.EditValue;
@@ -645,19 +610,6 @@ namespace Foxoft
                 Settings.Default.Save();
             }
         }
-
-        //private void MakeReturnIsNegativ(int rowInd)
-        //{
-        //    if ((bool)CheckEdit_IsReturn.EditValue)
-        //    {
-        //        GridColumn qtyColumn = CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut;
-
-        //        int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowInd, qtyColumn));
-        //        gV_InvoiceLine.SetRowCellValue(rowInd, qtyColumn, qty * (-1));
-
-        //        CalcRowLocNetAmount(new CellValueChangedEventArgs(rowInd, qtyColumn, qty * (-1)));
-        //    }
-        //}
 
         private void GetPrint()
         {
@@ -772,8 +724,6 @@ namespace Foxoft
                 XtraMessageBox.Show(combinedString);
             }
         }
-
-
 
         private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
         {
