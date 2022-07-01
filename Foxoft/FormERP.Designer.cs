@@ -44,12 +44,10 @@ namespace Foxoft
             this.aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.aCE_MakePayment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.aCE_receivePayment = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Payments = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -170,8 +168,6 @@ namespace Foxoft
             this.aCE_CountOut,
             this.accordionControlSeparator2,
             this.aCE_Expense,
-            this.aCE_MakePayment,
-            this.aCE_receivePayment,
             this.aCE_Payments,
             this.accordionControlSeparator1,
             this.aCE_ReportZet});
@@ -196,21 +192,21 @@ namespace Foxoft
             this.aCE_RetailSaleInvoice.Text = "Satış Fakturası";
             this.aCE_RetailSaleInvoice.Click += new System.EventHandler(this.aCE_RetailSaleInvoice_Click);
             // 
-            // aCE_CountOut
-            // 
-            this.aCE_CountOut.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_shipment.ImageOptions.SvgImage")));
-            this.aCE_CountOut.Name = "aCE_CountOut";
-            this.aCE_CountOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.aCE_CountOut.Text = "Sayım Azaltma";
-            this.aCE_CountOut.Click += new System.EventHandler(this.aCE_CountOut_Click);
-            // 
             // aCE_CountIn
             // 
-            this.aCE_CountIn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_ApproveInvoice.ImageOptions.SvgImage")));
+            this.aCE_CountIn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CountIn.ImageOptions.SvgImage")));
             this.aCE_CountIn.Name = "aCE_CountIn";
             this.aCE_CountIn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_CountIn.Text = "Sayım Artırma";
             this.aCE_CountIn.Click += new System.EventHandler(this.aCE_CountIn_Click);
+            // 
+            // aCE_CountOut
+            // 
+            this.aCE_CountOut.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CountOut.ImageOptions.SvgImage")));
+            this.aCE_CountOut.Name = "aCE_CountOut";
+            this.aCE_CountOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CountOut.Text = "Sayım Azaltma";
+            this.aCE_CountOut.Click += new System.EventHandler(this.aCE_CountOut_Click);
             // 
             // accordionControlSeparator2
             // 
@@ -223,22 +219,6 @@ namespace Foxoft
             this.aCE_Expense.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.aCE_Expense.Text = "Xərclər";
             this.aCE_Expense.Click += new System.EventHandler(this.aCE_Expense_Click);
-            // 
-            // aCE_MakePayment
-            // 
-            this.aCE_MakePayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_MakePayment.ImageOptions.SvgImage")));
-            this.aCE_MakePayment.Name = "aCE_MakePayment";
-            this.aCE_MakePayment.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.aCE_MakePayment.Text = "Ödəniş Et";
-            this.aCE_MakePayment.Click += new System.EventHandler(this.aCE_MakePayment_Click);
-            // 
-            // aCE_receivePayment
-            // 
-            this.aCE_receivePayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_receivePayment.ImageOptions.SvgImage")));
-            this.aCE_receivePayment.Name = "aCE_receivePayment";
-            this.aCE_receivePayment.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.aCE_receivePayment.Text = "Ödəniş Al";
-            this.aCE_receivePayment.Click += new System.EventHandler(this.aCE_receivePayment_Click);
             // 
             // aCE_Payments
             // 
@@ -349,8 +329,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Expense;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_ReportZet;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_MakePayment;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_receivePayment;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Payments;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator1;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator2;

@@ -114,7 +114,7 @@ namespace Foxoft
                         Balance = x.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut),
                         DcProductType = x.DcProductType,
                         ProductCode = x.ProductCode,
-                        ProductDescription = x.ProductDescription,
+                        ProductDesc = x.ProductDesc,
                         PosDiscount = x.PosDiscount,
                         RetailPrice = x.RetailPrice,
                         PurchasePrice = x.PurchasePrice,
@@ -169,6 +169,17 @@ namespace Foxoft
                 return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                           .Include(x => x.TrInvoiceLines)
                                           .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                          .FirstOrDefault();
+            }
+        }
+
+        public TrPaymentHeader SelectPaymentHeader(Guid paymentHeaderId)
+        {
+            using (subContext db = new subContext())
+            {
+                return db.TrPaymentHeaders.Include(x => x.DcCurrAcc)
+                                          .Include(x => x.TrPaymentLines)
+                                          .Where(x => x.PaymentHeaderId == paymentHeaderId)
                                           .FirstOrDefault();
             }
         }
@@ -474,11 +485,11 @@ namespace Foxoft
             }
         }
 
-        public bool PaymentHeaderExist(Guid invoiceHeaderId)
+        public bool PaymentHeaderExist(Guid paymentHeaderId)
         {
             using (subContext db = new subContext())
             {
-                return db.TrPaymentHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
+                return db.TrPaymentHeaders.Any(x => x.PaymentHeaderId == paymentHeaderId);
             }
         }
 
@@ -563,11 +574,29 @@ namespace Foxoft
             }
         }
 
+        public string SelectProcessName(string processCode)
+        {
+            using (subContext db = new subContext())
+            {
+                DcProcess dcProcess = db.DcProcesses.Where(x => x.ProcessCode == processCode)
+                                   .FirstOrDefault();
+                return dcProcess.ProcessDesc;
+            }
+        }
+
         public List<DcCurrency> SelectCurrencies()
         {
             using (subContext db = new subContext())
             {
                 return db.DcCurrencies.ToList(); // burdaki kolonlari dizaynda da elave et
+            }
+        }
+
+        public List<DcPaymentType> SelectPaymentTypes()
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcPaymentTypes.ToList(); // burdaki kolonlari dizaynda da elave et
             }
         }
 

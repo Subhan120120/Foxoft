@@ -280,21 +280,21 @@ namespace Foxoft
 
             foreach (Form form in Application.OpenForms)
             {
-                FormPaymentDetail formInvoice = form as FormPaymentDetail;
-                if (formInvoice != null)
+                FormPaymentHeaderList formPaymentHeaders = form as FormPaymentHeaderList;
+                if (formPaymentHeaders != null)
                 {
-                    formInvoice.BringToFront();
-                    formInvoice.Activate();
+                    formPaymentHeaders.BringToFront();
+                    formPaymentHeaders.Activate();
                     OpenFormCount++;
                 }
             }
 
             if (OpenFormCount == 0)
             {
-                FormPaymentDetail formPaymentDetail = new FormPaymentDetail();
-                formPaymentDetail.MdiParent = this;
-                formPaymentDetail.WindowState = FormWindowState.Maximized;
-                formPaymentDetail.Show();
+                FormPaymentHeaderList formPaymentHeaders = new FormPaymentHeaderList();
+                formPaymentHeaders.MdiParent = this;
+                formPaymentHeaders.WindowState = FormWindowState.Maximized;
+                formPaymentHeaders.Show();
                 parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
         }

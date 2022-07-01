@@ -19,6 +19,6 @@ namespace Foxoft.Models
 
         [DisplayName("Proses Kodu")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ProcessDescription { get; set; }
+        public string ProcessDesc { get; set; }
     }
 }

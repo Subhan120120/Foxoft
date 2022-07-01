@@ -21,7 +21,7 @@ using DevExpress.XtraGrid.Columns;
 
 namespace Foxoft
 {
-    public partial class FormPaymentHeaderList : XtraForm
+    public partial class FormPaymentHeaderList : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         subContext dbContext = new subContext();
         EfMethods efMethods = new EfMethods();
@@ -31,12 +31,20 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-            MemoryStream stream = new MemoryStream(byteArray);
-            OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
-            this.gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
+            //byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+            //MemoryStream stream = new MemoryStream(byteArray);
+            //OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+            //this.gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
+            LoadPaymentHeaders();
 
+            string dateTime = DateTime.Now.ToString("yyyy-MM-dd"); ;
+
+            gV_PaymentHeaderList.ActiveFilterString = "([OperationDate] >= #" + dateTime + "# AND [OperationDate] <= #" + dateTime + "#)";
+        }
+
+        private void LoadPaymentHeaders()
+        {
             dbContext.TrPaymentHeaders.Include(x => x.TrPaymentLines)
                                       .Include(x => x.TrInvoiceHeader)
                                       .Include(x => x.DcCurrAcc)
@@ -46,13 +54,13 @@ namespace Foxoft
                                       {
                                           LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
 
-                                          lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => x.PaymentLoc));
+                                          lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
 
                                           trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
 
                                           gV_PaymentHeaderList.BestFitColumns();
 
-                                      }, TaskScheduler.FromCurrentSynchronizationContext());            
+                                      }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
@@ -103,10 +111,9 @@ namespace Foxoft
             isFirstPaint = false;
         }
 
-        private void repositoryItemHyperLinkEdit1_ButtonClick(object sender, ButtonPressedEventArgs e)
+        private void repoHLE_InvoiceNumber_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-
-            MessageBox.Show("btn klik");
+            MessageBox.Show("repoHLE_InvoiceNumber_ButtonClick klik");
         }
 
         private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
@@ -118,14 +125,76 @@ namespace Foxoft
                 Guid invoiceHeaderId = Guid.Parse(obj.ToString());
                 TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-                this.Close();
-
                 FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
                 FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
                 formInvoice.MdiParent = formERP;
                 formInvoice.WindowState = FormWindowState.Maximized;
                 formInvoice.Show();
                 formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
+        }
+
+        private void repoHLE_DocNum_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+
+            MessageBox.Show("repoHLE_DocNum_ButtonClick klik");
+        }
+
+        private void repoHLE_DocNum_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            object obj = gV_PaymentHeaderList.GetFocusedRowCellValue(colPaymentHeaderId);
+
+            if (!object.ReferenceEquals(obj, null))
+            {
+                Guid invoiceHeaderId = Guid.Parse(obj.ToString());
+                TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);
+
+                FormPaymentDetail formaPayment = new FormPaymentDetail(trInvoiceHeader.PaymentHeaderId);
+                FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                formaPayment.MdiParent = formERP;
+                formaPayment.WindowState = FormWindowState.Maximized;
+                formaPayment.Show();
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
+        }
+
+        private void bBI_ReceivePayment_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+            {
+                if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+                {
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+                    //decimal debt = 
+                    using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
+                    {
+                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        {
+                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                            LoadPaymentHeaders();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void bBI_MakePayment_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+            {
+                if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+                {
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+
+                    using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
+                    {
+                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        {
+                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                            LoadPaymentHeaders();
+                        }
+                    }
+                }
             }
         }
     }

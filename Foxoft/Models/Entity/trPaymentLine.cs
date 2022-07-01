@@ -33,7 +33,6 @@ namespace Foxoft.Models
         public decimal PaymentLoc { get; set; }
 
         [DisplayName("Sətir Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string LineDescription { get; set; }
 

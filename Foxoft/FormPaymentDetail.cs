@@ -32,8 +32,16 @@ namespace Foxoft
 
             OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
+            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
+            repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
 
             ClearControlsAddNew();
+        }
+        public FormPaymentDetail(Guid paymentHeaderId)
+            : this()
+        {
+            trPaymentHeader = efMethods.SelectPaymentHeader(paymentHeaderId);
+            LoadPayment(trPaymentHeader.PaymentHeaderId);
         }
 
         private void ClearControlsAddNew()
@@ -97,7 +105,7 @@ namespace Foxoft
 
         private void CurrAccCodeButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            SelectDocNum();
+            SelectCurrAcc();
         }
 
         private void SelectDocNum()
@@ -135,11 +143,19 @@ namespace Foxoft
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (efMethods.PaymentHeaderExist(trPaymentHeader.PaymentHeaderId))
             {
-                efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
+                if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
+
+                    ClearControlsAddNew();
+                }
             }
+            else
+                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
         }
+
         private void SelectCurrAcc()
         {
             using (FormCurrAccList form = new FormCurrAccList(0))
@@ -152,18 +168,14 @@ namespace Foxoft
             }
         }
 
-        private void DocumentNumberButtonEdit_EditValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void gV_PaymentLine_InitNewRow(object sender, DevExpress.XtraGrid.Views.Grid.InitNewRowEventArgs e)
+        private void gV_PaymentLine_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentHeaderId, trPaymentHeader.PaymentHeaderId);
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLineId, Guid.NewGuid());
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, 1);
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, "kassa01");
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, "USD");
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
-            gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLineId, Guid.NewGuid());
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
         }
 
@@ -220,7 +232,7 @@ namespace Foxoft
             SavePayment();
         }
 
-        private void repoLUE_Currency_EditValueChanged(object sender, EventArgs e)
+        private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit textEditor = (LookUpEdit)sender;
             float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());

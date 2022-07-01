@@ -44,7 +44,7 @@ namespace Foxoft
             this.PurchasePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.WholesalePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.UseInternetCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            this.ProductDescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.ProductDescTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             this.ProductTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
@@ -55,7 +55,7 @@ namespace Foxoft
             this.ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForProductDescription = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForTaxRate = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
@@ -85,7 +85,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.PurchasePriceTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WholesalePriceTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductDescriptionTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductDescTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
@@ -94,7 +94,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ItemForRetailPrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForWholesalePrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForPurchasePrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDescription)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForBarcode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForTaxRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode)).BeginInit();
@@ -125,7 +125,7 @@ namespace Foxoft
             this.dataLayoutControl1.Controls.Add(this.PurchasePriceTextEdit);
             this.dataLayoutControl1.Controls.Add(this.WholesalePriceTextEdit);
             this.dataLayoutControl1.Controls.Add(this.UseInternetCheckEdit);
-            this.dataLayoutControl1.Controls.Add(this.ProductDescriptionTextEdit);
+            this.dataLayoutControl1.Controls.Add(this.ProductDescTextEdit);
             this.dataLayoutControl1.Controls.Add(this.btn_Ok);
             this.dataLayoutControl1.Controls.Add(this.btn_Cancel);
             this.dataLayoutControl1.Controls.Add(this.ProductTypeCodeLookUpEdit);
@@ -266,13 +266,13 @@ namespace Foxoft
             // 
             // ProductDescriptionTextEdit
             // 
-            this.ProductDescriptionTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductDescription", true));
-            this.ProductDescriptionTextEdit.Location = new System.Drawing.Point(117, 36);
-            this.ProductDescriptionTextEdit.Name = "ProductDescriptionTextEdit";
-            this.ProductDescriptionTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.ProductDescriptionTextEdit.Size = new System.Drawing.Size(250, 20);
-            this.ProductDescriptionTextEdit.StyleController = this.dataLayoutControl1;
-            this.ProductDescriptionTextEdit.TabIndex = 3;
+            this.ProductDescTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductDesc", true));
+            this.ProductDescTextEdit.Location = new System.Drawing.Point(117, 36);
+            this.ProductDescTextEdit.Name = "ProductDescTextEdit";
+            this.ProductDescTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            this.ProductDescTextEdit.Size = new System.Drawing.Size(250, 20);
+            this.ProductDescTextEdit.StyleController = this.dataLayoutControl1;
+            this.ProductDescTextEdit.TabIndex = 3;
             // 
             // btn_Ok
             // 
@@ -328,7 +328,7 @@ namespace Foxoft
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.ItemForProductCode,
             this.lCG_Price,
-            this.ItemForProductDescription,
+            this.ItemForProductDesc,
             this.ItemForBarcode,
             this.ItemForTaxRate,
             this.ItemForPromotionCode,
@@ -395,12 +395,12 @@ namespace Foxoft
             // 
             // ItemForProductDescription
             // 
-            this.ItemForProductDescription.Control = this.ProductDescriptionTextEdit;
-            this.ItemForProductDescription.Location = new System.Drawing.Point(0, 24);
-            this.ItemForProductDescription.Name = "ItemForProductDescription";
-            this.ItemForProductDescription.Size = new System.Drawing.Size(359, 24);
-            this.ItemForProductDescription.Text = "Product Description";
-            this.ItemForProductDescription.TextSize = new System.Drawing.Size(93, 13);
+            this.ItemForProductDesc.Control = this.ProductDescTextEdit;
+            this.ItemForProductDesc.Location = new System.Drawing.Point(0, 24);
+            this.ItemForProductDesc.Name = "ItemForProductDesc";
+            this.ItemForProductDesc.Size = new System.Drawing.Size(359, 24);
+            this.ItemForProductDesc.Text = "Product Description";
+            this.ItemForProductDesc.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForBarcode
             // 
@@ -563,7 +563,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.PurchasePriceTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WholesalePriceTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductDescriptionTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductDescTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
@@ -572,7 +572,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ItemForRetailPrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForWholesalePrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForPurchasePrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDescription)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForBarcode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForTaxRate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode)).EndInit();
@@ -608,7 +608,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit PurchasePriceTextEdit;
         private DevExpress.XtraEditors.TextEdit WholesalePriceTextEdit;
         private DevExpress.XtraEditors.CheckEdit UseInternetCheckEdit;
-        private DevExpress.XtraEditors.TextEdit ProductDescriptionTextEdit;
+        private DevExpress.XtraEditors.TextEdit ProductDescTextEdit;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForBarcode;
@@ -619,7 +619,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForPosDiscount;
         private DevExpress.XtraLayout.LayoutControlItem ItemForIsDisabled;
         private DevExpress.XtraLayout.LayoutControlItem ItemForUseInternet;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForProductDescription;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForProductDesc;
         private DevExpress.XtraLayout.LayoutControlGroup lCG_Price;
         private DevExpress.XtraLayout.LayoutControlItem ItemForRetailPrice;
         private DevExpress.XtraLayout.LayoutControlItem ItemForWholesalePrice;

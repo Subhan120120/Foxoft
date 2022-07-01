@@ -39,18 +39,19 @@ namespace Foxoft
         {
             //this.processCode = processCode;
 
-            dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
-                                      .Include(x => x.TrInvoiceLines)
+            dbContext.TrInvoiceHeaders
+                                      .Include(x => x.DcCurrAcc)
+                                      //.Include(x => x.TrInvoiceLines)
                                       .Where(x => x.ProcessCode == processCode)
                                       .OrderByDescending(x => x.DocumentDate)
                                       .LoadAsync()
                                       .ContinueWith(loadTask =>
                                          {
-                                             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+                                             //LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
-                                             lV_invoiceHeader.ForEach(x => x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount));
+                                             //lV_invoiceHeader.ForEach(x => x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount));
 
-                                             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+                                             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
                                          }, TaskScheduler.FromCurrentSynchronizationContext());
 

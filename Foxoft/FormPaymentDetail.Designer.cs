@@ -43,15 +43,21 @@ namespace Foxoft
             this.colPaymentLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPaymentTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoLUE_PaymentTypeCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDcPaymentType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoCalcEdit_Payment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            this.colPaymentLoc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoCalcEdit_PaymentLoc = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            this.colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repoBtnEdit_CashregisterCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -72,13 +78,17 @@ namespace Foxoft
             this.ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForPosterminalId = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.colPaymentLoc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoLUE_PaymentTypeCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Payment)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_PaymentLoc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
@@ -172,6 +182,12 @@ namespace Foxoft
             this.gC_PaymentLine.MainView = this.gV_PaymentLine;
             this.gC_PaymentLine.MenuManager = this.ribbon;
             this.gC_PaymentLine.Name = "gC_PaymentLine";
+            this.gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repoLUE_CurrencyCode,
+            this.repoCalcEdit_Payment,
+            this.repoCalcEdit_PaymentLoc,
+            this.repoBtnEdit_CashregisterCode,
+            this.repoLUE_PaymentTypeCode});
             this.gC_PaymentLine.Size = new System.Drawing.Size(706, 147);
             this.gC_PaymentLine.TabIndex = 9;
             this.gC_PaymentLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -188,22 +204,23 @@ namespace Foxoft
             this.colPaymentLineId,
             this.colPaymentHeaderId,
             this.colPaymentTypeCode,
-            this.colLineDescription,
+            this.colPayment,
+            this.colPaymentLoc,
             this.colCurrencyCode,
+            this.colLineDescription,
             this.colExchangeRate,
-            this.colDcPaymentType,
             this.colCreatedUserName,
             this.colCreatedDate,
             this.colLastUpdatedUserName,
             this.colLastUpdatedDate,
-            this.colPayment,
-            this.colPaymentLoc});
+            this.colCashRegisterCode});
             this.gV_PaymentLine.GridControl = this.gC_PaymentLine;
             this.gV_PaymentLine.Name = "gV_PaymentLine";
             this.gV_PaymentLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             this.gV_PaymentLine.OptionsNavigation.AutoFocusNewRow = true;
             this.gV_PaymentLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
             this.gV_PaymentLine.OptionsView.ShowGroupPanel = false;
+            this.gV_PaymentLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_PaymentLine_InitNewRow);
             this.gV_PaymentLine.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_PaymentLine_CellValueChanging);
             this.gV_PaymentLine.RowDeleted += new DevExpress.Data.RowDeletedEventHandler(this.gV_PaymentLine_RowDeleted);
             this.gV_PaymentLine.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gV_PaymentLine_RowUpdated);
@@ -212,22 +229,36 @@ namespace Foxoft
             // 
             this.colPaymentLineId.FieldName = "PaymentLineId";
             this.colPaymentLineId.Name = "colPaymentLineId";
-            this.colPaymentLineId.Visible = true;
-            this.colPaymentLineId.VisibleIndex = 0;
             // 
             // colPaymentHeaderId
             // 
             this.colPaymentHeaderId.FieldName = "PaymentHeaderId";
             this.colPaymentHeaderId.Name = "colPaymentHeaderId";
-            this.colPaymentHeaderId.Visible = true;
-            this.colPaymentHeaderId.VisibleIndex = 1;
             // 
             // colPaymentTypeCode
             // 
+            this.colPaymentTypeCode.ColumnEdit = this.repoLUE_PaymentTypeCode;
             this.colPaymentTypeCode.FieldName = "PaymentTypeCode";
             this.colPaymentTypeCode.Name = "colPaymentTypeCode";
             this.colPaymentTypeCode.Visible = true;
-            this.colPaymentTypeCode.VisibleIndex = 2;
+            this.colPaymentTypeCode.VisibleIndex = 0;
+            this.colPaymentTypeCode.Width = 136;
+            // 
+            // repoLUE_PaymentTypeCode
+            // 
+            this.repoLUE_PaymentTypeCode.AutoHeight = false;
+            this.repoLUE_PaymentTypeCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            this.repoLUE_PaymentTypeCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoLUE_PaymentTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeCode", ""),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeDesc", "")});
+            this.repoLUE_PaymentTypeCode.DisplayMember = "PaymentTypeDesc";
+            this.repoLUE_PaymentTypeCode.Name = "repoLUE_PaymentTypeCode";
+            this.repoLUE_PaymentTypeCode.NullText = "";
+            this.repoLUE_PaymentTypeCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+            this.repoLUE_PaymentTypeCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+            this.repoLUE_PaymentTypeCode.ValueMember = "PaymentTypeCode";
             // 
             // colLineDescription
             // 
@@ -235,62 +266,103 @@ namespace Foxoft
             this.colLineDescription.Name = "colLineDescription";
             this.colLineDescription.Visible = true;
             this.colLineDescription.VisibleIndex = 4;
+            this.colLineDescription.Width = 97;
             // 
             // colCurrencyCode
             // 
+            this.colCurrencyCode.ColumnEdit = this.repoLUE_CurrencyCode;
             this.colCurrencyCode.FieldName = "CurrencyCode";
             this.colCurrencyCode.Name = "colCurrencyCode";
             this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 5;
+            this.colCurrencyCode.VisibleIndex = 2;
+            this.colCurrencyCode.Width = 155;
+            // 
+            // repoLUE_CurrencyCode
+            // 
+            this.repoLUE_CurrencyCode.AutoHeight = false;
+            this.repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            this.repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "")});
+            this.repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
+            this.repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
+            this.repoLUE_CurrencyCode.NullText = "";
+            this.repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+            this.repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+            this.repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
+            this.repoLUE_CurrencyCode.EditValueChanged += new System.EventHandler(this.repoLUE_CurrencyCode_EditValueChanged);
             // 
             // colExchangeRate
             // 
             this.colExchangeRate.FieldName = "ExchangeRate";
             this.colExchangeRate.Name = "colExchangeRate";
             this.colExchangeRate.Visible = true;
-            this.colExchangeRate.VisibleIndex = 6;
-            // 
-            // colDcPaymentType
-            // 
-            this.colDcPaymentType.FieldName = "DcPaymentType";
-            this.colDcPaymentType.Name = "colDcPaymentType";
-            this.colDcPaymentType.Visible = true;
-            this.colDcPaymentType.VisibleIndex = 7;
+            this.colExchangeRate.VisibleIndex = 3;
+            this.colExchangeRate.Width = 157;
             // 
             // colCreatedUserName
             // 
             this.colCreatedUserName.FieldName = "CreatedUserName";
             this.colCreatedUserName.Name = "colCreatedUserName";
-            this.colCreatedUserName.Visible = true;
-            this.colCreatedUserName.VisibleIndex = 8;
             // 
             // colCreatedDate
             // 
             this.colCreatedDate.FieldName = "CreatedDate";
             this.colCreatedDate.Name = "colCreatedDate";
-            this.colCreatedDate.Visible = true;
-            this.colCreatedDate.VisibleIndex = 9;
             // 
             // colLastUpdatedUserName
             // 
             this.colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
             this.colLastUpdatedUserName.Name = "colLastUpdatedUserName";
-            this.colLastUpdatedUserName.Visible = true;
-            this.colLastUpdatedUserName.VisibleIndex = 10;
             // 
             // colLastUpdatedDate
             // 
             this.colLastUpdatedDate.FieldName = "LastUpdatedDate";
             this.colLastUpdatedDate.Name = "colLastUpdatedDate";
-            this.colLastUpdatedDate.Visible = true;
-            this.colLastUpdatedDate.VisibleIndex = 11;
             // 
             // colPayment
             // 
+            this.colPayment.ColumnEdit = this.repoCalcEdit_Payment;
             this.colPayment.FieldName = "Payment";
             this.colPayment.Name = "colPayment";
             this.colPayment.Visible = true;
-            this.colPayment.VisibleIndex = 3;
+            this.colPayment.VisibleIndex = 1;
+            this.colPayment.Width = 136;
+            // 
+            // repoCalcEdit_Payment
+            // 
+            this.repoCalcEdit_Payment.AutoHeight = false;
+            this.repoCalcEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoCalcEdit_Payment.Name = "repoCalcEdit_Payment";
+            // 
+            // colPaymentLoc
+            // 
+            this.colPaymentLoc.ColumnEdit = this.repoCalcEdit_PaymentLoc;
+            this.colPaymentLoc.FieldName = "PaymentLoc";
+            this.colPaymentLoc.Name = "colPaymentLoc";
+            // 
+            // repoCalcEdit_PaymentLoc
+            // 
+            this.repoCalcEdit_PaymentLoc.AutoHeight = false;
+            this.repoCalcEdit_PaymentLoc.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoCalcEdit_PaymentLoc.Name = "repoCalcEdit_PaymentLoc";
+            // 
+            // colCashRegisterCode
+            // 
+            this.colCashRegisterCode.ColumnEdit = this.repoBtnEdit_CashregisterCode;
+            this.colCashRegisterCode.FieldName = "CashRegisterCode";
+            this.colCashRegisterCode.Name = "colCashRegisterCode";
+            // 
+            // repoBtnEdit_CashregisterCode
+            // 
+            this.repoBtnEdit_CashregisterCode.AutoHeight = false;
+            this.repoBtnEdit_CashregisterCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.repoBtnEdit_CashregisterCode.Name = "repoBtnEdit_CashregisterCode";
             // 
             // OperationDateDateEdit
             // 
@@ -520,11 +592,6 @@ namespace Foxoft
             this.ItemForOfficeCode.Text = "Ofis";
             this.ItemForOfficeCode.TextSize = new System.Drawing.Size(71, 13);
             // 
-            // colPaymentLoc
-            // 
-            this.colPaymentLoc.FieldName = "PaymentLoc";
-            this.colPaymentLoc.Name = "colPaymentLoc";
-            // 
             // FormPaymentDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -543,6 +610,11 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoLUE_PaymentTypeCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Payment)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_PaymentLoc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
@@ -604,7 +676,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
         private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
         private DevExpress.XtraGrid.Columns.GridColumn colBankId;
-        private DevExpress.XtraGrid.Columns.GridColumn colDcPaymentType;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
@@ -619,5 +690,11 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit OfficeCodeLookUpEdit;
         private DevExpress.XtraEditors.ButtonEdit CurrAccCodeButtonEdit;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentLoc;
+        private DevExpress.XtraGrid.Columns.GridColumn colCashRegisterCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_PaymentTypeCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_CurrencyCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_Payment;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PaymentLoc;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_CashregisterCode;
     }
 }

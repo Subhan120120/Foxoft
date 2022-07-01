@@ -54,6 +54,8 @@ namespace Foxoft
             this.productTypeCode = productTypeCode;
             this.currAccTypeCode = currAccTypeCode;
 
+            this.Text = efMethods.SelectProcessName(processCode);
+
             if (CustomExtensions.ProcessDir(processCode) == "In")
                 colQtyOut.Visible = false;
             else
@@ -62,7 +64,7 @@ namespace Foxoft
             lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
-            repoLUE_Currency.DataSource = efMethods.SelectCurrencies();
+            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();
@@ -79,7 +81,7 @@ namespace Foxoft
             : this(processCode, productTypeCode, currAccTypeCode)
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-            LoadInvoice(invoiceHeaderId);
+            LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
         }
 
         public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
@@ -194,7 +196,7 @@ namespace Foxoft
 
                                         lV_invoiceLine.ForEach(x =>
                                         {
-                                            x.ProductDescription = x.DcProduct.ProductDescription;
+                                            x.ProductDesc = x.DcProduct.ProductDesc;
                                         });
 
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
@@ -482,7 +484,7 @@ namespace Foxoft
                     editor.EditValue = form.dcProduct.ProductCode;
 
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, form.dcProduct.ProductCode);
-                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
+                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDesc);
 
                     double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);

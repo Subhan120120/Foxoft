@@ -153,11 +153,11 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcCurrAcc>().HasData(
-                new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Sübhan", LastName = "Hüseynzadə", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1, OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "CA-2", FirstName = "Cemil", LastName = "Cavadov", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1 },
-                new DcCurrAcc { CurrAccCode = "CA-3", FirstName = "Orxan", LastName = "Sederek", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 2 },
-                new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Vagif", LastName = "Mustafayev", NewPassword = "456", PhoneNum = "0553628804", CurrAccTypeCode = 3 },
-                new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 4 },
+                new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Sübhan", LastName = "Hüseynzadə", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "CA-2", FirstName = "Cemil", LastName = "Cavadov", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcCurrAcc { CurrAccCode = "CA-3", FirstName = "Orxan", LastName = "Sederek", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 2, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Vagif", LastName = "Mustafayev", NewPassword = "456", PhoneNum = "0553628804", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01) },
                 new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 5 });
 
             modelBuilder.Entity<DcCurrAccType>(entity =>
@@ -273,19 +273,19 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcProcess>(entity =>
             {
-                entity.Property(e => e.ProcessDescription).HasDefaultValueSql("space(0)");
+                entity.Property(e => e.ProcessDesc).HasDefaultValueSql("space(0)");
             });
 
             modelBuilder.Entity<DcProcess>().HasData(
-                new DcProcess { ProcessCode = "RS", ProcessDescription = "Satış" },
-                new DcProcess { ProcessCode = "RP", ProcessDescription = "Alış" },
-                new DcProcess { ProcessCode = "PA", ProcessDescription = "Ödəmə" },
-                new DcProcess { ProcessCode = "SB", ProcessDescription = "Toptan Alış" },
-                new DcProcess { ProcessCode = "WS", ProcessDescription = "Toptan Satış" },
-                new DcProcess { ProcessCode = "EX", ProcessDescription = "Xərclər" },
-                new DcProcess { ProcessCode = "PE", ProcessDescription = "Dovr" },
-                new DcProcess { ProcessCode = "CI", ProcessDescription = "Sayım Artırma" },
-                new DcProcess { ProcessCode = "CO", ProcessDescription = "Sayım Azaltma" }
+                new DcProcess { ProcessCode = "RS", ProcessDesc = "Satış" },
+                new DcProcess { ProcessCode = "RP", ProcessDesc = "Alış" },
+                new DcProcess { ProcessCode = "PA", ProcessDesc = "Ödəmə" },
+                new DcProcess { ProcessCode = "SB", ProcessDesc = "Toptan Alış" },
+                new DcProcess { ProcessCode = "WS", ProcessDesc = "Toptan Satış" },
+                new DcProcess { ProcessCode = "EX", ProcessDesc = "Xərclər" },
+                new DcProcess { ProcessCode = "PE", ProcessDesc = "Dovr" },
+                new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma" },
+                new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma" }
                 );
 
             modelBuilder.Entity<DcProduct>(entity =>
@@ -296,7 +296,7 @@ namespace Foxoft.Models
                 entity.Property(e => e.Barcode)
                     .HasDefaultValueSql("space(0)");
 
-                entity.Property(e => e.ProductDescription)
+                entity.Property(e => e.ProductDesc)
                     .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.RetailPrice)
@@ -343,10 +343,10 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcProduct>().HasData(
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDescription = "Papaq", Barcode = "123456", RetailPrice = 4.5, CreatedDate = new DateTime(1900, 01, 01) },
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDescription = "Salvar", Barcode = "2000000000013", RetailPrice = 2.5, CreatedDate = new DateTime(1900, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDescription = "Yol Xerci", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1900, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDescription = "Isiq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1900, 01, 01) }
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDesc = "Papaq", Barcode = "123456", RetailPrice = 4.5, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDesc = "Salvar", Barcode = "2000000000013", RetailPrice = 2.5, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xerci", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "Isiq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) }
             );
 
             modelBuilder.Entity<DcProductType>(entity =>
@@ -581,9 +581,6 @@ namespace Foxoft.Models
                 entity.Property(e => e.PosDiscount)
                     .HasDefaultValueSql("0");
 
-                entity.Property(e => e.LineDescription)
-                    .HasDefaultValueSql("space(0)");
-
                 entity.Property(e => e.CreatedDate)
                     .HasDefaultValueSql("getdate()");
 
@@ -649,9 +646,6 @@ namespace Foxoft.Models
                 entity.HasOne(x => x.TrPaymentHeader)
                     .WithMany(x => x.TrPaymentLines)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.Property(e => e.LineDescription)
-                    .HasDefaultValueSql("space(0)");
 
                 entity.Property(e => e.Payment)
                     .HasDefaultValueSql("0");

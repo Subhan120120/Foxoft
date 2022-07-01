@@ -98,7 +98,7 @@ namespace Foxoft.Models
 
         [NotMapped]
         [DisplayName("Məhsul Adı")]
-        public string ProductDescription { get; set; }
+        public string ProductDesc { get; set; }
 
 
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }

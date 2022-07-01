@@ -35,7 +35,7 @@ namespace Foxoft
             this.gC_ProductList = new DevExpress.XtraGrid.GridControl();
             this.gV_ProductList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colProductDescription = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colRetailPrice = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -82,7 +82,7 @@ namespace Foxoft
             // 
             this.gV_ProductList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colProductCode,
-            this.colProductDescription,
+            this.colProductDesc,
             this.colBalance,
             this.colPurchasePrice,
             this.colRetailPrice,
@@ -111,10 +111,10 @@ namespace Foxoft
             // 
             // colProductDescription
             // 
-            this.colProductDescription.FieldName = "ProductDescription";
-            this.colProductDescription.Name = "colProductDescription";
-            this.colProductDescription.Visible = true;
-            this.colProductDescription.VisibleIndex = 1;
+            this.colProductDesc.FieldName = "ProductDesc";
+            this.colProductDesc.Name = "colProductDesc";
+            this.colProductDesc.Visible = true;
+            this.colProductDesc.VisibleIndex = 1;
             // 
             // colBalance
             // 
@@ -313,7 +313,7 @@ namespace Foxoft
 
         private DevExpress.XtraGrid.GridControl gC_ProductList;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_ProductList;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductDescription;
+        private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
         private DevExpress.XtraGrid.Columns.GridColumn colProductTypeCode;

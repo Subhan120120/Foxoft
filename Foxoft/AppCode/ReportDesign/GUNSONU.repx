@@ -25,7 +25,7 @@
                   <Cells>
                     <Item1 Ref="14" ControlType="XRTableCell" Name="tableCell5" Weight="0.28156798293360236">
                       <ExpressionBindings>
-                        <Item1 Ref="15" EventName="BeforePrint" PropertyName="Text" Expression="[ProcessDescription]" />
+                        <Item1 Ref="15" EventName="BeforePrint" PropertyName="Text" Expression="[ProcessDesc]" />
                       </ExpressionBindings>
                     </Item1>
                     <Item2 Ref="16" ControlType="XRTableCell" Name="tableCell14" Weight="0.18855689815566173" Multiline="true" Text="tableCell14" TextAlignment="MiddleCenter">
