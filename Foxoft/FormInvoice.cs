@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data;
+using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
@@ -46,7 +47,6 @@ namespace Foxoft
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
-
             //gV_InvoiceLine.OptionsNavigation.AutoFocusNewRow = true;
             //bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
@@ -200,6 +200,7 @@ namespace Foxoft
                                         });
 
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
+
 
                                         gV_InvoiceLine.BestFitColumns();
                                         gV_InvoiceLine.Focus();

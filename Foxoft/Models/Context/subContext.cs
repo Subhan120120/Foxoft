@@ -158,7 +158,7 @@ namespace Foxoft.Models
                 new DcCurrAcc { CurrAccCode = "CA-3", FirstName = "Orxan", LastName = "Sederek", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 2, CreatedDate = new DateTime(1901, 01, 01) },
                 new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Vagif", LastName = "Mustafayev", NewPassword = "456", PhoneNum = "0553628804", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01) },
                 new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 5 });
+                new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01) });
 
             modelBuilder.Entity<DcCurrAccType>(entity =>
             {

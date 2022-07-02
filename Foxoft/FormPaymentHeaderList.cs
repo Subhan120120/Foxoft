@@ -18,6 +18,7 @@ using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors.Controls;
 using System.ComponentModel;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.Data.Filtering;
 
 namespace Foxoft
 {
@@ -31,6 +32,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            //gV_PaymentHeaderList.OptionsFilter.filter = true;
             //byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             //MemoryStream stream = new MemoryStream(byteArray);
             //OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
@@ -57,6 +59,11 @@ namespace Foxoft
                                           lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
 
                                           trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
+
+                                          //string date = DateTime.Now.ToString("2022.06.30");
+                                          //this.gV_PaymentHeaderList.ActiveFilterCriteria = CriteriaOperator.Parse("DocumentDate >= " + date);
+                                          //var result = CriteriaToWhereClauseHelper.GetDataSetWhere(gV_PaymentHeaderList.ActiveFilterString);
+                                          //trPaymentHeadersBindingSource.Filter = result;
 
                                           gV_PaymentHeaderList.BestFitColumns();
 

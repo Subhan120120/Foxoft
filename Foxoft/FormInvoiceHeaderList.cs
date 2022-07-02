@@ -15,6 +15,9 @@ using DevExpress.XtraGrid;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using DevExpress.Utils.Extensions;
+using DevExpress.Data.Filtering;
+using DevExpress.Data.Linq;
+using DevExpress.Data.Linq.Helpers;
 
 namespace Foxoft
 {
@@ -22,8 +25,8 @@ namespace Foxoft
     {
         EfMethods efMethods = new EfMethods();
         public TrInvoiceHeader trInvoiceHeader { get; set; }
-        subContext dbContext = new subContext();
-        //public string processCode { get; set; }
+        subContext dbContext;
+        public string processCode { get; set; }
 
         public FormInvoiceHeaderList()
         {
@@ -37,23 +40,41 @@ namespace Foxoft
         public FormInvoiceHeaderList(string processCode)
             : this()
         {
-            //this.processCode = processCode;
+            this.processCode = processCode;
+            LoadInvoiveHeaders();
+        }
 
-            dbContext.TrInvoiceHeaders
-                                      .Include(x => x.DcCurrAcc)
-                                      //.Include(x => x.TrInvoiceLines)
-                                      .Where(x => x.ProcessCode == processCode)
-                                      .OrderByDescending(x => x.DocumentDate)
-                                      .LoadAsync()
-                                      .ContinueWith(loadTask =>
-                                         {
-                                             //LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+        private void LoadInvoiveHeaders()
+        {
+            dbContext = new subContext();
+            IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
 
-                                             //lV_invoiceHeader.ForEach(x => x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount));
+            CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+            IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(converter, gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
-                                             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
-                                         }, TaskScheduler.FromCurrentSynchronizationContext());
+            //filteredData
+            //            .Include(x => x.DcCurrAcc)
+            //            .Include(x => x.TrInvoiceLines)
+            //            .Where(x => x.ProcessCode == processCode)
+            //            .OrderByDescending(x => x.DocumentDate)
+            //            .LoadAsync()
+            //            .ContinueWith(loadTask =>
+            //            {
+            //                LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+
+            //                lV_invoiceHeader.ForEach(x => x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount));
+
+            //                trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+
+            //            }, TaskScheduler.FromCurrentSynchronizationContext());
+            filteredData.Include(x => x.DcCurrAcc)
+                        .Include(x => x.TrInvoiceLines)
+                        .Where(x => x.ProcessCode == processCode)
+                        .OrderByDescending(x => x.DocumentDate)
+                        .Load();
+
+            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
             //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }
@@ -82,6 +103,11 @@ namespace Foxoft
             {
                 DialogResult = DialogResult.OK;
             }
+        }
+
+        private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
+        {
+            LoadInvoiveHeaders();
         }
     }
 }

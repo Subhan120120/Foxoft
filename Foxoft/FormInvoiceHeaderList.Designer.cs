@@ -58,7 +58,7 @@ namespace Foxoft
             this.gC_InvoiceHeaderList.Location = new System.Drawing.Point(0, 0);
             this.gC_InvoiceHeaderList.MainView = this.gV_InvoiceHeaderList;
             this.gC_InvoiceHeaderList.Name = "gC_InvoiceHeaderList";
-            this.gC_InvoiceHeaderList.Size = new System.Drawing.Size(838, 418);
+            this.gC_InvoiceHeaderList.Size = new System.Drawing.Size(872, 475);
             this.gC_InvoiceHeaderList.TabIndex = 0;
             this.gC_InvoiceHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceHeaderList});
@@ -70,6 +70,7 @@ namespace Foxoft
             // 
             // gV_InvoiceHeaderList
             // 
+            this.gV_InvoiceHeaderList.ActiveFilterString = "[DocumentDate] >= #2022-06-29#";
             this.gV_InvoiceHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDocumentNumber,
             this.colIsReturn,
@@ -84,6 +85,7 @@ namespace Foxoft
             this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
             this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
             this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
+            this.gV_InvoiceHeaderList.ColumnFilterChanged += new System.EventHandler(this.gV_InvoiceHeaderList_ColumnFilterChanged);
             this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gV_TrInvoiceHeaderList_DoubleClick);
             // 
             // colDocumentNumber
@@ -162,7 +164,7 @@ namespace Foxoft
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 418);
+            this.ClientSize = new System.Drawing.Size(872, 475);
             this.Controls.Add(this.gC_InvoiceHeaderList);
             this.Name = "FormInvoiceHeaderList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

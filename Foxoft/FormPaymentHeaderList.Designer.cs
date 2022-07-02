@@ -87,6 +87,7 @@ namespace Foxoft
             // 
             // gV_PaymentHeaderList
             // 
+            this.gV_PaymentHeaderList.ActiveFilterString = "[OperationDate] >= #2022-06-30#";
             this.gV_PaymentHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colPaymentHeaderId,
             this.colDocumentNumber,
