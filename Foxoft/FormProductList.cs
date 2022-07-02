@@ -128,9 +128,8 @@ namespace Foxoft
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
             if (view == null) return;
             if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
-            {
                 DialogResult = DialogResult.OK;
-            }
+
 
             if (e.KeyCode == Keys.F10 && view.SelectedRowsCount > 0)
             {
@@ -140,7 +139,7 @@ namespace Foxoft
                     DcReport dcReport = efMethods.SelectReport(1004);
 
                     string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                    
+
                     string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
                     FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, 1004);

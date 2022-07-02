@@ -65,7 +65,7 @@ namespace Foxoft
 
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
-            int reportId = dcReport.ReportId;            
+            int reportId = dcReport.ReportId;
 
             string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
@@ -101,6 +101,7 @@ namespace Foxoft
             FormReportEditor formQueryEditor = new FormReportEditor(id);
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
             {
+                dcReport.ReportQuery = formQueryEditor.dcReport.ReportQuery;
             }
 
         }

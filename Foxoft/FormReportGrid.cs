@@ -22,6 +22,7 @@ namespace Foxoft
         Badge badge2;
         AdornerUIManager adornerUIManager1;
         int reportId;
+        string qry = "select 0 Nothing";
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
 
@@ -31,12 +32,12 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            DataTable dt = adoMethods.SqlGetDt(qry);
-            gridControl1.DataSource = dt;
+            this.qry = qry;
+            LoadData();
 
-            GridColumn column = gV_Report.Columns["InvoiceNumber"];
-            column.ColumnEdit = hyperLinkEdit;
             hyperLinkEdit.OpenLink += repoHLE_InvoiceNumber_OpenLink;
+            GridColumn column = gV_Report.Columns["InvoiceNumber"];
+            if (!object.ReferenceEquals(column, null)) column.ColumnEdit = hyperLinkEdit;
 
             adornerUIManager1 = new AdornerUIManager(components);
             badge1 = new Badge();
@@ -45,6 +46,12 @@ namespace Foxoft
             adornerUIManager1.Elements.Add(badge2);
             badge1.TargetElement = barButtonItem1;
             badge2.TargetElement = ribbonPage1;
+        }
+
+        private void LoadData()
+        {
+            DataTable dt = adoMethods.SqlGetDt(qry);
+            gridControl1.DataSource = dt;
         }
 
         public FormReportGrid(string qry, int reportId)
@@ -114,10 +121,12 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //MyGridControlDesigner myDesigner = new MyGridControlDesigner(gridControl1);
-            //myDesigner.LevelDesignerVisible = false;
-            //myDesigner.Selector.AllowDesignerButton = false;
-            //myDesigner.ShowDesigner(null, null);
+            gV_Report.PopulateColumns();
+            //foreach (GridColumn item in gV_Report.Columns)
+            //{
+            //    gV_Report.Columns.Remove(item);
+            //}
+
         }
 
         GridColumn prevColumn = null; // Disable the Immediate Edit Cell
@@ -148,7 +157,7 @@ namespace Foxoft
                     formInvoice.WindowState = FormWindowState.Maximized;
                     formInvoice.Show();
                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-                }                    
+                }
             }
         }
     }

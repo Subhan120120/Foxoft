@@ -12,6 +12,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -130,7 +131,8 @@ namespace Foxoft
             invoiceHeader.OfficeCode = Authorization.OfficeCode;
             invoiceHeader.StoreCode = Authorization.StoreCode;
             invoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
-            invoiceHeader.CurrAccCode = "111";
+            if (processCode == "RS")
+                invoiceHeader.CurrAccCode = "111";
 
             e.NewObject = invoiceHeader;
         }
@@ -200,7 +202,6 @@ namespace Foxoft
                                         });
 
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
-
 
                                         gV_InvoiceLine.BestFitColumns();
                                         gV_InvoiceLine.Focus();
@@ -603,20 +604,31 @@ namespace Foxoft
 
         private void GetPrint()
         {
-            if (Settings.Default.AppSetting.GetPrint == true)
-            {
+            //if (Settings.Default.AppSetting.GetPrint == true)
+            //{
                 ReportClass reportClass = new ReportClass();
                 //string designPath = Settings.Default.AppSetting.PrintDesignPath;
                 string designPath = designFolder + "InvoiceRS_A5.repx";
 
                 if (!File.Exists(designPath))
                     designPath = reportClass.SelectDesign();
-                if (!File.Exists(designPath))
+                if (File.Exists(designPath))
                 {
-                    ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+                    XtraReport report = reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath);
+
+                    ReportPrintTool printTool = new ReportPrintTool(report);
                     printTool.PrintDialog();
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        report.ExportToImage(ms, new ImageExportOptions() { Format = System.Drawing.Imaging.ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+                        //Write your code here  
+                        Image img = Image.FromStream(ms);
+
+                        Clipboard.SetImage(img);
+                    }
                 }
-            }
+            //}
         }
 
         private void MakePayment(decimal summaryInvoice)

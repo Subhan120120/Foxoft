@@ -40,12 +40,12 @@ namespace Foxoft
             this.colIsReturn = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceHeaderList)).BeginInit();
@@ -70,21 +70,23 @@ namespace Foxoft
             // 
             // gV_InvoiceHeaderList
             // 
-            this.gV_InvoiceHeaderList.ActiveFilterString = "[DocumentDate] >= #2022-06-29#";
+            this.gV_InvoiceHeaderList.ActiveFilterString = "[DocumentDate] = #2022-07-02#";
             this.gV_InvoiceHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDocumentNumber,
             this.colIsReturn,
             this.colDocumentDate,
             this.colCurrAccCode,
-            this.gridColumn1,
             this.colDocumentTime,
-            this.colStoreCode,
             this.colOperationDate,
             this.colOperationTime,
-            this.colTotalNetAmount});
+            this.colTotalNetAmount,
+            this.colStoreCode,
+            this.colCurrAccDesc});
             this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
             this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
             this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
+            this.gV_InvoiceHeaderList.OptionsView.FilterCriteriaDisplayStyle = DevExpress.XtraEditors.FilterCriteriaDisplayStyle.Visual;
+            this.gV_InvoiceHeaderList.OptionsView.ShowAutoFilterRow = true;
             this.gV_InvoiceHeaderList.ColumnFilterChanged += new System.EventHandler(this.gV_InvoiceHeaderList_ColumnFilterChanged);
             this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gV_TrInvoiceHeaderList_DoubleClick);
             // 
@@ -116,13 +118,6 @@ namespace Foxoft
             this.colCurrAccCode.Visible = true;
             this.colCurrAccCode.VisibleIndex = 4;
             // 
-            // gridColumn1
-            // 
-            this.gridColumn1.FieldName = "DcCurrAcc.FirstName";
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 5;
-            // 
             // colDocumentTime
             // 
             this.colDocumentTime.FieldName = "DocumentTime";
@@ -130,26 +125,19 @@ namespace Foxoft
             this.colDocumentTime.Visible = true;
             this.colDocumentTime.VisibleIndex = 3;
             // 
-            // colStoreCode
-            // 
-            this.colStoreCode.FieldName = "CurrAccCode";
-            this.colStoreCode.Name = "colStoreCode";
-            this.colStoreCode.Visible = true;
-            this.colStoreCode.VisibleIndex = 6;
-            // 
             // colOperationDate
             // 
             this.colOperationDate.FieldName = "OperationDate";
             this.colOperationDate.Name = "colOperationDate";
             this.colOperationDate.Visible = true;
-            this.colOperationDate.VisibleIndex = 7;
+            this.colOperationDate.VisibleIndex = 6;
             // 
             // colOperationTime
             // 
             this.colOperationTime.FieldName = "OperationTime";
             this.colOperationTime.Name = "colOperationTime";
             this.colOperationTime.Visible = true;
-            this.colOperationTime.VisibleIndex = 8;
+            this.colOperationTime.VisibleIndex = 7;
             // 
             // colTotalNetAmount
             // 
@@ -158,7 +146,21 @@ namespace Foxoft
             this.colTotalNetAmount.FieldName = "TotalNetAmount";
             this.colTotalNetAmount.Name = "colTotalNetAmount";
             this.colTotalNetAmount.Visible = true;
-            this.colTotalNetAmount.VisibleIndex = 9;
+            this.colTotalNetAmount.VisibleIndex = 8;
+            // 
+            // colStoreCode
+            // 
+            this.colStoreCode.FieldName = "StoreCode";
+            this.colStoreCode.Name = "colStoreCode";
+            this.colStoreCode.Visible = true;
+            this.colStoreCode.VisibleIndex = 9;
+            // 
+            // colCurrAccDesc
+            // 
+            this.colCurrAccDesc.FieldName = "DcCurrAcc.CurrAccDesc";
+            this.colCurrAccDesc.Name = "colCurrAccDesc";
+            this.colCurrAccDesc.Visible = true;
+            this.colCurrAccDesc.VisibleIndex = 5;
             // 
             // FormInvoiceHeaderList
             // 
@@ -205,5 +207,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentDate;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentTime;
         private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
     }
 }

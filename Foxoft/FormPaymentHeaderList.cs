@@ -39,10 +39,6 @@ namespace Foxoft
             //this.gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
             LoadPaymentHeaders();
-
-            string dateTime = DateTime.Now.ToString("yyyy-MM-dd"); ;
-
-            gV_PaymentHeaderList.ActiveFilterString = "([OperationDate] >= #" + dateTime + "# AND [OperationDate] <= #" + dateTime + "#)";
         }
 
         private void LoadPaymentHeaders()

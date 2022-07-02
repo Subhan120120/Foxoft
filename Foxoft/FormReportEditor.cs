@@ -10,7 +10,7 @@ namespace Foxoft
 {
     public partial class FormReportEditor : XtraForm
     {
-        DcReport dcReport = new DcReport();
+        public DcReport dcReport = new DcReport();
         subContext dbContext = new subContext();
 
         public FormReportEditor(int reportId)
