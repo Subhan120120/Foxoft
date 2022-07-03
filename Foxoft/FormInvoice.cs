@@ -130,6 +130,7 @@ namespace Foxoft
             invoiceHeader.ProcessCode = this.processCode;
             invoiceHeader.OfficeCode = Authorization.OfficeCode;
             invoiceHeader.StoreCode = Authorization.StoreCode;
+            invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
             invoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
             if (processCode == "RS")
                 invoiceHeader.CurrAccCode = "111";
@@ -251,7 +252,7 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut, 1);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
-
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
         }
 
         private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -606,28 +607,28 @@ namespace Foxoft
         {
             //if (Settings.Default.AppSetting.GetPrint == true)
             //{
-                ReportClass reportClass = new ReportClass();
-                //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-                string designPath = designFolder + "InvoiceRS_A5.repx";
+            ReportClass reportClass = new ReportClass();
+            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+            string designPath = designFolder + "InvoiceRS_A5.repx";
 
-                if (!File.Exists(designPath))
-                    designPath = reportClass.SelectDesign();
-                if (File.Exists(designPath))
+            if (!File.Exists(designPath))
+                designPath = reportClass.SelectDesign();
+            if (File.Exists(designPath))
+            {
+                XtraReport report = reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath);
+
+                ReportPrintTool printTool = new ReportPrintTool(report);
+                printTool.PrintDialog();
+
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    XtraReport report = reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath);
+                    report.ExportToImage(ms, new ImageExportOptions() { Format = System.Drawing.Imaging.ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+                    //Write your code here  
+                    Image img = Image.FromStream(ms);
 
-                    ReportPrintTool printTool = new ReportPrintTool(report);
-                    printTool.PrintDialog();
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        report.ExportToImage(ms, new ImageExportOptions() { Format = System.Drawing.Imaging.ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
-                        //Write your code here  
-                        Image img = Image.FromStream(ms);
-
-                        Clipboard.SetImage(img);
-                    }
+                    Clipboard.SetImage(img);
                 }
+            }
             //}
         }
 

@@ -106,6 +106,7 @@ namespace Foxoft
             this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbl_Payment = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
+            this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -229,7 +230,8 @@ namespace Foxoft
             this.colCreatedDate,
             this.col_ProductDesc,
             this.colAmountLoc,
-            this.colNetAmountLoc});
+            this.colNetAmountLoc,
+            this.colCreatedUserName});
             this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1096, 456, 264, 272);
             this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
             this.gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -348,13 +350,13 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "")});
             this.repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
-            this.repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
-            this.repoLUE_CurrencyCode.NullText = "";
-            this.repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
-            this.repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
             this.repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
+            this.repoLUE_CurrencyCode.NullText = "";
+            this.repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+            this.repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
             this.repoLUE_CurrencyCode.ShowFooter = false;
             this.repoLUE_CurrencyCode.ShowHeader = false;
+            this.repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
             this.repoLUE_CurrencyCode.EditValueChanged += new System.EventHandler(this.repoLUE_Currency_EditValueChanged);
             // 
             // colExchangeRate
@@ -906,6 +908,14 @@ namespace Foxoft
             this.ItemForCurrAccDesc.Text = "Cari Hesab Açıqlaması";
             this.ItemForCurrAccDesc.TextSize = new System.Drawing.Size(104, 13);
             // 
+            // colCreatedUserName
+            // 
+            this.colCreatedUserName.FieldName = "CreatedUserName";
+            this.colCreatedUserName.Name = "colCreatedUserName";
+            this.colCreatedUserName.OptionsColumn.ReadOnly = true;
+            this.colCreatedUserName.Visible = true;
+            this.colCreatedUserName.VisibleIndex = 9;
+            // 
             // FormInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1043,5 +1053,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_test;
         private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
     }
 }

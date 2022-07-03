@@ -196,6 +196,7 @@ namespace Foxoft
                 trPayment.PaymentHeaderId = PaymentHeaderId;
                 trPayment.DocumentNumber = NewDocNum;
                 trPayment.CurrAccCode = trInvoiceHeader.CurrAccCode;
+                trPayment.CreatedUserName = Authorization.CurrAccCode;
                 trPayment.OfficeCode = trInvoiceHeader.OfficeCode;
                 trPayment.StoreCode = trInvoiceHeader.StoreCode;
                 trPayment.DocumentDate = trInvoiceHeader.DocumentDate;
@@ -208,6 +209,7 @@ namespace Foxoft
 
                 trPaymentLine.Payment = isNegativ ? trPaymentLine.Payment * (-1) : trPaymentLine.Payment;
                 trPaymentLine.PaymentLoc = isNegativ ? trPaymentLine.PaymentLoc * (-1) : trPaymentLine.PaymentLoc;
+                trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
                 efMethods.InsertPaymentLine(trPaymentLine);
 
                 DialogResult = DialogResult.OK;

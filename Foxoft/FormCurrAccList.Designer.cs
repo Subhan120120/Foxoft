@@ -52,6 +52,7 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -81,7 +82,8 @@ namespace Foxoft
             this.col_IdentityNum,
             this.col_PhoneNum,
             this.col_Address,
-            this.col_BonusCardNum});
+            this.col_BonusCardNum,
+            this.col_CurrAccDesc});
             this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(867, 248, 264, 272);
             this.gV_CurrAccList.GridControl = this.gC_CurrAccList;
             this.gV_CurrAccList.Name = "gV_CurrAccList";
@@ -91,7 +93,7 @@ namespace Foxoft
             // 
             // col_CurrAccCode
             // 
-            this.col_CurrAccCode.Caption = "Tədarikçi";
+            this.col_CurrAccCode.Caption = "Cari Hesab";
             this.col_CurrAccCode.FieldName = "CurrAccCode";
             this.col_CurrAccCode.Name = "col_CurrAccCode";
             this.col_CurrAccCode.Visible = true;
@@ -116,16 +118,12 @@ namespace Foxoft
             this.col_FirstName.Caption = "Adı";
             this.col_FirstName.FieldName = "FirstName";
             this.col_FirstName.Name = "col_FirstName";
-            this.col_FirstName.Visible = true;
-            this.col_FirstName.VisibleIndex = 2;
             // 
             // col_LastName
             // 
             this.col_LastName.Caption = "Soyadı";
             this.col_LastName.FieldName = "LastName";
             this.col_LastName.Name = "col_LastName";
-            this.col_LastName.Visible = true;
-            this.col_LastName.VisibleIndex = 3;
             // 
             // col_IdentityNum
             // 
@@ -133,7 +131,7 @@ namespace Foxoft
             this.col_IdentityNum.FieldName = "IdentityNum";
             this.col_IdentityNum.Name = "col_IdentityNum";
             this.col_IdentityNum.Visible = true;
-            this.col_IdentityNum.VisibleIndex = 6;
+            this.col_IdentityNum.VisibleIndex = 5;
             // 
             // col_PhoneNum
             // 
@@ -141,7 +139,7 @@ namespace Foxoft
             this.col_PhoneNum.FieldName = "PhoneNum";
             this.col_PhoneNum.Name = "col_PhoneNum";
             this.col_PhoneNum.Visible = true;
-            this.col_PhoneNum.VisibleIndex = 7;
+            this.col_PhoneNum.VisibleIndex = 6;
             // 
             // col_Address
             // 
@@ -149,7 +147,7 @@ namespace Foxoft
             this.col_Address.FieldName = "Address";
             this.col_Address.Name = "col_Address";
             this.col_Address.Visible = true;
-            this.col_Address.VisibleIndex = 5;
+            this.col_Address.VisibleIndex = 4;
             // 
             // col_BonusCardNum
             // 
@@ -157,7 +155,7 @@ namespace Foxoft
             this.col_BonusCardNum.FieldName = "BonusCardNum";
             this.col_BonusCardNum.Name = "col_BonusCardNum";
             this.col_BonusCardNum.Visible = true;
-            this.col_BonusCardNum.VisibleIndex = 4;
+            this.col_BonusCardNum.VisibleIndex = 3;
             // 
             // ribbonControl1
             // 
@@ -237,6 +235,14 @@ namespace Foxoft
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
             // 
+            // col_CurrAccDesc
+            // 
+            this.col_CurrAccDesc.Caption = "Cari Hesab Açıqlaması";
+            this.col_CurrAccDesc.FieldName = "CurrAccDesc";
+            this.col_CurrAccDesc.Name = "col_CurrAccDesc";
+            this.col_CurrAccDesc.Visible = true;
+            this.col_CurrAccDesc.VisibleIndex = 2;
+            // 
             // FormCurrAccList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -281,5 +287,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
         private DevExpress.XtraBars.BarButtonItem bBI_refresh;
         private DevExpress.XtraBars.BarButtonItem bBI_quit;
+        private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;
     }
 }
