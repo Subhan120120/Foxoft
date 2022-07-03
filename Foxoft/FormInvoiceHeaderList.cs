@@ -39,8 +39,6 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
-
-
         }
 
         public FormInvoiceHeaderList(string processCode)
@@ -52,13 +50,44 @@ namespace Foxoft
 
         private void LoadInvoiveHeaders()
         {
+
             dbContext = new subContext();
             IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
 
             CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
             IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(converter, gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
-
+            //IQueryable<TrInvoiceHeader> selectedData = filteredData.Select(x => new TrInvoiceHeader
+            //{
+            //    DcCurrAcc = new DcCurrAcc { CurrAccDesc = x.DcCurrAcc.CurrAccDesc },
+            //    TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount),
+            //    InvoiceHeaderId = x.InvoiceHeaderId,
+            //    CreatedDate = x.CreatedDate,
+            //    CreatedUserName = x.CreatedUserName,
+            //    CurrAccCode = x.CurrAccCode,
+            //    CustomsDocumentNumber = x.CustomsDocumentNumber,
+            //    Description = x.Description,
+            //    DocumentDate = x.DocumentDate,
+            //    DocumentNumber = x.DocumentNumber,
+            //    DocumentTime = x.DocumentTime,
+            //    FiscalPrintedState = x.FiscalPrintedState,
+            //    IsCompleted = x.IsCompleted,
+            //    IsLocked = x.IsLocked,
+            //    IsPrinted = x.IsPrinted,
+            //    IsReturn = x.IsReturn,
+            //    IsSalesViaInternet = x.IsSalesViaInternet,
+            //    IsSuspended = x.IsSuspended,
+            //    LastUpdatedDate = x.LastUpdatedDate,
+            //    LastUpdatedUserName = x.LastUpdatedUserName,
+            //    OfficeCode = x.OfficeCode,
+            //    OperationDate = x.OperationDate,
+            //    OperationTime = x.OperationTime,
+            //    PosTerminalId = x.PosTerminalId,
+            //    ProcessCode = x.ProcessCode,
+            //    RelatedInvoiceId = x.RelatedInvoiceId,
+            //    StoreCode = x.StoreCode,
+            //    WarehouseCode = x.WarehouseCode,
+            //});
             //filteredData
             //            .Include(x => x.DcCurrAcc)
             //            .Include(x => x.TrInvoiceLines)
@@ -72,7 +101,6 @@ namespace Foxoft
             //                lV_invoiceHeader.ForEach(x =>
             //                {
             //                    x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
-            //                    x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc;
             //                });
 
             //                trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
@@ -84,12 +112,12 @@ namespace Foxoft
                         .Where(x => x.ProcessCode == processCode)
                         .OrderByDescending(x => x.DocumentDate)
                         .Load();
+
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
             lV_invoiceHeader.ForEach(x =>
             {
                 x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
-                x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc;
             });
 
             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
@@ -129,6 +157,12 @@ namespace Foxoft
         {
             LoadInvoiveHeaders();
 
+        }
+
+        private void gV_InvoiceHeaderList_CellValueChanging(object sender, CellValueChangedEventArgs e)
+        {
+            //if ((sender as GridView).IsFilterRow(e.RowHandle))
+            //    LoadInvoiveHeaders();
         }
     }
 }

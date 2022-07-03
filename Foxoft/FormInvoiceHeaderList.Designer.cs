@@ -87,6 +87,7 @@ namespace Foxoft
             this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
             this.gV_InvoiceHeaderList.OptionsView.FilterCriteriaDisplayStyle = DevExpress.XtraEditors.FilterCriteriaDisplayStyle.Visual;
             this.gV_InvoiceHeaderList.OptionsView.ShowAutoFilterRow = true;
+            this.gV_InvoiceHeaderList.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceHeaderList_CellValueChanging);
             this.gV_InvoiceHeaderList.ColumnFilterChanged += new System.EventHandler(this.gV_InvoiceHeaderList_ColumnFilterChanged);
             this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gV_TrInvoiceHeaderList_DoubleClick);
             // 

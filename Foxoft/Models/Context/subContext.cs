@@ -470,8 +470,8 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
             {
-                entity.HasIndex(e => e.CurrAccCode)
-                    .HasDatabaseName("IX_CurrAccCode");
+                //entity.HasIndex(e => e.CurrAccCode)
+                //    .HasDatabaseName("IX_CurrAccCode");
 
                 entity.Property(e => e.InvoiceHeaderId)
                     .ValueGeneratedNever();
@@ -547,12 +547,6 @@ namespace Foxoft.Models
 
                 entity.Property(e => e.InvoiceLineId)
                     .ValueGeneratedNever();
-
-                entity.HasIndex(e => e.InvoiceHeaderId)
-                    .HasDatabaseName("IX_InvoiceHeaderId");
-
-                entity.HasIndex(e => e.ProductCode)
-                    .HasDatabaseName("IX_ProductCode");
 
                 entity.Property(e => e.QtyIn)
                     .HasDefaultValueSql("0");
