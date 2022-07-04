@@ -91,14 +91,39 @@ namespace Foxoft
         {
             using (subContext db = new subContext())
             {
-                List<DcProduct> products = db.DcProducts.ToList();
+                List<DcProduct> products = db.DcProducts.Include(x => x.TrInvoiceLines)
+                                                            .ThenInclude(x => x.TrInvoiceHeader)
+                                                        .Select(x => new DcProduct
+                                                        {
+                                                            ProductCode = x.ProductCode,
+                                                            Barcode = x.Barcode,
+                                                            ProductTypeCode = x.ProductTypeCode,
+                                                            UsePos = x.UsePos,
+                                                            PromotionCode = x.PromotionCode,
+                                                            PromotionCode2 = x.PromotionCode2,
+                                                            TaxRate = x.TaxRate,
+                                                            PosDiscount = x.PosDiscount,
+                                                            IsDisabled = x.IsDisabled,
+                                                            RetailPrice = x.RetailPrice,
+                                                            PurchasePrice = x.PurchasePrice,
+                                                            WholesalePrice = x.WholesalePrice,
+                                                            UseInternet = x.UseInternet,
+                                                            ProductDesc = x.ProductDesc,
+                                                            CreatedUserName = x.CreatedUserName,
+                                                            CreatedDate = x.CreatedDate,
+                                                            LastUpdatedUserName = x.LastUpdatedUserName,
+                                                            LastUpdatedDate = x.LastUpdatedDate,
+                                                            Balance = x.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(s => s.TrInvoiceHeader.IsReturn == false ? s.QtyIn - s.QtyOut : s.QtyOut - s.QtyIn),
+                                                        })
+                                                        .ToList();
 
-                products.ForEach(x =>
-                {
-                    int balance = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut);
+                //products.ForEach(x =>
+                //{
+                //    int Sum = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn - x.QtyOut);
+                //    int SumIsReturn = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader).Where(p => p.ProductCode == x.ProductCode && p.TrInvoiceHeader.IsReturn == true).Sum(x => x.QtyOut - x.QtyIn);
 
-                    x.Balance = balance;
-                });
+                //    x.Balance = Sum + SumIsReturn;
+                //});
                 return products;
             }
         }
@@ -108,10 +133,12 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 List<DcProduct> products = db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
+                    .Include(x => x.TrInvoiceLines)
+                        .ThenInclude(x => x.TrInvoiceHeader)
                     .Select(x => new DcProduct
                     {
                         Barcode = x.Barcode,
-                        Balance = x.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut),
+                        Balance = x.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.TrInvoiceHeader.IsReturn == false ? x.QtyIn - x.QtyOut : (x.QtyIn - x.QtyOut) * (-1)),
                         DcProductType = x.DcProductType,
                         ProductCode = x.ProductCode,
                         ProductDesc = x.ProductDesc,
@@ -125,7 +152,6 @@ namespace Foxoft
                         CreatedDate = x.CreatedDate,
                         CreatedUserName = x.CreatedUserName,
                         IsDisabled = x.IsDisabled,
-                        TrInvoiceLines = x.TrInvoiceLines,
                         TrPrices = x.TrPrices,
                         LastUpdatedDate = x.LastUpdatedDate,
                         LastUpdatedUserName = x.LastUpdatedUserName,
@@ -134,7 +160,7 @@ namespace Foxoft
                         TaxRate = x.TaxRate,
                         TrFeature = x.TrFeature
                     })
-                                                        .ToList();
+                    .ToList();
 
                 //products.ForEach(x =>
                 //{

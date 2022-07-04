@@ -30,7 +30,6 @@ namespace Foxoft
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.btn_ERP = new DevExpress.XtraEditors.SimpleButton();
             this.lC_Root = new DevExpress.XtraLayout.LayoutControl();
@@ -66,12 +65,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.toolbarFormManager1)).BeginInit();
             this.SuspendLayout();
             // 
-            // splashScreenManager1
-            // 
-            // 
             // btn_ERP
             // 
-            this.btn_ERP.Appearance.Font = new System.Drawing.Font("Tahoma", 16F);
+            this.btn_ERP.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_ERP.Appearance.Options.UseFont = true;
             this.btn_ERP.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             this.btn_ERP.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_ERP.ImageOptions.SvgImage")));
@@ -100,7 +96,7 @@ namespace Foxoft
             // 
             // btn_POS
             // 
-            this.btn_POS.Appearance.Font = new System.Drawing.Font("Tahoma", 16F);
+            this.btn_POS.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_POS.Appearance.Options.UseFont = true;
             this.btn_POS.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             this.btn_POS.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_POS.ImageOptions.SvgImage")));
@@ -124,6 +120,7 @@ namespace Foxoft
             // 
             this.txtEdit_Password.Location = new System.Drawing.Point(68, 36);
             this.txtEdit_Password.Name = "txtEdit_Password";
+            this.txtEdit_Password.Properties.UseSystemPasswordChar = true;
             this.txtEdit_Password.Size = new System.Drawing.Size(231, 20);
             this.txtEdit_Password.StyleController = this.lC_Root;
             this.txtEdit_Password.TabIndex = 5;

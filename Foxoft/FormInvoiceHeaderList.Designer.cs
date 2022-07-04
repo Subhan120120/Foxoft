@@ -70,7 +70,7 @@ namespace Foxoft
             // 
             // gV_InvoiceHeaderList
             // 
-            this.gV_InvoiceHeaderList.ActiveFilterString = "[DocumentDate] = #2022-07-02#";
+            this.gV_InvoiceHeaderList.ActiveFilterString = "[DocumentDate] = #" + System.DateTime.Now.ToString("yyyy-MM-dd") + "#";
             this.gV_InvoiceHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDocumentNumber,
             this.colIsReturn,

@@ -118,7 +118,26 @@ namespace Foxoft
             catch (Exception) { }
         }
 
-        private void aCE_CurrAccs_Click(object sender, EventArgs e)
+        private void aCE_Products_Click(object sender, EventArgs e)
+        {
+            FormProductList form = Application.OpenForms["FormProductList"] as FormProductList;
+
+            if (form != null)
+            {
+                form.BringToFront();
+                form.Activate();
+            }
+            else
+            {
+                form = new FormProductList(0);
+                form.MdiParent = this;
+                form.Show();
+                form.WindowState = FormWindowState.Maximized;
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
+        }
+
+        private void aCE_CurrAcc_Click(object sender, EventArgs e)
         {
             FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
 
@@ -135,6 +154,11 @@ namespace Foxoft
                 form.WindowState = FormWindowState.Maximized;
                 parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
             }
+        }
+
+        private void aCE_CurrAccs_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)

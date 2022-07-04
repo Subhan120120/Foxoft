@@ -42,6 +42,8 @@ namespace Foxoft
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
             this.aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_Products = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CurrAcc = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -56,6 +58,7 @@ namespace Foxoft
             this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator3 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
             this.SuspendLayout();
@@ -162,6 +165,9 @@ namespace Foxoft
             // aCE_Invoices
             // 
             this.aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
+            this.aCE_Products,
+            this.aCE_CurrAcc,
+            this.accordionControlSeparator3,
             this.aCE_RetailPurchaseInvoice,
             this.aCE_RetailSaleInvoice,
             this.aCE_CountIn,
@@ -175,6 +181,22 @@ namespace Foxoft
             this.aCE_Invoices.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Invoices.ImageOptions.SvgImage")));
             this.aCE_Invoices.Name = "aCE_Invoices";
             this.aCE_Invoices.Text = "Əməliyatlar";
+            // 
+            // aCE_Products
+            // 
+            this.aCE_Products.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Products.ImageOptions.SvgImage")));
+            this.aCE_Products.Name = "aCE_Products";
+            this.aCE_Products.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_Products.Text = "Məhsul";
+            this.aCE_Products.Click += new System.EventHandler(this.aCE_Products_Click);
+            // 
+            // aCE_CurrAcc
+            // 
+            this.aCE_CurrAcc.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CurrAcc.ImageOptions.SvgImage")));
+            this.aCE_CurrAcc.Name = "aCE_CurrAcc";
+            this.aCE_CurrAcc.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CurrAcc.Text = "Cari Hesablar";
+            this.aCE_CurrAcc.Click += new System.EventHandler(this.aCE_CurrAcc_Click);
             // 
             // aCE_RetailPurchaseInvoice
             // 
@@ -283,6 +305,10 @@ namespace Foxoft
             this.aCE_CurrAccs.Text = "İstifadəçilər";
             this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
             // 
+            // accordionControlSeparator3
+            // 
+            this.accordionControlSeparator3.Name = "accordionControlSeparator3";
+            // 
             // FormERP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -332,5 +358,8 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Payments;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator1;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator2;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Products;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAcc;
+        private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator3;
     }
 }

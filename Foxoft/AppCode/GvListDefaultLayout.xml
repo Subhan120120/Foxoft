@@ -21,6 +21,7 @@
 	</property>
 	<property name="OptionsView" isnull="true" iskey="true">
 		<property name="ColumnHeaderAutoHeight">True</property>
+		<property name="ShowAutoFilterRow">true</property>
 		<property name="ShowGroupPanel">false</property>
 		<property name="ShowIndicator">false</property>
 	</property>

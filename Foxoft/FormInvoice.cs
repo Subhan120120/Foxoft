@@ -1,5 +1,4 @@
 ﻿using DevExpress.Data;
-using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
@@ -185,7 +184,7 @@ namespace Foxoft
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
             if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
-                lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
+                lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
 
             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
 
@@ -609,6 +608,7 @@ namespace Foxoft
             //{
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+
             string designPath = designFolder + "InvoiceRS_A5.repx";
 
             if (!File.Exists(designPath))
@@ -667,7 +667,7 @@ namespace Foxoft
         {
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = designFolder + "InvoiceRS_Tokla.repx";
+            string designPath = designFolder + "InvoiceRS_A5.repx";
 
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
@@ -690,7 +690,7 @@ namespace Foxoft
         {
             ReportClass reportClass = new ReportClass();
             //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = designFolder + "InvoiceRS_Tokla.repx";
+            string designPath = designFolder + "InvoiceRS_A5.repx";
 
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
@@ -779,7 +779,6 @@ namespace Foxoft
 
             CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, colExchangeRate, exRate));
         }
-
 
         private void bBI_SaveQuit_ItemClick(object sender, ItemClickEventArgs e)
         {

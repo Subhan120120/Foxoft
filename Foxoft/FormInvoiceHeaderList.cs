@@ -1,24 +1,22 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.Data.Linq;
+using DevExpress.Data.Linq.Helpers;
+using DevExpress.Utils;
+using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraGrid;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using DevExpress.Utils.Extensions;
-using DevExpress.Data.Filtering;
-using DevExpress.Data.Linq;
-using DevExpress.Data.Linq.Helpers;
-using System.Collections.Generic;
 
 namespace Foxoft
 {
@@ -50,44 +48,11 @@ namespace Foxoft
 
         private void LoadInvoiveHeaders()
         {
-
             dbContext = new subContext();
             IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
-
             CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-            IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(converter, gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
+            IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
-            //IQueryable<TrInvoiceHeader> selectedData = filteredData.Select(x => new TrInvoiceHeader
-            //{
-            //    DcCurrAcc = new DcCurrAcc { CurrAccDesc = x.DcCurrAcc.CurrAccDesc },
-            //    TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount),
-            //    InvoiceHeaderId = x.InvoiceHeaderId,
-            //    CreatedDate = x.CreatedDate,
-            //    CreatedUserName = x.CreatedUserName,
-            //    CurrAccCode = x.CurrAccCode,
-            //    CustomsDocumentNumber = x.CustomsDocumentNumber,
-            //    Description = x.Description,
-            //    DocumentDate = x.DocumentDate,
-            //    DocumentNumber = x.DocumentNumber,
-            //    DocumentTime = x.DocumentTime,
-            //    FiscalPrintedState = x.FiscalPrintedState,
-            //    IsCompleted = x.IsCompleted,
-            //    IsLocked = x.IsLocked,
-            //    IsPrinted = x.IsPrinted,
-            //    IsReturn = x.IsReturn,
-            //    IsSalesViaInternet = x.IsSalesViaInternet,
-            //    IsSuspended = x.IsSuspended,
-            //    LastUpdatedDate = x.LastUpdatedDate,
-            //    LastUpdatedUserName = x.LastUpdatedUserName,
-            //    OfficeCode = x.OfficeCode,
-            //    OperationDate = x.OperationDate,
-            //    OperationTime = x.OperationTime,
-            //    PosTerminalId = x.PosTerminalId,
-            //    ProcessCode = x.ProcessCode,
-            //    RelatedInvoiceId = x.RelatedInvoiceId,
-            //    StoreCode = x.StoreCode,
-            //    WarehouseCode = x.WarehouseCode,
-            //});
             //filteredData
             //            .Include(x => x.DcCurrAcc)
             //            .Include(x => x.TrInvoiceLines)
@@ -111,18 +76,44 @@ namespace Foxoft
                         .Include(x => x.TrInvoiceLines)
                         .Where(x => x.ProcessCode == processCode)
                         .OrderByDescending(x => x.DocumentDate)
-                        .Load();
+                        .Select(x => new TrInvoiceHeader
+                        {
+                            TrInvoiceLines = x.TrInvoiceLines,
+                            DcCurrAcc = x.DcCurrAcc,
+                            TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount),
+                            InvoiceHeaderId = x.InvoiceHeaderId,
+                            CreatedDate = x.CreatedDate,
+                            CreatedUserName = x.CreatedUserName,
+                            CurrAccCode = x.CurrAccCode,
+                            CustomsDocumentNumber = x.CustomsDocumentNumber,
+                            Description = x.Description,
+                            DocumentDate = x.DocumentDate,
+                            DocumentNumber = x.DocumentNumber,
+                            DocumentTime = x.DocumentTime,
+                            FiscalPrintedState = x.FiscalPrintedState,
+                            IsCompleted = x.IsCompleted,
+                            IsLocked = x.IsLocked,
+                            IsPrinted = x.IsPrinted,
+                            IsReturn = x.IsReturn,
+                            IsSalesViaInternet = x.IsSalesViaInternet,
+                            IsSuspended = x.IsSuspended,
+                            LastUpdatedDate = x.LastUpdatedDate,
+                            LastUpdatedUserName = x.LastUpdatedUserName,
+                            OfficeCode = x.OfficeCode,
+                            OperationDate = x.OperationDate,
+                            OperationTime = x.OperationTime,
+                            PosTerminalId = x.PosTerminalId,
+                            ProcessCode = x.ProcessCode,
+                            RelatedInvoiceId = x.RelatedInvoiceId,
+                            StoreCode = x.StoreCode,
+                            WarehouseCode = x.WarehouseCode,
+                        })
+                        .ToList();
 
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-
-            lV_invoiceHeader.ForEach(x =>
-            {
-                x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
-            });
-
             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
 
-            //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
+            gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }
 
         private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
@@ -156,7 +147,6 @@ namespace Foxoft
         private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
         {
             LoadInvoiveHeaders();
-
         }
 
         private void gV_InvoiceHeaderList_CellValueChanging(object sender, CellValueChangedEventArgs e)
