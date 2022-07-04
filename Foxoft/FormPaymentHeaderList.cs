@@ -105,11 +105,14 @@ namespace Foxoft
         bool isFirstPaint = true; // Focus FindPanel
         private void gC_ProductList_Paint(object sender, PaintEventArgs e)
         {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
             if (isFirstPaint)
             {
-                if (!gV_PaymentHeaderList.FindPanelVisible)
-                    gV_PaymentHeaderList.ShowFindPanel();
-                gV_PaymentHeaderList.ShowFindPanel();
+                if (!gV.FindPanelVisible)
+                    gV.ShowFindPanel();
+                gV.ShowFindPanel();
             }
             isFirstPaint = false;
         }

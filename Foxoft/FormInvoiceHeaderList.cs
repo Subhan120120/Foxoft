@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -49,9 +50,6 @@ namespace Foxoft
         private void LoadInvoiveHeaders()
         {
             dbContext = new subContext();
-            IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
-            CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-            IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
             //filteredData
             //            .Include(x => x.DcCurrAcc)
@@ -72,13 +70,17 @@ namespace Foxoft
 
             //            }, TaskScheduler.FromCurrentSynchronizationContext());
 
+            IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
+            CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+            IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
+
+
             filteredData.Include(x => x.DcCurrAcc)
                         .Include(x => x.TrInvoiceLines)
                         .Where(x => x.ProcessCode == processCode)
                         .OrderByDescending(x => x.DocumentDate)
                         .Select(x => new TrInvoiceHeader
                         {
-                            TrInvoiceLines = x.TrInvoiceLines,
                             DcCurrAcc = x.DcCurrAcc,
                             TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount),
                             InvoiceHeaderId = x.InvoiceHeaderId,
@@ -107,13 +109,11 @@ namespace Foxoft
                             RelatedInvoiceId = x.RelatedInvoiceId,
                             StoreCode = x.StoreCode,
                             WarehouseCode = x.WarehouseCode,
-                        })
-                        .ToList();
+                        });
 
-            LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-            trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+            trInvoiceHeadersBindingSource.DataSource = filteredData.ToList();
 
-            gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
+            //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }
 
         private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
@@ -146,13 +146,44 @@ namespace Foxoft
 
         private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
         {
-            LoadInvoiveHeaders();
+            //LoadInvoiveHeaders();
         }
 
         private void gV_InvoiceHeaderList_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
             //if ((sender as GridView).IsFilterRow(e.RowHandle))
             //    LoadInvoiveHeaders();
+        }
+
+        private void gV_InvoiceHeaderList_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            GridView view = sender as GridView;
+
+            if (e.RowHandle >= 0)
+            {
+                //string col = view.GetRowCellDisplayText(e.RowHandle, isre);
+                object isReturn = view.GetRowCellValue(e.RowHandle, colIsReturn);
+                bool value = (bool)isReturn;
+
+                if (value)
+                    e.Appearance.BackColor = Color.MistyRose;
+            }
+        }
+
+        // AutoFocus FindPanel
+        bool isFirstPaint = true;
+        private void gC_InvoiceHeaderList_Paint(object sender, PaintEventArgs e)
+        {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
+            if (isFirstPaint)
+            {
+                if (!gV.FindPanelVisible)
+                    gV.ShowFindPanel();
+                gV.ShowFindPanel();
+            }
+            isFirstPaint = false;
         }
     }
 }

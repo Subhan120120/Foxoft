@@ -10,6 +10,7 @@ using Foxoft.Models;
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -157,6 +158,25 @@ namespace Foxoft
                     formInvoice.WindowState = FormWindowState.Maximized;
                     formInvoice.Show();
                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+            }
+        }
+
+        private void gV_Report_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            GridView view = sender as GridView;
+
+            if (e.RowHandle >= 0)
+            {
+                object isReturn = view.GetRowCellValue(e.RowHandle, view.Columns["IsReturn"]);
+                isReturn ??= view.GetRowCellValue(e.RowHandle, view.Columns["Geri Qaytarma"]);
+
+                if (!object.ReferenceEquals(isReturn, null))
+                {
+                    bool value = (bool)isReturn;
+
+                    if (value)
+                        e.Appearance.BackColor = Color.MistyRose;
                 }
             }
         }

@@ -122,11 +122,14 @@ namespace Foxoft
         bool isFirstPaint = true;
         private void gC_CurrAccList_Paint(object sender, PaintEventArgs e)
         {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
             if (isFirstPaint)
             {
-                if (!gV_CurrAccList.FindPanelVisible)
-                    gV_CurrAccList.ShowFindPanel();
-                gV_CurrAccList.ShowFindPanel();
+                if (!gV.FindPanelVisible)
+                    gV.ShowFindPanel();
+                gV.ShowFindPanel();
             }
             isFirstPaint = false;
         }

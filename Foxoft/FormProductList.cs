@@ -153,16 +153,18 @@ namespace Foxoft
         {
         }
 
-
         // AutoFocus FindPanel
         bool isFirstPaint = true;
         private void gC_ProductList_Paint(object sender, PaintEventArgs e)
         {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
             if (isFirstPaint)
             {
-                if (!gV_ProductList.FindPanelVisible)
-                    gV_ProductList.ShowFindPanel();
-                gV_ProductList.ShowFindPanel();
+                if (!gV.FindPanelVisible)
+                    gV.ShowFindPanel();
+                gV.ShowFindPanel();
             }
             isFirstPaint = false;
         }
