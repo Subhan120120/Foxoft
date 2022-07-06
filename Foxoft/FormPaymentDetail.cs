@@ -30,7 +30,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
+            //OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();

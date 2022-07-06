@@ -146,6 +146,8 @@ namespace Foxoft
 
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
             if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
             {
                 int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
@@ -523,12 +525,11 @@ namespace Foxoft
             //{
             //    //MakeReturnIsNegativ(i);
             //}
+            //if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
+            //    efMethods.InsertInvoiceHeader(trInvoiceHeader);
 
             efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
 
-
-            //if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
-            //    efMethods.InsertInvoiceHeader(trInvoiceHeader);
             try
             {
                 dbContext.SaveChanges();
