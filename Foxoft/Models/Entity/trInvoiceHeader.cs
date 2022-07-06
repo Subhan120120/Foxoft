@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -107,14 +108,13 @@ namespace Foxoft.Models
         [DisplayName("Kilidlənib")]
         public bool IsLocked { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
         [DisplayName("Cari Hesab Açıqlaması")]
-        public string CurrAccDesc { get; set; }
+        public string CurrAccDesc { get { return DcCurrAcc.CurrAccDesc; } }
 
-        [NotMapped]
+        //[NotMapped]
         [DisplayName("Tutar")]
-        public decimal TotalNetAmount { get; set; }
-
+        public decimal TotalNetAmount { get { return TrInvoiceLines.Sum(t => t.NetAmount); } }
 
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }

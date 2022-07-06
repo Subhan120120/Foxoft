@@ -239,8 +239,8 @@ namespace Foxoft
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-                    trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.PhoneNum;
-                    CurrAccDescTextEdit.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+                    //trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.PhoneNum;
+                    //CurrAccDescTextEdit.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                 }
             }
         }
