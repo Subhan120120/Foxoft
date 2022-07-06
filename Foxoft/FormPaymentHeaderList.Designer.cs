@@ -46,9 +46,8 @@ namespace Foxoft
             this.colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPosterminalId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.col_TotalPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colTotalNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.formAssistant1 = new DevExpress.XtraBars.FormAssistant();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_ReceivePayment = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_MakePayment = new DevExpress.XtraBars.BarButtonItem();
@@ -56,6 +55,7 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.colTotalPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
@@ -87,7 +87,6 @@ namespace Foxoft
             // 
             // gV_PaymentHeaderList
             // 
-            this.gV_PaymentHeaderList.ActiveFilterString = "[OperationDate] >= #2022-06-30#";
             this.gV_PaymentHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colPaymentHeaderId,
             this.colDocumentNumber,
@@ -99,8 +98,9 @@ namespace Foxoft
             this.colDescription,
             this.colStoreCode,
             this.colPosterminalId,
+            this.col_TotalPayment,
             this.colInvoiceHeaderId,
-            this.colTotalNetAmount});
+            this.colTotalPayment});
             this.gV_PaymentHeaderList.GridControl = this.gC_PaymentHeaderList;
             this.gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
             this.gV_PaymentHeaderList.OptionsView.ShowFooter = true;
@@ -189,17 +189,17 @@ namespace Foxoft
             this.colPosterminalId.FieldName = "PosterminalId";
             this.colPosterminalId.Name = "colPosterminalId";
             // 
+            // col_TotalPayment
+            // 
+            this.col_TotalPayment.Caption = "gridColumn1";
+            this.col_TotalPayment.Name = "col_TotalPayment";
+            this.col_TotalPayment.Visible = true;
+            this.col_TotalPayment.VisibleIndex = 6;
+            // 
             // colInvoiceHeaderId
             // 
             this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
             this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
-            // 
-            // colTotalNetAmount
-            // 
-            this.colTotalNetAmount.FieldName = "TotalNetAmountLoc";
-            this.colTotalNetAmount.Name = "colTotalNetAmount";
-            this.colTotalNetAmount.Visible = true;
-            this.colTotalNetAmount.VisibleIndex = 6;
             // 
             // ribbonControl1
             // 
@@ -259,6 +259,13 @@ namespace Foxoft
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
             // 
+            // colTotalPayment
+            // 
+            this.colTotalPayment.FieldName = "TotalPayment";
+            this.colTotalPayment.Name = "colTotalPayment";
+            this.colTotalPayment.Visible = true;
+            this.colTotalPayment.VisibleIndex = 7;
+            // 
             // FormPaymentHeaderList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -303,7 +310,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
-        private DevExpress.XtraBars.FormAssistant formAssistant1;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
@@ -312,5 +318,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_ReceivePayment;
         private DevExpress.XtraBars.BarButtonItem bBI_MakePayment;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn col_TotalPayment;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalPayment;
     }
 }

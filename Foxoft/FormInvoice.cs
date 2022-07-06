@@ -185,8 +185,8 @@ namespace Foxoft
                                       .Where(x => x.InvoiceHeaderId == InvoiceHeaderId).Load();
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
-            if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
-                lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
+            //if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
+            //    lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
 
             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
 
@@ -239,8 +239,7 @@ namespace Foxoft
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-                    //trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.PhoneNum;
-                    //CurrAccDescTextEdit.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+                    CurrAccDescTextEdit.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                 }
             }
         }

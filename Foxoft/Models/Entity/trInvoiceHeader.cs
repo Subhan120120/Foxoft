@@ -110,11 +110,13 @@ namespace Foxoft.Models
 
         //[NotMapped]
         [DisplayName("Cari Hesab Açıqlaması")]
-        public string CurrAccDesc { get { return DcCurrAcc.CurrAccDesc; } }
+        public string CurrAccDesc { get { if (!object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }
 
         //[NotMapped]
         [DisplayName("Tutar")]
-        public decimal TotalNetAmount { get { return TrInvoiceLines.Sum(t => t.NetAmount); } }
+        //public decimal TotalNetAmount { get; set; }
+        public decimal TotalNetAmount { get { return TrInvoiceLines.Sum(t => t.NetAmountLoc); } }
+
 
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }

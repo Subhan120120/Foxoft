@@ -52,7 +52,7 @@ namespace Foxoft
                                       {
                                           LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
 
-                                          lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
+                                          //lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
 
                                           trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
 

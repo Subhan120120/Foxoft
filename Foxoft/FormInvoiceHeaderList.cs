@@ -75,43 +75,44 @@ namespace Foxoft
             IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
 
-            filteredData.Include(x => x.DcCurrAcc)
-                        .Include(x => x.TrInvoiceLines)
+            filteredData.Include(x => x.TrInvoiceLines)
+                        .Include(x => x.DcCurrAcc)
                         .Where(x => x.ProcessCode == processCode)
                         .OrderByDescending(x => x.DocumentDate)
-                        .Select(x => new TrInvoiceHeader
-                        {
-                            DcCurrAcc = x.DcCurrAcc,
-                            TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount),
-                            InvoiceHeaderId = x.InvoiceHeaderId,
-                            CreatedDate = x.CreatedDate,
-                            CreatedUserName = x.CreatedUserName,
-                            CurrAccCode = x.CurrAccCode,
-                            CustomsDocumentNumber = x.CustomsDocumentNumber,
-                            Description = x.Description,
-                            DocumentDate = x.DocumentDate,
-                            DocumentNumber = x.DocumentNumber,
-                            DocumentTime = x.DocumentTime,
-                            FiscalPrintedState = x.FiscalPrintedState,
-                            IsCompleted = x.IsCompleted,
-                            IsLocked = x.IsLocked,
-                            IsPrinted = x.IsPrinted,
-                            IsReturn = x.IsReturn,
-                            IsSalesViaInternet = x.IsSalesViaInternet,
-                            IsSuspended = x.IsSuspended,
-                            LastUpdatedDate = x.LastUpdatedDate,
-                            LastUpdatedUserName = x.LastUpdatedUserName,
-                            OfficeCode = x.OfficeCode,
-                            OperationDate = x.OperationDate,
-                            OperationTime = x.OperationTime,
-                            PosTerminalId = x.PosTerminalId,
-                            ProcessCode = x.ProcessCode,
-                            RelatedInvoiceId = x.RelatedInvoiceId,
-                            StoreCode = x.StoreCode,
-                            WarehouseCode = x.WarehouseCode,
-                        });
+                        .Load();
+            //.Select(x => new TrInvoiceHeader
+            //{
+            //    DcCurrAcc = x.DcCurrAcc,
+            //    TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmountLoc),
+            //    InvoiceHeaderId = x.InvoiceHeaderId,
+            //    CreatedDate = x.CreatedDate,
+            //    CreatedUserName = x.CreatedUserName,
+            //    CurrAccCode = x.CurrAccCode,
+            //    CustomsDocumentNumber = x.CustomsDocumentNumber,
+            //    Description = x.Description,
+            //    DocumentDate = x.DocumentDate,
+            //    DocumentNumber = x.DocumentNumber,
+            //    DocumentTime = x.DocumentTime,
+            //    FiscalPrintedState = x.FiscalPrintedState,
+            //    IsCompleted = x.IsCompleted,
+            //    IsLocked = x.IsLocked,
+            //    IsPrinted = x.IsPrinted,
+            //    IsReturn = x.IsReturn,
+            //    IsSalesViaInternet = x.IsSalesViaInternet,
+            //    IsSuspended = x.IsSuspended,
+            //    LastUpdatedDate = x.LastUpdatedDate,
+            //    LastUpdatedUserName = x.LastUpdatedUserName,
+            //    OfficeCode = x.OfficeCode,
+            //    OperationDate = x.OperationDate,
+            //    OperationTime = x.OperationTime,
+            //    PosTerminalId = x.PosTerminalId,
+            //    ProcessCode = x.ProcessCode,
+            //    RelatedInvoiceId = x.RelatedInvoiceId,
+            //    StoreCode = x.StoreCode,
+            //    WarehouseCode = x.WarehouseCode,
+            //});
 
-            trInvoiceHeadersBindingSource.DataSource = filteredData.ToList();
+            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
             //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }

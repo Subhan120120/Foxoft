@@ -43,9 +43,9 @@ namespace Foxoft
             this.colDocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperationTime = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colTotalNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceHeaderList)).BeginInit();
@@ -62,8 +62,8 @@ namespace Foxoft
             this.gC_InvoiceHeaderList.TabIndex = 0;
             this.gC_InvoiceHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceHeaderList});
-            this.gC_InvoiceHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceHeaderList_ProcessGridKey);
             this.gC_InvoiceHeaderList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_InvoiceHeaderList_Paint);
+            this.gC_InvoiceHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceHeaderList_ProcessGridKey);
             // 
             // trInvoiceHeadersBindingSource
             // 
@@ -79,16 +79,15 @@ namespace Foxoft
             this.colDocumentTime,
             this.colOperationDate,
             this.colOperationTime,
-            this.colTotalNetAmount,
             this.colStoreCode,
-            this.colCurrAccDesc});
+            this.colCurrAccDesc,
+            this.colTotalNetAmount});
             this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
             this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
             this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
             this.gV_InvoiceHeaderList.OptionsView.FilterCriteriaDisplayStyle = DevExpress.XtraEditors.FilterCriteriaDisplayStyle.Visual;
             this.gV_InvoiceHeaderList.OptionsView.ShowAutoFilterRow = true;
             this.gV_InvoiceHeaderList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_InvoiceHeaderList_RowStyle);
-            this.gV_InvoiceHeaderList.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceHeaderList_CellValueChanging);
             this.gV_InvoiceHeaderList.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceHeaderList_CellValueChanging);
             this.gV_InvoiceHeaderList.ColumnFilterChanged += new System.EventHandler(this.gV_InvoiceHeaderList_ColumnFilterChanged);
             this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gV_TrInvoiceHeaderList_DoubleClick);
@@ -142,28 +141,26 @@ namespace Foxoft
             this.colOperationTime.Visible = true;
             this.colOperationTime.VisibleIndex = 6;
             // 
-            // colTotalNetAmount
-            // 
-            this.colTotalNetAmount.DisplayFormat.FormatString = "{0:n2}";
-            this.colTotalNetAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colTotalNetAmount.FieldName = "TotalNetAmount";
-            this.colTotalNetAmount.Name = "colTotalNetAmount";
-            this.colTotalNetAmount.Visible = true;
-            this.colTotalNetAmount.VisibleIndex = 7;
-            // 
             // colStoreCode
             // 
             this.colStoreCode.FieldName = "StoreCode";
             this.colStoreCode.Name = "colStoreCode";
             this.colStoreCode.Visible = true;
-            this.colStoreCode.VisibleIndex = 8;
+            this.colStoreCode.VisibleIndex = 7;
             // 
             // colCurrAccDesc
             // 
             this.colCurrAccDesc.FieldName = "DcCurrAcc.CurrAccDesc";
             this.colCurrAccDesc.Name = "colCurrAccDesc";
             this.colCurrAccDesc.Visible = true;
-            this.colCurrAccDesc.VisibleIndex = 9;
+            this.colCurrAccDesc.VisibleIndex = 8;
+            // 
+            // colTotalNetAmount
+            // 
+            this.colTotalNetAmount.FieldName = "TotalNetAmount";
+            this.colTotalNetAmount.Name = "colTotalNetAmount";
+            this.colTotalNetAmount.Visible = true;
+            this.colTotalNetAmount.VisibleIndex = 9;
             // 
             // FormInvoiceHeaderList
             // 
