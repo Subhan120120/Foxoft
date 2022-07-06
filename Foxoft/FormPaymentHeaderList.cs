@@ -73,7 +73,7 @@ namespace Foxoft
             GridHitInfo info = view.CalcHitInfo(ea.Location);
             if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
             {
-                string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
                 trPaymentHeader = view.GetRow(view.FocusedRowHandle) as TrPaymentHeader;
 

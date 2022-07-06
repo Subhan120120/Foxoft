@@ -30,7 +30,6 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            //OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
@@ -72,12 +71,15 @@ namespace Foxoft
             paymentHeader.DocumentNumber = NewDocNum;
             paymentHeader.DocumentDate = DateTime.Now;
             paymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+            paymentHeader.OfficeCode = Authorization.OfficeCode;
 
             e.NewObject = paymentHeader;
         }
 
         private void trPaymentHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
+            trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
+
             if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
             {
                 int count = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).Count;
@@ -124,8 +126,11 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            dbContext.TrPaymentHeaders.Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
+            dbContext.TrPaymentHeaders.Include(x => x.DcCurrAcc)
+                                      .Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
+
             LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
+
             trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
 
             dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == paymentHeaderId)
@@ -164,6 +169,7 @@ namespace Foxoft
                 {
                     CurrAccCodeButtonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
                     trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
+
                 }
             }
         }
@@ -224,12 +230,12 @@ namespace Foxoft
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            SavePayment();
+            //SavePayment();
         }
 
         private void gV_PaymentLine_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
         {
-            SavePayment();
+            //SavePayment();
         }
 
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
@@ -239,6 +245,16 @@ namespace Foxoft
             gV_PaymentLine.SetFocusedRowCellValue(colExchangeRate, exRate);
 
             CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_PaymentLine.FocusedRowHandle, colExchangeRate, exRate));
+        }
+
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+            {
+                int count = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).Count;
+                if (count > 0)
+                    SavePayment();
+            }
         }
     }
 }

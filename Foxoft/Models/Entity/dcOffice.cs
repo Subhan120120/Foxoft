@@ -17,7 +17,6 @@ namespace Foxoft.Models
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string OfficeCode { get; set; }
 
-        [DefaultValue("space(0)")]
         [DisplayName("Ofis Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]

@@ -15,7 +15,6 @@ namespace Foxoft.Models
         [DisplayName("Özəllik Kodu")]
         public int Id { get; set; }
 
-        [DefaultValue("400")]
         [DisplayName("Özəllik Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string FeatureName { get; set; }

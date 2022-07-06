@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -119,6 +120,7 @@ namespace Foxoft.Models
 
         [DisplayName("Doğum Günü")]
         [Column(TypeName = "date")]
+        [DefaultValue("'1901-01-01'")]
         public DateTime? BirthDate { get; set; }
 
 

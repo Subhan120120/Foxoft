@@ -28,7 +28,6 @@ namespace Foxoft
         subContext dbContext;
         public string processCode { get; set; }
 
-        List<object> filters = new List<object>();
 
         public FormInvoiceHeaderList()
         {
@@ -75,42 +74,42 @@ namespace Foxoft
             IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
 
-            filteredData.Include(x => x.TrInvoiceLines)
+            List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
                         .Include(x => x.DcCurrAcc)
                         .Where(x => x.ProcessCode == processCode)
                         .OrderByDescending(x => x.DocumentDate)
-                        .Load();
-            //.Select(x => new TrInvoiceHeader
-            //{
-            //    DcCurrAcc = x.DcCurrAcc,
-            //    TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmountLoc),
-            //    InvoiceHeaderId = x.InvoiceHeaderId,
-            //    CreatedDate = x.CreatedDate,
-            //    CreatedUserName = x.CreatedUserName,
-            //    CurrAccCode = x.CurrAccCode,
-            //    CustomsDocumentNumber = x.CustomsDocumentNumber,
-            //    Description = x.Description,
-            //    DocumentDate = x.DocumentDate,
-            //    DocumentNumber = x.DocumentNumber,
-            //    DocumentTime = x.DocumentTime,
-            //    FiscalPrintedState = x.FiscalPrintedState,
-            //    IsCompleted = x.IsCompleted,
-            //    IsLocked = x.IsLocked,
-            //    IsPrinted = x.IsPrinted,
-            //    IsReturn = x.IsReturn,
-            //    IsSalesViaInternet = x.IsSalesViaInternet,
-            //    IsSuspended = x.IsSuspended,
-            //    LastUpdatedDate = x.LastUpdatedDate,
-            //    LastUpdatedUserName = x.LastUpdatedUserName,
-            //    OfficeCode = x.OfficeCode,
-            //    OperationDate = x.OperationDate,
-            //    OperationTime = x.OperationTime,
-            //    PosTerminalId = x.PosTerminalId,
-            //    ProcessCode = x.ProcessCode,
-            //    RelatedInvoiceId = x.RelatedInvoiceId,
-            //    StoreCode = x.StoreCode,
-            //    WarehouseCode = x.WarehouseCode,
-            //});
+            //.Load();
+            .Select(x => new TrInvoiceHeader
+            {
+                DcCurrAcc = x.DcCurrAcc,
+                TotalNetAmount = x.TotalNetAmount,
+                InvoiceHeaderId = x.InvoiceHeaderId,
+                CreatedDate = x.CreatedDate,
+                CreatedUserName = x.CreatedUserName,
+                CurrAccCode = x.CurrAccCode,
+                CustomsDocumentNumber = x.CustomsDocumentNumber,
+                Description = x.Description,
+                DocumentDate = x.DocumentDate,
+                DocumentNumber = x.DocumentNumber,
+                DocumentTime = x.DocumentTime,
+                FiscalPrintedState = x.FiscalPrintedState,
+                IsCompleted = x.IsCompleted,
+                IsLocked = x.IsLocked,
+                IsPrinted = x.IsPrinted,
+                IsReturn = x.IsReturn,
+                IsSalesViaInternet = x.IsSalesViaInternet,
+                IsSuspended = x.IsSuspended,
+                LastUpdatedDate = x.LastUpdatedDate,
+                LastUpdatedUserName = x.LastUpdatedUserName,
+                OfficeCode = x.OfficeCode,
+                OperationDate = x.OperationDate,
+                OperationTime = x.OperationTime,
+                PosTerminalId = x.PosTerminalId,
+                ProcessCode = x.ProcessCode,
+                RelatedInvoiceId = x.RelatedInvoiceId,
+                StoreCode = x.StoreCode,
+                WarehouseCode = x.WarehouseCode,
+            }).ToList();
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
@@ -125,7 +124,7 @@ namespace Foxoft
             if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
             {
                 //info.RowHandle
-                string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
                 trInvoiceHeader = view.GetRow(view.FocusedRowHandle) as TrInvoiceHeader;
 

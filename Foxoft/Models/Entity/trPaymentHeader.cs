@@ -29,20 +29,24 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string DocumentNumber { get; set; }
 
+        [DefaultValue("getdate()")]
         [Column(TypeName = "date")]
         [DisplayName("Ödəniş Tarixi")]
         public DateTime DocumentDate { get; set; }
 
         [DisplayName("Ödəniş Vaxtı")]
         [Column(TypeName = "time(0)")]
+        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan DocumentTime { get; set; }
 
+        [DefaultValue("getdate()")]
         [Column(TypeName = "date")]
         [DisplayName("Əməliyat Tarixi")]
         public DateTime OperationDate { get; set; }
 
         [DisplayName("Əməliyat Vaxtı")]
         [Column(TypeName = "time(0)")]
+        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan OperationTime { get; set; }
 
         //[DisplayName("Faktura Nömrəsi")]
@@ -79,21 +83,16 @@ namespace Foxoft.Models
         [DisplayName("POS Terminal")]
         public short PosterminalId { get; set; }
 
-        [DisplayName("Valyuta")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string CurrencyCode { get; set; }
-
-        [DisplayName("Valyuta Kursu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public double ExchangeRate { get; set; }
-
         [DisplayName("Tamamlanıb")]
         public bool IsCompleted { get; set; }
 
         [DisplayName("Kilidlənib")]
         public bool IsLocked { get; set; }
+
+
+        //[NotMapped] //datalayoutColntrola gore
+        [DisplayName("Cari Hesab Açıqlaması")]
+        public string CurrAccDesc { get { if (!Object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }
 
         //[NotMapped]
         [DisplayName("Toplam")]

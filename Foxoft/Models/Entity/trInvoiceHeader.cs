@@ -39,19 +39,23 @@ namespace Foxoft.Models
         public bool IsReturn { get; set; }
 
         [Column(TypeName = "date")]
+        [DefaultValue("getdate()")]
         [DisplayName("Faktura Tarixi")]
         public DateTime DocumentDate { get; set; }
 
         [Column(TypeName = "time(0)")]
         [DisplayName("Faktura Vaxtı")]
+        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan DocumentTime { get; set; }
 
         [Column(TypeName = "date")]
+        [DefaultValue("getdate()")]
         [DisplayName("Əməliyat Tarixi")]
         public DateTime OperationDate { get; set; }
 
         [Column(TypeName = "time(0)")]
         [DisplayName("Əməliyat Vaxtı")]
+        [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
         public TimeSpan OperationTime { get; set; }
 
 
@@ -108,14 +112,14 @@ namespace Foxoft.Models
         [DisplayName("Kilidlənib")]
         public bool IsLocked { get; set; }
 
-        //[NotMapped]
+        //[NotMapped] //datalayoutColntrola gore
         [DisplayName("Cari Hesab Açıqlaması")]
-        public string CurrAccDesc { get { if (!object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }
+        public string CurrAccDesc { get { if (!Object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }
 
-        //[NotMapped]
+        [NotMapped]
         [DisplayName("Tutar")]
         //public decimal TotalNetAmount { get; set; }
-        public decimal TotalNetAmount { get { return TrInvoiceLines.Sum(t => t.NetAmountLoc); } }
+        public decimal TotalNetAmount { get { return TrInvoiceLines.Sum(l => l.NetAmountLoc / 1.703m); } set { } }
 
 
 

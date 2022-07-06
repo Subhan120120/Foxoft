@@ -62,6 +62,7 @@ namespace Foxoft
             this.col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAmountLoc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNetAmountLoc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
             this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -106,7 +107,6 @@ namespace Foxoft
             this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbl_Payment = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
-            this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -447,6 +447,12 @@ namespace Foxoft
             this.colNetAmountLoc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colNetAmountLoc.FieldName = "NetAmountLoc";
             this.colNetAmountLoc.Name = "colNetAmountLoc";
+            // 
+            // colCreatedUserName
+            // 
+            this.colCreatedUserName.FieldName = "CreatedUserName";
+            this.colCreatedUserName.Name = "colCreatedUserName";
+            this.colCreatedUserName.OptionsColumn.ReadOnly = true;
             // 
             // CheckEdit_IsReturn
             // 
@@ -907,14 +913,6 @@ namespace Foxoft
             this.ItemForCurrAccDesc.Size = new System.Drawing.Size(213, 24);
             this.ItemForCurrAccDesc.Text = "Cari Hesab Açıqlaması";
             this.ItemForCurrAccDesc.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // colCreatedUserName
-            // 
-            this.colCreatedUserName.FieldName = "CreatedUserName";
-            this.colCreatedUserName.Name = "colCreatedUserName";
-            this.colCreatedUserName.OptionsColumn.ReadOnly = true;
-            this.colCreatedUserName.Visible = true;
-            this.colCreatedUserName.VisibleIndex = 9;
             // 
             // FormInvoice
             // 

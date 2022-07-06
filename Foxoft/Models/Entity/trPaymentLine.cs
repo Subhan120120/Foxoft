@@ -43,12 +43,41 @@ namespace Foxoft.Models
 
         [DisplayName("Valyuta Kursu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public float ExchangeRate { get; set; }
+        public float ExchangeRate { get; set; } = 1;
 
         [DisplayName("Kassa")]
         [ForeignKey("DcCurrAcc")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string CashRegisterCode { get; set; }
+
+
+        [NotMapped]
+        [DisplayName("Ödəniş Et")]
+        public decimal MakePayment
+        {
+            get
+            {
+                if (Payment < 0)
+                    return Payment * (-1);
+                else return 0;
+            }
+            set => Payment = value * (-1);
+
+        }
+
+        [NotMapped]
+        [DisplayName("Ödəniş Al")]
+        public decimal ReceivePayment
+        {
+            get
+            {
+                if (Payment > 0)
+                    return Payment;
+                else return 0;
+            }
+            set => Payment = value;
+        }
+
 
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentType DcPaymentType { get; set; }

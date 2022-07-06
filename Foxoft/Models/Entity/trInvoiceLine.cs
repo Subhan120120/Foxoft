@@ -43,17 +43,26 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public double Price { get; set; }
 
+        [DisplayName("Valyuta")]
+        [ForeignKey("DcCurrency")]
+        public string CurrencyCode { get; set; } = "USD";
+
+        [DefaultValue("1.703")]
+        [DisplayName("Valyuta Kursu")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public float ExchangeRate { get; set; }
+
         [DisplayName("Qiymət (AZN)")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public double PriceLoc { get; set; }
+        public double PriceLoc { get { return Price * ExchangeRate; } set {  } }
 
         [Column(TypeName = "money")]
         [DisplayName("Tutar")]
-        public decimal Amount { get; set; }
+        public decimal Amount { get { return (QtyIn + QtyOut) * (decimal)Price; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Tutar (AZN)")]
-        public decimal AmountLoc { get; set; }
+        public decimal AmountLoc { get { return (QtyIn + QtyOut) * (decimal)PriceLoc; } set { } }
 
         [DisplayName("Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
@@ -62,11 +71,11 @@ namespace Foxoft.Models
 
         [Column(TypeName = "money")]
         [DisplayName("Net Tutar")]
-        public decimal NetAmount { get; set; }
+        public decimal NetAmount { get { return (QtyIn + QtyOut) * (decimal)Price; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Net Tutar (AZN)")]
-        public decimal NetAmountLoc { get; set; }
+        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * (decimal)PriceLoc; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Kampaniya Endirimi")]
@@ -83,13 +92,6 @@ namespace Foxoft.Models
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
         public string SalesPersonCode { get; set; }
 
-        [DisplayName("Valyuta")]
-        [ForeignKey("DcCurrency")]
-        public string CurrencyCode { get; set; } = "USD";
-
-        [DisplayName("Valyuta Kursu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public float ExchangeRate { get; set; } = 1.703f;
 
 
         [NotMapped]

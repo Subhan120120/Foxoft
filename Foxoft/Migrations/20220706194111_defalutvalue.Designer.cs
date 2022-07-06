@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220706194111_defalutvalue")]
+    partial class defalutvalue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,11 +147,15 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsVip")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasColumnName("IsVIP");
+                        .HasColumnName("IsVIP")
+                        .HasDefaultValueSql("0");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(60)
@@ -320,8 +326,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("CurrAccTypeDesc")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<bool>("IsDisabled")
                         .HasColumnType("bit");
@@ -418,7 +426,9 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("FeatureName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("400");
 
                     b.HasKey("Id");
 
@@ -461,8 +471,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("OfficeDesc")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(150)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<Guid>("RowGuid")
                         .HasColumnType("uniqueidentifier");
@@ -501,8 +513,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("PaymentTypeDesc")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.HasKey("PaymentTypeCode");
 
@@ -528,8 +542,10 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("ProcessDesc")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(150)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.HasKey("ProcessCode");
 
@@ -590,8 +606,10 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Barcode")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -605,7 +623,9 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
                     b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -619,45 +639,66 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
                     b.Property<double>("PosDiscount")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("0");
 
                     b.Property<string>("ProductDesc")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(150)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<byte>("ProductTypeCode")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("PromotionCode")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("PromotionCode2")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<double>("PurchasePrice")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("0");
 
                     b.Property<double>("RetailPrice")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("0");
 
                     b.Property<double>("TaxRate")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("UseInternet")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("UsePos")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<double>("WholesalePrice")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("0");
 
                     b.HasKey("ProductCode");
 
-                    b.HasIndex("ProductTypeCode");
+                    b.HasIndex("ProductTypeCode")
+                        .HasDatabaseName("IX_ProductTypeCode");
 
                     b.ToTable("DcProducts");
 
@@ -739,8 +780,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("ProductTypeDesc")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.HasKey("ProductTypeCode");
 
@@ -1009,9 +1052,10 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
                     b.Property<string>("OfficeCode")
-                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(5)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<bool>("PermitNegativeStock")
                         .HasColumnType("bit");
@@ -1021,13 +1065,17 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("StoreCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("WarehouseDesc")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(150)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<byte>("WarehouseTypeCode")
                         .HasColumnType("tinyint");
@@ -1051,10 +1099,8 @@ namespace Foxoft.Migrations
                             IsDefault = false,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OfficeCode = "ofs01",
                             PermitNegativeStock = false,
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
                             WarehouseDesc = "Bakıxanov deposu",
                             WarehouseTypeCode = (byte)0,
                             WarnNegativeStock = false,
@@ -1068,10 +1114,8 @@ namespace Foxoft.Migrations
                             IsDefault = false,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OfficeCode = "ofs01",
                             PermitNegativeStock = false,
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
                             WarehouseDesc = "Elmlər deposu",
                             WarehouseTypeCode = (byte)0,
                             WarnNegativeStock = false,
@@ -1257,8 +1301,10 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Description")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("DocumentDate")
                         .ValueGeneratedOnAdd()
@@ -1267,8 +1313,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<TimeSpan>("DocumentTime")
                         .ValueGeneratedOnAdd()
@@ -1276,25 +1324,39 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
                     b.Property<byte>("FiscalPrintedState")
-                        .HasColumnType("tinyint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsPrinted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsReturn")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsSalesViaInternet")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsSuspended")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -1324,13 +1386,17 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("PosTerminalId")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("ProcessCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(5)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<Guid?>("RelatedInvoiceId")
                         .HasColumnType("uniqueidentifier");
@@ -1360,7 +1426,9 @@ namespace Foxoft.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("0");
 
                     b.Property<decimal>("AmountLoc")
                         .HasColumnType("money");
@@ -1380,12 +1448,14 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<decimal>("DiscountCampaign")
-                        .HasColumnType("money");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("0");
 
                     b.Property<float>("ExchangeRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
-                        .HasDefaultValueSql("1.703");
+                        .HasDefaultValueSql("1");
 
                     b.Property<Guid>("InvoiceHeaderId")
                         .HasColumnType("uniqueidentifier");
@@ -1406,16 +1476,22 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("NetAmount")
-                        .HasColumnType("money");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("0");
 
                     b.Property<decimal>("NetAmountLoc")
                         .HasColumnType("money");
 
                     b.Property<decimal>("PosDiscount")
-                        .HasColumnType("money");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("0");
 
                     b.Property<double>("Price")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("0");
 
                     b.Property<double>("PriceLoc")
                         .HasColumnType("float");
@@ -1426,10 +1502,14 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("QtyIn")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("QtyOut")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("0");
 
                     b.Property<Guid?>("RelatedLineId")
                         .HasColumnType("uniqueidentifier");
@@ -1439,7 +1519,9 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<float>("VatRate")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValueSql("0");
 
                     b.HasKey("InvoiceLineId");
 
@@ -1476,6 +1558,13 @@ namespace Foxoft.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
+
                     b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -1487,21 +1576,33 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<TimeSpan>("DocumentTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("time(0)")
                         .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
+                    b.Property<double>("ExchangeRate")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(60)
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("1");
+
                     b.Property<Guid?>("InvoiceHeaderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -1534,7 +1635,9 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<short>("PosterminalId")
-                        .HasColumnType("smallint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("StoreCode")
                         .IsRequired()
@@ -1576,7 +1679,9 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<float>("ExchangeRate")
-                        .HasColumnType("real");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValueSql("1");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -1594,13 +1699,17 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("Payment")
-                        .HasColumnType("money");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("0");
 
                     b.Property<Guid>("PaymentHeaderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("PaymentLoc")
-                        .HasColumnType("money");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValueSql("0");
 
                     b.Property<byte>("PaymentTypeCode")
                         .HasColumnType("tinyint");
@@ -1749,8 +1858,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
@@ -1780,56 +1891,80 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("OfficeCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("OperationDate")
-                        .HasColumnType("date");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<TimeSpan>("OperationTime")
-                        .HasColumnType("time(0)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("time(0)")
+                        .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
                     b.Property<string>("ProcessCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(5)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<byte>("ShipTypeCode")
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime>("ShippingDate")
-                        .HasColumnType("date");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("ShippingNumber")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<Guid?>("ShippingPostalAddressId")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(60)
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<TimeSpan>("ShippingTime")
-                        .HasColumnType("time(0)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("time(0)")
+                        .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
                     b.Property<string>("StoreCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("ToWarehouseCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("TransferApprovedDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("WarehouseCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(30)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.HasKey("ShipmentHeaderId");
 
@@ -1844,8 +1979,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("ColorCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -1860,8 +1997,10 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("CurrencyCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
@@ -1876,27 +2015,37 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("LineDescription")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("money");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
 
                     b.Property<string>("ProductCode")
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<string>("ProductDimensionCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
                     b.Property<string>("SalespersonCode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.Property<Guid>("ShipmentHeaderId")
                         .HasColumnType("uniqueidentifier");
@@ -1906,12 +2055,15 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("UsedBarcode")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValueSql("space(0)");
 
                     b.HasKey("ShipmentLineId");
 
-                    b.HasIndex("ShipmentHeaderId");
+                    b.HasIndex("ShipmentHeaderId")
+                        .HasDatabaseName("IX_ShipmentHeaderID");
 
                     b.ToTable("TrShipmentLines");
                 });
