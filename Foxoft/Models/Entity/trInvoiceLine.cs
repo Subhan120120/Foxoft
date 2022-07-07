@@ -29,13 +29,53 @@ namespace Foxoft.Models
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProductCode { get; set; }
 
+        [NotMapped]
+        [DisplayName("Say")]
+        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+        public int Qty
+        {
+            get
+            {
+                if (!Object.ReferenceEquals(TrInvoiceHeader, null))
+                {
+                    if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
+                        if (TrInvoiceHeader.IsReturn)
+                            return QtyIn * (-1);
+                        else return QtyIn;
+
+                    else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
+                        if (TrInvoiceHeader.IsReturn)
+                            return QtyOut * (-1);
+                        else return QtyOut;
+
+                    else
+                        return 5041;
+                }
+                else
+                    return 5042;
+            }
+            set
+            {
+                if (!Object.ReferenceEquals(TrInvoiceHeader, null))
+                {
+                    if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
+                        if (TrInvoiceHeader.IsReturn)
+                            QtyIn = value * (-1);
+                        else QtyIn = value;
+
+                    else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
+                        if (TrInvoiceHeader.IsReturn)
+                            QtyOut = value * (-1);
+                        else QtyOut = value;
+                }
+            }
+        }
+
         [DisplayName("Say Giriş")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
         public int QtyIn { get; set; }
 
         [DisplayName("Say Çıxış")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
         public int QtyOut { get; set; }
 

@@ -107,6 +107,7 @@ namespace Foxoft
             this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbl_Payment = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
+            this.colQty = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -216,6 +217,7 @@ namespace Foxoft
             this.col_InvoiceLineId,
             this.col_InvoiceHeaderId,
             this.col_ProductCode,
+            this.colQty,
             this.colQtyIn,
             this.colQtyOut,
             this.colPriceLoc,
@@ -285,7 +287,7 @@ namespace Foxoft
             this.colQtyIn.FieldName = "QtyIn";
             this.colQtyIn.Name = "colQtyIn";
             this.colQtyIn.Visible = true;
-            this.colQtyIn.VisibleIndex = 2;
+            this.colQtyIn.VisibleIndex = 3;
             this.colQtyIn.Width = 89;
             // 
             // colQtyOut
@@ -293,7 +295,7 @@ namespace Foxoft
             this.colQtyOut.FieldName = "QtyOut";
             this.colQtyOut.Name = "colQtyOut";
             this.colQtyOut.Visible = true;
-            this.colQtyOut.VisibleIndex = 3;
+            this.colQtyOut.VisibleIndex = 4;
             this.colQtyOut.Width = 89;
             // 
             // colPriceLoc
@@ -318,7 +320,7 @@ namespace Foxoft
             this.col_Price.FieldName = "Price";
             this.col_Price.Name = "col_Price";
             this.col_Price.Visible = true;
-            this.col_Price.VisibleIndex = 4;
+            this.col_Price.VisibleIndex = 5;
             this.col_Price.Width = 89;
             // 
             // repoCalcEdit_Price
@@ -338,7 +340,7 @@ namespace Foxoft
             this.colCurrencyCode.FieldName = "CurrencyCode";
             this.colCurrencyCode.Name = "colCurrencyCode";
             this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 5;
+            this.colCurrencyCode.VisibleIndex = 6;
             // 
             // repoLUE_CurrencyCode
             // 
@@ -364,7 +366,7 @@ namespace Foxoft
             this.colExchangeRate.FieldName = "ExchangeRate";
             this.colExchangeRate.Name = "colExchangeRate";
             this.colExchangeRate.Visible = true;
-            this.colExchangeRate.VisibleIndex = 6;
+            this.colExchangeRate.VisibleIndex = 7;
             // 
             // col_Amount
             // 
@@ -395,7 +397,7 @@ namespace Foxoft
             this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "SUM={0:0.##}")});
             this.col_NetAmount.Visible = true;
-            this.col_NetAmount.VisibleIndex = 7;
+            this.col_NetAmount.VisibleIndex = 8;
             this.col_NetAmount.Width = 97;
             // 
             // col_LineDesc
@@ -404,7 +406,7 @@ namespace Foxoft
             this.col_LineDesc.FieldName = "LineDescription";
             this.col_LineDesc.Name = "col_LineDesc";
             this.col_LineDesc.Visible = true;
-            this.col_LineDesc.VisibleIndex = 8;
+            this.col_LineDesc.VisibleIndex = 9;
             this.col_LineDesc.Width = 89;
             // 
             // col_SalesPersonCode
@@ -914,6 +916,13 @@ namespace Foxoft
             this.ItemForCurrAccDesc.Text = "Cari Hesab Açıqlaması";
             this.ItemForCurrAccDesc.TextSize = new System.Drawing.Size(104, 13);
             // 
+            // colQty
+            // 
+            this.colQty.FieldName = "Qty";
+            this.colQty.Name = "colQty";
+            this.colQty.Visible = true;
+            this.colQty.VisibleIndex = 2;
+            // 
             // FormInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1052,5 +1061,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
+        private DevExpress.XtraGrid.Columns.GridColumn colQty;
     }
 }

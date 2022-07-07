@@ -49,7 +49,7 @@ namespace Foxoft
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
-            //gV_InvoiceLine.OptionsNavigation.AutoFocusNewRow = true;
+
             //bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             this.productTypeCode = productTypeCode;
@@ -114,6 +114,7 @@ namespace Foxoft
             lbl_InvoicePaidSum.Text = "";
 
             dbContext.TrInvoiceLines.Include(x => x.DcProduct)
+                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
@@ -150,6 +151,14 @@ namespace Foxoft
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+            if (!Object.ReferenceEquals(trInvoiceHeader, null))
+                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                {
+                    int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut);
+                    int qtyInAbs = Math.Abs(qtyIn);
+                    gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
+                }
 
             if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
             {
@@ -196,6 +205,7 @@ namespace Foxoft
             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
 
             dbContext.TrInvoiceLines.Include(o => o.DcProduct)
+                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
                                     .OrderBy(x => x.CreatedDate)
                                     .LoadAsync()
@@ -249,10 +259,11 @@ namespace Foxoft
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             //GridView gv = sender as GridView;
+            //trInvoiceLinesBindingSource.DataSource = new TrInvoiceLine() { };
 
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, dcProcess.ProcessDir == 1 ? colQtyIn : colQtyOut, 1);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, colQty, 1);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
         }
@@ -426,6 +437,7 @@ namespace Foxoft
 
         private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
         {
+            #region DXMouseEventArgs ea
             //DXMouseEventArgs ea = e as DXMouseEventArgs;
             //GridView view = sender as GridView;
             //GridHitInfo info = view.CalcHitInfo(ea.Location);
@@ -434,7 +446,8 @@ namespace Foxoft
             //{
             //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
             //    MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
-            //}
+            //} 
+            #endregion
         }
 
         void editor_DoubleClick(object sender, EventArgs e)
@@ -454,17 +467,12 @@ namespace Foxoft
                 {
                     SelectSalesPerson(sender);
                 }
-                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-                //MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
             }
         }
 
         private void SelectSalesPerson(object sender)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            //if (buttonIndex == 0)
-            //{
             using (FormCurrAccList form = new FormCurrAccList(0))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
@@ -472,7 +480,6 @@ namespace Foxoft
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;
                 }
             }
-            //}
         }
 
         private void SelectProduct(object sender)
@@ -482,9 +489,7 @@ namespace Foxoft
                 productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
 
             ButtonEdit editor = (ButtonEdit)sender;
-            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            //if (buttonIndex == 0)
-            //{
+
             using (FormProductList form = new FormProductList(productTypeCode, productCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
@@ -496,13 +501,12 @@ namespace Foxoft
 
                     double price = dcProcess.ProcessCode == "RS" ? form.dcProduct.RetailPrice : (dcProcess.ProcessCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
-
-                    //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, col_Price, price));
                 }
             }
 
             gV_InvoiceLine.UpdateCurrentRow();
-            //}
+
+            gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1); // if qty defaultValue doesnt work            
         }
 
         private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
@@ -526,13 +530,6 @@ namespace Foxoft
 
         private void SaveInvoice()
         {
-            //for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-            //{
-            //    //MakeReturnIsNegativ(i);
-            //}
-            //if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
-            //    efMethods.InsertInvoiceHeader(trInvoiceHeader);
-
             efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
 
             try
@@ -589,11 +586,6 @@ namespace Foxoft
                 decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc));
                 summaryNetAmount += netAmount;
             }
-
-            //if ((bool)CheckEdit_IsReturn.EditValue)
-            //    summaryNetAmount *= (-1);
-            //if (CustomExtensions.ProcessDir(processCode) != "In")
-            //    summaryNetAmount *= (-1);
 
             return summaryNetAmount;
         }

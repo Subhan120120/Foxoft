@@ -59,14 +59,16 @@ namespace Foxoft
             this.colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoBtnEdit_CashregisterCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.colReceivePayment = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colMakePayment = new DevExpress.XtraGrid.Columns.GridColumn();
             this.OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             this.DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.StoreCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             this.CurrAccCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
-            this.DocumentNumberTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.CurrAccDescTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.ItemForOperationTime = new DevExpress.XtraLayout.LayoutControlItem();
@@ -77,8 +79,6 @@ namespace Foxoft
             this.ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForCurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
-            this.colReceivePayment = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMakePayment = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
@@ -97,8 +97,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreCodeLookUpEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CurrAccCodeButtonEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentNumberTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CurrAccDescTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationTime)).BeginInit();
@@ -172,8 +172,8 @@ namespace Foxoft
             this.dataLayoutControl1.Controls.Add(this.DescriptionTextEdit);
             this.dataLayoutControl1.Controls.Add(this.StoreCodeLookUpEdit);
             this.dataLayoutControl1.Controls.Add(this.CurrAccCodeButtonEdit);
-            this.dataLayoutControl1.Controls.Add(this.DocumentNumberTextEdit);
             this.dataLayoutControl1.Controls.Add(this.CurrAccDescTextEdit);
+            this.dataLayoutControl1.Controls.Add(this.btnEdit_DocNum);
             this.dataLayoutControl1.DataSource = this.trPaymentHeadersBindingSource;
             this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataLayoutControl1.Location = new System.Drawing.Point(0, 158);
@@ -374,6 +374,20 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.repoBtnEdit_CashregisterCode.Name = "repoBtnEdit_CashregisterCode";
             // 
+            // colReceivePayment
+            // 
+            this.colReceivePayment.FieldName = "ReceivePayment";
+            this.colReceivePayment.Name = "colReceivePayment";
+            this.colReceivePayment.Visible = true;
+            this.colReceivePayment.VisibleIndex = 5;
+            // 
+            // colMakePayment
+            // 
+            this.colMakePayment.FieldName = "MakePayment";
+            this.colMakePayment.Name = "colMakePayment";
+            this.colMakePayment.Visible = true;
+            this.colMakePayment.VisibleIndex = 6;
+            // 
             // OperationDateDateEdit
             // 
             this.OperationDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "OperationDate", true));
@@ -451,17 +465,6 @@ namespace Foxoft
             this.CurrAccCodeButtonEdit.TabIndex = 2;
             this.CurrAccCodeButtonEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.CurrAccCodeButtonEdit_ButtonClick);
             // 
-            // DocumentNumberTextEdit
-            // 
-            this.DocumentNumberTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "DocumentNumber", true));
-            this.DocumentNumberTextEdit.Location = new System.Drawing.Point(128, 12);
-            this.DocumentNumberTextEdit.MenuManager = this.ribbon;
-            this.DocumentNumberTextEdit.Name = "DocumentNumberTextEdit";
-            this.DocumentNumberTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.DocumentNumberTextEdit.Size = new System.Drawing.Size(314, 20);
-            this.DocumentNumberTextEdit.StyleController = this.dataLayoutControl1;
-            this.DocumentNumberTextEdit.TabIndex = 0;
-            // 
             // CurrAccDescTextEdit
             // 
             this.CurrAccDescTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "CurrAccDesc", true));
@@ -472,6 +475,20 @@ namespace Foxoft
             this.CurrAccDescTextEdit.Size = new System.Drawing.Size(133, 20);
             this.CurrAccDescTextEdit.StyleController = this.dataLayoutControl1;
             this.CurrAccDescTextEdit.TabIndex = 3;
+            // 
+            // btnEdit_DocNum
+            // 
+            this.btnEdit_DocNum.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "DocumentNumber", true));
+            this.btnEdit_DocNum.Location = new System.Drawing.Point(128, 12);
+            this.btnEdit_DocNum.MenuManager = this.ribbon;
+            this.btnEdit_DocNum.Name = "btnEdit_DocNum";
+            this.btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            this.btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.btnEdit_DocNum.Size = new System.Drawing.Size(314, 20);
+            this.btnEdit_DocNum.StyleController = this.dataLayoutControl1;
+            this.btnEdit_DocNum.TabIndex = 9;
+            this.btnEdit_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_DocNum_ButtonPressed);
             // 
             // Root
             // 
@@ -547,7 +564,7 @@ namespace Foxoft
             // 
             // ItemForDocumentNumber
             // 
-            this.ItemForDocumentNumber.Control = this.DocumentNumberTextEdit;
+            this.ItemForDocumentNumber.Control = this.btnEdit_DocNum;
             this.ItemForDocumentNumber.Location = new System.Drawing.Point(0, 0);
             this.ItemForDocumentNumber.Name = "ItemForDocumentNumber";
             this.ItemForDocumentNumber.Size = new System.Drawing.Size(434, 24);
@@ -571,20 +588,6 @@ namespace Foxoft
             this.ItemForCurrAccDesc.Size = new System.Drawing.Size(253, 24);
             this.ItemForCurrAccDesc.Text = "Cari Hesab Açıqlaması";
             this.ItemForCurrAccDesc.TextSize = new System.Drawing.Size(104, 13);
-            // 
-            // colReceivePayment
-            // 
-            this.colReceivePayment.FieldName = "ReceivePayment";
-            this.colReceivePayment.Name = "colReceivePayment";
-            this.colReceivePayment.Visible = true;
-            this.colReceivePayment.VisibleIndex = 5;
-            // 
-            // colMakePayment
-            // 
-            this.colMakePayment.FieldName = "MakePayment";
-            this.colMakePayment.Name = "colMakePayment";
-            this.colMakePayment.Visible = true;
-            this.colMakePayment.VisibleIndex = 6;
             // 
             // FormPaymentDetail
             // 
@@ -616,8 +619,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreCodeLookUpEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CurrAccCodeButtonEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentNumberTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CurrAccDescTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationTime)).EndInit();
@@ -689,5 +692,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colReceivePayment;
         private DevExpress.XtraGrid.Columns.GridColumn colMakePayment;
+        private DevExpress.XtraEditors.ButtonEdit btnEdit_DocNum;
     }
 }
