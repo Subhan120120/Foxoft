@@ -113,14 +113,14 @@ namespace Foxoft.Models
         [DisplayName("Kilidlənib")]
         public bool IsLocked { get; set; }
 
-        //[NotMapped] //datalayoutColntrola gore
+        [NotMapped] //datalayoutColntrola gore
         [DisplayName("Cari Hesab Açıqlaması")]
-        public string CurrAccDesc { get { if (!Object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }
+        public string CurrAccDesc { get { if (!Object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } set { } }
 
         [NotMapped]
         [DisplayName("Tutar")]
-        //public decimal TotalNetAmount { get; set; }
-        public decimal TotalNetAmount { get { return TrInvoiceLines.Sum(l => l.NetAmountLoc / 1.703m); } set { } }
+        public decimal TotalNetAmount { get; set; }
+        //public decimal TotalNetAmount { get { return TrInvoiceLines.Sum(l => l.NetAmountLoc / 1.703m); } set { } }
 
 
 

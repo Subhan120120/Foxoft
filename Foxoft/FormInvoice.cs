@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -102,8 +101,8 @@ namespace Foxoft
 
             invoiceHeaderId = Guid.NewGuid();
 
-            dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                      .Include(x => x.DcProcess)
+            dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
+                                      .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                       .Load();
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();

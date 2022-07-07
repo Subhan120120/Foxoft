@@ -48,6 +48,7 @@ namespace Foxoft
             this.colPosterminalId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.col_TotalPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_ReceivePayment = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_MakePayment = new DevExpress.XtraBars.BarButtonItem();
@@ -55,7 +56,6 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.colTotalPayment = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
@@ -201,6 +201,13 @@ namespace Foxoft
             this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
             this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
             // 
+            // colTotalPayment
+            // 
+            this.colTotalPayment.FieldName = "TotalPayment";
+            this.colTotalPayment.Name = "colTotalPayment";
+            this.colTotalPayment.Visible = true;
+            this.colTotalPayment.VisibleIndex = 7;
+            // 
             // ribbonControl1
             // 
             this.ribbonControl1.ExpandCollapseItem.Id = 0;
@@ -258,13 +265,6 @@ namespace Foxoft
             // 
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
-            // 
-            // colTotalPayment
-            // 
-            this.colTotalPayment.FieldName = "TotalPayment";
-            this.colTotalPayment.Name = "colTotalPayment";
-            this.colTotalPayment.Visible = true;
-            this.colTotalPayment.VisibleIndex = 7;
             // 
             // FormPaymentHeaderList
             // 

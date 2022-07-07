@@ -93,28 +93,31 @@ namespace Foxoft
             {
                 List<DcProduct> products = db.DcProducts.Include(x => x.TrInvoiceLines)
                                                             .ThenInclude(x => x.TrInvoiceHeader)
-                                                        .Select(x => new DcProduct
-                                                        {
-                                                            ProductCode = x.ProductCode,
-                                                            Barcode = x.Barcode,
-                                                            ProductTypeCode = x.ProductTypeCode,
-                                                            UsePos = x.UsePos,
-                                                            PromotionCode = x.PromotionCode,
-                                                            PromotionCode2 = x.PromotionCode2,
-                                                            TaxRate = x.TaxRate,
-                                                            PosDiscount = x.PosDiscount,
-                                                            IsDisabled = x.IsDisabled,
-                                                            RetailPrice = x.RetailPrice,
-                                                            PurchasePrice = x.PurchasePrice,
-                                                            WholesalePrice = x.WholesalePrice,
-                                                            UseInternet = x.UseInternet,
-                                                            ProductDesc = x.ProductDesc,
-                                                            CreatedUserName = x.CreatedUserName,
-                                                            CreatedDate = x.CreatedDate,
-                                                            LastUpdatedUserName = x.LastUpdatedUserName,
-                                                            LastUpdatedDate = x.LastUpdatedDate,
-                                                            Balance = x.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(s => s.TrInvoiceHeader.IsReturn == false ? s.QtyIn - s.QtyOut : s.QtyOut - s.QtyIn),
-                                                        })
+                                                        //.Select(x => new DcProduct
+                                                        //{
+                                                        //    Barcode = x.Barcode,
+                                                        //    Balance = x.Balance,
+                                                        //    DcProductType = x.DcProductType,
+                                                        //    ProductCode = x.ProductCode,
+                                                        //    ProductDesc = x.ProductDesc,
+                                                        //    PosDiscount = x.PosDiscount,
+                                                        //    RetailPrice = x.RetailPrice,
+                                                        //    PurchasePrice = x.PurchasePrice,
+                                                        //    ProductTypeCode = x.ProductTypeCode,
+                                                        //    WholesalePrice = x.WholesalePrice,
+                                                        //    UsePos = x.UsePos,
+                                                        //    UseInternet = x.UseInternet,
+                                                        //    CreatedDate = x.CreatedDate,
+                                                        //    CreatedUserName = x.CreatedUserName,
+                                                        //    IsDisabled = x.IsDisabled,
+                                                        //    TrPrices = x.TrPrices,
+                                                        //    LastUpdatedDate = x.LastUpdatedDate,
+                                                        //    LastUpdatedUserName = x.LastUpdatedUserName,
+                                                        //    PromotionCode = x.PromotionCode,
+                                                        //    PromotionCode2 = x.PromotionCode2,
+                                                        //    TaxRate = x.TaxRate,
+                                                        //    TrFeature = x.TrFeature
+                                                        //})
                                                         .ToList();
 
                 //products.ForEach(x =>
@@ -132,49 +135,34 @@ namespace Foxoft
         {
             using (subContext db = new subContext())
             {
-                List<DcProduct> products = db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
-                    .Include(x => x.TrInvoiceLines)
-                        .ThenInclude(x => x.TrInvoiceHeader)
-                    .Select(x => new DcProduct
-                    {
-                        Barcode = x.Barcode,
-                        Balance = x.Balance,
-                        DcProductType = x.DcProductType,
-                        ProductCode = x.ProductCode,
-                        ProductDesc = x.ProductDesc,
-                        PosDiscount = x.PosDiscount,
-                        RetailPrice = x.RetailPrice,
-                        PurchasePrice = x.PurchasePrice,
-                        ProductTypeCode = x.ProductTypeCode,
-                        WholesalePrice = x.WholesalePrice,
-                        UsePos = x.UsePos,
-                        UseInternet = x.UseInternet,
-                        CreatedDate = x.CreatedDate,
-                        CreatedUserName = x.CreatedUserName,
-                        IsDisabled = x.IsDisabled,
-                        TrPrices = x.TrPrices,
-                        LastUpdatedDate = x.LastUpdatedDate,
-                        LastUpdatedUserName = x.LastUpdatedUserName,
-                        PromotionCode = x.PromotionCode,
-                        PromotionCode2 = x.PromotionCode2,
-                        TaxRate = x.TaxRate,
-                        TrFeature = x.TrFeature
-                    })
-                    .ToList();
-
-                //products.ForEach(x =>
-                //{
-                //    TrPrice trPrice = db.TrPrices.Where(p => p.ProductCode == x.ProductCode)
-                //                              .OrderBy(p => p.CreatedDate)
-                //                              .Take(1)
-                //                              .FirstOrDefault();
-                //    if (trPrice != null)
-                //        x.RetailPrice = trPrice.Price;
-
-                //    int balance = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn + x.QtyOut);
-                //    x.Balance = balance;
-                //});
-                return products;
+                return db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
+                                    .Include(x => x.TrInvoiceLines)
+                                        .ThenInclude(x => x.TrInvoiceHeader)
+                                    .Select(x => new DcProduct
+                                    {
+                                        Barcode = x.Barcode,
+                                        Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                        DcProductType = x.DcProductType,
+                                        ProductCode = x.ProductCode,
+                                        ProductDesc = x.ProductDesc,
+                                        PosDiscount = x.PosDiscount,
+                                        RetailPrice = x.RetailPrice,
+                                        PurchasePrice = x.PurchasePrice,
+                                        ProductTypeCode = x.ProductTypeCode,
+                                        WholesalePrice = x.WholesalePrice,
+                                        UsePos = x.UsePos,
+                                        UseInternet = x.UseInternet,
+                                        CreatedDate = x.CreatedDate,
+                                        CreatedUserName = x.CreatedUserName,
+                                        IsDisabled = x.IsDisabled,
+                                        LastUpdatedDate = x.LastUpdatedDate,
+                                        LastUpdatedUserName = x.LastUpdatedUserName,
+                                        PromotionCode = x.PromotionCode,
+                                        PromotionCode2 = x.PromotionCode2,
+                                        TaxRate = x.TaxRate,
+                                        //TrFeature = x.TrFeature
+                                    })
+                                    .ToList();
             }
         }
 

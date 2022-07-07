@@ -78,40 +78,41 @@ namespace Foxoft
                         .Include(x => x.DcCurrAcc)
                         .Where(x => x.ProcessCode == processCode)
                         .OrderByDescending(x => x.DocumentDate)
-            //.Load();
-            .Select(x => new TrInvoiceHeader
-            {
-                DcCurrAcc = x.DcCurrAcc,
-                TotalNetAmount = x.TotalNetAmount,
-                InvoiceHeaderId = x.InvoiceHeaderId,
-                CreatedDate = x.CreatedDate,
-                CreatedUserName = x.CreatedUserName,
-                CurrAccCode = x.CurrAccCode,
-                CustomsDocumentNumber = x.CustomsDocumentNumber,
-                Description = x.Description,
-                DocumentDate = x.DocumentDate,
-                DocumentNumber = x.DocumentNumber,
-                DocumentTime = x.DocumentTime,
-                FiscalPrintedState = x.FiscalPrintedState,
-                IsCompleted = x.IsCompleted,
-                IsLocked = x.IsLocked,
-                IsPrinted = x.IsPrinted,
-                IsReturn = x.IsReturn,
-                IsSalesViaInternet = x.IsSalesViaInternet,
-                IsSuspended = x.IsSuspended,
-                LastUpdatedDate = x.LastUpdatedDate,
-                LastUpdatedUserName = x.LastUpdatedUserName,
-                OfficeCode = x.OfficeCode,
-                OperationDate = x.OperationDate,
-                OperationTime = x.OperationTime,
-                PosTerminalId = x.PosTerminalId,
-                ProcessCode = x.ProcessCode,
-                RelatedInvoiceId = x.RelatedInvoiceId,
-                StoreCode = x.StoreCode,
-                WarehouseCode = x.WarehouseCode,
-            }).ToList();
+                        //.Load()
+                        .Select(x => new TrInvoiceHeader
+                        {
+                            CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
+                            TotalNetAmount = x.TrInvoiceLines.Sum(l => l.NetAmountLoc / 1.703m),
+                            InvoiceHeaderId = x.InvoiceHeaderId,
+                            CreatedDate = x.CreatedDate,
+                            CreatedUserName = x.CreatedUserName,
+                            CurrAccCode = x.CurrAccCode,
+                            CustomsDocumentNumber = x.CustomsDocumentNumber,
+                            Description = x.Description,
+                            DocumentDate = x.DocumentDate,
+                            DocumentNumber = x.DocumentNumber,
+                            DocumentTime = x.DocumentTime,
+                            FiscalPrintedState = x.FiscalPrintedState,
+                            IsCompleted = x.IsCompleted,
+                            IsLocked = x.IsLocked,
+                            IsPrinted = x.IsPrinted,
+                            IsReturn = x.IsReturn,
+                            IsSalesViaInternet = x.IsSalesViaInternet,
+                            IsSuspended = x.IsSuspended,
+                            LastUpdatedDate = x.LastUpdatedDate,
+                            LastUpdatedUserName = x.LastUpdatedUserName,
+                            OfficeCode = x.OfficeCode,
+                            OperationDate = x.OperationDate,
+                            OperationTime = x.OperationTime,
+                            PosTerminalId = x.PosTerminalId,
+                            ProcessCode = x.ProcessCode,
+                            RelatedInvoiceId = x.RelatedInvoiceId,
+                            StoreCode = x.StoreCode,
+                            WarehouseCode = x.WarehouseCode,
+                        })
+                        .ToList();
 
-            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+            trInvoiceHeadersBindingSource.DataSource = headerList;
 
             //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }
