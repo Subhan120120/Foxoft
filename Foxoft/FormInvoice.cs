@@ -165,6 +165,8 @@ namespace Foxoft
                 if (count > 0)
                     SaveInvoice();
             }
+
+            gV_InvoiceLine.Focus();
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -552,7 +554,7 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                decimal summaryInvoice = CalcSumInvoice();
+                decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
                 if (summaryInvoice != 0)
                 {
@@ -576,18 +578,18 @@ namespace Foxoft
             }
         }
 
-        private decimal CalcSumInvoice()
-        {
-            decimal summaryNetAmount = 0;
+        //private decimal CalcSumInvoice()
+        //{
+        //    decimal summaryNetAmount = 0;
 
-            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-            {
-                decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc));
-                summaryNetAmount += netAmount;
-            }
+        //    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+        //    {
+        //        decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc));
+        //        summaryNetAmount += netAmount;
+        //    }
 
-            return summaryNetAmount;
-        }
+        //    return summaryNetAmount;
+        //}
 
         private void SaveSession()
         {
@@ -712,7 +714,8 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                decimal summaryInvoice = CalcSumInvoice();
+                decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
                 if (summaryInvoice != 0)
                 {
                     SaveInvoice();
@@ -729,7 +732,8 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                decimal summaryInvoice = CalcSumInvoice();
+                decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
                 if (summaryInvoice != 0)
                 {
                     SaveInvoice();
@@ -781,7 +785,7 @@ namespace Foxoft
         {
             if (dataLayoutControl1.isValid(out List<string> errorList))
             {
-                decimal summaryInvoice = CalcSumInvoice();
+                decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
                 if (summaryInvoice != 0)
                 {
