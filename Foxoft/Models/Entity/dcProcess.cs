@@ -12,13 +12,27 @@ namespace Foxoft.Models
 {
     public partial class DcProcess
     {
+        public DcProcess()
+        {
+            TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
+        }
+
         [Key]
         [DisplayName("Proses Kodu")]
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProcessCode { get; set; }
 
-        [DisplayName("Proses Kodu")]
+        [DisplayName("Proses Adı")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProcessDesc { get; set; }
+
+        [DisplayName("Proses İstiqaməti")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public byte ProcessDir { get; set; }
+
+
+        public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
     }
 }

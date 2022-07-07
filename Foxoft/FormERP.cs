@@ -188,7 +188,7 @@ namespace Foxoft
             foreach (Form form in Application.OpenForms)
             {
                 FormInvoice formInvoice = form as FormInvoice;
-                if (formInvoice != null && formInvoice.processCode == "EX")
+                if (formInvoice != null && formInvoice.dcProcess.ProcessCode == "EX")
                 {
                     formInvoice.BringToFront();
                     formInvoice.Activate();

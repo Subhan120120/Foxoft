@@ -138,7 +138,7 @@ namespace Foxoft
                     .Select(x => new DcProduct
                     {
                         Barcode = x.Barcode,
-                        Balance = x.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.TrInvoiceHeader.IsReturn == false ? x.QtyIn - x.QtyOut : (x.QtyIn - x.QtyOut) * (-1)),
+                        Balance = x.Balance,
                         DcProductType = x.DcProductType,
                         ProductCode = x.ProductCode,
                         ProductDesc = x.ProductDesc,
@@ -600,13 +600,13 @@ namespace Foxoft
             }
         }
 
-        public string SelectProcessName(string processCode)
+        public DcProcess SelectProcess(string processCode)
         {
             using (subContext db = new subContext())
             {
                 DcProcess dcProcess = db.DcProcesses.Where(x => x.ProcessCode == processCode)
                                    .FirstOrDefault();
-                return dcProcess.ProcessDesc;
+                return dcProcess; ;
             }
         }
 

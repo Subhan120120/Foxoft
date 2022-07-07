@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -24,6 +25,11 @@ namespace Foxoft.Models
         [DisplayName("Məhsul Kodu")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProductCode { get; set; }
+
+        [DisplayName("Məhsul Adı")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string ProductDesc { get; set; }
 
         [DisplayName("Barkod")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -66,14 +72,14 @@ namespace Foxoft.Models
         [DisplayName("İnternetdə İstifadə Et")]
         public bool UseInternet { get; set; }
 
-        [DisplayName("Məhsul Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ProductDesc { get; set; }
+        //[NotMapped]
+        //[DisplayName("Qalıq")]
+        //public int Balance { get; set; }
 
         [NotMapped]
-        [DisplayName("Qaliq")]
-        public int Balance { get; set; }
+        [DisplayName("Qalıq")]
+        //public decimal TotalNetAmount { get; set; }
+        public int Balance { get { return TrInvoiceLines.Sum(x => x.TrInvoiceHeader.IsReturn == false ? x.QtyIn - x.QtyOut : (x.QtyIn - x.QtyOut) * (-1)); } set { } }
 
         public virtual DcProductType DcProductType { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }

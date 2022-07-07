@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220706222930_processDir")]
+    partial class processDir
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1337,6 +1339,7 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
                     b.Property<string>("PosTerminalId")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -1361,8 +1364,6 @@ namespace Foxoft.Migrations
                     b.HasKey("InvoiceHeaderId");
 
                     b.HasIndex("CurrAccCode");
-
-                    b.HasIndex("ProcessCode");
 
                     b.HasIndex("DocumentNumber", "ProcessCode", "CurrAccCode");
 
@@ -1995,15 +1996,7 @@ namespace Foxoft.Migrations
                         .HasForeignKey("CurrAccCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcProcess", "DcProcess")
-                        .WithMany("TrInvoiceHeaders")
-                        .HasForeignKey("ProcessCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("DcCurrAcc");
-
-                    b.Navigation("DcProcess");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
@@ -2161,11 +2154,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcPaymentType", b =>
                 {
                     b.Navigation("TrPaymentLines");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcProcess", b =>
-                {
-                    b.Navigation("TrInvoiceHeaders");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProduct", b =>

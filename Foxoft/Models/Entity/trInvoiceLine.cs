@@ -54,7 +54,7 @@ namespace Foxoft.Models
 
         [DisplayName("Qiymət (AZN)")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public double PriceLoc { get { return Price * ExchangeRate; } set {  } }
+        public double PriceLoc { get { return Price * ExchangeRate; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Tutar")]
@@ -104,6 +104,7 @@ namespace Foxoft.Models
         [DisplayName("Məhsul Adı")]
         public string ProductDesc { get; set; }
 
+        //public string ProductDesc { get { if (!Object.ReferenceEquals(DcProduct, null)) return DcProduct.ProductDesc; else return ""; } set { } }  // gridview da set{} iwlemir
 
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }

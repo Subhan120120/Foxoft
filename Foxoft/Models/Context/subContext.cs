@@ -135,15 +135,15 @@ namespace Foxoft.Models
                 new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Visa" });
 
             modelBuilder.Entity<DcProcess>().HasData(
-                new DcProcess { ProcessCode = "RS", ProcessDesc = "Satış" },
-                new DcProcess { ProcessCode = "RP", ProcessDesc = "Alış" },
-                new DcProcess { ProcessCode = "PA", ProcessDesc = "Ödəmə" },
-                new DcProcess { ProcessCode = "SB", ProcessDesc = "Toptan Alış" },
-                new DcProcess { ProcessCode = "WS", ProcessDesc = "Toptan Satış" },
-                new DcProcess { ProcessCode = "EX", ProcessDesc = "Xərclər" },
-                new DcProcess { ProcessCode = "PE", ProcessDesc = "Dovr" },
-                new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma" },
-                new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma" }
+                new DcProcess { ProcessCode = "RP", ProcessDesc = "Alış", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "RS", ProcessDesc = "Satış", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "PA", ProcessDesc = "Ödəmə", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "SB", ProcessDesc = "Toptan Alış", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "WS", ProcessDesc = "Toptan Satış", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "EX", ProcessDesc = "Xərclər", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "PE", ProcessDesc = "Dovr", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma", ProcessDir = 2 }
                 );
 
             modelBuilder.Entity<DcProduct>().HasData(

@@ -40,7 +40,7 @@ namespace Foxoft
         string designFolder = @"C:\Users\Administrator\Documents\";
 
         private TrInvoiceHeader trInvoiceHeader;
-        public string processCode;
+        public DcProcess dcProcess;
         private byte productTypeCode;
         private byte currAccTypeCode;
         private EfMethods efMethods = new EfMethods();
@@ -52,15 +52,15 @@ namespace Foxoft
             //gV_InvoiceLine.OptionsNavigation.AutoFocusNewRow = true;
             //bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
-            this.processCode = processCode;
             this.productTypeCode = productTypeCode;
             this.currAccTypeCode = currAccTypeCode;
+            dcProcess = efMethods.SelectProcess(processCode);
 
-            this.Text = efMethods.SelectProcessName(processCode);
+            this.Text = dcProcess.ProcessDesc;
 
-            if (CustomExtensions.ProcessDir(processCode) == "In")
+            if (dcProcess.ProcessDir == 1)
                 colQtyOut.Visible = false;
-            else
+            else if (dcProcess.ProcessDir == 2)
                 colQtyIn.Visible = false;
 
             lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
@@ -103,7 +103,9 @@ namespace Foxoft
             invoiceHeaderId = Guid.NewGuid();
 
             dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                      .Include(x => x.DcProcess)
                                       .Load();
+
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
@@ -111,7 +113,8 @@ namespace Foxoft
 
             lbl_InvoicePaidSum.Text = "";
 
-            dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+            dbContext.TrInvoiceLines.Include(x => x.DcProduct)
+                                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -122,16 +125,16 @@ namespace Foxoft
         {
             TrInvoiceHeader invoiceHeader = new TrInvoiceHeader();
             invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
-            string NewDocNum = efMethods.GetNextDocNum(this.processCode, "DocumentNumber", "TrInvoiceHeaders");
+            string NewDocNum = efMethods.GetNextDocNum(this.dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders");
             invoiceHeader.DocumentNumber = NewDocNum;
             invoiceHeader.DocumentDate = DateTime.Now;
             invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-            invoiceHeader.ProcessCode = this.processCode;
+            invoiceHeader.ProcessCode = this.dcProcess.ProcessCode;
             invoiceHeader.OfficeCode = Authorization.OfficeCode;
             invoiceHeader.StoreCode = Authorization.StoreCode;
             invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
             invoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
-            if (processCode == "RS")
+            if (dcProcess.ProcessCode == "RS")
                 invoiceHeader.CurrAccCode = "111";
 
             e.NewObject = invoiceHeader;
@@ -168,7 +171,7 @@ namespace Foxoft
 
         private void SelectDocNum()
         {
-            using (FormInvoiceHeaderList form = new FormInvoiceHeaderList(this.processCode))
+            using (FormInvoiceHeaderList form = new FormInvoiceHeaderList(dcProcess.ProcessCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -182,6 +185,7 @@ namespace Foxoft
         {
             dbContext = new subContext();
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                      .Include(x => x.DcProcess)
                                       .Where(x => x.InvoiceHeaderId == InvoiceHeaderId).Load();
 
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
@@ -199,10 +203,7 @@ namespace Foxoft
                                     {
                                         LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
 
-                                        lV_invoiceLine.ForEach(x =>
-                                        {
-                                            x.ProductDesc = x.DcProduct.ProductDesc;
-                                        });
+                                        lV_invoiceLine.ForEach(x => { x.ProductDesc = x.DcProduct.ProductDesc; });
 
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
 
@@ -218,7 +219,7 @@ namespace Foxoft
 
         private void CalcPaidAmount()
         {
-            decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) / (decimal)1.703 * (CustomExtensions.ProcessDir(processCode) == "In" ? (-1) : 1);
+            decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) / (decimal)1.703 * (dcProcess.ProcessDir == 1 ? (-1) : 1);
             lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
         }
 
@@ -251,7 +252,7 @@ namespace Foxoft
 
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut, 1);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, dcProcess.ProcessDir == 1 ? colQtyIn : colQtyOut, 1);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
         }
@@ -493,7 +494,7 @@ namespace Foxoft
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, form.dcProduct.ProductCode);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDesc);
 
-                    double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
+                    double price = dcProcess.ProcessCode == "RS" ? form.dcProduct.RetailPrice : (dcProcess.ProcessCode == "RP" ? form.dcProduct.PurchasePrice : 0);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
 
                     //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, col_Price, price));
@@ -514,6 +515,7 @@ namespace Foxoft
         {
             //DataRowView rowView = e.Row as DataRowView;
             //DataRow row = rowView.Row;
+
             SaveInvoice();
         }
 

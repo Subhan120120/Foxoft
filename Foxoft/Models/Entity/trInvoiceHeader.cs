@@ -26,6 +26,7 @@ namespace Foxoft.Models
         public Guid? RelatedInvoiceId { get; set; }
 
         [DisplayName("Proses")]
+        [ForeignKey("DcProcess")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProcessCode { get; set; }
@@ -90,7 +91,7 @@ namespace Foxoft.Models
         public string CustomsDocumentNumber { get; set; }
 
         [DisplayName("POS Terminal")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string PosTerminalId { get; set; }
 
@@ -124,6 +125,7 @@ namespace Foxoft.Models
 
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
+        public virtual DcProcess DcProcess { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
     }
