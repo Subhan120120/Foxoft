@@ -57,11 +57,6 @@ namespace Foxoft
 
             this.Text = dcProcess.ProcessDesc;
 
-            if (dcProcess.ProcessDir == 1)
-                colQtyOut.Visible = false;
-            else if (dcProcess.ProcessDir == 2)
-                colQtyIn.Visible = false;
-
             lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
@@ -102,6 +97,7 @@ namespace Foxoft
             invoiceHeaderId = Guid.NewGuid();
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
+                                      .Include(x => x.DcCurrAcc)
                                       .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                       .Load();
 
@@ -136,6 +132,7 @@ namespace Foxoft
             invoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
             if (dcProcess.ProcessCode == "RS")
                 invoiceHeader.CurrAccCode = "111";
+            lbl_CurrAccDesc.Text = efMethods.SelectCurrAcc("111").CurrAccDesc;
 
             e.NewObject = invoiceHeader;
         }
@@ -151,13 +148,20 @@ namespace Foxoft
         {
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
+            //DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
+            //if (!object.ReferenceEquals(dcCurrAcc, null))
+            //    CurrAccDescTextEdit.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
+
             if (!Object.ReferenceEquals(trInvoiceHeader, null))
+            {
                 for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                 {
                     int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut);
                     int qtyInAbs = Math.Abs(qtyIn);
                     gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
                 }
+            }
+
 
             if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
             {
@@ -165,6 +169,7 @@ namespace Foxoft
                 if (count > 0)
                     SaveInvoice();
             }
+
 
             gV_InvoiceLine.Focus();
         }
@@ -200,8 +205,12 @@ namespace Foxoft
 
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
-            //if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
-            //    lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
+            if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
+                lV_invoiceHeader.ForEach(x =>
+                {
+                    x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+                    lbl_CurrAccDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+                });
 
             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
 
@@ -252,7 +261,7 @@ namespace Foxoft
                 {
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                     trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-                    CurrAccDescTextEdit.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+                    lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
                 }
             }
         }
@@ -260,7 +269,6 @@ namespace Foxoft
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             //GridView gv = sender as GridView;
-            //trInvoiceLinesBindingSource.DataSource = new TrInvoiceLine() { };
 
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
             gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());

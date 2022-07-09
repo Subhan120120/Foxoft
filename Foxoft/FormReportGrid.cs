@@ -120,7 +120,7 @@ namespace Foxoft
             }
         }
 
-        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_DesignClear_ItemClick(object sender, ItemClickEventArgs e)
         {
             gV_Report.PopulateColumns();
             //foreach (GridColumn item in gV_Report.Columns)

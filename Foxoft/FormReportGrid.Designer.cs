@@ -36,7 +36,7 @@ namespace Foxoft
             this.bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_GridOptions = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_DesignClear = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -80,7 +80,7 @@ namespace Foxoft
             this.bBI_LayoutSave,
             this.bBI_LayoutLoad,
             this.bBI_GridOptions,
-            this.barButtonItem3});
+            this.bBI_DesignClear});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.MaxItemId = 5;
             this.ribbonControl1.Name = "ribbonControl1";
@@ -115,12 +115,13 @@ namespace Foxoft
             this.bBI_GridOptions.Name = "bBI_GridOptions";
             this.bBI_GridOptions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_gridOptions_ItemClick);
             // 
-            // barButtonItem3
+            // bBI_DesignClear
             // 
-            this.barButtonItem3.Caption = "barButtonItem3";
-            this.barButtonItem3.Id = 4;
-            this.barButtonItem3.Name = "barButtonItem3";
-            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+            this.bBI_DesignClear.Caption = "Dizaynı Sıfırla";
+            this.bBI_DesignClear.Id = 4;
+            this.bBI_DesignClear.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem3.ImageOptions.SvgImage")));
+            this.bBI_DesignClear.Name = "bBI_DesignClear";
+            this.bBI_DesignClear.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DesignClear_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -134,7 +135,7 @@ namespace Foxoft
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_LayoutSave);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_LayoutLoad);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_GridOptions);
-            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem3);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DesignClear);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Dizayn";
             // 
@@ -185,6 +186,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_GridOptions;
         private DevExpress.XtraBars.BarButtonItem bBI_LayoutSave;
         private DevExpress.XtraBars.BarButtonItem bBI_LayoutLoad;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private DevExpress.XtraBars.BarButtonItem bBI_DesignClear;
     }
 }

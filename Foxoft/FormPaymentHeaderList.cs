@@ -1,30 +1,28 @@
-﻿using DevExpress.Utils;
-using DevExpress.XtraEditors;
+﻿using DevExpress.Data.Linq;
+using DevExpress.Data.Linq.Helpers;
+using DevExpress.Utils;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraGrid;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using DevExpress.Utils.Extensions;
-using DevExpress.XtraEditors.Controls;
-using System.ComponentModel;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.Data.Filtering;
 
 namespace Foxoft
 {
     public partial class FormPaymentHeaderList : DevExpress.XtraBars.Ribbon.RibbonForm
     {
-        subContext dbContext = new subContext();
+        subContext dbContext;
         EfMethods efMethods = new EfMethods();
         public TrPaymentHeader trPaymentHeader { get; set; }
 
@@ -33,37 +31,77 @@ namespace Foxoft
             InitializeComponent();
 
             //gV_PaymentHeaderList.OptionsFilter.filter = true;
-            //byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-            //MemoryStream stream = new MemoryStream(byteArray);
-            //OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
-            //this.gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
+
+            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+            MemoryStream stream = new MemoryStream(byteArray);
+            OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+            this.gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
             LoadPaymentHeaders();
         }
 
         private void LoadPaymentHeaders()
         {
-            dbContext.TrPaymentHeaders.Include(x => x.TrPaymentLines)
-                                      .Include(x => x.TrInvoiceHeader)
-                                      .Include(x => x.DcCurrAcc)
-                                      .OrderByDescending(x => x.OperationDate)
-                                      .LoadAsync()
-                                      .ContinueWith(loadTask =>
-                                      {
-                                          LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
+            dbContext = new subContext();
 
-                                          //lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
+            //dbContext.TrPaymentHeaders.Include(x => x.TrPaymentLines)
+            //                          .Include(x => x.TrInvoiceHeader)
+            //                          .Include(x => x.DcCurrAcc)
+            //                          .OrderByDescending(x => x.OperationDate)
+            //                          .LoadAsync()
+            //                          .ContinueWith(loadTask =>
+            //                          {
+            //                              LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
 
-                                          trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
+            //                              //lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
 
-                                          //string date = DateTime.Now.ToString("2022.06.30");
-                                          //this.gV_PaymentHeaderList.ActiveFilterCriteria = CriteriaOperator.Parse("DocumentDate >= " + date);
-                                          //var result = CriteriaToWhereClauseHelper.GetDataSetWhere(gV_PaymentHeaderList.ActiveFilterString);
-                                          //trPaymentHeadersBindingSource.Filter = result;
+            //                              trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
 
-                                          gV_PaymentHeaderList.BestFitColumns();
+            //                              //string date = DateTime.Now.ToString("2022.06.30");
+            //                              //this.gV_PaymentHeaderList.ActiveFilterCriteria = CriteriaOperator.Parse("DocumentDate >= " + date);
+            //                              //string result = CriteriaToWhereClauseHelper.GetDataSetWhere(gV_PaymentHeaderList.ActiveFilterString);
+            //                              //trPaymentHeadersBindingSource.Filter = result;
 
-                                      }, TaskScheduler.FromCurrentSynchronizationContext());
+            //                              gV_PaymentHeaderList.BestFitColumns();
+
+            //                          }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            IQueryable<TrPaymentHeader> trPaymentHeaders = dbContext.TrPaymentHeaders;
+            CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+            IQueryable<TrPaymentHeader> filteredData = trPaymentHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentHeaderList.ActiveFilterCriteria) as IQueryable<TrPaymentHeader>;
+
+
+            List<TrPaymentHeader> headerList = filteredData.Include(x => x.TrPaymentLines)
+                                                           .Include(x => x.DcCurrAcc)
+                                                           .OrderByDescending(x => x.DocumentDate)
+                                                           .Select(x => new TrPaymentHeader
+                                                           {
+                                                               CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
+                                                               TotalPayment = x.TrPaymentLines.Sum(x => x.Payment),
+                                                               PaymentHeaderId = x.PaymentHeaderId,
+                                                               InvoiceHeaderId = x.InvoiceHeaderId,
+                                                               DocumentNumber = x.DocumentNumber,
+                                                               DocumentDate = x.DocumentDate,
+                                                               DocumentTime = x.DocumentTime,
+                                                               OperationDate = x.OperationDate,
+                                                               OperationTime = x.OperationTime,
+                                                               CurrAccCode = x.CurrAccCode,
+                                                               Description = x.Description,
+                                                               OperationType = x.OperationType,
+                                                               CompanyCode = x.CompanyCode,
+                                                               OfficeCode = x.OfficeCode,
+                                                               StoreCode = x.StoreCode,
+                                                               PosterminalId = x.PosterminalId,
+                                                               IsCompleted = x.IsCompleted,
+                                                               IsLocked = x.IsLocked,
+                                                               CreatedUserName = x.CreatedUserName,
+                                                               CreatedDate = x.CreatedDate,
+                                                               LastUpdatedUserName = x.LastUpdatedUserName,
+                                                               LastUpdatedDate = x.LastUpdatedDate,
+                                                           })
+                                                           .ToList();
+
+            trPaymentHeadersBindingSource.DataSource = headerList;
         }
 
         private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
@@ -142,7 +180,6 @@ namespace Foxoft
 
         private void repoHLE_DocNum_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-
             MessageBox.Show("repoHLE_DocNum_ButtonClick klik");
         }
 

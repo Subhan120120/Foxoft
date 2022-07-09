@@ -35,13 +35,11 @@ namespace Foxoft
             trPaymentLine.CurrencyCode = "USD";
             trPaymentLine.ExchangeRate = 1.703f;
             trPaymentLine.CashRegisterCode = "kassa01";
+            trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
             this.trInvoiceHeader = trInvoiceHeader;
 
             if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
-                invoiceSumLoc *= (-1);
-
-            if (trInvoiceHeader.IsReturn)
                 invoiceSumLoc *= (-1);
 
             decimal prePaid = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId);
@@ -50,8 +48,9 @@ namespace Foxoft
             if (mustPaid < 0)
                 isNegativ = true;
 
-            trPaymentLine.PaymentLoc = Math.Abs(mustPaid);
-            trPaymentLine.Payment = Math.Abs(Math.Round(trPaymentLine.PaymentLoc / (decimal)trPaymentLine.ExchangeRate, 2));
+            decimal mustPaidABS = Math.Abs(mustPaid);
+
+            trPaymentLine.Payment = Math.Round(mustPaidABS / (decimal)trPaymentLine.ExchangeRate, 2); // change to USD
         }
 
         private void FormPayment_Load(object sender, EventArgs e)
@@ -76,13 +75,12 @@ namespace Foxoft
         {
             decimal txtCash = Convert.ToDecimal(txtEdit_Cash.EditValue);
             trPaymentLine.Payment = txtCash;
-            trPaymentLine.PaymentLoc = txtCash * (decimal)trPaymentLine.ExchangeRate;
             txtEdit_Cash.DoValidate();
         }
 
         private void txtEdit_Cash_Validating(object sender, CancelEventArgs e)
         {
-            if (trPaymentLine.Payment < 0)
+            if (!(trPaymentLine.Payment > 0))
                 e.Cancel = true;
         }
 
@@ -90,7 +88,7 @@ namespace Foxoft
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
             e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər 0 dan az olmamalıdır";
+            e.ErrorText = "Dəyər 0 dan böyük olmalıdır";
         }
 
         private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -102,7 +100,6 @@ namespace Foxoft
             LookUpEdit editor = sender as LookUpEdit;
             trPaymentLine.CurrencyCode = lUE_cashCurrency.EditValue.ToString();
             trPaymentLine.ExchangeRate = (float)editor.GetColumnValue("ExchangeRate");
-            trPaymentLine.PaymentLoc = Math.Round(trPaymentLine.Payment * (decimal)trPaymentLine.ExchangeRate, 2);
             FillControls();
         }
 
@@ -177,7 +174,7 @@ namespace Foxoft
             }
         }
 
-        private void simpleButtonOk_Click(object sender, EventArgs e)
+        private void btn_Ok_Click(object sender, EventArgs e)
         {
             EfMethods efMethods = new EfMethods();
 
@@ -208,8 +205,6 @@ namespace Foxoft
                 efMethods.InsertPaymentHeader(trPayment);
 
                 trPaymentLine.Payment = isNegativ ? trPaymentLine.Payment * (-1) : trPaymentLine.Payment;
-                trPaymentLine.PaymentLoc = isNegativ ? trPaymentLine.PaymentLoc * (-1) : trPaymentLine.PaymentLoc;
-                trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
                 efMethods.InsertPaymentLine(trPaymentLine);
 
                 DialogResult = DialogResult.OK;

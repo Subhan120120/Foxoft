@@ -304,7 +304,7 @@ namespace Foxoft
 
             foreach (Form form in Application.OpenForms)
             {
-                FormPaymentHeaderList formPaymentHeaders = form as FormPaymentHeaderList;
+                FormPaymentLineList formPaymentHeaders = form as FormPaymentLineList;
                 if (formPaymentHeaders != null)
                 {
                     formPaymentHeaders.BringToFront();
@@ -315,7 +315,7 @@ namespace Foxoft
 
             if (OpenFormCount == 0)
             {
-                FormPaymentHeaderList formPaymentHeaders = new FormPaymentHeaderList();
+                FormPaymentLineList formPaymentHeaders = new FormPaymentLineList();
                 formPaymentHeaders.MdiParent = this;
                 formPaymentHeaders.WindowState = FormWindowState.Maximized;
                 formPaymentHeaders.Show();

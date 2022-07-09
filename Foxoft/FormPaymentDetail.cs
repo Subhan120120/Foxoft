@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils.Extensions;
+﻿using DevExpress.Data;
+using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
@@ -63,7 +65,7 @@ namespace Foxoft
             dataLayoutControl1.isValid(out List<string> errorList);
         }
 
-        private void trPaymentHeadersBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
+        private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
             TrPaymentHeader paymentHeader = new TrPaymentHeader();
             string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders");
@@ -230,12 +232,12 @@ namespace Foxoft
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            //SavePayment();
+            SavePayment();
         }
 
-        private void gV_PaymentLine_RowDeleted(object sender, DevExpress.Data.RowDeletedEventArgs e)
+        private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)
         {
-            //SavePayment();
+            SavePayment();
         }
 
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
@@ -247,7 +249,7 @@ namespace Foxoft
             CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_PaymentLine.FocusedRowHandle, colExchangeRate, exRate));
         }
 
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_SaveAndClose_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
             {

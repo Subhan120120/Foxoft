@@ -27,10 +27,10 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal Payment { get; set; }
 
-        [DisplayName("Ödəmə")]
+        [DisplayName("Ödəmə YPV")]
         [Column(TypeName = "money")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public decimal PaymentLoc { get; set; }
+        public decimal PaymentLoc { get { return Payment * (decimal)ExchangeRate; } set { } }
 
         [DisplayName("Sətir Açıqlaması")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -78,6 +78,30 @@ namespace Foxoft.Models
             set => Payment = value;
         }
 
+
+        [NotMapped]
+        [DisplayName("Cari Hesab Açıqlaması")]
+        public string CurrAccCode { get; set; }
+
+        [NotMapped]
+        [DisplayName("Cari Hesab Adı")]
+        public string CurrAccDesc { get; set; }
+
+        [NotMapped]
+        [DisplayName("Ödəmiş Nömrəsi")]
+        public string DocumentNumber { get; set; }
+
+        [NotMapped]
+        [DisplayName("Faktura Nömrəsi")]
+        public string InvoiceNumber { get; set; }
+
+        [NotMapped]
+        [DisplayName("Invoice Id")]
+        public Guid? InvoiceHeaderId { get; set; }
+
+        [NotMapped]
+        [DisplayName("Ödəmə Tarixi")]
+        public DateTime DocumentDate { get; set; }
 
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentType DcPaymentType { get; set; }

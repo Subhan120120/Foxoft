@@ -33,7 +33,7 @@ namespace Foxoft
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaymentDetail));
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -46,9 +46,9 @@ namespace Foxoft
             this.colPaymentTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoLUE_PaymentTypeCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoCalcEdit_Payment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            this.repoCalcEdit_ReceivePayment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.colPaymentLoc = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoCalcEdit_PaymentLoc = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            this.repoCalcEdit_MakePayment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -86,8 +86,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_PaymentTypeCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Payment)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_PaymentLoc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_ReceivePayment)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_MakePayment)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
@@ -118,7 +118,7 @@ namespace Foxoft
             this.ribbon.ExpandCollapseItem,
             this.ribbon.SearchEditItem,
             this.bBI_DeletePayment,
-            this.barButtonItem1});
+            this.bBI_SaveAndClose});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
             this.ribbon.MaxItemId = 3;
             this.ribbon.Name = "ribbon";
@@ -137,11 +137,11 @@ namespace Foxoft
             // 
             // barButtonItem1
             // 
-            this.barButtonItem1.Caption = "barButtonItem1";
-            this.barButtonItem1.Id = 2;
-            this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-            this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            this.bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
+            this.bBI_SaveAndClose.Id = 2;
+            this.bBI_SaveAndClose.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+            this.bBI_SaveAndClose.Name = "bBI_SaveAndClose";
+            this.bBI_SaveAndClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndClose_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -153,7 +153,7 @@ namespace Foxoft
             // ribbonPageGroup1
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DeletePayment);
-            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_SaveAndClose);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "ribbonPageGroup1";
             // 
@@ -192,8 +192,8 @@ namespace Foxoft
             this.gC_PaymentLine.Name = "gC_PaymentLine";
             this.gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repoLUE_CurrencyCode,
-            this.repoCalcEdit_Payment,
-            this.repoCalcEdit_PaymentLoc,
+            this.repoCalcEdit_ReceivePayment,
+            this.repoCalcEdit_MakePayment,
             this.repoBtnEdit_CashregisterCode,
             this.repoLUE_PaymentTypeCode});
             this.gC_PaymentLine.Size = new System.Drawing.Size(875, 300);
@@ -212,6 +212,8 @@ namespace Foxoft
             this.colPaymentLineId,
             this.colPaymentHeaderId,
             this.colPaymentTypeCode,
+            this.colReceivePayment,
+            this.colMakePayment,
             this.colPayment,
             this.colPaymentLoc,
             this.colCurrencyCode,
@@ -221,9 +223,7 @@ namespace Foxoft
             this.colCreatedDate,
             this.colLastUpdatedUserName,
             this.colLastUpdatedDate,
-            this.colCashRegisterCode,
-            this.colReceivePayment,
-            this.colMakePayment});
+            this.colCashRegisterCode});
             this.gV_PaymentLine.GridControl = this.gC_PaymentLine;
             this.gV_PaymentLine.Name = "gV_PaymentLine";
             this.gV_PaymentLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
@@ -272,32 +272,30 @@ namespace Foxoft
             // 
             // colPayment
             // 
-            this.colPayment.ColumnEdit = this.repoCalcEdit_Payment;
+            this.colPayment.ColumnEdit = this.repoCalcEdit_ReceivePayment;
             this.colPayment.FieldName = "Payment";
             this.colPayment.Name = "colPayment";
-            this.colPayment.Visible = true;
-            this.colPayment.VisibleIndex = 1;
             this.colPayment.Width = 136;
             // 
-            // repoCalcEdit_Payment
+            // repoCalcEdit_ReceivePayment
             // 
-            this.repoCalcEdit_Payment.AutoHeight = false;
-            this.repoCalcEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.repoCalcEdit_ReceivePayment.AutoHeight = false;
+            this.repoCalcEdit_ReceivePayment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoCalcEdit_Payment.Name = "repoCalcEdit_Payment";
+            this.repoCalcEdit_ReceivePayment.Name = "repoCalcEdit_ReceivePayment";
             // 
             // colPaymentLoc
             // 
-            this.colPaymentLoc.ColumnEdit = this.repoCalcEdit_PaymentLoc;
+            this.colPaymentLoc.ColumnEdit = this.repoCalcEdit_MakePayment;
             this.colPaymentLoc.FieldName = "PaymentLoc";
             this.colPaymentLoc.Name = "colPaymentLoc";
             // 
-            // repoCalcEdit_PaymentLoc
+            // repoCalcEdit_MakePayment
             // 
-            this.repoCalcEdit_PaymentLoc.AutoHeight = false;
-            this.repoCalcEdit_PaymentLoc.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.repoCalcEdit_MakePayment.AutoHeight = false;
+            this.repoCalcEdit_MakePayment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoCalcEdit_PaymentLoc.Name = "repoCalcEdit_PaymentLoc";
+            this.repoCalcEdit_MakePayment.Name = "repoCalcEdit_MakePayment";
             // 
             // colCurrencyCode
             // 
@@ -305,7 +303,7 @@ namespace Foxoft
             this.colCurrencyCode.FieldName = "CurrencyCode";
             this.colCurrencyCode.Name = "colCurrencyCode";
             this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 2;
+            this.colCurrencyCode.VisibleIndex = 3;
             this.colCurrencyCode.Width = 155;
             // 
             // repoLUE_CurrencyCode
@@ -376,17 +374,19 @@ namespace Foxoft
             // 
             // colReceivePayment
             // 
+            this.colReceivePayment.ColumnEdit = this.repoCalcEdit_ReceivePayment;
             this.colReceivePayment.FieldName = "ReceivePayment";
             this.colReceivePayment.Name = "colReceivePayment";
             this.colReceivePayment.Visible = true;
-            this.colReceivePayment.VisibleIndex = 5;
+            this.colReceivePayment.VisibleIndex = 1;
             // 
             // colMakePayment
             // 
+            this.colMakePayment.ColumnEdit = this.repoCalcEdit_MakePayment;
             this.colMakePayment.FieldName = "MakePayment";
             this.colMakePayment.Name = "colMakePayment";
             this.colMakePayment.Visible = true;
-            this.colMakePayment.VisibleIndex = 6;
+            this.colMakePayment.VisibleIndex = 2;
             // 
             // OperationDateDateEdit
             // 
@@ -608,8 +608,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_PaymentTypeCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_Payment)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_PaymentLoc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_ReceivePayment)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_MakePayment)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
@@ -687,11 +687,13 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_CashregisterCode;
         private DevExpress.XtraEditors.TextEdit DocumentNumberTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem bBI_SaveAndClose;
         private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn colReceivePayment;
         private DevExpress.XtraGrid.Columns.GridColumn colMakePayment;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_DocNum;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_ReceivePayment;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_MakePayment;
     }
 }

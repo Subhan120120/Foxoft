@@ -328,7 +328,7 @@ namespace Foxoft
             this.btn_Ok.StyleController = this.lC_Root;
             this.btn_Ok.TabIndex = 13;
             this.btn_Ok.Text = "simpleButton2";
-            this.btn_Ok.Click += new System.EventHandler(this.simpleButtonOk_Click);
+            this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
             // 
             // btn_UpdateCash
             // 

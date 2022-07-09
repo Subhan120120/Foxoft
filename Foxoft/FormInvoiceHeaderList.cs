@@ -78,7 +78,6 @@ namespace Foxoft
                         .Include(x => x.DcCurrAcc)
                         .Where(x => x.ProcessCode == processCode)
                         .OrderByDescending(x => x.DocumentDate)
-                        //.Load()
                         .Select(x => new TrInvoiceHeader
                         {
                             CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
