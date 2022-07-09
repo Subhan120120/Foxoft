@@ -62,6 +62,8 @@ namespace Foxoft
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.bBI_Reload = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLineList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLineList)).BeginInit();
@@ -261,9 +263,10 @@ namespace Foxoft
             this.ribbonControl1.ExpandCollapseItem,
             this.ribbonControl1.SearchEditItem,
             this.bBI_ReceivePayment,
-            this.bBI_MakePayment});
+            this.bBI_MakePayment,
+            this.bBI_Reload});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 3;
+            this.ribbonControl1.MaxItemId = 5;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -289,7 +292,8 @@ namespace Foxoft
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1});
+            this.ribbonPageGroup1,
+            this.ribbonPageGroup2});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "Ödəmə";
             // 
@@ -311,6 +315,20 @@ namespace Foxoft
             // 
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "ribbonPage2";
+            // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_Reload);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Nəzarət";
+            // 
+            // barButtonItem1
+            // 
+            this.bBI_Reload.Caption = "Yenilə";
+            this.bBI_Reload.Id = 4;
+            this.bBI_Reload.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+            this.bBI_Reload.Name = "barButtonItem1";
+            this.bBI_Reload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Reload_ItemClick);
             // 
             // FormPaymentLineList
             // 
@@ -372,5 +390,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCashRegisterCode;
         private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentDate;
+        private DevExpress.XtraBars.BarButtonItem bBI_Reload;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
     }
 }

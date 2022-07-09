@@ -86,7 +86,7 @@ namespace Foxoft
                                 efMethods.InsertInvoiceHeader(TrInvoiceHeader);
                             }
 
-                            if (!efMethods.InvoiceLineExist(returnInvoiceHeaderId, invoiceLineID))
+                            if (!efMethods.InvoiceLineExistByRelatedLine(returnInvoiceHeaderId, invoiceLineID))
                             {
                                 TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
 

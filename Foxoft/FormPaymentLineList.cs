@@ -44,32 +44,32 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            IQueryable<TrPaymentLine> trPaymentLines = dbContext.TrPaymentLines.Include(x => x.TrPaymentHeader).ThenInclude(x => x.TrInvoiceHeader)
-                                                                               .Include(x => x.TrPaymentHeader).ThenInclude(x => x.DcCurrAcc)
-                                                                               .OrderByDescending(x => x.TrPaymentHeader.DocumentDate)
-                                                                               .Select(x => new TrPaymentLine
-                                                                               {
-                                                                                   CurrAccCode = x.TrPaymentHeader.CurrAccCode,
-                                                                                   CurrAccDesc = x.TrPaymentHeader.DcCurrAcc.CurrAccDesc,
-                                                                                   DocumentNumber = x.TrPaymentHeader.DocumentNumber,
-                                                                                   DocumentDate = x.TrPaymentHeader.DocumentDate,
-                                                                                   InvoiceNumber = x.TrPaymentHeader.TrInvoiceHeader.DocumentNumber,
-                                                                                   PaymentLineId = x.PaymentLineId,
-                                                                                   PaymentHeaderId = x.PaymentHeaderId,
-                                                                                   InvoiceHeaderId = x.TrPaymentHeader.InvoiceHeaderId,
-                                                                                   PaymentTypeCode = x.PaymentTypeCode,
-                                                                                   Payment = x.Payment,
-                                                                                   LineDescription = x.LineDescription,
-                                                                                   ExchangeRate = x.ExchangeRate,
-                                                                                   CreatedUserName = x.CreatedUserName,
-                                                                                   CreatedDate = x.CreatedDate,
-                                                                                   LastUpdatedUserName = x.LastUpdatedUserName,
-                                                                                   LastUpdatedDate = x.LastUpdatedDate,
-                                                                                   CurrencyCode = x.CurrencyCode,
-                                                                                   PaymentLoc = x.PaymentLoc,
-                                                                                   CashRegisterCode = x.CashRegisterCode,
-                                                                               })
-                                                                               ;
+            IQueryable<TrPaymentLine> trPaymentLines = dbContext.TrPaymentLines
+                                                        .Include(x => x.TrPaymentHeader).ThenInclude(x => x.TrInvoiceHeader)
+                                                        .Include(x => x.TrPaymentHeader).ThenInclude(x => x.DcCurrAcc)
+                                                        .OrderByDescending(x => x.TrPaymentHeader.DocumentDate).ThenByDescending(x => x.CreatedDate)
+                                                        .Select(x => new TrPaymentLine
+                                                        {
+                                                            CurrAccCode = x.TrPaymentHeader.CurrAccCode,
+                                                            CurrAccDesc = x.TrPaymentHeader.DcCurrAcc.CurrAccDesc,
+                                                            DocumentNumber = x.TrPaymentHeader.DocumentNumber,
+                                                            DocumentDate = x.TrPaymentHeader.DocumentDate,
+                                                            InvoiceNumber = x.TrPaymentHeader.TrInvoiceHeader.DocumentNumber,
+                                                            PaymentLineId = x.PaymentLineId,
+                                                            PaymentHeaderId = x.PaymentHeaderId,
+                                                            InvoiceHeaderId = x.TrPaymentHeader.InvoiceHeaderId,
+                                                            PaymentTypeCode = x.PaymentTypeCode,
+                                                            Payment = x.Payment,
+                                                            LineDescription = x.LineDescription,
+                                                            ExchangeRate = x.ExchangeRate,
+                                                            CreatedUserName = x.CreatedUserName,
+                                                            CreatedDate = x.CreatedDate,
+                                                            LastUpdatedUserName = x.LastUpdatedUserName,
+                                                            LastUpdatedDate = x.LastUpdatedDate,
+                                                            CurrencyCode = x.CurrencyCode,
+                                                            PaymentLoc = x.PaymentLoc,
+                                                            CashRegisterCode = x.CashRegisterCode,
+                                                        });
 
             CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
             IQueryable<TrPaymentLine> filteredData = trPaymentLines.AppendWhere(converter, gV_PaymentLineList.ActiveFilterCriteria) as IQueryable<TrPaymentLine>;
@@ -221,6 +221,11 @@ namespace Foxoft
                     }
                 }
             }
+        }
+
+        private void bBI_Reload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            LoadPaymentLines();
         }
     }
 }
