@@ -48,6 +48,7 @@ namespace Foxoft.Models
         public DbSet<TrPrice> TrPrices { get; set; }
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
+        public DbSet<DcReportFilter> DcReportFilters { get; set; } // view
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -156,7 +157,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcProductType>().HasData(
                 new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },
                 new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" }
-                );
+            );
 
             modelBuilder.Entity<DcWarehouse>().HasData(
                 new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Bakıxanov deposu", OfficeCode = "ofs01", StoreCode = "mgz01" },

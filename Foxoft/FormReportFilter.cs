@@ -15,11 +15,6 @@ namespace Foxoft
 {
     public partial class FormReportFilter : RibbonForm
     {
-        //Badge badge1;
-        //Badge badge2;
-        //AdornerUIManager adornerUIManager1;
-        //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
-
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
         DcReport dcReport = new DcReport();
@@ -36,8 +31,8 @@ namespace Foxoft
 
             this.dcReport = dcReport;
 
-            filterControl1.SourceControl = adoMethods.SqlGetDt(dcReport.ReportQuery);
-            filterControl1.FilterString = dcReport.ReportFilter;
+            filterControl_Outer.SourceControl = adoMethods.SqlGetDt(dcReport.ReportQuery);
+            filterControl_Outer.FilterString = dcReport.ReportFilter;
 
             this.repoBtnEdit_ProductCode.AutoHeight = false;
             this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
@@ -46,14 +41,6 @@ namespace Foxoft
             this.repoBtnEdit_CurrAccCode.AutoHeight = false;
             this.repoBtnEdit_CurrAccCode.Name = "repoBtnEdit_CurrAccCode";
             this.repoBtnEdit_CurrAccCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CurrAccCode_ButtonPressed);
-
-            //adornerUIManager1 = new AdornerUIManager(components);
-            //badge1 = new Badge();
-            //badge2 = new Badge();
-            //adornerUIManager1.Elements.Add(badge1);
-            //adornerUIManager1.Elements.Add(badge2);
-            //badge1.TargetElement = barButtonItem1;
-            //badge2.TargetElement = ribbonPage1;
         }
 
 
@@ -67,7 +54,7 @@ namespace Foxoft
 
             string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-            string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl1.FilterCriteria);
+            string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
             if (!string.IsNullOrEmpty(queryFilter))
                 queryFilter = " where " + queryFilter;
 
@@ -85,8 +72,8 @@ namespace Foxoft
             }
 
             string filterCriteria = "";
-            if (!object.ReferenceEquals(filterControl1.FilterCriteria, null))
-                filterCriteria = filterControl1.FilterCriteria.ToString();
+            if (!object.ReferenceEquals(filterControl_Outer.FilterCriteria, null))
+                filterCriteria = filterControl_Outer.FilterCriteria.ToString();
 
             efMethods.UpdateReportFilter(reportId, filterCriteria); //save filter to database
         }

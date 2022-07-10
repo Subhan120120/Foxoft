@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data;
+using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
