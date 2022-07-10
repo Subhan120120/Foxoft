@@ -31,11 +31,6 @@ namespace Foxoft
 {
     public partial class FormInvoice : RibbonForm
     {
-        Badge badge1;
-        Badge badge2;
-        AdornerUIManager adornerUIManager1;
-        public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
-
         string designFolder = @"C:\Users\Administrator\Documents\";
 
         private TrInvoiceHeader trInvoiceHeader;
@@ -45,6 +40,8 @@ namespace Foxoft
         private EfMethods efMethods = new EfMethods();
         private subContext dbContext;
         Guid invoiceHeaderId;
+
+        public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
         public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
         {
             InitializeComponent();
@@ -61,14 +58,6 @@ namespace Foxoft
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
-
-            adornerUIManager1 = new AdornerUIManager(components);
-            badge1 = new Badge();
-            badge2 = new Badge();
-            adornerUIManager1.Elements.Add(badge1);
-            adornerUIManager1.Elements.Add(badge2);
-            badge1.TargetElement = bBI_Save;
-            //badge2.TargetElement = RibbonPage_Invoice;
 
             ClearControlsAddNew();
         }
@@ -152,7 +141,7 @@ namespace Foxoft
             //if (!object.ReferenceEquals(dcCurrAcc, null))
             //    CurrAccDescTextEdit.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
 
-            if (!Object.ReferenceEquals(trInvoiceHeader, null))
+            if (!Object.ReferenceEquals(trInvoiceHeader, null)) // if Isreturn Changed calculate Qty again
             {
                 for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                 {
@@ -162,14 +151,12 @@ namespace Foxoft
                 }
             }
 
-
             if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
             {
                 int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
                 if (count > 0)
                     SaveInvoice();
             }
-
 
             gV_InvoiceLine.Focus();
         }
@@ -268,13 +255,12 @@ namespace Foxoft
 
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            //GridView gv = sender as GridView;
-
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, colQty, 1);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
+            GridView gv = sender as GridView;
+            gv.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
+            gv.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
+            //gv.SetRowCellValue(e.RowHandle, colQty, 1);
+            gv.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
+            gv.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
         }
 
         private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -408,16 +394,42 @@ namespace Foxoft
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
         {
-            #region Comment
-            //GridView view = sender as GridView;
-            //decimal val = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, colQty));
-            //if (val < 10)
-            //{
-            //    //e.ErrorText = "Error absh verdi";
-            //    e.Valid = false;
-            //    view.SetColumnError(colQty, "Deyer 10dan az ola bilmez");
-            //} 
-            #endregion
+        }
+
+        private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
+        {
+        }
+
+        private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
+        {
+            GridView view = sender as GridView;
+
+            if (!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS")
+            {
+                object colProductCode = view.GetFocusedRowCellValue(col_ProductCode);
+                string productCode = (colProductCode ??= "").ToString();
+
+                if (!String.IsNullOrEmpty(productCode))
+                {
+                    object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+                    Guid invoiceLineId = Guid.Parse((colInvoiceLineId ??= Guid.Empty).ToString());
+
+                    int currentQty = efMethods.SelectInvoiceLine(invoiceLineId).Qty;
+                    int balance = efMethods.SelectProduct(productCode).Balance + currentQty;
+                    int eValue = Convert.ToInt32(e.Value ??= 0);
+
+                    if (eValue > balance)
+                        e.Valid = false;
+                }
+
+            }
+        }
+
+        private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ErrorText = "Stokda miqdar yoxdur";
+            e.ExceptionMode = ExceptionMode.DisplayError;
+            e.WindowCaption = "Diqqət";
         }
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -431,14 +443,14 @@ namespace Foxoft
         }
 
         BaseEdit editor;
-        private void gridView_ShownEditor(object sender, EventArgs e)
+        private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
             editor = view.ActiveEditor;
             editor.DoubleClick += editor_DoubleClick;
         }
 
-        void gridView_HiddenEditor(object sender, EventArgs e)
+        void gV_InvoiceLine_HiddenEditor(object sender, EventArgs e)
         {
             editor.DoubleClick -= editor_DoubleClick;
             editor = null;
@@ -513,15 +525,10 @@ namespace Foxoft
                 }
             }
 
+
+            //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1); // if qty defaultValue doesnt work
             gV_InvoiceLine.UpdateCurrentRow();
-
-            gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1); // if qty defaultValue doesnt work            
-        }
-
-        private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
-        {
-            //e.ExceptionMode = ExceptionMode.DisplayError;
-            //e.ErrorText = "Deyer 10dan az ola bilmez";
+            // 
         }
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)

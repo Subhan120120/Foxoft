@@ -15,9 +15,11 @@ namespace Foxoft
 {
     public partial class FormReportFilter : RibbonForm
     {
-        Badge badge1;
-        Badge badge2;
-        AdornerUIManager adornerUIManager1;
+        //Badge badge1;
+        //Badge badge2;
+        //AdornerUIManager adornerUIManager1;
+        //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
+
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
         DcReport dcReport = new DcReport();
@@ -45,19 +47,15 @@ namespace Foxoft
             this.repoBtnEdit_CurrAccCode.Name = "repoBtnEdit_CurrAccCode";
             this.repoBtnEdit_CurrAccCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CurrAccCode_ButtonPressed);
 
-            adornerUIManager1 = new AdornerUIManager(components);
-            badge1 = new Badge();
-            badge2 = new Badge();
-            adornerUIManager1.Elements.Add(badge1);
-            adornerUIManager1.Elements.Add(badge2);
-            badge1.TargetElement = barButtonItem1;
-            badge2.TargetElement = ribbonPage1;
+            //adornerUIManager1 = new AdornerUIManager(components);
+            //badge1 = new Badge();
+            //badge2 = new Badge();
+            //adornerUIManager1.Elements.Add(badge1);
+            //adornerUIManager1.Elements.Add(badge2);
+            //badge1.TargetElement = barButtonItem1;
+            //badge2.TargetElement = ribbonPage1;
         }
 
-        public AdornerElement[] Badges
-        {
-            get { return new AdornerElement[] { badge1, badge2 }; }
-        }
 
         private void FormReport_Load(object sender, EventArgs e)
         {

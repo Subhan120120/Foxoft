@@ -22,6 +22,8 @@ namespace Foxoft
         Badge badge1;
         Badge badge2;
         AdornerUIManager adornerUIManager1;
+        //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
+
         int reportId;
         string qry = "select 0 Nothing";
         EfMethods efMethods = new EfMethods();
@@ -49,12 +51,6 @@ namespace Foxoft
             badge2.TargetElement = ribbonPage1;
         }
 
-        private void LoadData()
-        {
-            DataTable dt = adoMethods.SqlGetDt(qry);
-            gridControl1.DataSource = dt;
-        }
-
         public FormReportGrid(string qry, int reportId)
         : this(qry)
         {
@@ -63,14 +59,12 @@ namespace Foxoft
             LoadLayout();
         }
 
-
-        public AdornerElement[] Badges
+        private void LoadData()
         {
-            get
-            {
-                return new AdornerElement[] { badge1, badge2 };
-            }
+            DataTable dt = adoMethods.SqlGetDt(qry);
+            gridControl1.DataSource = dt;
         }
+
 
         private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
         {

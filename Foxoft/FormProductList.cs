@@ -7,6 +7,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -36,9 +37,15 @@ namespace Foxoft
         {
             this.productTypeCode = productTypeCode;
             if (productTypeCode != 0)
-                gC_ProductList.DataSource = efMethods.SelectProductsByProductType(productTypeCode);
+            {
+                List<DcProduct> dcProducts = efMethods.SelectProductsByProductType(productTypeCode);
+                gC_ProductList.DataSource = dcProducts;
+            }
             else
-                gC_ProductList.DataSource = efMethods.SelectProducts();
+            {
+                List<DcProduct> dcProducts = efMethods.SelectProducts();
+                gC_ProductList.DataSource = dcProducts;
+            }
             gV_ProductList.BestFitColumns();
         }
 

@@ -96,7 +96,7 @@ namespace Foxoft
                                                         //.Select(x => new DcProduct
                                                         //{
                                                         //    Barcode = x.Barcode,
-                                                        //    Balance = x.Balance,
+                                                        //    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
                                                         //    DcProductType = x.DcProductType,
                                                         //    ProductCode = x.ProductCode,
                                                         //    ProductDesc = x.ProductDesc,
@@ -110,24 +110,24 @@ namespace Foxoft
                                                         //    CreatedDate = x.CreatedDate,
                                                         //    CreatedUserName = x.CreatedUserName,
                                                         //    IsDisabled = x.IsDisabled,
-                                                        //    TrPrices = x.TrPrices,
                                                         //    LastUpdatedDate = x.LastUpdatedDate,
                                                         //    LastUpdatedUserName = x.LastUpdatedUserName,
                                                         //    PromotionCode = x.PromotionCode,
                                                         //    PromotionCode2 = x.PromotionCode2,
                                                         //    TaxRate = x.TaxRate,
-                                                        //    TrFeature = x.TrFeature
+                                                        //    //TrFeature = x.TrFeature
                                                         //})
                                                         .ToList();
-
-                //products.ForEach(x =>
-                //{
-                //    int Sum = db.TrInvoiceLines.Where(p => p.ProductCode == x.ProductCode).Sum(x => x.QtyIn - x.QtyOut);
-                //    int SumIsReturn = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader).Where(p => p.ProductCode == x.ProductCode && p.TrInvoiceHeader.IsReturn == true).Sum(x => x.QtyOut - x.QtyIn);
-
-                //    x.Balance = Sum + SumIsReturn;
-                //});
                 return products;
+            }
+        }
+
+        public DcProduct SelectProduct(string productCode)
+        {
+            using (subContext db = new subContext())
+            {
+                return db.DcProducts.Include(x => x.TrInvoiceLines)
+                                    .FirstOrDefault(x => x.ProductCode == productCode); ;
             }
         }
 
@@ -138,30 +138,30 @@ namespace Foxoft
                 return db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
                                     .Include(x => x.TrInvoiceLines)
                                         .ThenInclude(x => x.TrInvoiceHeader)
-                                    .Select(x => new DcProduct
-                                    {
-                                        Barcode = x.Barcode,
-                                        Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                        DcProductType = x.DcProductType,
-                                        ProductCode = x.ProductCode,
-                                        ProductDesc = x.ProductDesc,
-                                        PosDiscount = x.PosDiscount,
-                                        RetailPrice = x.RetailPrice,
-                                        PurchasePrice = x.PurchasePrice,
-                                        ProductTypeCode = x.ProductTypeCode,
-                                        WholesalePrice = x.WholesalePrice,
-                                        UsePos = x.UsePos,
-                                        UseInternet = x.UseInternet,
-                                        CreatedDate = x.CreatedDate,
-                                        CreatedUserName = x.CreatedUserName,
-                                        IsDisabled = x.IsDisabled,
-                                        LastUpdatedDate = x.LastUpdatedDate,
-                                        LastUpdatedUserName = x.LastUpdatedUserName,
-                                        PromotionCode = x.PromotionCode,
-                                        PromotionCode2 = x.PromotionCode2,
-                                        TaxRate = x.TaxRate,
-                                        //TrFeature = x.TrFeature
-                                    })
+                                    //.Select(x => new DcProduct
+                                    //{
+                                    //    Barcode = x.Barcode,
+                                    //    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                    //    DcProductType = x.DcProductType,
+                                    //    ProductCode = x.ProductCode,
+                                    //    ProductDesc = x.ProductDesc,
+                                    //    PosDiscount = x.PosDiscount,
+                                    //    RetailPrice = x.RetailPrice,
+                                    //    PurchasePrice = x.PurchasePrice,
+                                    //    ProductTypeCode = x.ProductTypeCode,
+                                    //    WholesalePrice = x.WholesalePrice,
+                                    //    UsePos = x.UsePos,
+                                    //    UseInternet = x.UseInternet,
+                                    //    CreatedDate = x.CreatedDate,
+                                    //    CreatedUserName = x.CreatedUserName,
+                                    //    IsDisabled = x.IsDisabled,
+                                    //    LastUpdatedDate = x.LastUpdatedDate,
+                                    //    LastUpdatedUserName = x.LastUpdatedUserName,
+                                    //    PromotionCode = x.PromotionCode,
+                                    //    PromotionCode2 = x.PromotionCode2,
+                                    //    TaxRate = x.TaxRate,
+                                    //    //TrFeature = x.TrFeature
+                                    //})
                                     .ToList();
             }
         }
@@ -212,7 +212,8 @@ namespace Foxoft
         {
             using (subContext db = new subContext())
             {
-                return db.TrInvoiceLines.FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
+                return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                        .FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
             }
         }
 

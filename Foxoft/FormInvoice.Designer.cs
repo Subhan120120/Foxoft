@@ -76,6 +76,21 @@ namespace Foxoft
             this.lUE_OfficeCode = new DevExpress.XtraEditors.LookUpEdit();
             this.lUE_StoreCode = new DevExpress.XtraEditors.LookUpEdit();
             this.lUE_WarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
+            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.ItemForIsReturn = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForCustomsDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForWarehouseCode = new DevExpress.XtraLayout.LayoutControlItem();
+            this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbl_Payment = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_Save = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_SaveAndNew = new DevExpress.XtraBars.BarButtonItem();
@@ -93,21 +108,9 @@ namespace Foxoft
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.ItemForIsReturn = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForCustomsDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForWarehouseCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbl_Payment = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
+            this.badge1 = new DevExpress.Utils.VisualEffects.Badge();
+            this.badge2 = new DevExpress.Utils.VisualEffects.Badge();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -131,7 +134,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lUE_OfficeCode.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lUE_StoreCode.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lUE_WarehouseCode.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForIsReturn)).BeginInit();
@@ -147,11 +149,12 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Payment)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adorneruıManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // trInvoiceLinesBindingSource
             // 
-            this.trInvoiceLinesBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceLine);
             this.trInvoiceLinesBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trInvoiceLinesBindingSource_AddingNew);
             // 
             // dataLayoutControl1
@@ -179,10 +182,10 @@ namespace Foxoft
             this.dataLayoutControl1.TabIndex = 4;
             this.dataLayoutControl1.Text = "dataLayoutControl1";
             // 
-            // lC_CurrAccDesc
+            // lbl_CurrAccDesc
             // 
             this.lbl_CurrAccDesc.Location = new System.Drawing.Point(630, 12);
-            this.lbl_CurrAccDesc.Name = "lC_CurrAccDesc";
+            this.lbl_CurrAccDesc.Name = "lbl_CurrAccDesc";
             this.lbl_CurrAccDesc.Size = new System.Drawing.Size(229, 20);
             this.lbl_CurrAccDesc.StyleController = this.dataLayoutControl1;
             this.lbl_CurrAccDesc.TabIndex = 1;
@@ -249,14 +252,18 @@ namespace Foxoft
             this.gV_InvoiceLine.OptionsView.ShowFooter = true;
             this.gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
             this.gV_InvoiceLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_InvoiceLine_InitNewRow);
-            this.gV_InvoiceLine.HiddenEditor += new System.EventHandler(this.gridView_HiddenEditor);
-            this.gV_InvoiceLine.ShownEditor += new System.EventHandler(this.gridView_ShownEditor);
+            this.gV_InvoiceLine.HiddenEditor += new System.EventHandler(this.gV_InvoiceLine_HiddenEditor);
+            this.gV_InvoiceLine.ShownEditor += new System.EventHandler(this.gV_InvoiceLine_ShownEditor);
             this.gV_InvoiceLine.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceLine_CellValueChanging);
+            this.gV_InvoiceLine.InvalidRowException += new DevExpress.XtraGrid.Views.Base.InvalidRowExceptionEventHandler(this.gV_InvoiceLine_InvalidRowException);
             this.gV_InvoiceLine.RowDeleted += new DevExpress.Data.RowDeletedEventHandler(this.gV_InvoiceLine_RowDeleted);
+            this.gV_InvoiceLine.ValidateRow += new DevExpress.XtraGrid.Views.Base.ValidateRowEventHandler(this.gV_InvoiceLine_ValidateRow);
             this.gV_InvoiceLine.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gV_InvoiceLine_RowUpdated);
             this.gV_InvoiceLine.RowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.gV_InvoiceLine_RowLoaded);
             this.gV_InvoiceLine.AsyncCompleted += new System.EventHandler(this.gV_InvoiceLine_AsyncCompleted);
             this.gV_InvoiceLine.DoubleClick += new System.EventHandler(this.gV_InvoiceLine_DoubleClick);
+            this.gV_InvoiceLine.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gV_InvoiceLine_ValidatingEditor);
+            this.gV_InvoiceLine.InvalidValueException += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.gV_InvoiceLine_InvalidValueException);
             // 
             // col_InvoiceLineId
             // 
@@ -481,7 +488,6 @@ namespace Foxoft
             // 
             // trInvoiceHeadersBindingSource
             // 
-            this.trInvoiceHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceHeader);
             this.trInvoiceHeadersBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trInvoiceHeadersBindingSource_AddingNew);
             this.trInvoiceHeadersBindingSource.CurrentItemChanged += new System.EventHandler(this.trInvoiceHeadersBindingSource_CurrentItemChanged);
             // 
@@ -613,158 +619,6 @@ namespace Foxoft
             this.lUE_WarehouseCode.Size = new System.Drawing.Size(312, 20);
             this.lUE_WarehouseCode.StyleController = this.dataLayoutControl1;
             this.lUE_WarehouseCode.TabIndex = 10;
-            // 
-            // ribbonControl1
-            // 
-            this.ribbonControl1.ExpandCollapseItem.Id = 0;
-            this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbonControl1.ExpandCollapseItem,
-            this.ribbonControl1.SearchEditItem,
-            this.bBI_Save,
-            this.bBI_SaveAndNew,
-            this.bBI_reportDesign,
-            this.bBI_Payment,
-            this.bBI_New,
-            this.bBI_reportPreview,
-            this.bBI_DeleteInvoice,
-            this.bBI_DeletePayment,
-            this.bBI_SaveQuit,
-            this.bBI_test});
-            this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 16;
-            this.ribbonControl1.Name = "ribbonControl1";
-            this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
-            this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
-            this.ribbonControl1.Size = new System.Drawing.Size(871, 158);
-            this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
-            // 
-            // bBI_Save
-            // 
-            this.bBI_Save.Caption = "Yadda Saxla";
-            this.bBI_Save.Id = 1;
-            this.bBI_Save.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Save.ImageOptions.SvgImage")));
-            this.bBI_Save.Name = "bBI_Save";
-            this.bBI_Save.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Save_ItemClick);
-            // 
-            // bBI_SaveAndNew
-            // 
-            this.bBI_SaveAndNew.Caption = "Yadda Saxla & Yeni";
-            this.bBI_SaveAndNew.Id = 2;
-            this.bBI_SaveAndNew.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveAndNew.ImageOptions.SvgImage")));
-            this.bBI_SaveAndNew.Name = "bBI_SaveAndNew";
-            this.bBI_SaveAndNew.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndNew_ItemClick);
-            // 
-            // bBI_reportDesign
-            // 
-            this.bBI_reportDesign.Caption = "Report Dizayn";
-            this.bBI_reportDesign.Id = 3;
-            this.bBI_reportDesign.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_reportDesign.ImageOptions.SvgImage")));
-            this.bBI_reportDesign.Name = "bBI_reportDesign";
-            this.bBI_reportDesign.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportDesign_ItemClick);
-            // 
-            // bBI_Payment
-            // 
-            this.bBI_Payment.Caption = "Ödəmə";
-            this.bBI_Payment.Id = 5;
-            this.bBI_Payment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Payment.ImageOptions.SvgImage")));
-            this.bBI_Payment.Name = "bBI_Payment";
-            this.bBI_Payment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Payment_ItemClick);
-            // 
-            // bBI_New
-            // 
-            this.bBI_New.Caption = "Yeni";
-            this.bBI_New.Id = 9;
-            this.bBI_New.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_New.ImageOptions.SvgImage")));
-            this.bBI_New.Name = "bBI_New";
-            this.bBI_New.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_New_ItemClick);
-            // 
-            // bBI_reportPreview
-            // 
-            this.bBI_reportPreview.Caption = "Report Görünüş";
-            this.bBI_reportPreview.Id = 10;
-            this.bBI_reportPreview.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_reportPreview.ImageOptions.SvgImage")));
-            this.bBI_reportPreview.Name = "bBI_reportPreview";
-            this.bBI_reportPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreview_ItemClick);
-            // 
-            // bBI_DeleteInvoice
-            // 
-            this.bBI_DeleteInvoice.Caption = "Fakturani Sil";
-            this.bBI_DeleteInvoice.Id = 11;
-            this.bBI_DeleteInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeleteInvoice.ImageOptions.SvgImage")));
-            this.bBI_DeleteInvoice.Name = "bBI_DeleteInvoice";
-            this.bBI_DeleteInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeleteInvoice_ItemClick);
-            // 
-            // bBI_DeletePayment
-            // 
-            this.bBI_DeletePayment.Caption = "Odemeni Sil";
-            this.bBI_DeletePayment.Id = 12;
-            this.bBI_DeletePayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeletePayment.ImageOptions.SvgImage")));
-            this.bBI_DeletePayment.Name = "bBI_DeletePayment";
-            this.bBI_DeletePayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeletePayment_ItemClick);
-            // 
-            // bBI_SaveQuit
-            // 
-            this.bBI_SaveQuit.Caption = "Yadda Saxla Bağla";
-            this.bBI_SaveQuit.Id = 13;
-            this.bBI_SaveQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
-            this.bBI_SaveQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
-            this.bBI_SaveQuit.Name = "bBI_SaveQuit";
-            this.bBI_SaveQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveQuit_ItemClick);
-            // 
-            // bBI_test
-            // 
-            this.bBI_test.Caption = "Test";
-            this.bBI_test.Id = 15;
-            this.bBI_test.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_test.ImageOptions.SvgImage")));
-            this.bBI_test.Name = "bBI_test";
-            // 
-            // ribbonPage1
-            // 
-            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.Faktura,
-            this.ribbonPageGroup3,
-            this.ribbonPageGroup2,
-            this.ribbonPageGroup1});
-            this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "Faktura";
-            // 
-            // Faktura
-            // 
-            this.Faktura.ItemLinks.Add(this.bBI_Save);
-            this.Faktura.ItemLinks.Add(this.bBI_SaveQuit);
-            this.Faktura.ItemLinks.Add(this.bBI_SaveAndNew);
-            this.Faktura.ItemLinks.Add(this.bBI_New);
-            this.Faktura.ItemLinks.Add(this.bBI_DeleteInvoice);
-            this.Faktura.Name = "Faktura";
-            this.Faktura.Text = "Faktura";
-            // 
-            // ribbonPageGroup3
-            // 
-            this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Payment);
-            this.ribbonPageGroup3.ItemLinks.Add(this.bBI_DeletePayment);
-            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
-            this.ribbonPageGroup3.Text = "Ödəmə";
-            // 
-            // ribbonPageGroup2
-            // 
-            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
-            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "Print";
-            // 
-            // ribbonPageGroup1
-            // 
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_test);
-            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
-            // 
-            // ribbonStatusBar1
-            // 
-            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 620);
-            this.ribbonStatusBar1.Name = "ribbonStatusBar1";
-            this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
-            this.ribbonStatusBar1.Size = new System.Drawing.Size(871, 24);
             // 
             // Root
             // 
@@ -920,6 +774,174 @@ namespace Foxoft
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
+            // ribbonControl1
+            // 
+            this.ribbonControl1.ExpandCollapseItem.Id = 0;
+            this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.ribbonControl1.SearchEditItem,
+            this.bBI_Save,
+            this.bBI_SaveAndNew,
+            this.bBI_reportDesign,
+            this.bBI_Payment,
+            this.bBI_New,
+            this.bBI_reportPreview,
+            this.bBI_DeleteInvoice,
+            this.bBI_DeletePayment,
+            this.bBI_SaveQuit,
+            this.bBI_test});
+            this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            this.ribbonControl1.MaxItemId = 16;
+            this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
+            this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1});
+            this.ribbonControl1.Size = new System.Drawing.Size(871, 158);
+            this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
+            // 
+            // bBI_Save
+            // 
+            this.bBI_Save.Caption = "Yadda Saxla";
+            this.bBI_Save.Id = 1;
+            this.bBI_Save.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Save.ImageOptions.SvgImage")));
+            this.bBI_Save.Name = "bBI_Save";
+            this.bBI_Save.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Save_ItemClick);
+            // 
+            // bBI_SaveAndNew
+            // 
+            this.bBI_SaveAndNew.Caption = "Yadda Saxla & Yeni";
+            this.bBI_SaveAndNew.Id = 2;
+            this.bBI_SaveAndNew.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveAndNew.ImageOptions.SvgImage")));
+            this.bBI_SaveAndNew.Name = "bBI_SaveAndNew";
+            this.bBI_SaveAndNew.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndNew_ItemClick);
+            // 
+            // bBI_reportDesign
+            // 
+            this.bBI_reportDesign.Caption = "Report Dizayn";
+            this.bBI_reportDesign.Id = 3;
+            this.bBI_reportDesign.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_reportDesign.ImageOptions.SvgImage")));
+            this.bBI_reportDesign.Name = "bBI_reportDesign";
+            this.bBI_reportDesign.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportDesign_ItemClick);
+            // 
+            // bBI_Payment
+            // 
+            this.bBI_Payment.Caption = "Ödəmə";
+            this.bBI_Payment.Id = 5;
+            this.bBI_Payment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Payment.ImageOptions.SvgImage")));
+            this.bBI_Payment.Name = "bBI_Payment";
+            this.bBI_Payment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Payment_ItemClick);
+            // 
+            // bBI_New
+            // 
+            this.bBI_New.Caption = "Yeni";
+            this.bBI_New.Id = 9;
+            this.bBI_New.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_New.ImageOptions.SvgImage")));
+            this.bBI_New.Name = "bBI_New";
+            this.bBI_New.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_New_ItemClick);
+            // 
+            // bBI_reportPreview
+            // 
+            this.bBI_reportPreview.Caption = "Report Görünüş";
+            this.bBI_reportPreview.Id = 10;
+            this.bBI_reportPreview.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_reportPreview.ImageOptions.SvgImage")));
+            this.bBI_reportPreview.Name = "bBI_reportPreview";
+            this.bBI_reportPreview.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreview_ItemClick);
+            // 
+            // bBI_DeleteInvoice
+            // 
+            this.bBI_DeleteInvoice.Caption = "Fakturani Sil";
+            this.bBI_DeleteInvoice.Id = 11;
+            this.bBI_DeleteInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeleteInvoice.ImageOptions.SvgImage")));
+            this.bBI_DeleteInvoice.Name = "bBI_DeleteInvoice";
+            this.bBI_DeleteInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeleteInvoice_ItemClick);
+            // 
+            // bBI_DeletePayment
+            // 
+            this.bBI_DeletePayment.Caption = "Odemeni Sil";
+            this.bBI_DeletePayment.Id = 12;
+            this.bBI_DeletePayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeletePayment.ImageOptions.SvgImage")));
+            this.bBI_DeletePayment.Name = "bBI_DeletePayment";
+            this.bBI_DeletePayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeletePayment_ItemClick);
+            // 
+            // bBI_SaveQuit
+            // 
+            this.bBI_SaveQuit.Caption = "Yadda Saxla Bağla";
+            this.bBI_SaveQuit.Id = 13;
+            this.bBI_SaveQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
+            this.bBI_SaveQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
+            this.bBI_SaveQuit.Name = "bBI_SaveQuit";
+            this.bBI_SaveQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveQuit_ItemClick);
+            // 
+            // bBI_test
+            // 
+            this.bBI_test.Caption = "Test";
+            this.bBI_test.Id = 15;
+            this.bBI_test.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_test.ImageOptions.SvgImage")));
+            this.bBI_test.Name = "bBI_test";
+            // 
+            // ribbonPage1
+            // 
+            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.Faktura,
+            this.ribbonPageGroup3,
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup1});
+            this.ribbonPage1.Name = "ribbonPage1";
+            this.ribbonPage1.Text = "Faktura";
+            // 
+            // Faktura
+            // 
+            this.Faktura.ItemLinks.Add(this.bBI_Save);
+            this.Faktura.ItemLinks.Add(this.bBI_SaveQuit);
+            this.Faktura.ItemLinks.Add(this.bBI_SaveAndNew);
+            this.Faktura.ItemLinks.Add(this.bBI_New);
+            this.Faktura.ItemLinks.Add(this.bBI_DeleteInvoice);
+            this.Faktura.Name = "Faktura";
+            this.Faktura.Text = "Faktura";
+            // 
+            // ribbonPageGroup3
+            // 
+            this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Payment);
+            this.ribbonPageGroup3.ItemLinks.Add(this.bBI_DeletePayment);
+            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+            this.ribbonPageGroup3.Text = "Ödəmə";
+            // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
+            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Print";
+            // 
+            // ribbonPageGroup1
+            // 
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_test);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
+            // 
+            // ribbonStatusBar1
+            // 
+            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 620);
+            this.ribbonStatusBar1.Name = "ribbonStatusBar1";
+            this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
+            this.ribbonStatusBar1.Size = new System.Drawing.Size(871, 24);
+            // 
+            // adorneruıManager1
+            // 
+            this.adorneruıManager1.Elements.Add(this.badge1);
+            this.adorneruıManager1.Elements.Add(this.badge2);
+            this.adorneruıManager1.Owner = this;
+            // 
+            // badge1
+            // 
+            this.badge1.Properties.Location = System.Drawing.ContentAlignment.TopRight;
+            this.badge1.TargetElement = this.bBI_New;
+            // 
+            // badge2
+            // 
+            this.badge2.Properties.Location = System.Drawing.ContentAlignment.TopRight;
+            this.badge2.TargetElement = this.bBI_Save;
+            // 
             // FormInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -959,7 +981,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.lUE_OfficeCode.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lUE_StoreCode.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lUE_WarehouseCode.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForIsReturn)).EndInit();
@@ -975,6 +996,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbl_Payment)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adorneruıManager1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1060,5 +1083,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDescription;
         private DevExpress.XtraEditors.LabelControl lbl_CurrAccDesc;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.Utils.VisualEffects.AdornerUIManager adorneruıManager1;
+        private DevExpress.Utils.VisualEffects.Badge badge1;
+        private DevExpress.Utils.VisualEffects.Badge badge2;
     }
 }

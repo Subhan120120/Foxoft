@@ -80,7 +80,7 @@ namespace Foxoft.Models
 
 
         [NotMapped]
-        [DisplayName("Cari Hesab Açıqlaması")]
+        [DisplayName("Cari Hesab Kodu")]
         public string CurrAccCode { get; set; }
 
         [NotMapped]
