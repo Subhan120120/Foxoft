@@ -8,6 +8,7 @@ using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
 using Foxoft.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
@@ -76,6 +77,42 @@ namespace Foxoft
                 filterCriteria = filterControl_Outer.FilterCriteria.ToString();
 
             efMethods.UpdateReportFilter(reportId, filterCriteria); //save filter to database
+
+            CriteriaOperator criteriaOperator = filterControl_Outer.FilterCriteria;
+
+
+
+            var asdasd = Extract(criteriaOperator);
+        }
+         
+        Dictionary<string, object> Extract(CriteriaOperator op)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            GroupOperator opGroup = op as GroupOperator;
+            if (ReferenceEquals(opGroup, null))
+            {
+                ExtractOne(dict, op);
+            }
+            else
+            {
+                if (opGroup.OperatorType == GroupOperatorType.And)
+                {
+                    foreach (var opn in opGroup.Operands)
+                    {
+                        ExtractOne(dict, opn);
+                    }
+                }
+            }
+            return dict;
+        }
+        private void ExtractOne(Dictionary<string, object> dict, CriteriaOperator op)
+        {
+            BinaryOperator opBinary = op as BinaryOperator;
+            if (ReferenceEquals(opBinary, null)) return;
+            OperandProperty opProperty = opBinary.LeftOperand as OperandProperty;
+            OperandValue opValue = opBinary.RightOperand as OperandValue;
+            if (ReferenceEquals(opProperty, null) || ReferenceEquals(opValue, null)) return;
+            dict.Add(opProperty.PropertyName, opValue.Value);
         }
 
         private void bBI_ReportEdit_ItemClick(object sender, ItemClickEventArgs e)

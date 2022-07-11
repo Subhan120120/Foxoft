@@ -34,7 +34,8 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                dbContext.DcReports.Where(x => x.ReportId == dcReport.ReportId)
+                dbContext.DcReports.Include(x => x.DcReportFilters)
+                                    .Where(x => x.ReportId == dcReport.ReportId)
                                    .Load();
                 dcReportsBindingSource.DataSource = dbContext.DcReports.Local.ToBindingList();
             }
