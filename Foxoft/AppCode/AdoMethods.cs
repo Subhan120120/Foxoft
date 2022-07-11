@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -58,7 +59,14 @@ namespace Foxoft
                 using (SqlDataAdapter da = new SqlDataAdapter(query, con))
                 {
                     DataTable dt = new DataTable();
-                    da.Fill(dt);
+                    try
+                    {
+                        da.Fill(dt);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Databaza Hal Hazırda məşğuldur \n {ex}");
+                    }
                     return dt;
                 }
             }

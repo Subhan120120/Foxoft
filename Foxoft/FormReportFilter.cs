@@ -1,5 +1,6 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.Utils.VisualEffects;
+using DevExpress.Xpo.DB;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -10,6 +11,7 @@ using Foxoft.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -32,7 +34,16 @@ namespace Foxoft
 
             this.dcReport = dcReport;
 
-            filterControl_Outer.SourceControl = adoMethods.SqlGetDt(dcReport.ReportQuery);
+            //string qryZero = dcReport.ReportQuery.Replace(rf.dcReport.ReportQuery, filterSql);
+
+            int startindex = dcReport.ReportQuery.IndexOf('{');
+            int endindex = dcReport.ReportQuery.IndexOf('}');
+            string outputstring = dcReport.ReportQuery.Substring(startindex, endindex - startindex + 1);
+
+            string querySql = dcReport.ReportQuery;
+            querySql = querySql.Replace(outputstring, "");
+
+            filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql);
             filterControl_Outer.FilterString = dcReport.ReportFilter;
 
             this.repoBtnEdit_ProductCode.AutoHeight = false;
@@ -52,8 +63,30 @@ namespace Foxoft
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
             int reportId = dcReport.ReportId;
+            string reportQuery = dcReport.ReportQuery;
 
-            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+            ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
+
+            CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
+
+            int index = 0;
+            foreach (DcReportFilter rf in dcReportFilters)
+            {
+                BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
+
+                criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
+
+
+                string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
+                reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci kod ile deyisdirilir
+
+                index++;
+            }
+
+            //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
+
+
+            string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
             string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
             if (!string.IsNullOrEmpty(queryFilter))
@@ -78,13 +111,48 @@ namespace Foxoft
 
             efMethods.UpdateReportFilter(reportId, filterCriteria); //save filter to database
 
-            CriteriaOperator criteriaOperator = filterControl_Outer.FilterCriteria;
+            //CriteriaOperator criteriaOperator = filterControl_Outer.FilterCriteria;
 
-
-
-            var asdasd = Extract(criteriaOperator);
+            //var asdasd = Extract(criteriaOperator);
         }
-         
+
+        private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
+        {
+            switch (filterOperatorType)
+            {
+                case "+":
+                    return BinaryOperatorType.Plus;
+                case "&":
+                    return BinaryOperatorType.BitwiseAnd;
+                case "/":
+                    return BinaryOperatorType.Divide;
+                case "==":
+                    return BinaryOperatorType.Equal;
+                case ">":
+                    return BinaryOperatorType.Greater;
+                case ">=":
+                    return BinaryOperatorType.GreaterOrEqual;
+                case "<":
+                    return BinaryOperatorType.Less;
+                case "<=":
+                    return BinaryOperatorType.LessOrEqual;
+                case "%":
+                    return BinaryOperatorType.Modulo;
+                case "*":
+                    return BinaryOperatorType.Multiply;
+                case "!=":
+                    return BinaryOperatorType.NotEqual;
+                case "|":
+                    return BinaryOperatorType.BitwiseOr;
+                case "-":
+                    return BinaryOperatorType.Minus;
+                case "^":
+                    return BinaryOperatorType.BitwiseXor;
+                default:
+                    return BinaryOperatorType.Equal;
+            }
+        }
+
         Dictionary<string, object> Extract(CriteriaOperator op)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();

@@ -25,10 +25,25 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public int ReportId { get; set; }
 
+        [DisplayName("Property")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string FilterProperty { get; set; }
+
+        [DisplayName("Value")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string FilterValue { get; set; }
+
         [DisplayName("Filter String")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string FilterString { get; set; }
+        public string FilterOperatorType { get; set; }
+
+        [DisplayName("Filter Təmsilci")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string Representative { get; set; }
 
         public virtual DcReport DcReport { get; set; }
 
