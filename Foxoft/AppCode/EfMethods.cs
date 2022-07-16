@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using DevExpress.Data.Linq;
+using DevExpress.Data.Filtering;
+using DevExpress.Data.Linq.Helpers;
 
 namespace Foxoft
 {
@@ -131,11 +134,20 @@ namespace Foxoft
             }
         }
 
-        public List<DcProduct> SelectProductsByProductType(byte productTypeCode)
+        public List<DcProduct> SelectProductsByProductType(byte productTypeCode, CriteriaOperator filterCriteria)
         {
             using (subContext db = new subContext())
             {
-                return db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
+
+                IQueryable<DcProduct> DcProducts = db.DcProducts;
+                CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+                IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), filterCriteria) as IQueryable<DcProduct>;
+
+
+                if (Object.ReferenceEquals(filterCriteria, null))
+                    filteredData = filteredData.Take(10);
+
+                IQueryable<DcProduct> dcProducts = filteredData.Where(x => x.ProductTypeCode == productTypeCode)
                                 .Include(x => x.TrInvoiceLines)
                                     .ThenInclude(x => x.TrInvoiceHeader)
                                 .Select(x => new DcProduct
@@ -162,8 +174,10 @@ namespace Foxoft
                                     //PromotionCode2 = x.PromotionCode2,
                                     //TaxRate = x.TaxRate,
                                     //TrFeature = x.TrFeature
-                                })
-                                .ToList();
+                                });
+
+
+                return dcProducts.ToList();
             }
         }
 
