@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.Data;
+using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraGrid;
@@ -57,6 +58,12 @@ namespace Foxoft
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
+            int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
+            if (rowHandle != GridControl.InvalidRowHandle)
+            {
+                gV_ProductList.FocusedRowHandle = rowHandle;
+                gV_ProductList.MakeRowVisible(rowHandle);
+            }
         }
 
         private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)

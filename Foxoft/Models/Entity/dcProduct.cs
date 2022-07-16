@@ -74,12 +74,11 @@ namespace Foxoft.Models
 
         //[NotMapped]
         //[DisplayName("Qalıq")]
-        //public int Balance { get; set; }
 
         [NotMapped]
         [DisplayName("Qalıq")]
-        //public decimal TotalNetAmount { get; set; }
-        public int Balance { get { return TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut); } set { } }
+        public int Balance { get; set; }
+        //public int Balance { get { return TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut); } set { } }
 
         public virtual DcProductType DcProductType { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }

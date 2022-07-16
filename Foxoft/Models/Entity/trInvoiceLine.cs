@@ -49,10 +49,10 @@ namespace Foxoft.Models
                         else return QtyOut;
 
                     else
-                        return 9999999;
+                        return 0;
                 }
                 else
-                    return 99999999;
+                    return 0;
             }
             set
             {

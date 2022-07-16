@@ -336,6 +336,12 @@ namespace Foxoft
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
             //CalcRowLocNetAmount(e);
+            GridView view = sender as GridView;
+
+            if (view == null) return;
+            if (e.Column != col_ProductCode) return;
+
+
         }
 
         #region CalcRowLocNetAmount
@@ -405,30 +411,59 @@ namespace Foxoft
         {
             GridView view = sender as GridView;
 
-            if (!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS")
+            if (view.FocusedColumn == colQty)
             {
-                object colProductCode = view.GetFocusedRowCellValue(col_ProductCode);
-                string productCode = (colProductCode ??= "").ToString();
-
-                if (!String.IsNullOrEmpty(productCode))
+                if (!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS")
                 {
-                    object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
-                    Guid invoiceLineId = Guid.Parse((colInvoiceLineId ??= Guid.Empty).ToString());
+                    object colProductCode = view.GetFocusedRowCellValue(col_ProductCode);
+                    string productCode = (colProductCode ??= "").ToString();
 
-                    int currentQty = efMethods.SelectInvoiceLine(invoiceLineId).Qty;
-                    int balance = efMethods.SelectProduct(productCode).Balance + currentQty;
-                    int eValue = Convert.ToInt32(e.Value ??= 0);
+                    if (!String.IsNullOrEmpty(productCode))
+                    {
+                        object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+                        Guid invoiceLineId = Guid.Parse((colInvoiceLineId ??= Guid.Empty).ToString());
 
-                    if (eValue > balance)
-                        e.Valid = false;
+                        int currentQty = efMethods.SelectInvoiceLine(invoiceLineId).Qty;
+                        int balance = efMethods.SelectProduct(productCode).TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut) + currentQty;
+                        int eValue = Convert.ToInt32(e.Value ??= 0);
+
+                        if (eValue > balance)
+                        {
+                            e.ErrorText = "Stokda miqdar yoxdur";
+                            e.Valid = false;
+                        }
+                    }
+
                 }
+            }
 
+            if (view.FocusedColumn == col_ProductCode)
+            {
+                string eValue = (e.Value ??= String.Empty).ToString();
+
+                DcProduct product = efMethods.SelectProduct(eValue);
+
+                if (Object.ReferenceEquals(product, null))
+                {
+                    e.ErrorText = "Belə nir məhsul yoxdur";
+                    e.Valid = false;
+                }
+                else
+                {
+                    ButtonEdit editor = (ButtonEdit)view.ActiveEditor;
+                    editor.EditValue = product.ProductCode;
+
+                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, product.ProductCode);
+                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, product.ProductDesc);
+
+                    double price = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+                    gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
+                }
             }
         }
 
         private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
         {
-            e.ErrorText = "Stokda miqdar yoxdur";
             e.ExceptionMode = ExceptionMode.DisplayError;
             e.WindowCaption = "Diqqət";
         }
@@ -443,18 +478,18 @@ namespace Foxoft
             SelectSalesPerson(sender);
         }
 
-        BaseEdit editor;
+        BaseEdit editorCustom;
         private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
-            editor = view.ActiveEditor;
-            editor.DoubleClick += editor_DoubleClick;
+            editorCustom = view.ActiveEditor;
+            editorCustom.DoubleClick += editor_DoubleClick;
         }
 
         void gV_InvoiceLine_HiddenEditor(object sender, EventArgs e)
         {
-            editor.DoubleClick -= editor_DoubleClick;
-            editor = null;
+            editorCustom.DoubleClick -= editor_DoubleClick;
+            editorCustom = null;
         }
 
         private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
@@ -517,19 +552,10 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
-
-                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, form.dcProduct.ProductCode);
-                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDesc);
-
-                    double price = dcProcess.ProcessCode == "RS" ? form.dcProduct.RetailPrice : (dcProcess.ProcessCode == "RP" ? form.dcProduct.PurchasePrice : 0);
-                    gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
+                    gV_InvoiceLine.CloseEditor();
+                    //gV_InvoiceLine.UpdateCurrentRow();
                 }
             }
-
-
-            //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1); // if qty defaultValue doesnt work
-            gV_InvoiceLine.UpdateCurrentRow();
-            // 
         }
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)

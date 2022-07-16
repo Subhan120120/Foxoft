@@ -136,33 +136,32 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 return db.DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
-                                    .Include(x => x.TrInvoiceLines)
-                                        .ThenInclude(x => x.TrInvoiceHeader)
-                                    //.Select(x => new DcProduct
-                                    //{
-                                    //    Barcode = x.Barcode,
-                                    //    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                    //    DcProductType = x.DcProductType,
-                                    //    ProductCode = x.ProductCode,
-                                    //    ProductDesc = x.ProductDesc,
-                                    //    PosDiscount = x.PosDiscount,
-                                    //    RetailPrice = x.RetailPrice,
-                                    //    PurchasePrice = x.PurchasePrice,
-                                    //    ProductTypeCode = x.ProductTypeCode,
-                                    //    WholesalePrice = x.WholesalePrice,
-                                    //    UsePos = x.UsePos,
-                                    //    UseInternet = x.UseInternet,
-                                    //    CreatedDate = x.CreatedDate,
-                                    //    CreatedUserName = x.CreatedUserName,
-                                    //    IsDisabled = x.IsDisabled,
-                                    //    LastUpdatedDate = x.LastUpdatedDate,
-                                    //    LastUpdatedUserName = x.LastUpdatedUserName,
-                                    //    PromotionCode = x.PromotionCode,
-                                    //    PromotionCode2 = x.PromotionCode2,
-                                    //    TaxRate = x.TaxRate,
-                                    //    //TrFeature = x.TrFeature
-                                    //})
-                                    .ToList();
+                                .Include(x => x.TrInvoiceLines)
+                                    .ThenInclude(x => x.TrInvoiceHeader)
+                                .Select(x => new DcProduct
+                                {
+                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                    ProductCode = x.ProductCode,
+                                    ProductDesc = x.ProductDesc,
+                                    PosDiscount = x.PosDiscount,
+                                    RetailPrice = x.RetailPrice,
+                                    PurchasePrice = x.PurchasePrice,
+                                    ProductTypeCode = x.ProductTypeCode,
+                                    WholesalePrice = x.WholesalePrice,
+                                    UsePos = x.UsePos,
+                                    UseInternet = x.UseInternet,
+                                    CreatedDate = x.CreatedDate,
+                                    CreatedUserName = x.CreatedUserName,
+                                    LastUpdatedDate = x.LastUpdatedDate,
+                                    LastUpdatedUserName = x.LastUpdatedUserName,
+                                    //Barcode = x.Barcode,
+                                    //IsDisabled = x.IsDisabled,
+                                    //PromotionCode = x.PromotionCode,
+                                    //PromotionCode2 = x.PromotionCode2,
+                                    //TaxRate = x.TaxRate,
+                                    //TrFeature = x.TrFeature
+                                })
+                                .ToList();
             }
         }
 
@@ -765,7 +764,7 @@ namespace Foxoft
             }
         }
 
-        public int UpdateReportFilter(int id, string reportFilter)
+        public int UpdateDcReportFilter(int id, string reportFilter)
         {
             using (subContext db = new subContext())
             {
@@ -774,6 +773,20 @@ namespace Foxoft
                 return db.SaveChanges();
             }
         }
+
+        public int UpdateReportFilter(string prop, string value)
+        {
+            using (subContext db = new subContext())
+            {
+                DcReportFilter dcReportFilter = db.DcReportFilters.FirstOrDefault(x => x.FilterProperty == prop);
+                dcReportFilter.FilterValue = value;
+
+                db.Entry(dcReportFilter).Property(x => x.FilterValue).IsModified = true;
+                return db.SaveChanges();
+            }
+        }
+
+
 
         public void InsertReport(DcReport dcReport)
         {

@@ -25,26 +25,22 @@ namespace Foxoft
         readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
         readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
 
-        public FormReportFilter(DcReport dcReport)
+        public FormReportFilter(DcReport Report)
         {
             InitializeComponent();
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
-            dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
+            this.dcReport = efMethods.SelectReport(Report.ReportId); // reload dcReport
 
-            this.dcReport = dcReport;
 
-            //string qryZero = dcReport.ReportQuery.Replace(rf.dcReport.ReportQuery, filterSql);
-
-            int startindex = dcReport.ReportQuery.IndexOf('{');
-            int endindex = dcReport.ReportQuery.IndexOf('}');
-            string outputstring = dcReport.ReportQuery.Substring(startindex, endindex - startindex + 1);
-
-            string querySql = dcReport.ReportQuery;
-            querySql = querySql.Replace(outputstring, "");
+            string querySql = ClearVariables(dcReport.ReportQuery);
 
             filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql);
             filterControl_Outer.FilterString = dcReport.ReportFilter;
+
+            GroupOperator groupOperator = GetFiltersFromDatabase(dcReport.DcReportFilters);
+            filterControl_Inner.SourceControl = opToDt(groupOperator);
+            filterControl_Inner.FilterCriteria = groupOperator;
 
             this.repoBtnEdit_ProductCode.AutoHeight = false;
             this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
@@ -55,6 +51,75 @@ namespace Foxoft
             this.repoBtnEdit_CurrAccCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CurrAccCode_ButtonPressed);
         }
 
+        private string ClearVariables(string querySql)
+        {
+            if (querySql.Contains("{"))
+            {
+                int startindex = querySql.IndexOf('{');
+                int endindex = querySql.IndexOf('}');
+                string outputstring = querySql.Substring(startindex, endindex - startindex + 1);
+                string newQuerySql = querySql.Replace(outputstring, "");
+                return newQuerySql;
+            }
+            else
+                return querySql;
+        }
+
+        private DataTable opToDt(GroupOperator groupOperand)
+        {
+            DataTable dt = new DataTable();
+            dt.Clear();
+            Dictionary<string, object> keyValuePairs = Extract(groupOperand);
+            foreach (var item in keyValuePairs)
+                dt.Columns.Add(item.Key);
+
+            return dt;
+        }
+
+        private GroupOperator GetFiltersFromDatabase(ICollection<DcReportFilter> dcReportFilters)
+        {
+            GroupOperator groupOperand = new GroupOperator();
+
+            foreach (DcReportFilter rf in dcReportFilters)
+            {
+                BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
+                CriteriaOperator op = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
+                groupOperand.Operands.Add(op);
+            }
+
+            return groupOperand;
+        }
+
+        //private CriteriaOperator DoSomthing(CriteriaOperator criteriaOperator)
+        //{
+        //    if (criteriaOperator is GroupOperator)
+        //    {
+        //        var groupOperator = (GroupOperator)criteriaOperator;
+        //        CriteriaOperatorCollection operands = groupOperator.Operands;
+
+        //        var indexesToremove = new List<int>();
+        //        for (int i = 0; i < operands.Count; i++)
+        //        {
+        //            CriteriaOperator operand = operands[i];
+        //            if (operand.ToString() == matchString)
+        //            {
+        //                if (ReferenceEquals(replaceOperator, null))
+        //                    indexesToremove.Add(i);
+        //                else
+        //                    operands[i] = replaceOperator;
+        //            }
+        //            else
+        //            {
+        //                CriteriaOperator extract = operand;
+        //                operands.RemoveAt(i);
+        //                operands.Insert(i, extract);
+        //            }
+        //        }
+        //        foreach (int i in indexesToremove)
+        //            operands.RemoveAt(i);
+        //    }
+        //    return criteriaOperator;
+        //}
 
         private void FormReport_Load(object sender, EventArgs e)
         {
@@ -76,9 +141,8 @@ namespace Foxoft
 
                 criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
 
-
                 string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
-                reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci kod ile deyisdirilir
+                reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
 
                 index++;
             }
@@ -109,11 +173,7 @@ namespace Foxoft
             if (!object.ReferenceEquals(filterControl_Outer.FilterCriteria, null))
                 filterCriteria = filterControl_Outer.FilterCriteria.ToString();
 
-            efMethods.UpdateReportFilter(reportId, filterCriteria); //save filter to database
-
-            //CriteriaOperator criteriaOperator = filterControl_Outer.FilterCriteria;
-
-            //var asdasd = Extract(criteriaOperator);
+            efMethods.UpdateDcReportFilter(reportId, filterCriteria); //save filter to database
         }
 
         private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
@@ -212,7 +272,21 @@ namespace Foxoft
             }
         }
 
-        private void filterControl1_CustomValueEditor(object sender, CustomValueEditorArgs e)
+        private void filterControl_Inner_CustomValueEditor(object sender, CustomValueEditorArgs e)
+        {
+            if (!object.ReferenceEquals(e.Value, null) && !object.ReferenceEquals(e.PropertyName, null))
+            {
+                foreach (var item in dcReport.DcReportFilters)
+                {
+                    string prop = e.PropertyName;
+
+                    efMethods.UpdateReportFilter(e.PropertyName, e.Value.ToString());
+                }
+                this.dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
+            }
+        }
+
+        private void filterControl_Outer_CustomValueEditor(object sender, CustomValueEditorArgs e)
         {
             if (e.Node.FirstOperand.PropertyName == "Məhsul Kodu" || e.Node.FirstOperand.PropertyName == "ProductCode")
                 e.RepositoryItem = repoBtnEdit_ProductCode;
@@ -253,6 +327,5 @@ namespace Foxoft
                 }
             }
         }
-
     }
 }
