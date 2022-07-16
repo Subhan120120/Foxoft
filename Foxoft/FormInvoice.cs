@@ -340,8 +340,6 @@ namespace Foxoft
 
             if (view == null) return;
             if (e.Column != col_ProductCode) return;
-
-
         }
 
         #region CalcRowLocNetAmount
@@ -423,7 +421,8 @@ namespace Foxoft
                         object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
                         Guid invoiceLineId = Guid.Parse((colInvoiceLineId ??= Guid.Empty).ToString());
 
-                        int currentQty = efMethods.SelectInvoiceLine(invoiceLineId).Qty;
+                        TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
+                        int currentQty = Object.ReferenceEquals(currTrInvoLine, null) ? 0 : currTrInvoLine.Qty;
                         int balance = efMethods.SelectProduct(productCode).TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut) + currentQty;
                         int eValue = Convert.ToInt32(e.Value ??= 0);
 
@@ -456,8 +455,10 @@ namespace Foxoft
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, product.ProductCode);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, product.ProductDesc);
 
-                    double price = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+                    decimal price = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
+
+                    gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
                 }
             }
         }
@@ -553,7 +554,7 @@ namespace Foxoft
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
                     gV_InvoiceLine.CloseEditor();
-                    //gV_InvoiceLine.UpdateCurrentRow();
+                    gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
                 }
             }
         }

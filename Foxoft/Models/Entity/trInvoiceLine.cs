@@ -81,7 +81,7 @@ namespace Foxoft.Models
 
         [DisplayName("Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [DisplayName("Valyuta")]
         [ForeignKey("DcCurrency")]
@@ -94,15 +94,15 @@ namespace Foxoft.Models
 
         [DisplayName("Qiymət (AZN)")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public double PriceLoc { get { return Price * ExchangeRate; } set { } }
+        public decimal PriceLoc { get { return Price * (decimal)ExchangeRate; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Tutar")]
-        public decimal Amount { get { return (QtyIn + QtyOut) * (decimal)Price; } set { } }
+        public decimal Amount { get { return (QtyIn + QtyOut) * Price; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Tutar (AZN)")]
-        public decimal AmountLoc { get { return (QtyIn + QtyOut) * (decimal)PriceLoc; } set { } }
+        public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
         [DisplayName("Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
@@ -111,11 +111,11 @@ namespace Foxoft.Models
 
         [Column(TypeName = "money")]
         [DisplayName("Net Tutar")]
-        public decimal NetAmount { get { return (QtyIn + QtyOut) * (decimal)Price; } set { } }
+        public decimal NetAmount { get { return (QtyIn + QtyOut) * Price; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Net Tutar (AZN)")]
-        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * (decimal)PriceLoc; } set { } }
+        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
         [Column(TypeName = "money")]
         [DisplayName("Kampaniya Endirimi")]

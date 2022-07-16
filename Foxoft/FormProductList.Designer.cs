@@ -34,6 +34,7 @@ namespace Foxoft
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductList));
             this.gC_ProductList = new DevExpress.XtraGrid.GridControl();
             this.gV_ProductList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -48,6 +49,7 @@ namespace Foxoft
             this.colTaxRate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPosDiscountRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLastSalePrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.BBI_ProductNew = new DevExpress.XtraBars.BarButtonItem();
             this.btn_ProductEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -81,6 +83,7 @@ namespace Foxoft
             // gV_ProductList
             // 
             this.gV_ProductList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colLastPurchasePrice,
             this.colProductCode,
             this.colProductDesc,
             this.colBalance,
@@ -94,12 +97,20 @@ namespace Foxoft
             this.colPromotionCode2,
             this.colTaxRate,
             this.colIsDisabled,
-            this.colPosDiscountRate});
+            this.colPosDiscountRate,
+            this.colLastSalePrice});
             this.gV_ProductList.CustomizationFormBounds = new System.Drawing.Rectangle(624, 401, 264, 272);
             this.gV_ProductList.GridControl = this.gC_ProductList;
             this.gV_ProductList.Name = "gV_ProductList";
             this.gV_ProductList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_ProductList_FocusedRowChanged);
             this.gV_ProductList.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
+            // 
+            // colLastPurchasePrice
+            // 
+            this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
+            this.colLastPurchasePrice.Name = "colLastPurchasePrice";
+            this.colLastPurchasePrice.Visible = true;
+            this.colLastPurchasePrice.VisibleIndex = 2;
             // 
             // colProductCode
             // 
@@ -109,7 +120,7 @@ namespace Foxoft
             this.colProductCode.VisibleIndex = 0;
             this.colProductCode.Width = 82;
             // 
-            // colProductDescription
+            // colProductDesc
             // 
             this.colProductDesc.FieldName = "ProductDesc";
             this.colProductDesc.Name = "colProductDesc";
@@ -122,21 +133,21 @@ namespace Foxoft
             this.colBalance.Name = "colBalance";
             this.colBalance.OptionsFilter.AllowFilter = false;
             this.colBalance.Visible = true;
-            this.colBalance.VisibleIndex = 2;
+            this.colBalance.VisibleIndex = 3;
             // 
             // colPurchasePrice
             // 
             this.colPurchasePrice.FieldName = "PurchasePrice";
             this.colPurchasePrice.Name = "colPurchasePrice";
             this.colPurchasePrice.Visible = true;
-            this.colPurchasePrice.VisibleIndex = 3;
+            this.colPurchasePrice.VisibleIndex = 4;
             // 
             // colRetailPrice
             // 
             this.colRetailPrice.FieldName = "RetailPrice";
             this.colRetailPrice.Name = "colRetailPrice";
             this.colRetailPrice.Visible = true;
-            this.colRetailPrice.VisibleIndex = 4;
+            this.colRetailPrice.VisibleIndex = 5;
             this.colRetailPrice.Width = 54;
             // 
             // colWholesalePrice
@@ -144,7 +155,7 @@ namespace Foxoft
             this.colWholesalePrice.FieldName = "WholesalePrice";
             this.colWholesalePrice.Name = "colWholesalePrice";
             this.colWholesalePrice.Visible = true;
-            this.colWholesalePrice.VisibleIndex = 5;
+            this.colWholesalePrice.VisibleIndex = 6;
             // 
             // colBarcode
             // 
@@ -193,6 +204,11 @@ namespace Foxoft
             this.colPosDiscountRate.FieldName = "PosDiscountRate";
             this.colPosDiscountRate.Name = "colPosDiscountRate";
             this.colPosDiscountRate.Width = 53;
+            // 
+            // colLastSalePrice
+            // 
+            this.colLastSalePrice.FieldName = "LastSalePrice";
+            this.colLastSalePrice.Name = "colLastSalePrice";
             // 
             // ribbonControl1
             // 
@@ -338,5 +354,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colWholesalePrice;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.BarButtonItem bBI_quit;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastSalePrice;
     }
 }

@@ -61,13 +61,13 @@ namespace Foxoft.Models
         public bool IsDisabled { get; set; }
 
         [DisplayName("Satış Qiyməti")]
-        public double RetailPrice { get; set; }
+        public decimal RetailPrice { get; set; }
 
         [DisplayName("Alış Qiyməti")]
-        public double PurchasePrice { get; set; }
+        public decimal PurchasePrice { get; set; }
 
         [DisplayName("Toptan Satış Qiyməti")]
-        public double WholesalePrice { get; set; }
+        public decimal WholesalePrice { get; set; }
 
         [DisplayName("İnternetdə İstifadə Et")]
         public bool UseInternet { get; set; }
@@ -79,6 +79,14 @@ namespace Foxoft.Models
         [DisplayName("Qalıq")]
         public int Balance { get; set; }
         //public int Balance { get { return TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut); } set { } }
+
+        [NotMapped]
+        [DisplayName("Son Alış Qiy.")]
+        public decimal? LastPurchasePrice { get; set; }        
+        
+        [NotMapped]
+        [DisplayName("Son Satış Qiy.")]
+        public decimal? LastSalePrice { get; set; }
 
         public virtual DcProductType DcProductType { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }

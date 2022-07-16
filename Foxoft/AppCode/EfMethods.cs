@@ -141,6 +141,8 @@ namespace Foxoft
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                    LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderBy(l => l.CreatedDate).FirstOrDefault().Price,
+                                    //LastSalePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RS").OrderBy(l => l.CreatedDate).FirstOrDefault().Price,
                                     ProductCode = x.ProductCode,
                                     ProductDesc = x.ProductDesc,
                                     PosDiscount = x.PosDiscount,
@@ -252,7 +254,7 @@ namespace Foxoft
                         Price = product.RetailPrice,
                         Amount = Convert.ToDecimal(product.RetailPrice),
                         PosDiscount = Convert.ToDecimal(product.PosDiscount),
-                        NetAmount = Convert.ToDecimal(product.RetailPrice - product.PosDiscount)
+                        NetAmount = Convert.ToDecimal(product.RetailPrice)
                     };
 
                     db.TrInvoiceLines.Add(trInvoiceLine);
