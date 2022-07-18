@@ -290,7 +290,8 @@ namespace Foxoft
                     SelectProduct(gV_InvoiceLine.ActiveEditor);
 
                 gV_InvoiceLine.CloseEditor();
-                e.Handled = true;
+
+                e.Handled = true;   // Stop the character from being entered into the control since it is non-numerical.
             }
 
             if (e.KeyCode == Keys.F9 && gV.SelectedRowsCount > 0)
@@ -304,8 +305,7 @@ namespace Foxoft
 
                     string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport.ReportId);
-                    formGrid.Text = dcReport.ReportName;
+                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
                     formGrid.Show();
                 }
             }
@@ -321,8 +321,7 @@ namespace Foxoft
 
                     string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport.ReportId);
-                    formGrid.Text = dcReport.ReportName;
+                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
                     formGrid.Show();
                 }
             }
@@ -449,11 +448,13 @@ namespace Foxoft
                 }
                 else
                 {
-                    ButtonEdit editor = (ButtonEdit)view.ActiveEditor;
-                    editor.EditValue = product.ProductCode;
+                    //ButtonEdit editor = (ButtonEdit)view.ActiveEditor;
+                    //editor.EditValue = product.ProductCode;
 
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, product.ProductCode);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, product.ProductDesc);
+                    gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
+                    gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
 
                     decimal price = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
                     gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
@@ -574,6 +575,16 @@ namespace Foxoft
 
         private void SaveInvoice()
         {
+            //for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            //{
+            //    int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, colQty));
+
+            //    if (!(qty > 0))
+            //    {
+            //        gV_InvoiceLine.DeleteRow(i);
+            //    }
+            //}
+
             efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
 
             try
@@ -849,6 +860,44 @@ namespace Foxoft
             {
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
+            }
+        }
+
+        private void gV_InvoiceLine_RowCellStyle(object sender, RowCellStyleEventArgs e)
+        {
+            GridView gridView = sender as GridView;
+            Color readOnlyForeColor = Color.Gray;
+            try
+            {
+                // Apply the ReadOnly style  
+                if (e.RowHandle >= 0 && (!gridView.OptionsBehavior.Editable || !e.Column.OptionsColumn.AllowEdit || e.Column.ReadOnly))
+                {
+                    GridViewInfo viewInfo = gridView.GetViewInfo() as GridViewInfo;
+                    GridDataRowInfo rowInfo = viewInfo.RowsInfo.GetInfoByHandle(e.RowHandle) as GridDataRowInfo;
+                    // Check if there are style conditions  
+                    if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
+                    {
+                        // Check if there are FormatRules that should override the ReadOnly style  
+                        bool hasrules = false;
+                        foreach (var rule in gridView.FormatRules)
+                        {
+                            if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
+                            {
+                                hasrules = true;
+                                break;
+                            }
+                        }
+                        if (!hasrules)
+                            e.Appearance.ForeColor = readOnlyForeColor;
+                    }
+                }
+                // This is to fix the selection color when a color is set for the column  
+                if (e.Column.AppearanceCell.Options.UseBackColor && gridView.IsCellSelected(e.RowHandle, e.Column))
+                    e.Appearance.BackColor = gridView.PaintAppearance.SelectedRow.BackColor;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print(ex.Message);
             }
         }
     }

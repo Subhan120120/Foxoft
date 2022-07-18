@@ -1,6 +1,4 @@
 ﻿using DevExpress.Data.Filtering;
-using DevExpress.Utils.VisualEffects;
-using DevExpress.Xpo.DB;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -11,8 +9,13 @@ using Foxoft.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Reflection;
 using System.Windows.Forms;
+
+using System.ComponentModel;
+using System.Drawing;
+using System.Text;
+using DevExpress.XtraEditors.Drawing;
+using DevExpress.Utils.Drawing;
 
 namespace Foxoft
 {
@@ -31,7 +34,7 @@ namespace Foxoft
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
             this.dcReport = efMethods.SelectReport(Report.ReportId); // reload dcReport
-
+            this.Text = Report.ReportName;
 
             string querySql = ClearVariables(dcReport.ReportQuery);
 
@@ -127,7 +130,6 @@ namespace Foxoft
 
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
-            int reportId = dcReport.ReportId;
             string reportQuery = dcReport.ReportQuery;
 
             ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
@@ -158,10 +160,9 @@ namespace Foxoft
 
             try
             {
-                FormReportGrid myform = new FormReportGrid(qryMaster + queryFilter, reportId);
+                FormReportGrid myform = new FormReportGrid(qryMaster + queryFilter, dcReport);
 
                 myform.MdiParent = this.MdiParent;
-                myform.Text = dcReport.ReportName;
                 myform.Show();
             }
             catch (Exception ex)
@@ -173,7 +174,7 @@ namespace Foxoft
             if (!object.ReferenceEquals(filterControl_Outer.FilterCriteria, null))
                 filterCriteria = filterControl_Outer.FilterCriteria.ToString();
 
-            efMethods.UpdateDcReportFilter(reportId, filterCriteria); //save filter to database
+            efMethods.UpdateDcReportFilter(dcReport.ReportId, filterCriteria); //save filter to database
         }
 
         private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
@@ -274,12 +275,15 @@ namespace Foxoft
 
         private void filterControl_Inner_CustomValueEditor(object sender, CustomValueEditorArgs e)
         {
+            if (e.Node.FirstOperand.PropertyName == "Məhsul Kodu" || e.Node.FirstOperand.PropertyName == "ProductCode")
+                e.RepositoryItem = repoBtnEdit_ProductCode;
+            if (e.Node.FirstOperand.PropertyName == "Cari Hesab Kodu" || e.Node.FirstOperand.PropertyName == "CurrAccCode")
+                e.RepositoryItem = repoBtnEdit_CurrAccCode;
+
             if (!object.ReferenceEquals(e.Value, null) && !object.ReferenceEquals(e.PropertyName, null))
             {
                 foreach (var item in dcReport.DcReportFilters)
                 {
-                    string prop = e.PropertyName;
-
                     efMethods.UpdateReportFilter(e.PropertyName, e.Value.ToString());
                 }
                 this.dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
@@ -326,6 +330,54 @@ namespace Foxoft
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;
                 }
             }
+        }
+
+        public class MyFilterControl : FilterControl
+        {
+            public MyFilterControl() : base() { }
+            protected override DevExpress.XtraEditors.Drawing.BaseControlPainter CreatePainter()
+            {
+                return new MyFilterControlPainter(this);
+            }
+
+            protected override void RaisePopupMenuShowing(PopupMenuShowingEventArgs e)
+            {
+                base.RaisePopupMenuShowing(e);
+                e.Cancel = true;
+            }
+        }
+
+        public class MyFilterControlPainter : FilterControlPainter
+        {
+            public MyFilterControlPainter(FilterControl filterControl) : base(filterControl) { }
+
+            protected override void DrawNodeLabel(Node node, ControlGraphicsInfoArgs info)
+            {
+                //base.DrawNodeLabel(node, info);
+                if (Model[node] == null) return;
+                Paint(Model[node], info);
+            }
+
+            public virtual void Paint(FilterControlLabelInfo labelInfo, ControlGraphicsInfoArgs info)
+            {
+                labelInfo.ViewInfo.Calculate(new GraphicsCache(info.Graphics));
+                labelInfo.ViewInfo.TopLine = 0;
+                for (int i = 0; i < labelInfo.ViewInfo.Count; i++)
+                {
+                    NodeEditableElement elem = labelInfo.ViewInfo[i].InfoText.Tag as NodeEditableElement;
+                    if (elem == null || (elem.ElementType == ElementType.NodeAdd
+                        || elem.ElementType == ElementType.NodeRemove
+                        || elem.ElementType == ElementType.Group))
+                    {
+                        labelInfo.ViewInfo[i].InfoText.Tag = null;
+                        continue;
+                    }
+                    labelInfo.ViewInfo[i].ViewInfo.Calculate(new GraphicsCache(info.Graphics));
+                    labelInfo.ViewInfo[i].Draw(info.Cache, info.ViewInfo.Appearance.GetFont(), labelInfo.ViewInfo[i].InfoText.Color, info.ViewInfo.Appearance.GetStringFormat());
+                }
+            }
+
+            public override void DrawFocusRectangle(ControlGraphicsInfoArgs info) { }
         }
     }
 }

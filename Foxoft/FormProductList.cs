@@ -1,7 +1,4 @@
-﻿using DevExpress.Data;
-using DevExpress.Data.Linq;
-using DevExpress.Data.Linq.Helpers;
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraGrid;
@@ -9,16 +6,11 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft
 {
@@ -38,6 +30,8 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             gV_ProductList.RestoreLayoutFromStream(stream, option);
+
+            ribbonControl1.Minimized = true;
         }
 
         public FormProductList(byte productTypeCode)
@@ -65,34 +59,33 @@ namespace Foxoft
 
         private void LoadProducts(byte productTypeCode)
         {
-            subContext dbContext = new subContext();
+            //subContext dbContext = new subContext();
 
-            IQueryable<DcProduct> DcProducts = dbContext.DcProducts;
-            CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-            IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), gV_ProductList.ActiveFilterCriteria) as IQueryable<DcProduct>;
+            //IQueryable<DcProduct> DcProducts = dbContext.DcProducts;
+            //CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+            //IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), gV_ProductList.ActiveFilterCriteria) as IQueryable<DcProduct>;
 
-            if (Object.ReferenceEquals(gV_ProductList.ActiveFilterCriteria, null))
-                filteredData = filteredData.Take(10);
+            //if (Object.ReferenceEquals(gV_ProductList.ActiveFilterCriteria, null))
+            //    filteredData = filteredData.Take(10);
 
-            filteredData.Where(x => x.ProductTypeCode == productTypeCode)
-                            .Include(x => x.TrInvoiceLines)
-                                .ThenInclude(x => x.TrInvoiceHeader)
-                            .LoadAsync()
-                            .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+            //filteredData.Where(x => x.ProductTypeCode == productTypeCode)
+            //                .Include(x => x.TrInvoiceLines)
+            //                    .ThenInclude(x => x.TrInvoiceHeader)
+            //                .LoadAsync()
+            //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
 
-
-            //if (productTypeCode != 0)
-            //{
-            //    List<DcProduct> dcProducts = efMethods.SelectProductsByProductType(productTypeCode, gV_ProductList.ActiveFilterCriteria);
-            //    gC_ProductList.DataSource = dcProducts;
-            //}
-            //else if (productTypeCode == 0)
-            //{
-            //    List<DcProduct> dcProducts = efMethods.SelectProducts();
-            //    gC_ProductList.DataSource = dcProducts;
-            //}
-            //gV_ProductList.BestFitColumns();
+            if (productTypeCode != 0)
+            {
+                List<DcProduct> dcProducts = efMethods.SelectProductsByProductType(productTypeCode, gV_ProductList.ActiveFilterCriteria);
+                dcProductsBindingSource.DataSource = dcProducts;
+            }
+            else if (productTypeCode == 0)
+            {
+                List<DcProduct> dcProducts = efMethods.SelectProducts();
+                dcProductsBindingSource.DataSource = dcProducts;
+            }
+            gV_ProductList.BestFitColumns();
         }
 
         private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -133,14 +126,9 @@ namespace Foxoft
             FormProduct formProduct = new FormProduct(productTypeCode);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
-                if (productTypeCode != 0)
-                    gC_ProductList.DataSource = efMethods.SelectProductsByProductType(productTypeCode, gV_ProductList.ActiveFilterCriteria);
-                else
-                    gC_ProductList.DataSource = efMethods.SelectProducts();
+                LoadProducts(productTypeCode);
             }
         }
-
-
 
         private void btn_productEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -150,10 +138,7 @@ namespace Foxoft
             {
                 int fr = gV_ProductList.FocusedRowHandle;
 
-                if (productTypeCode != 0)
-                    gC_ProductList.DataSource = efMethods.SelectProductsByProductType(productTypeCode, gV_ProductList.ActiveFilterCriteria);
-                else
-                    gC_ProductList.DataSource = efMethods.SelectProducts();
+                LoadProducts(productTypeCode);
 
                 gV_ProductList.FocusedRowHandle = fr;
             }
@@ -171,6 +156,21 @@ namespace Foxoft
             if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
                 DialogResult = DialogResult.OK;
 
+            if (e.KeyCode == Keys.F9 && view.SelectedRowsCount > 0)
+            {
+                object productCode = view.GetFocusedRowCellValue(colProductCode);
+                if (productCode != null)
+                {
+                    DcReport dcReport = efMethods.SelectReport(1005);
+
+                    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                    string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                    formGrid.Show();
+                }
+            }
 
             if (e.KeyCode == Keys.F10 && view.SelectedRowsCount > 0)
             {
@@ -183,8 +183,7 @@ namespace Foxoft
 
                     string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, 1004);
-                    formGrid.Text = dcReport.ReportName;
+                    FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
                     formGrid.Show();
                 }
             }
@@ -212,7 +211,7 @@ namespace Foxoft
 
         private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            gC_ProductList.ExportToXlsx(@"C:\Users\Administrator\Desktop\Excel");
+            gC_ProductList.ExportToXlsx(@"C:\Users\Public\Desktop\ProductList.xlsx");
         }
 
         private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
@@ -222,7 +221,7 @@ namespace Foxoft
 
         private void gV_ProductList_ColumnFilterChanged(object sender, EventArgs e)
         {
-            LoadProducts(productTypeCode);
+            //LoadProducts(productTypeCode);
         }
 
         private void barButtonItem1_ItemClick_1(object sender, ItemClickEventArgs e)

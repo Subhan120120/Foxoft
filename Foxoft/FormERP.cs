@@ -46,7 +46,6 @@ namespace Foxoft
                 {
                     FormReportFilter formReport = new FormReportFilter(dcReport);
                     formReport.MdiParent = this;
-                    formReport.Text = dcReport.ReportName;
                     formReport.Show();
                     parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
                 };

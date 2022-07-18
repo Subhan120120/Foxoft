@@ -24,19 +24,16 @@ namespace Foxoft
         AdornerUIManager adornerUIManager1;
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
-        int reportId;
+        DcReport report = new DcReport();
         string qry = "select 0 Nothing";
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
 
         RepositoryItemHyperLinkEdit hyperLinkEdit = new RepositoryItemHyperLinkEdit();
 
-        public FormReportGrid(string qry)
+        public FormReportGrid()
         {
             InitializeComponent();
-
-            this.qry = qry;
-            LoadData();
 
             hyperLinkEdit.OpenLink += repoHLE_InvoiceNumber_OpenLink;
             GridColumn column = gV_Report.Columns["InvoiceNumber"];
@@ -51,31 +48,33 @@ namespace Foxoft
             badge2.TargetElement = ribbonPage1;
         }
 
-        public FormReportGrid(string qry, int reportId)
-        : this(qry)
+        public FormReportGrid(string qry, DcReport report)
+        : this()
         {
-            this.reportId = reportId;
+            this.qry = qry;
+            this.report = report;
+            this.Text = report.ReportName;
 
+            LoadData();
             LoadLayout();
         }
 
         private void LoadData()
         {
             DataTable dt = adoMethods.SqlGetDt(qry);
-            gridControl1.DataSource = dt;
+            gC_Report.DataSource = dt;
         }
-
 
         private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (reportId > 0)
+            if (report.ReportId > 0)
             {
                 Stream str = new MemoryStream();
                 gV_Report.SaveLayoutToStream(str);
                 str.Seek(0, SeekOrigin.Begin);
                 StreamReader reader = new StreamReader(str);
                 string layoutTxt = reader.ReadToEnd();
-                efMethods.UpdateReportLayout(reportId, layoutTxt);
+                efMethods.UpdateReportLayout(report.ReportId, layoutTxt);
             }
         }
 
@@ -86,9 +85,9 @@ namespace Foxoft
 
         private void LoadLayout()
         {
-            if (reportId > 0)
+            if (report.ReportId > 0)
             {
-                DcReport dcReport = efMethods.SelectReport(reportId);
+                DcReport dcReport = efMethods.SelectReport(report.ReportId);
                 if (!string.IsNullOrEmpty(dcReport.ReportLayout))
                 {
                     byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
@@ -173,6 +172,11 @@ namespace Foxoft
                         e.Appearance.BackColor = Color.MistyRose;
                 }
             }
+        }
+
+        private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gC_Report.ExportToXlsx($@"C:\Users\Public\Desktop\{report.ReportName}.xlsx");
         }
     }
 }

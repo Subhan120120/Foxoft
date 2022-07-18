@@ -31,7 +31,7 @@ namespace Foxoft
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportFilter));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.filterControl_Inner = new DevExpress.XtraEditors.FilterControl();
+            this.filterControl_Inner = new MyFilterControl();
             this.btn_ShowReport = new DevExpress.XtraEditors.SimpleButton();
             this.filterControl_Outer = new DevExpress.XtraEditors.FilterControl();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();

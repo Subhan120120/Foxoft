@@ -132,6 +132,19 @@ namespace Foxoft.Models
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
         public string SalesPersonCode { get; set; }
 
+        [DisplayName("Son Alış Qiy.")]
+        public decimal? LastPurchasePrice { get; set; }
+
+
+
+
+        [DisplayName("Mənfəət")]
+        public decimal? Benefit { get { return (decimal?)Price - LastPurchasePrice; } }
+
+        [NotMapped]
+        [DisplayName("Qalıq")]
+        public int Balance { get; set; }
+
 
 
         [NotMapped]

@@ -130,9 +130,29 @@ namespace Foxoft
             using (subContext db = new subContext())
             {
                 return db.DcProducts.Include(x => x.TrInvoiceLines)
-                                    .FirstOrDefault(x => x.ProductCode == productCode); ;
+                                        .ThenInclude(x => x.TrInvoiceHeader)
+                                    .Select(x => new DcProduct
+                                    {
+                                        Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                        LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().Price,
+                                        ProductCode = x.ProductCode,
+                                        ProductDesc = x.ProductDesc,
+                                        PosDiscount = x.PosDiscount,
+                                        RetailPrice = x.RetailPrice,
+                                        PurchasePrice = x.PurchasePrice,
+                                        ProductTypeCode = x.ProductTypeCode,
+                                        WholesalePrice = x.WholesalePrice,
+                                        UsePos = x.UsePos,
+                                        UseInternet = x.UseInternet,
+                                        CreatedDate = x.CreatedDate,
+                                        CreatedUserName = x.CreatedUserName,
+                                        LastUpdatedDate = x.LastUpdatedDate,
+                                        LastUpdatedUserName = x.LastUpdatedUserName,
+                                    }).FirstOrDefault(x => x.ProductCode == productCode);
             }
         }
+
+
 
         public List<DcProduct> SelectProductsByProductType(byte productTypeCode, CriteriaOperator filterCriteria)
         {
@@ -143,18 +163,16 @@ namespace Foxoft
                 CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
                 IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), filterCriteria) as IQueryable<DcProduct>;
 
-
-                if (Object.ReferenceEquals(filterCriteria, null))
-                    filteredData = filteredData.Take(10);
+                //filteredData = filteredData.Take(100);
 
                 IQueryable<DcProduct> dcProducts = filteredData.Where(x => x.ProductTypeCode == productTypeCode)
                                 .Include(x => x.TrInvoiceLines)
-                                    .ThenInclude(x => x.TrInvoiceHeader)
+                                    .ThenInclude(l => l.TrInvoiceHeader)
+                                .OrderBy(x => x.ProductDesc)
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                    LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderBy(l => l.CreatedDate).FirstOrDefault().Price,
-                                    //LastSalePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RS").OrderBy(l => l.CreatedDate).FirstOrDefault().Price,
+                                    LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().Price,
                                     ProductCode = x.ProductCode,
                                     ProductDesc = x.ProductDesc,
                                     PosDiscount = x.PosDiscount,
@@ -168,12 +186,6 @@ namespace Foxoft
                                     CreatedUserName = x.CreatedUserName,
                                     LastUpdatedDate = x.LastUpdatedDate,
                                     LastUpdatedUserName = x.LastUpdatedUserName,
-                                    //Barcode = x.Barcode,
-                                    //IsDisabled = x.IsDisabled,
-                                    //PromotionCode = x.PromotionCode,
-                                    //PromotionCode2 = x.PromotionCode2,
-                                    //TaxRate = x.TaxRate,
-                                    //TrFeature = x.TrFeature
                                 });
 
 

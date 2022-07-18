@@ -30,36 +30,38 @@ namespace Foxoft
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportGrid));
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
+            this.gC_Report = new DevExpress.XtraGrid.GridControl();
             this.gV_Report = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_GridOptions = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_DesignClear = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gC_Report)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_Report)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.SuspendLayout();
             // 
-            // gridControl1
+            // gC_Report
             // 
-            this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl1.Location = new System.Drawing.Point(0, 158);
-            this.gridControl1.MainView = this.gV_Report;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(820, 420);
-            this.gridControl1.TabIndex = 0;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gC_Report.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gC_Report.Location = new System.Drawing.Point(0, 158);
+            this.gC_Report.MainView = this.gV_Report;
+            this.gC_Report.Name = "gC_Report";
+            this.gC_Report.Size = new System.Drawing.Size(820, 420);
+            this.gC_Report.TabIndex = 0;
+            this.gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_Report});
             // 
             // gV_Report
             // 
-            this.gV_Report.GridControl = this.gridControl1;
+            this.gV_Report.GridControl = this.gC_Report;
             this.gV_Report.Name = "gV_Report";
             this.gV_Report.OptionsBehavior.Editable = false;
             this.gV_Report.OptionsLayout.Columns.StoreAllOptions = true;
@@ -80,9 +82,10 @@ namespace Foxoft
             this.bBI_LayoutSave,
             this.bBI_LayoutLoad,
             this.bBI_GridOptions,
-            this.bBI_DesignClear});
+            this.bBI_DesignClear,
+            this.bBI_ExportXlsx});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 5;
+            this.ribbonControl1.MaxItemId = 6;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -119,14 +122,23 @@ namespace Foxoft
             // 
             this.bBI_DesignClear.Caption = "Dizaynı Sıfırla";
             this.bBI_DesignClear.Id = 4;
-            this.bBI_DesignClear.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem3.ImageOptions.SvgImage")));
+            this.bBI_DesignClear.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DesignClear.ImageOptions.SvgImage")));
             this.bBI_DesignClear.Name = "bBI_DesignClear";
             this.bBI_DesignClear.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DesignClear_ItemClick);
+            // 
+            // bBI_ExportXlsx
+            // 
+            this.bBI_ExportXlsx.Caption = "Excelə İxrac Et";
+            this.bBI_ExportXlsx.Id = 5;
+            this.bBI_ExportXlsx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage")));
+            this.bBI_ExportXlsx.Name = "bBI_ExportXlsx";
+            this.bBI_ExportXlsx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportXlsx_ItemClick);
             // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1});
+            this.ribbonPageGroup1,
+            this.ribbonPageGroup2});
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "Hesabat";
             // 
@@ -138,6 +150,12 @@ namespace Foxoft
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DesignClear);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Dizayn";
+            // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_ExportXlsx);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Export";
             // 
             // ribbonStatusBar1
             // 
@@ -156,7 +174,7 @@ namespace Foxoft
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 602);
-            this.Controls.Add(this.gridControl1);
+            this.Controls.Add(this.gC_Report);
             this.Controls.Add(this.ribbonStatusBar1);
             this.Controls.Add(this.ribbonControl1);
             this.Name = "FormReportGrid";
@@ -164,7 +182,7 @@ namespace Foxoft
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar1;
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gC_Report)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_Report)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             this.ResumeLayout(false);
@@ -174,7 +192,7 @@ namespace Foxoft
 
         #endregion
 
-        public DevExpress.XtraGrid.GridControl gridControl1;
+        public DevExpress.XtraGrid.GridControl gC_Report;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_Report;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
@@ -187,5 +205,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_LayoutSave;
         private DevExpress.XtraBars.BarButtonItem bBI_LayoutLoad;
         private DevExpress.XtraBars.BarButtonItem bBI_DesignClear;
+        private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
     }
 }
