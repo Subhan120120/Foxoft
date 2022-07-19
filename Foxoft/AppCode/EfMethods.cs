@@ -18,11 +18,11 @@ namespace Foxoft
             //this.db = new subContext();
         }
 
-        public string GetNextDocNum(string processCode, string columnName, string tableName)
+        public string GetNextDocNum(string processCode, string columnName, string tableName, int ReplicateNum)
         {
             using (subContext db = new subContext())
             {
-                string qry = $"exec [dbo].[GetNextDocNum] {processCode}, {columnName}, {tableName}";
+                string qry = $"exec [dbo].[GetNextDocNum] {processCode}, {columnName}, {tableName}, {ReplicateNum}";
 
                 return db.Set<GetNextDocNum>()
                     .FromSqlRaw(qry)

@@ -66,7 +66,7 @@ namespace Foxoft
         {
             dcProduct = dcProductsBindingSource.AddNew() as DcProduct;
 
-            string NewDocNum = efMethods.GetNextDocNum("P", "ProductCode", "DcProducts");
+            string NewDocNum = efMethods.GetNextDocNum("P", "ProductCode", "DcProducts", 6);
             dcProduct.ProductCode = NewDocNum;
             dcProduct.ProductTypeCode = productTypeCode;
             dcProduct.CreatedUserName = Authorization.CurrAccCode;

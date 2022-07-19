@@ -68,7 +68,7 @@ namespace Foxoft
         private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
             TrPaymentHeader paymentHeader = new TrPaymentHeader();
-            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders");
+            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
             paymentHeader.InvoiceHeaderId = Guid.NewGuid();
             paymentHeader.DocumentNumber = NewDocNum;
             paymentHeader.DocumentDate = DateTime.Now;

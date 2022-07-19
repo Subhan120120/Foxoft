@@ -71,7 +71,7 @@ namespace Foxoft
             dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
             dcCurrAcc.CurrAccTypeCode = temp;
 
-            string NewDocNum = efMethods.GetNextDocNum("C", "CurrAccCode", "DcCurrAccs");
+            string NewDocNum = efMethods.GetNextDocNum("C", "CurrAccCode", "DcCurrAccs", 6);
             dcCurrAcc.CurrAccCode = NewDocNum;
             dcCurrAcc.DataLanguageCode = "AZ";
 

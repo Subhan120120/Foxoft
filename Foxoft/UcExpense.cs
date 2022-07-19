@@ -34,7 +34,7 @@ namespace Foxoft
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-            string NewDocNum = efMethods.GetNextDocNum("EX", "DocumentNumber", "TrInvoiceHeaders");
+            string NewDocNum = efMethods.GetNextDocNum("EX", "DocumentNumber", "TrInvoiceHeaders", 6);
             trInvoiceHeader.InvoiceHeaderId = Guid.NewGuid();
             trInvoiceHeader.DocumentNumber = NewDocNum;
             trInvoiceHeader.DocumentDate = DateTime.Now;
