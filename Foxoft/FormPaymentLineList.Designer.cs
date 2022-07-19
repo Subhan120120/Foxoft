@@ -59,13 +59,15 @@ namespace Foxoft
          this.bBI_ReceivePayment = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_MakePayment = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Reload = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
+         this.test = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLineList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLineList)).BeginInit();
@@ -267,9 +269,10 @@ namespace Foxoft
             this.bBI_ReceivePayment,
             this.bBI_MakePayment,
             this.bBI_Reload,
-            this.bBI_ExportXlsx});
+            this.bBI_ExportXlsx,
+            this.test});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 6;
+         this.ribbonControl1.MaxItemId = 7;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -300,12 +303,28 @@ namespace Foxoft
          this.bBI_Reload.Name = "bBI_Reload";
          this.bBI_Reload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Reload_ItemClick);
          // 
+         // bBI_ExportXlsx
+         // 
+         this.bBI_ExportXlsx.Caption = "Excelə İxrac";
+         this.bBI_ExportXlsx.Id = 5;
+         this.bBI_ExportXlsx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage")));
+         this.bBI_ExportXlsx.Name = "bBI_ExportXlsx";
+         this.bBI_ExportXlsx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportXlsx_ItemClick);
+         // 
+         // test
+         // 
+         this.test.Caption = "Test";
+         this.test.Id = 6;
+         this.test.Name = "test";
+         this.test.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.test_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
             this.ribbonPageGroup2,
-            this.ribbonPageGroup3});
+            this.ribbonPageGroup3,
+            this.ribbonPageGroup4});
          this.ribbonPage1.Name = "ribbonPage1";
          this.ribbonPage1.Text = "Ödəmə";
          // 
@@ -322,6 +341,18 @@ namespace Foxoft
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Nəzarət";
          // 
+         // ribbonPageGroup3
+         // 
+         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_ExportXlsx);
+         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+         this.ribbonPageGroup3.Text = "Export";
+         // 
+         // ribbonPageGroup4
+         // 
+         this.ribbonPageGroup4.ItemLinks.Add(this.test);
+         this.ribbonPageGroup4.Name = "ribbonPageGroup4";
+         this.ribbonPageGroup4.Text = "Test";
+         // 
          // ribbonStatusBar1
          // 
          this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 510);
@@ -333,20 +364,6 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
-         // 
-         // ribbonPageGroup3
-         // 
-         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_ExportXlsx);
-         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
-         this.ribbonPageGroup3.Text = "Export";
-         // 
-         // barButtonItem1
-         // 
-         this.bBI_ExportXlsx.Caption = "Excelə İxrac";
-         this.bBI_ExportXlsx.Id = 5;
-         this.bBI_ExportXlsx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-         this.bBI_ExportXlsx.Name = "barButtonItem1";
-         this.bBI_ExportXlsx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportXlsx_ItemClick);
          // 
          // FormPaymentLineList
          // 
@@ -412,5 +429,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
       private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+      private DevExpress.XtraBars.BarButtonItem test;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
    }
 }

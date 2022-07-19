@@ -37,7 +37,7 @@ namespace Foxoft.Models
 
       [DisplayName("Məhsul Tipi")]
       [ForeignKey("DcProductType")]
-      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]
       public byte ProductTypeCode { get; set; }
 
       [DisplayName("POSda İstifadə Et")]

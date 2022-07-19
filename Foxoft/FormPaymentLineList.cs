@@ -22,6 +22,12 @@ using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using System.Collections.Generic;
+using System.Net;
+using System.Diagnostics;
+using System.Security;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace Foxoft
 {
@@ -231,6 +237,44 @@ namespace Foxoft
       private void bBI_ExportXlsx_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
          gV_PaymentLineList.ExportToXlsx(@"C:\Users\Public\Desktop\PaymentLineList.xlsx");
+      }
+
+      private void sendWhatsApp(string number, string message)
+      {
+         string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
+
+         Process myProcess = new Process();
+         myProcess.StartInfo.UseShellExecute = true;
+         myProcess.StartInfo.FileName = link;
+         myProcess.Start();
+
+         //Process.Start(link);
+      }
+
+      private void test_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      {
+         sendWhatsApp("+994773895969", "Salam %0A Salam");
+      }
+
+      private void test_ItemClick()
+      {
+         //try
+         //{
+         //   string accountSid = "AC3975230c878fd8f23210d643a30a94b6";
+         //   string authToken = "a17365de8e7d28057adef930da03ee71";
+
+         //   TwilioClient.Init(accountSid, authToken);
+         //   var mediaUrl = new[] {
+         //           new Uri(@"https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg")
+         //       }.ToList();
+         //   var message = MessageResource.Create(mediaUrl: mediaUrl, from: new PhoneNumber("whatsapp: +18507578553"), body: "Profile", to: new PhoneNumber("whatsapp:+994519678909"));
+         //   MessageBox.Show(message.Sid);
+         //}
+         //catch (Exception ex)
+         //{
+
+         //   MessageBox.Show(ex.ToString());
+         //}
       }
    }
 }
