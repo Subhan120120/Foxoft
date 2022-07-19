@@ -827,7 +827,7 @@ namespace Foxoft
    }
   }
 
-  private void repoLUE_Currency_EditValueChanged(object sender, EventArgs e)
+  private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
   {
    LookUpEdit textEditor = (LookUpEdit)sender;
    float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());

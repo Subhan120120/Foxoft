@@ -392,7 +392,7 @@ namespace Foxoft
             this.repoLUE_CurrencyCode.ShowFooter = false;
             this.repoLUE_CurrencyCode.ShowHeader = false;
             this.repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
-            this.repoLUE_CurrencyCode.EditValueChanged += new System.EventHandler(this.repoLUE_Currency_EditValueChanged);
+            this.repoLUE_CurrencyCode.EditValueChanged += new System.EventHandler(this.repoLUE_CurrencyCode_EditValueChanged);
             // 
             // colExchangeRate
             // 
