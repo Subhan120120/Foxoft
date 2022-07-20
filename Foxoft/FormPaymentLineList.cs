@@ -239,21 +239,8 @@ namespace Foxoft
          gV_PaymentLineList.ExportToXlsx(@"C:\Users\Public\Desktop\PaymentLineList.xlsx");
       }
 
-      private void sendWhatsApp(string number, string message)
-      {
-         string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
-
-         Process myProcess = new Process();
-         myProcess.StartInfo.UseShellExecute = true;
-         myProcess.StartInfo.FileName = link;
-         myProcess.Start();
-
-         //Process.Start(link);
-      }
-
       private void test_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
-         sendWhatsApp("+994773895969", "Salam %0A Salam");
       }
 
       private void test_ItemClick()

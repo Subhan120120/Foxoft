@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -68,14 +69,15 @@ namespace Foxoft
       private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
       {
          TrPaymentHeader paymentHeader = new TrPaymentHeader();
+         paymentHeader.PaymentHeaderId = paymentHeaderId;
          string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
-         paymentHeader.InvoiceHeaderId = Guid.NewGuid();
          paymentHeader.DocumentNumber = NewDocNum;
          paymentHeader.DocumentDate = DateTime.Now;
          paymentHeader.OperationDate = DateTime.Now;
          paymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
          paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
          paymentHeader.OfficeCode = Authorization.OfficeCode;
+         paymentHeader.StoreCode = Authorization.StoreCode;
 
          e.NewObject = paymentHeader;
       }
@@ -134,8 +136,14 @@ namespace Foxoft
                                    .Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
 
          LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
-
+         if (!lV_paymentHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
+            lV_paymentHeader.ForEach(x =>
+            {
+               x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+               lbl_CurrAccDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+            });
          trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
+         trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
 
          dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == paymentHeaderId)
                                  .OrderBy(x => x.CreatedDate)
@@ -148,6 +156,8 @@ namespace Foxoft
                                  }, TaskScheduler.FromCurrentSynchronizationContext());
 
          dataLayoutControl1.isValid(out List<string> errorList);
+
+         CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
       }
 
       private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -173,6 +183,8 @@ namespace Foxoft
             {
                CurrAccCodeButtonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
                trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
+               lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+               CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPaymentHeader.DocumentDate);
             }
          }
       }
@@ -205,6 +217,20 @@ namespace Foxoft
       private void gV_PaymentLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
       {
          //CalcRowLocNetAmount(e);
+      }
+
+      private void CalcCurrAccBalance(string CurrAccCode, DateTime dateTime)
+      {
+         if (!String.IsNullOrEmpty(CurrAccCode))
+         {
+            decimal Balance = Math.Round(efMethods.SelectCurrAccBalance(CurrAccCode, dateTime) / 1.703m, 2);
+
+            lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Balance.ToString();
+
+            decimal CurrentBalance = efMethods.SelectPaymentSum(CurrAccCode, trPaymentHeader.DocumentNumber);
+            Balance = Math.Round(Balance - (CurrentBalance / 1.703m), 2);
+            lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Balance.ToString();
+         }
       }
 
       //private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
@@ -242,6 +268,8 @@ namespace Foxoft
             string combinedString = errorList.Aggregate((x, y) => x + "" + y);
             XtraMessageBox.Show(combinedString);
          }
+
+         CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
       }
 
       private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)
@@ -274,6 +302,44 @@ namespace Foxoft
             if (count > 0)
                SavePayment();
          }
+      }
+
+      private void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
+         {
+            string odendi = "";
+            for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
+            {
+               decimal payment = Math.Round(Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment)), 2);
+               string currency = gV_PaymentLine.GetRowCellValue(i, colCurrencyCode).ToString();
+               odendi += "odendi: " + payment.ToString() + currency + "%0A";
+            }
+
+            decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate) / 1.703m, 2);
+
+            string qaldı = "qaldı: " + balance.ToString();
+
+            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
+            if (!String.IsNullOrEmpty(phoneNum))
+            {
+               sendWhatsApp("+994" + phoneNum, odendi + " " + qaldı);
+            }
+         }
+      }
+
+      private void sendWhatsApp(string number, string message)
+      {
+         number = number.Replace(" ", "");
+
+         string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
+
+         Process myProcess = new Process();
+         myProcess.StartInfo.UseShellExecute = true;
+         myProcess.StartInfo.FileName = link;
+         myProcess.Start();
+
+         //Process.Start(link);
       }
    }
 }

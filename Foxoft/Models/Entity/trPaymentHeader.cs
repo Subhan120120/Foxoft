@@ -96,8 +96,15 @@ namespace Foxoft.Models
 
         [NotMapped]
         [DisplayName("Toplam")]
-        public decimal TotalPayment { get; set; }
-
+        public decimal TotalPayment { get; set; }        
+      
+        //[NotMapped]
+        //[DisplayName("Toplam")]
+        //public decimal CurrAccBalanceBefore { get; set; }  
+      
+        //[NotMapped]
+        //[DisplayName("Toplam")]
+        //public decimal CurrAccBalanceAfter { get; set; }
 
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }

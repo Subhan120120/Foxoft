@@ -22,8 +22,8 @@ namespace Foxoft
          InitializeComponent();
 
          CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectCurrAccTypes();
-         CurrAccTypeCodeLookUpEdit.Properties.ValueMember = "CurrAccTypeCode";
-         CurrAccTypeCodeLookUpEdit.Properties.DisplayMember = "CurrAccTypeDesc";
+         OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
+         StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
 
          AcceptButton = btn_Ok;
          CancelButton = btn_Cancel;

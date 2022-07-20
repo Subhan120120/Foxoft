@@ -88,21 +88,26 @@ namespace Foxoft
         }
 
         private void UpdateGridViewData()
-        {
-            int fr = gV_CurrAccList.FocusedRowHandle;
+      {
+         int fr = gV_CurrAccList.FocusedRowHandle;
 
-            if (currAccTypeCode != 0)
-                gC_CurrAccList.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
-            else
-                gC_CurrAccList.DataSource = efMethods.SelectCurrAccs();
+         LoadCurrAccs();
 
-            if (fr > 0)
-                gV_CurrAccList.FocusedRowHandle = fr;
-            else
-                gV_CurrAccList.MoveLast();
-        }
+         if (fr > 0)
+            gV_CurrAccList.FocusedRowHandle = fr;
+         else
+            gV_CurrAccList.MoveLast();
+      }
 
-        private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
+      private void LoadCurrAccs()
+      {
+         if (currAccTypeCode != 0)
+            gC_CurrAccList.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
+         else
+            gC_CurrAccList.DataSource = efMethods.SelectCurrAccs();
+      }
+
+      private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             UpdateGridViewData();
         }

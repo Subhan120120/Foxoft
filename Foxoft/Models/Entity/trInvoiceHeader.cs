@@ -114,8 +114,8 @@ namespace Foxoft.Models
         public bool IsLocked { get; set; }
 
         //[NotMapped] //datalayoutColntrola gore
-        [DisplayName("Cari Hesab Adı")]
-        public string CurrAccDescription { get { if (!Object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }
+        //[DisplayName("Cari Hesab Adı")]
+        //public string CurrAccDescription { get { if (!Object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }
 
         [NotMapped]
         [DisplayName("Cari Hesab Adı")]

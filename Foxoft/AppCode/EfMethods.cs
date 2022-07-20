@@ -96,30 +96,24 @@ namespace Foxoft
          {
             List<DcProduct> products = db.DcProducts.Include(x => x.TrInvoiceLines)
                                                         .ThenInclude(x => x.TrInvoiceHeader)
-                                                    //.Select(x => new DcProduct
-                                                    //{
-                                                    //    Barcode = x.Barcode,
-                                                    //    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                                    //    DcProductType = x.DcProductType,
-                                                    //    ProductCode = x.ProductCode,
-                                                    //    ProductDesc = x.ProductDesc,
-                                                    //    PosDiscount = x.PosDiscount,
-                                                    //    RetailPrice = x.RetailPrice,
-                                                    //    PurchasePrice = x.PurchasePrice,
-                                                    //    ProductTypeCode = x.ProductTypeCode,
-                                                    //    WholesalePrice = x.WholesalePrice,
-                                                    //    UsePos = x.UsePos,
-                                                    //    UseInternet = x.UseInternet,
-                                                    //    CreatedDate = x.CreatedDate,
-                                                    //    CreatedUserName = x.CreatedUserName,
-                                                    //    IsDisabled = x.IsDisabled,
-                                                    //    LastUpdatedDate = x.LastUpdatedDate,
-                                                    //    LastUpdatedUserName = x.LastUpdatedUserName,
-                                                    //    PromotionCode = x.PromotionCode,
-                                                    //    PromotionCode2 = x.PromotionCode2,
-                                                    //    TaxRate = x.TaxRate,
-                                                    //    //TrFeature = x.TrFeature
-                                                    //})
+                                                    .Select(x => new DcProduct
+                                                    {
+                                                       Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                                       LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().Price,
+                                                       ProductCode = x.ProductCode,
+                                                       ProductDesc = x.ProductDesc,
+                                                       PosDiscount = x.PosDiscount,
+                                                       RetailPrice = x.RetailPrice,
+                                                       PurchasePrice = x.PurchasePrice,
+                                                       ProductTypeCode = x.ProductTypeCode,
+                                                       WholesalePrice = x.WholesalePrice,
+                                                       UsePos = x.UsePos,
+                                                       UseInternet = x.UseInternet,
+                                                       CreatedDate = x.CreatedDate,
+                                                       CreatedUserName = x.CreatedUserName,
+                                                       LastUpdatedDate = x.LastUpdatedDate,
+                                                       LastUpdatedUserName = x.LastUpdatedUserName,
+                                                    })
                                                     .ToList();
             return products;
          }
@@ -154,7 +148,7 @@ namespace Foxoft
 
 
 
-      public List<DcProduct> SelectProductsByProductType(byte productTypeCode, CriteriaOperator filterCriteria)
+      public List<DcProduct> SelectProductsByType(byte productTypeCode, CriteriaOperator filterCriteria)
       {
          using (subContext db = new subContext())
          {
@@ -582,6 +576,19 @@ namespace Foxoft
          {
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                                 .OrderBy(x => x.CreatedDate)
+                                .Select(x => new DcCurrAcc
+                                {
+                                   CurrAccCode = x.CurrAccCode,
+                                   CurrAccDesc = x.CurrAccDesc,
+                                   PhoneNum = x.PhoneNum,
+                                   Address = x.Address,
+                                   FirstName =x.FirstName,
+                                   LastName =x.LastName,                                   
+                                   CreatedDate = x.CreatedDate,
+                                   CreatedUserName = x.CreatedUserName,
+                                   LastUpdatedDate = x.LastUpdatedDate,
+                                   LastUpdatedUserName = x.LastUpdatedUserName,
+                                })
                                 .ToList(); // burdaki kolonlari dizaynda da elave et
          }
       }
@@ -602,6 +609,42 @@ namespace Foxoft
          {
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+         }
+      }
+
+      public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate)
+      {
+         using (subContext db = new subContext())
+         {
+            decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode && x.TrInvoiceHeader.DocumentDate <= documentDate)
+                                       .Sum(x => (x.QtyIn - x.QtyOut) * x.PriceLoc);
+
+            decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.DocumentDate <= documentDate)
+                                       .Sum(x => x.PaymentLoc);
+
+            return invoiceSum + paymentSum;
+         }
+      }
+
+      public decimal SelectPaymentSum(string currAccCode, string docNum)
+      {
+         using (subContext db = new subContext())
+         {
+            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.DocumentNumber == docNum)
+                                    .Sum(x => x.PaymentLoc);
+         }
+      }
+
+      public decimal SelectInvoiceSum(string currAccCode, string docNum)
+      {
+         using (subContext db = new subContext())
+         {
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode && x.TrInvoiceHeader.DocumentNumber == docNum)
+                                    .Sum(x => (x.QtyIn - x.QtyOut) * x.PriceLoc);
          }
       }
 

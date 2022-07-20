@@ -80,7 +80,7 @@ namespace Foxoft
                         .OrderByDescending(x => x.DocumentDate)
                         .Select(x => new TrInvoiceHeader
                         {
-                            CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
+                            CurrAccDesc = x.CurrAccDesc,
                             TotalNetAmount = x.TrInvoiceLines.Sum(l => l.NetAmountLoc / 1.703m),
                             InvoiceHeaderId = x.InvoiceHeaderId,
                             CreatedDate = x.CreatedDate,
