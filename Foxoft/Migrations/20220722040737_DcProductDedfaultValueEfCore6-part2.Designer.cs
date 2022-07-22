@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220722040737_DcProductDedfaultValueEfCore6-part2")]
+    partial class DcProductDedfaultValueEfCore6part2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,9 +115,7 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
                     b.Property<decimal>("CreditLimit")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("money")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("money");
 
                     b.Property<string>("CurrAccDesc")
                         .HasMaxLength(60)
@@ -125,9 +125,7 @@ namespace Foxoft.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<double>("CustomerPosDiscountRate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("float")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("float");
 
                     b.Property<byte?>("CustomerTypeCode")
                         .HasColumnType("tinyint");
@@ -149,15 +147,11 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsVip")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasColumnName("IsVIP")
-                        .HasDefaultValueSql("0");
+                        .HasColumnName("IsVIP");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(60)
@@ -715,7 +709,7 @@ namespace Foxoft.Migrations
                             RetailPrice = 4.5m,
                             TaxRate = 0.0,
                             UseInternet = false,
-                            UsePos = false,
+                            UsePos = true,
                             WholesalePrice = 0m
                         },
                         new
@@ -732,7 +726,7 @@ namespace Foxoft.Migrations
                             RetailPrice = 2.5m,
                             TaxRate = 0.0,
                             UseInternet = false,
-                            UsePos = false,
+                            UsePos = true,
                             WholesalePrice = 0m
                         },
                         new
@@ -749,7 +743,7 @@ namespace Foxoft.Migrations
                             RetailPrice = 0m,
                             TaxRate = 0.0,
                             UseInternet = false,
-                            UsePos = false,
+                            UsePos = true,
                             WholesalePrice = 0m
                         },
                         new
@@ -766,7 +760,7 @@ namespace Foxoft.Migrations
                             RetailPrice = 0m,
                             TaxRate = 0.0,
                             UseInternet = false,
-                            UsePos = false,
+                            UsePos = true,
                             WholesalePrice = 0m
                         });
                 });
@@ -1352,37 +1346,25 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("convert(varchar(10), GETDATE(), 108)");
 
                     b.Property<byte>("FiscalPrintedState")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("tinyint");
 
                     b.Property<bool>("IsCompleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsPrinted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsReturn")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsSalesViaInternet")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsSuspended")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()

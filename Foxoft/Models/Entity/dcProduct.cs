@@ -40,6 +40,7 @@ namespace Foxoft.Models
       [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]
       public byte ProductTypeCode { get; set; }
 
+      [DefaultValue("1")]
       [DisplayName("POSda İstifadə Et")]
       public bool UsePos { get; set; }
 
@@ -51,29 +52,35 @@ namespace Foxoft.Models
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string PromotionCode2 { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Vergi Dərəcəsi")]
       public double TaxRate { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Pos Endirimi")]
       public double PosDiscount { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Qeyri-Aktiv")]
       public bool IsDisabled { get; set; }
 
 
       const string qiymetler = "Qiymətlər";
+      [DefaultValue("0")]
       [Display(Name = "Alış Qiyməti", GroupName = qiymetler, Order = 0)]
       [DisplayName("Alış Qiyməti")]
       public decimal PurchasePrice { get; set; }
 
+      [DefaultValue("0")]
       [Display(Name = "Topdan Satış Qiy.", GroupName = qiymetler, Order = 1)]
       [DisplayName("Toptan Satış Qiyməti")]
       public decimal WholesalePrice { get; set; }
 
+      [DefaultValue("0")]
       [Display(Name = "Satış Qiyməti", GroupName = qiymetler, Order = 2)]
       public decimal RetailPrice { get; set; }
 
-
+      [DefaultValue("0")]
       [DisplayName("İnternetdə İstifadə Et")]
       public bool UseInternet { get; set; }
 

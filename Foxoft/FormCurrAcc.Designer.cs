@@ -340,9 +340,10 @@ namespace Foxoft
          this.PhoneNumTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcCurrAccsBindingSource, "PhoneNum", true));
          this.PhoneNumTextEdit.Location = new System.Drawing.Point(134, 213);
          this.PhoneNumTextEdit.Name = "PhoneNumTextEdit";
-         this.PhoneNumTextEdit.Properties.Mask.EditMask = "(999) 000-0000";
-         this.PhoneNumTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
          this.PhoneNumTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+         this.PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
+         this.PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerSignature", "isOptimistic=False");
+         this.PhoneNumTextEdit.Properties.MaskSettings.Set("mask", "(\\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2})| ?");
          this.PhoneNumTextEdit.Size = new System.Drawing.Size(165, 20);
          this.PhoneNumTextEdit.StyleController = this.dataLayoutControl1;
          this.PhoneNumTextEdit.TabIndex = 13;

@@ -83,11 +83,13 @@ namespace Foxoft.Models
       [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string DataLanguageCode { get; set; }
 
-      [DisplayName("Kredit Limiti")]
+      [DefaultValue("0")]
       [Column(TypeName = "money")]
+      [DisplayName("Kredit Limiti")]
       public decimal CreditLimit { get; set; }
 
       [Column("IsVIP")]
+      [DefaultValue("0")]
       [DisplayName("VIP")]
       public bool IsVip { get; set; }
 
@@ -97,9 +99,11 @@ namespace Foxoft.Models
       [DisplayName("Tədarikçi Tipi")]
       public byte? VendorTypeCode { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Müştəri Endirim Dərəcəsi")]
       public double CustomerPosDiscountRate { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Qeyri-Aktiv")]
       public bool IsDisabled { get; set; }
 
@@ -115,9 +119,10 @@ namespace Foxoft.Models
       public string Address { get; set; }
 
 
-      [DataType(DataType.PhoneNumber)]
       [DisplayName("Telefon")]
+      [DataType(DataType.PhoneNumber)]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      //[RegularExpression(@"\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2}", ErrorMessage = "Characters are not allowed.")]
       public string PhoneNum { get; set; }
 
       [DisplayName("Doğum Günü")]

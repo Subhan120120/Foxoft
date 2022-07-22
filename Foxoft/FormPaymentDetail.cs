@@ -323,7 +323,7 @@ namespace Foxoft
             string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
             if (!String.IsNullOrEmpty(phoneNum))
             {
-               sendWhatsApp("+994" + phoneNum, odendi + " " + qaldı);
+               sendWhatsApp("+994" + phoneNum, odendi + qaldı);
             }
          }
       }

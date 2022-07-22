@@ -83,10 +83,6 @@ namespace Foxoft
          this.gC_PaymentHeaderList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_ProductList_Paint);
          this.gC_PaymentHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_PaymentHeaderList_ProcessGridKey);
          // 
-         // trPaymentHeadersBindingSource
-         // 
-         this.trPaymentHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentHeader);
-         // 
          // gV_PaymentHeaderList
          // 
          this.gV_PaymentHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
@@ -171,7 +167,7 @@ namespace Foxoft
          // 
          // colCurrAccDesc
          // 
-         this.colCurrAccDesc.FieldName = "DcCurrAcc.CurrAccDesc";
+         this.colCurrAccDesc.FieldName = "CurrAccDesc";
          this.colCurrAccDesc.Name = "colCurrAccDesc";
          this.colCurrAccDesc.Visible = true;
          this.colCurrAccDesc.VisibleIndex = 5;
