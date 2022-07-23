@@ -11,156 +11,160 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
-    public partial class TrInvoiceLine : BaseEntity
-    {
-        [Key]
-        public Guid InvoiceLineId { get; set; }
+   [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
+   public partial class TrInvoiceLine : BaseEntity
+   {
+      [Key]
+      public Guid InvoiceLineId { get; set; }
 
-        [ForeignKey("TrInvoiceHeader")]
-        public Guid InvoiceHeaderId { get; set; }
+      [ForeignKey("TrInvoiceHeader")]
+      public Guid InvoiceHeaderId { get; set; }
 
-        public Guid? RelatedLineId { get; set; }
+      public Guid? RelatedLineId { get; set; }
 
 
-        [DisplayName("Məhsul")]
-        [ForeignKey("DcProduct")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ProductCode { get; set; }
+      [DisplayName("Məhsul")]
+      [ForeignKey("DcProduct")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ProductCode { get; set; }
 
-        [NotMapped]
-        [DisplayName("Say")]
-        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        public int Qty
-        {
-            get
+      [NotMapped]
+      [DisplayName("Say")]
+      [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+      public int Qty
+      {
+         get
+         {
+            if (!Object.ReferenceEquals(TrInvoiceHeader, null))
             {
-                if (!Object.ReferenceEquals(TrInvoiceHeader, null))
-                {
-                    if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
-                        if (TrInvoiceHeader.IsReturn)
-                            return QtyIn * (-1);
-                        else return QtyIn;
+               if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
+                  if (TrInvoiceHeader.IsReturn)
+                     return QtyIn * (-1);
+                  else return QtyIn;
 
-                    else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
-                        if (TrInvoiceHeader.IsReturn)
-                            return QtyOut * (-1);
-                        else return QtyOut;
+               else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
+                  if (TrInvoiceHeader.IsReturn)
+                     return QtyOut * (-1);
+                  else return QtyOut;
 
-                    else
-                        return 0;
-                }
-                else
-                    return 0;
+               else
+                  return 0;
             }
-            set
+            else
+               return 0;
+         }
+         set
+         {
+            if (!Object.ReferenceEquals(TrInvoiceHeader, null))
             {
-                if (!Object.ReferenceEquals(TrInvoiceHeader, null))
-                {
-                    if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
-                        if (TrInvoiceHeader.IsReturn)
-                            QtyIn = value * (-1);
-                        else QtyIn = value;
+               if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
+                  if (TrInvoiceHeader.IsReturn)
+                     QtyIn = value * (-1);
+                  else QtyIn = value;
 
-                    else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
-                        if (TrInvoiceHeader.IsReturn)
-                            QtyOut = value * (-1);
-                        else QtyOut = value;
-                }
+               else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
+                  if (TrInvoiceHeader.IsReturn)
+                     QtyOut = value * (-1);
+                  else QtyOut = value;
             }
-        }
+         }
+      }
 
-        [DisplayName("Say Giriş")]
-        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        public int QtyIn { get; set; }
+      [DefaultValue("0")]
+      [DisplayName("Say Giriş")]
+      [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+      public int QtyIn { get; set; }
 
-        [DisplayName("Say Çıxış")]
-        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        public int QtyOut { get; set; }
+      [DefaultValue("0")]
+      [DisplayName("Say Çıxış")]
+      [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+      public int QtyOut { get; set; }
 
-        [DisplayName("Qiymət")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public decimal Price { get; set; }
+      [DisplayName("Qiymət")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public decimal Price { get; set; }
 
-        [DisplayName("Valyuta")]
-        [ForeignKey("DcCurrency")]
-        public string CurrencyCode { get; set; } = "USD";
+      [DisplayName("Valyuta")]
+      [ForeignKey("DcCurrency")]
+      public string CurrencyCode { get; set; } = "USD";
 
-        [DefaultValue("1.703")]
-        [DisplayName("Valyuta Kursu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public float ExchangeRate { get; set; }
+      [DefaultValue("1")]
+      [DisplayName("Valyuta Kursu")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public float ExchangeRate { get; set; } = 1;
 
-        [DisplayName("Qiymət (AZN)")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public decimal PriceLoc { get { return Price * (decimal)ExchangeRate; } set { } }
+      [DisplayName("Qiymət (YPV)")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public decimal PriceLoc { get { return Price / (decimal)ExchangeRate; } set { } }
 
-        [Column(TypeName = "money")]
-        [DisplayName("Tutar")]
-        public decimal Amount { get { return (QtyIn + QtyOut) * Price; } set { } }
+      [Column(TypeName = "money")]
+      [DisplayName("Tutar")]
+      public decimal Amount { get { return (QtyIn + QtyOut) * Price; } set { } }
 
-        [Column(TypeName = "money")]
-        [DisplayName("Tutar (AZN)")]
-        public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
+      [Column(TypeName = "money")]
+      [DisplayName("Tutar (YPV)")]
+      public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
-        [DisplayName("Qiymət")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [Column(TypeName = "money")]
-        public decimal PosDiscount { get; set; }
+      [DefaultValue("0")]
+      [DisplayName("Qiymət")]
+      [Column(TypeName = "money")]
+      public decimal PosDiscount { get; set; }
 
-        [Column(TypeName = "money")]
-        [DisplayName("Net Tutar")]
-        public decimal NetAmount { get { return (QtyIn + QtyOut) * Price; } set { } }
+      [Column(TypeName = "money")]
+      [DisplayName("Net Tutar")]
+      public decimal NetAmount { get { return (QtyIn + QtyOut) * Price; } set { } }
 
-        [Column(TypeName = "money")]
-        [DisplayName("Net Tutar (AZN)")]
-        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
+      [Column(TypeName = "money")]
+      [DisplayName("Net Tutar (YPV)")]
+      public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
-        [Column(TypeName = "money")]
-        [DisplayName("Kampaniya Endirimi")]
-        public decimal DiscountCampaign { get; set; }
+      [DefaultValue("0")]
+      [Column(TypeName = "money")]
+      [DisplayName("Kampaniya Endirimi")]
+      public decimal DiscountCampaign { get; set; }
 
-        [DisplayName("ƏDV")]
-        public float VatRate { get; set; }
+      [DefaultValue("0")]
+      [DisplayName("ƏDV")]
+      public float VatRate { get; set; }
 
-        [DisplayName("Açıqlama")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
-        public string LineDescription { get; set; }
+      [DisplayName("Açıqlama")]
+      [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+      public string LineDescription { get; set; }
 
-        [DisplayName("Satıcı")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
-        public string SalesPersonCode { get; set; }
+      [DisplayName("Satıcı")]
+      [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+      public string SalesPersonCode { get; set; }
 
-        [DisplayName("Son Alış Qiy.")]
-        public decimal? LastPurchasePrice { get; set; }
-
-
-
-
-        [DisplayName("Mənfəət")]
-        public decimal? Benefit { get { return (decimal?)Price - LastPurchasePrice; } }
-
-        [NotMapped]
-        [DisplayName("Qalıq")]
-        public int Balance { get; set; }
+      [DisplayName("Son Alış Qiy.")]
+      public decimal? LastPurchasePrice { get; set; }
 
 
 
-        [NotMapped]
-        public int ReturnQty { get; set; }
 
-        [NotMapped]
-        public int RemainingQty { get; set; }
+      [DisplayName("Mənfəət")]
+      public decimal? Benefit { get { return (decimal?)PriceLoc - LastPurchasePrice; } }
 
-        [NotMapped]
-        [DisplayName("Məhsul Adı")]
-        public string ProductDesc { get; set; }
+      [NotMapped]
+      [DisplayName("Qalıq")]
+      public int Balance { get; set; }
 
-        //public string ProductDesc { get { if (!Object.ReferenceEquals(DcProduct, null)) return DcProduct.ProductDesc; else return ""; } set { } }  // gridview da set{} iwlemir
 
-        public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
-        public virtual DcProduct DcProduct { get; set; }
-        public virtual DcCurrency DcCurrency { get; set; }
-    }
+
+      [NotMapped]
+      public int ReturnQty { get; set; }
+
+      [NotMapped]
+      public int RemainingQty { get; set; }
+
+      [NotMapped]
+      [DisplayName("Məhsul Adı")]
+      public string ProductDesc { get; set; }
+
+      //public string ProductDesc { get { if (!Object.ReferenceEquals(DcProduct, null)) return DcProduct.ProductDesc; else return ""; } set { } }  // gridview da set{} iwlemir
+
+      public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
+      public virtual DcProduct DcProduct { get; set; }
+      public virtual DcCurrency DcCurrency { get; set; }
+   }
 }

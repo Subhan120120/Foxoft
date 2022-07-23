@@ -81,7 +81,7 @@ namespace Foxoft
                      .Select(x => new TrInvoiceHeader
                      {
                         CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
-                        TotalNetAmount = x.TrInvoiceLines.Sum(l => l.NetAmountLoc / 1.703m),
+                        TotalNetAmount = x.TrInvoiceLines.Sum(l => l.NetAmountLoc),
                         InvoiceHeaderId = x.InvoiceHeaderId,
                         CreatedDate = x.CreatedDate,
                         CreatedUserName = x.CreatedUserName,

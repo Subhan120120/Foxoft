@@ -229,7 +229,7 @@ namespace Foxoft
 
       private void CalcPaidAmount()
       {
-         decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) / 1.703m * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+         decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
          lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
       }
 

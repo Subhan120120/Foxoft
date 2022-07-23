@@ -136,12 +136,18 @@ namespace Foxoft
                                    .Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
 
          LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
-         if (!lV_paymentHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
-            lV_paymentHeader.ForEach(x =>
-            {
-               x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-               lbl_CurrAccDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-            });
+
+
+         lV_paymentHeader.ForEach(x =>
+         {
+            string fullName = "";
+            if (!lV_paymentHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
+               fullName = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+
+            x.CurrAccDesc = fullName;
+            lbl_CurrAccDesc.Text = fullName;
+         });
+
          trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
          trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
 
@@ -196,7 +202,7 @@ namespace Foxoft
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, 1);
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, "kassa01");
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, "USD");
-         gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
+         gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1f);
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
       }
 
@@ -223,12 +229,12 @@ namespace Foxoft
       {
          if (!String.IsNullOrEmpty(CurrAccCode))
          {
-            decimal Balance = Math.Round(efMethods.SelectCurrAccBalance(CurrAccCode, dateTime) / 1.703m, 2);
+            decimal Balance = efMethods.SelectCurrAccBalance(CurrAccCode, dateTime);
 
             lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Balance.ToString();
 
             decimal CurrentBalance = efMethods.SelectPaymentSum(CurrAccCode, trPaymentHeader.DocumentNumber);
-            Balance = Math.Round(Balance - (CurrentBalance / 1.703m), 2);
+            Balance = Balance - CurrentBalance;
             lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Balance.ToString();
          }
       }
@@ -316,7 +322,7 @@ namespace Foxoft
                odendi += "odendi: " + payment.ToString() + currency + "%0A";
             }
 
-            decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate) / 1.703m, 2);
+            decimal balance = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
 
             string qaldı = "qaldı: " + balance.ToString();
 
@@ -324,6 +330,10 @@ namespace Foxoft
             if (!String.IsNullOrEmpty(phoneNum))
             {
                sendWhatsApp("+994" + phoneNum, odendi + qaldı);
+            }
+            else
+            {
+               MessageBox.Show("Nömrə Qeyd Olunmayıb");
             }
          }
       }

@@ -67,6 +67,7 @@ namespace Foxoft.Models
       [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string OperationType { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Şirkət")]
       public decimal CompanyCode { get; set; }
 
@@ -83,9 +84,11 @@ namespace Foxoft.Models
       [DisplayName("POS Terminal")]
       public short PosterminalId { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Tamamlanıb")]
       public bool IsCompleted { get; set; }
 
+      [DefaultValue("0")]
       [DisplayName("Kilidlənib")]
       public bool IsLocked { get; set; }
 

@@ -28,6 +28,7 @@
     <None Remove="AppCode\Qry_Payments.sql" />
     <None Remove="AppCode\Qry_PaymentVendors.sql" />
     <None Remove="AppCode\Qry_Sales.sql" />
+    <None Remove="AppCode\SqlQuery\CurrAccBalance.sql" />
     <None Remove="AppCode\SqlQuery\ProductBalance.sql" />
     <None Remove="AppCode\SqlQuery\Qry_Invoice.sql" />
     <None Remove="AppCode\SqlQuery\View_AllPayments.sql" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <EmbeddedResource Include="AppCode\ReportDesign\GUNSONU.repx" />
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
+    <EmbeddedResource Include="AppCode\SqlQuery\CurrAccBalance.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentVendors.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentCustomers.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\Qry_CurrAccExtra.sql" />

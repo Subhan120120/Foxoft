@@ -33,7 +33,7 @@ namespace Foxoft
          trPaymentLine.PaymentLineId = Guid.NewGuid();
          trPaymentLine.PaymentTypeCode = paymentType;
          trPaymentLine.CurrencyCode = "USD";
-         trPaymentLine.ExchangeRate = 1.703f;
+         trPaymentLine.ExchangeRate = 1f;
          trPaymentLine.CashRegisterCode = "kassa01";
          trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
@@ -50,7 +50,7 @@ namespace Foxoft
 
          decimal mustPaidABS = Math.Abs(mustPaid);
 
-         trPaymentLine.Payment = Math.Round(mustPaidABS / (decimal)trPaymentLine.ExchangeRate, 2); // change to USD
+         trPaymentLine.Payment = mustPaidABS;
       }
 
       private void FormPayment_Load(object sender, EventArgs e)
