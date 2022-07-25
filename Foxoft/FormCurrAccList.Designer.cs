@@ -53,6 +53,7 @@ namespace Foxoft
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -83,12 +84,14 @@ namespace Foxoft
             this.col_PhoneNum,
             this.col_Address,
             this.col_BonusCardNum,
-            this.col_CurrAccDesc});
+            this.col_CurrAccDesc,
+            this.colBalance});
          this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(867, 248, 264, 272);
          this.gV_CurrAccList.GridControl = this.gC_CurrAccList;
          this.gV_CurrAccList.Name = "gV_CurrAccList";
          this.gV_CurrAccList.OptionsView.ShowGroupPanel = false;
          this.gV_CurrAccList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_CurrAccList_FocusedRowChanged);
+         this.gV_CurrAccList.ColumnFilterChanged += new System.EventHandler(this.gV_CurrAccList_ColumnFilterChanged);
          this.gV_CurrAccList.DoubleClick += new System.EventHandler(this.gV_CurrAccList_DoubleClick);
          // 
          // col_CurrAccCode
@@ -237,6 +240,13 @@ namespace Foxoft
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
          // 
+         // colBalance
+         // 
+         this.colBalance.FieldName = "Balance";
+         this.colBalance.Name = "colBalance";
+         this.colBalance.Visible = true;
+         this.colBalance.VisibleIndex = 4;
+         // 
          // FormCurrAccList
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,5 +292,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_refresh;
         private DevExpress.XtraBars.BarButtonItem bBI_quit;
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;
-    }
+      private DevExpress.XtraGrid.Columns.GridColumn colBalance;
+   }
 }

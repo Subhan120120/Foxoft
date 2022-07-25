@@ -43,11 +43,11 @@ namespace Foxoft
 
       private void FormCurrAcc_Load(object sender, EventArgs e)
       {
-         FillDataLayout();
+         LoadCurrAcc();
          dataLayoutControl1.isValid(out List<string> errorList);
       }
 
-      private void FillDataLayout()
+      private void LoadCurrAcc()
       {
          dbContext = new subContext();
 

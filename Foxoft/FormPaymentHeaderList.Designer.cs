@@ -46,7 +46,6 @@ namespace Foxoft
          this.colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colStoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colPosterminalId = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.col_TotalPayment = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colTotalPayment = new DevExpress.XtraGrid.Columns.GridColumn();
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -96,7 +95,6 @@ namespace Foxoft
             this.colDescription,
             this.colStoreCode,
             this.colPosterminalId,
-            this.col_TotalPayment,
             this.colInvoiceHeaderId,
             this.colTotalPayment});
          this.gV_PaymentHeaderList.GridControl = this.gC_PaymentHeaderList;
@@ -187,13 +185,6 @@ namespace Foxoft
          this.colPosterminalId.FieldName = "PosterminalId";
          this.colPosterminalId.Name = "colPosterminalId";
          // 
-         // col_TotalPayment
-         // 
-         this.col_TotalPayment.Caption = "gridColumn1";
-         this.col_TotalPayment.Name = "col_TotalPayment";
-         this.col_TotalPayment.Visible = true;
-         this.col_TotalPayment.VisibleIndex = 6;
-         // 
          // colInvoiceHeaderId
          // 
          this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
@@ -204,7 +195,7 @@ namespace Foxoft
          this.colTotalPayment.FieldName = "TotalPayment";
          this.colTotalPayment.Name = "colTotalPayment";
          this.colTotalPayment.Visible = true;
-         this.colTotalPayment.VisibleIndex = 7;
+         this.colTotalPayment.VisibleIndex = 6;
          // 
          // ribbonControl1
          // 

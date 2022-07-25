@@ -116,7 +116,7 @@ namespace Foxoft
          //} 
          #endregion
 
-         ApplySelectedProduct();
+         DialogResult = DialogResult.OK;
       }
 
       private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
@@ -130,16 +130,22 @@ namespace Foxoft
 
       private void btn_productEdit_ItemClick(object sender, ItemClickEventArgs e)
       {
-         FormProduct formProduct = new FormProduct(productTypeCode, dcProduct.ProductCode);
-
-         if (formProduct.ShowDialog(this) == DialogResult.OK)
+         if (!Object.ReferenceEquals(dcProduct, null))
          {
-            int fr = gV_ProductList.FocusedRowHandle;
 
-            LoadProducts(productTypeCode);
+            FormProduct formProduct = new FormProduct(productTypeCode, dcProduct.ProductCode);
 
-            gV_ProductList.FocusedRowHandle = fr;
+            if (formProduct.ShowDialog(this) == DialogResult.OK)
+            {
+               int fr = gV_ProductList.FocusedRowHandle;
+
+               LoadProducts(productTypeCode);
+
+               gV_ProductList.FocusedRowHandle = fr;
+            }
          }
+         else
+            MessageBox.Show("Məhsul Seçilməyib");
       }
 
       private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
@@ -153,7 +159,8 @@ namespace Foxoft
          if (view == null) return;
          if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
          {
-            ApplySelectedProduct();
+            DialogResult = DialogResult.OK;
+            //ApplySelectedProduct();
          }
 
          if (e.KeyCode == Keys.F9 && view.SelectedRowsCount > 0)
@@ -234,6 +241,12 @@ namespace Foxoft
 
       private void gV_ProductList_ColumnFilterChanged(object sender, EventArgs e)
       {
+         GridView view = sender as GridView;
+
+         if (view.FocusedRowHandle >= 0)
+            dcProduct = view.GetRow(view.FocusedRowHandle) as DcProduct;
+         else
+            dcProduct = null;
          //LoadProducts(productTypeCode);
       }
 

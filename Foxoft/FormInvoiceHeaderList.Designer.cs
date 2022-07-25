@@ -88,6 +88,7 @@ namespace Foxoft
          this.gV_InvoiceHeaderList.OptionsView.FilterCriteriaDisplayStyle = DevExpress.XtraEditors.FilterCriteriaDisplayStyle.Visual;
          this.gV_InvoiceHeaderList.OptionsView.ShowAutoFilterRow = true;
          this.gV_InvoiceHeaderList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_InvoiceHeaderList_RowStyle);
+         this.gV_InvoiceHeaderList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_InvoiceHeaderList_FocusedRowChanged);
          this.gV_InvoiceHeaderList.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceHeaderList_CellValueChanging);
          this.gV_InvoiceHeaderList.ColumnFilterChanged += new System.EventHandler(this.gV_InvoiceHeaderList_ColumnFilterChanged);
          this.gV_InvoiceHeaderList.DoubleClick += new System.EventHandler(this.gV_TrInvoiceHeaderList_DoubleClick);
@@ -153,7 +154,7 @@ namespace Foxoft
          this.colTotalNetAmount.FieldName = "TotalNetAmount";
          this.colTotalNetAmount.Name = "colTotalNetAmount";
          this.colTotalNetAmount.Visible = true;
-         this.colTotalNetAmount.VisibleIndex = 9;
+         this.colTotalNetAmount.VisibleIndex = 8;
          // 
          // colCurrAccDesc
          // 

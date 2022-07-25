@@ -99,7 +99,7 @@ namespace Foxoft
                                                     .Select(x => new DcProduct
                                                     {
                                                        Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                                       LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().Price,
+                                                       LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentDate).FirstOrDefault().PriceLoc,
                                                        ProductCode = x.ProductCode,
                                                        ProductDesc = x.ProductDesc,
                                                        PosDiscount = x.PosDiscount,
@@ -128,7 +128,7 @@ namespace Foxoft
                                 .Select(x => new DcProduct
                                 {
                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                   LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().Price,
+                                   LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().PriceLoc,
                                    ProductCode = x.ProductCode,
                                    ProductDesc = x.ProductDesc,
                                    PosDiscount = x.PosDiscount,
@@ -165,7 +165,7 @@ namespace Foxoft
                             .Select(x => new DcProduct
                             {
                                Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                               LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().Price,
+                               LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.CreatedDate).FirstOrDefault().PriceLoc,
                                ProductCode = x.ProductCode,
                                ProductDesc = x.ProductDesc,
                                PosDiscount = x.PosDiscount,
@@ -574,16 +574,20 @@ namespace Foxoft
       {
          using (subContext db = new subContext())
          {
+
+
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                                 .OrderBy(x => x.CreatedDate)
                                 .Select(x => new DcCurrAcc
                                 {
+                                   Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader).Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode).Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
+                                   + db.TrPaymentLines.Include(l => l.TrPaymentHeader).Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode).Sum(s => s.PaymentLoc),
                                    CurrAccCode = x.CurrAccCode,
                                    CurrAccDesc = x.CurrAccDesc,
                                    PhoneNum = x.PhoneNum,
                                    Address = x.Address,
-                                   FirstName =x.FirstName,
-                                   LastName =x.LastName,                                   
+                                   FirstName = x.FirstName,
+                                   LastName = x.LastName,
                                    CreatedDate = x.CreatedDate,
                                    CreatedUserName = x.CreatedUserName,
                                    LastUpdatedDate = x.LastUpdatedDate,

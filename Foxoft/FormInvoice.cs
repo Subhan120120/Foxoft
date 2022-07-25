@@ -459,8 +459,10 @@ namespace Foxoft
                gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
                gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
 
-               decimal price = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
-               gV_InvoiceLine.SetFocusedRowCellValue(col_Price, price);
+               decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+               decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_Price));
+               if (priceInvoice == 0)
+                  gV_InvoiceLine.SetFocusedRowCellValue(col_Price, priceProduct);
 
                gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
             }

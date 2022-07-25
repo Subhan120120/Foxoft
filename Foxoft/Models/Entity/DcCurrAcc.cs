@@ -130,6 +130,10 @@ namespace Foxoft.Models
       [DefaultValue("'1901-01-01'")]
       public DateTime? BirthDate { get; set; }
 
+      [NotMapped]
+      [DisplayName("Qalıq")]
+      public decimal Balance { get; set; }
+
 
       public virtual DcCurrAccType DcCurrAccType { get; set; }
       public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }

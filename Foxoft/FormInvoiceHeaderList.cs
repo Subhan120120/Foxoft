@@ -77,7 +77,7 @@ namespace Foxoft
          List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
                      .Include(x => x.DcCurrAcc)
                      .Where(x => x.ProcessCode == processCode)
-                     .OrderByDescending(x => x.DocumentDate)
+                     .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
                      .Select(x => new TrInvoiceHeader
                      {
                         CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
@@ -126,7 +126,6 @@ namespace Foxoft
             //info.RowHandle
             //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
-            trInvoiceHeader = view.GetRow(view.FocusedRowHandle) as TrInvoiceHeader;
 
             if (!object.ReferenceEquals(trInvoiceHeader, null))
                DialogResult = DialogResult.OK;
@@ -139,13 +138,19 @@ namespace Foxoft
          if (view == null) return;
          if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
          {
-            if (!object.ReferenceEquals(trInvoiceHeader, null))
+            if (!Object.ReferenceEquals(trInvoiceHeader, null))
                DialogResult = DialogResult.OK;
          }
       }
 
       private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
       {
+         GridView view = sender as GridView;
+         if (view.SelectedRowsCount > 0)
+            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+         else
+            trInvoiceHeader = null;
+
          //LoadInvoiveHeaders();
       }
 
@@ -184,6 +189,15 @@ namespace Foxoft
             gV.ShowFindPanel();
          }
          isFirstPaint = false;
+      }
+
+      private void gV_InvoiceHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+      {
+         GridView view = sender as GridView;
+         if (view.SelectedRowsCount > 0)
+            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+         else
+            trInvoiceHeader = null;
       }
    }
 }

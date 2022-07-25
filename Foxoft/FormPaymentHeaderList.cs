@@ -74,11 +74,11 @@ namespace Foxoft
 
          List<TrPaymentHeader> headerList = filteredData.Include(x => x.TrPaymentLines)
                                                         .Include(x => x.DcCurrAcc)
-                                                        .OrderByDescending(x => x.DocumentDate)
+                                                        .OrderByDescending(x => x.OperationDate).ThenByDescending(x => x.OperationTime)
                                                         .Select(x => new TrPaymentHeader
                                                         {
                                                            CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
-                                                           TotalPayment = x.TrPaymentLines.Sum(x => x.Payment),
+                                                           TotalPayment = x.TrPaymentLines.Sum(x => x.PaymentLoc),
                                                            PaymentHeaderId = x.PaymentHeaderId,
                                                            InvoiceHeaderId = x.InvoiceHeaderId,
                                                            DocumentNumber = x.DocumentNumber,
