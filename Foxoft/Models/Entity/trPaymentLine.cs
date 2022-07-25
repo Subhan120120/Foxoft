@@ -102,7 +102,15 @@ namespace Foxoft.Models
 
       [NotMapped]
       [DisplayName("Ödəmə Tarixi")]
-      public DateTime DocumentDate { get; set; }
+      public DateTime DocumentDate { get; set; }      
+      
+      [NotMapped]
+      [DisplayName("Əvvəlki Borc")]
+      public decimal BalanceBefor { get; set; }
+
+      [NotMapped]
+      [DisplayName("Sonrakı Borc")]
+      public decimal BalanceAfter { get; set; }
 
       public virtual TrPaymentHeader TrPaymentHeader { get; set; }
       public virtual DcPaymentType DcPaymentType { get; set; }

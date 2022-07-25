@@ -85,6 +85,8 @@ namespace Foxoft
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
          this.dataLayoutControl1.SuspendLayout();
@@ -274,7 +276,9 @@ namespace Foxoft
             this.colCreatedDate,
             this.colLastUpdatedUserName,
             this.colLastUpdatedDate,
-            this.colCashRegisterCode});
+            this.colCashRegisterCode,
+            this.colBalanceBefor,
+            this.colBalanceAfter});
          this.gV_PaymentLine.CustomizationFormBounds = new System.Drawing.Rectangle(953, 390, 264, 272);
          this.gV_PaymentLine.GridControl = this.gC_PaymentLine;
          this.gV_PaymentLine.Name = "gV_PaymentLine";
@@ -656,6 +660,20 @@ namespace Foxoft
          this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem5.TextVisible = false;
          // 
+         // colBalanceBefor
+         // 
+         this.colBalanceBefor.FieldName = "BalanceBefor";
+         this.colBalanceBefor.Name = "colBalanceBefor";
+         this.colBalanceBefor.Visible = true;
+         this.colBalanceBefor.VisibleIndex = 6;
+         // 
+         // colBalanceAfter
+         // 
+         this.colBalanceAfter.FieldName = "BalanceAfter";
+         this.colBalanceAfter.Name = "colBalanceAfter";
+         this.colBalanceAfter.Visible = true;
+         this.colBalanceAfter.VisibleIndex = 7;
+         // 
          // FormPaymentDetail
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -769,5 +787,7 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
       private DevExpress.XtraBars.BarButtonItem bBI_SendWhatsapp;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+      private DevExpress.XtraGrid.Columns.GridColumn colBalanceBefor;
+      private DevExpress.XtraGrid.Columns.GridColumn colBalanceAfter;
    }
 }

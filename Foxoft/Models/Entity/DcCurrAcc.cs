@@ -122,7 +122,7 @@ namespace Foxoft.Models
       [DisplayName("Telefon")]
       [DataType(DataType.PhoneNumber)]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      //[RegularExpression(@"\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2}", ErrorMessage = "Characters are not allowed.")]
+      //[RegularExpression(@"\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2}", ErrorMessage = "Duzgun Format Daxil Edin.")]
       public string PhoneNum { get; set; }
 
       [DisplayName("Doğum Günü")]

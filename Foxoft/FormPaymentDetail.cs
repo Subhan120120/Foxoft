@@ -190,7 +190,8 @@ namespace Foxoft
                CurrAccCodeButtonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
                trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
-               CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPaymentHeader.DocumentDate);
+
+               CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
             }
          }
       }
@@ -265,6 +266,13 @@ namespace Foxoft
 
       private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
       {
+         decimal balanceAfter = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
+         decimal invoiceSum = efMethods.SelectPaymentSum(trPaymentHeader.CurrAccCode, trPaymentHeader.DocumentNumber);
+         decimal balanceBefore = balanceAfter - invoiceSum;
+
+         gV_PaymentLine.SetFocusedRowCellValue(colBalanceBefor, balanceBefore);
+         gV_PaymentLine.SetFocusedRowCellValue(colBalanceAfter, balanceAfter);
+
          if (dataLayoutControl1.isValid(out List<string> errorList))
          {
             SavePayment();

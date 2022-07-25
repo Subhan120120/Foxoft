@@ -50,12 +50,12 @@ namespace Foxoft
          this.bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_refresh = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_Report1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.bBI_Report1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -137,6 +137,8 @@ namespace Foxoft
          // col_PhoneNum
          // 
          this.col_PhoneNum.Caption = "Telefon";
+         this.col_PhoneNum.DisplayFormat.FormatString = "0:(##)###-##-##";
+         this.col_PhoneNum.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
          this.col_PhoneNum.FieldName = "PhoneNum";
          this.col_PhoneNum.Name = "col_PhoneNum";
          this.col_PhoneNum.Visible = true;
@@ -166,6 +168,8 @@ namespace Foxoft
          // 
          // colBalance
          // 
+         this.colBalance.DisplayFormat.FormatString = "{0:n2}";
+         this.colBalance.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colBalance.FieldName = "Balance";
          this.colBalance.Name = "colBalance";
          this.colBalance.Visible = true;
@@ -223,6 +227,14 @@ namespace Foxoft
          this.bBI_quit.Name = "bBI_quit";
          this.bBI_quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_quit_ItemClick);
          // 
+         // bBI_Report1
+         // 
+         this.bBI_Report1.Caption = "Müştəri ilə Haqq Hesab";
+         this.bBI_Report1.Id = 5;
+         this.bBI_Report1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Report1.ImageOptions.SvgImage")));
+         this.bBI_Report1.Name = "bBI_Report1";
+         this.bBI_Report1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Report1_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -239,6 +251,12 @@ namespace Foxoft
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "İdarə Et";
          // 
+         // ribbonPageGroup3
+         // 
+         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
+         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+         this.ribbonPageGroup3.Text = "Hesabat";
+         // 
          // ribbonStatusBar1
          // 
          this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 571);
@@ -250,20 +268,6 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
-         // 
-         // ribbonPageGroup3
-         // 
-         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
-         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
-         this.ribbonPageGroup3.Text = "Hesabat";
-         // 
-         // barButtonItem1
-         // 
-         this.bBI_Report1.Caption = "Müştəri ilə Haqq Hesab";
-         this.bBI_Report1.Id = 5;
-         this.bBI_Report1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-         this.bBI_Report1.Name = "barButtonItem1";
-         this.bBI_Report1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Report1_ItemClick);
          // 
          // FormCurrAccList
          // 

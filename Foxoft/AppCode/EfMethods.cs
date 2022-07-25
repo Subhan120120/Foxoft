@@ -625,7 +625,7 @@ namespace Foxoft
                                        .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.DocumentDate <= documentDate)
+                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.OperationDate <= documentDate)
                                        .Sum(x => x.PaymentLoc);
 
             return invoiceSum + paymentSum;
