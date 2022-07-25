@@ -622,7 +622,7 @@ namespace Foxoft
          {
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode && x.TrInvoiceHeader.DocumentDate <= documentDate)
-                                       .Sum(x => (x.QtyIn - x.QtyOut) * x.PriceLoc);
+                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                        .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.DocumentDate <= documentDate)
@@ -838,12 +838,23 @@ namespace Foxoft
          }
       }
 
-      public int UpdateDcReportFilter(int id, string reportFilter)
+      public int UpdateDcReport_Filter(int id, string reportFilter)
       {
          using (subContext db = new subContext())
          {
             DcReport dcReport = new DcReport() { ReportId = id, ReportFilter = reportFilter };
             db.Entry(dcReport).Property(x => x.ReportFilter).IsModified = true;
+            return db.SaveChanges();
+         }
+      }
+
+      public int UpdateDcReportFilter_Value(int ReportId, string fieldName, string filterValue)
+      {
+         using (subContext db = new subContext())
+         {
+            DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName).FirstOrDefault(x => x.ReportId == ReportId);
+            dcReport.FilterValue = filterValue;
+            db.Entry(dcReport).Property(x => x.FilterValue).IsModified = true;
             return db.SaveChanges();
          }
       }

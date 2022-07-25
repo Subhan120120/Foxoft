@@ -44,6 +44,7 @@ namespace Foxoft
          this.col_Address = new DevExpress.XtraGrid.Columns.GridColumn();
          this.col_BonusCardNum = new DevExpress.XtraGrid.Columns.GridColumn();
          this.col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -53,7 +54,8 @@ namespace Foxoft
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.bBI_Report1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -162,6 +164,13 @@ namespace Foxoft
          this.col_CurrAccDesc.Visible = true;
          this.col_CurrAccDesc.VisibleIndex = 1;
          // 
+         // colBalance
+         // 
+         this.colBalance.FieldName = "Balance";
+         this.colBalance.Name = "colBalance";
+         this.colBalance.Visible = true;
+         this.colBalance.VisibleIndex = 4;
+         // 
          // ribbonControl1
          // 
          this.ribbonControl1.ExpandCollapseItem.Id = 0;
@@ -171,9 +180,10 @@ namespace Foxoft
             this.bBI_CurrAccNew,
             this.bBI_CurAccEdit,
             this.bBI_refresh,
-            this.bBI_quit});
+            this.bBI_quit,
+            this.bBI_Report1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 5;
+         this.ribbonControl1.MaxItemId = 6;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -216,7 +226,8 @@ namespace Foxoft
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1});
+            this.ribbonPageGroup1,
+            this.ribbonPageGroup3});
          this.ribbonPage1.Name = "ribbonPage1";
          this.ribbonPage1.Text = "Cari Hesab";
          // 
@@ -240,12 +251,19 @@ namespace Foxoft
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
          // 
-         // colBalance
+         // ribbonPageGroup3
          // 
-         this.colBalance.FieldName = "Balance";
-         this.colBalance.Name = "colBalance";
-         this.colBalance.Visible = true;
-         this.colBalance.VisibleIndex = 4;
+         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
+         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+         this.ribbonPageGroup3.Text = "Hesabat";
+         // 
+         // barButtonItem1
+         // 
+         this.bBI_Report1.Caption = "Müştəri ilə Haqq Hesab";
+         this.bBI_Report1.Id = 5;
+         this.bBI_Report1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_Report1.Name = "barButtonItem1";
+         this.bBI_Report1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Report1_ItemClick);
          // 
          // FormCurrAccList
          // 
@@ -293,5 +311,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_quit;
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colBalance;
+      private DevExpress.XtraBars.BarButtonItem bBI_Report1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
    }
 }

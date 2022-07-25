@@ -59,19 +59,19 @@ namespace Foxoft
 
       private void RibbonControl1_Merge(object sender, RibbonMergeEventArgs e)
       {
-         AdornerElement[] badges = ((FormInvoice)e.MergedChild.Parent).Badges;
-         adornerUIManager1.BeginUpdate();
-         foreach (AdornerElement badge in badges)
-         {
-            AdornerElement clone = badge.Clone() as AdornerElement;
-            if (badge.TargetElement is BarItem)
-               clone.TargetElement = badge.TargetElement;
-            if (badge.TargetElement is RibbonPage)
-               clone.TargetElement = parentRibbonControl.MergedPages.GetPageByName((badge.TargetElement as RibbonPage).Name);
-            adornerUIManager1.Elements.Add(clone);
-            adorners1.Add(clone);
-         }
-         adornerUIManager1.EndUpdate();
+         //AdornerElement[] badges = ((FormInvoice)e.MergedChild.Parent).Badges;
+         //adornerUIManager1.BeginUpdate();
+         //foreach (AdornerElement badge in badges)
+         //{
+         //   AdornerElement clone = badge.Clone() as AdornerElement;
+         //   if (badge.TargetElement is BarItem)
+         //      clone.TargetElement = badge.TargetElement;
+         //   if (badge.TargetElement is RibbonPage)
+         //      clone.TargetElement = parentRibbonControl.MergedPages.GetPageByName((badge.TargetElement as RibbonPage).Name);
+         //   adornerUIManager1.Elements.Add(clone);
+         //   adorners1.Add(clone);
+         //}
+         //adornerUIManager1.EndUpdate();
       }
 
       private void RibbonControl1_UnMerge(object sender, RibbonMergeEventArgs e)

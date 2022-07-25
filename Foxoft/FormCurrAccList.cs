@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraGrid;
@@ -7,6 +8,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -171,6 +173,78 @@ namespace Foxoft
             dcCurrAcc = view.GetFocusedRow() as DcCurrAcc;
          else
             dcCurrAcc = null;
+      }
+
+      private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+
+         DcReport dcReport = efMethods.SelectReport(1003);
+         object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(col_CurrAccCode);
+
+         if (!Object.ReferenceEquals(currAccCode, null))
+         {
+
+            efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
+
+            string reportQuery = dcReport.ReportQuery;
+
+            ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
+            CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
+            int index = 0;
+            foreach (DcReportFilter rf in dcReportFilters)
+            {
+               BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
+
+               criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
+
+               string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
+               reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
+
+               index++;
+            }
+            //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
+            string qryMaster = "Select * from ( " + reportQuery + ") as master";
+
+            FormReportGrid formGrid = new FormReportGrid(qryMaster, dcReport);
+            formGrid.Show();
+         }
+      }
+
+      private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
+      {
+         switch (filterOperatorType)
+         {
+            case "+":
+               return BinaryOperatorType.Plus;
+            case "&":
+               return BinaryOperatorType.BitwiseAnd;
+            case "/":
+               return BinaryOperatorType.Divide;
+            case "==":
+               return BinaryOperatorType.Equal;
+            case ">":
+               return BinaryOperatorType.Greater;
+            case ">=":
+               return BinaryOperatorType.GreaterOrEqual;
+            case "<":
+               return BinaryOperatorType.Less;
+            case "<=":
+               return BinaryOperatorType.LessOrEqual;
+            case "%":
+               return BinaryOperatorType.Modulo;
+            case "*":
+               return BinaryOperatorType.Multiply;
+            case "!=":
+               return BinaryOperatorType.NotEqual;
+            case "|":
+               return BinaryOperatorType.BitwiseOr;
+            case "-":
+               return BinaryOperatorType.Minus;
+            case "^":
+               return BinaryOperatorType.BitwiseXor;
+            default:
+               return BinaryOperatorType.Equal;
+         }
       }
    }
 }

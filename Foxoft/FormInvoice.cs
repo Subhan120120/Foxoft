@@ -41,12 +41,10 @@ namespace Foxoft
       private subContext dbContext;
       Guid invoiceHeaderId;
 
-      public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
+      //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
       public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
       {
          InitializeComponent();
-
-         //bBI_SaveQuit.ItemShortcut = new BarShortcut(Keys.Escape);
 
          this.productTypeCode = productTypeCode;
          this.currAccTypeCode = currAccTypeCode;
@@ -619,7 +617,7 @@ namespace Foxoft
             {
                SaveInvoice();
 
-               MakePayment(summaryInvoice);
+               //MakePayment(summaryInvoice);
 
                GetPrint();
 
@@ -850,7 +848,7 @@ namespace Foxoft
             {
                SaveInvoice();
 
-               MakePayment(summaryInvoice);
+               //MakePayment(summaryInvoice);
 
                GetPrint();
 
