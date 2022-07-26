@@ -67,6 +67,7 @@ namespace Foxoft
          this.colNetAmountLoc = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBenefit = new DevExpress.XtraGrid.Columns.GridColumn();
          this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
          this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
          this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -111,9 +112,6 @@ namespace Foxoft
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
-         this.badge1 = new DevExpress.Utils.VisualEffects.Badge();
-         this.badge2 = new DevExpress.Utils.VisualEffects.Badge();
-         this.colBenefit = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -256,6 +254,7 @@ namespace Foxoft
          this.gV_InvoiceLine.Name = "gV_InvoiceLine";
          this.gV_InvoiceLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
          this.gV_InvoiceLine.OptionsSelection.MultiSelect = true;
+         this.gV_InvoiceLine.OptionsView.ColumnHeaderAutoHeight = DevExpress.Utils.DefaultBoolean.False;
          this.gV_InvoiceLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
          this.gV_InvoiceLine.OptionsView.ShowFooter = true;
          this.gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
@@ -295,7 +294,7 @@ namespace Foxoft
          this.col_ProductCode.Name = "col_ProductCode";
          this.col_ProductCode.Visible = true;
          this.col_ProductCode.VisibleIndex = 0;
-         this.col_ProductCode.Width = 91;
+         this.col_ProductCode.Width = 42;
          // 
          // repoBtnEdit_ProductCode
          // 
@@ -311,6 +310,7 @@ namespace Foxoft
          this.colBalance.Name = "colBalance";
          this.colBalance.Visible = true;
          this.colBalance.VisibleIndex = 2;
+         this.colBalance.Width = 33;
          // 
          // colQty
          // 
@@ -318,6 +318,7 @@ namespace Foxoft
          this.colQty.Name = "colQty";
          this.colQty.Visible = true;
          this.colQty.VisibleIndex = 3;
+         this.colQty.Width = 34;
          // 
          // colQtyIn
          // 
@@ -354,7 +355,7 @@ namespace Foxoft
          this.col_Price.Name = "col_Price";
          this.col_Price.Visible = true;
          this.col_Price.VisibleIndex = 4;
-         this.col_Price.Width = 89;
+         this.col_Price.Width = 45;
          // 
          // repoCalcEdit_Price
          // 
@@ -374,6 +375,7 @@ namespace Foxoft
          this.colCurrencyCode.Name = "colCurrencyCode";
          this.colCurrencyCode.Visible = true;
          this.colCurrencyCode.VisibleIndex = 5;
+         this.colCurrencyCode.Width = 45;
          // 
          // repoLUE_CurrencyCode
          // 
@@ -400,6 +402,7 @@ namespace Foxoft
          this.colExchangeRate.Name = "colExchangeRate";
          this.colExchangeRate.Visible = true;
          this.colExchangeRate.VisibleIndex = 6;
+         this.colExchangeRate.Width = 57;
          // 
          // col_Amount
          // 
@@ -431,7 +434,7 @@ namespace Foxoft
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "Toplam={0:0.##}")});
          this.col_NetAmount.Visible = true;
          this.col_NetAmount.VisibleIndex = 7;
-         this.col_NetAmount.Width = 97;
+         this.col_NetAmount.Width = 42;
          // 
          // col_LineDesc
          // 
@@ -440,7 +443,7 @@ namespace Foxoft
          this.col_LineDesc.Name = "col_LineDesc";
          this.col_LineDesc.Visible = true;
          this.col_LineDesc.VisibleIndex = 8;
-         this.col_LineDesc.Width = 89;
+         this.col_LineDesc.Width = 34;
          // 
          // col_SalesPersonCode
          // 
@@ -469,7 +472,7 @@ namespace Foxoft
          this.col_ProductDesc.OptionsColumn.AllowEdit = false;
          this.col_ProductDesc.Visible = true;
          this.col_ProductDesc.VisibleIndex = 1;
-         this.col_ProductDesc.Width = 100;
+         this.col_ProductDesc.Width = 225;
          // 
          // colAmountLoc
          // 
@@ -497,6 +500,15 @@ namespace Foxoft
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
          this.colLastPurchasePrice.Visible = true;
          this.colLastPurchasePrice.VisibleIndex = 9;
+         this.colLastPurchasePrice.Width = 57;
+         // 
+         // colBenefit
+         // 
+         this.colBenefit.FieldName = "Benefit";
+         this.colBenefit.Name = "colBenefit";
+         this.colBenefit.Visible = true;
+         this.colBenefit.VisibleIndex = 10;
+         this.colBenefit.Width = 71;
          // 
          // CheckEdit_IsReturn
          // 
@@ -951,26 +963,7 @@ namespace Foxoft
          // 
          // adorneruıManager1
          // 
-         this.adorneruıManager1.Elements.Add(this.badge1);
-         this.adorneruıManager1.Elements.Add(this.badge2);
          this.adorneruıManager1.Owner = this;
-         // 
-         // badge1
-         // 
-         this.badge1.Properties.Location = System.Drawing.ContentAlignment.TopRight;
-         this.badge1.TargetElement = this.bBI_New;
-         // 
-         // badge2
-         // 
-         this.badge2.Properties.Location = System.Drawing.ContentAlignment.TopRight;
-         this.badge2.TargetElement = this.bBI_Save;
-         // 
-         // colBenefit
-         // 
-         this.colBenefit.FieldName = "Benefit";
-         this.colBenefit.Name = "colBenefit";
-         this.colBenefit.Visible = true;
-         this.colBenefit.VisibleIndex = 10;
          // 
          // FormInvoice
          // 

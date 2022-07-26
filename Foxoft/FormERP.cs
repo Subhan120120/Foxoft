@@ -53,8 +53,8 @@ namespace Foxoft
             this.aCE_Reports.Elements.Add(aCE);
          }
 
-         adorners1 = new List<AdornerElement>();
-         adornerUIManager1 = new AdornerUIManager(this.components);
+         //adorners1 = new List<AdornerElement>();
+         //adornerUIManager1 = new AdornerUIManager(this.components);
       }
 
       private void RibbonControl1_Merge(object sender, RibbonMergeEventArgs e)
@@ -76,14 +76,14 @@ namespace Foxoft
 
       private void RibbonControl1_UnMerge(object sender, RibbonMergeEventArgs e)
       {
-         adornerUIManager1.BeginUpdate();
-         foreach (AdornerElement badge in adorners1)
-         {
-            adornerUIManager1.Elements.Remove(badge);
-            badge.Dispose();
-         }
-         adorners1.Clear();
-         adornerUIManager1.EndUpdate();
+         //adornerUIManager1.BeginUpdate();
+         //foreach (AdornerElement badge in adorners1)
+         //{
+         //   adornerUIManager1.Elements.Remove(badge);
+         //   badge.Dispose();
+         //}
+         //adorners1.Clear();
+         //adornerUIManager1.EndUpdate();
       }
 
       private void bBI_POS_ItemClick(object sender, ItemClickEventArgs e)

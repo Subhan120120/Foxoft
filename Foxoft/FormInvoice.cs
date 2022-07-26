@@ -250,6 +250,7 @@ namespace Foxoft
                btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+
             }
          }
       }
@@ -559,6 +560,8 @@ namespace Foxoft
                editor.EditValue = form.dcProduct.ProductCode;
                gV_InvoiceLine.CloseEditor();
                gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+               gV_InvoiceLine.BestFitColumns();
             }
          }
       }
