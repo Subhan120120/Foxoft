@@ -66,6 +66,8 @@ namespace Foxoft
          this.colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
          this.repoBtnEdit_CashregisterCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+         this.colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
          this.OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
          this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
          this.OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -85,8 +87,7 @@ namespace Foxoft
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
          this.dataLayoutControl1.SuspendLayout();
@@ -128,9 +129,10 @@ namespace Foxoft
             this.ribbon.SearchEditItem,
             this.bBI_DeletePayment,
             this.bBI_SaveAndClose,
-            this.bBI_SendWhatsapp});
+            this.bBI_SendWhatsapp,
+            this.bBI_NewPayment});
          this.ribbon.Location = new System.Drawing.Point(0, 0);
-         this.ribbon.MaxItemId = 5;
+         this.ribbon.MaxItemId = 6;
          this.ribbon.Name = "ribbon";
          this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -171,8 +173,9 @@ namespace Foxoft
          // 
          // ribbonPageGroup1
          // 
-         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DeletePayment);
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_SaveAndClose);
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_NewPayment);
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DeletePayment);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Ödəmə";
          // 
@@ -444,6 +447,20 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton()});
          this.repoBtnEdit_CashregisterCode.Name = "repoBtnEdit_CashregisterCode";
          // 
+         // colBalanceBefor
+         // 
+         this.colBalanceBefor.FieldName = "BalanceBefor";
+         this.colBalanceBefor.Name = "colBalanceBefor";
+         this.colBalanceBefor.Visible = true;
+         this.colBalanceBefor.VisibleIndex = 6;
+         // 
+         // colBalanceAfter
+         // 
+         this.colBalanceAfter.FieldName = "BalanceAfter";
+         this.colBalanceAfter.Name = "colBalanceAfter";
+         this.colBalanceAfter.Visible = true;
+         this.colBalanceAfter.VisibleIndex = 7;
+         // 
          // OperationDateDateEdit
          // 
          this.OperationDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "OperationDate", true));
@@ -660,19 +677,12 @@ namespace Foxoft
          this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem5.TextVisible = false;
          // 
-         // colBalanceBefor
+         // bBI_NewPayment
          // 
-         this.colBalanceBefor.FieldName = "BalanceBefor";
-         this.colBalanceBefor.Name = "colBalanceBefor";
-         this.colBalanceBefor.Visible = true;
-         this.colBalanceBefor.VisibleIndex = 6;
-         // 
-         // colBalanceAfter
-         // 
-         this.colBalanceAfter.FieldName = "BalanceAfter";
-         this.colBalanceAfter.Name = "colBalanceAfter";
-         this.colBalanceAfter.Visible = true;
-         this.colBalanceAfter.VisibleIndex = 7;
+         this.bBI_NewPayment.Caption = "Yeni Ödəniş";
+         this.bBI_NewPayment.Id = 5;
+         this.bBI_NewPayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_NewPayment.ImageOptions.SvgImage")));
+         this.bBI_NewPayment.Name = "bBI_NewPayment";
          // 
          // FormPaymentDetail
          // 
@@ -789,5 +799,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceBefor;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceAfter;
+      private DevExpress.XtraBars.BarButtonItem bBI_NewPayment;
    }
 }

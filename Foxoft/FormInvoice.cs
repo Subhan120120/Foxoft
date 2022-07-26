@@ -94,6 +94,7 @@ namespace Foxoft
 
 
          lbl_InvoicePaidSum.Text = "";
+         lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
 
          dbContext.TrInvoiceLines.Include(x => x.DcProduct)
                                  .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
@@ -627,9 +628,8 @@ namespace Foxoft
                ClearControlsAddNew();
             }
             else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-            {
                ClearControlsAddNew();
-            }
+
          }
          else
          {
