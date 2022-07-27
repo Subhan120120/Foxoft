@@ -35,6 +35,7 @@ namespace Foxoft
          this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_SendWhatsapp = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -87,7 +88,6 @@ namespace Foxoft
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
          this.dataLayoutControl1.SuspendLayout();
@@ -162,6 +162,14 @@ namespace Foxoft
          this.bBI_SendWhatsapp.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SendWhatsapp.ImageOptions.SvgImage")));
          this.bBI_SendWhatsapp.Name = "bBI_SendWhatsapp";
          this.bBI_SendWhatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SendWhatsapp_ItemClick);
+         // 
+         // bBI_NewPayment
+         // 
+         this.bBI_NewPayment.Caption = "Yeni Ödəniş";
+         this.bBI_NewPayment.Id = 5;
+         this.bBI_NewPayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_NewPayment.ImageOptions.SvgImage")));
+         this.bBI_NewPayment.Name = "bBI_NewPayment";
+         this.bBI_NewPayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_NewPayment_ItemClick);
          // 
          // ribbonPage1
          // 
@@ -257,10 +265,6 @@ namespace Foxoft
          this.gC_PaymentLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_PaymentLine});
          this.gC_PaymentLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_PaymentLine_KeyDown);
-         // 
-         // trPaymentLinesBindingSource
-         // 
-         this.trPaymentLinesBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentLine);
          // 
          // gV_PaymentLine
          // 
@@ -478,7 +482,6 @@ namespace Foxoft
          // 
          // trPaymentHeadersBindingSource
          // 
-         this.trPaymentHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentHeader);
          this.trPaymentHeadersBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trPaymentHeadersBindingSource_AddingNew);
          this.trPaymentHeadersBindingSource.CurrentItemChanged += new System.EventHandler(this.trPaymentHeadersBindingSource_CurrentItemChanged);
          // 
@@ -676,13 +679,6 @@ namespace Foxoft
          this.layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem5.TextVisible = false;
-         // 
-         // bBI_NewPayment
-         // 
-         this.bBI_NewPayment.Caption = "Yeni Ödəniş";
-         this.bBI_NewPayment.Id = 5;
-         this.bBI_NewPayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_NewPayment.ImageOptions.SvgImage")));
-         this.bBI_NewPayment.Name = "bBI_NewPayment";
          // 
          // FormPaymentDetail
          // 

@@ -172,12 +172,17 @@ namespace Foxoft
                Guid invoiceHeaderId = Guid.Parse(objInv.ToString());
                TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-               FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
-               FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
-               formInvoice.MdiParent = formERP;
-               formInvoice.WindowState = FormWindowState.Maximized;
-               formInvoice.Show();
-               formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+               if (!Object.ReferenceEquals(trInvoiceHeader, null))
+               {
+                  FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+                  FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                  formInvoice.MdiParent = formERP;
+                  formInvoice.WindowState = FormWindowState.Maximized;
+                  formInvoice.Show();
+                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+               }
+               else
+                  MessageBox.Show("Belə bir qaimə yoxdur. ");
             }
          }
 

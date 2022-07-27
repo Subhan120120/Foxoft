@@ -51,7 +51,7 @@ namespace Foxoft
          this.aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
          this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_Payments = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.aCE_PaymentDetail = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
          this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -59,7 +59,6 @@ namespace Foxoft
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_PaymentDetail = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -176,7 +175,6 @@ namespace Foxoft
             this.accordionControlSeparator2,
             this.aCE_Expense,
             this.aCE_PaymentDetail,
-            this.aCE_Payments,
             this.accordionControlSeparator1,
             this.aCE_ReportZet});
          this.aCE_Invoices.Expanded = true;
@@ -248,14 +246,13 @@ namespace Foxoft
          this.aCE_Expense.Text = "Xərclər";
          this.aCE_Expense.Click += new System.EventHandler(this.aCE_Expense_Click);
          // 
-         // aCE_Payments
+         // aCE_PaymentDetail
          // 
-         this.aCE_Payments.Expanded = true;
-         this.aCE_Payments.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Payments.ImageOptions.SvgImage")));
-         this.aCE_Payments.Name = "aCE_Payments";
-         this.aCE_Payments.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_Payments.Text = "Ödənişlər";
-         this.aCE_Payments.Click += new System.EventHandler(this.aCE_Payments_Click);
+         this.aCE_PaymentDetail.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_PaymentDetail.ImageOptions.SvgImage")));
+         this.aCE_PaymentDetail.Name = "aCE_PaymentDetail";
+         this.aCE_PaymentDetail.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.aCE_PaymentDetail.Text = "Ödəniş Qəbzi";
+         this.aCE_PaymentDetail.Click += new System.EventHandler(this.aCE_PaymentDetail_Click);
          // 
          // accordionControlSeparator1
          // 
@@ -312,14 +309,6 @@ namespace Foxoft
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
          // 
-         // aCE_PaymentDetail
-         // 
-         this.aCE_PaymentDetail.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
-         this.aCE_PaymentDetail.Name = "aCE_PaymentDetail";
-         this.aCE_PaymentDetail.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_PaymentDetail.Text = "Ödəniş Qəbzi";
-         this.aCE_PaymentDetail.Click += new System.EventHandler(this.aCE_PaymentDetail_Click);
-         // 
          // FormERP
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,7 +355,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Expense;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_ReportZet;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Payments;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator1;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator2;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Products;

@@ -903,7 +903,7 @@ namespace Foxoft
          this.bBI_SaveQuit.Caption = "Yadda Saxla Bağla";
          this.bBI_SaveQuit.Id = 13;
          this.bBI_SaveQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
-         this.bBI_SaveQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
+         this.bBI_SaveQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
          this.bBI_SaveQuit.Name = "bBI_SaveQuit";
          this.bBI_SaveQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveQuit_ItemClick);
          // 

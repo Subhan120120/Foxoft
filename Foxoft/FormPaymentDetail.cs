@@ -63,6 +63,9 @@ namespace Foxoft
                                  .LoadAsync()
                                  .ContinueWith(loadTask => trPaymentLinesBindingSource.DataSource = dbContext.TrPaymentLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
+
+         lbl_CurrAccDesc.Text = trPaymentHeader.CurrAccDesc;
+
          dataLayoutControl1.isValid(out List<string> errorList);
       }
 
@@ -316,6 +319,7 @@ namespace Foxoft
             if (count > 0)
                SavePayment();
          }
+         this.Close();
       }
 
       private void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
@@ -335,14 +339,13 @@ namespace Foxoft
             string qaldı = "qaldı: " + balance.ToString();
 
             string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
+
             if (!String.IsNullOrEmpty(phoneNum))
-            {
                sendWhatsApp("+994" + phoneNum, odendi + qaldı);
-            }
+
             else
-            {
                MessageBox.Show("Nömrə Qeyd Olunmayıb");
-            }
+
          }
       }
 
@@ -358,6 +361,11 @@ namespace Foxoft
          myProcess.Start();
 
          //Process.Start(link);
+      }
+
+      private void bBI_NewPayment_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ClearControlsAddNew();
       }
    }
 }
