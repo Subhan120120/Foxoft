@@ -2736,7 +2736,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Foxoft"
         "ProductCode" = "8:{45CA112D-09DD-478B-AD26-1FA73E8263C8}"
-        "PackageCode" = "8:{1ADA50A5-697F-4EAB-B840-0234A7ECD314}"
+        "PackageCode" = "8:{888D8E74-C559-43CF-AEF5-40A2F49B79F4}"
         "UpgradeCode" = "8:{F9623061-39E4-403B-99A1-E6554D6C90B4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

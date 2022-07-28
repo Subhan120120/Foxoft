@@ -759,7 +759,7 @@ namespace Foxoft
          this.ClientSize = new System.Drawing.Size(604, 420);
          this.Controls.Add(this.dataLayoutControl1);
          this.Name = "FormCurrAcc";
-         this.Text = "Form1";
+         this.Text = "Cari Hesab";
          this.Load += new System.EventHandler(this.FormCurrAcc_Load);
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
          this.dataLayoutControl1.ResumeLayout(false);

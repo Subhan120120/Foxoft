@@ -31,7 +31,7 @@ namespace Foxoft.Models
       public string CurrAccDesc { get; set; }
 
       [ForeignKey("DcCurrAccType")]
-      [DisplayName("Cari Hesab Tipi Kodu")]
+      [DisplayName("Cari Hesab Tipi")]
       [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]
       public byte CurrAccTypeCode { get; set; }
 

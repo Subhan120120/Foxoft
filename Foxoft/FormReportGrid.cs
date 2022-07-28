@@ -36,7 +36,6 @@ namespace Foxoft
       {
          InitializeComponent();
 
-
          adornerUIManager1 = new AdornerUIManager(components);
          badge1 = new Badge();
          badge2 = new Badge();
@@ -70,15 +69,14 @@ namespace Foxoft
          if (Object.ReferenceEquals(column_InvoiceNumber, null))
             column_InvoiceNumber = gV_Report.Columns["Faktura Nömrəsi"];
 
-         if (!object.ReferenceEquals(column_InvoiceNumber, null))
+         if (!Object.ReferenceEquals(column_InvoiceNumber, null))
             column_InvoiceNumber.ColumnEdit = HLE_InvoiceNum;
 
-
          GridColumn col_DocumentNumber = gV_Report.Columns["DocumentNumber"];
-         if (!object.ReferenceEquals(col_DocumentNumber, null))
+         if (!Object.ReferenceEquals(col_DocumentNumber, null))
 
             col_DocumentNumber = gV_Report.Columns["Ödəniş Nömrəsi"];
-         if (!object.ReferenceEquals(col_DocumentNumber, null)) col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
+         if (!Object.ReferenceEquals(col_DocumentNumber, null)) col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
 
          HLE_DocumentNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
       }

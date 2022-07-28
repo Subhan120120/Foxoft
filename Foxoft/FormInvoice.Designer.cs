@@ -539,6 +539,7 @@ namespace Foxoft
          this.DocumentDateDateEdit.Size = new System.Drawing.Size(303, 20);
          this.DocumentDateDateEdit.StyleController = this.dataLayoutControl1;
          this.DocumentDateDateEdit.TabIndex = 9;
+         this.DocumentDateDateEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // DocumentTimeTimeSpanEdit
          // 
@@ -551,6 +552,7 @@ namespace Foxoft
          this.DocumentTimeTimeSpanEdit.Size = new System.Drawing.Size(303, 20);
          this.DocumentTimeTimeSpanEdit.StyleController = this.dataLayoutControl1;
          this.DocumentTimeTimeSpanEdit.TabIndex = 11;
+         this.DocumentTimeTimeSpanEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // CustomsDocumentNumberTextEdit
          // 
@@ -561,6 +563,7 @@ namespace Foxoft
          this.CustomsDocumentNumberTextEdit.Size = new System.Drawing.Size(303, 20);
          this.CustomsDocumentNumberTextEdit.StyleController = this.dataLayoutControl1;
          this.CustomsDocumentNumberTextEdit.TabIndex = 7;
+         this.CustomsDocumentNumberTextEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // btnEdit_DocNum
          // 
@@ -575,6 +578,7 @@ namespace Foxoft
          this.btnEdit_DocNum.TabIndex = 0;
          this.btnEdit_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_DocNum_ButtonPressed);
          this.btnEdit_DocNum.DoubleClick += new System.EventHandler(this.btnEdit_DocNum_DoubleClick);
+         this.btnEdit_DocNum.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // memoEdit_Desc
          // 
@@ -584,6 +588,7 @@ namespace Foxoft
          this.memoEdit_Desc.Size = new System.Drawing.Size(320, 20);
          this.memoEdit_Desc.StyleController = this.dataLayoutControl1;
          this.memoEdit_Desc.TabIndex = 12;
+         this.memoEdit_Desc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // btnEdit_CurrAccCode
          // 
@@ -597,6 +602,7 @@ namespace Foxoft
          this.btnEdit_CurrAccCode.TabIndex = 2;
          this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
          this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
+         this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // lUE_OfficeCode
          // 
@@ -616,6 +622,7 @@ namespace Foxoft
          this.lUE_OfficeCode.Size = new System.Drawing.Size(320, 20);
          this.lUE_OfficeCode.StyleController = this.dataLayoutControl1;
          this.lUE_OfficeCode.TabIndex = 6;
+         this.lUE_OfficeCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // lUE_StoreCode
          // 
@@ -635,6 +642,7 @@ namespace Foxoft
          this.lUE_StoreCode.Size = new System.Drawing.Size(320, 20);
          this.lUE_StoreCode.StyleController = this.dataLayoutControl1;
          this.lUE_StoreCode.TabIndex = 8;
+         this.lUE_StoreCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // lUE_WarehouseCode
          // 
@@ -654,6 +662,7 @@ namespace Foxoft
          this.lUE_WarehouseCode.Size = new System.Drawing.Size(320, 20);
          this.lUE_WarehouseCode.StyleController = this.dataLayoutControl1;
          this.lUE_WarehouseCode.TabIndex = 10;
+         this.lUE_WarehouseCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
          // Root
          // 

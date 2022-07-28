@@ -271,17 +271,58 @@ namespace Foxoft
          GridControl gC = sender as GridControl;
          GridView gV = gC.MainView as GridView;
 
-         if (e.KeyCode == Keys.Delete)
-         {
-            if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
-               return;
+         StandartKeys(e);
 
-            gV.DeleteSelectedRows();
+         if (e.KeyCode == Keys.F9 && gV.SelectedRowsCount > 0)
+         {
+            if (e.KeyCode == Keys.Delete)
+            {
+               if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                  return;
+
+               gV.DeleteSelectedRows();
+            }
+
+            if (e.KeyCode == Keys.F9)
+            {
+               object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
+               if (productCode != null)
+               {
+                  DcReport dcReport = efMethods.SelectReport(1005);
+
+                  string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  formGrid.Show();
+               }
+            }
+
+            if (e.KeyCode == Keys.F10)
+            {
+               object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
+               if (productCode != null)
+               {
+                  DcReport dcReport = efMethods.SelectReport(1004);
+
+                  string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  formGrid.Show();
+               }
+            }
          }
 
+      }
+
+      private void StandartKeys(KeyEventArgs e)
+      {
          if (e.KeyCode == Keys.F1)
          {
-            gV_InvoiceLine.FocusedRowHandle = GridControl.NewItemRowHandle;
+            SelectCurrAcc();
          }
 
          if (e.KeyCode == Keys.F2)
@@ -294,38 +335,6 @@ namespace Foxoft
             gV_InvoiceLine.CloseEditor();
 
             e.Handled = true;   // Stop the character from being entered into the control.
-         }
-
-         if (e.KeyCode == Keys.F9 && gV.SelectedRowsCount > 0)
-         {
-            object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
-            if (productCode != null)
-            {
-               DcReport dcReport = efMethods.SelectReport(1005);
-
-               string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
-               string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
-
-               FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
-               formGrid.Show();
-            }
-         }
-
-         if (e.KeyCode == Keys.F10 && gV.SelectedRowsCount > 0)
-         {
-            object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
-            if (productCode != null)
-            {
-               DcReport dcReport = efMethods.SelectReport(1004);
-
-               string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
-               string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
-
-               FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
-               formGrid.Show();
-            }
          }
       }
 
@@ -905,6 +914,19 @@ namespace Foxoft
          {
             System.Diagnostics.Debug.Print(ex.Message);
          }
+      }
+
+      private void btnEdit_CurrAccCode_KeyDown(object sender, KeyEventArgs e)
+      {
+         //MessageBox.Show("\nKeyCode: " + e.KeyCode +
+         //                     "\nKeyData: " + e.KeyData +
+         //                     "\nKeyValue: " + e.KeyValue
+         //                     );
+      }
+
+      private void dataLayoutControls_KeyDown(object sender, KeyEventArgs e)
+      {
+         StandartKeys(e);
       }
    }
 }

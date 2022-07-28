@@ -152,6 +152,7 @@ namespace Foxoft
          this.bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
          this.bBI_SaveAndClose.Id = 2;
          this.bBI_SaveAndClose.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveAndClose.ImageOptions.SvgImage")));
+         this.bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
          this.bBI_SaveAndClose.Name = "bBI_SaveAndClose";
          this.bBI_SaveAndClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndClose_ItemClick);
          // 
@@ -691,7 +692,7 @@ namespace Foxoft
          this.Name = "FormPaymentDetail";
          this.Ribbon = this.ribbon;
          this.StatusBar = this.ribbonStatusBar;
-         this.Text = "FormPaymentDetail";
+         this.Text = "Ödəmə";
          ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
          this.dataLayoutControl1.ResumeLayout(false);

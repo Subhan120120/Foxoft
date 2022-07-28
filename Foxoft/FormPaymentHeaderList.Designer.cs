@@ -283,7 +283,7 @@ namespace Foxoft
          this.Ribbon = this.ribbonControl1;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.StatusBar = this.ribbonStatusBar1;
-         this.Text = "FormPaymentHeaderList";
+         this.Text = "Ödəmələr";
          ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).EndInit();

@@ -25,9 +25,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Diagnostics;
 using System.Security;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.Types;
 
 namespace Foxoft
 {

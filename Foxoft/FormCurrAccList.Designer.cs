@@ -137,8 +137,8 @@ namespace Foxoft
          // col_PhoneNum
          // 
          this.col_PhoneNum.Caption = "Telefon";
-         this.col_PhoneNum.DisplayFormat.FormatString = "0:(##)###-##-##";
-         this.col_PhoneNum.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
+         this.col_PhoneNum.DisplayFormat.FormatString = "{0:(##) ### ## ##}";
+         this.col_PhoneNum.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.col_PhoneNum.FieldName = "PhoneNum";
          this.col_PhoneNum.Name = "col_PhoneNum";
          this.col_PhoneNum.Visible = true;
