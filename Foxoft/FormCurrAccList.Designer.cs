@@ -51,6 +51,7 @@ namespace Foxoft
          this.bBI_refresh = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Report1 = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -185,9 +186,10 @@ namespace Foxoft
             this.bBI_CurAccEdit,
             this.bBI_refresh,
             this.bBI_quit,
-            this.bBI_Report1});
+            this.bBI_Report1,
+            this.bBI_ExportXlsx});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 6;
+         this.ribbonControl1.MaxItemId = 7;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -235,6 +237,14 @@ namespace Foxoft
          this.bBI_Report1.Name = "bBI_Report1";
          this.bBI_Report1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Report1_ItemClick);
          // 
+         // bBI_ExportXlsx
+         // 
+         this.bBI_ExportXlsx.Caption = "Excelə Göndər";
+         this.bBI_ExportXlsx.Id = 6;
+         this.bBI_ExportXlsx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_ExportXlsx.Name = "bBI_ExportXlsx";
+         this.bBI_ExportXlsx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportXlsx_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -254,6 +264,7 @@ namespace Foxoft
          // ribbonPageGroup3
          // 
          this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
+         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_ExportXlsx);
          this.ribbonPageGroup3.Name = "ribbonPageGroup3";
          this.ribbonPageGroup3.Text = "Hesabat";
          // 
@@ -317,5 +328,6 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colBalance;
       private DevExpress.XtraBars.BarButtonItem bBI_Report1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+      private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
    }
 }

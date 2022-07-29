@@ -349,5 +349,11 @@ namespace Foxoft
          parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
 
       }
+
+      private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
+      {
+         if (MessageBox.Show("Programdan Çıx", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            e.Cancel = true;
+      }
    }
 }

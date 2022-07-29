@@ -44,6 +44,7 @@ namespace Foxoft
       {
          this.processCode = processCode;
          LoadInvoiveHeaders();
+         gV_InvoiceHeaderList.BestFitColumns();
       }
 
       private void LoadInvoiveHeaders()

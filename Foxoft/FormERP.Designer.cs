@@ -323,6 +323,7 @@ namespace Foxoft
          this.StatusBar = this.ribbonStatusBar;
          this.Text = "Foxoft";
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+         this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormERP_FormClosing);
          this.MdiChildActivate += new System.EventHandler(this.FormERP_MdiChildActivate);
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).EndInit();

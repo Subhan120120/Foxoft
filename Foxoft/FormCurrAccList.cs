@@ -246,5 +246,10 @@ namespace Foxoft
                return BinaryOperatorType.Equal;
          }
       }
+
+      private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         gC_CurrAccList.ExportToXlsx($@"C:\Users\Public\Desktop\CariHesablar.xlsx");
+      }
    }
 }

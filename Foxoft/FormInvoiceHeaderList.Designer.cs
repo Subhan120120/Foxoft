@@ -118,50 +118,40 @@ namespace Foxoft
          // 
          this.colCurrAccCode.FieldName = "CurrAccCode";
          this.colCurrAccCode.Name = "colCurrAccCode";
-         this.colCurrAccCode.Visible = true;
-         this.colCurrAccCode.VisibleIndex = 4;
          // 
          // colDocumentTime
          // 
          this.colDocumentTime.FieldName = "DocumentTime";
          this.colDocumentTime.Name = "colDocumentTime";
-         this.colDocumentTime.Visible = true;
-         this.colDocumentTime.VisibleIndex = 3;
          // 
          // colOperationDate
          // 
          this.colOperationDate.FieldName = "OperationDate";
          this.colOperationDate.Name = "colOperationDate";
-         this.colOperationDate.Visible = true;
-         this.colOperationDate.VisibleIndex = 5;
          // 
          // colOperationTime
          // 
          this.colOperationTime.FieldName = "OperationTime";
          this.colOperationTime.Name = "colOperationTime";
-         this.colOperationTime.Visible = true;
-         this.colOperationTime.VisibleIndex = 6;
          // 
          // colStoreCode
          // 
          this.colStoreCode.FieldName = "StoreCode";
          this.colStoreCode.Name = "colStoreCode";
-         this.colStoreCode.Visible = true;
-         this.colStoreCode.VisibleIndex = 7;
          // 
          // colTotalNetAmount
          // 
          this.colTotalNetAmount.FieldName = "TotalNetAmount";
          this.colTotalNetAmount.Name = "colTotalNetAmount";
          this.colTotalNetAmount.Visible = true;
-         this.colTotalNetAmount.VisibleIndex = 8;
+         this.colTotalNetAmount.VisibleIndex = 3;
          // 
          // colCurrAccDesc
          // 
          this.colCurrAccDesc.FieldName = "CurrAccDesc";
          this.colCurrAccDesc.Name = "colCurrAccDesc";
          this.colCurrAccDesc.Visible = true;
-         this.colCurrAccDesc.VisibleIndex = 9;
+         this.colCurrAccDesc.VisibleIndex = 4;
          // 
          // FormInvoiceHeaderList
          // 

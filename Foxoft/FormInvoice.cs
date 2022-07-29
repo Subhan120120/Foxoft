@@ -32,6 +32,7 @@ namespace Foxoft
    public partial class FormInvoice : RibbonForm
    {
       string designFolder = @"C:\Users\Administrator\Documents\";
+      string designFile = @"InvoiceRS_A5.repx";
 
       private TrInvoiceHeader trInvoiceHeader;
       public DcProcess dcProcess;
@@ -677,13 +678,21 @@ namespace Foxoft
          ReportClass reportClass = new ReportClass();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         string designPath = designFolder + "InvoiceRS_A5.repx";
+         string designPath = designFolder + designFile;
 
          if (!File.Exists(designPath))
             designPath = reportClass.SelectDesign();
          if (File.Exists(designPath))
          {
-            XtraReport report = reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath);
+            DsMethods dsMethods = new DsMethods();
+            SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+            dataSource.Name = "Invoice";
+
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+            dataSource.Fill();
+
+            XtraReport report = reportClass.CreateReport(dataSource, designPath);
 
             ReportPrintTool printTool = new ReportPrintTool(report);
             printTool.PrintDialog();
@@ -697,7 +706,7 @@ namespace Foxoft
                Clipboard.SetImage(img);
             }
          }
-         //}
+
       }
 
       private void MakePayment(decimal summaryInvoice)
@@ -735,7 +744,7 @@ namespace Foxoft
       {
          ReportClass reportClass = new ReportClass();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + "InvoiceRS_A5.repx";
+         string designPath = designFolder + designFile;
 
          if (!File.Exists(designPath))
             designPath = reportClass.SelectDesign();
@@ -758,7 +767,7 @@ namespace Foxoft
       {
          ReportClass reportClass = new ReportClass();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + "InvoiceRS_A5.repx";
+         string designPath = designFolder + designFile;
 
          if (!File.Exists(designPath))
             designPath = reportClass.SelectDesign();
