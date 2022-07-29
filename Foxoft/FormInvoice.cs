@@ -273,7 +273,7 @@ namespace Foxoft
 
          StandartKeys(e);
 
-         if (e.KeyCode == Keys.F9 && gV.SelectedRowsCount > 0)
+         if (gV.SelectedRowsCount > 0)
          {
             if (e.KeyCode == Keys.Delete)
             {
