@@ -3,7 +3,6 @@ using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -11,14 +10,13 @@ namespace Foxoft
    public partial class FormPayment : XtraForm
    {
       private Guid PaymentHeaderId;
-
       private TrInvoiceHeader trInvoiceHeader { get; set; }
       private TrPaymentLine trPaymentLine = new TrPaymentLine();
       private EfMethods efMethods = new EfMethods();
 
       private bool isNegativ = false;
 
-      public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader)
+      public FormPayment()
       {
          InitializeComponent();
          AcceptButton = btn_Ok;
@@ -26,7 +24,11 @@ namespace Foxoft
 
          lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
          lUE_CashlessCurrency.Properties.DataSource = efMethods.SelectCurrencies();
+      }
 
+      public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader)
+         : this()
+      {
          PaymentHeaderId = Guid.NewGuid();
 
          trPaymentLine.PaymentHeaderId = PaymentHeaderId;
@@ -51,6 +53,14 @@ namespace Foxoft
          decimal mustPaidABS = Math.Abs(mustPaid);
 
          trPaymentLine.Payment = mustPaidABS;
+      }
+
+      public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader, bool autoMakePayment)
+         : this(paymentType, invoiceSumLoc, trInvoiceHeader)
+      {
+         if (invoiceSumLoc > 0)
+            if (autoMakePayment)
+               btn_Ok.PerformClick();
       }
 
       private void FormPayment_Load(object sender, EventArgs e)
@@ -95,6 +105,7 @@ namespace Foxoft
       {
          SelectCurrAcc(sender);
       }
+
       private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
       {
          LookUpEdit editor = sender as LookUpEdit;

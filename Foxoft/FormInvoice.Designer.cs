@@ -105,6 +105,7 @@ namespace Foxoft
          this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_SaveQuit = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_test = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_reportPreviewAzn = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -833,9 +834,10 @@ namespace Foxoft
             this.bBI_DeleteInvoice,
             this.bBI_DeletePayment,
             this.bBI_SaveQuit,
-            this.bBI_test});
+            this.bBI_test,
+            this.bBI_reportPreviewAzn});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 16;
+         this.ribbonControl1.MaxItemId = 17;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -923,6 +925,14 @@ namespace Foxoft
          this.bBI_test.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_test.ImageOptions.SvgImage")));
          this.bBI_test.Name = "bBI_test";
          // 
+         // bBI_reportPreviewAzn
+         // 
+         this.bBI_reportPreviewAzn.Caption = "Report Görünüş Azn";
+         this.bBI_reportPreviewAzn.Id = 16;
+         this.bBI_reportPreviewAzn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_reportPreviewAzn.Name = "bBI_reportPreviewAzn";
+         this.bBI_reportPreviewAzn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreviewAzn_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -954,6 +964,7 @@ namespace Foxoft
          // 
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
+         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreviewAzn);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Print";
          // 
@@ -1121,5 +1132,6 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
       private DevExpress.XtraGrid.Columns.GridColumn colBalance;
       private DevExpress.XtraGrid.Columns.GridColumn colBenefit;
+      private DevExpress.XtraBars.BarButtonItem bBI_reportPreviewAzn;
    }
 }

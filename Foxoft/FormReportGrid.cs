@@ -226,5 +226,10 @@ namespace Foxoft
       {
          LoadData();
       }
+
+      private void bBI_Quit_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         Close();
+      }
    }
 }

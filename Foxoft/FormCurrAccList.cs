@@ -143,6 +143,8 @@ namespace Foxoft
             if (!gV.FindPanelVisible)
                gV.ShowFindPanel();
             gV.ShowFindPanel();
+
+
          }
          isFirstPaint = false;
       }

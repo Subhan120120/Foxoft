@@ -39,10 +39,11 @@ namespace Foxoft
          this.bBI_DesignClear = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_Quit = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          ((System.ComponentModel.ISupportInitialize)(this.gC_Report)).BeginInit();
@@ -86,10 +87,12 @@ namespace Foxoft
             this.bBI_GridOptions,
             this.bBI_DesignClear,
             this.bBI_ExportXlsx,
-            this.bBI_Refresh});
+            this.bBI_Refresh,
+            this.bBI_Quit});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 8;
+         this.ribbonControl1.MaxItemId = 9;
          this.ribbonControl1.Name = "ribbonControl1";
+         this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_Quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
          this.ribbonControl1.Size = new System.Drawing.Size(820, 158);
@@ -145,6 +148,14 @@ namespace Foxoft
          this.bBI_Refresh.Name = "bBI_Refresh";
          this.bBI_Refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Refresh_ItemClick);
          // 
+         // bBI_Quit
+         // 
+         this.bBI_Quit.Id = 8;
+         this.bBI_Quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem4.ImageOptions.SvgImage")));
+         this.bBI_Quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
+         this.bBI_Quit.Name = "bBI_Quit";
+         this.bBI_Quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Quit_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -153,6 +164,12 @@ namespace Foxoft
             this.ribbonPageGroup2});
          this.ribbonPage1.Name = "ribbonPage1";
          this.ribbonPage1.Text = "Hesabat";
+         // 
+         // ribbonPageGroup3
+         // 
+         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Refresh);
+         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+         this.ribbonPageGroup3.Text = "Data";
          // 
          // ribbonPageGroup1
          // 
@@ -168,12 +185,6 @@ namespace Foxoft
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_ExportXlsx);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Export";
-         // 
-         // ribbonPageGroup3
-         // 
-         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Refresh);
-         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
-         this.ribbonPageGroup3.Text = "Data";
          // 
          // ribbonStatusBar1
          // 
@@ -228,5 +239,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
       private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+      private DevExpress.XtraBars.BarButtonItem bBI_Quit;
    }
 }

@@ -592,16 +592,6 @@ namespace Foxoft
 
       private void SaveInvoice()
       {
-         //for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-         //{
-         //    int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, colQty));
-
-         //    if (!(qty > 0))
-         //    {
-         //        gV_InvoiceLine.DeleteRow(i);
-         //    }
-         //}
-
          efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
 
          try
@@ -611,6 +601,16 @@ namespace Foxoft
          catch (Exception ex)
          {
             MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+         }
+
+         if (trInvoiceHeader.ProcessCode == "EX")
+         {
+            decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
+            if (summaryInvoice != 0)
+            {
+               MakePayment(summaryInvoice);
+            }
          }
 
          SaveSession();
@@ -744,17 +744,16 @@ namespace Foxoft
       {
          ReportClass reportClass = new ReportClass();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + designFile;
-
-         if (!File.Exists(designPath))
-            designPath = reportClass.SelectDesign();
+         string designPath = reportClass.SelectDesign();
 
          if (File.Exists(designPath))
          {
             DsMethods dsMethods = new DsMethods();
             SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+
             dataSource.Name = "Invoice";
+
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
             dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
             dataSource.Fill();
 
@@ -768,6 +767,31 @@ namespace Foxoft
          ReportClass reportClass = new ReportClass();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
          string designPath = designFolder + designFile;
+
+         if (!File.Exists(designPath))
+            designPath = reportClass.SelectDesign();
+
+         if (File.Exists(designPath))
+         {
+            DsMethods dsMethods = new DsMethods();
+            SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+
+            dataSource.Name = "Invoice";
+
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+            dataSource.Fill();
+
+            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(dataSource, designPath));
+            printTool.ShowRibbonPreview();
+         }
+      }
+
+      private void bBI_reportPreviewAzn_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ReportClass reportClass = new ReportClass();
+         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+         string designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
 
          if (!File.Exists(designPath))
             designPath = reportClass.SelectDesign();
@@ -814,7 +838,7 @@ namespace Foxoft
 
             if (summaryInvoice != 0)
             {
-               SaveInvoice();
+               //SaveInvoice();
                MakePayment(summaryInvoice);
             }
          }

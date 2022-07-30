@@ -140,15 +140,12 @@ namespace Foxoft.Models
       public decimal? LastPurchasePrice { get; set; }
 
 
-
-
       [DisplayName("Mənfəət")]
       public decimal? Benefit { get { return (decimal?)PriceLoc - LastPurchasePrice; } }
 
       [NotMapped]
       [DisplayName("Qalıq")]
       public int Balance { get; set; }
-
 
 
       [NotMapped]
