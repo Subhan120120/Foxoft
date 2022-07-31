@@ -144,7 +144,8 @@ namespace Foxoft
                gV.ShowFindPanel();
             gV.ShowFindPanel();
 
-
+            gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
+            gV.OptionsFind.FindNullPrompt = "Axtarın...";
          }
          isFirstPaint = false;
       }

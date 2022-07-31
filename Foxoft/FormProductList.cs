@@ -85,6 +85,10 @@ namespace Foxoft
             List<DcProduct> dcProducts = efMethods.SelectProducts();
             dcProductsBindingSource.DataSource = dcProducts;
          }
+
+         if (gV_ProductList.FocusedRowHandle >= 0)
+            dcProduct = gV_ProductList.GetRow(gV_ProductList.FocusedRowHandle) as DcProduct;
+
          gV_ProductList.BestFitColumns();
       }
 
@@ -163,7 +167,7 @@ namespace Foxoft
             //ApplySelectedProduct();
          }
 
-         if (e.KeyCode == Keys.F9 && view.SelectedRowsCount > 0)
+         if (e.KeyCode == Keys.F3 && view.SelectedRowsCount > 0)
          {
             object productCode = view.GetFocusedRowCellValue(colProductCode);
             if (productCode != null)
@@ -179,7 +183,7 @@ namespace Foxoft
             }
          }
 
-         if (e.KeyCode == Keys.F10 && view.SelectedRowsCount > 0)
+         if (e.KeyCode == Keys.F4 && view.SelectedRowsCount > 0)
          {
             object productCode = view.GetFocusedRowCellValue(colProductCode);
             if (productCode != null)
@@ -225,6 +229,9 @@ namespace Foxoft
             if (!gV.FindPanelVisible)
                gV.ShowFindPanel();
             gV.ShowFindPanel();
+
+            gV.OptionsFind.FindFilterColumns = "ProductDesc";
+            gV.OptionsFind.FindNullPrompt = "Axtarın...";
          }
          isFirstPaint = false;
       }

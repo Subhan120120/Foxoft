@@ -58,9 +58,9 @@ namespace Foxoft
       public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader, bool autoMakePayment)
          : this(paymentType, invoiceSumLoc, trInvoiceHeader)
       {
-         if (invoiceSumLoc > 0)
-            if (autoMakePayment)
-               btn_Ok.PerformClick();
+         //if (invoiceSumLoc > 0)
+         //   if (autoMakePayment)
+         //      SavePayment();
       }
 
       private void FormPayment_Load(object sender, EventArgs e)
@@ -187,33 +187,40 @@ namespace Foxoft
 
       private void btn_Ok_Click(object sender, EventArgs e)
       {
+         SavePayment();
+      }
+
+      private void SavePayment()
+      {
          EfMethods efMethods = new EfMethods();
 
          decimal cash = trPaymentLine.PaymentLoc;
 
          string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
 
-         string operType = "invoice";
-         if (trInvoiceHeader.InvoiceHeaderId == Guid.Empty || trInvoiceHeader == null)
-            operType = "payment";
+         bool invoiceExist = trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader != null;
+
+         string operType = "payment";
+         if (invoiceExist)
+            operType = "invoice";
 
          if (cash > 0)
          {
-            TrPaymentHeader trPayment = new TrPaymentHeader();
+            TrPaymentHeader trPaymentHead = new TrPaymentHeader();
 
-            trPayment.PaymentHeaderId = PaymentHeaderId;
-            trPayment.DocumentNumber = NewDocNum;
-            trPayment.CurrAccCode = trInvoiceHeader.CurrAccCode;
-            trPayment.CreatedUserName = Authorization.CurrAccCode;
-            trPayment.OfficeCode = Authorization.OfficeCode;
-            trPayment.StoreCode = Authorization.StoreCode;
-            trPayment.DocumentDate = trInvoiceHeader.DocumentDate;
-            trPayment.DocumentTime = trInvoiceHeader.DocumentTime;
-            if (trInvoiceHeader.InvoiceHeaderId != Guid.Empty)
-               trPayment.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
-            trPayment.OperationType = operType;
-            trPayment.OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString());
-            efMethods.InsertPaymentHeader(trPayment);
+            trPaymentHead.PaymentHeaderId = PaymentHeaderId;
+            trPaymentHead.DocumentNumber = NewDocNum;
+            trPaymentHead.CurrAccCode = trInvoiceHeader.CurrAccCode;
+            trPaymentHead.CreatedUserName = Authorization.CurrAccCode;
+            trPaymentHead.OfficeCode = Authorization.OfficeCode;
+            trPaymentHead.StoreCode = Authorization.StoreCode;
+            trPaymentHead.DocumentDate = trInvoiceHeader.DocumentDate;
+            trPaymentHead.DocumentTime = trInvoiceHeader.DocumentTime;
+            if (invoiceExist)
+               trPaymentHead.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+            trPaymentHead.OperationType = operType;
+            trPaymentHead.OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString());
+            efMethods.InsertPaymentHeader(trPaymentHead);
 
             trPaymentLine.Payment = isNegativ ? trPaymentLine.Payment * (-1) : trPaymentLine.Payment;
             efMethods.InsertPaymentLine(trPaymentLine);
@@ -221,6 +228,5 @@ namespace Foxoft
             DialogResult = DialogResult.OK;
          }
       }
-
    }
 }

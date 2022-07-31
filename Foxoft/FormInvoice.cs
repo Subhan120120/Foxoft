@@ -284,7 +284,7 @@ namespace Foxoft
                gV.DeleteSelectedRows();
             }
 
-            if (e.KeyCode == Keys.F9)
+            if (e.KeyCode == Keys.F3)
             {
                object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
                if (productCode != null)
@@ -300,7 +300,7 @@ namespace Foxoft
                }
             }
 
-            if (e.KeyCode == Keys.F10)
+            if (e.KeyCode == Keys.F4)
             {
                object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
                if (productCode != null)

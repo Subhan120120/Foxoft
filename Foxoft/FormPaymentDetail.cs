@@ -126,7 +126,10 @@ namespace Foxoft
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                trPaymentHeader = form.trPaymentHeader;
-               LoadPayment(trPaymentHeader.PaymentHeaderId);
+               if (!Object.ReferenceEquals(trPaymentHeader, null))
+               {
+                  LoadPayment(trPaymentHeader.PaymentHeaderId);
+               }
             }
          }
       }
