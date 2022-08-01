@@ -218,12 +218,28 @@ namespace Foxoft
          GridControl gC = sender as GridControl;
          GridView gV = gC.MainView as GridView;
 
+         StandartKeys(e);
+
          if (e.KeyCode == Keys.Delete)
          {
             if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
                return;
 
             gV.DeleteSelectedRows();
+         }
+      }
+
+      private void StandartKeys(KeyEventArgs e)
+      {
+         if (e.KeyCode == Keys.F1)
+         {
+            SelectCurrAcc();
+         }
+
+         if (e.KeyCode == Keys.F2)
+         {
+            gV_PaymentLine.FocusedColumn = colReceivePayment;
+            e.Handled = true;   // Stop the character from being entered into the control.
          }
       }
 
@@ -369,6 +385,11 @@ namespace Foxoft
       private void bBI_NewPayment_ItemClick(object sender, ItemClickEventArgs e)
       {
          ClearControlsAddNew();
+      }
+
+      private void dataLayout_KeyDown(object sender, KeyEventArgs e)
+      {
+         StandartKeys(e);
       }
    }
 }

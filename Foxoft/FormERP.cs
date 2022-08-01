@@ -128,11 +128,19 @@ namespace Foxoft
          }
          else
          {
-            form = new FormProductList(0);
-            form.MdiParent = this;
-            form.Show();
-            form.WindowState = FormWindowState.Maximized;
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            try
+            {
+
+               form = new FormProductList(0);
+               form.MdiParent = this;
+               form.Show();
+               form.WindowState = FormWindowState.Maximized;
+               parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show(ex.ToString());
+            }
          }
       }
 
@@ -147,11 +155,18 @@ namespace Foxoft
          }
          else
          {
-            form = new FormCurrAccList(0);
-            form.MdiParent = this;
-            form.Show();
-            form.WindowState = FormWindowState.Maximized;
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            try
+            {
+               form = new FormCurrAccList(0);
+               form.MdiParent = this;
+               form.Show();
+               form.WindowState = FormWindowState.Maximized;
+               parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show("Cari Hesablar acila bilmir: \n" + ex.ToString());
+            }
          }
       }
 

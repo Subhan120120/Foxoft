@@ -480,6 +480,7 @@ namespace Foxoft
          this.OperationDateDateEdit.Size = new System.Drawing.Size(344, 20);
          this.OperationDateDateEdit.StyleController = this.dataLayoutControl1;
          this.OperationDateDateEdit.TabIndex = 4;
+         this.OperationDateDateEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
          // 
          // trPaymentHeadersBindingSource
          // 
@@ -498,6 +499,7 @@ namespace Foxoft
          this.OperationTimeTimeSpanEdit.Size = new System.Drawing.Size(344, 20);
          this.OperationTimeTimeSpanEdit.StyleController = this.dataLayoutControl1;
          this.OperationTimeTimeSpanEdit.TabIndex = 6;
+         this.OperationTimeTimeSpanEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
          // 
          // DescriptionTextEdit
          // 
@@ -509,6 +511,7 @@ namespace Foxoft
          this.DescriptionTextEdit.Size = new System.Drawing.Size(355, 20);
          this.DescriptionTextEdit.StyleController = this.dataLayoutControl1;
          this.DescriptionTextEdit.TabIndex = 7;
+         this.DescriptionTextEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
          // 
          // StoreCodeLookUpEdit
          // 
@@ -528,6 +531,7 @@ namespace Foxoft
          this.StoreCodeLookUpEdit.Size = new System.Drawing.Size(355, 20);
          this.StoreCodeLookUpEdit.StyleController = this.dataLayoutControl1;
          this.StoreCodeLookUpEdit.TabIndex = 5;
+         this.StoreCodeLookUpEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
          // 
          // CurrAccCodeButtonEdit
          // 
@@ -541,6 +545,7 @@ namespace Foxoft
          this.CurrAccCodeButtonEdit.StyleController = this.dataLayoutControl1;
          this.CurrAccCodeButtonEdit.TabIndex = 2;
          this.CurrAccCodeButtonEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.CurrAccCodeButtonEdit_ButtonClick);
+         this.CurrAccCodeButtonEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
          // 
          // btnEdit_DocNum
          // 
@@ -555,6 +560,7 @@ namespace Foxoft
          this.btnEdit_DocNum.StyleController = this.dataLayoutControl1;
          this.btnEdit_DocNum.TabIndex = 9;
          this.btnEdit_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_DocNum_ButtonPressed);
+         this.btnEdit_DocNum.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
          // 
          // Root
          // 

@@ -167,7 +167,7 @@ namespace Foxoft
             //ApplySelectedProduct();
          }
 
-         if (e.KeyCode == Keys.F3 && view.SelectedRowsCount > 0)
+         if (e.KeyCode == Keys.F9 && view.SelectedRowsCount > 0)
          {
             object productCode = view.GetFocusedRowCellValue(colProductCode);
             if (productCode != null)
@@ -183,7 +183,7 @@ namespace Foxoft
             }
          }
 
-         if (e.KeyCode == Keys.F4 && view.SelectedRowsCount > 0)
+         if (e.KeyCode == Keys.F10 && view.SelectedRowsCount > 0)
          {
             object productCode = view.GetFocusedRowCellValue(colProductCode);
             if (productCode != null)

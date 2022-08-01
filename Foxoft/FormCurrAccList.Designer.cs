@@ -57,6 +57,7 @@ namespace Foxoft
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.colIsVip = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -88,7 +89,8 @@ namespace Foxoft
             this.col_Address,
             this.col_BonusCardNum,
             this.col_CurrAccDesc,
-            this.colBalance});
+            this.colBalance,
+            this.colIsVip});
          this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(867, 248, 264, 272);
          this.gV_CurrAccList.GridControl = this.gC_CurrAccList;
          this.gV_CurrAccList.Name = "gV_CurrAccList";
@@ -241,7 +243,7 @@ namespace Foxoft
          // 
          this.bBI_ExportXlsx.Caption = "Excelə Göndər";
          this.bBI_ExportXlsx.Id = 6;
-         this.bBI_ExportXlsx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_ExportXlsx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_ExportXlsx.ImageOptions.SvgImage")));
          this.bBI_ExportXlsx.Name = "bBI_ExportXlsx";
          this.bBI_ExportXlsx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportXlsx_ItemClick);
          // 
@@ -279,6 +281,12 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
+         // 
+         // colIsVip
+         // 
+         this.colIsVip.Caption = "VIP";
+         this.colIsVip.FieldName = "IsVIP";
+         this.colIsVip.Name = "colIsVip";
          // 
          // FormCurrAccList
          // 
@@ -329,5 +337,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem bBI_Report1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
       private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
+      private DevExpress.XtraGrid.Columns.GridColumn colIsVip;
    }
 }

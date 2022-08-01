@@ -584,6 +584,7 @@ namespace Foxoft
                                    + db.TrPaymentLines.Include(l => l.TrPaymentHeader).Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode).Sum(s => s.PaymentLoc),
                                    CurrAccCode = x.CurrAccCode,
                                    CurrAccDesc = x.CurrAccDesc,
+                                   IsVip = x.IsVip,
                                    PhoneNum = x.PhoneNum,
                                    Address = x.Address,
                                    FirstName = x.FirstName,

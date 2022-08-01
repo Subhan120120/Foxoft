@@ -602,8 +602,10 @@ namespace Foxoft
          this.btnEdit_CurrAccCode.StyleController = this.dataLayoutControl1;
          this.btnEdit_CurrAccCode.TabIndex = 2;
          this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
+         this.btnEdit_CurrAccCode.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CurrAccCode_InvalidValue);
          this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
          this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
+         this.btnEdit_CurrAccCode.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CurrAccCode_Validating);
          // 
          // lUE_OfficeCode
          // 
@@ -929,7 +931,7 @@ namespace Foxoft
          // 
          this.bBI_reportPreviewAzn.Caption = "Report Görünüş Azn";
          this.bBI_reportPreviewAzn.Id = 16;
-         this.bBI_reportPreviewAzn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_reportPreviewAzn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_reportPreviewAzn.ImageOptions.SvgImage")));
          this.bBI_reportPreviewAzn.Name = "bBI_reportPreviewAzn";
          this.bBI_reportPreviewAzn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreviewAzn_ItemClick);
          // 

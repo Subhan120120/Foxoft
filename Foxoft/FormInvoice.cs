@@ -47,6 +47,9 @@ namespace Foxoft
       {
          InitializeComponent();
 
+         if (processCode == "EX")
+            btnEdit_CurrAccCode.Enabled = false;
+
          this.productTypeCode = productTypeCode;
          this.currAccTypeCode = currAccTypeCode;
          dcProcess = efMethods.SelectProcess(processCode);
@@ -250,8 +253,8 @@ namespace Foxoft
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-               trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-               lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+               //trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
+               //lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
 
             }
          }
@@ -284,7 +287,13 @@ namespace Foxoft
                gV.DeleteSelectedRows();
             }
 
-            if (e.KeyCode == Keys.F3)
+            if (e.KeyCode == Keys.C && e.Control)
+            {
+               string cellValue = gV.GetFocusedValue().ToString();
+               Clipboard.SetText(cellValue);
+            }
+
+            if (e.KeyCode == Keys.F9)
             {
                object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
                if (productCode != null)
@@ -300,7 +309,7 @@ namespace Foxoft
                }
             }
 
-            if (e.KeyCode == Keys.F4)
+            if (e.KeyCode == Keys.F10)
             {
                object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
                if (productCode != null)
@@ -414,6 +423,32 @@ namespace Foxoft
 
       private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
       {
+      }
+
+      private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
+      {
+         object eValue = btnEdit_CurrAccCode.EditValue;
+
+         if (!Object.ReferenceEquals(eValue, null))
+         {
+            DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+
+            if (Object.ReferenceEquals(curr, null))
+            {
+               e.Cancel = true;
+            }
+            else
+            { 
+               trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
+               lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
+            }
+         }
+      }
+
+      private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+      {
+         e.ErrorText = "Belə bir cari yoxdur";
+         e.ExceptionMode = ExceptionMode.DisplayError;
       }
 
       private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
@@ -566,13 +601,20 @@ namespace Foxoft
 
          using (FormProductList form = new FormProductList(productTypeCode, productCode))
          {
-            if (form.ShowDialog(this) == DialogResult.OK)
+            try
             {
-               editor.EditValue = form.dcProduct.ProductCode;
-               gV_InvoiceLine.CloseEditor();
-               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+               if (form.ShowDialog(this) == DialogResult.OK)
+               {
+                  editor.EditValue = form.dcProduct.ProductCode;
+                  gV_InvoiceLine.CloseEditor();
+                  gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
 
-               gV_InvoiceLine.BestFitColumns();
+                  gV_InvoiceLine.BestFitColumns();
+               }
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show(ex.ToString());
             }
          }
       }
@@ -603,15 +645,15 @@ namespace Foxoft
             MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
          }
 
-         if (trInvoiceHeader.ProcessCode == "EX")
-         {
-            decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+         //if (trInvoiceHeader.ProcessCode == "EX")
+         //{
+         //   decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
-            if (summaryInvoice != 0)
-            {
-               MakePayment(summaryInvoice);
-            }
-         }
+         //   if (summaryInvoice != 0)
+         //   {
+         //      MakePayment(summaryInvoice);
+         //   }
+         //}
 
          SaveSession();
       }
@@ -961,5 +1003,6 @@ namespace Foxoft
       {
          StandartKeys(e);
       }
+
    }
 }

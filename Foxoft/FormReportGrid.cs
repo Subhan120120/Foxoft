@@ -165,22 +165,25 @@ namespace Foxoft
 
          if (!Object.ReferenceEquals(objInv, null))
          {
-            if (Guid.Parse(objInv.ToString()) != Guid.Empty)
+            if (!String.IsNullOrEmpty(objInv.ToString()))
             {
-               Guid invoiceHeaderId = Guid.Parse(objInv.ToString());
-               TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-
-               if (!Object.ReferenceEquals(trInvoiceHeader, null))
+               if (Guid.Parse(objInv.ToString()) != Guid.Empty)
                {
-                  FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
-                  FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
-                  formInvoice.MdiParent = formERP;
-                  formInvoice.WindowState = FormWindowState.Maximized;
-                  formInvoice.Show();
-                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  Guid invoiceHeaderId = Guid.Parse(objInv.ToString());
+                  TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+
+                  if (!Object.ReferenceEquals(trInvoiceHeader, null))
+                  {
+                     FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+                     FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                     formInvoice.MdiParent = formERP;
+                     formInvoice.WindowState = FormWindowState.Maximized;
+                     formInvoice.Show();
+                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  }
+                  else
+                     MessageBox.Show("Belə bir qaimə yoxdur. ");
                }
-               else
-                  MessageBox.Show("Belə bir qaimə yoxdur. ");
             }
          }
 
