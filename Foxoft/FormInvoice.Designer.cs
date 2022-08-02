@@ -602,10 +602,10 @@ namespace Foxoft
          this.btnEdit_CurrAccCode.StyleController = this.dataLayoutControl1;
          this.btnEdit_CurrAccCode.TabIndex = 2;
          this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
-         this.btnEdit_CurrAccCode.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CurrAccCode_InvalidValue);
+         //this.btnEdit_CurrAccCode.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CurrAccCode_InvalidValue);
          this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
          this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
-         this.btnEdit_CurrAccCode.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CurrAccCode_Validating);
+         //this.btnEdit_CurrAccCode.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CurrAccCode_Validating);
          // 
          // lUE_OfficeCode
          // 

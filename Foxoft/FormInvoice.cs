@@ -47,7 +47,7 @@ namespace Foxoft
       {
          InitializeComponent();
 
-         if (processCode == "EX")
+         if (processCode == "EX" || processCode == "CI" || processCode == "CO")
             btnEdit_CurrAccCode.Enabled = false;
 
          this.productTypeCode = productTypeCode;
@@ -253,8 +253,8 @@ namespace Foxoft
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-               //trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-               //lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+               trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
+               lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
 
             }
          }
@@ -425,31 +425,31 @@ namespace Foxoft
       {
       }
 
-      private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
-      {
-         object eValue = btnEdit_CurrAccCode.EditValue;
+      //private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
+      //{
+      //   object eValue = btnEdit_CurrAccCode.EditValue;
 
-         if (!Object.ReferenceEquals(eValue, null))
-         {
-            DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+      //   if (!Object.ReferenceEquals(eValue, null))
+      //   {
+      //      DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
 
-            if (Object.ReferenceEquals(curr, null))
-            {
-               e.Cancel = true;
-            }
-            else
-            { 
-               trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
-               lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
-            }
-         }
-      }
+      //      if (Object.ReferenceEquals(curr, null))
+      //      {
+      //         e.Cancel = true;
+      //      }
+      //      else
+      //      { 
+      //         trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
+      //         lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
+      //      }
+      //   }
+      //}
 
-      private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
-      {
-         e.ErrorText = "Belə bir cari yoxdur";
-         e.ExceptionMode = ExceptionMode.DisplayError;
-      }
+      //private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+      //{
+      //   e.ErrorText = "Belə bir cari yoxdur";
+      //   e.ExceptionMode = ExceptionMode.DisplayError;
+      //}
 
       private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
       {
@@ -935,7 +935,7 @@ namespace Foxoft
             {
                SaveInvoice();
 
-               //MakePayment(summaryInvoice);
+               MakePayment(summaryInvoice);
 
                GetPrint();
 

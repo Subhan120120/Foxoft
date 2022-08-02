@@ -343,21 +343,23 @@ namespace Foxoft
 
       private void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
       {
+
          if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
          {
             string odendi = "";
             for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
             {
-               decimal payment = Math.Round(Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment)), 2);
+               decimal payment = Math.Abs(Math.Round(Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment)), 2));
                string currency = gV_PaymentLine.GetRowCellValue(i, colCurrencyCode).ToString();
-               odendi += "odendi: " + payment.ToString() + currency + "%0A";
+               odendi += "odendi: " + payment.ToString() + " " + currency + "%0A";
             }
 
-            decimal balance = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
-
-            string qaldı = "qaldı: " + balance.ToString();
-
+            decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2);
+            string qaldı = "qaldı: " + balance.ToString() + " USD";
             string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
+
+
+            Clipboard.SetText(odendi + qaldı);
 
             if (!String.IsNullOrEmpty(phoneNum))
                sendWhatsApp("+994" + phoneNum, odendi + qaldı);
