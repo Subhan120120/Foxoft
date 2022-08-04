@@ -48,7 +48,15 @@ namespace Foxoft
          InitializeComponent();
 
          if (processCode == "EX" || processCode == "CI" || processCode == "CO")
+         {
             btnEdit_CurrAccCode.Enabled = false;
+            colLastPurchasePrice.Visible = false;
+            colBenefit.Visible = false;
+            colBalance.Visible = false;
+         }
+
+         if (processCode == "EX")
+            colQty.Visible = false;
 
          this.productTypeCode = productTypeCode;
          this.currAccTypeCode = currAccTypeCode;
@@ -504,12 +512,16 @@ namespace Foxoft
                gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
                gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
 
+
                decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
                decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_Price));
                if (priceInvoice == 0)
                   gV_InvoiceLine.SetFocusedRowCellValue(col_Price, priceProduct);
 
                gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+               if (dcProcess.ProcessCode == "EX")
+                  gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
             }
          }
       }

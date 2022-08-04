@@ -61,6 +61,7 @@ namespace Foxoft
          DataTable dt = adoMethods.SqlGetDt(qry);
          gC_Report.DataSource = dt;
 
+         gV_Report.MoveLast();
 
          GridColumn column_InvoiceNumber = gV_Report.Columns["InvoiceNumber"];
 

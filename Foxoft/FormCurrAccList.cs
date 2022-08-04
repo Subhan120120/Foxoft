@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Foxoft
 {
@@ -30,6 +32,7 @@ namespace Foxoft
          MemoryStream stream = new MemoryStream(byteArray);
          OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
          gV_CurrAccList.RestoreLayoutFromStream(stream, option);
+
       }
 
       public FormCurrAccList(byte currAccTypeCode)
@@ -109,10 +112,14 @@ namespace Foxoft
 
       private void LoadCurrAccs()
       {
+         subContext dbContext = new Foxoft.Models.subContext();
+
          if (currAccTypeCode != 0)
-            gC_CurrAccList.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
+            dbContext.DcCurrAccs.Where(x => x.CurrAccTypeCode == currAccTypeCode).Load();
          else
-            gC_CurrAccList.DataSource = efMethods.SelectCurrAccs();
+            dbContext.DcCurrAccs.Load();
+
+         //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
       }
 
       private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -189,6 +196,8 @@ namespace Foxoft
 
             efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
 
+            dcReport = efMethods.SelectReport(dcReport.ReportId);
+
             string reportQuery = dcReport.ReportQuery;
 
             ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
@@ -207,6 +216,8 @@ namespace Foxoft
             }
             //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
             string qryMaster = "Select * from ( " + reportQuery + ") as master";
+
+
 
             FormReportGrid formGrid = new FormReportGrid(qryMaster, dcReport);
             formGrid.Show();

@@ -45,6 +45,7 @@ namespace Foxoft
          this.col_BonusCardNum = new DevExpress.XtraGrid.Columns.GridColumn();
          this.col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colIsVip = new DevExpress.XtraGrid.Columns.GridColumn();
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -57,7 +58,6 @@ namespace Foxoft
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.colIsVip = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
@@ -178,6 +178,12 @@ namespace Foxoft
          this.colBalance.Visible = true;
          this.colBalance.VisibleIndex = 4;
          // 
+         // colIsVip
+         // 
+         this.colIsVip.Caption = "VIP";
+         this.colIsVip.FieldName = "IsVIP";
+         this.colIsVip.Name = "colIsVip";
+         // 
          // ribbonControl1
          // 
          this.ribbonControl1.ExpandCollapseItem.Id = 0;
@@ -281,12 +287,6 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
-         // 
-         // colIsVip
-         // 
-         this.colIsVip.Caption = "VIP";
-         this.colIsVip.FieldName = "IsVIP";
-         this.colIsVip.Name = "colIsVip";
          // 
          // FormCurrAccList
          // 

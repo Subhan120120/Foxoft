@@ -354,9 +354,9 @@ namespace Foxoft
                odendi += "odendi: " + payment.ToString() + " " + currency + "%0A";
             }
 
-            decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2);
+            decimal balance = Math.Abs(Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2));
             string qaldı = "qaldı: " + balance.ToString() + " USD";
-            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
+            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum.Trim();
 
 
             Clipboard.SetText(odendi + qaldı);
