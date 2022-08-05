@@ -263,7 +263,6 @@ namespace Foxoft
                btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
-
             }
          }
       }
@@ -733,6 +732,9 @@ namespace Foxoft
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
          string designPath = designFolder + designFile;
+
+         if (trInvoiceHeader.CurrAccCode == "111")
+            designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
 
          if (!File.Exists(designPath))
             designPath = reportClass.SelectDesign();

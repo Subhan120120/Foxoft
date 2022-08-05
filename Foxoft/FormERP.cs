@@ -131,7 +131,7 @@ namespace Foxoft
             try
             {
 
-               form = new FormProductList(0);
+               form = new FormProductList(1);
                form.MdiParent = this;
                form.Show();
                form.WindowState = FormWindowState.Maximized;

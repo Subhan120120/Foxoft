@@ -112,14 +112,19 @@ namespace Foxoft
 
       private void LoadCurrAccs()
       {
-         subContext dbContext = new Foxoft.Models.subContext();
+         subContext dbContext = new subContext();
 
          if (currAccTypeCode != 0)
-            dbContext.DcCurrAccs.Where(x => x.CurrAccTypeCode == currAccTypeCode).Load();
+         {
+            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
+         }
          else
-            dbContext.DcCurrAccs.Load();
+         {
+            //dbContext.DcCurrAccs.Load();
+            //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
+            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs();
+         }
 
-         //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
       }
 
       private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -188,40 +193,40 @@ namespace Foxoft
       private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
       {
 
-         DcReport dcReport = efMethods.SelectReport(1003);
-         object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(col_CurrAccCode);
+         //DcReport dcReport = efMethods.SelectReport(1003);
+         //object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(col_CurrAccCode);
 
-         if (!Object.ReferenceEquals(currAccCode, null))
-         {
+         //if (!Object.ReferenceEquals(currAccCode, null))
+         //{
 
-            efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
+         //   efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
 
-            dcReport = efMethods.SelectReport(dcReport.ReportId);
+         //   dcReport = efMethods.SelectReport(dcReport.ReportId);
 
-            string reportQuery = dcReport.ReportQuery;
+         //   string reportQuery = dcReport.ReportQuery;
 
-            ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
-            CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
-            int index = 0;
-            foreach (DcReportFilter rf in dcReportFilters)
-            {
-               BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
+         //   ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
+         //   CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
+         //   int index = 0;
+         //   foreach (DcReportFilter rf in dcReportFilters)
+         //   {
+         //      BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
 
-               criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
+         //      criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
 
-               string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
-               reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
+         //      string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
+         //      reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
 
-               index++;
-            }
-            //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
-            string qryMaster = "Select * from ( " + reportQuery + ") as master";
+         //      index++;
+         //   }
+         //   //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
+         //   string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
 
 
-            FormReportGrid formGrid = new FormReportGrid(qryMaster, dcReport);
-            formGrid.Show();
-         }
+         //   FormReportGrid formGrid = new FormReportGrid(qryMaster, dcReport);
+         //   formGrid.Show();
+         //}
       }
 
       private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
