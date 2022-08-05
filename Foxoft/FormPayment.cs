@@ -103,7 +103,7 @@ namespace Foxoft
 
       private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
       {
-         SelectCurrAcc(sender);
+         SelectCashRegister(sender);
       }
 
       private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
@@ -114,7 +114,7 @@ namespace Foxoft
          FillControls();
       }
 
-      private void SelectCurrAcc(object sender)
+      private void SelectCashRegister(object sender)
       {
          ButtonEdit buttonEdit = (ButtonEdit)sender;
 

@@ -39,6 +39,7 @@ namespace Foxoft
 
          ClearControlsAddNew();
       }
+
       public FormPaymentDetail(Guid paymentHeaderId)
           : this()
       {
