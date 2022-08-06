@@ -296,8 +296,14 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.C && e.Control)
             {
+               //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
+               //   Clipboard.SetText(view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString());
+               //else
+               //   MessageBox.Show("The value in the selected cell is null or empty!");
+
                string cellValue = gV.GetFocusedValue().ToString();
                Clipboard.SetText(cellValue);
+               e.Handled = true;
             }
 
             if (e.KeyCode == Keys.F9)

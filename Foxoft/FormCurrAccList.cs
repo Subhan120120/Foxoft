@@ -32,7 +32,6 @@ namespace Foxoft
          MemoryStream stream = new MemoryStream(byteArray);
          OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
          gV_CurrAccList.RestoreLayoutFromStream(stream, option);
-
       }
 
       public FormCurrAccList(byte currAccTypeCode)
@@ -136,11 +135,27 @@ namespace Foxoft
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
-         if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
-         {
-            DialogResult = DialogResult.OK;
-         }
 
+         if (view.SelectedRowsCount > 0)
+         {
+            if (e.KeyCode == Keys.Enter)
+            {
+               DialogResult = DialogResult.OK;
+            }
+
+            if (e.KeyCode == Keys.C && e.Control)
+            {
+               //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
+               //   Clipboard.SetText(view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString());
+               //else
+               //   MessageBox.Show("The value in the selected cell is null or empty!");
+
+               string cellValue = gV_CurrAccList.GetFocusedValue().ToString();
+               Clipboard.SetText(cellValue);
+               e.Handled = true;
+            }
+
+         }
       }
 
       // AutoFocus FindPanel
@@ -192,41 +207,39 @@ namespace Foxoft
 
       private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
       {
+         DcReport dcReport = efMethods.SelectReport(1003);
+         object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
 
-         //DcReport dcReport = efMethods.SelectReport(1003);
-         //object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(col_CurrAccCode);
+         if (!Object.ReferenceEquals(currAccCode, null))
+         {
+            efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
 
-         //if (!Object.ReferenceEquals(currAccCode, null))
-         //{
+            dcReport = efMethods.SelectReport(dcReport.ReportId);
 
-         //   efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
+            string reportQuery = dcReport.ReportQuery;
 
-         //   dcReport = efMethods.SelectReport(dcReport.ReportId);
+            ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
+            CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
+            int index = 0;
+            foreach (DcReportFilter rf in dcReportFilters)
+            {
+               BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
 
-         //   string reportQuery = dcReport.ReportQuery;
+               criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
 
-         //   ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
-         //   CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
-         //   int index = 0;
-         //   foreach (DcReportFilter rf in dcReportFilters)
-         //   {
-         //      BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
+               string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
+               reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
 
-         //      criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
-
-         //      string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
-         //      reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
-
-         //      index++;
-         //   }
-         //   //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
-         //   string qryMaster = "Select * from ( " + reportQuery + ") as master";
+               index++;
+            }
+            //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
+            string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
 
 
-         //   FormReportGrid formGrid = new FormReportGrid(qryMaster, dcReport);
-         //   formGrid.Show();
-         //}
+            FormReportGrid formGrid = new FormReportGrid(qryMaster, dcReport);
+            formGrid.Show();
+         }
       }
 
       private BinaryOperatorType ConvertOperatorType(string filterOperatorType)

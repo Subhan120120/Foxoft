@@ -161,42 +161,58 @@ namespace Foxoft
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
+
          if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
          {
             DialogResult = DialogResult.OK;
-            //ApplySelectedProduct();
          }
 
-         if (e.KeyCode == Keys.F9 && view.SelectedRowsCount > 0)
+         if (view.SelectedRowsCount > 0)
          {
-            object productCode = view.GetFocusedRowCellValue(colProductCode);
-            if (productCode != null)
+            if (e.KeyCode == Keys.F9)
             {
-               DcReport dcReport = efMethods.SelectReport(1005);
+               object productCode = view.GetFocusedRowCellValue(colProductCode);
+               if (productCode != null)
+               {
+                  DcReport dcReport = efMethods.SelectReport(1005);
 
-               string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+                  string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-               string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-               FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
-               formGrid.Show();
+                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  formGrid.Show();
+               }
             }
-         }
 
-         if (e.KeyCode == Keys.F10 && view.SelectedRowsCount > 0)
-         {
-            object productCode = view.GetFocusedRowCellValue(colProductCode);
-            if (productCode != null)
+            if (e.KeyCode == Keys.C && e.Control)
             {
-               DcReport dcReport = efMethods.SelectReport(1004);
+               //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
+               //   Clipboard.SetText(view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString());
+               //else
+               //   MessageBox.Show("The value in the selected cell is null or empty!");
 
-               string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
-               string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
-
-               FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
-               formGrid.Show();
+               string cellValue = view.GetFocusedValue().ToString();
+               Clipboard.SetText(cellValue);
+               e.Handled = true;
             }
+
+            if (e.KeyCode == Keys.F10)
+            {
+               object productCode = view.GetFocusedRowCellValue(colProductCode);
+               if (productCode != null)
+               {
+                  DcReport dcReport = efMethods.SelectReport(1004);
+
+                  string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  formGrid.Show();
+               }
+            }
+
          }
       }
 
