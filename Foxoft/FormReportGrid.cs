@@ -62,6 +62,7 @@ namespace Foxoft
          gC_Report.DataSource = dt;
 
          gV_Report.MoveLast();
+         gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
 
          GridColumn column_InvoiceNumber = gV_Report.Columns["InvoiceNumber"];
 
@@ -223,7 +224,15 @@ namespace Foxoft
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
-         gC_Report.ExportToXlsx($@"C:\Users\Public\Desktop\{report.ReportName}.xlsx");
+         try
+         {
+
+            gC_Report.ExportToXlsx($@"C:\Users\Public\Desktop\{report.ReportName}.xlsx");
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(ex.ToString());
+         }
       }
 
       private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
