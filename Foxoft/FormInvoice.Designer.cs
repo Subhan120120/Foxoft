@@ -939,7 +939,7 @@ namespace Foxoft
          // 
          this.bBI_CopyInvoice.Caption = "Kopyala";
          this.bBI_CopyInvoice.Id = 17;
-         this.bBI_CopyInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_CopyInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CopyInvoice.ImageOptions.SvgImage")));
          this.bBI_CopyInvoice.Name = "bBI_CopyInvoice";
          this.bBI_CopyInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CopyInvoice_ItemClick);
          // 

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class UcReturn : XtraUserControl
+   public partial class UcReturn : XtraForm
    {
       public Guid returnInvoiceHeaderId;
       public Guid invoiceHeaderId;

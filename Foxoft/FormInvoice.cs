@@ -37,7 +37,6 @@ namespace Foxoft
       private TrInvoiceHeader trInvoiceHeader;
       public DcProcess dcProcess;
       private byte productTypeCode;
-      private byte currAccTypeCode;
       private EfMethods efMethods = new EfMethods();
       private subContext dbContext;
       Guid invoiceHeaderId;
@@ -59,7 +58,7 @@ namespace Foxoft
             colQty.Visible = false;
 
          this.productTypeCode = productTypeCode;
-         this.currAccTypeCode = currAccTypeCode;
+
          dcProcess = efMethods.SelectProcess(processCode);
 
          this.Text = dcProcess.ProcessDesc;
@@ -438,31 +437,6 @@ namespace Foxoft
       {
       }
 
-      //private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
-      //{
-      //   object eValue = btnEdit_CurrAccCode.EditValue;
-
-      //   if (!Object.ReferenceEquals(eValue, null))
-      //   {
-      //      DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
-
-      //      if (Object.ReferenceEquals(curr, null))
-      //      {
-      //         e.Cancel = true;
-      //      }
-      //      else
-      //      { 
-      //         trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
-      //         lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
-      //      }
-      //   }
-      //}
-
-      //private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
-      //{
-      //   e.ErrorText = "Belə bir cari yoxdur";
-      //   e.ExceptionMode = ExceptionMode.DisplayError;
-      //}
 
       private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
       {
@@ -1053,6 +1027,7 @@ namespace Foxoft
       {
          GridView gridView = sender as GridView;
          Color readOnlyForeColor = Color.Gray;
+         Color readOnlyBackColor = Color.LightGray;
          try
          {
             // Apply the ReadOnly style  
@@ -1074,7 +1049,7 @@ namespace Foxoft
                      }
                   }
                   if (!hasrules)
-                     e.Appearance.ForeColor = readOnlyForeColor;
+                     e.Appearance.BackColor = readOnlyBackColor;
                }
             }
             // This is to fix the selection color when a color is set for the column  
@@ -1134,5 +1109,32 @@ namespace Foxoft
             }
          }
       }
+
+      //private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
+      //{
+      //   object eValue = btnEdit_CurrAccCode.EditValue;
+
+      //   if (!Object.ReferenceEquals(eValue, null))
+      //   {
+      //      DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+
+      //      if (Object.ReferenceEquals(curr, null))
+      //      {
+      //         e.Cancel = true;
+      //      }
+      //      else
+      //      { 
+      //         trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
+      //         lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
+      //      }
+      //   }
+      //}
+
+      //private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+      //{
+      //   e.ErrorText = "Belə bir cari yoxdur";
+      //   e.ExceptionMode = ExceptionMode.DisplayError;
+      //}
+
    }
 }

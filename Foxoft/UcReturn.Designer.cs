@@ -121,6 +121,7 @@ namespace Foxoft
          this.lC_Root.Dock = System.Windows.Forms.DockStyle.Fill;
          this.lC_Root.Location = new System.Drawing.Point(0, 0);
          this.lC_Root.Name = "lC_Root";
+         this.lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(710, 0, 650, 400);
          this.lC_Root.Root = this.lCG_Root;
          this.lC_Root.Size = new System.Drawing.Size(991, 659);
          this.lC_Root.TabIndex = 0;
@@ -508,7 +509,7 @@ namespace Foxoft
             this.lCG_ReturnInvoiceLine,
             this.lCG_InvoiceLine,
             this.lCG_Payment});
-         this.lCG_Root.Name = "lCG_Root";
+         this.lCG_Root.Name = "Root";
          this.lCG_Root.Size = new System.Drawing.Size(991, 659);
          this.lCG_Root.TextVisible = false;
          // 
