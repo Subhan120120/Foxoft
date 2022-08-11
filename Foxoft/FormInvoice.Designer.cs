@@ -106,6 +106,7 @@ namespace Foxoft
          this.bBI_SaveQuit = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_test = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_reportPreviewAzn = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -602,10 +603,8 @@ namespace Foxoft
          this.btnEdit_CurrAccCode.StyleController = this.dataLayoutControl1;
          this.btnEdit_CurrAccCode.TabIndex = 2;
          this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
-         //this.btnEdit_CurrAccCode.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CurrAccCode_InvalidValue);
          this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
          this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
-         //this.btnEdit_CurrAccCode.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CurrAccCode_Validating);
          // 
          // lUE_OfficeCode
          // 
@@ -837,9 +836,10 @@ namespace Foxoft
             this.bBI_DeletePayment,
             this.bBI_SaveQuit,
             this.bBI_test,
-            this.bBI_reportPreviewAzn});
+            this.bBI_reportPreviewAzn,
+            this.bBI_CopyInvoice});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 17;
+         this.ribbonControl1.MaxItemId = 18;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -935,6 +935,14 @@ namespace Foxoft
          this.bBI_reportPreviewAzn.Name = "bBI_reportPreviewAzn";
          this.bBI_reportPreviewAzn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreviewAzn_ItemClick);
          // 
+         // bBI_CopyInvoice
+         // 
+         this.bBI_CopyInvoice.Caption = "Kopyala";
+         this.bBI_CopyInvoice.Id = 17;
+         this.bBI_CopyInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_CopyInvoice.Name = "bBI_CopyInvoice";
+         this.bBI_CopyInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CopyInvoice_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -967,6 +975,7 @@ namespace Foxoft
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreviewAzn);
+         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_CopyInvoice);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Print";
          // 
@@ -1135,5 +1144,6 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colBalance;
       private DevExpress.XtraGrid.Columns.GridColumn colBenefit;
       private DevExpress.XtraBars.BarButtonItem bBI_reportPreviewAzn;
+      private DevExpress.XtraBars.BarButtonItem bBI_CopyInvoice;
    }
 }

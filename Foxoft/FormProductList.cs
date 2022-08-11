@@ -264,12 +264,15 @@ namespace Foxoft
 
       private void gV_ProductList_ColumnFilterChanged(object sender, EventArgs e)
       {
+
          GridView view = sender as GridView;
 
          if (view.FocusedRowHandle >= 0)
             dcProduct = view.GetRow(view.FocusedRowHandle) as DcProduct;
          else
             dcProduct = null;
+
+
          //LoadProducts(productTypeCode);
       }
 

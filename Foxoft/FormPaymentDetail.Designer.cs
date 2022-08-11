@@ -88,6 +88,7 @@ namespace Foxoft
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+         this.bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
          this.dataLayoutControl1.SuspendLayout();
@@ -130,9 +131,10 @@ namespace Foxoft
             this.bBI_DeletePayment,
             this.bBI_SaveAndClose,
             this.bBI_SendWhatsapp,
-            this.bBI_NewPayment});
+            this.bBI_NewPayment,
+            this.bBI_CopyPayment});
          this.ribbon.Location = new System.Drawing.Point(0, 0);
-         this.ribbon.MaxItemId = 6;
+         this.ribbon.MaxItemId = 7;
          this.ribbon.Name = "ribbon";
          this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -191,6 +193,7 @@ namespace Foxoft
          // ribbonPageGroup2
          // 
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_SendWhatsapp);
+         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_CopyPayment);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Alət";
          // 
@@ -687,6 +690,14 @@ namespace Foxoft
          this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem5.TextVisible = false;
          // 
+         // bBI_CopyPayment
+         // 
+         this.bBI_CopyPayment.Caption = "Kopyala";
+         this.bBI_CopyPayment.Id = 6;
+         this.bBI_CopyPayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_CopyPayment.Name = "bBI_CopyPayment";
+         this.bBI_CopyPayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CopyPayment_ItemClick);
+         // 
          // FormPaymentDetail
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -803,5 +814,6 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceBefor;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceAfter;
       private DevExpress.XtraBars.BarButtonItem bBI_NewPayment;
+      private DevExpress.XtraBars.BarButtonItem bBI_CopyPayment;
    }
 }

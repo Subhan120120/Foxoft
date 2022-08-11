@@ -2,7 +2,6 @@
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
-using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -22,6 +21,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -662,19 +662,95 @@ namespace Foxoft
             MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
          }
 
-         //if (trInvoiceHeader.ProcessCode == "EX")
-         //{
-         //   decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
-
-         //   if (summaryInvoice != 0)
-         //   {
-         //      MakePayment(summaryInvoice);
-         //   }
-         //}
+         if (trInvoiceHeader.ProcessCode == "EX")
+         {
+            SavePayment();
+         }
 
          SaveSession();
       }
 
+      private void SavePayment()
+      {
+         TrPaymentHeader trPaymentHeader = PaymentHeaderDefaults(trInvoiceHeader);
+         TrPaymentLine trPaymentLine = PaymentLineDefaults();
+
+
+         decimal invoiceSumLoc = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
+         if (invoiceSumLoc > 0)
+         {
+            if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
+               invoiceSumLoc *= (-1);
+
+            bool isNegativ = false;
+
+            if (invoiceSumLoc < 0)
+               isNegativ = true;
+
+            EfMethods efMethods = new EfMethods();
+
+            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
+            trPaymentHeader.DocumentNumber = NewDocNum;
+
+            efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+            efMethods.InsertPaymentHeader(trPaymentHeader);
+
+            List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+            foreach (TrInvoiceLine il in trInvoiceLines)
+            {
+               trPaymentLine.PaymentHeaderId = trPaymentHeader.PaymentHeaderId;
+               trPaymentLine.PaymentLineId = Guid.NewGuid();
+               trPaymentLine.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
+               trPaymentLine.CurrencyCode = il.CurrencyCode;
+               trPaymentLine.ExchangeRate = il.ExchangeRate;
+               trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
+
+               efMethods.InsertPaymentLine(trPaymentLine);
+            }
+         }
+      }
+
+      private TrPaymentHeader PaymentHeaderDefaults(TrInvoiceHeader trInvoiceHeader)
+      {
+         TrPaymentHeader trPaymentHeader = new TrPaymentHeader();
+
+         Guid PaymentHeaderId = Guid.NewGuid();
+
+         bool invoiceExist = trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader != null;
+
+         string operType = "payment";
+         if (invoiceExist)
+            operType = "invoice";
+
+         trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
+         trPaymentHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
+         trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
+         trPaymentHeader.OfficeCode = Authorization.OfficeCode;
+         trPaymentHeader.StoreCode = Authorization.StoreCode;
+         trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
+         trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
+         if (invoiceExist)
+            trPaymentHeader.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+         trPaymentHeader.OperationType = operType;
+         trPaymentHeader.OperationDate = trInvoiceHeader.DocumentDate;
+         trPaymentHeader.OperationTime = trInvoiceHeader.DocumentTime;
+
+         return trPaymentHeader;
+      }
+
+      private TrPaymentLine PaymentLineDefaults()
+      {
+         TrPaymentLine trPaymentLine = new TrPaymentLine();
+         trPaymentLine.PaymentTypeCode = 1;
+         trPaymentLine.CurrencyCode = "USD";
+         trPaymentLine.ExchangeRate = 1f;
+         trPaymentLine.CashRegisterCode = "kassa01";
+         trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
+
+         return trPaymentLine;
+      }
       private void FormInvoice_FormClosed(object sender, FormClosedEventArgs e)
       {
          dbContext.Dispose();
@@ -761,7 +837,7 @@ namespace Foxoft
 
             using (MemoryStream ms = new MemoryStream())
             {
-               report.ExportToImage(ms, new ImageExportOptions() { Format = System.Drawing.Imaging.ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+               report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
                //Write your code here  
                Image img = Image.FromStream(ms);
 
@@ -771,9 +847,9 @@ namespace Foxoft
 
       }
 
-      private void MakePayment(decimal summaryInvoice)
+      private void MakePayment(decimal summaryInvoice, bool autoPayment)
       {
-         using (FormPayment formPayment = new FormPayment(1, summaryInvoice, trInvoiceHeader))
+         using (FormPayment formPayment = new FormPayment(1, summaryInvoice, trInvoiceHeader, autoPayment))
          {
             if (formPayment.ShowDialog(this) == DialogResult.OK)
             {
@@ -901,7 +977,7 @@ namespace Foxoft
             if (summaryInvoice != 0)
             {
                //SaveInvoice();
-               MakePayment(summaryInvoice);
+               MakePayment(summaryInvoice, false);
             }
          }
          else
@@ -955,7 +1031,7 @@ namespace Foxoft
             {
                SaveInvoice();
 
-               MakePayment(summaryInvoice);
+               MakePayment(summaryInvoice, false);
 
                GetPrint();
 
@@ -1024,5 +1100,39 @@ namespace Foxoft
          StandartKeys(e);
       }
 
+      private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ReportClass reportClass = new ReportClass();
+         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+
+         string designPath = designFolder + designFile;
+
+         if (trInvoiceHeader.CurrAccCode == "111")
+            designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
+
+         if (!File.Exists(designPath))
+            designPath = reportClass.SelectDesign();
+         if (File.Exists(designPath))
+         {
+            DsMethods dsMethods = new DsMethods();
+            SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+            dataSource.Name = "Invoice";
+
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+            dataSource.Fill();
+
+            XtraReport report = reportClass.CreateReport(dataSource, designPath);
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+               report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+               //Write your code here  
+               Image img = Image.FromStream(ms);
+
+               Clipboard.SetImage(img);
+            }
+         }
+      }
    }
 }

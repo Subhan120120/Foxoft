@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -10,6 +11,8 @@ namespace Foxoft
    public partial class FormPayment : XtraForm
    {
       private Guid PaymentHeaderId;
+      private bool autoMakePayment;
+      private TrPaymentHeader trPaymentHeader = new TrPaymentHeader();
       private TrInvoiceHeader trInvoiceHeader { get; set; }
       private TrPaymentLine trPaymentLine = new TrPaymentLine();
       private EfMethods efMethods = new EfMethods();
@@ -29,17 +32,9 @@ namespace Foxoft
       public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader)
          : this()
       {
-         PaymentHeaderId = Guid.NewGuid();
-
-         trPaymentLine.PaymentHeaderId = PaymentHeaderId;
-         trPaymentLine.PaymentLineId = Guid.NewGuid();
-         trPaymentLine.PaymentTypeCode = paymentType;
-         trPaymentLine.CurrencyCode = "USD";
-         trPaymentLine.ExchangeRate = 1f;
-         trPaymentLine.CashRegisterCode = "kassa01";
-         trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
-
          this.trInvoiceHeader = trInvoiceHeader;
+
+         PaymentDefaults(paymentType, trInvoiceHeader);
 
          if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
             invoiceSumLoc *= (-1);
@@ -58,9 +53,39 @@ namespace Foxoft
       public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader, bool autoMakePayment)
          : this(paymentType, invoiceSumLoc, trInvoiceHeader)
       {
-         //if (invoiceSumLoc > 0)
-         //   if (autoMakePayment)
-         //      SavePayment();
+         if (trPaymentLine.Payment > 0)
+            if (autoMakePayment)
+               SavePayment(true);
+      }
+
+      private void PaymentDefaults(byte paymentType, TrInvoiceHeader trInvoiceHeader)
+      {
+         PaymentHeaderId = Guid.NewGuid();
+
+         bool invoiceExist = trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader != null;
+
+         string operType = "payment";
+         if (invoiceExist)
+            operType = "invoice";
+
+         trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
+         trPaymentHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
+         trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
+         trPaymentHeader.OfficeCode = Authorization.OfficeCode;
+         trPaymentHeader.StoreCode = Authorization.StoreCode;
+         trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
+         trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
+         if (invoiceExist)
+            trPaymentHeader.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+         trPaymentHeader.OperationType = operType;
+         trPaymentHeader.OperationDate = DateTime.Now;
+
+         trPaymentLine.PaymentHeaderId = PaymentHeaderId;
+         trPaymentLine.PaymentTypeCode = paymentType;
+         trPaymentLine.CurrencyCode = "USD";
+         trPaymentLine.ExchangeRate = 1f;
+         trPaymentLine.CashRegisterCode = "kassa01";
+         trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
       }
 
       private void FormPayment_Load(object sender, EventArgs e)
@@ -187,43 +212,44 @@ namespace Foxoft
 
       private void btn_Ok_Click(object sender, EventArgs e)
       {
-         SavePayment();
+         SavePayment(false);
       }
 
-      private void SavePayment()
+      private void SavePayment(bool autoPayment)
       {
-         EfMethods efMethods = new EfMethods();
-
-         decimal cash = trPaymentLine.PaymentLoc;
-
-         string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
-
-         bool invoiceExist = trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader != null;
-
-         string operType = "payment";
-         if (invoiceExist)
-            operType = "invoice";
-
-         if (cash > 0)
+         if (trPaymentLine.PaymentLoc > 0)
          {
-            TrPaymentHeader trPaymentHead = new TrPaymentHeader();
+            EfMethods efMethods = new EfMethods();
+            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
+            trPaymentHeader.DocumentNumber = NewDocNum;
 
-            trPaymentHead.PaymentHeaderId = PaymentHeaderId;
-            trPaymentHead.DocumentNumber = NewDocNum;
-            trPaymentHead.CurrAccCode = trInvoiceHeader.CurrAccCode;
-            trPaymentHead.CreatedUserName = Authorization.CurrAccCode;
-            trPaymentHead.OfficeCode = Authorization.OfficeCode;
-            trPaymentHead.StoreCode = Authorization.StoreCode;
-            trPaymentHead.DocumentDate = trInvoiceHeader.DocumentDate;
-            trPaymentHead.DocumentTime = trInvoiceHeader.DocumentTime;
-            if (invoiceExist)
-               trPaymentHead.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
-            trPaymentHead.OperationType = operType;
-            trPaymentHead.OperationDate = DateTime.Parse(dateEdit_Date.EditValue.ToString());
-            efMethods.InsertPaymentHeader(trPaymentHead);
+            if (autoPayment)
+            {
+               efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
 
-            trPaymentLine.Payment = isNegativ ? trPaymentLine.Payment * (-1) : trPaymentLine.Payment;
-            efMethods.InsertPaymentLine(trPaymentLine);
+               efMethods.InsertPaymentHeader(trPaymentHeader);
+
+               List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+               foreach (TrInvoiceLine il in trInvoiceLines)
+               {
+                  trPaymentLine.PaymentLineId = Guid.NewGuid();
+                  trPaymentLine.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
+                  trPaymentLine.CurrencyCode = il.CurrencyCode;
+                  trPaymentLine.ExchangeRate = il.ExchangeRate;
+                  trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
+
+                  efMethods.InsertPaymentLine(trPaymentLine);
+               }
+            }
+            else
+            {
+               efMethods.InsertPaymentHeader(trPaymentHeader);
+
+               trPaymentLine.PaymentLineId = Guid.NewGuid();
+               trPaymentLine.Payment = isNegativ ? trPaymentLine.Payment * (-1) : trPaymentLine.Payment;
+
+               efMethods.InsertPaymentLine(trPaymentLine);
+            }
 
             DialogResult = DialogResult.OK;
          }

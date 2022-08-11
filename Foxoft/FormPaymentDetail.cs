@@ -347,28 +347,38 @@ namespace Foxoft
 
          if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
          {
-            string odendi = "";
-            for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
-            {
-               decimal payment = Math.Abs(Math.Round(Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment)), 2));
-               string currency = gV_PaymentLine.GetRowCellValue(i, colCurrencyCode).ToString();
-               odendi += "odendi: " + payment.ToString() + " " + currency + "%0A";
-            }
-
-            decimal balance = Math.Abs(Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2));
-            string qaldı = "qaldı: " + balance.ToString() + " USD";
             string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum.Trim();
 
+            string copyText = PaymentText("%0A");
+            string CopyText2 = PaymentText("\n");
 
-            Clipboard.SetText(odendi + qaldı);
+            Clipboard.SetText(CopyText2);
 
             if (!String.IsNullOrEmpty(phoneNum))
-               sendWhatsApp("+994" + phoneNum, odendi + qaldı);
+               sendWhatsApp("+994" + phoneNum, copyText);
 
             else
                MessageBox.Show("Nömrə Qeyd Olunmayıb");
 
          }
+      }
+
+      private string PaymentText(string line)
+      {
+         string odendi = "";
+         for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
+         {
+            decimal payment = Math.Abs(Math.Round(Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment)), 2));
+            string currency = gV_PaymentLine.GetRowCellValue(i, colCurrencyCode).ToString();
+            odendi += "odendi: " + payment.ToString() + " " + currency + line;
+         }
+
+         decimal balance = Math.Abs(Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2));
+         string qaldı = "qaldı: " + balance.ToString() + " USD";
+
+         string copyText = odendi + qaldı;
+
+         return copyText;
       }
 
       private void sendWhatsApp(string number, string message)
@@ -393,6 +403,13 @@ namespace Foxoft
       private void dataLayout_KeyDown(object sender, KeyEventArgs e)
       {
          StandartKeys(e);
+      }
+
+      private void bBI_CopyPayment_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         string CopyText = PaymentText("\n");
+
+         Clipboard.SetText(CopyText);
       }
    }
 }
