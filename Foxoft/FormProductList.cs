@@ -4,10 +4,12 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -279,6 +281,57 @@ namespace Foxoft
       private void barButtonItem1_ItemClick_1(object sender, ItemClickEventArgs e)
       {
          MessageBox.Show(gV_ProductList.ActiveFilterString);
+      }
+
+      private void gV_ProductList_RowCellStyle(object sender, RowCellStyleEventArgs e)
+      {
+         //GridView gridView = sender as GridView;
+
+         //try
+         //{
+         //   // Apply the ReadOnly style  
+         //   if (e.RowHandle >= 0 && e.Column == colBalance)
+         //   {
+         //      GridViewInfo viewInfo = gridView.GetViewInfo() as GridViewInfo;
+         //      GridDataRowInfo rowInfo = viewInfo.RowsInfo.GetInfoByHandle(e.RowHandle) as GridDataRowInfo;
+         //      // Check if there are style conditions  
+         //      if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
+         //      {
+         //         // Check if there are FormatRules that should override the ReadOnly style  
+         //         bool hasrules = false;
+         //         foreach (var rule in gridView.FormatRules)
+         //         {
+         //            if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
+         //            {
+         //               hasrules = true;
+         //               break;
+         //            }
+         //         }
+         //         if (!hasrules)
+         //            e.Appearance.ForeColor = Color.Gray;
+         //      }
+         //   }
+         //   // This is to fix the selection color when a color is set for the column  
+         //   if (e.Column.AppearanceCell.Options.UseBackColor && gridView.IsCellSelected(e.RowHandle, e.Column))
+         //      e.Appearance.BackColor = gridView.PaintAppearance.SelectedRow.BackColor;
+         //}
+         //catch (Exception ex)
+         //{
+         //   System.Diagnostics.Debug.Print(ex.Message);
+         //}
+      }
+
+      private void gV_ProductList_RowStyle(object sender, RowStyleEventArgs e)
+      {
+         GridView view = sender as GridView;
+
+         if (!Object.ReferenceEquals(view.GetRowCellValue(e.RowHandle, colBalance), null))
+         {
+            int balance = (int)view.GetRowCellValue(e.RowHandle, colBalance);
+
+            if (balance == 0)
+               e.Appearance.ForeColor = Color.Gray;
+         }
       }
    }
 }

@@ -48,14 +48,19 @@ namespace Foxoft
 
          if (processCode == "EX" || processCode == "CI" || processCode == "CO")
          {
+            if (processCode == "EX")
+               colQty.Visible = false;
+
             btnEdit_CurrAccCode.Enabled = false;
-            colLastPurchasePrice.Visible = false;
-            colBenefit.Visible = false;
             colBalance.Visible = false;
+            col_PosDiscount.Visible = false;
          }
 
-         if (processCode == "EX")
-            colQty.Visible = false;
+         if (processCode == "RS")
+         {
+            colLastPurchasePrice.Visible = true;
+            colBenefit.Visible = true;
+         }
 
          this.productTypeCode = productTypeCode;
 
@@ -684,6 +689,8 @@ namespace Foxoft
                efMethods.InsertPaymentLine(trPaymentLine);
             }
          }
+
+         CalcPaidAmount();
       }
 
       private TrPaymentHeader PaymentHeaderDefaults(TrInvoiceHeader trInvoiceHeader)
@@ -1026,7 +1033,7 @@ namespace Foxoft
       private void gV_InvoiceLine_RowCellStyle(object sender, RowCellStyleEventArgs e)
       {
          GridView gridView = sender as GridView;
-         Color readOnlyForeColor = Color.Gray;
+
          Color readOnlyBackColor = Color.LightGray;
          try
          {
