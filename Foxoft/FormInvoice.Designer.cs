@@ -435,7 +435,7 @@ namespace Foxoft
          this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "Toplam={0:0.##}")});
          this.col_NetAmount.Visible = true;
-         this.col_NetAmount.VisibleIndex = 6;
+         this.col_NetAmount.VisibleIndex = 7;
          this.col_NetAmount.Width = 42;
          // 
          // col_LineDesc
@@ -444,7 +444,7 @@ namespace Foxoft
          this.col_LineDesc.FieldName = "LineDescription";
          this.col_LineDesc.Name = "col_LineDesc";
          this.col_LineDesc.Visible = true;
-         this.col_LineDesc.VisibleIndex = 7;
+         this.col_LineDesc.VisibleIndex = 8;
          this.col_LineDesc.Width = 34;
          // 
          // col_SalesPersonCode
@@ -500,12 +500,16 @@ namespace Foxoft
          // 
          this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
+         this.colLastPurchasePrice.Visible = true;
+         this.colLastPurchasePrice.VisibleIndex = 9;
          this.colLastPurchasePrice.Width = 57;
          // 
          // colBenefit
          // 
          this.colBenefit.FieldName = "Benefit";
          this.colBenefit.Name = "colBenefit";
+         this.colBenefit.Visible = true;
+         this.colBenefit.VisibleIndex = 10;
          this.colBenefit.Width = 71;
          // 
          // CheckEdit_IsReturn

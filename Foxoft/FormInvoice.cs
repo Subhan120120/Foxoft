@@ -54,12 +54,8 @@ namespace Foxoft
             btnEdit_CurrAccCode.Enabled = false;
             colBalance.Visible = false;
             col_PosDiscount.Visible = false;
-         }
-
-         if (processCode == "RS")
-         {
-            colLastPurchasePrice.Visible = true;
-            colBenefit.Visible = true;
+            colLastPurchasePrice.Visible = false;
+            colBenefit.Visible = false;
          }
 
          this.productTypeCode = productTypeCode;

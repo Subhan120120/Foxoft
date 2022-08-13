@@ -249,7 +249,7 @@ namespace Foxoft
             gV.ShowFindPanel();
 
             gV.OptionsFind.FindFilterColumns = "ProductDesc";
-            gV.OptionsFind.FindNullPrompt = "Axtarın...";
+            //gV.OptionsFind.FindNullPrompt = "Axtarın...";
          }
          isFirstPaint = false;
       }
