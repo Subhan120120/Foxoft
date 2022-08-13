@@ -46,6 +46,10 @@ namespace Foxoft
       {
          InitializeComponent();
 
+         colBalance.OptionsColumn.ReadOnly = true;
+         colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+
+
          if (processCode == "EX" || processCode == "CI" || processCode == "CO")
          {
             if (processCode == "EX")

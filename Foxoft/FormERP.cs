@@ -370,5 +370,6 @@ namespace Foxoft
          if (MessageBox.Show("Programdan Çıx", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
             e.Cancel = true;
       }
+
    }
 }
