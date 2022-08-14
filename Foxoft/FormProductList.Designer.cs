@@ -220,6 +220,8 @@ namespace Foxoft
          // 
          // colLastPurchasePrice
          // 
+         this.colLastPurchasePrice.DisplayFormat.FormatString = "{0:n2}";
+         this.colLastPurchasePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
          this.colLastPurchasePrice.Visible = true;
