@@ -59,6 +59,7 @@ namespace Foxoft
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -73,9 +74,10 @@ namespace Foxoft
             this.skinPaletteDropDownButtonItem,
             this.bBI_MdiChildrenList,
             this.bBI_CloseWindows,
-            this.bBI_POS});
+            this.bBI_POS,
+            this.bSI_UserName});
          this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-         this.parentRibbonControl.MaxItemId = 13;
+         this.parentRibbonControl.MaxItemId = 14;
          this.parentRibbonControl.Name = "parentRibbonControl";
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
@@ -139,6 +141,7 @@ namespace Foxoft
          // 
          // ribbonStatusBar
          // 
+         this.ribbonStatusBar.ItemLinks.Add(this.bSI_UserName);
          this.ribbonStatusBar.Location = new System.Drawing.Point(0, 608);
          this.ribbonStatusBar.Name = "ribbonStatusBar";
          this.ribbonStatusBar.Ribbon = this.parentRibbonControl;
@@ -309,6 +312,13 @@ namespace Foxoft
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
          // 
+         // bSI_UserName
+         // 
+         this.bSI_UserName.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+         this.bSI_UserName.Caption = "İstifadəçi Adı";
+         this.bSI_UserName.Id = 13;
+         this.bSI_UserName.Name = "bSI_UserName";
+         // 
          // FormERP
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -362,5 +372,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAcc;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator3;
       private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_PaymentDetail;
+      private DevExpress.XtraBars.BarStaticItem bSI_UserName;
    }
 }

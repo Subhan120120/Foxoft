@@ -574,8 +574,6 @@ namespace Foxoft
       {
          using (subContext db = new subContext())
          {
-
-
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                                 .OrderBy(x => x.CreatedDate)
                                 .Select(x => new DcCurrAcc
@@ -587,6 +585,7 @@ namespace Foxoft
                                    IsVip = x.IsVip,
                                    PhoneNum = x.PhoneNum,
                                    Address = x.Address,
+                                   StoreCode = x.StoreCode,
                                    FirstName = x.FirstName,
                                    LastName = x.LastName,
                                    CreatedDate = x.CreatedDate,

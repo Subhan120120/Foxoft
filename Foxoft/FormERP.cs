@@ -24,9 +24,11 @@ namespace Foxoft
 
       public FormERP()
       {
+         EfMethods efMethods = new EfMethods();
+
          InitializeComponent();
          ComponentResourceManager resources = new ComponentResourceManager(typeof(FormERP));
-         EfMethods efMethods = new EfMethods();
+         bSI_UserName.Caption = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
 
          List<DcReport> dcReports = efMethods.SelectReports();
 
