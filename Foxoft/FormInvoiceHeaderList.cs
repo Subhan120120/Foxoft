@@ -125,7 +125,6 @@ namespace Foxoft
             //info.RowHandle
             //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
-
             if (!object.ReferenceEquals(trInvoiceHeader, null))
                DialogResult = DialogResult.OK;
          }
@@ -135,6 +134,9 @@ namespace Foxoft
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
+
+         trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+
          if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
          {
             if (!Object.ReferenceEquals(trInvoiceHeader, null))

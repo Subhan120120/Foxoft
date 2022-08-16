@@ -268,6 +268,9 @@
         ZCIgLz4NCjwvc3ZnPgs=
 </value>
   </data>
+  <metadata name="bBI_test.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
   <data name="bBI_test.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
@@ -306,6 +309,9 @@
         L2c+DQo8L3N2Zz4L
 </value>
   </data>
+  <metadata name="bBI_CopyInvoice.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
   <data name="bBI_CopyInvoice.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
@@ -323,6 +329,64 @@
         QmxhY2siIC8+DQo8L3N2Zz4L
 </value>
   </data>
+  <metadata name="bBI_Whatsapp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
+  <data name="barButtonItem1.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAK0JAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgdmlld0JveD0iMCAwIDE3
+        NS4yMTYgMTc1LjU1MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgPGRlZnM+
+        DQogICAgPGxpbmVhckdyYWRpZW50IHgxPSI4NS45MTVweCIgeTE9IjMyLjU2N3B4IiB4Mj0iODYuNTM1
+        cHgiIHkyPSIxMzcuMDkycHgiIGdyYWRpZW50dW5pdHM9InVzZXJzcGFjZW9udXNlIiBzcHJlYWRtZXRo
+        b2Q9InBhZCIgaWQ9ImIiPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzU3ZDE2
+        MyIgLz4NCiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIzYjMzYSIgLz4NCiAg
+        ICA8L2xpbmVhckdyYWRpZW50Pg0KICA8L2RlZnM+DQogIDxwYXRoIGQ9Im01NC41MzIgMTM4LjQ1IDIu
+        MjM1IDEuMzI0YzkuMzg3IDUuNTcxIDIwLjE1IDguNTE4IDMxLjEyNiA4LjUyM2guMDIzYzMzLjcwNyAw
+        IDYxLjEzOS0yNy40MjYgNjEuMTUzLTYxLjEzNS4wMDYtMTYuMzM1LTYuMzQ5LTMxLjY5Ni0xNy44OTUt
+        NDMuMjUxQTYwLjc1IDYwLjc1IDAgMCAwIDg3Ljk0IDI1Ljk4M2MtMzMuNzMzIDAtNjEuMTY2IDI3LjQy
+        My02MS4xNzggNjEuMTNhNjAuOTggNjAuOTggMCAwIDAgOS4zNDkgMzIuNTM1bDEuNDU1IDIuMzEyLTYu
+        MTc5IDIyLjU1OHptLTQwLjgxMSAyMy41NDRMMjQuMTYgMTIzLjg4Yy02LjQzOC0xMS4xNTQtOS44MjUt
+        MjMuODA4LTkuODIxLTM2Ljc3Mi4wMTctNDAuNTU2IDMzLjAyMS03My41NSA3My41NzgtNzMuNTUgMTku
+        NjgxLjAxIDM4LjE1NCA3LjY2OSA1Mi4wNDcgMjEuNTcyczIxLjUzNyAzMi4zODMgMjEuNTMgNTIuMDM3
+        Yy0uMDE4IDQwLjU1My0zMy4wMjcgNzMuNTUzLTczLjU3OCA3My41NTNoLS4wMzJjLTEyLjMxMy0uMDA1
+        LTI0LjQxMi0zLjA5NC0zNS4xNTktOC45NTR6bTAgMCIgZmlsbD0iI2IzYjNiMyIgLz4NCiAgPHBhdGgg
+        ZD0ibTEyLjk2NiAxNjEuMjM4IDEwLjQzOS0zOC4xMTRhNzMuNDIgNzMuNDIgMCAwIDEtOS44MjEtMzYu
+        NzcyYy4wMTctNDAuNTU2IDMzLjAyMS03My41NSA3My41NzgtNzMuNTUgMTkuNjgxLjAxIDM4LjE1NCA3
+        LjY2OSA1Mi4wNDcgMjEuNTcyczIxLjUzNyAzMi4zODMgMjEuNTMgNTIuMDM3Yy0uMDE4IDQwLjU1My0z
+        My4wMjcgNzMuNTUzLTczLjU3OCA3My41NTNoLS4wMzJjLTEyLjMxMy0uMDA1LTI0LjQxMi0zLjA5NC0z
+        NS4xNTktOC45NTR6IiBmaWxsPSIjZmZmIiAvPg0KICA8cGF0aCBkPSJNODcuMTg0IDI1LjIyN2MtMzMu
+        NzMzIDAtNjEuMTY2IDI3LjQyMy02MS4xNzggNjEuMTNhNjAuOTggNjAuOTggMCAwIDAgOS4zNDkgMzIu
+        NTM1bDEuNDU1IDIuMzEyLTYuMTc5IDIyLjU1OSAyMy4xNDYtNi4wNjkgMi4yMzUgMS4zMjRjOS4zODcg
+        NS41NzEgMjAuMTUgOC41MTggMzEuMTI2IDguNTI0aC4wMjNjMzMuNzA3IDAgNjEuMTQtMjcuNDI2IDYx
+        LjE1My02MS4xMzVhNjAuNzUgNjAuNzUgMCAwIDAtMTcuODk1LTQzLjI1MSA2MC43NSA2MC43NSAwIDAg
+        MC00My4yMzUtMTcuOTI5eiIgZmlsbD0idXJsKCNsaW5lYXJHcmFkaWVudDE3ODApIiAvPg0KICA8cGF0
+        aCBkPSJNODcuMTg0IDI1LjIyN2MtMzMuNzMzIDAtNjEuMTY2IDI3LjQyMy02MS4xNzggNjEuMTNhNjAu
+        OTggNjAuOTggMCAwIDAgOS4zNDkgMzIuNTM1bDEuNDU1IDIuMzEzLTYuMTc5IDIyLjU1OCAyMy4xNDYt
+        Ni4wNjkgMi4yMzUgMS4zMjRjOS4zODcgNS41NzEgMjAuMTUgOC41MTcgMzEuMTI2IDguNTIzaC4wMjNj
+        MzMuNzA3IDAgNjEuMTQtMjcuNDI2IDYxLjE1My02MS4xMzVhNjAuNzUgNjAuNzUgMCAwIDAtMTcuODk1
+        LTQzLjI1MSA2MC43NSA2MC43NSAwIDAgMC00My4yMzUtMTcuOTI4eiIgZmlsbD0idXJsKCNiKSIgLz4N
+        CiAgPHBhdGggZD0iTTY4Ljc3MiA1NS42MDNjLTEuMzc4LTMuMDYxLTIuODI4LTMuMTIzLTQuMTM3LTMu
+        MTc2bC0zLjUyNC0uMDQzYy0xLjIyNiAwLTMuMjE4LjQ2LTQuOTAyIDIuM3MtNi40MzUgNi4yODctNi40
+        MzUgMTUuMzMyIDYuNTg4IDE3Ljc4NSA3LjUwNiAxOS4wMTMgMTIuNzE4IDIwLjM4MSAzMS40MDUgMjcu
+        NzVjMTUuNTI5IDYuMTI0IDE4LjY4OSA0LjkwNiAyMi4wNjEgNC42czEwLjg3Ny00LjQ0NyAxMi40MDgt
+        OC43NCAxLjUzMi03Ljk3MSAxLjA3My04Ljc0LTEuNjg1LTEuMjI2LTMuNTI1LTIuMTQ2LTEwLjg3Ny01
+        LjM2Ny0xMi41NjItNS45ODEtMi45MS0uOTE5LTQuMTM3LjkyMS00Ljc0NiA1Ljk3OS01LjgxOSA3LjIw
+        Ni0yLjE0NCAxLjM4MS0zLjk4NC40NjItNy43Ni0yLjg2MS0xNC43ODQtOS4xMjRjLTUuNDY1LTQuODcz
+        LTkuMTU0LTEwLjg5MS0xMC4yMjgtMTIuNzNzLS4xMTQtMi44MzUuODA4LTMuNzUxYy44MjUtLjgyNCAx
+        LjgzOC0yLjE0NyAyLjc1OS0zLjIyczEuMjI0LTEuODQgMS44MzYtMy4wNjUuMzA3LTIuMzAxLS4xNTMt
+        My4yMi00LjAzMi0xMC4wMTEtNS42NjYtMTMuNjQ3IiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9ImV2ZW5v
+        ZGQiIC8+DQo8L3N2Zz4L
+</value>
+  </data>
+  <metadata name="ribbonPageGroup3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
+  <metadata name="ribbonPageGroup2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
   <metadata name="adorneruıManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1, 7</value>
   </metadata>

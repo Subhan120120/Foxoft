@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -48,7 +49,6 @@ namespace Foxoft
 
          colBalance.OptionsColumn.ReadOnly = true;
          colLastPurchasePrice.OptionsColumn.ReadOnly = true;
-
 
          if (processCode == "EX" || processCode == "CI" || processCode == "CO")
          {
@@ -883,6 +883,11 @@ namespace Foxoft
 
       private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
       {
+         ShowReportPreview();
+      }
+
+      private void ShowReportPreview()
+      {
          ReportClass reportClass = new ReportClass();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
          string designPath = designFolder + designFile;
@@ -1014,7 +1019,9 @@ namespace Foxoft
 
                MakePayment(summaryInvoice, false);
 
-               GetPrint();
+               ShowReportPreview();
+
+               //GetPrint();
 
                this.Close();
             }
@@ -1065,7 +1072,7 @@ namespace Foxoft
          }
          catch (Exception ex)
          {
-            System.Diagnostics.Debug.Print(ex.Message);
+            Debug.Print(ex.Message);
          }
       }
 
@@ -1083,6 +1090,11 @@ namespace Foxoft
       }
 
       private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         CopyReportToClipboard();
+      }
+
+      private void CopyReportToClipboard()
       {
          ReportClass reportClass = new ReportClass();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
@@ -1117,6 +1129,31 @@ namespace Foxoft
          }
       }
 
+      private void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         CopyReportToClipboard();
+         string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
+         sendWhatsApp(phoneNum, "");
+      }
+      private void sendWhatsApp(string number, string message)
+      {
+         number = number.Trim();
+
+         if (number == "")
+         {
+            MessageBox.Show("Nömrə qeyd olunmayıb.");
+            return;
+         }
+
+         number = "+994" + number;
+
+         string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
+
+         Process myProcess = new Process();
+         myProcess.StartInfo.UseShellExecute = true;
+         myProcess.StartInfo.FileName = link;
+         myProcess.Start();
+      }
       //private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
       //{
       //   object eValue = btnEdit_CurrAccCode.EditValue;

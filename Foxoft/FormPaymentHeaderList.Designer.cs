@@ -102,6 +102,8 @@ namespace Foxoft
          this.gV_PaymentHeaderList.OptionsView.ShowFooter = true;
          this.gV_PaymentHeaderList.OptionsView.ShowGroupPanel = false;
          this.gV_PaymentHeaderList.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gV_PaymentHeaderList_ShowingEditor);
+         this.gV_PaymentHeaderList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_PaymentHeaderList_FocusedRowChanged);
+         this.gV_PaymentHeaderList.ColumnFilterChanged += new System.EventHandler(this.gV_PaymentHeaderList_ColumnFilterChanged);
          this.gV_PaymentHeaderList.DoubleClick += new System.EventHandler(this.gV_PaymentHeaderList_DoubleClick);
          // 
          // colPaymentHeaderId

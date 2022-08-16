@@ -99,7 +99,7 @@ namespace Foxoft
                                                     .Select(x => new DcProduct
                                                     {
                                                        Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                                       LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                                                       LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
                                                        ProductCode = x.ProductCode,
                                                        ProductDesc = x.ProductDesc,
                                                        PosDiscount = x.PosDiscount,
@@ -128,7 +128,7 @@ namespace Foxoft
                                 .Select(x => new DcProduct
                                 {
                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                   LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                                   LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
                                    ProductCode = x.ProductCode,
                                    ProductDesc = x.ProductDesc,
                                    PosDiscount = x.PosDiscount,
@@ -165,7 +165,7 @@ namespace Foxoft
                             .Select(x => new DcProduct
                             {
                                Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                               LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                               LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
                                ProductCode = x.ProductCode,
                                ProductDesc = x.ProductDesc,
                                PosDiscount = x.PosDiscount,

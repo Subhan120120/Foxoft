@@ -344,23 +344,19 @@ namespace Foxoft
 
       private void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
       {
-
          if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
          {
-            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum.Trim();
+            string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
 
             string copyText = PaymentText("%0A");
             string CopyText2 = PaymentText("\n");
 
             Clipboard.SetText(CopyText2);
 
-            if (!String.IsNullOrEmpty(phoneNum))
-               sendWhatsApp("+994" + phoneNum, copyText);
-
-            else
-               MessageBox.Show("Nömrə Qeyd Olunmayıb");
-
+            sendWhatsApp(phoneNum, copyText);
          }
+         else
+            MessageBox.Show("Cari Hesab qeyd olunmayıb.");
       }
 
       private string PaymentText(string line)
@@ -383,7 +379,15 @@ namespace Foxoft
 
       private void sendWhatsApp(string number, string message)
       {
-         number = number.Replace(" ", "");
+         number = number.Trim();
+
+         if (number == "")
+         {
+            MessageBox.Show("Nömrə qeyd olunmayıb.");
+            return;
+         }
+
+         number = "+994" + number;
 
          string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
 
@@ -391,8 +395,6 @@ namespace Foxoft
          myProcess.StartInfo.UseShellExecute = true;
          myProcess.StartInfo.FileName = link;
          myProcess.Start();
-
-         //Process.Start(link);
       }
 
       private void bBI_NewPayment_ItemClick(object sender, ItemClickEventArgs e)

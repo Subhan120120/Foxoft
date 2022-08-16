@@ -2,6 +2,7 @@
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
@@ -21,7 +22,7 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class FormPaymentHeaderList : DevExpress.XtraBars.Ribbon.RibbonForm
+   public partial class FormPaymentHeaderList : RibbonForm
    {
       subContext dbContext;
       EfMethods efMethods = new EfMethods();
@@ -114,7 +115,7 @@ namespace Foxoft
          {
             //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
-            trPaymentHeader = view.GetRow(view.FocusedRowHandle) as TrPaymentHeader;
+            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
 
             DialogResult = DialogResult.OK;
          }
@@ -124,8 +125,10 @@ namespace Foxoft
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
+
          if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
          {
+            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
             DialogResult = DialogResult.OK;
          }
       }
@@ -202,7 +205,7 @@ namespace Foxoft
          }
       }
 
-      private void bBI_ReceivePayment_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void bBI_ReceivePayment_ItemClick(object sender, ItemClickEventArgs e)
       {
          using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
          {
@@ -222,7 +225,7 @@ namespace Foxoft
          }
       }
 
-      private void bBI_MakePayment_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+      private void bBI_MakePayment_ItemClick(object sender, ItemClickEventArgs e)
       {
          using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
          {
@@ -245,6 +248,25 @@ namespace Foxoft
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
          gV_PaymentHeaderList.ExportToXlsx(@"C:\Users\Public\Desktop\PaymentHeaderList.xlsx");
+      }
+
+      private void gV_PaymentHeaderList_ColumnFilterChanged(object sender, EventArgs e)
+      {
+         GridView view = sender as GridView;
+
+         if (view.SelectedRowsCount > 0)
+            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+         else
+            trPaymentHeader = null;
+      }
+
+      private void gV_PaymentHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+      {
+         GridView view = sender as GridView;
+         if (view.SelectedRowsCount > 0)
+            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+         else
+            trPaymentHeader = null;
       }
    }
 }

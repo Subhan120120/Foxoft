@@ -114,6 +114,7 @@ namespace Foxoft
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
+         this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -837,9 +838,10 @@ namespace Foxoft
             this.bBI_SaveQuit,
             this.bBI_test,
             this.bBI_reportPreviewAzn,
-            this.bBI_CopyInvoice});
+            this.bBI_CopyInvoice,
+            this.bBI_Whatsapp});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 18;
+         this.ribbonControl1.MaxItemId = 19;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -976,6 +978,7 @@ namespace Foxoft
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreviewAzn);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_CopyInvoice);
+         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_Whatsapp);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Print";
          // 
@@ -995,6 +998,14 @@ namespace Foxoft
          // adorneruıManager1
          // 
          this.adorneruıManager1.Owner = this;
+         // 
+         // bBI_Whatsapp
+         // 
+         this.bBI_Whatsapp.Caption = "Whatsappdan Göndər";
+         this.bBI_Whatsapp.Id = 18;
+         this.bBI_Whatsapp.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.bBI_Whatsapp.Name = "bBI_Whatsapp";
+         this.bBI_Whatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Whatsapp_ItemClick);
          // 
          // FormInvoice
          // 
@@ -1145,5 +1156,6 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colBenefit;
       private DevExpress.XtraBars.BarButtonItem bBI_reportPreviewAzn;
       private DevExpress.XtraBars.BarButtonItem bBI_CopyInvoice;
+      private DevExpress.XtraBars.BarButtonItem bBI_Whatsapp;
    }
 }
