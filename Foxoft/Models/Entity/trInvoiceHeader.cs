@@ -81,10 +81,14 @@ namespace Foxoft.Models
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string StoreCode { get; set; }
 
-      [DisplayName("Depo")]
+      [DisplayName("Depodan")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string WarehouseCode { get; set; }
+
+      [DisplayName("Depoya")]
+      [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ToWarehouseCode { get; set; }
 
       [DisplayName("Fərdi Sənəd Nömrəsi")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]

@@ -68,7 +68,6 @@ namespace Foxoft
 
          this.Text = dcProcess.ProcessDesc;
 
-         lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
          lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
          lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
          repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();

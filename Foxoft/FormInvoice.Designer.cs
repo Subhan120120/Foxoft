@@ -76,7 +76,6 @@ namespace Foxoft
          this.btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
          this.memoEdit_Desc = new DevExpress.XtraEditors.MemoEdit();
          this.btnEdit_CurrAccCode = new DevExpress.XtraEditors.ButtonEdit();
-         this.lUE_OfficeCode = new DevExpress.XtraEditors.LookUpEdit();
          this.lUE_StoreCode = new DevExpress.XtraEditors.LookUpEdit();
          this.lUE_WarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
          this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -87,7 +86,6 @@ namespace Foxoft
          this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForCustomsDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForWarehouseCode = new DevExpress.XtraLayout.LayoutControlItem();
@@ -107,6 +105,7 @@ namespace Foxoft
          this.bBI_test = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_reportPreviewAzn = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -114,7 +113,6 @@ namespace Foxoft
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
-         this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -135,7 +133,6 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.memoEdit_Desc.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.btnEdit_CurrAccCode.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.lUE_OfficeCode.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.lUE_StoreCode.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.lUE_WarehouseCode.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
@@ -146,7 +143,6 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForOfficeCode)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForCustomsDocumentNumber)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForStoreCode)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForWarehouseCode)).BeginInit();
@@ -174,7 +170,6 @@ namespace Foxoft
          this.dataLayoutControl1.Controls.Add(this.btnEdit_DocNum);
          this.dataLayoutControl1.Controls.Add(this.memoEdit_Desc);
          this.dataLayoutControl1.Controls.Add(this.btnEdit_CurrAccCode);
-         this.dataLayoutControl1.Controls.Add(this.lUE_OfficeCode);
          this.dataLayoutControl1.Controls.Add(this.lUE_StoreCode);
          this.dataLayoutControl1.Controls.Add(this.lUE_WarehouseCode);
          this.dataLayoutControl1.DataSource = this.trInvoiceHeadersBindingSource;
@@ -607,30 +602,10 @@ namespace Foxoft
          this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
          this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          // 
-         // lUE_OfficeCode
-         // 
-         this.lUE_OfficeCode.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "OfficeCode", true));
-         this.lUE_OfficeCode.Location = new System.Drawing.Point(539, 36);
-         this.lUE_OfficeCode.Name = "lUE_OfficeCode";
-         this.lUE_OfficeCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-         this.lUE_OfficeCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.lUE_OfficeCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("OfficeCode", "Ofis kodu"),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("OfficeDesc", "Ofis Adı")});
-         this.lUE_OfficeCode.Properties.DisplayMember = "OfficeDesc";
-         this.lUE_OfficeCode.Properties.NullText = "";
-         this.lUE_OfficeCode.Properties.ShowHeader = false;
-         this.lUE_OfficeCode.Properties.ValueMember = "OfficeCode";
-         this.lUE_OfficeCode.Size = new System.Drawing.Size(320, 20);
-         this.lUE_OfficeCode.StyleController = this.dataLayoutControl1;
-         this.lUE_OfficeCode.TabIndex = 6;
-         this.lUE_OfficeCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
-         // 
          // lUE_StoreCode
          // 
          this.lUE_StoreCode.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "StoreCode", true));
-         this.lUE_StoreCode.Location = new System.Drawing.Point(539, 60);
+         this.lUE_StoreCode.Location = new System.Drawing.Point(539, 36);
          this.lUE_StoreCode.Name = "lUE_StoreCode";
          this.lUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
          this.lUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -688,7 +663,6 @@ namespace Foxoft
             this.layoutControlItem1,
             this.ItemForDocumentNumber,
             this.ItemForCurrAccCode,
-            this.ItemForOfficeCode,
             this.ItemForCustomsDocumentNumber,
             this.ItemForStoreCode,
             this.ItemForWarehouseCode,
@@ -754,15 +728,6 @@ namespace Foxoft
          this.ItemForCurrAccCode.Text = "Cari Hesab";
          this.ItemForCurrAccCode.TextSize = new System.Drawing.Size(98, 13);
          // 
-         // ItemForOfficeCode
-         // 
-         this.ItemForOfficeCode.Control = this.lUE_OfficeCode;
-         this.ItemForOfficeCode.Location = new System.Drawing.Point(417, 24);
-         this.ItemForOfficeCode.Name = "ItemForOfficeCode";
-         this.ItemForOfficeCode.Size = new System.Drawing.Size(434, 24);
-         this.ItemForOfficeCode.Text = "Ofis";
-         this.ItemForOfficeCode.TextSize = new System.Drawing.Size(98, 13);
-         // 
          // ItemForCustomsDocumentNumber
          // 
          this.ItemForCustomsDocumentNumber.Control = this.CustomsDocumentNumberTextEdit;
@@ -775,9 +740,9 @@ namespace Foxoft
          // ItemForStoreCode
          // 
          this.ItemForStoreCode.Control = this.lUE_StoreCode;
-         this.ItemForStoreCode.Location = new System.Drawing.Point(417, 48);
+         this.ItemForStoreCode.Location = new System.Drawing.Point(417, 24);
          this.ItemForStoreCode.Name = "ItemForStoreCode";
-         this.ItemForStoreCode.Size = new System.Drawing.Size(434, 24);
+         this.ItemForStoreCode.Size = new System.Drawing.Size(434, 48);
          this.ItemForStoreCode.Text = "Mağaza";
          this.ItemForStoreCode.TextSize = new System.Drawing.Size(98, 13);
          // 
@@ -945,6 +910,14 @@ namespace Foxoft
          this.bBI_CopyInvoice.Name = "bBI_CopyInvoice";
          this.bBI_CopyInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CopyInvoice_ItemClick);
          // 
+         // bBI_Whatsapp
+         // 
+         this.bBI_Whatsapp.Caption = "Whatsappdan Göndər";
+         this.bBI_Whatsapp.Id = 18;
+         this.bBI_Whatsapp.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Whatsapp.ImageOptions.SvgImage")));
+         this.bBI_Whatsapp.Name = "bBI_Whatsapp";
+         this.bBI_Whatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Whatsapp_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -986,7 +959,7 @@ namespace Foxoft
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_test);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-         this.ribbonPageGroup1.Text = "ribbonPageGroup1";
+         this.ribbonPageGroup1.Text = "Nəzarət";
          // 
          // ribbonStatusBar1
          // 
@@ -998,14 +971,6 @@ namespace Foxoft
          // adorneruıManager1
          // 
          this.adorneruıManager1.Owner = this;
-         // 
-         // bBI_Whatsapp
-         // 
-         this.bBI_Whatsapp.Caption = "Whatsappdan Göndər";
-         this.bBI_Whatsapp.Id = 18;
-         this.bBI_Whatsapp.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-         this.bBI_Whatsapp.Name = "bBI_Whatsapp";
-         this.bBI_Whatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Whatsapp_ItemClick);
          // 
          // FormInvoice
          // 
@@ -1043,7 +1008,6 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.memoEdit_Desc.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.btnEdit_CurrAccCode.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.lUE_OfficeCode.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.lUE_StoreCode.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.lUE_WarehouseCode.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
@@ -1054,7 +1018,6 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForOfficeCode)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForCustomsDocumentNumber)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForStoreCode)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForWarehouseCode)).EndInit();
@@ -1084,7 +1047,6 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentTime;
       private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
       private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForOfficeCode;
       private DevExpress.XtraLayout.LayoutControlItem ItemForStoreCode;
       private DevExpress.XtraLayout.LayoutControlItem ItemForWarehouseCode;
       private DevExpress.XtraLayout.LayoutControlItem ItemForCustomsDocumentNumber;
@@ -1104,7 +1066,6 @@ namespace Foxoft
       private DevExpress.XtraEditors.MemoEdit memoEdit_Desc;
       private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
       private DevExpress.XtraEditors.ButtonEdit btnEdit_CurrAccCode;
-      private DevExpress.XtraEditors.LookUpEdit lUE_OfficeCode;
       private DevExpress.XtraEditors.LookUpEdit lUE_StoreCode;
       private DevExpress.XtraEditors.LookUpEdit lUE_WarehouseCode;
       private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
