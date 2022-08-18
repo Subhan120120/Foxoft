@@ -102,7 +102,6 @@ namespace Foxoft
          this.bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_SaveQuit = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_test = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_reportPreviewAzn = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
@@ -801,7 +800,6 @@ namespace Foxoft
             this.bBI_DeleteInvoice,
             this.bBI_DeletePayment,
             this.bBI_SaveQuit,
-            this.bBI_test,
             this.bBI_reportPreviewAzn,
             this.bBI_CopyInvoice,
             this.bBI_Whatsapp});
@@ -887,13 +885,6 @@ namespace Foxoft
          this.bBI_SaveQuit.Name = "bBI_SaveQuit";
          this.bBI_SaveQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveQuit_ItemClick);
          // 
-         // bBI_test
-         // 
-         this.bBI_test.Caption = "Test";
-         this.bBI_test.Id = 15;
-         this.bBI_test.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_test.ImageOptions.SvgImage")));
-         this.bBI_test.Name = "bBI_test";
-         // 
          // bBI_reportPreviewAzn
          // 
          this.bBI_reportPreviewAzn.Caption = "Report Görünüş Azn";
@@ -957,7 +948,6 @@ namespace Foxoft
          // 
          // ribbonPageGroup1
          // 
-         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_test);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Nəzarət";
          // 
@@ -1100,7 +1090,6 @@ namespace Foxoft
       private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PriceLoc;
       private DevExpress.XtraBars.BarButtonItem bBI_SaveQuit;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup Faktura;
-      private DevExpress.XtraBars.BarButtonItem bBI_test;
       private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
       private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
