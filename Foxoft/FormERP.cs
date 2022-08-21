@@ -373,5 +373,13 @@ namespace Foxoft
             e.Cancel = true;
       }
 
+      private void aCE_Transfer_Click(object sender, EventArgs e)
+      {
+         FormInvoice formInvoice = new FormInvoice("TF", 1, 4);
+         formInvoice.MdiParent = this;
+         formInvoice.WindowState = FormWindowState.Maximized;
+         formInvoice.Show();
+         parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+      }
    }
 }

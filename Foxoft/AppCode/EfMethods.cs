@@ -323,8 +323,16 @@ namespace Foxoft
       {
          using (subContext db = new subContext())
          {
+            string editable = invoiceHeaderId.ToString();
+            Guid transferHead = Guid.Parse(editable.Replace(editable.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
             TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { InvoiceHeaderId = invoiceHeaderId };
             db.TrInvoiceHeaders.Remove(trInvoiceHeader);
+
+            TrInvoiceHeader transferHeader = db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == transferHead);
+            if (!Object.ReferenceEquals(transferHeader, null))
+               db.TrInvoiceHeaders.Remove(transferHeader);
+
 
             IQueryable<TrInvoiceLine> trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId);
             if (trInvoiceLine.Any())
