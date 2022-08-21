@@ -99,6 +99,7 @@ namespace Foxoft
          this.colDocumentNumber.Name = "colDocumentNumber";
          this.colDocumentNumber.Visible = true;
          this.colDocumentNumber.VisibleIndex = 0;
+         this.colDocumentNumber.Width = 169;
          // 
          // colIsReturn
          // 
@@ -106,6 +107,7 @@ namespace Foxoft
          this.colIsReturn.Name = "colIsReturn";
          this.colIsReturn.Visible = true;
          this.colIsReturn.VisibleIndex = 1;
+         this.colIsReturn.Width = 93;
          // 
          // colDocumentDate
          // 
@@ -113,6 +115,7 @@ namespace Foxoft
          this.colDocumentDate.Name = "colDocumentDate";
          this.colDocumentDate.Visible = true;
          this.colDocumentDate.VisibleIndex = 2;
+         this.colDocumentDate.Width = 194;
          // 
          // colCurrAccCode
          // 
@@ -145,6 +148,7 @@ namespace Foxoft
          this.colTotalNetAmount.Name = "colTotalNetAmount";
          this.colTotalNetAmount.Visible = true;
          this.colTotalNetAmount.VisibleIndex = 3;
+         this.colTotalNetAmount.Width = 194;
          // 
          // colCurrAccDesc
          // 
@@ -152,6 +156,7 @@ namespace Foxoft
          this.colCurrAccDesc.Name = "colCurrAccDesc";
          this.colCurrAccDesc.Visible = true;
          this.colCurrAccDesc.VisibleIndex = 4;
+         this.colCurrAccDesc.Width = 197;
          // 
          // FormInvoiceHeaderList
          // 

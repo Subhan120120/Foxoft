@@ -1,34 +1,34 @@
 ﻿
 namespace Foxoft
 {
-    partial class FormPaymentHeaderList
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+   partial class FormPaymentHeaderList
+   {
+      /// <summary>
+      /// Required designer variable.
+      /// </summary>
+      private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      /// <summary>
+      /// Clean up any resources being used.
+      /// </summary>
+      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing && (components != null))
+         {
+            components.Dispose();
+         }
+         base.Dispose(disposing);
+      }
 
-        #region Windows Form Designer generated code
+      #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+      /// <summary>
+      /// Required method for Designer support - do not modify
+      /// the contents of this method with the code editor.
+      /// </summary>
+      private void InitializeComponent()
+      {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPaymentHeaderList));
          this.gC_PaymentHeaderList = new DevExpress.XtraGrid.GridControl();
@@ -82,6 +82,10 @@ namespace Foxoft
          this.gC_PaymentHeaderList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_ProductList_Paint);
          this.gC_PaymentHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_PaymentHeaderList_ProcessGridKey);
          // 
+         // trPaymentHeadersBindingSource
+         // 
+         this.trPaymentHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentHeader);
+         // 
          // gV_PaymentHeaderList
          // 
          this.gV_PaymentHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
@@ -97,6 +101,7 @@ namespace Foxoft
             this.colPosterminalId,
             this.colInvoiceHeaderId,
             this.colTotalPayment});
+         this.gV_PaymentHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(796, 370, 264, 272);
          this.gV_PaymentHeaderList.GridControl = this.gC_PaymentHeaderList;
          this.gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
          this.gV_PaymentHeaderList.OptionsView.ShowFooter = true;
@@ -176,10 +181,12 @@ namespace Foxoft
          // 
          this.colDescription.FieldName = "Description";
          this.colDescription.Name = "colDescription";
+         this.colDescription.Visible = true;
+         this.colDescription.VisibleIndex = 7;
          // 
          // colStoreCode
          // 
-         this.colStoreCode.FieldName = "CurrAccCode";
+         this.colStoreCode.FieldName = "StoreCode";
          this.colStoreCode.Name = "colStoreCode";
          // 
          // colPosterminalId
@@ -295,38 +302,38 @@ namespace Foxoft
          this.ResumeLayout(false);
          this.PerformLayout();
 
-        }
+      }
 
-        #endregion
+      #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_PaymentHeaderList;
-        private System.Windows.Forms.BindingSource trPaymentHeadersBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentHeaderList;
-        private DevExpress.XtraGrid.Columns.GridColumn colPaymentHeaderId;
-        private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colOperationTime;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colDescription;
-        private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colPosterminalId;
-        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
-        private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
-        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
-        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_InvoiceNumber;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccFirstName;
-        private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
-        private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
-        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
-        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-        private DevExpress.XtraBars.BarButtonItem bBI_ReceivePayment;
-        private DevExpress.XtraBars.BarButtonItem bBI_MakePayment;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
-        private DevExpress.XtraGrid.Columns.GridColumn col_TotalPayment;
-        private DevExpress.XtraGrid.Columns.GridColumn colTotalPayment;
+      private DevExpress.XtraGrid.GridControl gC_PaymentHeaderList;
+      private System.Windows.Forms.BindingSource trPaymentHeadersBindingSource;
+      private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentHeaderList;
+      private DevExpress.XtraGrid.Columns.GridColumn colPaymentHeaderId;
+      private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;
+      private DevExpress.XtraGrid.Columns.GridColumn colOperationTime;
+      private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colDescription;
+      private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colPosterminalId;
+      private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
+      private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
+      private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
+      private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_InvoiceNumber;
+      private DevExpress.XtraGrid.Columns.GridColumn colCurrAccFirstName;
+      private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
+      private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
+      private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
+      private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+      private DevExpress.XtraBars.BarButtonItem bBI_ReceivePayment;
+      private DevExpress.XtraBars.BarButtonItem bBI_MakePayment;
+      private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
+      private DevExpress.XtraGrid.Columns.GridColumn col_TotalPayment;
+      private DevExpress.XtraGrid.Columns.GridColumn colTotalPayment;
       private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
    }

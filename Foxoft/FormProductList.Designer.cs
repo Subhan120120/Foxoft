@@ -191,8 +191,6 @@ namespace Foxoft
          // 
          this.colRetailPrice.FieldName = "RetailPrice";
          this.colRetailPrice.Name = "colRetailPrice";
-         this.colRetailPrice.Visible = true;
-         this.colRetailPrice.VisibleIndex = 4;
          // 
          // colPurchasePrice
          // 
@@ -204,7 +202,7 @@ namespace Foxoft
          this.colWholesalePrice.FieldName = "WholesalePrice";
          this.colWholesalePrice.Name = "colWholesalePrice";
          this.colWholesalePrice.Visible = true;
-         this.colWholesalePrice.VisibleIndex = 5;
+         this.colWholesalePrice.VisibleIndex = 4;
          // 
          // colUseInternet
          // 

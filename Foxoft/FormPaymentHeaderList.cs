@@ -40,6 +40,10 @@ namespace Foxoft
          this.gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
          LoadPaymentHeaders();
+
+         string storeCode = Authorization.StoreCode;
+         this.gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+
       }
 
       private void LoadPaymentHeaders()
@@ -100,6 +104,7 @@ namespace Foxoft
                                                            CreatedDate = x.CreatedDate,
                                                            LastUpdatedUserName = x.LastUpdatedUserName,
                                                            LastUpdatedDate = x.LastUpdatedDate,
+                                                           TrInvoiceHeader = x.TrInvoiceHeader
                                                         })
                                                         .ToList();
 

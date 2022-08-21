@@ -42,6 +42,10 @@ namespace Foxoft
       {
          this.processCode = processCode;
          LoadInvoiveHeaders();
+
+         string storeCode = Authorization.StoreCode;
+         this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+
          gV_InvoiceHeaderList.BestFitColumns();
       }
 

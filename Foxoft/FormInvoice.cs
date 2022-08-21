@@ -670,6 +670,7 @@ namespace Foxoft
 
             string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
             trPaymentHeader.DocumentNumber = NewDocNum;
+            trPaymentHeader.Description = trInvoiceHeader.Description;
 
             efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
 
@@ -683,6 +684,7 @@ namespace Foxoft
                trPaymentLine.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
                trPaymentLine.CurrencyCode = il.CurrencyCode;
                trPaymentLine.ExchangeRate = il.ExchangeRate;
+               trPaymentLine.LineDescription = il.LineDescription;
                trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
 
                efMethods.InsertPaymentLine(trPaymentLine);

@@ -941,13 +941,13 @@ namespace Foxoft
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreviewAzn);
-         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_CopyInvoice);
-         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_Whatsapp);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Print";
          // 
          // ribbonPageGroup1
          // 
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CopyInvoice);
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Whatsapp);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Nəzarət";
          // 
