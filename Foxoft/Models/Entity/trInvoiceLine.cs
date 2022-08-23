@@ -139,7 +139,6 @@ namespace Foxoft.Models
       [DisplayName("Son Alış Qiy.")]
       public decimal? LastPurchasePrice { get; set; }
 
-
       [DisplayName("Mənfəət")]
       public decimal? Benefit { get { return (decimal?)PriceLoc - LastPurchasePrice; } }
 

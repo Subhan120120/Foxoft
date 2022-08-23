@@ -50,12 +50,13 @@ namespace Foxoft
          colBalance.OptionsColumn.ReadOnly = true;
          colLastPurchasePrice.OptionsColumn.ReadOnly = true;
 
-         if (processCode == "EX" || processCode == "CI" || processCode == "CO")
+         if (processCode == "EX" || processCode == "CI" || processCode == "CO" || processCode == "TF")
          {
             if (processCode == "EX")
                colQty.Visible = false;
+            if (processCode != "TF")
+               btnEdit_CurrAccCode.Enabled = false;
 
-            btnEdit_CurrAccCode.Enabled = false;
             colBalance.Visible = false;
             col_PosDiscount.Visible = false;
             colLastPurchasePrice.Visible = false;
@@ -133,7 +134,7 @@ namespace Foxoft
          invoiceHeader.OfficeCode = Authorization.OfficeCode;
          invoiceHeader.StoreCode = Authorization.StoreCode;
          invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
-         invoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
+         invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
          if (dcProcess.ProcessCode == "RS")
          {
             invoiceHeader.CurrAccCode = "111";
@@ -462,7 +463,9 @@ namespace Foxoft
                   TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
                   int currentQty = Object.ReferenceEquals(currTrInvoLine, null) ? 0 : currTrInvoLine.Qty;
 
-                  int balance = efMethods.SelectProduct(productCode).Balance + currentQty;
+                  string warehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+                  int balance = efMethods.SelectProductBalance(productCode, warehouseCode) + currentQty;
+
                   int eValue = Convert.ToInt32(e.Value ??= 0);
 
                   if (eValue > balance)

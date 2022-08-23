@@ -93,6 +93,15 @@ namespace Foxoft.Models
       //public int Balance { get { return TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut); } set { } }
 
       [NotMapped]
+      [DisplayName("Qalıq Merkez")]
+      public int BalanceM { get; set; }
+
+      [NotMapped]
+      [DisplayName("Qalıq Filial")]
+      public int BalanceF { get; set; }
+
+
+      [NotMapped]
       [DisplayName("Son Alış Qiy.")]
       public decimal? LastPurchasePrice { get; set; }
 

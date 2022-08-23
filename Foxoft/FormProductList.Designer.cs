@@ -61,6 +61,8 @@ namespace Foxoft
          this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBalanceF = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBalanceM = new DevExpress.XtraGrid.Columns.GridColumn();
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.BBI_ProductNew = new DevExpress.XtraBars.BarButtonItem();
          this.btn_ProductEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -123,7 +125,9 @@ namespace Foxoft
             this.colCreatedUserName,
             this.colCreatedDate,
             this.colLastUpdatedUserName,
-            this.colLastUpdatedDate});
+            this.colLastUpdatedDate,
+            this.colBalanceF,
+            this.colBalanceM});
          this.gV_ProductList.CustomizationFormBounds = new System.Drawing.Rectangle(624, 401, 264, 272);
          this.gV_ProductList.GridControl = this.gC_ProductList;
          this.gV_ProductList.Name = "gV_ProductList";
@@ -139,6 +143,7 @@ namespace Foxoft
          this.colProductCode.Name = "colProductCode";
          this.colProductCode.Visible = true;
          this.colProductCode.VisibleIndex = 0;
+         this.colProductCode.Width = 77;
          // 
          // colProductDesc
          // 
@@ -146,6 +151,7 @@ namespace Foxoft
          this.colProductDesc.Name = "colProductDesc";
          this.colProductDesc.Visible = true;
          this.colProductDesc.VisibleIndex = 1;
+         this.colProductDesc.Width = 417;
          // 
          // colBarcode
          // 
@@ -202,7 +208,8 @@ namespace Foxoft
          this.colWholesalePrice.FieldName = "WholesalePrice";
          this.colWholesalePrice.Name = "colWholesalePrice";
          this.colWholesalePrice.Visible = true;
-         this.colWholesalePrice.VisibleIndex = 4;
+         this.colWholesalePrice.VisibleIndex = 5;
+         this.colWholesalePrice.Width = 122;
          // 
          // colUseInternet
          // 
@@ -213,8 +220,6 @@ namespace Foxoft
          // 
          this.colBalance.FieldName = "Balance";
          this.colBalance.Name = "colBalance";
-         this.colBalance.Visible = true;
-         this.colBalance.VisibleIndex = 2;
          // 
          // colLastPurchasePrice
          // 
@@ -223,7 +228,8 @@ namespace Foxoft
          this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
          this.colLastPurchasePrice.Visible = true;
-         this.colLastPurchasePrice.VisibleIndex = 3;
+         this.colLastPurchasePrice.VisibleIndex = 4;
+         this.colLastPurchasePrice.Width = 105;
          // 
          // colLastSalePrice
          // 
@@ -269,6 +275,22 @@ namespace Foxoft
          // 
          this.colLastUpdatedDate.FieldName = "LastUpdatedDate";
          this.colLastUpdatedDate.Name = "colLastUpdatedDate";
+         // 
+         // colBalanceF
+         // 
+         this.colBalanceF.FieldName = "BalanceF";
+         this.colBalanceF.Name = "colBalanceF";
+         this.colBalanceF.Visible = true;
+         this.colBalanceF.VisibleIndex = 3;
+         this.colBalanceF.Width = 85;
+         // 
+         // colBalanceM
+         // 
+         this.colBalanceM.FieldName = "BalanceM";
+         this.colBalanceM.Name = "colBalanceM";
+         this.colBalanceM.Visible = true;
+         this.colBalanceM.VisibleIndex = 2;
+         this.colBalanceM.Width = 87;
          // 
          // ribbonControl1
          // 
@@ -427,5 +449,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
-    }
+      private DevExpress.XtraGrid.Columns.GridColumn colBalanceF;
+      private DevExpress.XtraGrid.Columns.GridColumn colBalanceM;
+   }
 }

@@ -99,6 +99,8 @@ namespace Foxoft
                                                     .Select(x => new DcProduct
                                                     {
                                                        Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                                       BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
+                                                       BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
                                                        LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
                                                        ProductCode = x.ProductCode,
                                                        ProductDesc = x.ProductDesc,
@@ -128,6 +130,8 @@ namespace Foxoft
                                 .Select(x => new DcProduct
                                 {
                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                   BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
+                                   BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
                                    LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
                                    ProductCode = x.ProductCode,
                                    ProductDesc = x.ProductDesc,
@@ -146,7 +150,15 @@ namespace Foxoft
          }
       }
 
-
+      public int SelectProductBalance(string productCode, string warehouseCode)
+      {
+         using (subContext db = new subContext())
+         {
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.ProductCode == productCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                    .Sum(x => x.QtyIn - x.QtyOut);
+         }
+      }
 
       public List<DcProduct> SelectProductsByType(byte productTypeCode, CriteriaOperator filterCriteria)
       {
@@ -165,6 +177,8 @@ namespace Foxoft
                             .Select(x => new DcProduct
                             {
                                Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                               BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
+                               BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
                                LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
                                ProductCode = x.ProductCode,
                                ProductDesc = x.ProductDesc,
@@ -724,6 +738,15 @@ namespace Foxoft
             return db.DcWarehouses.Where(x => x.IsDisabled == false)
                                   .OrderBy(x => x.CreatedDate)
                                   .ToList(); // burdaki kolonlari dizaynda da elave et
+         }
+      }
+
+      public string SelectWarehouseByStore(string storeCode)
+      {
+         using (subContext db = new subContext())
+         {
+            return db.DcWarehouses.Where(x => x.IsDisabled == false && x.IsDefault == true)
+                                  .FirstOrDefault(x => x.StoreCode == storeCode).WarehouseCode; // burdaki kolonlari dizaynda da elave et
          }
       }
 
