@@ -664,13 +664,13 @@ namespace Foxoft
          }
       }
 
-      public decimal SelectInvoiceSum(string currAccCode, string docNum)
+      public decimal SelectInvoiceSum(Guid invoiceHeaderId)
       {
          using (subContext db = new subContext())
          {
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode && x.TrInvoiceHeader.DocumentNumber == docNum)
-                                    .Sum(x => (x.QtyIn - x.QtyOut) * x.PriceLoc);
+                                    .Where(x => x.TrInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                                    .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc * (100 - x.PosDiscount)));
          }
       }
 

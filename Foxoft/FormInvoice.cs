@@ -753,8 +753,7 @@ namespace Foxoft
          TrPaymentHeader trPaymentHeader = PaymentHeaderDefaults(trInvoiceHeader);
          TrPaymentLine trPaymentLine = PaymentLineDefaults();
 
-
-         decimal invoiceSumLoc = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+         decimal invoiceSumLoc = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
          if (invoiceSumLoc > 0)
          {
