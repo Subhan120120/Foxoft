@@ -15,7 +15,7 @@ namespace Foxoft
    public partial class UcReturn : XtraForm
    {
       public Guid returnInvoiceHeaderId;
-      public Guid invoiceHeaderId;
+      public TrInvoiceHeader trInvoiceHeader;
       public Guid invoiceLineID;
 
       EfMethods efMethods = new EfMethods();
@@ -27,34 +27,69 @@ namespace Foxoft
 
       private void UcReturn_Load(object sender, EventArgs e)
       {
-         ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
+         //ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
       }
 
       void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
       {
-         if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
-            efMethods.DeleteInvoice(returnInvoiceHeaderId);                // delete incomplete invoice
+         //if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
+         //   efMethods.DeleteInvoice(returnInvoiceHeaderId); 
       }
 
       private void btnEdit_InvoiceHeader_ButtonClick(object sender, ButtonPressedEventArgs e)
       {
-         using (FormInvoiceHeaderList formInvoiceHeaderList = new FormInvoiceHeaderList("RS"))
+         SelectDocNum();
+      }
+
+      private void SelectDocNum()
+      {
+         using (FormInvoiceHeaderList form = new FormInvoiceHeaderList("RS"))
          {
-            if (formInvoiceHeaderList.ShowDialog(this) == DialogResult.OK)
+            if (form.ShowDialog(this) == DialogResult.OK)
             {
-               btnEdit_InvoiceHeader.EditValue = formInvoiceHeaderList.trInvoiceHeader.DocumentNumber;
-               invoiceHeaderId = formInvoiceHeaderList.trInvoiceHeader.InvoiceHeaderId;
+               trInvoiceHeader = form.trInvoiceHeader;
+               btnEdit_InvoiceHeader.EditValue = trInvoiceHeader.DocumentNumber;
 
                if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
                   efMethods.DeleteInvoice(returnInvoiceHeaderId);                // delete previous invoice
                returnInvoiceHeaderId = Guid.NewGuid();                             // create next invoice
 
-               gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
-
-               gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeaderId);
-               gC_ReturnInvoiceLine.DataSource = null;
+               LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
             }
          }
+      }
+      private void LoadInvoice(Guid invoiceHeaderId)
+      {
+         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
+
+         gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeaderId);
+         gC_ReturnInvoiceLine.DataSource = null;
+
+         //dbContext.TrInvoiceLines.Include(o => o.DcProduct)
+         //                        .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+         //                        .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
+         //                        .OrderBy(x => x.CreatedDate)
+         //                        .LoadAsync()
+         //                        .ContinueWith(loadTask =>
+         //                        {
+         //                           LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
+
+         //                           lV_invoiceLine.ForEach(x => { x.ProductDesc = x.DcProduct.ProductDesc; });
+
+         //                           trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
+
+         //                           gV_InvoiceLine.BestFitColumns();
+         //                           gV_InvoiceLine.Focus();
+
+         //                        }, TaskScheduler.FromCurrentSynchronizationContext());
+
+         //dataLayoutControl1.isValid(out List<string> errorList);
+         CalcPaidAmount();
+      }
+      private void CalcPaidAmount()
+      {
+         //decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+         //lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
       }
 
       private void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -109,7 +144,7 @@ namespace Foxoft
                      else
                         efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
 
-                     gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
+                     gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
                   }
                }
             }
@@ -147,7 +182,7 @@ namespace Foxoft
                if (formPayment.ShowDialog(this) == DialogResult.OK)
                {
                   returnInvoiceHeaderId = Guid.NewGuid();
-                  efMethods.UpdateInvoiceIsCompleted(invoiceHeaderId);
+                  efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
                   gC_InvoiceLine.DataSource = null;
                   gC_PaymentLine.DataSource = null;

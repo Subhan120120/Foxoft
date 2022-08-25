@@ -63,6 +63,8 @@ namespace Foxoft
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -78,9 +80,10 @@ namespace Foxoft
             this.bBI_MdiChildrenList,
             this.bBI_CloseWindows,
             this.bBI_POS,
-            this.bSI_UserName});
+            this.bSI_UserName,
+            this.barButtonItem1});
          this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-         this.parentRibbonControl.MaxItemId = 14;
+         this.parentRibbonControl.MaxItemId = 15;
          this.parentRibbonControl.Name = "parentRibbonControl";
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
@@ -138,7 +141,8 @@ namespace Foxoft
          // ribbonPage_Home
          // 
          this.ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGr_Control});
+            this.ribbonPageGr_Control,
+            this.ribbonPageGroup1});
          this.ribbonPage_Home.MergeOrder = 0;
          this.ribbonPage_Home.Name = "ribbonPage_Home";
          this.ribbonPage_Home.Text = "Ümumi";
@@ -341,6 +345,20 @@ namespace Foxoft
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
          // 
+         // ribbonPageGroup1
+         // 
+         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
+         this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+         this.ribbonPageGroup1.Text = "Nəzarət";
+         // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "Test";
+         this.barButtonItem1.Id = 14;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         // 
          // FormERP
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -399,5 +417,7 @@ namespace Foxoft
       private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
       private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator4;
       private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Transfer;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
    }
 }
