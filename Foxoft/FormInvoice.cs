@@ -52,15 +52,21 @@ namespace Foxoft
 
          if (processCode == "EX" || processCode == "CI" || processCode == "CO" || processCode == "TF")
          {
-            if (processCode == "EX")
-               colQty.Visible = false;
-            if (processCode != "TF")
-               btnEdit_CurrAccCode.Enabled = false;
-
+            btnEdit_CurrAccCode.Enabled = false;
             colBalance.Visible = false;
             col_PosDiscount.Visible = false;
             colLastPurchasePrice.Visible = false;
             colBenefit.Visible = false;
+
+            if (processCode == "EX")
+               colQty.Visible = false;
+            if (processCode == "TF")
+            {
+               btnEdit_CurrAccCode.Enabled = true;
+               col_Price.Visible = false;
+               colCurrencyCode.Visible = false;
+               col_NetAmount.Visible = false;
+            }
          }
 
          this.productTypeCode = productTypeCode;
