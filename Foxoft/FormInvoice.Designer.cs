@@ -1125,17 +1125,11 @@ namespace Foxoft
       private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PriceLoc;
       private DevExpress.XtraBars.BarButtonItem bBI_SaveQuit;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup Faktura;
-      private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
       private DevExpress.XtraGrid.Columns.GridColumn colQty;
-      private DevExpress.XtraEditors.TextEdit CurrAccDescriptionTextEdit;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDescription;
       private DevExpress.XtraEditors.LabelControl lbl_CurrAccDesc;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
       private DevExpress.Utils.VisualEffects.AdornerUIManager adorneruıManager1;
-      private DevExpress.Utils.VisualEffects.Badge badge1;
-      private DevExpress.Utils.VisualEffects.Badge badge2;
       private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
       private DevExpress.XtraGrid.Columns.GridColumn colBalance;
       private DevExpress.XtraGrid.Columns.GridColumn colBenefit;

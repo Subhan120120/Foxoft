@@ -14,6 +14,7 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using DevExpress.XtraEditors;
 
 namespace Foxoft
 {
@@ -282,6 +283,26 @@ namespace Foxoft
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
          gC_CurrAccList.ExportToXlsx($@"C:\Users\Public\Desktop\CariHesablar.xlsx");
+      }
+
+      private void bBI_CurrAccDelete_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (efMethods.CurrAccExist(dcCurrAcc.CurrAccCode))
+         {
+            if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcCurrAcc.CurrAccDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+               efMethods.DeleteCurrAcc(dcCurrAcc);
+
+               LoadCurrAccs();
+            }
+         }
+         else
+            XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+      }
+
+      private void bBI_CurAccRefresh_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         UpdateGridViewData();
       }
    }
 }

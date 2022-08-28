@@ -1,6 +1,7 @@
 ﻿using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
@@ -332,6 +333,26 @@ namespace Foxoft
             if (balance == 0)
                e.Appearance.ForeColor = Color.Gray;
          }
+      }
+
+      private void bBI_ProductDelete_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (efMethods.ProductExist(dcProduct.ProductCode))
+         {
+            if (MessageBox.Show("Silmek Isteyirsiz? \n " + dcProduct.ProductDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+               efMethods.DeleteProduct(dcProduct);
+
+               LoadProducts(productTypeCode);
+            }
+         }
+         else
+            XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+      }
+
+      private void bBI_ProductRefresh_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         LoadProducts(productTypeCode);
       }
    }
 }

@@ -866,8 +866,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit CurrAccTypeCodeLookUpEdit;
       private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
       private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
-      private DevExpress.XtraEditors.TextEdit OfficeCodeTextEdit;
-      private DevExpress.XtraEditors.TextEdit StoreCodeTextEdit;
       private DevExpress.XtraLayout.LayoutControlItem ItemForOfficeCode;
       private DevExpress.XtraLayout.LayoutControlItem ItemForStoreCode;
       private DevExpress.XtraEditors.LookUpEdit OfficeCodeLookUpEdit;

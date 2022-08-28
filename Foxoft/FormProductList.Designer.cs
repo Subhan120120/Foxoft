@@ -69,6 +69,8 @@ namespace Foxoft
          this.bBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_ProductDelete = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_ProductRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -93,10 +95,6 @@ namespace Foxoft
             this.gV_ProductList});
          this.gC_ProductList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_ProductList_Paint);
          this.gC_ProductList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_ProductList_ProcessGridKey);
-         // 
-         // dcProductsBindingSource
-         // 
-         this.dcProductsBindingSource.DataSource = typeof(Foxoft.Models.DcProduct);
          // 
          // gV_ProductList
          // 
@@ -302,9 +300,11 @@ namespace Foxoft
             this.btn_ProductEdit,
             this.bBI_ExportExcel,
             this.bBI_quit,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.bBI_ProductDelete,
+            this.bBI_ProductRefresh});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 8;
+         this.ribbonControl1.MaxItemId = 10;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -314,7 +314,7 @@ namespace Foxoft
          // 
          // BBI_ProductNew
          // 
-         this.BBI_ProductNew.Caption = "Yeni Məhsul";
+         this.BBI_ProductNew.Caption = "Yeni";
          this.BBI_ProductNew.Id = 1;
          this.BBI_ProductNew.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ProductNew.ImageOptions.SvgImage")));
          this.BBI_ProductNew.Name = "BBI_ProductNew";
@@ -322,7 +322,7 @@ namespace Foxoft
          // 
          // btn_ProductEdit
          // 
-         this.btn_ProductEdit.Caption = "Məhsulu Dəyiş";
+         this.btn_ProductEdit.Caption = "Dəyiş";
          this.btn_ProductEdit.Id = 2;
          this.btn_ProductEdit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_ProductEdit.ImageOptions.SvgImage")));
          this.btn_ProductEdit.Name = "btn_ProductEdit";
@@ -348,8 +348,25 @@ namespace Foxoft
          // 
          this.barButtonItem1.Caption = "Test";
          this.barButtonItem1.Id = 7;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
          this.barButtonItem1.Name = "barButtonItem1";
          this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick_1);
+         // 
+         // bBI_ProductDelete
+         // 
+         this.bBI_ProductDelete.Caption = "Sil";
+         this.bBI_ProductDelete.Id = 8;
+         this.bBI_ProductDelete.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_ProductDelete.ImageOptions.SvgImage")));
+         this.bBI_ProductDelete.Name = "bBI_ProductDelete";
+         this.bBI_ProductDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ProductDelete_ItemClick);
+         // 
+         // bBI_ProductRefresh
+         // 
+         this.bBI_ProductRefresh.Caption = "Yenilə";
+         this.bBI_ProductRefresh.Id = 9;
+         this.bBI_ProductRefresh.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_ProductRefresh.ImageOptions.SvgImage")));
+         this.bBI_ProductRefresh.Name = "bBI_ProductRefresh";
+         this.bBI_ProductRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ProductRefresh_ItemClick);
          // 
          // ribbonPage1
          // 
@@ -363,15 +380,17 @@ namespace Foxoft
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.BBI_ProductNew);
          this.ribbonPageGroup1.ItemLinks.Add(this.btn_ProductEdit);
-         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_ExportExcel);
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_ProductDelete);
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_ProductRefresh);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-         this.ribbonPageGroup1.Text = "Mehsul";
+         this.ribbonPageGroup1.Text = "İdarə";
          // 
          // ribbonPageGroup2
          // 
+         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_ExportExcel);
          this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem1);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-         this.ribbonPageGroup2.Text = "Test";
+         this.ribbonPageGroup2.Text = "Nəzarət";
          // 
          // ribbonStatusBar1
          // 
@@ -451,5 +470,8 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceF;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceM;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+      private DevExpress.XtraBars.BarButtonItem bBI_ProductDelete;
+      private DevExpress.XtraBars.BarButtonItem bBI_ProductRefresh;
    }
 }

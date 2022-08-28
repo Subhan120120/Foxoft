@@ -41,7 +41,7 @@ namespace Foxoft
          badge2 = new Badge();
          adornerUIManager1.Elements.Add(badge1);
          adornerUIManager1.Elements.Add(badge2);
-         badge1.TargetElement = barButtonItem1;
+         //badge1.TargetElement = barButtonItem1;
          badge2.TargetElement = ribbonPage1;
       }
 

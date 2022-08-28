@@ -196,20 +196,6 @@ namespace Foxoft
 
         private DevExpress.XtraGrid.GridControl gC_InvoiceHeaderList;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceHeaderList;
-        private DevExpress.XtraGrid.Columns.GridColumn col_DocNum;
-        private DevExpress.XtraGrid.Columns.GridColumn col_IsReturn;
-        private DevExpress.XtraGrid.Columns.GridColumn col_DocDate;
-        private DevExpress.XtraGrid.Columns.GridColumn col_DocTime;
-        private DevExpress.XtraGrid.Columns.GridColumn col_Desc;
-        private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_OfficeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_StoreCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_CustomsDocNum;
-        private DevExpress.XtraGrid.Columns.GridColumn col_CreatedUserName;
-        private DevExpress.XtraGrid.Columns.GridColumn col_CreatedDate;
-        private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceHeaderId;
-        private DevExpress.XtraGrid.Columns.GridColumn col_ProcessCode;
         private System.Windows.Forms.BindingSource trInvoiceHeadersBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colOperationDate;
@@ -217,11 +203,9 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colIsReturn;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colStoreCode;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentDate;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentTime;
         private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colWarehouseCode;
       private DevExpress.XtraGrid.Columns.GridColumn colToWarehouseCode;

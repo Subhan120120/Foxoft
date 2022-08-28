@@ -19,8 +19,8 @@ namespace Foxoft
 {
    public partial class FormERP : RibbonForm
    {
-      AdornerUIManager adornerUIManager1;
-      IList<AdornerElement> adorners1;
+      //AdornerUIManager adornerUIManager1;
+      //IList<AdornerElement> adorners1;
 
       public FormERP()
       {

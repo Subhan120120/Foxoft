@@ -414,7 +414,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_PaymentDetail;
       private DevExpress.XtraBars.BarStaticItem bSI_UserName;
       private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator5;
-      private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
       private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator4;
       private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Transfer;
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;

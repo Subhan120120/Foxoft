@@ -369,6 +369,28 @@ namespace Foxoft
          }
       }
 
+      public int DeleteProduct(DcProduct dcProduct)
+      {
+         using (subContext db = new subContext())
+         {            
+            if (!object.ReferenceEquals(dcProduct, null))
+               db.DcProducts.Remove(dcProduct);
+
+            return db.SaveChanges();
+         }
+      }
+
+      public int DeleteCurrAcc(DcCurrAcc dcCurrAcc)
+      {
+         using (subContext db = new subContext())
+         {            
+            if (!object.ReferenceEquals(dcCurrAcc, null))
+               db.DcCurrAccs.Remove(dcCurrAcc);
+
+            return db.SaveChanges();
+         }
+      }
+
       public int DeletePaymentByInvoice(Guid invoiceHeaderId)
       {
          using (subContext db = new subContext())

@@ -74,10 +74,11 @@ namespace Foxoft
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_refresh = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_quit = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Report1 = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -102,10 +103,6 @@ namespace Foxoft
             this.gV_CurrAccList});
          this.gC_CurrAccList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_CurrAccList_Paint);
          this.gC_CurrAccList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_CurrAccList_ProcessGridKey);
-         // 
-         // dcCurrAccsBindingSource
-         // 
-         this.dcCurrAccsBindingSource.DataSource = typeof(Foxoft.Models.DcCurrAcc);
          // 
          // gV_CurrAccList
          // 
@@ -346,12 +343,13 @@ namespace Foxoft
             this.ribbonControl1.SearchEditItem,
             this.bBI_CurrAccNew,
             this.bBI_CurAccEdit,
-            this.bBI_refresh,
             this.bBI_quit,
             this.bBI_Report1,
-            this.bBI_ExportXlsx});
+            this.bBI_ExportXlsx,
+            this.bBI_CurrAccDelete,
+            this.bBI_CurAccRefresh});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 7;
+         this.ribbonControl1.MaxItemId = 9;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -361,7 +359,7 @@ namespace Foxoft
          // 
          // bBI_CurrAccNew
          // 
-         this.bBI_CurrAccNew.Caption = "Yeni Istifadəçi";
+         this.bBI_CurrAccNew.Caption = "Yeni";
          this.bBI_CurrAccNew.Id = 1;
          this.bBI_CurrAccNew.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CurrAccNew.ImageOptions.SvgImage")));
          this.bBI_CurrAccNew.Name = "bBI_CurrAccNew";
@@ -369,19 +367,11 @@ namespace Foxoft
          // 
          // bBI_CurAccEdit
          // 
-         this.bBI_CurAccEdit.Caption = "Istifadəçini Dəyiş";
+         this.bBI_CurAccEdit.Caption = "Dəyiş";
          this.bBI_CurAccEdit.Id = 2;
          this.bBI_CurAccEdit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CurAccEdit.ImageOptions.SvgImage")));
          this.bBI_CurAccEdit.Name = "bBI_CurAccEdit";
          this.bBI_CurAccEdit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CurrAccEdit_ItemClick);
-         // 
-         // bBI_refresh
-         // 
-         this.bBI_refresh.Caption = "Yenilə";
-         this.bBI_refresh.Id = 3;
-         this.bBI_refresh.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_refresh.ImageOptions.SvgImage")));
-         this.bBI_refresh.Name = "bBI_refresh";
-         this.bBI_refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_refresh_ItemClick);
          // 
          // bBI_quit
          // 
@@ -407,6 +397,22 @@ namespace Foxoft
          this.bBI_ExportXlsx.Name = "bBI_ExportXlsx";
          this.bBI_ExportXlsx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportXlsx_ItemClick);
          // 
+         // bBI_CurrAccDelete
+         // 
+         this.bBI_CurrAccDelete.Caption = "Sil";
+         this.bBI_CurrAccDelete.Id = 7;
+         this.bBI_CurrAccDelete.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CurrAccDelete.ImageOptions.SvgImage")));
+         this.bBI_CurrAccDelete.Name = "bBI_CurrAccDelete";
+         this.bBI_CurrAccDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CurrAccDelete_ItemClick);
+         // 
+         // bBI_CurAccRefresh
+         // 
+         this.bBI_CurAccRefresh.Caption = "Yenilə";
+         this.bBI_CurAccRefresh.Id = 8;
+         this.bBI_CurAccRefresh.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CurAccRefresh.ImageOptions.SvgImage")));
+         this.bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
+         this.bBI_CurAccRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CurAccRefresh_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -419,9 +425,10 @@ namespace Foxoft
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CurrAccNew);
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CurAccEdit);
-         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_refresh);
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CurrAccDelete);
+         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CurAccRefresh);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-         this.ribbonPageGroup1.Text = "İdarə Et";
+         this.ribbonPageGroup1.Text = "İdarə";
          // 
          // ribbonPageGroup3
          // 
@@ -471,12 +478,10 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
         private DevExpress.XtraBars.BarButtonItem bBI_CurrAccNew;
         private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
-        private DevExpress.XtraBars.BarButtonItem bBI_refresh;
         private DevExpress.XtraBars.BarButtonItem bBI_quit;
       private DevExpress.XtraBars.BarButtonItem bBI_Report1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
@@ -517,5 +522,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
       private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
       private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
+      private DevExpress.XtraBars.BarButtonItem bBI_CurrAccDelete;
+      private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
    }
 }
