@@ -318,10 +318,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colPosterminalId;
       private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
       private DevExpress.XtraGrid.Columns.GridColumn colInvoiceNumber;
-      private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
       private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_InvoiceNumber;
-      private DevExpress.XtraGrid.Columns.GridColumn colCurrAccFirstName;
-      private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
       private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
       private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
       private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
@@ -332,7 +329,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem bBI_ReceivePayment;
       private DevExpress.XtraBars.BarButtonItem bBI_MakePayment;
       private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
-      private DevExpress.XtraGrid.Columns.GridColumn col_TotalPayment;
       private DevExpress.XtraGrid.Columns.GridColumn colTotalPayment;
       private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;

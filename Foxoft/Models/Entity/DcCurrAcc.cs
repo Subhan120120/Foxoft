@@ -118,7 +118,6 @@ namespace Foxoft.Models
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string Address { get; set; }
 
-
       [DisplayName("Telefon")]
       [DataType(DataType.PhoneNumber)]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -129,6 +128,9 @@ namespace Foxoft.Models
       [Column(TypeName = "date")]
       [DefaultValue("'1901-01-01'")]
       public DateTime? BirthDate { get; set; }
+
+      [DisplayName("Varsayılan Müstəri")]
+      public bool IsDefaultCustomer { get; set; }
 
       [NotMapped]
       [DisplayName("Qalıq")]

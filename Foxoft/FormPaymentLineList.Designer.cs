@@ -394,10 +394,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.GridControl gC_PaymentLineList;
         private System.Windows.Forms.BindingSource trPaymentLinesBindingSource;
         private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentLineList;
-        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_InvoiceNumber;
-        private DevExpress.XtraGrid.Columns.GridColumn colCurrAccFirstName;
-        private DevExpress.XtraGrid.Columns.GridColumn colTotalNetAmount;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repoHLE_DocNum;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;

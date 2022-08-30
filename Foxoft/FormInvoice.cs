@@ -141,10 +141,14 @@ namespace Foxoft
          invoiceHeader.StoreCode = Authorization.StoreCode;
          invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
          invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+
          if (dcProcess.ProcessCode == "RS")
          {
-            invoiceHeader.CurrAccCode = "111";
-            lbl_CurrAccDesc.Text = efMethods.SelectCurrAcc("111").CurrAccDesc;
+            string defaultCustomer = efMethods.SelectCustomerByStore(Authorization.StoreCode);
+            invoiceHeader.CurrAccCode = defaultCustomer;
+
+            if (!Object.ReferenceEquals(null, efMethods.SelectCurrAcc(defaultCustomer)))
+               invoiceHeader.CurrAccDesc = efMethods.SelectCurrAcc(defaultCustomer).CurrAccDesc;
          }
 
          e.NewObject = invoiceHeader;
@@ -274,6 +278,9 @@ namespace Foxoft
                btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
+
+               trInvoiceHeader.ToWarehouseCode = efMethods.SelectWarehouseByStore(trInvoiceHeader.CurrAccCode);
+               lUE_ToWarehouseCode.EditValue = trInvoiceHeader.ToWarehouseCode;
             }
          }
       }
@@ -655,7 +662,6 @@ namespace Foxoft
 
             if (trInvoiceHeader.ProcessCode == "TF")
             {
-
                foreach (var entry in entityEntry)
                {
                   if (entry.Entity.GetType().Name == nameof(TrInvoiceHeader))
@@ -694,7 +700,6 @@ namespace Foxoft
                         context2.SaveChanges();
                      }
 
-
                      //entry.CurrentValues.SetValues(asdasd);
                   }
 
@@ -731,11 +736,9 @@ namespace Foxoft
                         }
                         context2.SaveChanges();
                      }
-
                      //entry.CurrentValues.SetValues(asdsdf);
                   }
                }
-
                //context2.SaveChanges();
             }
 

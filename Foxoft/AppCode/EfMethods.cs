@@ -372,7 +372,7 @@ namespace Foxoft
       public int DeleteProduct(DcProduct dcProduct)
       {
          using (subContext db = new subContext())
-         {            
+         {
             if (!object.ReferenceEquals(dcProduct, null))
                db.DcProducts.Remove(dcProduct);
 
@@ -383,7 +383,7 @@ namespace Foxoft
       public int DeleteCurrAcc(DcCurrAcc dcCurrAcc)
       {
          using (subContext db = new subContext())
-         {            
+         {
             if (!object.ReferenceEquals(dcCurrAcc, null))
                db.DcCurrAccs.Remove(dcCurrAcc);
 
@@ -767,8 +767,30 @@ namespace Foxoft
       {
          using (subContext db = new subContext())
          {
-            return db.DcWarehouses.Where(x => x.IsDisabled == false && x.IsDefault == true)
-                                  .FirstOrDefault(x => x.StoreCode == storeCode).WarehouseCode; // burdaki kolonlari dizaynda da elave et
+            string wareCode = "";
+
+            DcWarehouse dcWarehouse = db.DcWarehouses.Where(x => x.IsDisabled == false && x.IsDefault == true)
+                                  .FirstOrDefault(x => x.StoreCode == storeCode);
+
+            if (!object.ReferenceEquals(null, dcWarehouse))
+               wareCode = dcWarehouse.WarehouseCode;
+
+            return wareCode;
+         }
+      }
+
+      public string SelectCustomerByStore(string storeCode)
+      {
+         using (subContext db = new subContext())
+         {
+            string defCustomer = "";
+            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefaultCustomer == true)
+                                .FirstOrDefault(x => x.StoreCode == storeCode);
+
+            if (!object.ReferenceEquals(null, dcCurrAcc))
+               defCustomer = dcCurrAcc.CurrAccCode;
+
+            return defCustomer;
          }
       }
 

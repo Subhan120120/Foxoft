@@ -292,7 +292,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForReportName;
         private DevExpress.XtraEditors.MemoEdit ReportQueryMemoEdit;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        private DevExpress.XtraGrid.Columns.GridColumn FieldName;
         private DevExpress.XtraGrid.GridControl DcReportFiltersGridControl;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportFilters;

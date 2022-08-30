@@ -470,7 +470,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceF;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceM;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem2;
       private DevExpress.XtraBars.BarButtonItem bBI_ProductDelete;
       private DevExpress.XtraBars.BarButtonItem bBI_ProductRefresh;
    }

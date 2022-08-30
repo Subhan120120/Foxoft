@@ -11,7 +11,7 @@ namespace Foxoft
    public partial class FormPayment : XtraForm
    {
       private Guid PaymentHeaderId;
-      private bool autoMakePayment;
+      //private bool autoMakePayment;
       private TrPaymentHeader trPaymentHeader = new TrPaymentHeader();
       private TrInvoiceHeader trInvoiceHeader { get; set; }
       private TrPaymentLine trPaymentLine = new TrPaymentLine();

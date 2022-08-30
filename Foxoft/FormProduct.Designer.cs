@@ -624,7 +624,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-        private DevExpress.XtraEditors.LookUpEdit BarcodeLookUpEdit;
         private DevExpress.XtraEditors.LookUpEdit ProductTypeCodeLookUpEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
         private DevExpress.XtraEditors.TextEdit BarcodeTextEdit;
@@ -641,7 +640,5 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem ItemForWholesalePrice;
       private DevExpress.XtraLayout.LayoutControlItem ItemForRetailPrice;
       private DevExpress.XtraLayout.LayoutControlItem ItemForPosDiscount;
-      private DevExpress.XtraEditors.SimpleButton simpleButton1;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
    }
 }

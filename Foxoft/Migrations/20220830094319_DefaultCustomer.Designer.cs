@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220830094319_DefaultCustomer")]
+    partial class DefaultCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,6 +138,9 @@ namespace Foxoft.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
+                    b.Property<string>("DefaultCustomer")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FatherName")
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
@@ -201,9 +206,6 @@ namespace Foxoft.Migrations
                     b.Property<byte?>("VendorTypeCode")
                         .HasColumnType("tinyint");
 
-                    b.Property<bool>("isDefaultCustomer")
-                        .HasColumnType("bit");
-
                     b.HasKey("CurrAccCode");
 
                     b.HasIndex("CurrAccTypeCode");
@@ -228,8 +230,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PhoneNum = "0519678909",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
-                            isDefaultCustomer = false
+                            StoreCode = "mgz01"
                         },
                         new
                         {
@@ -248,8 +249,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PhoneNum = "0519678909",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
-                            isDefaultCustomer = false
+                            StoreCode = "mgz01"
                         },
                         new
                         {
@@ -268,8 +268,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PhoneNum = "0773628800",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
-                            isDefaultCustomer = false
+                            StoreCode = "mgz01"
                         },
                         new
                         {
@@ -288,8 +287,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PhoneNum = "0553628804",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
-                            isDefaultCustomer = false
+                            StoreCode = "mgz01"
                         },
                         new
                         {
@@ -307,8 +305,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PhoneNum = "0773628800",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
-                            isDefaultCustomer = false
+                            StoreCode = "mgz01"
                         },
                         new
                         {
@@ -326,8 +323,7 @@ namespace Foxoft.Migrations
                             OfficeCode = "ofs01",
                             PhoneNum = "",
                             RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            StoreCode = "mgz01",
-                            isDefaultCustomer = false
+                            StoreCode = "mgz01"
                         });
                 });
 
