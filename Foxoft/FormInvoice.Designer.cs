@@ -202,9 +202,9 @@ namespace Foxoft
          // 
          // lbl_CurrAccDesc
          // 
-         this.lbl_CurrAccDesc.Location = new System.Drawing.Point(716, 12);
+         this.lbl_CurrAccDesc.Location = new System.Drawing.Point(626, 12);
          this.lbl_CurrAccDesc.Name = "lbl_CurrAccDesc";
-         this.lbl_CurrAccDesc.Size = new System.Drawing.Size(158, 20);
+         this.lbl_CurrAccDesc.Size = new System.Drawing.Size(248, 20);
          this.lbl_CurrAccDesc.StyleController = this.dataLayoutControl1;
          this.lbl_CurrAccDesc.TabIndex = 1;
          // 
@@ -614,14 +614,17 @@ namespace Foxoft
          this.btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
          this.btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.btnEdit_CurrAccCode.Size = new System.Drawing.Size(175, 20);
+         this.btnEdit_CurrAccCode.Size = new System.Drawing.Size(85, 20);
          this.btnEdit_CurrAccCode.StyleController = this.dataLayoutControl1;
          this.btnEdit_CurrAccCode.TabIndex = 2;
          this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
          this.btnEdit_CurrAccCode.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CurrAccCode_InvalidValue);
+         this.btnEdit_CurrAccCode.EditValueChanged += new System.EventHandler(this.btnEdit_CurrAccCode_EditValueChanged);
+         this.btnEdit_CurrAccCode.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.btnEdit_CurrAccCode_EditValueChanging);
          this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
          this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          this.btnEdit_CurrAccCode.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CurrAccCode_Validating);
+         this.btnEdit_CurrAccCode.Validated += new System.EventHandler(this.btnEdit_CurrAccCode_Validated);
          // 
          // lUE_StoreCode
          // 
@@ -947,7 +950,7 @@ namespace Foxoft
          this.ItemForCurrAccCode.Control = this.btnEdit_CurrAccCode;
          this.ItemForCurrAccCode.Location = new System.Drawing.Point(415, 0);
          this.ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-         this.ItemForCurrAccCode.Size = new System.Drawing.Size(289, 24);
+         this.ItemForCurrAccCode.Size = new System.Drawing.Size(199, 24);
          this.ItemForCurrAccCode.Text = "Cari Hesab";
          this.ItemForCurrAccCode.TextSize = new System.Drawing.Size(98, 13);
          // 
@@ -1001,10 +1004,10 @@ namespace Foxoft
          // layoutControlItem2
          // 
          this.layoutControlItem2.Control = this.lbl_CurrAccDesc;
-         this.layoutControlItem2.Location = new System.Drawing.Point(704, 0);
+         this.layoutControlItem2.Location = new System.Drawing.Point(614, 0);
          this.layoutControlItem2.MinSize = new System.Drawing.Size(67, 17);
          this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(162, 24);
+         this.layoutControlItem2.Size = new System.Drawing.Size(252, 24);
          this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem2.TextVisible = false;

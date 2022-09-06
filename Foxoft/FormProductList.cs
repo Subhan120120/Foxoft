@@ -101,6 +101,8 @@ namespace Foxoft
 
          if (view.FocusedRowHandle >= 0)
             dcProduct = view.GetRow(view.FocusedRowHandle) as DcProduct;
+         else
+            dcProduct = null;
       }
 
       private void gridView1_DoubleClick(object sender, EventArgs e)
@@ -164,7 +166,7 @@ namespace Foxoft
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
 
-         if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
+         if (e.KeyCode == Keys.Enter && dcProduct is not null)
          {
             DialogResult = DialogResult.OK;
          }
@@ -215,19 +217,6 @@ namespace Foxoft
                }
             }
 
-         }
-      }
-
-      private void ApplySelectedProduct()
-      {
-         if (gV_ProductList.FocusedRowHandle >= 0)
-         {
-            dcProduct = gV_ProductList.GetFocusedRow() as DcProduct;
-            DialogResult = DialogResult.OK;
-         }
-         else
-         {
-            MessageBox.Show("Məhsul Seçilmədi");
          }
       }
 

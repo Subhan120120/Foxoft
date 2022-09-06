@@ -48,6 +48,8 @@ namespace Foxoft
 
          if (view.FocusedRowHandle >= 0)
             dcCurrAcc = view.GetFocusedRow() as DcCurrAcc;
+         else
+            dcCurrAcc = null;
       }
 
       private void gV_CurrAccList_DoubleClick(object sender, EventArgs e)
@@ -70,7 +72,7 @@ namespace Foxoft
 
          //ApplySelectedCurrAcc();
          GridView view = sender as GridView;
-         if (view.SelectedRowsCount > 0)
+         if (dcCurrAcc is not null)
             DialogResult = DialogResult.OK;
       }
 
@@ -137,7 +139,7 @@ namespace Foxoft
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
 
-         if (view.SelectedRowsCount > 0)
+         if (dcCurrAcc is not null)
          {
             if (e.KeyCode == Keys.Enter)
             {
@@ -183,22 +185,10 @@ namespace Foxoft
          this.Close();
       }
 
-      private void ApplySelectedCurrAcc()
-      {
-         if (gV_CurrAccList.FocusedRowHandle >= 0)
-         {
-            dcCurrAcc = gV_CurrAccList.GetFocusedRow() as DcCurrAcc;
-            DialogResult = DialogResult.OK;
-         }
-         else
-         {
-            MessageBox.Show("Məhsul Seçilmədi");
-         }
-      }
-
       private void gV_CurrAccList_ColumnFilterChanged(object sender, EventArgs e)
       {
          GridView view = sender as GridView;
+
 
          if (view.FocusedRowHandle >= 0)
             dcCurrAcc = view.GetFocusedRow() as DcCurrAcc;

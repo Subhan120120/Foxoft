@@ -1263,6 +1263,7 @@ namespace Foxoft
          string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
          sendWhatsApp(phoneNum, "");
       }
+
       private void sendWhatsApp(string number, string message)
       {
          number = number.Trim();
@@ -1285,24 +1286,24 @@ namespace Foxoft
 
       private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
       {
-         //object eValue = e.;
+         object eValue = trInvoiceHeader.CurrAccCode;
 
-         //if (eValue is not null)
-         //{
-         //   DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+         if (eValue is not null)
+         {
+            DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
 
-         //   if (curr is null)
-         //   {
-         //      e.Cancel = true;
-         //   }
-         //   else
-         //   {
-         //      trInvoiceHeader.CurrAccCode = eValue.ToString();
-         //      lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
-         //   }
-         //}
+            if (curr is null)
+            {
+               e.Cancel = true;
+            }
+            else
+            {
+               trInvoiceHeader.CurrAccCode = eValue.ToString();
+               lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
+            }
+         }
       }
-
+      
       private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
       {
          e.ErrorText = "Belə bir cari yoxdur";
@@ -1314,5 +1315,17 @@ namespace Foxoft
          btnEdit_CurrAccCode.DoValidate();
       }
 
+      private void btnEdit_CurrAccCode_Validated(object sender, EventArgs e)
+      {
+
+      }
+
+      private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
+      {
+      }
+
+      private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
+      {
+      }
    }
 }

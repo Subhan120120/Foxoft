@@ -66,6 +66,7 @@ namespace Foxoft
             this.gV_InvoiceHeaderList});
          this.gC_InvoiceHeaderList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_InvoiceHeaderList_Paint);
          this.gC_InvoiceHeaderList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceHeaderList_ProcessGridKey);
+         this.gC_InvoiceHeaderList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceHeaderList_KeyDown);
          // 
          // trInvoiceHeadersBindingSource
          // 

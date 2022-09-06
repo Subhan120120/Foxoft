@@ -204,5 +204,11 @@ namespace Foxoft
          else
             trInvoiceHeader = null;
       }
+
+      private void gC_InvoiceHeaderList_KeyDown(object sender, KeyEventArgs e)
+      {
+         if (e.KeyCode == Keys.Escape)
+            Close();
+      }
    }
 }
