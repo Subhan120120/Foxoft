@@ -97,7 +97,7 @@ namespace Foxoft
                         FiscalPrintedState = x.FiscalPrintedState,
                         IsCompleted = x.IsCompleted,
                         IsLocked = x.IsLocked,
-                        IsPrinted = x.IsPrinted,
+                        PrintCount = x.PrintCount,
                         IsReturn = x.IsReturn,
                         IsSalesViaInternet = x.IsSalesViaInternet,
                         IsSuspended = x.IsSuspended,

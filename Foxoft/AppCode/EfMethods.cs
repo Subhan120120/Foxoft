@@ -435,6 +435,19 @@ namespace Foxoft
          }
       }
 
+      public int UpdateInvoicePrintCount(Guid invoiceHeaderId)
+      {
+         using (subContext db = new subContext())
+         {
+            TrInvoiceHeader trInvoiceHeader = db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
+
+            trInvoiceHeader.PrintCount = Convert.ToByte(trInvoiceHeader.PrintCount + 1);
+            db.Entry(trInvoiceHeader).Property(x => x.PrintCount).IsModified = true;
+            db.SaveChanges();
+            return trInvoiceHeader.PrintCount;
+         }
+      }
+
       public int UpdateInvoiceLineQtyOut(object invoiceLineId, int qtyOut)
       {
          Guid variable = Guid.Parse(invoiceLineId.ToString());
@@ -739,6 +752,19 @@ namespace Foxoft
             DcCurrency dcCurrency = db.DcCurrencies.Where(x => x.CurrencyCode == currancyCode)
                                                    .FirstOrDefault();
             return dcCurrency.ExchangeRate;
+         }
+      }
+
+      public int SelectInvoicePrinCount(Guid invoiceHeaderId)
+      {
+         using (subContext db = new subContext())
+         {
+            int rtrn = 0;
+            TrInvoiceHeader trInvoice = db.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                           .FirstOrDefault();
+            if (trInvoice is not null)
+               rtrn = trInvoice.PrintCount;
+            return rtrn;
          }
       }
 

@@ -226,8 +226,8 @@ namespace Foxoft
       {
          try
          {
-
-            gC_Report.ExportToXlsx($@"C:\Users\Public\Desktop\{report.ReportName}.xlsx");
+            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            gC_Report.ExportToXlsx(pathDesktop + $@"\{report.ReportName}.xlsx");
          }
          catch (Exception ex)
          {

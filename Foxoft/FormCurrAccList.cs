@@ -282,7 +282,8 @@ namespace Foxoft
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
-         gC_CurrAccList.ExportToXlsx($@"C:\Users\Public\Desktop\CariHesablar.xlsx");
+         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         gC_CurrAccList.ExportToXlsx(pathDesktop + $@"\CariHesablar.xlsx");
       }
 
       private void bBI_CurrAccDelete_ItemClick(object sender, ItemClickEventArgs e)

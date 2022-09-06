@@ -139,7 +139,6 @@ namespace Foxoft
       {
          if (!Object.ReferenceEquals(dcProduct, null))
          {
-
             FormProduct formProduct = new FormProduct(productTypeCode, dcProduct.ProductCode);
 
             if (formProduct.ShowDialog(this) == DialogResult.OK)
@@ -257,7 +256,8 @@ namespace Foxoft
 
       private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
       {
-         gC_ProductList.ExportToXlsx(@"C:\Users\Public\Desktop\ProductList.xlsx");
+         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         gC_ProductList.ExportToXlsx(pathDesktop + @"\ProductList.xlsx");
       }
 
       private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
@@ -275,13 +275,26 @@ namespace Foxoft
          else
             dcProduct = null;
 
-
          //LoadProducts(productTypeCode);
       }
 
       private void barButtonItem1_ItemClick_1(object sender, ItemClickEventArgs e)
       {
-         MessageBox.Show(gV_ProductList.ActiveFilterString);
+         object test = null;
+
+         //DialogResult dialogResult =  MessageBox.Show("Test", "", );
+
+         if (test is not null)
+         {
+            MessageBox.Show("test is not null");
+         }
+
+         if (test is null)
+         {
+            MessageBox.Show("test is null");
+         }
+
+
       }
 
       private void gV_ProductList_RowCellStyle(object sender, RowCellStyleEventArgs e)

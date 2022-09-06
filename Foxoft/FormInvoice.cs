@@ -126,6 +126,8 @@ namespace Foxoft
                                  .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
          dataLayoutControl1.isValid(out List<string> errorList);
+
+         CalcPrintCount();
       }
 
       private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -251,12 +253,20 @@ namespace Foxoft
 
          dataLayoutControl1.isValid(out List<string> errorList);
          CalcPaidAmount();
+         CalcPrintCount();
       }
 
       private void CalcPaidAmount()
       {
          decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
          lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
+      }
+
+      private void CalcPrintCount()
+      {
+         int printCount = efMethods.SelectInvoicePrinCount(trInvoiceHeader.InvoiceHeaderId);
+
+         lbl_PrintCount.Text = "Print Edilib: " + printCount + " nüsxə";
       }
 
       private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -921,9 +931,18 @@ namespace Foxoft
             dataSource.Fill();
 
             XtraReport report = reportClass.CreateReport(dataSource, designPath);
-
             ReportPrintTool printTool = new ReportPrintTool(report);
-            printTool.PrintDialog();
+            bool? isPrinted = printTool.PrintDialog();
+            if (isPrinted is not null)
+            {
+               bool printed = Convert.ToBoolean(isPrinted);
+               if (printed)
+               {
+                  efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
+                  CalcPrintCount();
+               }
+            }
+
 
             using (MemoryStream ms = new MemoryStream())
             {
@@ -1263,31 +1282,37 @@ namespace Foxoft
          myProcess.StartInfo.FileName = link;
          myProcess.Start();
       }
-      //private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
-      //{
-      //   object eValue = btnEdit_CurrAccCode.EditValue;
 
-      //   if (!Object.ReferenceEquals(eValue, null))
-      //   {
-      //      DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+      private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
+      {
+         //object eValue = e.;
 
-      //      if (Object.ReferenceEquals(curr, null))
-      //      {
-      //         e.Cancel = true;
-      //      }
-      //      else
-      //      { 
-      //         trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
-      //         lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
-      //      }
-      //   }
-      //}
+         //if (eValue is not null)
+         //{
+         //   DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
 
-      //private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
-      //{
-      //   e.ErrorText = "Belə bir cari yoxdur";
-      //   e.ExceptionMode = ExceptionMode.DisplayError;
-      //}
+         //   if (curr is null)
+         //   {
+         //      e.Cancel = true;
+         //   }
+         //   else
+         //   {
+         //      trInvoiceHeader.CurrAccCode = eValue.ToString();
+         //      lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
+         //   }
+         //}
+      }
+
+      private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+      {
+         e.ErrorText = "Belə bir cari yoxdur";
+         e.ExceptionMode = ExceptionMode.DisplayError;
+      }
+
+      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         btnEdit_CurrAccCode.DoValidate();
+      }
 
    }
 }

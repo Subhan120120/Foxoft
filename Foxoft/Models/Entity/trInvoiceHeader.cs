@@ -109,7 +109,7 @@ namespace Foxoft.Models
 
       [DefaultValue("0")]
       [DisplayName("Print Olunub")]
-      public bool IsPrinted { get; set; }
+      public byte PrintCount { get; set; }
 
       [DefaultValue("0")]
       [DisplayName("Fiscal Çap Durumu")]
