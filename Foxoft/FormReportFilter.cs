@@ -166,7 +166,7 @@ namespace Foxoft
          }
 
          string filterCriteria = "";
-         if (!object.ReferenceEquals(filterControl_Outer.FilterCriteria, null))
+         if (filterControl_Outer.FilterCriteria is not null)
             filterCriteria = filterControl_Outer.FilterCriteria.ToString();
 
          efMethods.UpdateDcReport_Filter(dcReport.ReportId, filterCriteria); //save filter to database

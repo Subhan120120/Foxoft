@@ -269,21 +269,6 @@ namespace Foxoft
 
       private void barButtonItem1_ItemClick_1(object sender, ItemClickEventArgs e)
       {
-         object test = null;
-
-         //DialogResult dialogResult =  MessageBox.Show("Test", "", );
-
-         if (test is not null)
-         {
-            MessageBox.Show("test is not null");
-         }
-
-         if (test is null)
-         {
-            MessageBox.Show("test is null");
-         }
-
-
       }
 
       private void gV_ProductList_RowCellStyle(object sender, RowCellStyleEventArgs e)

@@ -43,6 +43,9 @@ namespace Foxoft
          adornerUIManager1.Elements.Add(badge2);
          //badge1.TargetElement = barButtonItem1;
          badge2.TargetElement = ribbonPage1;
+
+         HLE_DocumentNum.SingleClick = true;
+         HLE_InvoiceNum.SingleClick = true;
       }
 
       public FormReportGrid(string qry, DcReport report)

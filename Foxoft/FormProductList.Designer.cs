@@ -346,7 +346,7 @@ namespace Foxoft
          // 
          // barButtonItem1
          // 
-         this.barButtonItem1.Caption = "Test";
+         this.barButtonItem1.Caption = "Sil";
          this.barButtonItem1.Id = 7;
          this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
          this.barButtonItem1.Name = "barButtonItem1";

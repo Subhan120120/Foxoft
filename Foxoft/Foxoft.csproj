@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\New folder\**" />
+    <Compile Remove="Models\Entity\Mapping\**" />
     <EmbeddedResource Remove="Migrations\New folder\**" />
+    <EmbeddedResource Remove="Models\Entity\Mapping\**" />
     <None Remove="Migrations\New folder\**" />
+    <None Remove="Models\Entity\Mapping\**" />
     <Page Remove="Migrations\New folder\**" />
+    <Page Remove="Models\Entity\Mapping\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -93,10 +97,6 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Entity\Mapping\" />
   </ItemGroup>
 
 </Project>

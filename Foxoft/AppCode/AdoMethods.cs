@@ -11,13 +11,13 @@ namespace Foxoft
    public class AdoMethods
    {
       private string subConnString = Properties.Settings.Default.subConnString;
-      private SqlParameter[] paramArray = new SqlParameter[] { };
+      private SqlParameter[] paramArray = Array.Empty<SqlParameter>();
 
       public int SqlExec(string query)
       {
-         using (SqlConnection con = new SqlConnection(subConnString))
+         using (SqlConnection con = new(subConnString))
          {
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlCommand cmd = new(query, con))
             {
                con.Open();
 
@@ -32,9 +32,9 @@ namespace Foxoft
 
       public int SqlExec(string query, SqlParameter[] sqlParameters)
       {
-         using (SqlConnection con = new SqlConnection(subConnString))
+         using (SqlConnection con = new(subConnString))
          {
-            using (SqlCommand cmd = new SqlCommand(query, con))
+            using (SqlCommand cmd = new(query, con))
             {
                cmd.Parameters.AddRange(sqlParameters);
                con.Open();
@@ -50,14 +50,14 @@ namespace Foxoft
 
       public DataTable SqlGetDt(string query)
       {
-         using (SqlConnection con = new SqlConnection(subConnString))
+         using (SqlConnection con = new(subConnString))
          {
             con.Open();
 
-            using (SqlCommand command = new SqlCommand(query, con))
+            using (SqlCommand command = new(query, con))
             {
                SqlDataReader dr = command.ExecuteReader();
-               DataTable dt = new DataTable();
+               DataTable dt = new();
                dt.Load(dr);
                return dt;
             }
@@ -80,12 +80,12 @@ namespace Foxoft
 
       public DataTable SqlGetDt(string query, SqlParameter[] sqlParameters)
       {
-         using (SqlConnection con = new SqlConnection(subConnString))
+         using (SqlConnection con = new(subConnString))
          {
-            using (SqlDataAdapter da = new SqlDataAdapter(query, con))
+            using (SqlDataAdapter da = new(query, con))
             {
                da.SelectCommand.Parameters.AddRange(sqlParameters);
-               DataTable dt = new DataTable();
+               DataTable dt = new();
                da.Fill(dt);
                return dt;
             }
@@ -99,7 +99,7 @@ namespace Foxoft
          string qry = "";
          using (Stream stream = assembly.GetManifestResourceStream(str))
          {
-            using (StreamReader reader = new StreamReader(stream))
+            using (StreamReader reader = new(stream))
             {
                qry = reader.ReadToEnd();
             }
@@ -123,7 +123,7 @@ namespace Foxoft
          string qry = "";
          using (Stream stream = assembly.GetManifestResourceStream(str))
          {
-            using (StreamReader reader = new StreamReader(stream))
+            using (StreamReader reader = new(stream))
             {
                qry = reader.ReadToEnd();
             }
