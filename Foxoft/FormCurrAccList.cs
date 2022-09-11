@@ -20,7 +20,7 @@ namespace Foxoft
 {
    public partial class FormCurrAccList : RibbonForm
    {
-      EfMethods efMethods = new EfMethods();
+      EfMethods efMethods = new();
       public DcCurrAcc dcCurrAcc { get; set; }
       public byte currAccTypeCode;
 
@@ -30,8 +30,8 @@ namespace Foxoft
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-         MemoryStream stream = new MemoryStream(byteArray);
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         MemoryStream stream = new(byteArray);
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_CurrAccList.RestoreLayoutFromStream(stream, option);
       }
 
@@ -79,7 +79,7 @@ namespace Foxoft
       private void bBI_CurrAccNew_ItemClick(object sender, ItemClickEventArgs e)
       {
          dcCurrAcc = new DcCurrAcc();
-         FormCurrAcc form = new FormCurrAcc(currAccTypeCode);
+         FormCurrAcc form = new(currAccTypeCode);
          if (form.ShowDialog(this) == DialogResult.OK)
          {
             UpdateGridViewData();
@@ -92,7 +92,7 @@ namespace Foxoft
 
          if (!Object.ReferenceEquals(dcCurrAcc, null))
          {
-            FormCurrAcc form = new FormCurrAcc(dcCurrAcc.CurrAccCode);
+            FormCurrAcc form = new(dcCurrAcc.CurrAccCode);
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                UpdateGridViewData();
@@ -114,7 +114,7 @@ namespace Foxoft
 
       private void LoadCurrAccs()
       {
-         subContext dbContext = new subContext();
+         subContext dbContext = new();
 
          if (currAccTypeCode != 0)
          {
@@ -201,7 +201,7 @@ namespace Foxoft
          DcReport dcReport = efMethods.SelectReport(1003);
          object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
 
-         if (!Object.ReferenceEquals(currAccCode, null))
+         if (currAccCode is not null)
          {
             efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
 
@@ -228,46 +228,65 @@ namespace Foxoft
 
 
 
-            FormReportGrid formGrid = new FormReportGrid(qryMaster, dcReport);
+            FormReportGrid formGrid = new(qryMaster, dcReport);
             formGrid.Show();
          }
       }
 
       private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
       {
-         switch (filterOperatorType)
+         return filterOperatorType switch
          {
-            case "+":
-               return BinaryOperatorType.Plus;
-            case "&":
-               return BinaryOperatorType.BitwiseAnd;
-            case "/":
-               return BinaryOperatorType.Divide;
-            case "==":
-               return BinaryOperatorType.Equal;
-            case ">":
-               return BinaryOperatorType.Greater;
-            case ">=":
-               return BinaryOperatorType.GreaterOrEqual;
-            case "<":
-               return BinaryOperatorType.Less;
-            case "<=":
-               return BinaryOperatorType.LessOrEqual;
-            case "%":
-               return BinaryOperatorType.Modulo;
-            case "*":
-               return BinaryOperatorType.Multiply;
-            case "!=":
-               return BinaryOperatorType.NotEqual;
-            case "|":
-               return BinaryOperatorType.BitwiseOr;
-            case "-":
-               return BinaryOperatorType.Minus;
-            case "^":
-               return BinaryOperatorType.BitwiseXor;
-            default:
-               return BinaryOperatorType.Equal;
-         }
+            "+" => BinaryOperatorType.Plus,
+            "&" => BinaryOperatorType.BitwiseAnd,
+            "/" => BinaryOperatorType.Divide,
+            "==" => BinaryOperatorType.Equal,
+            ">" => BinaryOperatorType.Greater,
+            ">=" => BinaryOperatorType.GreaterOrEqual,
+            "<" => BinaryOperatorType.Less,
+            "<=" => BinaryOperatorType.LessOrEqual,
+            "%" => BinaryOperatorType.Modulo,
+            "*" => BinaryOperatorType.Multiply,
+            "!=" => BinaryOperatorType.NotEqual,
+            "|" => BinaryOperatorType.BitwiseOr,
+            "-" => BinaryOperatorType.Minus,
+            "^" => BinaryOperatorType.BitwiseXor,
+            _ => BinaryOperatorType.Equal,
+         };
+
+         //switch (filterOperatorType)
+         //{
+         //   case "+":
+         //      return BinaryOperatorType.Plus;
+         //   case "&":
+         //      return BinaryOperatorType.BitwiseAnd;
+         //   case "/":
+         //      return BinaryOperatorType.Divide;
+         //   case "==":
+         //      return BinaryOperatorType.Equal;
+         //   case ">":
+         //      return BinaryOperatorType.Greater;
+         //   case ">=":
+         //      return BinaryOperatorType.GreaterOrEqual;
+         //   case "<":
+         //      return BinaryOperatorType.Less;
+         //   case "<=":
+         //      return BinaryOperatorType.LessOrEqual;
+         //   case "%":
+         //      return BinaryOperatorType.Modulo;
+         //   case "*":
+         //      return BinaryOperatorType.Multiply;
+         //   case "!=":
+         //      return BinaryOperatorType.NotEqual;
+         //   case "|":
+         //      return BinaryOperatorType.BitwiseOr;
+         //   case "-":
+         //      return BinaryOperatorType.Minus;
+         //   case "^":
+         //      return BinaryOperatorType.BitwiseXor;
+         //   default:
+         //      return BinaryOperatorType.Equal;
+         //}
       }
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)

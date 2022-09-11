@@ -21,7 +21,7 @@ namespace Foxoft
 {
    public partial class FormInvoiceHeaderList : XtraForm
    {
-      EfMethods efMethods = new EfMethods();
+      EfMethods efMethods = new();
       public TrInvoiceHeader trInvoiceHeader { get; set; }
       subContext dbContext;
       public string processCode { get; set; }
@@ -33,7 +33,7 @@ namespace Foxoft
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new MemoryStream(byteArray);
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         OptionsLayoutGrid option = new () { StoreAllOptions = true, StoreAppearance = true };
          this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
       }
 
@@ -73,7 +73,7 @@ namespace Foxoft
          //            }, TaskScheduler.FromCurrentSynchronizationContext());
 
          IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
-         CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+         CriteriaToExpressionConverter converter = new();
          IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
 

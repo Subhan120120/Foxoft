@@ -32,9 +32,8 @@ namespace Foxoft
 {
    public partial class FormInvoice : RibbonForm
    {
-      string designFolder = @"C:\Users\Administrator\Documents\";
+      readonly string designFolder = @"C:\Users\Administrator\Documents\";
       string designFile = @"InvoiceRS_A5.repx";
-
       private TrInvoiceHeader trInvoiceHeader;
       public DcProcess dcProcess;
       private byte productTypeCode;
@@ -134,11 +133,11 @@ namespace Foxoft
       {
          TrInvoiceHeader invoiceHeader = new();
          invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
-         string NewDocNum = efMethods.GetNextDocNum(this.dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+         string NewDocNum = efMethods.GetNextDocNum(dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders", 6);
          invoiceHeader.DocumentNumber = NewDocNum;
          invoiceHeader.DocumentDate = DateTime.Now;
          invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-         invoiceHeader.ProcessCode = this.dcProcess.ProcessCode;
+         invoiceHeader.ProcessCode = dcProcess.ProcessCode;
          invoiceHeader.OfficeCode = Authorization.OfficeCode;
          invoiceHeader.StoreCode = Authorization.StoreCode;
          invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
@@ -209,7 +208,6 @@ namespace Foxoft
             trInvoiceHeader = form.trInvoiceHeader;
             LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
          }
-
       }
 
       private void LoadInvoice(Guid InvoiceHeaderId)
@@ -319,11 +317,6 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.C && e.Control)
             {
-               //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
-               //   Clipboard.SetText(view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString());
-               //else
-               //   MessageBox.Show("The value in the selected cell is null or empty!");
-
                string cellValue = gV.GetFocusedValue().ToString();
                Clipboard.SetText(cellValue);
                e.Handled = true;
@@ -361,7 +354,6 @@ namespace Foxoft
                }
             }
          }
-
       }
 
       private void StandartKeys(KeyEventArgs e)
@@ -392,7 +384,7 @@ namespace Foxoft
       private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
       {
          //CalcRowLocNetAmount(e);
-         GridView view = sender as GridView;
+         GridView view = (GridView)sender;
 
          if (view == null) return;
          if (e.Column != col_ProductCode) return;
@@ -892,7 +884,7 @@ namespace Foxoft
       private void SaveSession()
       {
          object warehouseCode = lUE_WarehouseCode.EditValue;
-         if (!object.ReferenceEquals(warehouseCode, null))
+         if (warehouseCode is not null)
          {
             Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
             Settings.Default.Save();
