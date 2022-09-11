@@ -131,11 +131,14 @@ namespace Foxoft
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
 
-         if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
-         {
+         if (view.SelectedRowsCount > 0)
             trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+
+         if (e.KeyCode == Keys.Enter && trPaymentHeader is not null)
             DialogResult = DialogResult.OK;
-         }
+
+         if (e.KeyCode == Keys.Escape)
+            Close();
       }
 
       GridColumn prevColumn = null; // Disable the Immediate Edit Cell
@@ -173,7 +176,7 @@ namespace Foxoft
       {
          object obj = gV_PaymentHeaderList.GetFocusedRowCellValue(colInvoiceHeaderId);
 
-         if (!object.ReferenceEquals(obj, null))
+         if (obj is not null)
          {
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
@@ -196,7 +199,7 @@ namespace Foxoft
       {
          object obj = gV_PaymentHeaderList.GetFocusedRowCellValue(colPaymentHeaderId);
 
-         if (!object.ReferenceEquals(obj, null))
+         if (obj is not null)
          {
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);

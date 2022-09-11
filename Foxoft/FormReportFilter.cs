@@ -275,7 +275,7 @@ namespace Foxoft
          if (e.Node.FirstOperand.PropertyName == "Cari Hesab Kodu" || e.Node.FirstOperand.PropertyName == "CurrAccCode")
             e.RepositoryItem = repoBtnEdit_CurrAccCode;
 
-         if (!object.ReferenceEquals(e.Value, null) && !object.ReferenceEquals(e.PropertyName, null))
+         if (e.Value is not null && e.PropertyName is not null)
          {
             foreach (var item in dcReport.DcReportFilters)
             {

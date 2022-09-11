@@ -147,7 +147,7 @@ namespace Foxoft
       {
          object obj = gV_PaymentLineList.GetFocusedRowCellValue(colInvoiceHeaderId); //deyisdir
 
-         if (!object.ReferenceEquals(obj, null))
+         if (obj is not null)
          {
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
@@ -171,7 +171,7 @@ namespace Foxoft
       {
          object obj = gV_PaymentLineList.GetFocusedRowCellValue(colPaymentHeaderId);
 
-         if (!object.ReferenceEquals(obj, null))
+         if (obj is not null)
          {
             Guid paymentHeaderId = Guid.Parse(obj.ToString());
 

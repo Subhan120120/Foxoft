@@ -33,7 +33,7 @@ namespace Foxoft
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new MemoryStream(byteArray);
-         OptionsLayoutGrid option = new () { StoreAllOptions = true, StoreAppearance = true };
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
       }
 
@@ -124,28 +124,28 @@ namespace Foxoft
          DXMouseEventArgs ea = e as DXMouseEventArgs;
          GridView view = sender as GridView;
          GridHitInfo info = view.CalcHitInfo(ea.Location);
-         if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
+         if ((info.InRow || info.InRowCell) && trInvoiceHeader is not null)
          {
             //info.RowHandle
             //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
-            if (!object.ReferenceEquals(trInvoiceHeader, null))
-               DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
          }
       }
 
       private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
-         if (view == null) return;
+         if (view is null) return;
 
-         trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+         if (view.SelectedRowsCount > 0)
+            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
 
-         if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
-         {
-            if (!Object.ReferenceEquals(trInvoiceHeader, null))
-               DialogResult = DialogResult.OK;
-         }
+         if (e.KeyCode == Keys.Enter && trInvoiceHeader is not null)
+            DialogResult = DialogResult.OK;
+
+         if (e.KeyCode == Keys.Escape)
+            Close();
       }
 
       private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
@@ -203,12 +203,6 @@ namespace Foxoft
             trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
          else
             trInvoiceHeader = null;
-      }
-
-      private void gC_InvoiceHeaderList_KeyDown(object sender, KeyEventArgs e)
-      {
-         if (e.KeyCode == Keys.Escape)
-            Close();
       }
    }
 }

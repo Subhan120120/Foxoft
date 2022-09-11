@@ -127,7 +127,7 @@ namespace Foxoft
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                trPaymentHeader = form.trPaymentHeader;
-               if (!Object.ReferenceEquals(trPaymentHeader, null))
+               if (trPaymentHeader is not null)
                {
                   LoadPayment(trPaymentHeader.PaymentHeaderId);
                }
@@ -148,7 +148,7 @@ namespace Foxoft
          lV_paymentHeader.ForEach(x =>
          {
             string fullName = "";
-            if (!lV_paymentHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
+            if (!lV_paymentHeader.Any(x => x.DcCurrAcc is null))
                fullName = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
 
             x.CurrAccDesc = fullName;

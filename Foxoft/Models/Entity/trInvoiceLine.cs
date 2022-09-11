@@ -36,7 +36,7 @@ namespace Foxoft.Models
       {
          get
          {
-            if (!Object.ReferenceEquals(TrInvoiceHeader, null))
+            if (TrInvoiceHeader is not null)
             {
                if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
                   if (TrInvoiceHeader.IsReturn)
@@ -56,7 +56,7 @@ namespace Foxoft.Models
          }
          set
          {
-            if (!Object.ReferenceEquals(TrInvoiceHeader, null))
+            if (TrInvoiceHeader is not null)
             {
                if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
                   if (TrInvoiceHeader.IsReturn)

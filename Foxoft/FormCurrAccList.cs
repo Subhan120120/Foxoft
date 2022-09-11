@@ -90,7 +90,7 @@ namespace Foxoft
       {
          //ApplySelectedCurrAcc();
 
-         if (!Object.ReferenceEquals(dcCurrAcc, null))
+         if (dcCurrAcc is not null)
          {
             FormCurrAcc form = new(dcCurrAcc.CurrAccCode);
             if (form.ShowDialog(this) == DialogResult.OK)

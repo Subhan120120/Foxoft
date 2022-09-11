@@ -68,7 +68,7 @@ namespace Foxoft
          //CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
          //IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), gV_ProductList.ActiveFilterCriteria) as IQueryable<DcProduct>;
 
-         //if (Object.ReferenceEquals(gV_ProductList.ActiveFilterCriteria, null))
+         //if (gV_ProductList.ActiveFilterCriteria is null)
          //    filteredData = filteredData.Take(10);
 
          //filteredData.Where(x => x.ProductTypeCode == productTypeCode)
@@ -139,7 +139,7 @@ namespace Foxoft
 
       private void btn_productEdit_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (!Object.ReferenceEquals(dcProduct, null))
+         if (dcProduct is not null)
          {
             FormProduct formProduct = new FormProduct(productTypeCode, dcProduct.ProductCode);
 
@@ -313,7 +313,7 @@ namespace Foxoft
       {
          GridView view = sender as GridView;
 
-         if (!Object.ReferenceEquals(view.GetRowCellValue(e.RowHandle, colBalance), null))
+         if (view.GetRowCellValue(e.RowHandle, colBalance) is not null)
          {
             int balance = (int)view.GetRowCellValue(e.RowHandle, colBalance);
 

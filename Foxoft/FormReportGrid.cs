@@ -71,17 +71,18 @@ namespace Foxoft
 
          HLE_InvoiceNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
 
-         if (Object.ReferenceEquals(column_InvoiceNumber, null))
+         if (column_InvoiceNumber is null)
             column_InvoiceNumber = gV_Report.Columns["Faktura Nömrəsi"];
 
-         if (!Object.ReferenceEquals(column_InvoiceNumber, null))
+         if (column_InvoiceNumber is not null)
             column_InvoiceNumber.ColumnEdit = HLE_InvoiceNum;
 
          GridColumn col_DocumentNumber = gV_Report.Columns["DocumentNumber"];
-         if (!Object.ReferenceEquals(col_DocumentNumber, null))
-
+         if (col_DocumentNumber is not null)
             col_DocumentNumber = gV_Report.Columns["Ödəniş Nömrəsi"];
-         if (!Object.ReferenceEquals(col_DocumentNumber, null)) col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
+
+         if (col_DocumentNumber is not null)
+            col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
 
          HLE_DocumentNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
       }
@@ -93,7 +94,7 @@ namespace Foxoft
             Stream str = new MemoryStream();
             gV_Report.SaveLayoutToStream(str);
             str.Seek(0, SeekOrigin.Begin);
-            StreamReader reader = new StreamReader(str);
+            StreamReader reader = new(str);
             string layoutTxt = reader.ReadToEnd();
             efMethods.UpdateReportLayout(report.ReportId, layoutTxt);
          }
@@ -112,7 +113,7 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(dcReport.ReportLayout))
             {
                byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
-               MemoryStream stream = new MemoryStream(byteArray);
+               MemoryStream stream = new(byteArray);
                gV_Report.RestoreLayoutFromStream(stream);
             }
          }
@@ -121,10 +122,10 @@ namespace Foxoft
       private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
       {
          Stream str = new MemoryStream();
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_Report.SaveLayoutToStream(str, option);
 
-         using (FormReportGridOptions formGridOptions = new FormReportGridOptions(str))
+         using (FormReportGridOptions formGridOptions = new(str))
          {
             if (formGridOptions.ShowDialog(this) == DialogResult.OK)
             {
@@ -141,7 +142,6 @@ namespace Foxoft
          //{
          //    gV_Report.Columns.Remove(item);
          //}
-
       }
 
       GridColumn prevColumn = null; // Disable the Immediate Edit Cell
@@ -168,7 +168,7 @@ namespace Foxoft
          object objInv = gV_Report.GetFocusedRowCellValue("InvoiceHeaderId");
          object objPay = gV_Report.GetFocusedRowCellValue("PaymentHeaderId");
 
-         if (!Object.ReferenceEquals(objInv, null))
+         if (objInv is not null)
          {
             if (!String.IsNullOrEmpty(objInv.ToString()))
             {
@@ -177,7 +177,7 @@ namespace Foxoft
                   Guid invoiceHeaderId = Guid.Parse(objInv.ToString());
                   TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-                  if (!Object.ReferenceEquals(trInvoiceHeader, null))
+                  if (trInvoiceHeader is not null)
                   {
                      FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
                      FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
@@ -192,7 +192,7 @@ namespace Foxoft
             }
          }
 
-         if (!Object.ReferenceEquals(objPay, null))
+         if (objPay is not null)
          {
             if (Guid.Parse(objPay.ToString()) != Guid.Empty)
             {
@@ -215,7 +215,7 @@ namespace Foxoft
             object isReturn = view.GetRowCellValue(e.RowHandle, view.Columns["IsReturn"]);
             isReturn ??= view.GetRowCellValue(e.RowHandle, view.Columns["Geri Qaytarma"]);
 
-            if (!object.ReferenceEquals(isReturn, null))
+            if (isReturn is not null)
             {
                bool value = (bool)isReturn;
 

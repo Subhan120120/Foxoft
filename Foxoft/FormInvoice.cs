@@ -167,7 +167,7 @@ namespace Foxoft
          trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
          //DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-         //if (!object.ReferenceEquals(dcCurrAcc, null))
+         //if (dcCurrAcc is not null)
          //    CurrAccDescTextEdit.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
 
          if (trInvoiceHeader is not null) // if Isreturn Changed calculate Qty again
