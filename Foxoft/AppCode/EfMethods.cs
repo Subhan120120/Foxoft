@@ -20,21 +20,19 @@ namespace Foxoft
 
       public string GetNextDocNum(string processCode, string columnName, string tableName, int ReplicateNum)
       {
-         using (subContext db = new())
-         {
-            string qry = $"exec [dbo].[GetNextDocNum] {processCode}, {columnName}, {tableName}, {ReplicateNum}";
+         using subContext db = new();
+         string qry = $"exec [dbo].[GetNextDocNum] {processCode}, {columnName}, {tableName}, {ReplicateNum}";
 
-            return db.Set<GetNextDocNum>()
-                .FromSqlRaw(qry)
-                .AsEnumerable()
-                .First()
-                .Value;
-         }
+         return db.Set<GetNextDocNum>()
+             .FromSqlRaw(qry)
+             .AsEnumerable()
+             .First()
+             .Value;
       }
 
       public List<TrInvoiceLine> SelectInvoiceLines(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
+         using subContext db = new();
          {
             List<TrInvoiceLine> InvoiceLines = db.TrInvoiceLines.Include(x => x.DcProduct)
                                                               .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
@@ -65,405 +63,379 @@ namespace Foxoft
 
       public decimal SelectInvoiceNetAmount(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            decimal sumNetAmount = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                    .Sum(x => x.NetAmount);
-            return sumNetAmount;
-         }
+         using subContext db = new();
+
+         decimal sumNetAmount = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                 .Sum(x => x.NetAmount);
+         return sumNetAmount;
+
       }
 
 
       public List<DcProductType> SelectProductTypes()
       {
-         using (subContext db = new())
-         {
-            return db.DcProductTypes.ToList();
-         }
+         using subContext db = new();
+         return db.DcProductTypes.ToList();
       }
 
       public List<DcCurrAccType> SelectCurrAccTypes()
       {
-         using (subContext db = new())
-         {
-            return db.DcCurrAccTypes.ToList();
-         }
+         using subContext db = new();
+         return db.DcCurrAccTypes.ToList();
       }
 
       public List<DcProduct> SelectProducts()
       {
-         using (subContext db = new())
-         {
-            List<DcProduct> products = db.DcProducts.Include(x => x.TrInvoiceLines)
-                                                        .ThenInclude(x => x.TrInvoiceHeader)
-                                                    .Select(x => new DcProduct
-                                                    {
-                                                       Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                                       BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
-                                                       BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                                                       LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
-                                                       ProductCode = x.ProductCode,
-                                                       ProductDesc = x.ProductDesc,
-                                                       PosDiscount = x.PosDiscount,
-                                                       RetailPrice = x.RetailPrice,
-                                                       PurchasePrice = x.PurchasePrice,
-                                                       ProductTypeCode = x.ProductTypeCode,
-                                                       WholesalePrice = x.WholesalePrice,
-                                                       UsePos = x.UsePos,
-                                                       UseInternet = x.UseInternet,
-                                                       CreatedDate = x.CreatedDate,
-                                                       CreatedUserName = x.CreatedUserName,
-                                                       LastUpdatedDate = x.LastUpdatedDate,
-                                                       LastUpdatedUserName = x.LastUpdatedUserName,
-                                                    })
-                                                    .ToList();
-            return products;
-         }
+         using subContext db = new();
+
+         List<DcProduct> products = db.DcProducts.Include(x => x.TrInvoiceLines)
+                                                     .ThenInclude(x => x.TrInvoiceHeader)
+                                                 .Select(x => new DcProduct
+                                                 {
+                                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                                    BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
+                                                    BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
+                                                    LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                                                    ProductCode = x.ProductCode,
+                                                    ProductDesc = x.ProductDesc,
+                                                    PosDiscount = x.PosDiscount,
+                                                    RetailPrice = x.RetailPrice,
+                                                    PurchasePrice = x.PurchasePrice,
+                                                    ProductTypeCode = x.ProductTypeCode,
+                                                    WholesalePrice = x.WholesalePrice,
+                                                    UsePos = x.UsePos,
+                                                    UseInternet = x.UseInternet,
+                                                    CreatedDate = x.CreatedDate,
+                                                    CreatedUserName = x.CreatedUserName,
+                                                    LastUpdatedDate = x.LastUpdatedDate,
+                                                    LastUpdatedUserName = x.LastUpdatedUserName,
+                                                 })
+                                                 .ToList();
+         return products;
+
       }
 
       public DcProduct SelectProduct(string productCode)
       {
-         using (subContext db = new())
-         {
-            return db.DcProducts.Include(x => x.TrInvoiceLines)
-                                    .ThenInclude(x => x.TrInvoiceHeader)
-                                .Select(x => new DcProduct
-                                {
-                                   Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                   BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
-                                   BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                                   LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
-                                   ProductCode = x.ProductCode,
-                                   ProductDesc = x.ProductDesc,
-                                   PosDiscount = x.PosDiscount,
-                                   RetailPrice = x.RetailPrice,
-                                   PurchasePrice = x.PurchasePrice,
-                                   ProductTypeCode = x.ProductTypeCode,
-                                   WholesalePrice = x.WholesalePrice,
-                                   UsePos = x.UsePos,
-                                   UseInternet = x.UseInternet,
-                                   CreatedDate = x.CreatedDate,
-                                   CreatedUserName = x.CreatedUserName,
-                                   LastUpdatedDate = x.LastUpdatedDate,
-                                   LastUpdatedUserName = x.LastUpdatedUserName,
-                                }).FirstOrDefault(x => x.ProductCode == productCode);
-         }
+         using subContext db = new();
+
+         return db.DcProducts.Include(x => x.TrInvoiceLines)
+                                 .ThenInclude(x => x.TrInvoiceHeader)
+                             .Select(x => new DcProduct
+                             {
+                                Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
+                                BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
+                                LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                                ProductCode = x.ProductCode,
+                                ProductDesc = x.ProductDesc,
+                                PosDiscount = x.PosDiscount,
+                                RetailPrice = x.RetailPrice,
+                                PurchasePrice = x.PurchasePrice,
+                                ProductTypeCode = x.ProductTypeCode,
+                                WholesalePrice = x.WholesalePrice,
+                                UsePos = x.UsePos,
+                                UseInternet = x.UseInternet,
+                                CreatedDate = x.CreatedDate,
+                                CreatedUserName = x.CreatedUserName,
+                                LastUpdatedDate = x.LastUpdatedDate,
+                                LastUpdatedUserName = x.LastUpdatedUserName,
+                             }).FirstOrDefault(x => x.ProductCode == productCode);
+
       }
 
       public int SelectProductBalance(string productCode, string warehouseCode)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .Where(x => x.ProductCode == productCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
-                                    .Sum(x => x.QtyIn - x.QtyOut);
-         }
+         using subContext db = new();
+
+         return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                 .Where(x => x.ProductCode == productCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                 .Sum(x => x.QtyIn - x.QtyOut);
+
       }
 
       public List<DcProduct> SelectProductsByType(byte productTypeCode, CriteriaOperator filterCriteria)
       {
-         using (subContext db = new())
-         {
-            IQueryable<DcProduct> DcProducts = db.DcProducts;
-            CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-            IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), filterCriteria) as IQueryable<DcProduct>;
+         using subContext db = new();
 
-            //filteredData = filteredData.Take(100);
+         IQueryable<DcProduct> DcProducts = db.DcProducts;
+         CriteriaToExpressionConverter converter = new();
+         IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), filterCriteria) as IQueryable<DcProduct>;
 
-            IQueryable<DcProduct> dcProducts = filteredData.Where(x => x.ProductTypeCode == productTypeCode)
-                            .Include(x => x.TrInvoiceLines)
-                                .ThenInclude(l => l.TrInvoiceHeader)
-                            .OrderBy(x => x.ProductDesc)
-                            .Select(x => new DcProduct
-                            {
-                               Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                               BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
-                               BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                               LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
-                               ProductCode = x.ProductCode,
-                               ProductDesc = x.ProductDesc,
-                               PosDiscount = x.PosDiscount,
-                               RetailPrice = x.RetailPrice,
-                               PurchasePrice = x.PurchasePrice,
-                               ProductTypeCode = x.ProductTypeCode,
-                               WholesalePrice = x.WholesalePrice,
-                               UsePos = x.UsePos,
-                               UseInternet = x.UseInternet,
-                               CreatedDate = x.CreatedDate,
-                               CreatedUserName = x.CreatedUserName,
-                               LastUpdatedDate = x.LastUpdatedDate,
-                               LastUpdatedUserName = x.LastUpdatedUserName,
-                            });
+         //filteredData = filteredData.Take(100);
+
+         IQueryable<DcProduct> dcProducts = filteredData.Where(x => x.ProductTypeCode == productTypeCode)
+                         .Include(x => x.TrInvoiceLines)
+                             .ThenInclude(l => l.TrInvoiceHeader)
+                         .OrderBy(x => x.ProductDesc)
+                         .Select(x => new DcProduct
+                         {
+                            Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                            BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
+                            BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
+                            LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                            ProductCode = x.ProductCode,
+                            ProductDesc = x.ProductDesc,
+                            PosDiscount = x.PosDiscount,
+                            RetailPrice = x.RetailPrice,
+                            PurchasePrice = x.PurchasePrice,
+                            ProductTypeCode = x.ProductTypeCode,
+                            WholesalePrice = x.WholesalePrice,
+                            UsePos = x.UsePos,
+                            UseInternet = x.UseInternet,
+                            CreatedDate = x.CreatedDate,
+                            CreatedUserName = x.CreatedUserName,
+                            LastUpdatedDate = x.LastUpdatedDate,
+                            LastUpdatedUserName = x.LastUpdatedUserName,
+                         });
 
 
-            return dcProducts.ToList();
-         }
+         return dcProducts.ToList();
+
       }
 
       public List<TrInvoiceHeader> SelectInvoiceHeaders()
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceHeaders.Where(x => x.IsCompleted == true)
-                                      .OrderBy(x => x.CreatedDate)
-                                      .ToList();
-         }
+         using subContext db = new();
+
+         return db.TrInvoiceHeaders.Where(x => x.IsCompleted == true)
+                                   .OrderBy(x => x.CreatedDate)
+                                   .ToList();
       }
 
       public TrInvoiceHeader SelectInvoiceHeader(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
-                                      .Include(x => x.TrInvoiceLines)
-                                      .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                      .FirstOrDefault();
-         }
+         using subContext db = new();
+
+         return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                   .Include(x => x.TrInvoiceLines)
+                                   .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                   .FirstOrDefault();
+
       }
 
       public TrPaymentHeader SelectPaymentHeader(Guid paymentHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrPaymentHeaders.Include(x => x.DcCurrAcc)
-                                      .Include(x => x.TrPaymentLines)
-                                      .Where(x => x.PaymentHeaderId == paymentHeaderId)
-                                      .FirstOrDefault();
-         }
+         using subContext db = new();
+
+         return db.TrPaymentHeaders.Include(x => x.DcCurrAcc)
+                                   .Include(x => x.TrPaymentLines)
+                                   .Where(x => x.PaymentHeaderId == paymentHeaderId)
+                                   .FirstOrDefault();
+
       }
 
       public List<TrInvoiceHeader> SelectInvoiceHeadersByProcessCode(string processCode)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceHeaders.Where(x => x.ProcessCode == processCode)
-                                      .OrderBy(x => x.CreatedDate)
-                                      .ToList();
-         }
+         using subContext db = new();
+
+         return db.TrInvoiceHeaders.Where(x => x.ProcessCode == processCode)
+                                   .OrderBy(x => x.CreatedDate)
+                                   .ToList();
+
       }
 
       public TrInvoiceLine SelectInvoiceLine(Guid invoiceLineId)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
-         }
+         using subContext db = new();
+
+         return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                 .FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
       }
 
       public List<TrInvoiceLine> SelectInvoiceLineForReport(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                        .ThenInclude(x => x.DcCurrAcc)
-                                    .Include(x => x.DcProduct)
-                                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                    .OrderBy(x => x.CreatedDate)
-                                    .ToList();
-         }
+         using subContext db = new();
+
+         return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                     .ThenInclude(x => x.DcCurrAcc)
+                                 .Include(x => x.DcProduct)
+                                 .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                 .OrderBy(x => x.CreatedDate)
+                                 .ToList();
+
       }
 
       public int InsertInvoiceLine(DcProduct dcProduct, Guid invoiceHeaderId)
       {
-         using (subContext db = new())
+         using subContext db = new();
+
+         IQueryable<DcProduct> dcProducts = db.DcProducts.AsQueryable();
+
+         if (!string.IsNullOrEmpty(dcProduct.ProductCode))
+            dcProducts = dcProducts.Where(x => x.ProductCode == dcProduct.ProductCode);
+         else if (!string.IsNullOrEmpty(dcProduct.Barcode))
+            dcProducts = dcProducts.Where(x => x.Barcode == dcProduct.Barcode);
+
+         DcProduct product = dcProducts.FirstOrDefault();
+
+         if (product is not null)
          {
-            IQueryable<DcProduct> dcProducts = db.DcProducts.AsQueryable();
-
-            if (!string.IsNullOrEmpty(dcProduct.ProductCode))
-               dcProducts = dcProducts.Where(x => x.ProductCode == dcProduct.ProductCode);
-            else if (!string.IsNullOrEmpty(dcProduct.Barcode))
-               dcProducts = dcProducts.Where(x => x.Barcode == dcProduct.Barcode);
-
-            DcProduct product = dcProducts.FirstOrDefault();
-
-            if (product != null)
+            TrInvoiceLine trInvoiceLine = new()
             {
-               TrInvoiceLine trInvoiceLine = new TrInvoiceLine()
-               {
-                  InvoiceLineId = Guid.NewGuid(),
-                  InvoiceHeaderId = invoiceHeaderId,
-                  ProductCode = product.ProductCode,
-                  Price = product.RetailPrice,
-                  Amount = Convert.ToDecimal(product.RetailPrice),
-                  PosDiscount = Convert.ToDecimal(product.PosDiscount),
-                  NetAmount = Convert.ToDecimal(product.RetailPrice)
-               };
+               InvoiceLineId = Guid.NewGuid(),
+               InvoiceHeaderId = invoiceHeaderId,
+               ProductCode = product.ProductCode,
+               Price = product.RetailPrice,
+               Amount = Convert.ToDecimal(product.RetailPrice),
+               PosDiscount = Convert.ToDecimal(product.PosDiscount),
+               NetAmount = Convert.ToDecimal(product.RetailPrice)
+            };
 
-               db.TrInvoiceLines.Add(trInvoiceLine);
-               return db.SaveChanges();
-            }
-            else
-               return -1;
+            db.TrInvoiceLines.Add(trInvoiceLine);
+            return db.SaveChanges();
          }
+         else
+            return -1;
+
       }
 
       public int InsertInvoiceLine(TrInvoiceLine TrInvoiceLine)
       {
-         using (subContext db = new())
-         {
-            db.TrInvoiceLines.Add(TrInvoiceLine);
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         db.TrInvoiceLines.Add(TrInvoiceLine);
+         return db.SaveChanges();
       }
 
       public bool InvoiceLineExistByRelatedLine(Guid invoicecHeaderId, Guid relatedLineId)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoicecHeaderId)
-                                    .Any(x => x.RelatedLineId == relatedLineId);
-         }
+         using subContext db = new();
+         return db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoicecHeaderId)
+                        .Any(x => x.RelatedLineId == relatedLineId);
       }
 
       public bool InvoiceHeaderExist(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
-         }
+         using subContext db = new();
+         return db.TrInvoiceHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
       }
 
       public void InsertInvoiceHeader(TrInvoiceHeader TrInvoiceHeader)
       {
-         using (subContext db = new())
-         {
-            db.TrInvoiceHeaders.Add(TrInvoiceHeader);
-            db.SaveChanges();
-         }
+         using subContext db = new();
+         db.TrInvoiceHeaders.Add(TrInvoiceHeader);
+         db.SaveChanges();
       }
 
       public int DeleteInvoice(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            string editable = invoiceHeaderId.ToString();
-            Guid transferHead = Guid.Parse(editable.Replace(editable.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+         using subContext db = new();
 
-            TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { InvoiceHeaderId = invoiceHeaderId };
-            db.TrInvoiceHeaders.Remove(trInvoiceHeader);
+         string editable = invoiceHeaderId.ToString();
+         Guid transferHead = Guid.Parse(editable.Replace(editable.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
 
-            TrInvoiceHeader transferHeader = db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == transferHead);
-            if (transferHeader is not null)
-               db.TrInvoiceHeaders.Remove(transferHeader);
+         TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId };
+         db.TrInvoiceHeaders.Remove(trInvoiceHeader);
+
+         TrInvoiceHeader transferHeader = db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == transferHead);
+         if (transferHeader is not null)
+            db.TrInvoiceHeaders.Remove(transferHeader);
 
 
-            IQueryable<TrInvoiceLine> trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId);
-            if (trInvoiceLine.Any())
-               db.TrInvoiceLines.Remove(trInvoiceLine.First());
+         IQueryable<TrInvoiceLine> trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId);
+         if (trInvoiceLine.Any())
+            db.TrInvoiceLines.Remove(trInvoiceLine.First());
 
-            return db.SaveChanges();
-         }
+         return db.SaveChanges();
       }
 
       public int DeletePayment(Guid paymentHeaderId)
       {
-         using (subContext db = new())
-         {
-            TrPaymentHeader trPaymentHeader = db.TrPaymentHeaders.Where(x => x.PaymentHeaderId == paymentHeaderId)
-                                                                 .FirstOrDefault();
-            if (trPaymentHeader is not null)
-               db.TrPaymentHeaders.Remove(trPaymentHeader);
+         using subContext db = new();
+         TrPaymentHeader trPaymentHeader = db.TrPaymentHeaders.Where(x => x.PaymentHeaderId == paymentHeaderId)
+                                                     .FirstOrDefault();
+         if (trPaymentHeader is not null)
+            db.TrPaymentHeaders.Remove(trPaymentHeader);
 
-            return db.SaveChanges();
-         }
+         return db.SaveChanges();
+
       }
 
       public int DeleteProduct(DcProduct dcProduct)
       {
-         using (subContext db = new())
-         {
-            if (dcProduct is not null)
-               db.DcProducts.Remove(dcProduct);
+         using subContext db = new();
+         if (dcProduct is not null)
+            db.DcProducts.Remove(dcProduct);
 
-            return db.SaveChanges();
-         }
+         return db.SaveChanges();
       }
 
       public int DeleteCurrAcc(DcCurrAcc dcCurrAcc)
       {
-         using (subContext db = new())
-         {
-            if (dcCurrAcc is not null)
-               db.DcCurrAccs.Remove(dcCurrAcc);
+         using subContext db = new();
 
-            return db.SaveChanges();
-         }
+         if (dcCurrAcc is not null)
+            db.DcCurrAccs.Remove(dcCurrAcc);
+
+         return db.SaveChanges();
+
       }
 
       public int DeletePaymentByInvoice(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            List<TrPaymentHeader> trPaymentHeaders = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                                        .ToList();
-            if (trPaymentHeaders is not null)
-               db.TrPaymentHeaders.RemoveRange(trPaymentHeaders);
+         using subContext db = new();
+         List<TrPaymentHeader> trPaymentHeaders = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                            .ToList();
+         if (trPaymentHeaders is not null)
+            db.TrPaymentHeaders.RemoveRange(trPaymentHeaders);
 
-            int result = db.SaveChanges();
-            return result;
-         }
+         int result = db.SaveChanges();
+         return result;
+
       }
 
       public int DeleteInvoiceLine(object invoiceLineId)
       {
-         using (subContext db = new())
-         {
-            TrInvoiceLine trInvoiceLine = new TrInvoiceLine() { InvoiceLineId = Guid.Parse(invoiceLineId.ToString()) };
-            db.TrInvoiceLines.Remove(trInvoiceLine);
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+
+         TrInvoiceLine trInvoiceLine = new() { InvoiceLineId = Guid.Parse(invoiceLineId.ToString()) };
+         db.TrInvoiceLines.Remove(trInvoiceLine);
+         return db.SaveChanges();
       }
 
       public int DeleteReport(int ReportId)
       {
-         using (subContext db = new())
-         {
-            DcReport dcReport = new DcReport() { ReportId = ReportId };
-            db.DcReports.Remove(dcReport);
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         DcReport dcReport = new() { ReportId = ReportId };
+         db.DcReports.Remove(dcReport);
+         return db.SaveChanges();
+
       }
 
       public int UpdateInvoiceIsCompleted(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { InvoiceHeaderId = invoiceHeaderId, IsCompleted = true };
-            db.Entry(trInvoiceHeader).Property(x => x.IsCompleted).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsCompleted = true };
+         db.Entry(trInvoiceHeader).Property(x => x.IsCompleted).IsModified = true;
+         return db.SaveChanges();
+
       }
 
       public int UpdateInvoicePrintCount(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            TrInvoiceHeader trInvoiceHeader = db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
-
-            trInvoiceHeader.PrintCount = Convert.ToByte(trInvoiceHeader.PrintCount + 1);
-            db.Entry(trInvoiceHeader).Property(x => x.PrintCount).IsModified = true;
-            db.SaveChanges();
-            return trInvoiceHeader.PrintCount;
-         }
+         using subContext db = new();
+         TrInvoiceHeader trInvoiceHeader = db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
+         trInvoiceHeader.PrintCount = Convert.ToByte(trInvoiceHeader.PrintCount + 1);
+         db.Entry(trInvoiceHeader).Property(x => x.PrintCount).IsModified = true;
+         db.SaveChanges();
+         return trInvoiceHeader.PrintCount;
       }
 
       public int UpdateInvoiceLineQtyOut(object invoiceLineId, int qtyOut)
       {
          Guid variable = Guid.Parse(invoiceLineId.ToString());
 
-         using (subContext db = new())
-         {
-            TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.FirstOrDefault(x => x.InvoiceLineId == variable);
+         using subContext db = new();
 
-            trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
-            trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
-            trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
-            trInvoiceLine.QtyOut = qtyOut;
+         TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.FirstOrDefault(x => x.InvoiceLineId == variable);
 
-            db.TrInvoiceLines.Update(trInvoiceLine);
-            return db.SaveChanges();
-         }
+         trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
+         trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
+         trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
+         trInvoiceLine.QtyOut = qtyOut;
+
+         db.TrInvoiceLines.Update(trInvoiceLine);
+         return db.SaveChanges();
       }
 
       public int UpdateInvoiceLineQtyOut(object invoiceHeaderId, object relatedLineId, int qtyOut)
@@ -471,352 +443,307 @@ namespace Foxoft
          Guid HeaderId = Guid.Parse(invoiceHeaderId.ToString());
          Guid relatedId = Guid.Parse(relatedLineId.ToString());
 
-         using (subContext db = new())
-         {
-            TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.Where(x => x.RelatedLineId == relatedId)
-                                               .FirstOrDefault(x => x.InvoiceHeaderId == HeaderId);
+         using subContext db = new();
 
-            trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
-            trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
-            trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
-            trInvoiceLine.QtyOut = qtyOut;
+         TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.Where(x => x.RelatedLineId == relatedId)
+                                            .FirstOrDefault(x => x.InvoiceHeaderId == HeaderId);
 
-            db.TrInvoiceLines.Update(trInvoiceLine);
-            return db.SaveChanges();
-         }
+         trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
+         trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
+         trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
+         trInvoiceLine.QtyOut = qtyOut;
+
+         db.TrInvoiceLines.Update(trInvoiceLine);
+         return db.SaveChanges();
+
       }
 
       public int UpdateInvoicePosDiscount(TrInvoiceLine trInvoiceLine)
       {
-         using (subContext db = new())
-         {
-            //db.TrInvoiceLine.Attach(TrInvoiceLine);
-            db.Entry(trInvoiceLine).Property(x => x.PosDiscount).IsModified = true;
-            db.Entry(trInvoiceLine).Property(x => x.NetAmount).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+
+         db.Entry(trInvoiceLine).Property(x => x.PosDiscount).IsModified = true;
+         db.Entry(trInvoiceLine).Property(x => x.NetAmount).IsModified = true;
+         return db.SaveChanges();
+
       }
 
       public int UpdateInvoiceCurrAccCode(Guid invoiceHeaderId, string currAccCode)
       {
-         using (subContext db = new())
-         {
-            TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { InvoiceHeaderId = invoiceHeaderId, CurrAccCode = currAccCode };
-            db.Entry(trInvoiceHeader).Property(x => x.CurrAccCode).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, CurrAccCode = currAccCode };
+         db.Entry(trInvoiceHeader).Property(x => x.CurrAccCode).IsModified = true;
+         return db.SaveChanges();
       }
 
       public int UpdatePaymentsCurrAccCode(Guid invoiceHeaderId, string currAccCode)
       {
-         using (subContext db = new())
+         using subContext db = new();
+
+         List<TrPaymentHeader> trPaymentHeaders = SelectPaymentHeaders(invoiceHeaderId);
+
+         foreach (TrPaymentHeader entity in trPaymentHeaders)
          {
-            List<TrPaymentHeader> trPaymentHeaders = SelectPaymentHeaders(invoiceHeaderId);
-
-            foreach (TrPaymentHeader entity in trPaymentHeaders)
-            {
-               entity.CurrAccCode = currAccCode;
-               db.Entry(entity).Property(x => x.CurrAccCode).IsModified = true;
-            }
-
-            return db.SaveChanges();
+            entity.CurrAccCode = currAccCode;
+            db.Entry(entity).Property(x => x.CurrAccCode).IsModified = true;
          }
+
+         return db.SaveChanges();
       }
 
       public int UpdateInvoiceSalesPerson(Guid invoiceLineId, string currAccCode)
       {
-         using (subContext db = new())
-         {
-            TrInvoiceLine trInvoiceLine = new TrInvoiceLine() { InvoiceLineId = invoiceLineId, SalesPersonCode = currAccCode };
-            db.Entry(trInvoiceLine).Property(x => x.SalesPersonCode).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+
+         TrInvoiceLine trInvoiceLine = new() { InvoiceLineId = invoiceLineId, SalesPersonCode = currAccCode };
+         db.Entry(trInvoiceLine).Property(x => x.SalesPersonCode).IsModified = true;
+         return db.SaveChanges();
+
       }
 
       public int InsertCustomer(DcCurrAcc dcCurrAcc)
       {
-         using (subContext db = new())
-         {
-            db.DcCurrAccs.Add(dcCurrAcc);
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         db.DcCurrAccs.Add(dcCurrAcc);
+         return db.SaveChanges();
       }
 
       public bool CustomerExist(string CurrAccCode)
       {
-         using (subContext db = new())
-         {
-            return db.DcCurrAccs.Any(x => x.CurrAccCode == CurrAccCode);
-         }
+         using subContext db = new();
+         return db.DcCurrAccs.Any(x => x.CurrAccCode == CurrAccCode);
       }
 
       public int UpdateCustomer(DcCurrAcc dcCurrAcc)
       {
-         using (subContext db = new())
-         {
-            db.DcCurrAccs.Update(dcCurrAcc);
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         db.DcCurrAccs.Update(dcCurrAcc);
+         return db.SaveChanges();
       }
 
       public int InsertPaymentHeader(TrPaymentHeader trPaymentHeader)
       {
-         using (subContext db = new())
-         {
-            db.TrPaymentHeaders.Add(trPaymentHeader);
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         db.TrPaymentHeaders.Add(trPaymentHeader);
+         return db.SaveChanges();
       }
 
       public int InsertPaymentLine(TrPaymentLine trPaymentLine)
       {
-         using (subContext db = new())
-         {
-            db.TrPaymentLines.Add(trPaymentLine);
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         db.TrPaymentLines.Add(trPaymentLine);
+         return db.SaveChanges();
       }
 
       public bool PaymentHeaderExist(Guid paymentHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrPaymentHeaders.Any(x => x.PaymentHeaderId == paymentHeaderId);
-         }
+         using subContext db = new();
+         return db.TrPaymentHeaders.Any(x => x.PaymentHeaderId == paymentHeaderId);
       }
 
       public List<TrPaymentLine> SelectPaymentLines(Guid paymentHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Include(x => x.DcPaymentType)
-                                    .Where(x => x.TrPaymentHeader.PaymentHeaderId == paymentHeaderId)
-                                    .ToList();
-         }
+         using subContext db = new();
+         return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                        .Include(x => x.DcPaymentType)
+                        .Where(x => x.TrPaymentHeader.PaymentHeaderId == paymentHeaderId)
+                        .ToList();
       }
 
       public List<TrPaymentLine> SelectPaymentLinesByInvoice(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Include(x => x.DcPaymentType)
-                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
-                                    .ToList();
-         }
+         using subContext db = new();
+         return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                        .Include(x => x.DcPaymentType)
+                        .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                        .ToList();
       }
 
       public List<TrPaymentHeader> SelectPaymentHeaders(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                    .ToList();
-         }
+         using subContext db = new();
+         return db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                 .ToList();
+
       }
 
       public decimal SelectPaymentLinesSum(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(s => s.PaymentLoc);
-         }
+         using subContext db = new();
+
+         return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                 .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                 .Sum(s => s.PaymentLoc);
       }
 
       public List<DcCurrAcc> SelectCurrAccs()
       {
-         using (subContext db = new())
-         {
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                                .OrderBy(x => x.CreatedDate)
-                                .Select(x => new DcCurrAcc
-                                {
-                                   Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader).Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode).Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
-                                   + db.TrPaymentLines.Include(l => l.TrPaymentHeader).Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode).Sum(s => s.PaymentLoc),
-                                   CurrAccCode = x.CurrAccCode,
-                                   CurrAccDesc = x.CurrAccDesc,
-                                   IsVip = x.IsVip,
-                                   PhoneNum = x.PhoneNum,
-                                   Address = x.Address,
-                                   StoreCode = x.StoreCode,
-                                   FirstName = x.FirstName,
-                                   LastName = x.LastName,
-                                   CreatedDate = x.CreatedDate,
-                                   CreatedUserName = x.CreatedUserName,
-                                   LastUpdatedDate = x.LastUpdatedDate,
-                                   LastUpdatedUserName = x.LastUpdatedUserName,
-                                })
-                                .ToList(); // burdaki kolonlari dizaynda da elave et
-         }
+         using subContext db = new();
+         return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                    .OrderBy(x => x.CreatedDate)
+                    .Select(x => new DcCurrAcc
+                    {
+                       Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader).Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode).Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
+                       + db.TrPaymentLines.Include(l => l.TrPaymentHeader).Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode).Sum(s => s.PaymentLoc),
+                       CurrAccCode = x.CurrAccCode,
+                       CurrAccDesc = x.CurrAccDesc,
+                       IsVip = x.IsVip,
+                       PhoneNum = x.PhoneNum,
+                       Address = x.Address,
+                       StoreCode = x.StoreCode,
+                       FirstName = x.FirstName,
+                       LastName = x.LastName,
+                       CreatedDate = x.CreatedDate,
+                       CreatedUserName = x.CreatedUserName,
+                       LastUpdatedDate = x.LastUpdatedDate,
+                       LastUpdatedUserName = x.LastUpdatedUserName,
+                    })
+                    .ToList(); // burdaki kolonlari dizaynda da elave et
       }
 
       public List<DcCurrAcc> SelectCurrAccsByType(byte currAccTypeCode)
       {
-         using (subContext db = new())
-         {
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == currAccTypeCode)
-                                .OrderBy(x => x.CreatedDate)
-                                .ToList(); // burdaki kolonlari dizaynda da elave et
-         }
+         using subContext db = new();
+
+         return db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == currAccTypeCode)
+                             .OrderBy(x => x.CreatedDate)
+                             .ToList(); // burdaki kolonlari dizaynda da elave et
       }
 
       public DcCurrAcc SelectCurrAcc(string currAccCode)
       {
-         using (subContext db = new())
-         {
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
-         }
+         using subContext db = new();
+         return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                             .FirstOrDefault(x => x.CurrAccCode == currAccCode);
       }
 
       public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate)
       {
-         using (subContext db = new())
-         {
-            decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode && x.TrInvoiceHeader.DocumentDate <= documentDate)
-                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
+         using subContext db = new();
 
-            decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.OperationDate <= documentDate)
-                                       .Sum(x => x.PaymentLoc);
+         decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode && x.TrInvoiceHeader.DocumentDate <= documentDate)
+                                    .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
 
-            return invoiceSum + paymentSum;
-         }
+         decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.OperationDate <= documentDate)
+                                    .Sum(x => x.PaymentLoc);
+
+         return invoiceSum + paymentSum;
+
       }
 
       public decimal SelectPaymentSum(string currAccCode, string docNum)
       {
-         using (subContext db = new())
-         {
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.DocumentNumber == docNum)
-                                    .Sum(x => x.PaymentLoc);
-         }
+         using subContext db = new();
+
+         return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                 .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.DocumentNumber == docNum)
+                                 .Sum(x => x.PaymentLoc);
       }
 
       public decimal SelectInvoiceSum(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .Where(x => x.TrInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc * (100 - x.PosDiscount)));
-         }
+         using subContext db = new();
+
+         return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                 .Where(x => x.TrInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
+                                 .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc * (100 - x.PosDiscount)));
       }
 
       public List<DcOffice> SelectOffices()
       {
-         using (subContext db = new())
-         {
-            return db.DcOffices.Where(x => x.IsDisabled == false)
-                               .OrderBy(x => x.CreatedDate)
-                               .ToList(); // burdaki kolonlari dizaynda da elave et
-         }
+         using subContext db = new();
+
+         return db.DcOffices.Where(x => x.IsDisabled == false)
+                            .OrderBy(x => x.CreatedDate)
+                            .ToList(); // burdaki kolonlari dizaynda da elave et
       }
 
       public DcProcess SelectProcess(string processCode)
       {
-         using (subContext db = new())
-         {
-            DcProcess dcProcess = db.DcProcesses.Where(x => x.ProcessCode == processCode)
-                               .FirstOrDefault();
-            return dcProcess; ;
-         }
+         using subContext db = new();
+         DcProcess dcProcess = db.DcProcesses.Where(x => x.ProcessCode == processCode)
+                   .FirstOrDefault();
+         return dcProcess;
       }
 
       public List<DcCurrency> SelectCurrencies()
       {
-         using (subContext db = new())
-         {
-            return db.DcCurrencies.ToList(); // burdaki kolonlari dizaynda da elave et
-         }
+         using subContext db = new();
+
+         return db.DcCurrencies.ToList(); // burdaki kolonlari dizaynda da elave et
+
       }
 
       public List<DcPaymentType> SelectPaymentTypes()
       {
-         using (subContext db = new())
-         {
-            return db.DcPaymentTypes.ToList(); // burdaki kolonlari dizaynda da elave et
-         }
+         using subContext db = new();
+         return db.DcPaymentTypes.ToList(); // burdaki kolonlari dizaynda da elave et
       }
 
       public float SelectExRate(string currancyCode)
       {
-         using (subContext db = new())
-         {
-            DcCurrency dcCurrency = db.DcCurrencies.Where(x => x.CurrencyCode == currancyCode)
-                                                   .FirstOrDefault();
-            return dcCurrency.ExchangeRate;
-         }
+         using subContext db = new();
+         DcCurrency dcCurrency = db.DcCurrencies.Where(x => x.CurrencyCode == currancyCode)
+                                                .FirstOrDefault();
+         return dcCurrency.ExchangeRate;
       }
 
       public int SelectInvoicePrinCount(Guid invoiceHeaderId)
       {
-         using (subContext db = new())
-         {
-            int rtrn = 0;
-            TrInvoiceHeader trInvoice = db.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                           .FirstOrDefault();
-            if (trInvoice is not null)
-               rtrn = trInvoice.PrintCount;
-            return rtrn;
-         }
+         using subContext db = new();
+         int rtrn = 0;
+         TrInvoiceHeader trInvoice = db.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                        .FirstOrDefault();
+         if (trInvoice is not null)
+            rtrn = trInvoice.PrintCount;
+         return rtrn;
       }
 
       public List<DcCurrAcc> SelectStores()
       {
-         using (subContext db = new())
-         {
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                                .Where(x => x.CurrAccTypeCode == 4)
-                                .OrderBy(x => x.CreatedDate)
-                                .ToList(); // burdaki kolonlari dizaynda da elave et
-         }
+         using subContext db = new();
+         return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                    .Where(x => x.CurrAccTypeCode == 4)
+                    .OrderBy(x => x.CreatedDate)
+                    .ToList(); // burdaki kolonlari dizaynda da elave et
       }
 
       public List<DcWarehouse> SelectWarehouses()
       {
-         using (subContext db = new())
-         {
-            return db.DcWarehouses.Where(x => x.IsDisabled == false)
-                                  .OrderBy(x => x.CreatedDate)
-                                  .ToList(); // burdaki kolonlari dizaynda da elave et
-         }
+         using subContext db = new();
+         return db.DcWarehouses.Where(x => x.IsDisabled == false)
+                      .OrderBy(x => x.CreatedDate)
+                      .ToList(); // burdaki kolonlari dizaynda da elave et
       }
 
       public string SelectWarehouseByStore(string storeCode)
       {
-         using (subContext db = new())
-         {
-            string wareCode = "";
+         using subContext db = new();
+         string wareCode = "";
 
-            DcWarehouse dcWarehouse = db.DcWarehouses.Where(x => x.IsDisabled == false && x.IsDefault == true)
-                                  .FirstOrDefault(x => x.StoreCode == storeCode);
+         DcWarehouse dcWarehouse = db.DcWarehouses.Where(x => x.IsDisabled == false && x.IsDefault == true)
+                               .FirstOrDefault(x => x.StoreCode == storeCode);
 
-            if (dcWarehouse is not null)
-               wareCode = dcWarehouse.WarehouseCode;
+         if (dcWarehouse is not null)
+            wareCode = dcWarehouse.WarehouseCode;
 
-            return wareCode;
-         }
+         return wareCode;
       }
 
       public string SelectCustomerByStore(string storeCode)
       {
-         using (subContext db = new())
-         {
-            string defCustomer = "";
-            DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefaultCustomer == true)
-                                .FirstOrDefault(x => x.StoreCode == storeCode);
+         using subContext db = new();
 
-            if (dcCurrAcc is not null)
-               defCustomer = dcCurrAcc.CurrAccCode;
+         string defCustomer = "";
+         DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefaultCustomer == true)
+                             .FirstOrDefault(x => x.StoreCode == storeCode);
 
-            return defCustomer;
-         }
+         if (dcCurrAcc is not null)
+            defCustomer = dcCurrAcc.CurrAccCode;
+
+         return defCustomer;
       }
 
       public bool Login(string CurrAccCode, string Password)
@@ -825,179 +752,142 @@ namespace Foxoft
             return false;
          else
          {
-            using (subContext db = new())
-            {
-               return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                                   .Where(x => x.CurrAccCode == CurrAccCode)
-                                   .Any(x => x.NewPassword == Password);
-            }
+            using subContext db = new();
+            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                    .Where(x => x.CurrAccCode == CurrAccCode)
+                    .Any(x => x.NewPassword == Password);
          }
       }
 
       public bool CurrAccExist(string CurrAccCode)
       {
-
-         using (subContext db = new())
-         {
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
-                                .Any(x => x.CurrAccCode == CurrAccCode);
-         }
+         using subContext db = new();
+         return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                             .Any(x => x.CurrAccCode == CurrAccCode);
       }
 
       public bool ReportExist(int Id)
       {
-
-         using (subContext db = new())
-         {
-            return db.DcReports.Any(x => x.ReportId == Id);
-         }
+         using subContext db = new();
+         return db.DcReports.Any(x => x.ReportId == Id);
       }
 
       public bool ProductExist(string productCode)
       {
-         using (subContext db = new())
-         {
-            return db.DcProducts.Where(x => x.IsDisabled == false)
-                                .Any(x => x.ProductCode == productCode);
-         }
+         using subContext db = new();
+         return db.DcProducts.Where(x => x.IsDisabled == false)
+                    .Any(x => x.ProductCode == productCode);
+
       }
 
       public void InsertCurrAcc(DcCurrAcc dcCurrAcc)
       {
-         using (subContext db = new())
-         {
-            db.DcCurrAccs.Add(dcCurrAcc);
-            db.SaveChanges();
-         }
+         using subContext db = new();
+         db.DcCurrAccs.Add(dcCurrAcc);
+         db.SaveChanges();
+
       }
 
       public void InsertProduct(DcProduct dcProduct)
       {
-         using (subContext db = new())
-         {
-            db.DcProducts.Add(dcProduct);
-            db.SaveChanges();
-         }
+         using subContext db = new();
+         db.DcProducts.Add(dcProduct);
+         db.SaveChanges();
+
       }
 
       public List<DcRole> SelectRoles(string CurrAccCode)
       {
-         using (subContext db = new())
-         {
-            return db.DcRoles.Include(x => x.TrCurrAccRoles)
-                                .ThenInclude(x => x.DcCurrAcc)
-                             .Where(o => o.TrCurrAccRoles.Any(x => x.CurrAccCode == CurrAccCode))
-                             .ToList();
-         }
+         using subContext db = new();
+         return db.DcRoles.Include(x => x.TrCurrAccRoles)
+                    .ThenInclude(x => x.DcCurrAcc)
+                 .Where(o => o.TrCurrAccRoles.Any(x => x.CurrAccCode == CurrAccCode))
+                 .ToList();
       }
 
       public string SelectOfficeCode(string CurrAccCode)
       {
-         using (subContext db = new())
-         {
-            DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
-                                             .FirstOrDefault();
+         using subContext db = new();
 
-            return currAcc.OfficeCode;
-         }
+         DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
+                                          .FirstOrDefault();
+         return currAcc.OfficeCode;
       }
 
       public string SelectStoreCode(string CurrAccCode)
       {
-         using (subContext db = new())
-         {
-            DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
-                                             .FirstOrDefault();
-            return currAcc.StoreCode;
-         }
+         using subContext db = new();
+         DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
+                                 .FirstOrDefault();
+         return currAcc.StoreCode;
       }
 
       public int UpdateReportLayout(int id, string reportLayout)
       {
-         using (subContext db = new())
-         {
-            DcReport dcReport = new DcReport() { ReportId = id, ReportLayout = reportLayout };
-            db.Entry(dcReport).Property(x => x.ReportLayout).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         DcReport dcReport = new() { ReportId = id, ReportLayout = reportLayout };
+         db.Entry(dcReport).Property(x => x.ReportLayout).IsModified = true;
+         return db.SaveChanges();
       }
 
       public DcReport SelectReport(int id)
       {
-         using (subContext db = new())
-         {
-            return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportId == id);
-         }
+         using subContext db = new();
+         return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportId == id);
       }
 
       public List<DcReport> SelectReports()
       {
-         using (subContext db = new())
-         {
-            return db.DcReports.ToList();
-         }
+         using subContext db = new();
+         return db.DcReports.ToList();
       }
 
       public int UpdateDcReport_Filter(int id, string reportFilter)
       {
-         using (subContext db = new())
-         {
-            DcReport dcReport = new DcReport() { ReportId = id, ReportFilter = reportFilter };
-            db.Entry(dcReport).Property(x => x.ReportFilter).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         DcReport dcReport = new() { ReportId = id, ReportFilter = reportFilter };
+         db.Entry(dcReport).Property(x => x.ReportFilter).IsModified = true;
+         return db.SaveChanges();
       }
 
       public int UpdateDcReportFilter_Value(int ReportId, string fieldName, string filterValue)
       {
-         using (subContext db = new())
-         {
-            DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName).FirstOrDefault(x => x.ReportId == ReportId);
-            dcReport.FilterValue = filterValue;
-            db.Entry(dcReport).Property(x => x.FilterValue).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName).FirstOrDefault(x => x.ReportId == ReportId);
+         dcReport.FilterValue = filterValue;
+         db.Entry(dcReport).Property(x => x.FilterValue).IsModified = true;
+         return db.SaveChanges();
       }
 
       public int UpdateReportFilter(string prop, string value)
       {
-         using (subContext db = new())
-         {
-            DcReportFilter dcReportFilter = db.DcReportFilters.FirstOrDefault(x => x.FilterProperty == prop);
-            dcReportFilter.FilterValue = value;
+         using subContext db = new();
+         DcReportFilter dcReportFilter = db.DcReportFilters.FirstOrDefault(x => x.FilterProperty == prop);
+         dcReportFilter.FilterValue = value;
 
-            db.Entry(dcReportFilter).Property(x => x.FilterValue).IsModified = true;
-            return db.SaveChanges();
-         }
+         db.Entry(dcReportFilter).Property(x => x.FilterValue).IsModified = true;
+         return db.SaveChanges();
       }
-
-
 
       public void InsertReport(DcReport dcReport)
       {
-         using (subContext db = new())
-         {
-            db.DcReports.Add(dcReport);
-            db.SaveChanges();
-         }
+         using subContext db = new();
+         db.DcReports.Add(dcReport);
+         db.SaveChanges();
       }
 
       public int UpdateAppSettingGridViewLayout(string layout)
       {
-         using (subContext db = new())
-         {
-            AppSetting appSetting = new AppSetting() { Id = 1, GridViewLayout = layout };
-            db.Entry(appSetting).Property(x => x.GridViewLayout).IsModified = true;
-            return db.SaveChanges();
-         }
+         using subContext db = new();
+         AppSetting appSetting = new() { Id = 1, GridViewLayout = layout };
+         db.Entry(appSetting).Property(x => x.GridViewLayout).IsModified = true;
+         return db.SaveChanges();
       }
 
       public AppSetting SelectAppSetting()
       {
-         using (subContext db = new())
-         {
-            return db.AppSettings.Find(1);
-         }
+         using subContext db = new();
+         return db.AppSettings.Find(1);
       }
    }
 }

@@ -15,81 +15,70 @@ namespace Foxoft
 
       public int SqlExec(string query)
       {
-         using (SqlConnection con = new(subConnString))
-         {
-            using (SqlCommand cmd = new(query, con))
-            {
-               con.Open();
+         using SqlConnection con = new(subConnString);
+         using SqlCommand cmd = new(query, con);
+         con.Open();
 
-               int result = cmd.ExecuteNonQuery();
+         int result = cmd.ExecuteNonQuery();
 
-               if (result < 0)
-                  XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
-               return result;
-            }
-         }
+         if (result < 0)
+            XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
+         return result;
       }
 
       public int SqlExec(string query, SqlParameter[] sqlParameters)
       {
-         using (SqlConnection con = new(subConnString))
-         {
-            using (SqlCommand cmd = new(query, con))
-            {
-               cmd.Parameters.AddRange(sqlParameters);
-               con.Open();
+         using SqlConnection con = new(subConnString);
+         using SqlCommand cmd = new(query, con);
 
-               int result = cmd.ExecuteNonQuery();
+         cmd.Parameters.AddRange(sqlParameters);
+         con.Open();
 
-               if (result < 0)
-                  XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
-               return result;
-            }
-         }
+         int result = cmd.ExecuteNonQuery();
+
+         if (result < 0)
+            XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
+         return result;
       }
 
       public DataTable SqlGetDt(string query)
       {
-         using (SqlConnection con = new(subConnString))
-         {
-            con.Open();
+         using SqlConnection con = new(subConnString);
+         con.Open();
 
-            using (SqlCommand command = new(query, con))
-            {
-               SqlDataReader dr = command.ExecuteReader();
-               DataTable dt = new();
-               dt.Load(dr);
-               return dt;
-            }
+         using SqlCommand command = new(query, con);
 
-            //using (SqlDataAdapter da = new SqlDataAdapter(query, con))
-            //{
-            //   DataTable dt = new DataTable();
-            //   try
-            //   {
-            //      da.Fill(dt);
-            //   }
-            //   catch (Exception ex)
-            //   {
-            //      MessageBox.Show($"Databaza Hal Hazırda məşğuldur \n {ex}");
-            //   }
-            //   return dt;
-            //}
-         }
+         SqlDataReader dr = command.ExecuteReader();
+         DataTable dt = new();
+         dt.Load(dr);
+         return dt;
+
+
+         //using (SqlDataAdapter da = new SqlDataAdapter(query, con))
+         //{
+         //   DataTable dt = new DataTable();
+         //   try
+         //   {
+         //      da.Fill(dt);
+         //   }
+         //   catch (Exception ex)
+         //   {
+         //      MessageBox.Show($"Databaza Hal Hazırda məşğuldur \n {ex}");
+         //   }
+         //   return dt;
+         //}
+
       }
 
       public DataTable SqlGetDt(string query, SqlParameter[] sqlParameters)
       {
-         using (SqlConnection con = new(subConnString))
-         {
-            using (SqlDataAdapter da = new(query, con))
-            {
-               da.SelectCommand.Parameters.AddRange(sqlParameters);
-               DataTable dt = new();
-               da.Fill(dt);
-               return dt;
-            }
-         }
+         using SqlConnection con = new(subConnString);
+         using SqlDataAdapter da = new(query, con);
+
+         da.SelectCommand.Parameters.AddRange(sqlParameters);
+         DataTable dt = new();
+         da.Fill(dt);
+         return dt;
       }
 
       public DataTable SelectInvoiceLines(DateTime StartDate, DateTime EndDate)
@@ -97,13 +86,11 @@ namespace Foxoft
          Assembly assembly = Assembly.GetExecutingAssembly();
          string str = "Foxoft.AppCode.Qry_Sales.sql";
          string qry = "";
-         using (Stream stream = assembly.GetManifestResourceStream(str))
-         {
-            using (StreamReader reader = new(stream))
-            {
-               qry = reader.ReadToEnd();
-            }
-         }
+
+         using Stream stream = assembly.GetManifestResourceStream(str);
+         using StreamReader reader = new(stream);
+         qry = reader.ReadToEnd();
+
 
          paramArray = new SqlParameter[]
          {
@@ -121,13 +108,10 @@ namespace Foxoft
          Assembly assembly = Assembly.GetExecutingAssembly();
          string str = "Foxoft.AppCode.Qry_Payments.sql";
          string qry = "";
-         using (Stream stream = assembly.GetManifestResourceStream(str))
-         {
-            using (StreamReader reader = new(stream))
-            {
-               qry = reader.ReadToEnd();
-            }
-         }
+
+         using Stream stream = assembly.GetManifestResourceStream(str);
+         using StreamReader reader = new(stream);
+         qry = reader.ReadToEnd();
 
          paramArray = new SqlParameter[]
          {

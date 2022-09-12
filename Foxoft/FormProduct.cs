@@ -8,6 +8,19 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using DevExpress.Utils;
+using DevExpress.Data.Linq;
+using DevExpress.Data.Linq.Helpers;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using Foxoft.Properties;
+using System.Drawing;
+using System.IO;
+using System.Text;
+using DevExpress.Utils.Extensions;
 
 namespace Foxoft
 {
@@ -58,6 +71,7 @@ namespace Foxoft
             dbContext.DcProducts.Where(x => x.ProductCode == dcProduct.ProductCode)
                                 .Include(x => x.DcProductType)
                                 .Load();
+
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
          }
       }

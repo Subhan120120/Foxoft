@@ -359,22 +359,26 @@ namespace Foxoft
             MessageBox.Show("Cari Hesab qeyd olunmayıb.");
       }
 
-      private string PaymentText(string line)
+      private string PaymentText(string newLine)
       {
          string odendi = "";
          for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
          {
-            decimal payment = Math.Abs(Math.Round(Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment)), 2));
+            decimal pay = Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment));
+
+            string txtPay = pay > 0 ? "Ödəniş alındı: " : "Ödəniş verildi: ";
+
+            decimal payment = Math.Abs(Math.Round(pay, 2));
+
             string currency = gV_PaymentLine.GetRowCellValue(i, colCurrencyCode).ToString();
-            odendi += "odendi: " + payment.ToString() + " " + currency + line;
+
+            odendi += txtPay + payment.ToString() + " " + currency + newLine;
          }
 
-         decimal balance = Math.Abs(Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2));
+         decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2);
          string qaldı = "qaldı: " + balance.ToString() + " USD";
 
-         string copyText = odendi + qaldı;
-
-         return copyText;
+         return odendi + qaldı;
       }
 
       private void sendWhatsApp(string number, string message)
