@@ -44,6 +44,7 @@ namespace Foxoft
           : this()
       {
          trPaymentHeader = efMethods.SelectPaymentHeader(paymentHeaderId);
+
          LoadPayment(trPaymentHeader.PaymentHeaderId);
       }
 

@@ -90,7 +90,7 @@ namespace Foxoft
          this.bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_SaveQuit = new DevExpress.XtraBars.BarButtonItem();
+         this.bBI_SaveAndQuit = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_reportPreviewAzn = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
@@ -619,12 +619,9 @@ namespace Foxoft
          this.btnEdit_CurrAccCode.TabIndex = 2;
          this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
          this.btnEdit_CurrAccCode.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CurrAccCode_InvalidValue);
-         this.btnEdit_CurrAccCode.EditValueChanged += new System.EventHandler(this.btnEdit_CurrAccCode_EditValueChanged);
-         this.btnEdit_CurrAccCode.EditValueChanging += new DevExpress.XtraEditors.Controls.ChangingEventHandler(this.btnEdit_CurrAccCode_EditValueChanging);
          this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
          this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
          this.btnEdit_CurrAccCode.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CurrAccCode_Validating);
-         this.btnEdit_CurrAccCode.Validated += new System.EventHandler(this.btnEdit_CurrAccCode_Validated);
          // 
          // lUE_StoreCode
          // 
@@ -698,7 +695,7 @@ namespace Foxoft
             this.bBI_reportPreview,
             this.bBI_DeleteInvoice,
             this.bBI_DeletePayment,
-            this.bBI_SaveQuit,
+            this.bBI_SaveAndQuit,
             this.bBI_reportPreviewAzn,
             this.bBI_CopyInvoice,
             this.bBI_Whatsapp,
@@ -778,12 +775,12 @@ namespace Foxoft
          // 
          // bBI_SaveQuit
          // 
-         this.bBI_SaveQuit.Caption = "Yadda Saxla Bağla";
-         this.bBI_SaveQuit.Id = 13;
-         this.bBI_SaveQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
-         this.bBI_SaveQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
-         this.bBI_SaveQuit.Name = "bBI_SaveQuit";
-         this.bBI_SaveQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveQuit_ItemClick);
+         this.bBI_SaveAndQuit.Caption = "Yadda Saxla Bağla";
+         this.bBI_SaveAndQuit.Id = 13;
+         this.bBI_SaveAndQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
+         this.bBI_SaveAndQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
+         this.bBI_SaveAndQuit.Name = "bBI_SaveQuit";
+         this.bBI_SaveAndQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndQuit_ItemClick);
          // 
          // bBI_reportPreviewAzn
          // 
@@ -829,7 +826,7 @@ namespace Foxoft
          // Faktura
          // 
          this.Faktura.ItemLinks.Add(this.bBI_Save);
-         this.Faktura.ItemLinks.Add(this.bBI_SaveQuit);
+         this.Faktura.ItemLinks.Add(this.bBI_SaveAndQuit);
          this.Faktura.ItemLinks.Add(this.bBI_SaveAndNew);
          this.Faktura.ItemLinks.Add(this.bBI_New);
          this.Faktura.ItemLinks.Add(this.bBI_DeleteInvoice);
@@ -1165,7 +1162,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colAmountLoc;
       private DevExpress.XtraGrid.Columns.GridColumn colNetAmountLoc;
       private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_PriceLoc;
-      private DevExpress.XtraBars.BarButtonItem bBI_SaveQuit;
+      private DevExpress.XtraBars.BarButtonItem bBI_SaveAndQuit;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup Faktura;
       private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
       private DevExpress.XtraGrid.Columns.GridColumn colQty;

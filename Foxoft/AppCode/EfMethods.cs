@@ -126,7 +126,7 @@ namespace Foxoft
                                 Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
                                 BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
                                 BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                                LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                                LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100))).FirstOrDefault(),
                                 ProductCode = x.ProductCode,
                                 ProductDesc = x.ProductDesc,
                                 PosDiscount = x.PosDiscount,
@@ -173,7 +173,7 @@ namespace Foxoft
                             Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
                             BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
                             BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                            LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)).FirstOrDefault(),
+                            LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100))).FirstOrDefault(),
                             ProductCode = x.ProductCode,
                             ProductDesc = x.ProductDesc,
                             PosDiscount = x.PosDiscount,
@@ -189,9 +189,7 @@ namespace Foxoft
                             LastUpdatedUserName = x.LastUpdatedUserName,
                          });
 
-
          return dcProducts.ToList();
-
       }
 
       public List<TrInvoiceHeader> SelectInvoiceHeaders()
@@ -211,7 +209,6 @@ namespace Foxoft
                                    .Include(x => x.TrInvoiceLines)
                                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                    .FirstOrDefault();
-
       }
 
       public TrPaymentHeader SelectPaymentHeader(Guid paymentHeaderId)

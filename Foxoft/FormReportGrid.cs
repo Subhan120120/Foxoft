@@ -4,6 +4,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
@@ -246,6 +247,20 @@ namespace Foxoft
       private void bBI_Quit_ItemClick(object sender, ItemClickEventArgs e)
       {
          Close();
+      }
+
+      private void gC_Report_ProcessGridKey(object sender, KeyEventArgs e)
+      {
+         GridControl gC = sender as GridControl;
+         GridView gV = gC.MainView as GridView;
+
+         if (e.KeyCode == Keys.C && e.Control)
+         {
+            string cellValue = gV.GetFocusedValue().ToString();
+            Clipboard.SetText(cellValue);
+            e.Handled = true;
+         }
+
       }
    }
 }

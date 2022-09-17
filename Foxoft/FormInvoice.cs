@@ -33,7 +33,9 @@ namespace Foxoft
    public partial class FormInvoice : RibbonForm
    {
       readonly string designFolder = @"C:\Users\Administrator\Documents\";
-      string designFile = @"InvoiceRS_A5.repx";
+      string rerportFileNameInvoice = @"InvoiceRS_A5.repx";
+      string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
+
       private TrInvoiceHeader trInvoiceHeader;
       public DcProcess dcProcess;
       private byte productTypeCode;
@@ -166,10 +168,6 @@ namespace Foxoft
       {
          trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
-         //DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-         //if (dcCurrAcc is not null)
-         //    CurrAccDescTextEdit.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
-
          if (trInvoiceHeader is not null) // if Isreturn Changed calculate Qty again
          {
             for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
@@ -278,14 +276,16 @@ namespace Foxoft
 
       private void SelectCurrAcc()
       {
-         using FormCurrAccList form = new(0);
+         FormCurrAccList form = new(0);
+
+         if (trInvoiceHeader.ProcessCode == "TF")
+            form = new(4);
 
          if (form.ShowDialog(this) == DialogResult.OK)
          {
             btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
             FillCurrAccCode(form.dcCurrAcc);
          }
-
       }
 
       private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -293,7 +293,6 @@ namespace Foxoft
          GridView gv = sender as GridView;
          gv.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
          gv.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
-         //gv.SetRowCellValue(e.RowHandle, colQty, 1);
          gv.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
          gv.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
       }
@@ -359,9 +358,8 @@ namespace Foxoft
       private void StandartKeys(KeyEventArgs e)
       {
          if (e.KeyCode == Keys.F1)
-         {
             SelectCurrAcc();
-         }
+
 
          if (e.KeyCode == Keys.F2)
          {
@@ -509,7 +507,7 @@ namespace Foxoft
                gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
                gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
 
-               decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.RetailPrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+               decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
                decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_Price));
                if (priceInvoice == 0)
                   gV_InvoiceLine.SetFocusedRowCellValue(col_Price, priceProduct);
@@ -853,13 +851,12 @@ namespace Foxoft
 
                //MakePayment(summaryInvoice);
 
-               GetPrint();
+               GetPrintToWarehouse();
 
                ClearControlsAddNew();
             }
             else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                ClearControlsAddNew();
-
          }
          else
          {
@@ -891,17 +888,46 @@ namespace Foxoft
          }
       }
 
-      private void GetPrint()
+      private void GetPrintToWarehouse()
       {
          //if (Settings.Default.AppSetting.GetPrint == true)
          //{
-         ReportClass reportClass = new();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         string designPath = designFolder + designFile;
+         string designPath = designFolder + reportFileNameInvoiceWare;
 
-         if (trInvoiceHeader.CurrAccCode == "111")
-            designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
+         XtraReport report = GetInvoiceReport(designPath);
+
+         if (report is not null)
+         {
+            ReportPrintTool printTool = new(report);
+            bool? isPrinted = printTool.PrintDialog();
+
+            if (isPrinted is not null)
+            {
+               bool printed = Convert.ToBoolean(isPrinted);
+               if (printed)
+               {
+                  efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
+                  CalcPrintCount();
+               }
+            }
+
+            using MemoryStream ms = new();
+
+            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+
+            Image img = Image.FromStream(ms);
+
+            Clipboard.SetImage(img);
+         }
+
+      }
+
+      private string subConnString = Settings.Default.subConnString;
+      private XtraReport GetInvoiceReport(string designPath)
+      {
+         ReportClass reportClass = new();
 
          if (!File.Exists(designPath))
             designPath = reportClass.SelectDesign();
@@ -915,30 +941,12 @@ namespace Foxoft
             dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
             dataSource.Fill();
 
-            XtraReport report = reportClass.CreateReport(dataSource, designPath);
-            ReportPrintTool printTool = new(report);
-            bool? isPrinted = printTool.PrintDialog();
-            if (isPrinted is not null)
-            {
-               bool printed = Convert.ToBoolean(isPrinted);
-               if (printed)
-               {
-                  efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
-                  CalcPrintCount();
-               }
-            }
-
-
-            using MemoryStream ms = new();
-
-            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
-            //Write your code here  
-            Image img = Image.FromStream(ms);
-
-            Clipboard.SetImage(img);
-
+            return reportClass.CreateReport(dataSource, designPath);
          }
-
+         else
+         {
+            return null;
+         }
       }
 
       private void MakePayment(decimal summaryInvoice, bool autoPayment)
@@ -950,7 +958,6 @@ namespace Foxoft
             CalcPaidAmount();
             //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
          }
-
       }
 
       private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
@@ -970,26 +977,13 @@ namespace Foxoft
          ClearControlsAddNew();
       }
 
-      private string subConnString = Settings.Default.subConnString;
-
       private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
       {
-         ReportClass reportClass = new();
-         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = reportClass.SelectDesign();
-
-         if (File.Exists(designPath))
+         string designPath = "";
+         XtraReport xtraReport = GetInvoiceReport(designPath);
+         if (xtraReport is not null)
          {
-            DsMethods dsMethods = new();
-            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-
-            dataSource.Name = "Invoice";
-
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
-            dataSource.Fill();
-
-            ReportDesignTool printTool = new(reportClass.CreateReport(dataSource, designPath));
+            ReportDesignTool printTool = new(xtraReport);
             printTool.ShowRibbonDesigner();
          }
       }
@@ -1001,50 +995,27 @@ namespace Foxoft
 
       private void ShowReportPreview()
       {
-         ReportClass reportClass = new();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + designFile;
+         string designPath = designFolder + rerportFileNameInvoice;
 
-         if (!File.Exists(designPath))
-            designPath = reportClass.SelectDesign();
-
-         if (File.Exists(designPath))
+         XtraReport xtraReport = GetInvoiceReport(designPath);
+         if (xtraReport is not null)
          {
-            DsMethods dsMethods = new();
-            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-
-            dataSource.Name = "Invoice";
-
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
-            dataSource.Fill();
-
-            ReportPrintTool printTool = new(reportClass.CreateReport(dataSource, designPath));
+            ReportPrintTool printTool = new(xtraReport);
             printTool.ShowRibbonPreview();
          }
       }
 
       private void bBI_reportPreviewAzn_ItemClick(object sender, ItemClickEventArgs e)
       {
-         ReportClass reportClass = new();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
          string designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
 
-         if (!File.Exists(designPath))
-            designPath = reportClass.SelectDesign();
+         XtraReport xtraReport = GetInvoiceReport(designPath);
 
-         if (File.Exists(designPath))
+         if (xtraReport is not null)
          {
-            DsMethods dsMethods = new();
-            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-
-            dataSource.Name = "Invoice";
-
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
-            dataSource.Fill();
-
-            ReportPrintTool printTool = new(reportClass.CreateReport(dataSource, designPath));
+            ReportPrintTool printTool = new(xtraReport);
             printTool.ShowRibbonPreview();
          }
       }
@@ -1120,7 +1091,7 @@ namespace Foxoft
          //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, colExchangeRate, exRate));
       }
 
-      private void bBI_SaveQuit_ItemClick(object sender, ItemClickEventArgs e)
+      private void bBI_SaveAndQuit_ItemClick(object sender, ItemClickEventArgs e)
       {
          if (dataLayoutControl1.isValid(out List<string> errorList))
          {
@@ -1132,9 +1103,7 @@ namespace Foxoft
 
                MakePayment(summaryInvoice, false);
 
-               ShowReportPreview();
-
-               //GetPrint();
+               GetPrintToWarehouse();
 
                this.Close();
             }
@@ -1187,14 +1156,6 @@ namespace Foxoft
          }
       }
 
-      private void btnEdit_CurrAccCode_KeyDown(object sender, KeyEventArgs e)
-      {
-         //MessageBox.Show("\nKeyCode: " + e.KeyCode +
-         //                     "\nKeyData: " + e.KeyData +
-         //                     "\nKeyValue: " + e.KeyValue
-         //                     );
-      }
-
       private void dataLayoutControls_KeyDown(object sender, KeyEventArgs e)
       {
          StandartKeys(e);
@@ -1202,61 +1163,55 @@ namespace Foxoft
 
       private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
       {
-         CopyReportToClipboard();
+         string fileName = rerportFileNameInvoice;
+         if (trInvoiceHeader.CurrAccCode == "111")
+            fileName = designFolder + @"InvoiceRS_A5_Azn.repx";
+
+         Image image = Image.FromStream(GetInvoiceReportImg(fileName));
+         Clipboard.SetImage(image);
       }
 
-      private void CopyReportToClipboard()
+      private MemoryStream GetInvoiceReportImg(string designPath)
       {
-         ReportClass reportClass = new();
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         string designPath = designFolder + designFile;
+         designPath = designFolder + rerportFileNameInvoice;
 
-         if (trInvoiceHeader.CurrAccCode == "111")
-            designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
+         XtraReport report = GetInvoiceReport(designPath);
 
-         if (!File.Exists(designPath))
-            designPath = reportClass.SelectDesign();
-         if (File.Exists(designPath))
+         if (report is not null)
          {
-            DsMethods dsMethods = new();
-            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-            dataSource.Name = "Invoice";
-
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
-            dataSource.Fill();
-
-            XtraReport report = reportClass.CreateReport(dataSource, designPath);
-
-            using MemoryStream ms = new();
+            MemoryStream ms = new();
 
             report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
-            //Write your code here  
-            Image img = Image.FromStream(ms);
 
-            Clipboard.SetImage(img);
-
+            return ms;
          }
+         else
+            return null;
       }
 
       private void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
       {
-         CopyReportToClipboard();
+         MemoryStream memoryStream = GetInvoiceReportImg(rerportFileNameInvoice);
+         Clipboard.SetImage(Image.FromStream(memoryStream));
          string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
-         sendWhatsApp(phoneNum, "");
+
+         byte[] AsBytes = memoryStream.ToArray();
+         string AsBase64String = Convert.ToBase64String(AsBytes);
+
+         SendWhatsApp(phoneNum, AsBase64String);
       }
 
-      private void sendWhatsApp(string number, string message)
+      private void SendWhatsApp(string number, string message)
       {
-         number = number.Trim();
-
-         if (number == "")
+         if (String.IsNullOrEmpty(number))
          {
             MessageBox.Show("Nömrə qeyd olunmayıb.");
             return;
          }
 
+         number = number.Trim();
          number = "+994" + number;
 
          string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
@@ -1266,6 +1221,43 @@ namespace Foxoft
          myProcess.StartInfo.FileName = link;
          myProcess.Start();
       }
+
+      //private void SendWhatsapp(string number, string type, string body)
+      //{
+      //   if (String.IsNullOrEmpty(number))
+      //   {
+      //      MessageBox.Show("Nömrə qeyd olunmayıb.");
+      //      return;
+      //   }
+
+      //   number = number.Trim();
+      //   number = "+994" + number;
+
+      //   string instanceId = "instance17384";
+      //   string token = "y4hm0p00tuganpqt";
+      //   string url = "https://api.ultramsg.com/" + instanceId + "/messages/";
+
+      //   //byte[] AsBytes = File.ReadAllBytes(body);
+      //   //string AsBase64String = Convert.ToBase64String(AsBytes);
+
+      //   url += type == "image" ? "image" : "chat";
+
+      //   var client = new RestClient(url);
+      //   var request = new RestRequest(url, Method.Post);
+      //   request.AddHeader("content-type", "application/x-www-form-urlencoded");
+      //   request.AddParameter("token", token);
+      //   request.AddParameter("to", number);
+
+      //   if (type == "chat")
+      //      request.AddParameter("body", body);
+      //   else if (type == "image")
+      //      request.AddParameter("image", body);
+
+      //   RestResponse response = client.Execute(request);
+      //   var output = response.Content;
+
+      //   MessageBox.Show(output.ToString());
+      //}
 
       private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
       {
@@ -1302,19 +1294,6 @@ namespace Foxoft
       }
 
       private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
-      {
-         btnEdit_CurrAccCode.DoValidate();
-      }
-
-      private void btnEdit_CurrAccCode_Validated(object sender, EventArgs e)
-      {
-      }
-
-      private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
-      {
-      }
-
-      private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
       {
       }
    }

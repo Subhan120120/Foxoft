@@ -61,6 +61,7 @@ namespace Foxoft
          this.gC_Report.TabIndex = 0;
          this.gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_Report});
+         this.gC_Report.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_Report_ProcessGridKey);
          // 
          // gV_Report
          // 
@@ -151,7 +152,7 @@ namespace Foxoft
          // bBI_Quit
          // 
          this.bBI_Quit.Id = 8;
-         this.bBI_Quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem4.ImageOptions.SvgImage")));
+         this.bBI_Quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_Quit.ImageOptions.SvgImage")));
          this.bBI_Quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
          this.bBI_Quit.Name = "bBI_Quit";
          this.bBI_Quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Quit_ItemClick);

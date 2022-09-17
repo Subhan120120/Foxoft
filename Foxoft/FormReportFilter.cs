@@ -1,8 +1,10 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.Utils.Drawing;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Drawing;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
 using Foxoft.Models;
@@ -10,12 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
-
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using DevExpress.XtraEditors.Drawing;
-using DevExpress.Utils.Drawing;
 
 namespace Foxoft
 {
@@ -27,6 +23,7 @@ namespace Foxoft
 
       readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
       readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new RepositoryItemButtonEdit();
 
       public FormReportFilter(DcReport Report)
       {
@@ -53,6 +50,10 @@ namespace Foxoft
          this.repoBtnEdit_CurrAccCode.AutoHeight = false;
          this.repoBtnEdit_CurrAccCode.Name = "repoBtnEdit_CurrAccCode";
          this.repoBtnEdit_CurrAccCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CurrAccCode_ButtonPressed);
+
+         this.repoBtnEdit_StoreCode.AutoHeight = false;
+         this.repoBtnEdit_StoreCode.Name = "repoBtnEdit_StoreCode";
+         this.repoBtnEdit_StoreCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_StoreCode_ButtonPressed);
       }
 
       private string ClearVariables(string querySql)
@@ -291,6 +292,8 @@ namespace Foxoft
             e.RepositoryItem = repoBtnEdit_ProductCode;
          if (e.Node.FirstOperand.PropertyName == "Cari Hesab Kodu" || e.Node.FirstOperand.PropertyName == "CurrAccCode")
             e.RepositoryItem = repoBtnEdit_CurrAccCode;
+         if (e.Node.FirstOperand.PropertyName == "Mağaza Kodu" || e.Node.FirstOperand.PropertyName == "StoreCode")
+            e.RepositoryItem = repoBtnEdit_StoreCode;
       }
 
       private void repoBtnEdt_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -312,13 +315,17 @@ namespace Foxoft
 
       private void repobtnEdit_CurrAccCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
       {
-         SelectCurrAcc(sender);
+         SelectCurrAcc(sender, 0);
+      }
+      private void repobtnEdit_StoreCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         SelectCurrAcc(sender, 4);
       }
 
-      private void SelectCurrAcc(object sender)
+      private void SelectCurrAcc(object sender, byte currAccTypeCode)
       {
          ButtonEdit editor = (ButtonEdit)sender;
-         using (FormCurrAccList form = new FormCurrAccList(0))
+         using (FormCurrAccList form = new FormCurrAccList(currAccTypeCode))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -330,7 +337,7 @@ namespace Foxoft
       public class MyFilterControl : FilterControl
       {
          public MyFilterControl() : base() { }
-         protected override DevExpress.XtraEditors.Drawing.BaseControlPainter CreatePainter()
+         protected override BaseControlPainter CreatePainter()
          {
             return new MyFilterControlPainter(this);
          }
