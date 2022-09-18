@@ -73,6 +73,7 @@ namespace Foxoft
          this.gV_Report.OptionsLayout.StoreAllOptions = true;
          this.gV_Report.OptionsLayout.StoreAppearance = true;
          this.gV_Report.OptionsLayout.StoreFormatRules = true;
+         this.gV_Report.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.VisibleAlways;
          this.gV_Report.OptionsView.ShowFooter = true;
          this.gV_Report.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_Report_RowStyle);
          this.gV_Report.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gV_Report_ShowingEditor);

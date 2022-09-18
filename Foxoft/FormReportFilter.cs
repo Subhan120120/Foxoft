@@ -280,7 +280,7 @@ namespace Foxoft
          {
             foreach (var item in dcReport.DcReportFilters)
             {
-               efMethods.UpdateReportFilter(e.PropertyName, e.Value.ToString());
+               efMethods.UpdateReportFilter(dcReport.ReportId, e.PropertyName, e.Value.ToString());
             }
             this.dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
          }

@@ -856,10 +856,10 @@ namespace Foxoft
          return db.SaveChanges();
       }
 
-      public int UpdateReportFilter(string prop, string value)
+      public int UpdateReportFilter(int id, string prop, string value)
       {
          using subContext db = new();
-         DcReportFilter dcReportFilter = db.DcReportFilters.FirstOrDefault(x => x.FilterProperty == prop);
+         DcReportFilter dcReportFilter = db.DcReportFilters.FirstOrDefault(x => x.FilterProperty == prop && x.ReportId == id);
          dcReportFilter.FilterValue = value;
 
          db.Entry(dcReportFilter).Property(x => x.FilterValue).IsModified = true;

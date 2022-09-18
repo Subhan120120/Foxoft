@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -144,7 +143,6 @@ namespace Foxoft
                                    .Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
 
          LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
-
 
          lV_paymentHeader.ForEach(x =>
          {
@@ -365,15 +363,22 @@ namespace Foxoft
          string odendi = "";
          for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
          {
-            decimal pay = Convert.ToDecimal(gV_PaymentLine.GetRowCellValue(i, colPayment));
+            TrPaymentLine trPaymentLine = gV_PaymentLine.GetRow(i) as TrPaymentLine;
+
+            decimal pay = trPaymentLine.Payment;
+
+            string lineDesc = trPaymentLine.LineDescription;
+
+            if (!String.IsNullOrEmpty(lineDesc))
+               lineDesc = " (" + lineDesc + ")";
 
             string txtPay = pay > 0 ? "Ödəniş alındı: " : "Ödəniş verildi: ";
 
             decimal payment = Math.Abs(Math.Round(pay, 2));
 
-            string currency = gV_PaymentLine.GetRowCellValue(i, colCurrencyCode).ToString();
+            string currency = trPaymentLine.CurrencyCode;
 
-            odendi += txtPay + payment.ToString() + " " + currency + newLine;
+            odendi += txtPay + payment.ToString() + " " + currency + lineDesc + newLine;
          }
 
          decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2);
@@ -386,7 +391,7 @@ namespace Foxoft
       {
          number = number.Trim();
 
-         if (number == "")
+         if (String.IsNullOrEmpty(number))
          {
             MessageBox.Show("Nömrə qeyd olunmayıb.");
             return;

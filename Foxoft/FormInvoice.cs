@@ -157,13 +157,6 @@ namespace Foxoft
          e.NewObject = invoiceHeader;
       }
 
-      private void trInvoiceLinesBindingSource_AddingNew(object sender, AddingNewEventArgs e)
-      {
-         //line.DcProduct = new DcProduct();
-         //line.DcProduct.ProductDescription = "Fazil";
-         //e.NewObject = line;
-      }
-
       private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
       {
          trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
@@ -1197,10 +1190,10 @@ namespace Foxoft
          Clipboard.SetImage(Image.FromStream(memoryStream));
          string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-         byte[] AsBytes = memoryStream.ToArray();
-         string AsBase64String = Convert.ToBase64String(AsBytes);
+         //byte[] AsBytes = memoryStream.ToArray();
+         //string AsBase64String = Convert.ToBase64String(AsBytes);
 
-         SendWhatsApp(phoneNum, AsBase64String);
+         SendWhatsApp(phoneNum, "");
       }
 
       private void SendWhatsApp(string number, string message)

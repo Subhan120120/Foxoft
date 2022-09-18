@@ -161,10 +161,6 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.adorneruıManager1)).BeginInit();
          this.SuspendLayout();
          // 
-         // trInvoiceLinesBindingSource
-         // 
-         this.trInvoiceLinesBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trInvoiceLinesBindingSource_AddingNew);
-         // 
          // dataLayoutControl1
          // 
          this.dataLayoutControl1.Controls.Add(this.lbl_PrintCount);
