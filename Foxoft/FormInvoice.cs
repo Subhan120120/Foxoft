@@ -128,7 +128,7 @@ namespace Foxoft
 
          dataLayoutControl1.isValid(out List<string> errorList);
 
-         CalcPrintCount();
+         ShowPrintCount();
       }
 
       private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -241,7 +241,7 @@ namespace Foxoft
 
          dataLayoutControl1.isValid(out List<string> errorList);
          CalcPaidAmount();
-         CalcPrintCount();
+         ShowPrintCount();
       }
 
       private void CalcPaidAmount()
@@ -250,7 +250,7 @@ namespace Foxoft
          lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
       }
 
-      private void CalcPrintCount()
+      private void ShowPrintCount()
       {
          int printCount = efMethods.SelectInvoicePrinCount(trInvoiceHeader.InvoiceHeaderId);
 
@@ -893,6 +893,11 @@ namespace Foxoft
 
          if (report is not null)
          {
+            using MemoryStream ms = new();
+            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+            Image img = Image.FromStream(ms);
+            Clipboard.SetImage(img);
+
             ReportPrintTool printTool = new(report);
             bool? isPrinted = printTool.PrintDialog();
 
@@ -902,19 +907,10 @@ namespace Foxoft
                if (printed)
                {
                   efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
-                  CalcPrintCount();
+                  ShowPrintCount();
                }
             }
-
-            using MemoryStream ms = new();
-
-            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
-
-            Image img = Image.FromStream(ms);
-
-            Clipboard.SetImage(img);
          }
-
       }
 
       private string subConnString = Settings.Default.subConnString;
@@ -1088,13 +1084,13 @@ namespace Foxoft
       {
          if (dataLayoutControl1.isValid(out List<string> errorList))
          {
-            decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+            decimal summInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
-            if (summaryInvoice != 0)
+            if (summInvoice != 0)
             {
                SaveInvoice();
 
-               MakePayment(summaryInvoice, false);
+               MakePayment(summInvoice, false);
 
                GetPrintToWarehouse();
 
@@ -1107,8 +1103,8 @@ namespace Foxoft
          }
          else
          {
-            string combinedString = errorList.Aggregate((x, y) => x + "" + y);
-            XtraMessageBox.Show(combinedString);
+            string combinedStr = errorList.Aggregate((x, y) => x + "" + y);
+            XtraMessageBox.Show(combinedStr);
          }
       }
 

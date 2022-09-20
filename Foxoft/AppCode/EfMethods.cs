@@ -164,7 +164,7 @@ namespace Foxoft
 
          //filteredData = filteredData.Take(100);
 
-         IQueryable<DcProduct> dcProducts = filteredData.Where(x => x.ProductTypeCode == productTypeCode)
+         IQueryable<DcProduct> dcProducts = DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
                          .Include(x => x.TrInvoiceLines)
                              .ThenInclude(l => l.TrInvoiceHeader)
                          .OrderBy(x => x.ProductDesc)

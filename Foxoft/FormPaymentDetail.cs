@@ -360,17 +360,12 @@ namespace Foxoft
 
       private string PaymentText(string newLine)
       {
-         string odendi = "";
+         string paid = "";
          for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
          {
             TrPaymentLine trPaymentLine = gV_PaymentLine.GetRow(i) as TrPaymentLine;
 
             decimal pay = trPaymentLine.Payment;
-
-            string lineDesc = trPaymentLine.LineDescription;
-
-            if (!String.IsNullOrEmpty(lineDesc))
-               lineDesc = " (" + lineDesc + ")";
 
             string txtPay = pay > 0 ? "Ödəniş alındı: " : "Ödəniş verildi: ";
 
@@ -378,13 +373,18 @@ namespace Foxoft
 
             string currency = trPaymentLine.CurrencyCode;
 
-            odendi += txtPay + payment.ToString() + " " + currency + lineDesc + newLine;
+            string lineDesc = trPaymentLine.LineDescription;
+
+            if (!String.IsNullOrEmpty(lineDesc))
+               lineDesc = " (" + lineDesc + ")";
+
+            paid += txtPay + payment.ToString() + " " + currency + lineDesc + newLine;
          }
 
          decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2);
-         string qaldı = "qaldı: " + balance.ToString() + " USD";
+         string balanceTxt = "Qalıq: " + balance.ToString() + " USD";
 
-         return odendi + qaldı;
+         return paid + balanceTxt;
       }
 
       private void sendWhatsApp(string number, string message)
