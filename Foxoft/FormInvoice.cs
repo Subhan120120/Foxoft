@@ -269,15 +269,18 @@ namespace Foxoft
 
       private void SelectCurrAcc()
       {
-         FormCurrAccList form = new(0);
-
-         if (trInvoiceHeader.ProcessCode == "TF")
-            form = new(4);
-
-         if (form.ShowDialog(this) == DialogResult.OK)
+         if (btnEdit_CurrAccCode.Enabled)
          {
-            btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-            FillCurrAccCode(form.dcCurrAcc);
+            FormCurrAccList form = new(0);
+
+            if (trInvoiceHeader.ProcessCode == "TF")
+               form = new(4);
+
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+               btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+               FillCurrAccCode(form.dcCurrAcc);
+            }
          }
       }
 
@@ -352,7 +355,6 @@ namespace Foxoft
       {
          if (e.KeyCode == Keys.F1)
             SelectCurrAcc();
-
 
          if (e.KeyCode == Keys.F2)
          {

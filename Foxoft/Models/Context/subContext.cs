@@ -42,7 +42,6 @@ namespace Foxoft.Models
       public DbSet<TrShipmentLine> TrShipmentLines { get; set; }
       public DbSet<DcReport> DcReports { get; set; }
       public DbSet<DcFeature> DcFeatures { get; set; }
-      public DbSet<TrFeature> TrFeatures { get; set; }
       public DbSet<AppSetting> AppSettings { get; set; }
       public DbSet<DcVariable> DcVariables { get; set; }
       public DbSet<TrPrice> TrPrices { get; set; }
@@ -189,9 +188,6 @@ namespace Foxoft.Models
 
          modelBuilder.Entity<DcReport>().HasData(
              new DcReport { ReportName = "Satis", ReportQuery = "select * from TrInvoiceLines", ReportId = 1 });
-
-         modelBuilder.Entity<TrFeature>()
-             .HasIndex(entity => new { entity.FeatureId, entity.ProductCode }).IsUnique();
 
          CustomMethods customMethods = new CustomMethods();
          string gvListDefault = customMethods.GetDataFromFile("Foxoft.AppCode.GvListDefaultLayout.xml");

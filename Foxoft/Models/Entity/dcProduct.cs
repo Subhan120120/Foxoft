@@ -19,6 +19,7 @@ namespace Foxoft.Models
       {
          TrInvoiceLines = new HashSet<TrInvoiceLine>();
          TrPrices = new HashSet<TrPrice>();
+         DcFeatures = new HashSet<DcFeature>();
       }
 
       [Key]
@@ -112,6 +113,6 @@ namespace Foxoft.Models
       public virtual DcProductType DcProductType { get; set; }
       public virtual ICollection<TrPrice> TrPrices { get; set; }
       public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
-      public virtual ICollection<TrFeature> TrFeature { get; set; }
+      public virtual ICollection<DcFeature> DcFeatures { get; set; }
    }
 }
