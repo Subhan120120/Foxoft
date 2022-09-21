@@ -909,7 +909,7 @@ namespace Foxoft
                if (printed)
                {
                   efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
-                  ShowPrintCount();
+                  //ShowPrintCount();
                }
             }
          }

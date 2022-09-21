@@ -38,7 +38,7 @@ namespace Foxoft
                                                               .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                                               .OrderBy(x => x.CreatedDate)
                                                               .ToList();
-
+            
             //InvoiceLines.ForEach(x =>
             //{
             //    x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);

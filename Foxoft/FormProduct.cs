@@ -14,9 +14,9 @@ namespace Foxoft
 {
    public partial class FormProduct : XtraForm
    {
-      subContext dbContext = new subContext();
-      EfMethods efMethods = new EfMethods();
-      private DcProduct dcProduct = new DcProduct();
+      subContext dbContext = new();
+      EfMethods efMethods = new();
+      private DcProduct dcProduct = new();
       private byte productTypeCode;
 
       public FormProduct(byte productTypeCode)
@@ -75,7 +75,7 @@ namespace Foxoft
          dcProduct.ProductCode = NewDocNum;
          dcProduct.ProductTypeCode = productTypeCode;
          dcProduct.CreatedUserName = Authorization.CurrAccCode;
-
+         
          dcProductsBindingSource.DataSource = dcProduct;
       }
 

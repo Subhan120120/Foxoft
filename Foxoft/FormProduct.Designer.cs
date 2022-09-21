@@ -62,15 +62,15 @@ namespace Foxoft
          this.ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
          this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
          this.ItemForPosDiscount = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForProductCode = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
          this.ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
+         this.ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
+         this.ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForBalance = new DevExpress.XtraLayout.LayoutControlItem();
+         this.ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
          this.gridControl1 = new DevExpress.XtraGrid.GridControl();
          this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -103,15 +103,15 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForPosDiscount)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForProductCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForPurchasePrice)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForWholesalePrice)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForRetailPrice)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForBalance)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
          this.SuspendLayout();
@@ -477,26 +477,6 @@ namespace Foxoft
          this.ItemForPosDiscount.Text = "Pos Endirimi";
          this.ItemForPosDiscount.TextSize = new System.Drawing.Size(85, 13);
          // 
-         // ItemForUseInternet
-         // 
-         this.ItemForUseInternet.Control = this.UseInternetCheckEdit;
-         this.ItemForUseInternet.Location = new System.Drawing.Point(201, 237);
-         this.ItemForUseInternet.Name = "ItemForUseInternet";
-         this.ItemForUseInternet.Size = new System.Drawing.Size(205, 24);
-         this.ItemForUseInternet.Text = "İnternetdə İstifadə Et";
-         this.ItemForUseInternet.TextSize = new System.Drawing.Size(0, 0);
-         this.ItemForUseInternet.TextVisible = false;
-         // 
-         // ItemForIsDisabled
-         // 
-         this.ItemForIsDisabled.Control = this.IsDisabledCheckEdit;
-         this.ItemForIsDisabled.Location = new System.Drawing.Point(0, 237);
-         this.ItemForIsDisabled.Name = "ItemForIsDisabled";
-         this.ItemForIsDisabled.Size = new System.Drawing.Size(201, 24);
-         this.ItemForIsDisabled.Text = "Is Disabled";
-         this.ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
-         this.ItemForIsDisabled.TextVisible = false;
-         // 
          // ItemForProductCode
          // 
          this.ItemForProductCode.Control = this.ProductCodeTextEdit;
@@ -505,15 +485,6 @@ namespace Foxoft
          this.ItemForProductCode.Size = new System.Drawing.Size(406, 24);
          this.ItemForProductCode.Text = "Məhsul Kodu";
          this.ItemForProductCode.TextSize = new System.Drawing.Size(85, 13);
-         // 
-         // ItemForProductDesc
-         // 
-         this.ItemForProductDesc.Control = this.ProductDescTextEdit;
-         this.ItemForProductDesc.Location = new System.Drawing.Point(0, 24);
-         this.ItemForProductDesc.Name = "ItemForProductDesc";
-         this.ItemForProductDesc.Size = new System.Drawing.Size(406, 24);
-         this.ItemForProductDesc.Text = "Məhsul Adı";
-         this.ItemForProductDesc.TextSize = new System.Drawing.Size(85, 13);
          // 
          // layoutControlGroup2
          // 
@@ -551,6 +522,26 @@ namespace Foxoft
          this.ItemForRetailPrice.Size = new System.Drawing.Size(382, 24);
          this.ItemForRetailPrice.TextSize = new System.Drawing.Size(85, 13);
          // 
+         // ItemForIsDisabled
+         // 
+         this.ItemForIsDisabled.Control = this.IsDisabledCheckEdit;
+         this.ItemForIsDisabled.Location = new System.Drawing.Point(0, 237);
+         this.ItemForIsDisabled.Name = "ItemForIsDisabled";
+         this.ItemForIsDisabled.Size = new System.Drawing.Size(201, 24);
+         this.ItemForIsDisabled.Text = "Is Disabled";
+         this.ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
+         this.ItemForIsDisabled.TextVisible = false;
+         // 
+         // ItemForUseInternet
+         // 
+         this.ItemForUseInternet.Control = this.UseInternetCheckEdit;
+         this.ItemForUseInternet.Location = new System.Drawing.Point(201, 237);
+         this.ItemForUseInternet.Name = "ItemForUseInternet";
+         this.ItemForUseInternet.Size = new System.Drawing.Size(205, 24);
+         this.ItemForUseInternet.Text = "İnternetdə İstifadə Et";
+         this.ItemForUseInternet.TextSize = new System.Drawing.Size(0, 0);
+         this.ItemForUseInternet.TextVisible = false;
+         // 
          // ItemForBalance
          // 
          this.ItemForBalance.Control = this.BalanceTextEdit;
@@ -559,6 +550,15 @@ namespace Foxoft
          this.ItemForBalance.Size = new System.Drawing.Size(406, 24);
          this.ItemForBalance.Text = "Qalıq";
          this.ItemForBalance.TextSize = new System.Drawing.Size(85, 13);
+         // 
+         // ItemForProductDesc
+         // 
+         this.ItemForProductDesc.Control = this.ProductDescTextEdit;
+         this.ItemForProductDesc.Location = new System.Drawing.Point(0, 24);
+         this.ItemForProductDesc.Name = "ItemForProductDesc";
+         this.ItemForProductDesc.Size = new System.Drawing.Size(406, 24);
+         this.ItemForProductDesc.Text = "Məhsul Adı";
+         this.ItemForProductDesc.TextSize = new System.Drawing.Size(85, 13);
          // 
          // gridControl1
          // 
@@ -614,15 +614,15 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForPosDiscount)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForProductCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForPurchasePrice)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForWholesalePrice)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForRetailPrice)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForBalance)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
          this.ResumeLayout(false);
