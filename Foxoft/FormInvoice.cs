@@ -1286,6 +1286,8 @@ namespace Foxoft
 
       private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
       {
+         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         gC_InvoiceLine.ExportToXlsx(pathDesktop + $@"\InvoiceLine.xlsx");
       }
    }
 }
