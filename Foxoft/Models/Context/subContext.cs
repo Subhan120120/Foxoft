@@ -46,6 +46,7 @@ namespace Foxoft.Models
       public DbSet<DcVariable> DcVariables { get; set; }
       public DbSet<TrPrice> TrPrices { get; set; }
       public DbSet<DcCurrency> DcCurrencies { get; set; }
+      public DbSet<DcProductDcFeature> DcProductDcFeatures { get; set; }
       public DbSet<RetailSale> RetailSales { get; set; } // view
       public DbSet<DcReportFilter> DcReportFilters { get; set; } // view
 
@@ -153,6 +154,9 @@ namespace Foxoft.Models
              new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xerci", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) },
              new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "Isiq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) }
          );
+
+         modelBuilder.Entity<DcProductDcFeature>()
+            .HasKey(bc => new { bc.ProductCode, bc.FeatureId });
 
          modelBuilder.Entity<DcProductType>().HasData(
              new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },

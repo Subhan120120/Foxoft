@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20220926122402_asdjkasd")]
+    partial class asdjkasd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,7 +165,7 @@ namespace Foxoft.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<bool>("IsDefault")
+                    b.Property<bool>("IsDefaultCustomer")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDisabled")
@@ -235,7 +237,7 @@ namespace Foxoft.Migrations
                             CurrAccTypeCode = (byte)3,
                             CustomerPosDiscountRate = 0.0,
                             FirstName = "Sübhan",
-                            IsDefault = false,
+                            IsDefaultCustomer = false,
                             IsDisabled = false,
                             IsVip = false,
                             LastName = "Hüseynzadə",
@@ -255,7 +257,7 @@ namespace Foxoft.Migrations
                             CurrAccTypeCode = (byte)3,
                             CustomerPosDiscountRate = 0.0,
                             FirstName = "Mudir",
-                            IsDefault = false,
+                            IsDefaultCustomer = false,
                             IsDisabled = false,
                             IsVip = false,
                             LastName = "Mudir",
@@ -275,7 +277,7 @@ namespace Foxoft.Migrations
                             CurrAccTypeCode = (byte)3,
                             CustomerPosDiscountRate = 0.0,
                             FirstName = "Operator",
-                            IsDefault = false,
+                            IsDefaultCustomer = false,
                             IsDisabled = false,
                             IsVip = false,
                             LastName = "Operator",
@@ -295,7 +297,7 @@ namespace Foxoft.Migrations
                             CurrAccTypeCode = (byte)3,
                             CustomerPosDiscountRate = 0.0,
                             FirstName = "Satici",
-                            IsDefault = false,
+                            IsDefaultCustomer = false,
                             IsDisabled = false,
                             IsVip = false,
                             LastName = "Satici",
@@ -315,7 +317,7 @@ namespace Foxoft.Migrations
                             CurrAccDesc = "Merkez Mağaza",
                             CurrAccTypeCode = (byte)4,
                             CustomerPosDiscountRate = 0.0,
-                            IsDefault = false,
+                            IsDefaultCustomer = false,
                             IsDisabled = false,
                             IsVip = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -334,7 +336,7 @@ namespace Foxoft.Migrations
                             CurrAccDesc = "Nağd Kassa",
                             CurrAccTypeCode = (byte)5,
                             CustomerPosDiscountRate = 0.0,
-                            IsDefault = false,
+                            IsDefaultCustomer = false,
                             IsDisabled = false,
                             IsVip = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

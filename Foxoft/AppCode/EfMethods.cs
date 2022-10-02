@@ -38,7 +38,7 @@ namespace Foxoft
                                                               .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                                               .OrderBy(x => x.CreatedDate)
                                                               .ToList();
-            
+
             //InvoiceLines.ForEach(x =>
             //{
             //    x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);
@@ -173,6 +173,7 @@ namespace Foxoft
                             Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
                             BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
                             BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
+                            BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
                             LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100))).FirstOrDefault(),
                             ProductCode = x.ProductCode,
                             ProductDesc = x.ProductDesc,
@@ -250,7 +251,6 @@ namespace Foxoft
                                  .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                  .OrderBy(x => x.CreatedDate)
                                  .ToList();
-
       }
 
       public int InsertInvoiceLine(DcProduct dcProduct, Guid invoiceHeaderId)
@@ -734,8 +734,8 @@ namespace Foxoft
          using subContext db = new();
 
          string defCustomer = "";
-         DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefaultCustomer == true)
-                             .FirstOrDefault(x => x.StoreCode == storeCode);
+         DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDefault == true && x.CurrAccTypeCode == 1)
+                                            .FirstOrDefault(x => x.IsDisabled == false && x.StoreCode == storeCode);
 
          if (dcCurrAcc is not null)
             defCustomer = dcCurrAcc.CurrAccCode;

@@ -93,6 +93,8 @@ namespace Foxoft
             dcProduct = gV_ProductList.GetRow(gV_ProductList.FocusedRowHandle) as DcProduct;
 
          gV_ProductList.BestFitColumns();
+
+
       }
 
       private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -340,6 +342,11 @@ namespace Foxoft
       private void bBI_ProductRefresh_ItemClick(object sender, ItemClickEventArgs e)
       {
          LoadProducts(productTypeCode);
+      }
+
+      private void BBI_Feature_ItemClick(object sender, ItemClickEventArgs e)
+      {
+
       }
    }
 }

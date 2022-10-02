@@ -130,7 +130,7 @@ namespace Foxoft.Models
       public DateTime? BirthDate { get; set; }
 
       [DisplayName("Varsayılan Müstəri")]
-      public bool IsDefaultCustomer { get; set; }
+      public bool IsDefault { get; set; }
 
       [NotMapped]
       [DisplayName("Qalıq")]

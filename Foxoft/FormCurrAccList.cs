@@ -110,6 +110,11 @@ namespace Foxoft
             gV_CurrAccList.FocusedRowHandle = fr;
          else
             gV_CurrAccList.MoveLast();
+
+         if (gV_CurrAccList.FocusedRowHandle >= 0)
+            dcCurrAcc = gV_CurrAccList.GetFocusedRow() as DcCurrAcc;
+         else
+            dcCurrAcc = null;
       }
 
       private void LoadCurrAccs()

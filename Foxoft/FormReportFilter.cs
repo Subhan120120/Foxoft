@@ -34,9 +34,12 @@ namespace Foxoft
          this.dcReport = efMethods.SelectReport(Report.ReportId); // reload dcReport
          this.Text = Report.ReportName;
 
-         string querySql = ClearVariables(dcReport.ReportQuery);
+         string querySql = null;
+         if (dcReport is not null)
+            querySql = ClearVariables(dcReport.ReportQuery);
 
-         filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql);
+         if (querySql is not null)
+            filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql);
          filterControl_Outer.FilterString = dcReport.ReportFilter;
 
          GroupOperator groupOperator = GetFiltersFromDatabase(dcReport.DcReportFilters);
@@ -58,16 +61,19 @@ namespace Foxoft
 
       private string ClearVariables(string querySql)
       {
-         if (querySql.Contains("{"))
-         {
-            int startindex = querySql.IndexOf('{');
-            int endindex = querySql.IndexOf('}');
-            string outputstring = querySql.Substring(startindex, endindex - startindex + 1);
-            string newQuerySql = querySql.Replace(outputstring, "");
-            return newQuerySql;
-         }
-         else
-            return querySql;
+         if (querySql is not null)
+
+            if (querySql.Contains("{"))
+            {
+               int startindex = querySql.IndexOf('{');
+               int endindex = querySql.IndexOf('}');
+               string outputstring = querySql.Substring(startindex, endindex - startindex + 1);
+               string newQuerySql = querySql.Replace(outputstring, "");
+               return newQuerySql;
+            }
+            else
+               return querySql;
+         else return null;
       }
 
       private DataTable opToDt(GroupOperator groupOperand)

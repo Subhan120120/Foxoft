@@ -101,6 +101,10 @@ namespace Foxoft.Models
       [DisplayName("Qalıq Filial")]
       public int BalanceF { get; set; }
 
+      [NotMapped]
+      [DisplayName("Qalıq Sahil")]
+      public int BalanceS { get; set; }
+
 
       [NotMapped]
       [DisplayName("Son Alış Qiy.")]

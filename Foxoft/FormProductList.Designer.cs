@@ -71,11 +71,13 @@ namespace Foxoft
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_ProductDelete = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_ProductRefresh = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_Feature = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.colBalanceS = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_ProductList)).BeginInit();
@@ -125,7 +127,8 @@ namespace Foxoft
             this.colLastUpdatedUserName,
             this.colLastUpdatedDate,
             this.colBalanceF,
-            this.colBalanceM});
+            this.colBalanceM,
+            this.colBalanceS});
          this.gV_ProductList.CustomizationFormBounds = new System.Drawing.Rectangle(624, 401, 264, 272);
          this.gV_ProductList.GridControl = this.gC_ProductList;
          this.gV_ProductList.Name = "gV_ProductList";
@@ -206,7 +209,7 @@ namespace Foxoft
          this.colWholesalePrice.FieldName = "WholesalePrice";
          this.colWholesalePrice.Name = "colWholesalePrice";
          this.colWholesalePrice.Visible = true;
-         this.colWholesalePrice.VisibleIndex = 5;
+         this.colWholesalePrice.VisibleIndex = 6;
          this.colWholesalePrice.Width = 122;
          // 
          // colUseInternet
@@ -226,7 +229,7 @@ namespace Foxoft
          this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
          this.colLastPurchasePrice.Visible = true;
-         this.colLastPurchasePrice.VisibleIndex = 4;
+         this.colLastPurchasePrice.VisibleIndex = 5;
          this.colLastPurchasePrice.Width = 105;
          // 
          // colLastSalePrice
@@ -302,9 +305,10 @@ namespace Foxoft
             this.bBI_quit,
             this.barButtonItem1,
             this.bBI_ProductDelete,
-            this.bBI_ProductRefresh});
+            this.bBI_ProductRefresh,
+            this.BBI_Feature});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 10;
+         this.ribbonControl1.MaxItemId = 18;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -368,6 +372,14 @@ namespace Foxoft
          this.bBI_ProductRefresh.Name = "bBI_ProductRefresh";
          this.bBI_ProductRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ProductRefresh_ItemClick);
          // 
+         // BBI_Feature
+         // 
+         this.BBI_Feature.Caption = "Ozellik";
+         this.BBI_Feature.Id = 13;
+         this.BBI_Feature.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_Feature.ImageOptions.SvgImage")));
+         this.BBI_Feature.Name = "BBI_Feature";
+         this.BBI_Feature.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Feature_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -389,6 +401,7 @@ namespace Foxoft
          // 
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_ExportExcel);
          this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem1);
+         this.ribbonPageGroup2.ItemLinks.Add(this.BBI_Feature);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Nəzarət";
          // 
@@ -403,6 +416,13 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
+         // 
+         // colBalanceS
+         // 
+         this.colBalanceS.FieldName = "BalanceS";
+         this.colBalanceS.Name = "colBalanceS";
+         this.colBalanceS.Visible = true;
+         this.colBalanceS.VisibleIndex = 4;
          // 
          // FormProductList
          // 
@@ -472,5 +492,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceM;
       private DevExpress.XtraBars.BarButtonItem bBI_ProductDelete;
       private DevExpress.XtraBars.BarButtonItem bBI_ProductRefresh;
+      private DevExpress.XtraBars.BarButtonItem BBI_Feature;
+      private DevExpress.XtraGrid.Columns.GridColumn colBalanceS;
    }
 }

@@ -1,8 +1,6 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
-using DevExpress.Utils;
 using DevExpress.Utils.Svg;
-using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
@@ -364,7 +362,6 @@ namespace Foxoft
          formPaymentDetail.WindowState = FormWindowState.Maximized;
          formPaymentDetail.Show();
          parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-
       }
 
       private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
@@ -403,7 +400,6 @@ namespace Foxoft
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();
-            //parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
          }
       }
    }
