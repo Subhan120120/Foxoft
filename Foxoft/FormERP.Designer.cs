@@ -38,8 +38,10 @@ namespace Foxoft
          this.bBI_CloseWindows = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_POS = new DevExpress.XtraBars.BarButtonItem();
          this.bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
          this.aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -63,8 +65,6 @@ namespace Foxoft
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -138,6 +138,14 @@ namespace Foxoft
          this.bSI_UserName.Id = 13;
          this.bSI_UserName.Name = "bSI_UserName";
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "Test";
+         this.barButtonItem1.Id = 14;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         // 
          // ribbonPage_Home
          // 
          this.ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -152,6 +160,12 @@ namespace Foxoft
          this.ribbonPageGr_Control.ItemLinks.Add(this.bBI_MdiChildrenList);
          this.ribbonPageGr_Control.ItemLinks.Add(this.bBI_CloseWindows);
          this.ribbonPageGr_Control.Name = "ribbonPageGr_Control";
+         // 
+         // ribbonPageGroup1
+         // 
+         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
+         this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+         this.ribbonPageGroup1.Text = "Nəzarət";
          // 
          // ribbonStatusBar
          // 
@@ -344,20 +358,6 @@ namespace Foxoft
          this.aCE_CurrAccs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
-         // 
-         // ribbonPageGroup1
-         // 
-         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
-         this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-         this.ribbonPageGroup1.Text = "Nəzarət";
-         // 
-         // barButtonItem1
-         // 
-         this.barButtonItem1.Caption = "Test";
-         this.barButtonItem1.Id = 14;
-         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-         this.barButtonItem1.Name = "barButtonItem1";
-         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
          // 
          // FormERP
          // 
