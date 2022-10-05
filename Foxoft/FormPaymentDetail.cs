@@ -24,7 +24,7 @@ namespace Foxoft
    public partial class FormPaymentDetail : RibbonForm
    {
       private TrPaymentHeader trPaymentHeader;
-      private EfMethods efMethods = new EfMethods();
+      private EfMethods efMethods = new();
       private subContext dbContext;
       private Guid paymentHeaderId;
 
@@ -207,9 +207,14 @@ namespace Foxoft
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentHeaderId, trPaymentHeader.PaymentHeaderId);
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLineId, Guid.NewGuid());
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, 1);
-         gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, "kassa01");
-         gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, "USD");
-         gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1f);
+
+         string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
+
+         if (!String.IsNullOrEmpty(cashReg))
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);
+
+         gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
+         gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
       }
 

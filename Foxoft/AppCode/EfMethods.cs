@@ -729,6 +729,20 @@ namespace Foxoft
          return wareCode;
       }
 
+      public string SelectDefaultCashRegister(string storeCode)
+      {
+         using subContext db = new();
+         string cashRegCode = "";
+
+         DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == 5)
+                               .FirstOrDefault(x => x.StoreCode == storeCode);
+
+         if (dcCurrAcc is not null)
+            cashRegCode = dcCurrAcc.CurrAccCode;
+
+         return cashRegCode;
+      }
+
       public string SelectCustomerByStore(string storeCode)
       {
          using subContext db = new();
