@@ -52,7 +52,6 @@ namespace Foxoft
 
             this.aCE_Reports.Elements.Add(aCE);
          }
-
          //adorners1 = new List<AdornerElement>();
          //adornerUIManager1 = new AdornerUIManager(this.components);
       }
@@ -130,7 +129,6 @@ namespace Foxoft
          {
             try
             {
-
                form = new FormProductList(1);
                form.MdiParent = this;
                form.Show();
