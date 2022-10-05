@@ -25,7 +25,7 @@ namespace Foxoft.Models
         [DisplayName("Cari Hesab Tipi Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string CurrAccTypeDescription { get; set; }
+        public string CurrAccTypeDesc { get; set; }
 
         [DisplayName("Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }

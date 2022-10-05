@@ -10,42 +10,111 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    public partial class TrPaymentLine : BaseEntity
-    {
-        [Key]
-        public Guid PaymentLineId { get; set; }
+   public partial class TrPaymentLine : BaseEntity
+   {
+      [Key]
+      public Guid PaymentLineId { get; set; }
 
-        [ForeignKey("TrPaymentHeader")]
-        public Guid PaymentHeaderId { get; set; }
+      [ForeignKey("TrPaymentHeader")]
+      public Guid PaymentHeaderId { get; set; }
 
-        [DisplayName("Ödəmə Tipi")]
-        [ForeignKey("DcPaymentType")]
-        public byte PaymentTypeCode { get; set; }
+      [DisplayName("Ödəmə Tipi")]
+      [ForeignKey("DcPaymentType")]
+      public byte PaymentTypeCode { get; set; }
 
-        [DisplayName("Ödəmə")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [Column(TypeName = "money")]
-        public decimal Payment { get; set; }
+      [DisplayName("Ödəmə")]
+      [Column(TypeName = "money")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public decimal Payment { get; set; }
 
-        [DisplayName("Sətir Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string LineDescription { get; set; }
+      [DisplayName("Ödəmə YPV")]
+      [Column(TypeName = "money")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public decimal PaymentLoc { get { return Math.Round(Payment / (decimal)ExchangeRate, 2); } set { } }
 
-        [DisplayName("Valyuta")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string CurrencyCode { get; set; }
+      [DisplayName("Sətir Açıqlaması")]
+      [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string LineDescription { get; set; }
 
-        [DisplayName("Valyuta Kursu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public double ExchangeRate { get; set; }
+      [DisplayName("Valyuta")]
+      [ForeignKey("DcCurrency")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public string CurrencyCode { get; set; }
 
-        [DisplayName("Bank")]
-        public byte? BankId { get; set; }
+      [DefaultValue("1")]
+      [DisplayName("Valyuta Kursu")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public float ExchangeRate { get; set; } = 1;
+
+      [DisplayName("Kassa")]
+      [ForeignKey("DcCurrAcc")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      public string CashRegisterCode { get; set; }
 
 
-        public virtual TrPaymentHeader TrPaymentHeader { get; set; }
-        public virtual DcPaymentType DcPaymentType { get; set; }
-    }
+      [NotMapped]
+      [DisplayName("Ödəniş Et")]
+      public decimal MakePayment
+      {
+         get
+         {
+            if (Payment < 0)
+               return Payment * (-1);
+            else return 0;
+         }
+         set => Payment = value * (-1);
+
+      }
+
+      [NotMapped]
+      [DisplayName("Ödəniş Al")]
+      public decimal ReceivePayment
+      {
+         get
+         {
+            if (Payment > 0)
+               return Payment;
+            else return 0;
+         }
+         set => Payment = value;
+      }
+
+
+      [NotMapped]
+      [DisplayName("Cari Hesab Kodu")]
+      public string CurrAccCode { get; set; }
+
+      [NotMapped]
+      [DisplayName("Cari Hesab Adı")]
+      public string CurrAccDesc { get; set; }
+
+      [NotMapped]
+      [DisplayName("Ödəmiş Nömrəsi")]
+      public string DocumentNumber { get; set; }
+
+      [NotMapped]
+      [DisplayName("Faktura Nömrəsi")]
+      public string InvoiceNumber { get; set; }
+
+      [NotMapped]
+      [DisplayName("Invoice Id")]
+      public Guid? InvoiceHeaderId { get; set; }
+
+      [NotMapped]
+      [DisplayName("Ödəmə Tarixi")]
+      public DateTime DocumentDate { get; set; }      
+      
+      [NotMapped]
+      [DisplayName("Əvvəlki Borc")]
+      public decimal BalanceBefor { get; set; }
+
+      [NotMapped]
+      [DisplayName("Sonrakı Borc")]
+      public decimal BalanceAfter { get; set; }
+
+      public virtual TrPaymentHeader TrPaymentHeader { get; set; }
+      public virtual DcPaymentType DcPaymentType { get; set; }
+      public virtual DcCurrAcc DcCurrAcc { get; set; }
+      public virtual DcCurrency DcCurrency { get; set; }
+   }
 }

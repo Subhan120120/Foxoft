@@ -56,7 +56,7 @@ namespace Foxoft.Models
         [DisplayName("Valyuta")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string CurrencyCode { get; set; }
+        public string CurrencyCode { get; set; } = "USD";
 
         [DisplayName("Qiymət")]
         [Column(TypeName = "money")]

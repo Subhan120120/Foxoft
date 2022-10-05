@@ -1,7 +1,7 @@
 ﻿using DevExpress.Data;
-using DevExpress.Utils;
+using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
-using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -10,6 +10,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -19,8 +20,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,518 +30,1267 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormInvoice : RibbonForm
-    {
-        Badge badge1;
-        Badge badge2;
-        AdornerUIManager adornerUIManager1;
+   public partial class FormInvoice : RibbonForm
+   {
+      readonly string designFolder = @"C:\Users\Administrator\Documents\";
+      string rerportFileNameInvoice = @"InvoiceRS_A5.repx";
+      string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
 
-        private TrInvoiceHeader trInvoiceHeader;
-        public string processCode;
-        private byte productTypeCode;
-        private byte currAccTypeCode;
-        private EfMethods efMethods = new EfMethods();
-        private subContext dbContext;
+      private TrInvoiceHeader trInvoiceHeader;
+      public DcProcess dcProcess;
+      private byte productTypeCode;
+      private EfMethods efMethods = new();
+      private subContext dbContext;
+      Guid invoiceHeaderId;
 
-        public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
-        {
-            InitializeComponent();
+      //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
+      public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
+      {
+         InitializeComponent();
 
-            this.processCode = processCode;
-            this.productTypeCode = productTypeCode;
-            this.currAccTypeCode = currAccTypeCode;
+         colBalance.OptionsColumn.ReadOnly = true;
+         colLastPurchasePrice.OptionsColumn.ReadOnly = true;
 
-            if (CustomExtensions.ProcessDir(processCode) == "In")
-                gV_InvoiceLine.Columns["QtyOut"].Visible = false;
-            else
-                gV_InvoiceLine.Columns["QtyIn"].Visible = false;
+         if (processCode == "EX" || processCode == "CI" || processCode == "CO" || processCode == "TF")
+         {
+            btnEdit_CurrAccCode.Enabled = false;
+            colBalance.Visible = false;
+            col_PosDiscount.Visible = false;
+            colLastPurchasePrice.Visible = false;
+            colBenefit.Visible = false;
 
-            lUE_OfficeCode.Properties.DataSource = efMethods.SelectOffices();
-            lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
-            lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
-
-            adornerUIManager1 = new AdornerUIManager(components);
-            badge1 = new Badge();
-            badge2 = new Badge();
-            adornerUIManager1.Elements.Add(badge1);
-            adornerUIManager1.Elements.Add(badge2);
-            badge1.TargetElement = bBI_Save;
-            //badge2.TargetElement = RibbonPage_Invoice;
-
-            ClearControlsAddNew();
-
-            LoadSession();
-        }
-
-        public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
-
-        private void FormInvoice_Load(object sender, EventArgs e)
-        {
-            dataLayoutControl1.isValid(out List<string> errorList);
-        }
-
-        private void LoadSession()
-        {
-            trInvoiceHeader.OfficeCode = Settings.Default.OfficeCode;
-            trInvoiceHeader.StoreCode = Settings.Default.StoreCode;
-            trInvoiceHeader.WarehouseCode = Settings.Default.WarehouseCode;
-        }
-
-        private void ClearControlsAddNew()
-        {
-            dbContext = new subContext();
-
-            trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
-
-            string NewDocNum = efMethods.GetNextDocNum(this.processCode, "DocumentNumber", "TrInvoiceHeaders");
-            trInvoiceHeader.InvoiceHeaderId = Guid.NewGuid();
-            trInvoiceHeader.DocumentNumber = NewDocNum;
-            trInvoiceHeader.DocumentDate = DateTime.Now;
-            trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-            trInvoiceHeader.ProcessCode = this.processCode;
-
-            trInvoiceHeadersBindingSource.DataSource = trInvoiceHeader;
-
-            //trInvoiceHeadersBindingSource.EndEdit();
-
-            labelControl1.Text = "";
-
-            dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-                                    .LoadAsync()
-                                    .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-        }
-
-        private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            SelectDocNum();
-        }
-
-        private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)
-        {
-            SelectDocNum();
-        }
-
-        private void SelectDocNum()
-        {
-            using (FormInvoiceHeaderList form = new FormInvoiceHeaderList(this.processCode))
+            if (processCode == "EX")
+               colQty.Visible = false;
+            if (processCode == "TF")
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    trInvoiceHeader = form.trInvoiceHeader;
-
-                    dbContext = new subContext();
-                    dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc).Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
-                    LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-
-                    if (!lV_invoiceHeader.Any(x => Object.ReferenceEquals(x.DcCurrAcc, null)))
-                        lV_invoiceHeader.ForEach(x => x.CurrAccDesc = x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName);
-
-                    trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
-
-                    dbContext.TrInvoiceLines.Include(o => o.DcProduct)
-                                            .Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
-                                            .OrderBy(x => x.CreatedDate)
-                                            .LoadAsync()
-                                            .ContinueWith(loadTask =>
-                                            {
-                                                LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
-
-                                                lV_invoiceLine.ForEach(x =>
-                                                {
-                                                    x.ProductDescription = x.DcProduct.ProductDescription;
-
-                                                    if (form.trInvoiceHeader.IsReturn)
-                                                    {
-                                                        x.QtyIn = x.QtyIn * (-1);
-                                                        x.QtyOut = x.QtyOut * (-1);
-                                                        x.Amount = x.Amount * (-1);
-                                                        x.NetAmount = x.NetAmount * (-1);
-                                                    }
-                                                });
-
-                                                trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
-
-                                            }, TaskScheduler.FromCurrentSynchronizationContext());
-
-                    dataLayoutControl1.isValid(out List<string> errorList);
-
-                    labelControl1.Text = "Ödənilib: " + Math.Round(efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2).ToString() + "AZN";
-                }
+               btnEdit_CurrAccCode.Enabled = true;
+               col_Price.Visible = false;
+               colCurrencyCode.Visible = false;
+               col_NetAmount.Visible = false;
             }
-        }
+         }
 
-        private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
-        {
-            SelectCurrAcc();
-        }
+         this.productTypeCode = productTypeCode;
 
-        private void btnEdit_CurrAccCode_DoubleClick(object sender, EventArgs e)
-        {
-            SelectCurrAcc();
-        }
+         dcProcess = efMethods.SelectProcess(processCode);
 
-        private void SelectCurrAcc()
-        {
-            using (FormCurrAccList form = new FormCurrAccList(currAccTypeCode))
+         this.Text = dcProcess.ProcessDesc;
+
+         lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
+         lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
+         lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
+         repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
+
+         ClearControlsAddNew();
+      }
+
+      public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode, Guid invoiceHeaderId)
+          : this(processCode, productTypeCode, currAccTypeCode)
+      {
+         trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+         LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+      }
+
+      private void FormInvoice_Load(object sender, EventArgs e)
+      {
+         dataLayoutControl1.isValid(out List<string> errorList);
+      }
+
+      private void FormInvoice_Shown(object sender, EventArgs e)
+      {
+         gC_InvoiceLine.Focus();
+      }
+
+      private void ClearControlsAddNew()
+      {
+         dbContext = new subContext();
+
+         invoiceHeaderId = Guid.NewGuid();
+
+         dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
+                                   .Include(x => x.DcCurrAcc)
+                                   .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                   .Load();
+
+         trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+
+         trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
+
+
+         lbl_InvoicePaidSum.Text = "";
+         lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
+
+         dbContext.TrInvoiceLines.Include(x => x.DcProduct)
+                                 .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                                 .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                                 .LoadAsync()
+                                 .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+
+         dataLayoutControl1.isValid(out List<string> errorList);
+
+         ShowPrintCount();
+      }
+
+      private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
+      {
+         TrInvoiceHeader invoiceHeader = new();
+         invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
+         string NewDocNum = efMethods.GetNextDocNum(dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+         invoiceHeader.DocumentNumber = NewDocNum;
+         invoiceHeader.DocumentDate = DateTime.Now;
+         invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+         invoiceHeader.ProcessCode = dcProcess.ProcessCode;
+         invoiceHeader.OfficeCode = Authorization.OfficeCode;
+         invoiceHeader.StoreCode = Authorization.StoreCode;
+         invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
+         invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+
+         if (dcProcess.ProcessCode == "RS")
+         {
+            string defaultCustomer = efMethods.SelectCustomerByStore(Authorization.StoreCode);
+            invoiceHeader.CurrAccCode = defaultCustomer;
+
+            if (efMethods.SelectCurrAcc(defaultCustomer) is not null)
+               invoiceHeader.CurrAccDesc = efMethods.SelectCurrAcc(defaultCustomer).CurrAccDesc;
+         }
+
+         e.NewObject = invoiceHeader;
+      }
+
+      private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
+      {
+         trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+         if (trInvoiceHeader is not null) // if Isreturn Changed calculate Qty again
+         {
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-                    lC_CurrAccDesc.Text = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
-                    trInvoiceHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-                    trInvoiceHeader.CurrAccDesc = form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
-                }
+               int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut);
+               int qtyInAbs = Math.Abs(qtyIn);
+               gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
             }
-        }
+         }
 
-        private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
-        {
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceHeaderId", trInvoiceHeader.InvoiceHeaderId);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut", 1);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
+         if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+         {
+            int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
+            if (count > 0)
+               SaveInvoice();
+         }
 
-            GridView view = sender as GridView;
+         gV_InvoiceLine.Focus();
+      }
 
-            //view.SetRowCellValue(e.RowHandle, col_ProductDesc, "InitNewRow");
-        }
+      private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         SelectDocNum();
+      }
 
-        private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
-        {
+      private void btnEdit_DocNum_DoubleClick(object sender, EventArgs e)
+      {
+         SelectDocNum();
+      }
+
+      private void SelectDocNum()
+      {
+         using FormInvoiceHeaderList form = new(dcProcess.ProcessCode);
+         if (form.ShowDialog(this) == DialogResult.OK)
+         {
+            trInvoiceHeader = form.trInvoiceHeader;
+            LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+         }
+      }
+
+      private void LoadInvoice(Guid InvoiceHeaderId)
+      {
+         dbContext = new subContext();
+         dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                   .Include(x => x.DcProcess)
+                                   .Where(x => x.InvoiceHeaderId == InvoiceHeaderId).Load();
+
+         LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+
+         if (!lV_invoiceHeader.Any(x => x.DcCurrAcc is null))
+            lV_invoiceHeader.ForEach(x =>
+            {
+               x.CurrAccDesc = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+               lbl_CurrAccDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+            });
+
+         trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+         trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+         dbContext.TrInvoiceLines.Include(o => o.DcProduct)
+                                 .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                                 .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
+                                 .OrderBy(x => x.CreatedDate)
+                                 .LoadAsync()
+                                 .ContinueWith(loadTask =>
+                                 {
+                                    LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
+
+                                    lV_invoiceLine.ForEach(x =>
+                                    {
+                                       x.ProductDesc = x.DcProduct.ProductDesc;
+                                    });
+
+                                    trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
+
+                                    gV_InvoiceLine.BestFitColumns();
+                                    gV_InvoiceLine.Focus();
+
+                                 }, TaskScheduler.FromCurrentSynchronizationContext());
+
+
+         dataLayoutControl1.isValid(out List<string> errorList);
+         CalcPaidAmount();
+         ShowPrintCount();
+      }
+
+      private void CalcPaidAmount()
+      {
+         decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+         lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
+      }
+
+      private void ShowPrintCount()
+      {
+         int printCount = efMethods.SelectInvoicePrinCount(trInvoiceHeader.InvoiceHeaderId);
+
+         lbl_PrintCount.Text = "Print Edilib: " + printCount + " nüsxə";
+      }
+
+      private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
+      {
+         SelectCurrAcc();
+      }
+
+      private void btnEdit_CurrAccCode_DoubleClick(object sender, EventArgs e)
+      {
+         SelectCurrAcc();
+      }
+
+      private void SelectCurrAcc()
+      {
+         if (btnEdit_CurrAccCode.Enabled)
+         {
+            FormCurrAccList form = new(0);
+
+            if (trInvoiceHeader.ProcessCode == "TF")
+               form = new(4);
+
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+               btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+               FillCurrAccCode(form.dcCurrAcc);
+            }
+         }
+      }
+
+      private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
+      {
+         GridView gv = sender as GridView;
+         gv.SetRowCellValue(e.RowHandle, col_InvoiceHeaderId, trInvoiceHeader.InvoiceHeaderId);
+         gv.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
+         gv.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
+         gv.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
+      }
+
+      private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
+      {
+         GridControl gC = sender as GridControl;
+         GridView gV = gC.MainView as GridView;
+
+         StandartKeys(e);
+
+         if (gV.SelectedRowsCount > 0)
+         {
             if (e.KeyCode == Keys.Delete)
             {
-                if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                    return;
-                GridView gV = sender as GridView;
-                gV.DeleteSelectedRows();
+               if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                  return;
+
+               gV.DeleteSelectedRows();
             }
-        }
 
-        private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
-        {
-            CalcRowNetAmount(e);
-        }
-
-        private void CalcRowNetAmount(CellValueChangedEventArgs e)
-        {
-            object objPrice = gV_InvoiceLine.GetFocusedRowCellValue("Price");
-            object objQty = gV_InvoiceLine.GetFocusedRowCellValue(CustomExtensions.ProcessDir(processCode) == "In" ? "QtyIn" : "QtyOut");
-            object objPosDiscount = gV_InvoiceLine.GetFocusedRowCellValue("PosDiscount");
-
-            if (e.Value != null && e.Column == col_Price)
-                objPrice = e.Value;
-            if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
-                objQty = e.Value;
-            if (e.Value != null && e.Column == col_PosDiscount)
-                objPosDiscount = e.Value;
-
-            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
-            decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
-            decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount, CultureInfo.InvariantCulture) : 0;
-
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "Amount", Qty * Price);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "NetAmount", Qty * Price - PosDiscount);
-        }
-
-        private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
-        {
-            #region Comment
-            //GridView view = sender as GridView;
-            //decimal val = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, colQty));
-            //if (val < 10)
-            //{
-            //    //e.ErrorText = "Error absh verdi";
-            //    e.Valid = false;
-            //    view.SetColumnError(colQty, "Deyer 10dan az ola bilmez");
-            //} 
-            #endregion
-        }
-
-        private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            SelectProduct(sender);
-        }
-
-        private void repoBtnEdit_SalesPersonCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            SelectSalesPerson(sender);
-        }
-
-        BaseEdit editor;
-        private void gridView_ShownEditor(object sender, EventArgs e)
-        {
-            GridView view = sender as GridView;
-            editor = view.ActiveEditor;
-            editor.DoubleClick += editor_DoubleClick;
-        }
-
-        void gridView_HiddenEditor(object sender, EventArgs e)
-        {
-            editor.DoubleClick -= editor_DoubleClick;
-            editor = null;
-        }
-
-        private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
-        {
-            //DXMouseEventArgs ea = e as DXMouseEventArgs;
-            //GridView view = sender as GridView;
-            //GridHitInfo info = view.CalcHitInfo(ea.Location);
-            //info.Column
-            //if (info.InRow || info.InRowCell)
-            //{
-            //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-            //    MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
-            //}
-        }
-
-        void editor_DoubleClick(object sender, EventArgs e)
-        {
-            BaseEdit editor = (BaseEdit)sender;
-            GridControl grid = editor.Parent as GridControl;
-            GridView view = grid.FocusedView as GridView;
-            Point pt = grid.PointToClient(Control.MousePosition);
-            GridHitInfo info = view.CalcHitInfo(pt);
-            if (info.InRow || info.InRowCell)
+            if (e.KeyCode == Keys.C && e.Control)
             {
-                if (info.Column == col_ProductCode)
-                {
-                    SelectProduct(sender);
-                }
-                else if (info.Column == col_SalesPersonCode)
-                {
-                    SelectSalesPerson(sender);
-                }
-                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-                //MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
+               string cellValue = gV.GetFocusedValue().ToString();
+               Clipboard.SetText(cellValue);
+               e.Handled = true;
             }
-        }
 
-        private void SelectSalesPerson(object sender)
-        {
-            ButtonEdit editor = (ButtonEdit)sender;
-            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            //if (buttonIndex == 0)
-            //{
-            using (FormCurrAccList form = new FormCurrAccList(3))
+            if (e.KeyCode == Keys.F9)
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    editor.EditValue = form.dcCurrAcc.CurrAccCode;
-                }
+               object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
+               if (productCode != null)
+               {
+                  DcReport dcReport = efMethods.SelectReport(1005);
+
+                  string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  formGrid.Show();
+               }
             }
-            //}
-        }
 
-        private void SelectProduct(object sender)
-        {
-            string productCode = "";
-            if (gV_InvoiceLine.GetFocusedRowCellValue("ProductCode") != null)
-                productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
-
-            ButtonEdit editor = (ButtonEdit)sender;
-            //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            //if (buttonIndex == 0)
-            //{
-            using (FormProductList form = new FormProductList(productTypeCode, productCode))
+            if (e.KeyCode == Keys.F10)
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    editor.EditValue = form.dcProduct.ProductCode;
-                    gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, form.dcProduct.ProductDescription);
+               object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
+               if (productCode != null)
+               {
+                  DcReport dcReport = efMethods.SelectReport(1004);
 
-                    double price = this.processCode == "RS" ? form.dcProduct.RetailPrice : (this.processCode == "RP" ? form.dcProduct.PurchasePrice : 0);
-                    gV_InvoiceLine.SetFocusedRowCellValue("Price", price);
+                  string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-                    CalcRowNetAmount(new CellValueChangedEventArgs(0, col_Amount, null));
-                }
+                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  formGrid.Show();
+               }
             }
-            //}
-        }
+         }
+      }
 
-        private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
-        {
-            //e.ExceptionMode = ExceptionMode.DisplayError;
-            //e.ErrorText = "Deyer 10dan az ola bilmez";
-        }
+      private void StandartKeys(KeyEventArgs e)
+      {
+         if (e.KeyCode == Keys.F1)
+            SelectCurrAcc();
 
-        private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
-        {
-            //DataRowView rowView = e.Row as DataRowView;
-            //DataRow row = rowView.Row;
+         if (e.KeyCode == Keys.F2)
+         {
+            gV_InvoiceLine.FocusedColumn = col_ProductCode;
+            gV_InvoiceLine.ShowEditor();
+            if (gV_InvoiceLine.ActiveEditor is ButtonEdit)
+               SelectProduct(gV_InvoiceLine.ActiveEditor);
 
-            //dbContext.SaveChanges();
-        }
+            gV_InvoiceLine.CloseEditor();
 
-        private void gV_InvoiceLine_RowDeleted(object sender, RowDeletedEventArgs e)
-        {
-            //dbContext.SaveChanges();
-        }
+            e.Handled = true;   // Stop the character from being entered into the control.
+         }
+      }
 
-        private void FormInvoice_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            dbContext.Dispose();
-        }
+      private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
+      {
+         //CalcRowLocNetAmount(e);
+      }
 
-        private void bBI_SaveAndNew_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (dataLayoutControl1.isValid(out List<string> errorList))
+      private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
+      {
+         //CalcRowLocNetAmount(e);
+         GridView view = (GridView)sender;
+
+         if (view == null) return;
+         if (e.Column != col_ProductCode) return;
+      }
+
+      #region CalcRowLocNetAmount
+
+      //private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
+      //{
+      //    object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut);
+      //    object objExRate = gV_InvoiceLine.GetFocusedRowCellValue(colExchangeRate);
+      //    object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, col_Price);
+      //    object objPriceLoc = gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc);
+
+      //    decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
+      //    decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
+      //    decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
+      //    decimal PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
+
+      //    if (e.Value != null && e.Column == col_Price)
+      //    {
+      //        objPrice = e.Value;
+      //        Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Math.Round(Price * exRate, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * Price, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * Price, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * Price * exRate, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * Price * exRate, 2));
+
+      //    }
+      //    else if (e.Value != null && e.Column == colPriceLoc)
+      //    {
+      //        objPriceLoc = e.Value;
+      //        PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Price, Math.Round(PriceLoc / exRate, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * PriceLoc / exRate, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * PriceLoc / exRate, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * PriceLoc, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * PriceLoc, 2));
+      //    }
+      //    else if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
+      //    {
+      //        objQty = e.Value;
+      //        Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * Price, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * Price, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * PriceLoc, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * PriceLoc, 2));
+      //    }
+      //    else if (e.Value != null && e.Column == colExchangeRate)
+      //    {
+      //        objExRate = e.Value;
+      //        exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Math.Round(Price * exRate, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * Price * exRate, 2));
+      //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * Price * exRate, 2));
+      //    }
+      //} 
+      #endregion
+
+      private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
+      {
+      }
+
+      private void gV_InvoiceLine_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
+      {
+      }
+
+
+      private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
+      {
+         GridView view = sender as GridView;
+
+         if (view.FocusedColumn == colQty)
+         {
+            if (!trInvoiceHeader.IsReturn && (trInvoiceHeader.ProcessCode == "RS" || trInvoiceHeader.ProcessCode == "TF"))
             {
-                decimal summaryNetAmount = Convert.ToDecimal(gV_InvoiceLine.Columns["NetAmount"].SummaryItem.SummaryValue);
+               object colProductCode = view.GetFocusedRowCellValue(col_ProductCode);
+               string productCode = (colProductCode ??= "").ToString();
 
-                if (trInvoiceHeader.IsReturn)
-                    summaryNetAmount *= (-1);
-                if (CustomExtensions.ProcessDir(processCode) == "In")
-                    summaryNetAmount *= (-1);
+               if (!String.IsNullOrEmpty(productCode))
+               {
+                  object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+                  Guid invoiceLineId = Guid.Parse((colInvoiceLineId ??= Guid.Empty).ToString());
 
-                if (summaryNetAmount != 0)
-                {
-                    if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))//if invoiceHeader doesnt exist
-                        efMethods.InsertInvoiceHeader(trInvoiceHeader);
+                  TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
+                  int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
 
-                    if ((bool)CheckEdit_IsReturn.EditValue)
-                    {
-                        for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                        {
-                            if (CustomExtensions.ProcessDir(processCode) == "In")
-                            {
-                                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyIn"));
-                                gV_InvoiceLine.SetRowCellValue(i, "QtyIn", qty * (-1));
-                            }
-                            else if (CustomExtensions.ProcessDir(processCode) == "Out")
-                            {
-                                int qty = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, "QtyOut"));
-                                gV_InvoiceLine.SetRowCellValue(i, "QtyOut", qty * (-1));
-                            }
+                  string warehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+                  int balance = efMethods.SelectProductBalance(productCode, warehouseCode) + currentQty;
 
-                            int amount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_Amount));
-                            gV_InvoiceLine.SetRowCellValue(i, "Amount", amount * (-1));
+                  int eValue = Convert.ToInt32(e.Value ??= 0);
 
-                            int netAmount = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(i, col_NetAmount));
-                            gV_InvoiceLine.SetRowCellValue(i, "NetAmount", netAmount * (-1));
-                        }
-                    }
+                  if (eValue > balance)
+                  {
+                     e.ErrorText = "Stokda miqdar yoxdur";
+                     e.Valid = false;
+                  }
+               }
 
-                    dbContext.SaveChanges();
+            }
+         }
 
-                    MakePayment(Math.Round(summaryNetAmount - efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId), 2));
+         if (view.FocusedColumn == col_ProductCode)
+         {
+            string eValue = (e.Value ??= String.Empty).ToString();
 
-                    SaveSession();
-                    ClearControlsAddNew();
-                    LoadSession();
+            DcProduct product = efMethods.SelectProduct(eValue);
 
-                    GetPrint();
-                }
-                else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+            if (product is null)
+            {
+               e.ErrorText = "Belə nir məhsul yoxdur";
+               e.Valid = false;
             }
             else
             {
-                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
-                XtraMessageBox.Show(combinedString);
-            }
-        }
+               //ButtonEdit editor = (ButtonEdit)view.ActiveEditor;
+               //editor.EditValue = product.ProductCode;
 
-        private void GetPrint()
-        {
-            if (Settings.Default.AppSetting.GetPrint == true)
+               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, product.ProductCode);
+               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, product.ProductDesc);
+               gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
+               gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
+
+               decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+               decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_Price));
+               if (priceInvoice == 0)
+                  gV_InvoiceLine.SetFocusedRowCellValue(col_Price, priceProduct);
+
+               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+               if (dcProcess.ProcessCode == "EX")
+                  gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+            }
+         }
+      }
+
+      private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
+      {
+         e.ExceptionMode = ExceptionMode.DisplayError;
+         e.WindowCaption = "Diqqət";
+      }
+
+      private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         SelectProduct(sender);
+      }
+
+      private void repoBtnEdit_SalesPersonCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         SelectSalesPerson(sender);
+      }
+
+      BaseEdit editorCustom;
+      private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
+      {
+         GridView view = sender as GridView;
+         editorCustom = view.ActiveEditor;
+         editorCustom.DoubleClick += editor_DoubleClick;
+      }
+
+      void gV_InvoiceLine_HiddenEditor(object sender, EventArgs e)
+      {
+         editorCustom.DoubleClick -= editor_DoubleClick;
+         editorCustom = null;
+      }
+
+      private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
+      {
+         #region DXMouseEventArgs ea
+         //DXMouseEventArgs ea = e as DXMouseEventArgs;
+         //GridView view = sender as GridView;
+         //GridHitInfo info = view.CalcHitInfo(ea.Location);
+         //info.Column
+         //if (info.InRow || info.InRowCell)
+         //{
+         //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+         //    MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
+         //} 
+         #endregion
+      }
+
+      void editor_DoubleClick(object sender, EventArgs e)
+      {
+         BaseEdit editor = (BaseEdit)sender;
+         GridControl grid = editor.Parent as GridControl;
+         GridView view = grid.FocusedView as GridView;
+         Point pt = grid.PointToClient(Control.MousePosition);
+         GridHitInfo info = view.CalcHitInfo(pt);
+         if (info.InRow || info.InRowCell)
+         {
+            if (info.Column == col_ProductCode)
             {
-                ReportClass reportClass = new ReportClass();
-                string designPath = Settings.Default.AppSetting.PrintDesignPath;
-                if (!File.Exists(designPath))
-                    designPath = reportClass.SelectDesign();
-                if (!File.Exists(designPath))
-                {
-                    ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-                    printTool.PrintDialog();
-                }
+               SelectProduct(sender);
             }
-        }
-
-        private void MakePayment(decimal paidAmount)
-        {
-            using (FormPayment formPayment = new FormPayment(1, paidAmount, trInvoiceHeader))
+            else if (info.Column == col_SalesPersonCode)
             {
-                if (formPayment.ShowDialog(this) == DialogResult.OK)
-                {
-                    //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                }
+               SelectSalesPerson(sender);
             }
-        }
+         }
+      }
 
-        private void SaveSession()
-        {
-            Settings.Default.OfficeCode = lUE_OfficeCode.EditValue.ToString();
-            Settings.Default.StoreCode = lUE_StoreCode.EditValue.ToString();
+      private void SelectSalesPerson(object sender)
+      {
+         ButtonEdit editor = (ButtonEdit)sender;
+         using FormCurrAccList form = new(0);
+
+         if (form.ShowDialog(this) == DialogResult.OK)
+         {
+            editor.EditValue = form.dcCurrAcc.CurrAccCode;
+         }
+
+      }
+
+      private void SelectProduct(object sender)
+      {
+         string productCode = "";
+         if (gV_InvoiceLine.GetFocusedRowCellValue("ProductCode") != null)
+            productCode = gV_InvoiceLine.GetFocusedRowCellValue("ProductCode").ToString();
+
+         ButtonEdit editor = (ButtonEdit)sender;
+
+         using FormProductList form = new(productTypeCode, productCode);
+
+         try
+         {
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+               editor.EditValue = form.dcProduct.ProductCode;
+               gV_InvoiceLine.CloseEditor();
+               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+               gV_InvoiceLine.BestFitColumns();
+            }
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(ex.ToString());
+         }
+
+      }
+
+      private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
+      {
+         //DataRowView rowView = e.Row as DataRowView;
+         //DataRow row = rowView.Row;
+
+         SaveInvoice();
+      }
+
+      private void gV_InvoiceLine_RowDeleted(object sender, RowDeletedEventArgs e)
+      {
+         SaveInvoice();
+      }
+
+      Guid quidHead;
+      private void SaveInvoice()
+      {
+         efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+
+         try
+         {
+            dbContext.SaveChanges(false);
+
+            List<EntityEntry> entityEntry = new();
+
+            foreach (var entry in dbContext.ChangeTracker.Entries())
+            {
+               entityEntry.Add(entry);
+            };
+
+            if (trInvoiceHeader.ProcessCode == "TF")
+            {
+               foreach (var entry in entityEntry)
+               {
+                  if (entry.Entity.GetType().Name == nameof(TrInvoiceHeader))
+                  {
+                     //TrInvoiceHeader trIH = entry.Entity as TrInvoiceHeader;
+
+                     TrInvoiceHeader trIH = (TrInvoiceHeader)entry.CurrentValues.ToObject();
+
+                     string invoHeadStr = trIH.InvoiceHeaderId.ToString();
+
+                     quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                     using subContext context2 = new();
+
+                     TrInvoiceHeader newTrIH = trIH;
+                     newTrIH.InvoiceHeaderId = quidHead;
+                     string temp = trIH.WarehouseCode;
+                     newTrIH.WarehouseCode = trIH.ToWarehouseCode;
+                     newTrIH.ToWarehouseCode = temp;
+                     newTrIH.StoreCode = trIH.CurrAccCode;
+
+                     switch (entry.State)
+                     {
+                        case EntityState.Deleted:
+                           context2.TrInvoiceHeaders.Remove(newTrIH);
+                           break;
+                        case EntityState.Modified:
+                           context2.TrInvoiceHeaders.Update(newTrIH);
+                           break;
+                        case EntityState.Added:
+                           context2.TrInvoiceHeaders.Add(newTrIH);
+                           break;
+                        default:
+                           break;
+                     }
+                     context2.SaveChanges();
+
+                     //entry.CurrentValues.SetValues(asdasd);
+                  }
+
+                  if (entry.Entity.GetType().Name == nameof(TrInvoiceLine))
+                  {
+                     //TrInvoiceLine trIL = entry.Entity as TrInvoiceLine;
+
+                     TrInvoiceLine trIL = (TrInvoiceLine)entry.CurrentValues.ToObject();
+
+                     string invoLineStr = trIL.InvoiceLineId.ToString();
+                     Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                     using subContext context2 = new();
+
+                     TrInvoiceLine newTrIL = trIL;
+                     newTrIL.InvoiceHeaderId = quidHead;
+                     newTrIL.InvoiceLineId = quidLine;
+                     newTrIL.QtyIn = trIL.QtyOut;
+                     newTrIL.QtyOut -= trIL.QtyOut;
+
+                     switch (entry.State)
+                     {
+                        case EntityState.Deleted:
+                           context2.TrInvoiceLines.Remove(newTrIL);
+                           break;
+                        case EntityState.Modified:
+                           context2.TrInvoiceLines.Update(newTrIL);
+                           break;
+                        case EntityState.Added:
+                           context2.TrInvoiceLines.Add(newTrIL);
+                           break;
+                        default:
+                           break;
+                     }
+                     context2.SaveChanges();
+
+                     //entry.CurrentValues.SetValues(asdsdf);
+                  }
+               }
+               //context2.SaveChanges();
+            }
+
+            dbContext.ChangeTracker.AcceptAllChanges();
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+         }
+
+         if (trInvoiceHeader.ProcessCode == "EX")
+         {
+            SavePayment();
+         }
+
+         SaveSession();
+      }
+
+      private void SavePayment()
+      {
+         TrPaymentHeader trPaymentHeader = PaymentHeaderDefaults(trInvoiceHeader);
+         TrPaymentLine trPaymentLine = PaymentLineDefaults();
+
+         decimal invoiceSumLoc = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+
+         if (invoiceSumLoc > 0)
+         {
+            if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
+               invoiceSumLoc *= (-1);
+
+            bool isNegativ = false;
+
+            if (invoiceSumLoc < 0)
+               isNegativ = true;
+
+            EfMethods efMethods = new();
+
+            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
+            trPaymentHeader.DocumentNumber = NewDocNum;
+            trPaymentHeader.Description = trInvoiceHeader.Description;
+
+            efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+            efMethods.InsertPaymentHeader(trPaymentHeader);
+
+            List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+            foreach (TrInvoiceLine il in trInvoiceLines)
+            {
+               trPaymentLine.PaymentHeaderId = trPaymentHeader.PaymentHeaderId;
+               trPaymentLine.PaymentLineId = Guid.NewGuid();
+               trPaymentLine.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
+               trPaymentLine.CurrencyCode = il.CurrencyCode;
+               trPaymentLine.ExchangeRate = il.ExchangeRate;
+               trPaymentLine.LineDescription = il.LineDescription;
+               trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
+
+               efMethods.InsertPaymentLine(trPaymentLine);
+            }
+         }
+
+         CalcPaidAmount();
+      }
+
+      private TrPaymentHeader PaymentHeaderDefaults(TrInvoiceHeader trInvoiceHeader)
+      {
+         TrPaymentHeader trPaymentHeader = new();
+
+         Guid PaymentHeaderId = Guid.NewGuid();
+
+         bool invoiceExist = trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader != null;
+
+         string operType = "payment";
+         if (invoiceExist)
+            operType = "invoice";
+
+         trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
+         trPaymentHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
+         trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
+         trPaymentHeader.OfficeCode = Authorization.OfficeCode;
+         trPaymentHeader.StoreCode = Authorization.StoreCode;
+         trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
+         trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
+         if (invoiceExist)
+            trPaymentHeader.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
+         trPaymentHeader.OperationType = operType;
+         trPaymentHeader.OperationDate = trInvoiceHeader.DocumentDate;
+         trPaymentHeader.OperationTime = trInvoiceHeader.DocumentTime;
+
+         return trPaymentHeader;
+      }
+
+      private TrPaymentLine PaymentLineDefaults()
+      {
+         TrPaymentLine trPaymentLine = new();
+         trPaymentLine.PaymentTypeCode = 1;
+         trPaymentLine.CurrencyCode = "USD";
+         trPaymentLine.ExchangeRate = 1f;
+         trPaymentLine.CashRegisterCode = "kassa01";
+         trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
+
+         return trPaymentLine;
+      }
+      private void FormInvoice_FormClosed(object sender, FormClosedEventArgs e)
+      {
+         dbContext.Dispose();
+      }
+
+      private void bBI_SaveAndNew_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (dataLayoutControl1.isValid(out List<string> errorList))
+         {
+            decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
+            if (summaryInvoice != 0 || trInvoiceHeader.ProcessCode == "TF")
+            {
+               SaveInvoice();
+
+               //MakePayment(summaryInvoice);
+
+               GetPrintToWarehouse();
+
+               ClearControlsAddNew();
+            }
+            else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+               ClearControlsAddNew();
+         }
+         else
+         {
+            string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+            XtraMessageBox.Show(combinedString);
+         }
+      }
+
+      //private decimal CalcSumInvoice()
+      //{
+      //    decimal summaryNetAmount = 0;
+
+      //    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+      //    {
+      //        decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc));
+      //        summaryNetAmount += netAmount;
+      //    }
+
+      //    return summaryNetAmount;
+      //}
+
+      private void SaveSession()
+      {
+         object warehouseCode = lUE_WarehouseCode.EditValue;
+         if (warehouseCode is not null)
+         {
             Settings.Default.WarehouseCode = lUE_WarehouseCode.EditValue.ToString();
-
             Settings.Default.Save();
-        }
+         }
+      }
 
-        private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ReportClass reportClass = new ReportClass();
-            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = Directory.GetCurrentDirectory() + "Foxoft.AppCode.GUNSONU.repx";
+      private void GetPrintToWarehouse()
+      {
+         //if (Settings.Default.AppSetting.GetPrint == true)
+         //{
+         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
-            if (!File.Exists(designPath))
+         string designPath = designFolder + reportFileNameInvoiceWare;
+
+         XtraReport report = GetInvoiceReport(designPath);
+
+         if (report is not null)
+         {
+            using MemoryStream ms = new();
+            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+            Image img = Image.FromStream(ms);
+            Clipboard.SetImage(img);
+
+            ReportPrintTool printTool = new(report);
+            bool? isPrinted = printTool.PrintDialog();
+
+            if (isPrinted is not null)
             {
-                ReportDesignTool printTool = new ReportDesignTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
-                printTool.ShowRibbonDesigner();
+               bool printed = Convert.ToBoolean(isPrinted);
+               if (printed)
+               {
+                  efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
+                  //ShowPrintCount();
+               }
             }
-        }
+         }
+      }
 
-        private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
-        {
-            MessageBox.Show("Event AsyncCompleted");
-        }
+      private string subConnString = Settings.Default.subConnString;
+      private XtraReport GetInvoiceReport(string designPath)
+      {
+         ReportClass reportClass = new();
 
-        private void gV_InvoiceLine_RowLoaded(object sender, RowEventArgs e)
-        {
-            //object a = sender;
-            //RowEventArgs r = e;
-            MessageBox.Show("Event RowLoaded");
-        }
+         if (!File.Exists(designPath))
+            designPath = reportClass.SelectDesign();
+         if (File.Exists(designPath))
+         {
+            DsMethods dsMethods = new();
+            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
+            dataSource.Name = "Invoice";
 
-        private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ClearControlsAddNew();
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+            dataSource.Fill();
 
-            LoadSession();
+            return reportClass.CreateReport(dataSource, designPath);
+         }
+         else
+         {
+            return null;
+         }
+      }
 
-            dataLayoutControl1.isValid(out List<string> errorList);
-        }
+      private void MakePayment(decimal summaryInvoice, bool autoPayment)
+      {
+         using FormPayment formPayment = new(1, summaryInvoice, trInvoiceHeader, autoPayment);
 
-        private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //string[] asdsa = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            //foreach (var item in asdsa)
-            //{
-            //    MessageBox.Show(item.ToString());
-            //}
-            ReportClass reportClass = new ReportClass();
-            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = Directory.GetCurrentDirectory() + "Foxoft.AppCode.GUNSONU.repx";
+         if (formPayment.ShowDialog(this) == DialogResult.OK)
+         {
+            CalcPaidAmount();
+            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+         }
+      }
 
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
+      private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
+      {
+         MessageBox.Show("Event AsyncCompleted");
+      }
 
-            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
+      private void gV_InvoiceLine_RowLoaded(object sender, RowEventArgs e)
+      {
+         //object a = sender;
+         //RowEventArgs r = e;
+         MessageBox.Show("Event RowLoaded");
+      }
+
+      private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ClearControlsAddNew();
+      }
+
+      private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         string designPath = "";
+         XtraReport xtraReport = GetInvoiceReport(designPath);
+         if (xtraReport is not null)
+         {
+            ReportDesignTool printTool = new(xtraReport);
+            printTool.ShowRibbonDesigner();
+         }
+      }
+
+      private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ShowReportPreview();
+      }
+
+      private void ShowReportPreview()
+      {
+         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+         string designPath = designFolder + rerportFileNameInvoice;
+
+         XtraReport xtraReport = GetInvoiceReport(designPath);
+         if (xtraReport is not null)
+         {
+            ReportPrintTool printTool = new(xtraReport);
             printTool.ShowRibbonPreview();
-        }
+         }
+      }
 
-        private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
-        {
+      private void bBI_reportPreviewAzn_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+         string designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
 
-        }
+         XtraReport xtraReport = GetInvoiceReport(designPath);
 
-        private void trInvoiceLinesBindingSource_AddingNew(object sender, AddingNewEventArgs e)
-        {
-            //line.DcProduct = new DcProduct();
-            //line.DcProduct.ProductDescription = "Fazil";
-            //e.NewObject = line;
-        }
+         if (xtraReport is not null)
+         {
+            ReportPrintTool printTool = new(xtraReport);
+            printTool.ShowRibbonPreview();
+         }
+      }
 
+      private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (dataLayoutControl1.isValid(out List<string> errorList))
+         {
+            decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
-    }
+            if (summaryInvoice != 0)
+            {
+               SaveInvoice();
+            }
+         }
+         else
+         {
+            string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+            XtraMessageBox.Show(combinedString);
+         }
+      }
+
+      private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (dataLayoutControl1.isValid(out List<string> errorList))
+         {
+            decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
+            if (summaryInvoice != 0)
+            {
+               //SaveInvoice();
+               MakePayment(summaryInvoice, false);
+            }
+         }
+         else
+         {
+            string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+            XtraMessageBox.Show(combinedString);
+         }
+      }
+
+      private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
+         {
+            if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+               efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+               efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+               ClearControlsAddNew();
+            }
+         }
+         else
+            XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+      }
+
+      private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+         {
+            efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            CalcPaidAmount();
+         }
+      }
+
+      private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
+      {
+         LookUpEdit textEditor = (LookUpEdit)sender;
+         float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
+         gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, exRate);
+
+         //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, colExchangeRate, exRate));
+      }
+
+      private void bBI_SaveAndQuit_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (dataLayoutControl1.isValid(out List<string> errorList))
+         {
+            decimal summInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
+            if (summInvoice != 0)
+            {
+               SaveInvoice();
+
+               MakePayment(summInvoice, false);
+
+               GetPrintToWarehouse();
+
+               this.Close();
+            }
+            else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            {
+               this.Close();
+            };
+         }
+         else
+         {
+            string combinedStr = errorList.Aggregate((x, y) => x + "" + y);
+            XtraMessageBox.Show(combinedStr);
+         }
+      }
+
+      private void gV_InvoiceLine_RowCellStyle(object sender, RowCellStyleEventArgs e)
+      {
+         GridView gridView = sender as GridView;
+
+         Color readOnlyBackColor = Color.LightGray;
+         try
+         {
+            if (e.RowHandle >= 0 && (!gridView.OptionsBehavior.Editable || !e.Column.OptionsColumn.AllowEdit || e.Column.ReadOnly))
+            {
+               GridViewInfo viewInfo = gridView.GetViewInfo() as GridViewInfo;
+               GridDataRowInfo rowInfo = viewInfo.RowsInfo.GetInfoByHandle(e.RowHandle) as GridDataRowInfo;
+
+               if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
+               {
+                  bool hasrules = false;
+                  foreach (var rule in gridView.FormatRules)
+                  {
+                     if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
+                     {
+                        hasrules = true;
+                        break;
+                     }
+                  }
+                  if (!hasrules)
+                     e.Appearance.BackColor = readOnlyBackColor;
+               }
+            }
+            // This is to fix the selection color when a color is set for the column  
+            if (e.Column.AppearanceCell.Options.UseBackColor && gridView.IsCellSelected(e.RowHandle, e.Column))
+               e.Appearance.BackColor = gridView.PaintAppearance.SelectedRow.BackColor;
+         }
+         catch (Exception ex)
+         {
+            Debug.Print(ex.Message);
+         }
+      }
+
+      private void dataLayoutControls_KeyDown(object sender, KeyEventArgs e)
+      {
+         StandartKeys(e);
+      }
+
+      private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         string fileName = rerportFileNameInvoice;
+         if (trInvoiceHeader.CurrAccCode == "111")
+            fileName = designFolder + @"InvoiceRS_A5_Azn.repx";
+
+         Image image = Image.FromStream(GetInvoiceReportImg(fileName));
+         Clipboard.SetImage(image);
+      }
+
+      private MemoryStream GetInvoiceReportImg(string designPath)
+      {
+         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+
+         designPath = designFolder + rerportFileNameInvoice;
+
+         XtraReport report = GetInvoiceReport(designPath);
+
+         if (report is not null)
+         {
+            MemoryStream ms = new();
+
+            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+
+            return ms;
+         }
+         else
+            return null;
+      }
+
+      private void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         MemoryStream memoryStream = GetInvoiceReportImg(rerportFileNameInvoice);
+         Clipboard.SetImage(Image.FromStream(memoryStream));
+         string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
+
+         //byte[] AsBytes = memoryStream.ToArray();
+         //string AsBase64String = Convert.ToBase64String(AsBytes);
+
+         SendWhatsApp(phoneNum, "");
+      }
+
+      private void SendWhatsApp(string number, string message)
+      {
+         if (String.IsNullOrEmpty(number))
+         {
+            MessageBox.Show("Nömrə qeyd olunmayıb.");
+            return;
+         }
+
+         number = number.Trim();
+         number = "+994" + number;
+
+         string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
+
+         Process myProcess = new();
+         myProcess.StartInfo.UseShellExecute = true;
+         myProcess.StartInfo.FileName = link;
+         myProcess.Start();
+      }
+
+      //private void SendWhatsapp(string number, string type, string body)
+      //{
+      //   if (String.IsNullOrEmpty(number))
+      //   {
+      //      MessageBox.Show("Nömrə qeyd olunmayıb.");
+      //      return;
+      //   }
+
+      //   number = number.Trim();
+      //   number = "+994" + number;
+
+      //   string instanceId = "instance17384";
+      //   string token = "y4hm0p00tuganpqt";
+      //   string url = "https://api.ultramsg.com/" + instanceId + "/messages/";
+
+      //   //byte[] AsBytes = File.ReadAllBytes(body);
+      //   //string AsBase64String = Convert.ToBase64String(AsBytes);
+
+      //   url += type == "image" ? "image" : "chat";
+
+      //   var client = new RestClient(url);
+      //   var request = new RestRequest(url, Method.Post);
+      //   request.AddHeader("content-type", "application/x-www-form-urlencoded");
+      //   request.AddParameter("token", token);
+      //   request.AddParameter("to", number);
+
+      //   if (type == "chat")
+      //      request.AddParameter("body", body);
+      //   else if (type == "image")
+      //      request.AddParameter("image", body);
+
+      //   RestResponse response = client.Execute(request);
+      //   var output = response.Content;
+
+      //   MessageBox.Show(output.ToString());
+      //}
+
+      private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
+      {
+         object eValue = trInvoiceHeader.CurrAccCode;
+
+         if (eValue is not null)
+         {
+            DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+
+            if (curr is null)
+            {
+               e.Cancel = true;
+            }
+            else
+            {
+               FillCurrAccCode(curr);
+            }
+         }
+      }
+
+      private void FillCurrAccCode(DcCurrAcc curr)
+      {
+         trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
+         lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
+
+         trInvoiceHeader.ToWarehouseCode = efMethods.SelectWarehouseByStore(trInvoiceHeader.CurrAccCode);
+         lUE_ToWarehouseCode.EditValue = trInvoiceHeader.ToWarehouseCode;
+      }
+
+      private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+      {
+         e.ErrorText = "Belə bir cari yoxdur";
+         e.ExceptionMode = ExceptionMode.DisplayError;
+      }
+
+      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         gC_InvoiceLine.ExportToXlsx(pathDesktop + $@"\InvoiceLine.xlsx");
+      }
+   }
 }

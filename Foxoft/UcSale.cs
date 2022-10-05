@@ -66,7 +66,7 @@ namespace Foxoft
                 {
                     if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                     {
-                        string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders");
+                        string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
 
                         TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                         {
@@ -205,7 +205,7 @@ namespace Foxoft
 
                 if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                 {
-                    string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders");
+                    string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
                     TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                     {
                         InvoiceHeaderId = invoiceHeaderId,
@@ -239,7 +239,7 @@ namespace Foxoft
 
             if (summaryNetAmount > 0)
             {
-                int paymentType = 0;
+                byte paymentType = 0;
 
                 SimpleButton simpleButton = sender as SimpleButton;
                 switch (simpleButton.Name)
@@ -306,7 +306,7 @@ namespace Foxoft
                 {
                     if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                     {
-                        string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders");
+                        string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
                         TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                         {
                             InvoiceHeaderId = invoiceHeaderId,
@@ -338,7 +338,7 @@ namespace Foxoft
                 {
                     if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                     {
-                        string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders");
+                        string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
                         TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                         {
                             InvoiceHeaderId = invoiceHeaderId,

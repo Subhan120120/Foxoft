@@ -29,7 +29,7 @@ namespace Foxoft
                 txtEdit_PhoneNum.EditValue = DcCurrAcc.PhoneNum;
             }
             else
-                txtEdit_CurrAccCode.EditValue = efMethods.GetNextDocNum("CA", "CurrAccCode", "DcCurrAccs");
+                txtEdit_CurrAccCode.EditValue = efMethods.GetNextDocNum("C", "CurrAccCode", "DcCurrAccs", 4);
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)

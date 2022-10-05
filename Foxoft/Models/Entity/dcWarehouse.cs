@@ -22,6 +22,7 @@ namespace Foxoft.Models
         public byte WarehouseTypeCode { get; set; }
 
         [DisplayName("Ofis")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string OfficeCode { get; set; }
 

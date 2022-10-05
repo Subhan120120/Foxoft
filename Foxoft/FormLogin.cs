@@ -2,8 +2,10 @@
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
+using Foxoft.Models;
 using Foxoft.Properties;
 using System;
+using System.Windows;
 
 namespace Foxoft
 {
@@ -13,6 +15,11 @@ namespace Foxoft
 
         public FormLogin()
         {
+            EfMethods efMethods = new EfMethods();
+            AppSetting appSetting = efMethods.SelectAppSetting();
+            Settings.Default.AppSetting = appSetting;
+            Settings.Default.Save();
+
             InitializeComponent();
             SplashScreenManager sSM = new SplashScreenManager(this, typeof(global::Foxoft.SplashScreenStartup), true, true);
             sSM.ClosingDelay = 500;
@@ -78,7 +85,7 @@ namespace Foxoft
 
             Authorization.CurrAccCode = txtEdit_UserName.Text;
             Authorization.DcRoles = efMethods.SelectRoles(txtEdit_UserName.Text);
-            Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
+            Authorization.StoreCode = efMethods.SelectStoreCode(txtEdit_UserName.Text);
             Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
         }
 

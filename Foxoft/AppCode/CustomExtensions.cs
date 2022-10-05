@@ -69,18 +69,18 @@ namespace Foxoft
 
         public static string ProcessDir(string processCode)
         {
-            if (processCode == "RP")
-                return "In";
-            else if (processCode == "RS")
-                return "Out";
-            else if (processCode == "EX")
-                return "In";
-            else if (processCode == "SB")
-                return "In";
-            else if (processCode == "W")
-                return "Out";
-            else
-                return "";
+            switch (processCode)
+            {
+                case "RP": return "In";
+                case "EX": return "In";
+                case "SB": return "In";
+                case "CI": return "In";
+                case "TF": return "Out";
+                case "RS": return "Out";
+                case "WS": return "Out";
+                case "CO": return "Out";
+                default: return "";
+            }
         }
 
     }

@@ -11,85 +11,108 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormCurrAcc : XtraForm
-    {
-        subContext dbContext;
-        EfMethods efMethods = new EfMethods();
-        public DcCurrAcc dcCurrAcc = new DcCurrAcc();
+   public partial class FormCurrAcc : XtraForm
+   {
+      subContext dbContext;
+      EfMethods efMethods = new EfMethods();
+      public DcCurrAcc dcCurrAcc = new DcCurrAcc();
 
-        public FormCurrAcc()
-        {
-            InitializeComponent();
-            AcceptButton = btn_Ok;
-            CancelButton = btn_Cancel;
-        }
+      public FormCurrAcc()
+      {
+         InitializeComponent();
 
-        public FormCurrAcc(string currAccCode)
-            : this()
-        {
-            dcCurrAcc.CurrAccCode = currAccCode;
-        }
+         CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectCurrAccTypes();
+         OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
+         StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
 
-        private void FormCurrAcc_Load(object sender, EventArgs e)
-        {
-            FillDataLayout();
-            dataLayoutControl1.isValid(out List<string> errorList);
-        }
+         AcceptButton = btn_Ok;
+         CancelButton = btn_Cancel;
+      }
 
-        private void FillDataLayout()
-        {
-            dbContext = new subContext();
+      public FormCurrAcc(string currAccCode)
+          : this()
+      {
+         dcCurrAcc.CurrAccCode = currAccCode;
+      }
 
-            if (string.IsNullOrEmpty(dcCurrAcc.CurrAccCode))
-                ClearControlsAddNew();
-            else
-            {
-                //dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                //                    .LoadAsync()
-                //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-                
-                dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                    .Load();
-                dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
-            }
-        }
+      public FormCurrAcc(byte currAccTypeCode)
+          : this()
+      {
+         dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
+      }
 
-        private void ClearControlsAddNew()
-        {
-            dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
+      private void FormCurrAcc_Load(object sender, EventArgs e)
+      {
+         LoadCurrAcc();
+         dataLayoutControl1.isValid(out List<string> errorList);
+      }
 
-            string NewDocNum = efMethods.GetNextDocNum("CA", "CurrAccCode", "DcCurrAccs");
-            dcCurrAcc.CurrAccCode = NewDocNum;
-            dcCurrAcc.DataLanguageCode = "AZ";
+      private void LoadCurrAcc()
+      {
+         dbContext = new subContext();
 
-            dcCurrAccsBindingSource.DataSource = dcCurrAcc;
-        }
+         if (string.IsNullOrEmpty(dcCurrAcc.CurrAccCode))
+            ClearControlsAddNew();
+         else
+         {
+            //dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
+            //                    .LoadAsync()
+            //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
-        private void dcCurrAccsBindingSource_AddingNew(object sender, AddingNewEventArgs e)
-        {
-            //dcCurrAcc = new DcCurrAcc();
-            //dcCurrAcc.CurrAccCode = efMethods.GetNextDocNum("CA", "CurrAccCode", "DcCurrAccs");
-            //dcCurrAcc.DataLanguageCode = "AZ";
-            //e.NewObject = dcCurrAcc;
-        }
+            dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
+                .Load();
+            dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
+         }
+      }
 
-        private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
-        {
-            if (e.FieldName == "ModifiedDate")
-            {
-                e.Visible = false;
-                e.Handled = true;
-            }
-        }
+      private void ClearControlsAddNew()
+      {
+         byte temp = dcCurrAcc.CurrAccTypeCode;
+         dcCurrAcc = dcCurrAccsBindingSource.AddNew() as DcCurrAcc;
+         dcCurrAcc.CurrAccTypeCode = temp;
 
-        private void btn_Ok_Click(object sender, EventArgs e)
-        {
+         dcCurrAcc.StoreCode = Authorization.StoreCode;
+         dcCurrAcc.OfficeCode = Authorization.OfficeCode;
+         string NewDocNum = efMethods.GetNextDocNum("C", "CurrAccCode", "DcCurrAccs", 4);
+         dcCurrAcc.CurrAccCode = NewDocNum;
+         dcCurrAcc.DataLanguageCode = "AZ";
+
+         dcCurrAccsBindingSource.DataSource = dcCurrAcc;
+      }
+
+      private void dcCurrAccsBindingSource_AddingNew(object sender, AddingNewEventArgs e)
+      {
+         //dcCurrAcc = new DcCurrAcc();
+         //dcCurrAcc.CurrAccCode = efMethods.GetNextDocNum("CA", "CurrAccCode", "DcCurrAccs");
+         //dcCurrAcc.DataLanguageCode = "AZ";
+         //e.NewObject = dcCurrAcc;
+      }
+
+      private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
+      {
+         if (e.FieldName == "ModifiedDate")
+         {
+            e.Visible = false;
+            e.Handled = true;
+         }
+      }
+
+      private void btn_Ok_Click(object sender, EventArgs e)
+      {
+         if (dataLayoutControl1.isValid(out List<string> errorList))
+         {
             dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
             if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if invoiceHeader doesnt exist
-                efMethods.InsertCurrAcc(dcCurrAcc);
+               efMethods.InsertCurrAcc(dcCurrAcc);
             else
-                dbContext.SaveChanges();
+               dbContext.SaveChanges();
             DialogResult = DialogResult.OK;
-        }
-    }
+         }
+         else
+         {
+            string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+            XtraMessageBox.Show(combinedString);
+         }
+      }
+   }
 }

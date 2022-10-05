@@ -1,47 +1,67 @@
-﻿using Foxoft.Models;
+﻿using DevExpress.XtraEditors;
+using Foxoft.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormReportEditor : Form
+    public partial class FormReportEditor : XtraForm
     {
-        DcReport dcReport;
+        public DcReport dcReport = new DcReport();
+        subContext dbContext = new subContext();
 
-        public FormReportEditor(DcReport dcReport)
+        public FormReportEditor(int reportId)
         {
-            this.dcReport = dcReport;
+            this.dcReport.ReportId = reportId;
 
             InitializeComponent();
-            AcceptButton = simpleButton1;
+
+            CancelButton = btn_Cancel;
+            AcceptButton = btn_Ok;
         }
 
         private void FormQueryEditor_Load(object sender, EventArgs e)
         {
-            textEdit1.Text = dcReport.ReportQuery;
-            textEdit2.Text = dcReport.ReportName;
+            FillDataLayout();
         }
 
-        private void simpleButton1_Click(object sender, EventArgs e)
+        private void FillDataLayout()
+        {
+            if (!(dcReport.ReportId > 0))
+                ClearControlsAddNew();
+            else
+            {
+                dbContext.DcReports.Include(x => x.DcReportFilters)
+                                    .Where(x => x.ReportId == dcReport.ReportId)
+                                   .Load();
+                dcReportsBindingSource.DataSource = dbContext.DcReports.Local.ToBindingList();
+            }
+        }
+
+        private void ClearControlsAddNew()
+        {
+            dcReport = dcReportsBindingSource.AddNew() as DcReport;
+
+            dcReportsBindingSource.DataSource = dcReport;
+        }
+
+        private void btn_Ok_Click(object sender, EventArgs e)
         {
             EfMethods efMethods = new EfMethods();
-            dcReport = efMethods.SelectReport(dcReport.Id);
-            dcReport.ReportQuery = textEdit1.Text;
-            dcReport.ReportName = textEdit2.Text;
-            efMethods.UpdateReport(dcReport);
-            DialogResult = DialogResult.OK;
-        }
 
-        private void simpleButton2_Click(object sender, EventArgs e)
-        {
-            this.Close();
+            //dcReport = efMethods.SelectReport(dcReport.ReportId);
+            //efMethods.UpdateReport(dcReport);
+
+            dcReport = dcReportsBindingSource.Current as DcReport;
+            if (!efMethods.ReportExist(dcReport.ReportId)) //if invoiceHeader doesnt exist
+                efMethods.InsertReport(dcReport);
+            else
+                dbContext.SaveChanges();
+
+            DialogResult = DialogResult.OK;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Foxoft.Models
 
         [DisplayName("Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         public virtual DcProduct DcProduct { get; set; }
     }
