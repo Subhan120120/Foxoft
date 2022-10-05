@@ -29,9 +29,6 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             gV_ProductList.RestoreLayoutFromStream(stream, option);
-
-
-
         }
 
         public FormProductList(byte productTypeCode)
@@ -49,8 +46,19 @@ namespace Foxoft
             this.productCode = productCode;
         }
 
+
+
         private void FormProductList_Load(object sender, EventArgs e)
         {
+            FocusSelectedProduct();
+        }
+
+        private void FocusSelectedProduct()
+        {
+            int rowHandle = gV_ProductList.LocateByValue("ProductCode", productCode);
+            gV_ProductList.SelectRow(rowHandle);
+            gV_ProductList.FocusedRowHandle = rowHandle;
+            gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
         }
 
         private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -87,7 +95,7 @@ namespace Foxoft
 
         private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormProduct formProduct = new FormProduct();
+            FormProduct formProduct = new FormProduct(productTypeCode);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
                 if (productTypeCode != 0)
@@ -117,11 +125,8 @@ namespace Foxoft
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            int rowHandle = gV_ProductList.LocateByValue("ProductCode", productCode);
+            gV_ProductList.ShowEditForm();
 
-            gV_ProductList.SelectRow(rowHandle);
-            gV_ProductList.FocusedRowHandle = rowHandle;
-            gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
         }
 
         private void gC_ProductList_ProcessGridKey(object sender, KeyEventArgs e)

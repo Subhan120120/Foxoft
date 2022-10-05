@@ -35,6 +35,12 @@ namespace Foxoft
             this.dcProduct.ProductCode = productCode;
         }
 
+        public FormProduct(byte productTypeCode)
+            : this()
+        {
+            this.dcProduct.ProductTypeCode = productTypeCode;
+        }
+
         private void FormProduct_Load(object sender, System.EventArgs e)
         {
             FillDataLayout();
@@ -62,10 +68,12 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
+            byte temp = dcProduct.ProductTypeCode;
             dcProduct = dcProductsBindingSource.AddNew() as DcProduct;
 
-            string NewDocNum = efMethods.GetNextDocNum("PR", "ProductCode", "DcProducts");
-            dcProduct.ProductCode = NewDocNum;
+            dcProduct.ProductTypeCode = temp;
+            dcProduct.ProductCode = efMethods.GetNextDocNum("PR", "ProductCode", "DcProducts"); ;
+
 
             dcProductsBindingSource.DataSource = dcProduct;
         }
