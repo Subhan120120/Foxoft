@@ -27,7 +27,6 @@ namespace Foxoft.Models
       public DbSet<DcProduct> DcProducts { get; set; }
       public DbSet<DcProductType> DcProductTypes { get; set; }
       public DbSet<DcRole> DcRoles { get; set; }
-      //public DbSet<DcStore> DcStores { get; set; }
       public DbSet<DcTerminal> DcTerminals { get; set; }
       public DbSet<DcWarehouse> DcWarehouses { get; set; }
       public DbSet<MigrationHistory> MigrationHistory { get; set; }
@@ -88,7 +87,18 @@ namespace Foxoft.Models
 
          modelBuilder.Entity<GetNextDocNum>() //procedure
                      .HasNoKey();
-         //.ToView(null);
+
+         // more foreign key same table configure
+         modelBuilder.Entity<TrPaymentHeader>(e =>
+         {
+            e.HasOne(field => field.ToCashReg)
+            .WithMany(fk => fk.TrPaymentHeaderToCashes)
+            .HasForeignKey(fk => fk.ToCashRegCode);
+
+            //e.HasOne(field => field.FromCashReg)
+            //.WithMany(fk => fk.TrPaymentHeaderFromCashes)
+            //.HasForeignKey(fk => fk.FromCashRegCode);
+         });
 
          modelBuilder.Entity<DcCurrAcc>().HasData(
              new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Sübhan", LastName = "Hüseynzadə", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },

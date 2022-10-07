@@ -348,6 +348,23 @@ namespace Foxoft
 
       }
 
+      public int DeleteMoneyTransfer(Guid paymentHeaderId)
+      {
+         using subContext db = new();
+
+         string editable = paymentHeaderId.ToString();
+         Guid transferHead = Guid.Parse(editable.Replace(editable.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+         TrPaymentHeader trPaymentHeader = new() { PaymentHeaderId = paymentHeaderId };
+         db.TrPaymentHeaders.Remove(trPaymentHeader);
+
+         TrPaymentHeader transferHeader = db.TrPaymentHeaders.FirstOrDefault(x => x.PaymentHeaderId == transferHead);
+         if (transferHeader is not null)
+            db.TrPaymentHeaders.Remove(transferHeader);
+
+         return db.SaveChanges();
+      }
+
       public int DeleteProduct(DcProduct dcProduct)
       {
          using subContext db = new();
@@ -368,7 +385,13 @@ namespace Foxoft
 
       }
 
-      public int DeletePaymentByInvoice(Guid invoiceHeaderId)
+      public bool PaymentHeaderExistByInvoice(Guid invoiceHeaderId)
+      {
+         using subContext db = new();
+         return db.TrPaymentHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
+      }
+
+      public int DeletePaymentsByInvoice(Guid invoiceHeaderId)
       {
          using subContext db = new();
          List<TrPaymentHeader> trPaymentHeaders = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
@@ -378,7 +401,6 @@ namespace Foxoft
 
          int result = db.SaveChanges();
          return result;
-
       }
 
       public int DeleteInvoiceLine(object invoiceLineId)
@@ -576,12 +598,13 @@ namespace Foxoft
       public List<DcCurrAcc> SelectCurrAccs()
       {
          using subContext db = new();
-         return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+
+         byte[] byteArr = new byte[] { 1, 2, 3 };
+
+         return db.DcCurrAccs.Where(x => x.IsDisabled == false && byteArr.Contains(x.CurrAccTypeCode))
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {
-                       Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader).Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode).Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
-                       + db.TrPaymentLines.Include(l => l.TrPaymentHeader).Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode).Sum(s => s.PaymentLoc),
                        CurrAccCode = x.CurrAccCode,
                        CurrAccDesc = x.CurrAccDesc,
                        IsVip = x.IsVip,
@@ -594,6 +617,12 @@ namespace Foxoft
                        CreatedUserName = x.CreatedUserName,
                        LastUpdatedDate = x.LastUpdatedDate,
                        LastUpdatedUserName = x.LastUpdatedUserName,
+                       Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader)
+                                                  .Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode)
+                                                  .Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
+                               + db.TrPaymentLines.Include(l => l.TrPaymentHeader)
+                                                  .Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode)
+                                                  .Sum(s => s.PaymentLoc),
                     })
                     .ToList(); // burdaki kolonlari dizaynda da elave et
       }

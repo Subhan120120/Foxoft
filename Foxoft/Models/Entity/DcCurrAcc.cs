@@ -18,6 +18,8 @@ namespace Foxoft.Models
       {
          TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
          TrPaymentHeaders = new HashSet<TrPaymentHeader>();
+         //TrPaymentHeaderFromCashes = new HashSet<TrPaymentHeader>();
+         TrPaymentHeaderToCashes = new HashSet<TrPaymentHeader>();
          TrPaymentLines = new HashSet<TrPaymentLine>();
       }
 
@@ -139,7 +141,12 @@ namespace Foxoft.Models
 
       public virtual DcCurrAccType DcCurrAccType { get; set; }
       public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
+
+
       public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
+
+      public virtual ICollection<TrPaymentHeader> TrPaymentHeaderToCashes { get; set; }
+      //public virtual ICollection<TrPaymentHeader> TrPaymentHeaderFromCashes { get; set; }
       public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
       public virtual ICollection<TrCurrAccRole> TrCurrAccRole { get; set; }
    }

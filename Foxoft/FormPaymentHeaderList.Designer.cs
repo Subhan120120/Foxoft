@@ -57,6 +57,8 @@ namespace Foxoft
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.colFromCashRegCode = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colToCashRegCode = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentHeaderList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentHeaderList)).BeginInit();
@@ -100,7 +102,9 @@ namespace Foxoft
             this.colStoreCode,
             this.colPosterminalId,
             this.colInvoiceHeaderId,
-            this.colTotalPayment});
+            this.colTotalPayment,
+            this.colFromCashRegCode,
+            this.colToCashRegCode});
          this.gV_PaymentHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(796, 370, 264, 272);
          this.gV_PaymentHeaderList.GridControl = this.gC_PaymentHeaderList;
          this.gV_PaymentHeaderList.Name = "gV_PaymentHeaderList";
@@ -280,6 +284,20 @@ namespace Foxoft
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
          // 
+         // colFromCashRegCode
+         // 
+         this.colFromCashRegCode.FieldName = "FromCashRegCode";
+         this.colFromCashRegCode.Name = "colFromCashRegCode";
+         this.colFromCashRegCode.Visible = true;
+         this.colFromCashRegCode.VisibleIndex = 8;
+         // 
+         // colToCashRegCode
+         // 
+         this.colToCashRegCode.FieldName = "ToCashRegCode";
+         this.colToCashRegCode.Name = "colToCashRegCode";
+         this.colToCashRegCode.Visible = true;
+         this.colToCashRegCode.VisibleIndex = 9;
+         // 
          // FormPaymentHeaderList
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -332,5 +350,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colTotalPayment;
       private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+      private DevExpress.XtraGrid.Columns.GridColumn colToCashRegCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colFromCashRegCode;
    }
 }

@@ -228,7 +228,7 @@ namespace Foxoft
 
             if (autoPayment)
             {
-               efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+               efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
 
                efMethods.InsertPaymentHeader(trPaymentHeader);
 

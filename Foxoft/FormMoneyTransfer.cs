@@ -21,25 +21,24 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class FormPaymentDetail : RibbonForm
+   public partial class FormMoneyTransfer : RibbonForm
    {
       private TrPaymentHeader trPaymentHeader;
       private EfMethods efMethods = new();
       private subContext dbContext;
       private Guid paymentHeaderId;
 
-      public FormPaymentDetail()
+      public FormMoneyTransfer()
       {
          InitializeComponent();
 
-         StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
          repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
          repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
 
          ClearControlsAddNew();
       }
 
-      public FormPaymentDetail(Guid paymentHeaderId)
+      public FormMoneyTransfer(Guid paymentHeaderId)
           : this()
       {
          trPaymentHeader = efMethods.SelectPaymentHeader(paymentHeaderId);
@@ -49,7 +48,7 @@ namespace Foxoft
 
       private void ClearControlsAddNew()
       {
-         dbContext = new subContext();
+         dbContext = new();
 
          paymentHeaderId = Guid.NewGuid();
 
@@ -59,19 +58,18 @@ namespace Foxoft
 
          trPaymentHeader = trPaymentHeadersBindingSource.AddNew() as TrPaymentHeader;
 
-
          dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == trPaymentHeader.InvoiceHeaderId)
                                  .LoadAsync()
                                  .ContinueWith(loadTask => trPaymentLinesBindingSource.DataSource = dbContext.TrPaymentLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
-         lbl_CurrAccDesc.Text = trPaymentHeader.CurrAccDesc;
+         lbl_ToCashRegDesc.Text = trPaymentHeader.CurrAccDesc;
 
          dataLayoutControl1.isValid(out List<string> errorList);
       }
 
       private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
       {
-         TrPaymentHeader paymentHeader = new TrPaymentHeader();
+         TrPaymentHeader paymentHeader = new();
          paymentHeader.PaymentHeaderId = paymentHeaderId;
          string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
          paymentHeader.DocumentNumber = NewDocNum;
@@ -89,6 +87,14 @@ namespace Foxoft
       {
          trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
 
+         if (trPaymentHeader is not null)
+         {
+            for (int i = 0; i < gV_PaymentLine.RowCount; i++)
+            {
+               gV_PaymentLine.SetRowCellValue(i, colCashRegisterCode, trPaymentHeader.ToCashRegCode);
+            }
+         }
+
          if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
          {
             int count = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).Count;
@@ -97,11 +103,72 @@ namespace Foxoft
          }
       }
 
+      Guid guidHead;
       private void SavePayment()
       {
          try
          {
-            dbContext.SaveChanges();
+            dbContext.SaveChanges(false);
+
+            //List<EntityEntry> entityEntry = new();
+            IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
+
+            foreach (var entry in entityEntry)
+            {
+               if (entry.Entity.GetType().Name == nameof(TrPaymentHeader))
+               {
+                  TrPaymentHeader trPH = (TrPaymentHeader)entry.CurrentValues.ToObject();
+
+                  string payHeadStr = trPH.PaymentHeaderId.ToString();
+
+                  guidHead = Guid.Parse(payHeadStr.Replace(payHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                  using subContext context2 = new();
+
+                  TrPaymentHeader newTrIP = trPH;
+                  newTrIP.PaymentHeaderId = guidHead;
+                  string temp = trPH.FromCashRegCode;
+                  newTrIP.FromCashRegCode = trPH.ToCashRegCode;
+                  newTrIP.ToCashRegCode = temp;
+
+                  switch (entry.State)
+                  {
+                     case EntityState.Added: context2.TrPaymentHeaders.Add(newTrIP); break;
+                     case EntityState.Modified: context2.TrPaymentHeaders.Update(newTrIP); break;
+                     case EntityState.Deleted: context2.TrPaymentHeaders.Remove(newTrIP); break;
+                     default: break;
+                  }
+
+                  context2.SaveChanges();
+               }
+
+               if (entry.Entity.GetType().Name == nameof(TrPaymentLine))
+               {
+                  TrPaymentLine trPl = (TrPaymentLine)entry.CurrentValues.ToObject();
+
+                  string invoLineStr = trPl.PaymentLineId.ToString();
+                  Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                  using subContext context2 = new();
+
+                  TrPaymentLine newTrPl = trPl;
+                  newTrPl.PaymentHeaderId = guidHead;
+                  newTrPl.PaymentLineId = quidLine;
+                  newTrPl.CashRegisterCode = trPaymentHeader.FromCashRegCode;
+                  newTrPl.Payment *= (-1);
+
+                  switch (entry.State)
+                  {
+                     case EntityState.Added: context2.TrPaymentLines.Add(newTrPl); break;
+                     case EntityState.Modified: context2.TrPaymentLines.Update(newTrPl); break;
+                     case EntityState.Deleted: context2.TrPaymentLines.Remove(newTrPl); break;
+                     default: break;
+                  }
+                  context2.SaveChanges();
+               }
+            }
+
+            dbContext.ChangeTracker.AcceptAllChanges();
          }
          catch (Exception ex)
          {
@@ -116,7 +183,7 @@ namespace Foxoft
 
       private void CurrAccCodeButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
       {
-         SelectCurrAcc();
+         //SelectCurrAcc(sender);
       }
 
       private void SelectDocNum()
@@ -138,19 +205,21 @@ namespace Foxoft
       {
          dbContext = new subContext();
 
-         dbContext.TrPaymentHeaders.Include(x => x.DcCurrAcc)
-                                   .Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
+         dbContext.TrPaymentHeaders
+                                   .Include(x => x.DcCurrAcc)
+                                   .Include(x => x.ToCashReg)
+                                   .Where(x => x.PaymentHeaderId == paymentHeaderId)
+                                   .Load();
 
          LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
 
          lV_paymentHeader.ForEach(x =>
          {
-            string fullName = "";
-            if (!lV_paymentHeader.Any(x => x.DcCurrAcc is null))
-               fullName = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-
-            x.CurrAccDesc = fullName;
-            lbl_CurrAccDesc.Text = fullName;
+            if (lV_paymentHeader.Any(x => x.DcCurrAcc is not null) || lV_paymentHeader.Any(x => x.ToCashReg is not null))
+            {
+               lbl_FromCashRegDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+               lbl_ToCashRegDesc.Text = x.ToCashReg.CurrAccDesc + " " + x.ToCashReg.FirstName + " " + x.ToCashReg.LastName;
+            }
          });
 
          trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
@@ -177,7 +246,7 @@ namespace Foxoft
          {
             if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-               efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
+               efMethods.DeleteMoneyTransfer(trPaymentHeader.PaymentHeaderId);
 
                ClearControlsAddNew();
             }
@@ -186,18 +255,15 @@ namespace Foxoft
             XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
       }
 
-      private void SelectCurrAcc()
+      private DcCurrAcc SelectCurrAcc()
       {
-         using (FormCurrAccList form = new FormCurrAccList(0))
+         using (FormCurrAccList form = new(5))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-               CurrAccCodeButtonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
-               trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-               lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
-
-               CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
+               return form.dcCurrAcc;
             }
+            else return null;
          }
       }
 
@@ -207,7 +273,7 @@ namespace Foxoft
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLineId, Guid.NewGuid());
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentTypeCode, 1);
 
-         string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
+         string cashReg = trPaymentHeader.ToCashRegCode;
 
          if (!String.IsNullOrEmpty(cashReg))
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);
@@ -235,14 +301,9 @@ namespace Foxoft
 
       private void StandartKeys(KeyEventArgs e)
       {
-         if (e.KeyCode == Keys.F1)
-         {
-            SelectCurrAcc();
-         }
-
          if (e.KeyCode == Keys.F2)
          {
-            gV_PaymentLine.FocusedColumn = colReceivePayment;
+            gV_PaymentLine.FocusedColumn = colPayment;
             e.Handled = true;   // Stop the character from being entered into the control.
          }
       }
@@ -265,30 +326,6 @@ namespace Foxoft
             lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Balance.ToString();
          }
       }
-
-      //private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
-      //{
-      //object objExRate = gV_PaymentLine.GetFocusedRowCellValue(colExchangeRate);
-      //object objPayment = gV_PaymentLine.GetRowCellValue(e.RowHandle, colPayment);
-      //object objPaymentLoc = gV_PaymentLine.GetFocusedRowCellValue(colPaymentLoc);
-
-      //decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
-      //decimal Payment = objPayment.IsNumeric() ? Convert.ToDecimal(objPayment, CultureInfo.InvariantCulture) : 0;
-      //decimal PaymentLoc = objPaymentLoc.IsNumeric() ? Convert.ToDecimal(objPaymentLoc, CultureInfo.InvariantCulture) : 0;
-
-      //if (e.Value != null && e.Column == colPayment)
-      //{
-      //    objPayment = e.Value;
-      //    Payment = objPayment.IsNumeric() ? Convert.ToDecimal(objPayment, CultureInfo.InvariantCulture) : 0;
-      //    gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLoc, Math.Round(Payment * exRate, 2));
-      //}
-      //else if (e.Value != null && e.Column == colExchangeRate)
-      //{
-      //    objExRate = e.Value;
-      //    exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
-      //    gV_PaymentLine.SetRowCellValue(e.RowHandle, colPaymentLoc, Math.Round(Payment * exRate, 2));
-      //}
-      //}
 
       private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
       {
@@ -426,6 +463,36 @@ namespace Foxoft
          string CopyText = PaymentText("\n");
 
          Clipboard.SetText(CopyText);
+      }
+
+      private void FromCashRegCodeButtonEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         ButtonEdit buttonEdit = sender as ButtonEdit;
+         DcCurrAcc dcCurrAcc = SelectCurrAcc();
+
+         if (dcCurrAcc is not null)
+         {
+            buttonEdit.EditValue = dcCurrAcc.CurrAccCode;
+            trPaymentHeader.FromCashRegCode = dcCurrAcc.CurrAccCode;
+            lbl_FromCashRegDesc.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
+
+            CalcCurrAccBalance(dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
+         }
+      }
+
+      private void ToCashRegCodeButtonEdit_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         ButtonEdit buttonEdit = sender as ButtonEdit;
+         DcCurrAcc dcCurrAcc = SelectCurrAcc();
+
+         if (dcCurrAcc is not null)
+         {
+            buttonEdit.EditValue = dcCurrAcc.CurrAccCode;
+            trPaymentHeader.ToCashRegCode = dcCurrAcc.CurrAccCode;
+            lbl_ToCashRegDesc.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
+
+            CalcCurrAccBalance(dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
+         }
       }
    }
 }

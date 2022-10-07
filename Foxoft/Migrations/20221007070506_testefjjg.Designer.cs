@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20221007070506_testefjjg")]
+    partial class testefjjg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1644,11 +1646,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
 
-                    b.Property<bool>("IsMainTF")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("1");
-
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -1694,6 +1691,8 @@ namespace Foxoft.Migrations
                     b.HasKey("PaymentHeaderId");
 
                     b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("FromCashRegCode");
 
                     b.HasIndex("InvoiceHeaderId");
 
@@ -2204,6 +2203,10 @@ namespace Foxoft.Migrations
                         .WithMany("TrPaymentHeaders")
                         .HasForeignKey("CurrAccCode");
 
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "FromCashReg")
+                        .WithMany("TrPaymentHeaderFromCashes")
+                        .HasForeignKey("FromCashRegCode");
+
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrPaymentHeaders")
                         .HasForeignKey("InvoiceHeaderId")
@@ -2214,6 +2217,8 @@ namespace Foxoft.Migrations
                         .HasForeignKey("ToCashRegCode");
 
                     b.Navigation("DcCurrAcc");
+
+                    b.Navigation("FromCashReg");
 
                     b.Navigation("ToCashReg");
 
@@ -2306,6 +2311,8 @@ namespace Foxoft.Migrations
                     b.Navigation("TrCurrAccRole");
 
                     b.Navigation("TrInvoiceHeaders");
+
+                    b.Navigation("TrPaymentHeaderFromCashes");
 
                     b.Navigation("TrPaymentHeaders");
 

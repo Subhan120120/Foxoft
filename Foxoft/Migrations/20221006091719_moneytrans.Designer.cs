@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20221006091719_moneytrans")]
+    partial class moneytrans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1644,11 +1646,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
 
-                    b.Property<bool>("IsMainTF")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("1");
-
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -1696,8 +1693,6 @@ namespace Foxoft.Migrations
                     b.HasIndex("CurrAccCode");
 
                     b.HasIndex("InvoiceHeaderId");
-
-                    b.HasIndex("ToCashRegCode");
 
                     b.ToTable("TrPaymentHeaders");
                 });
@@ -2202,20 +2197,15 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
                         .WithMany("TrPaymentHeaders")
-                        .HasForeignKey("CurrAccCode");
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrPaymentHeaders")
                         .HasForeignKey("InvoiceHeaderId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "ToCashReg")
-                        .WithMany("TrPaymentHeaderToCashes")
-                        .HasForeignKey("ToCashRegCode");
-
                     b.Navigation("DcCurrAcc");
-
-                    b.Navigation("ToCashReg");
 
                     b.Navigation("TrInvoiceHeader");
                 });
@@ -2308,8 +2298,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceHeaders");
 
                     b.Navigation("TrPaymentHeaders");
-
-                    b.Navigation("TrPaymentHeaderToCashes");
 
                     b.Navigation("TrPaymentLines");
                 });

@@ -49,15 +49,20 @@ namespace Foxoft.Models
       [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
       public TimeSpan OperationTime { get; set; }
 
-      //[DisplayName("Faktura Nömrəsi")]
-      //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-      //[StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      //public string InvoiceNumber { get; set; }
-
       [DisplayName("Cari Hesab")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       [ForeignKey("DcCurrAcc")]
       public string CurrAccCode { get; set; }
+
+      [DisplayName("Kassaya")]
+      [ForeignKey("ToCashReg")]
+      [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ToCashRegCode { get; set; }
+
+      //[NotMapped]
+      [DisplayName("Kassadan")]
+      [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string FromCashRegCode { get { return CurrAccCode; } set { CurrAccCode = value; } }
 
       [DisplayName("Açıqlama")]
       [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -92,6 +97,9 @@ namespace Foxoft.Models
       [DisplayName("Kilidlənib")]
       public bool IsLocked { get; set; }
 
+      [DefaultValue("1")]
+      [DisplayName("Əsas Qaimə")]
+      public bool IsMainTF { get; set; }
 
       [NotMapped] //datalayoutColntrola gore
       [DisplayName("Cari Hesab Adı")]
@@ -101,16 +109,10 @@ namespace Foxoft.Models
       [DisplayName("Toplam")]
       public decimal TotalPayment { get; set; }
 
-      //[NotMapped]
-      //[DisplayName("Toplam")]
-      //public decimal CurrAccBalanceBefore { get; set; }  
-
-      //[NotMapped]
-      //[DisplayName("Toplam")]
-      //public decimal CurrAccBalanceAfter { get; set; }
-
 
       public virtual DcCurrAcc DcCurrAcc { get; set; }
+      public virtual DcCurrAcc ToCashReg { get; set; }
+      //public virtual DcCurrAcc FromCashReg { get; set; }
       public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
       public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
    }

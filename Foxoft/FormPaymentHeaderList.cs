@@ -82,6 +82,7 @@ namespace Foxoft
                                                         .OrderByDescending(x => x.OperationDate).ThenByDescending(x => x.OperationTime)
                                                         .Select(x => new TrPaymentHeader
                                                         {
+                                                           TrInvoiceHeader = x.TrInvoiceHeader,
                                                            CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
                                                            TotalPayment = x.TrPaymentLines.Sum(x => x.PaymentLoc),
                                                            PaymentHeaderId = x.PaymentHeaderId,
@@ -104,7 +105,8 @@ namespace Foxoft
                                                            CreatedDate = x.CreatedDate,
                                                            LastUpdatedUserName = x.LastUpdatedUserName,
                                                            LastUpdatedDate = x.LastUpdatedDate,
-                                                           TrInvoiceHeader = x.TrInvoiceHeader
+                                                           //FromCashRegCode = x.FromCashRegCode,
+                                                           ToCashRegCode = x.ToCashRegCode,
                                                         })
                                                         .ToList();
 

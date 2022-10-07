@@ -24,6 +24,7 @@ namespace Foxoft
       readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
       readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
       readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new RepositoryItemButtonEdit();
 
       public FormReportFilter(DcReport Report)
       {
@@ -57,6 +58,10 @@ namespace Foxoft
          this.repoBtnEdit_StoreCode.AutoHeight = false;
          this.repoBtnEdit_StoreCode.Name = "repoBtnEdit_StoreCode";
          this.repoBtnEdit_StoreCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_StoreCode_ButtonPressed);
+
+         this.repoBtnEdit_CashRegisterCode.AutoHeight = false;
+         this.repoBtnEdit_CashRegisterCode.Name = "repoBtnEdit_CashRegisterCode";
+         this.repoBtnEdit_CashRegisterCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CashRegisterCode_ButtonPressed);
       }
 
       private string ClearVariables(string querySql)
@@ -300,6 +305,8 @@ namespace Foxoft
             e.RepositoryItem = repoBtnEdit_CurrAccCode;
          if (e.Node.FirstOperand.PropertyName == "Mağaza Kodu" || e.Node.FirstOperand.PropertyName == "StoreCode")
             e.RepositoryItem = repoBtnEdit_StoreCode;
+         if (e.Node.FirstOperand.PropertyName == "Kassa Kodu" || e.Node.FirstOperand.PropertyName == "CashRegisterCode")
+            e.RepositoryItem = repoBtnEdit_CashRegisterCode;
       }
 
       private void repoBtnEdt_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -323,9 +330,15 @@ namespace Foxoft
       {
          SelectCurrAcc(sender, 0);
       }
+
       private void repobtnEdit_StoreCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
       {
          SelectCurrAcc(sender, 4);
+      }
+
+      private void repobtnEdit_CashRegisterCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         SelectCurrAcc(sender, 5);
       }
 
       private void SelectCurrAcc(object sender, byte currAccTypeCode)
@@ -340,6 +353,7 @@ namespace Foxoft
          }
       }
 
+      // Prevent delete filter
       public class MyFilterControl : FilterControl
       {
          public MyFilterControl() : base() { }

@@ -22,17 +22,17 @@ namespace Foxoft
 
       public FormERP()
       {
-         EfMethods efMethods = new EfMethods();
+         EfMethods efMethods = new();
 
          InitializeComponent();
-         ComponentResourceManager resources = new ComponentResourceManager(typeof(FormERP));
+         ComponentResourceManager resources = new(typeof(FormERP));
          bSI_UserName.Caption = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
 
          List<DcReport> dcReports = efMethods.SelectReports();
 
          foreach (DcReport dcReport in dcReports)
          {
-            AccordionControlElement aCE = new AccordionControlElement();
+            AccordionControlElement aCE = new();
 
             aCE.ImageOptions.SvgImage = ((SvgImage)(resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage")));
 
@@ -44,7 +44,7 @@ namespace Foxoft
             aCE.Text = dcReport.ReportName;
             aCE.Click += (sender, e) =>
             {
-               FormReportFilter formReport = new FormReportFilter(dcReport);
+               FormReportFilter formReport = new(dcReport);
                formReport.MdiParent = this;
                formReport.Show();
                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
@@ -87,7 +87,7 @@ namespace Foxoft
 
       private void bBI_POS_ItemClick(object sender, ItemClickEventArgs e)
       {
-         FormPOS formPOS = new FormPOS();
+         FormPOS formPOS = new();
          formPOS.Show();
       }
 
@@ -129,7 +129,7 @@ namespace Foxoft
          {
             try
             {
-               form = new FormProductList(1);
+               form = new(1);
                form.MdiParent = this;
                form.Show();
                form.WindowState = FormWindowState.Maximized;
@@ -155,7 +155,7 @@ namespace Foxoft
          {
             try
             {
-               form = new FormCurrAccList(0);
+               form = new(0);
                form.MdiParent = this;
                form.Show();
                form.WindowState = FormWindowState.Maximized;
@@ -175,7 +175,7 @@ namespace Foxoft
 
       private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new FormInvoice("RP", 1, 2);
+         FormInvoice formInvoice = new("RP", 1, 2);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -185,7 +185,7 @@ namespace Foxoft
 
       private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new FormInvoice("RS", 1, 1);
+         FormInvoice formInvoice = new("RS", 1, 1);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -210,7 +210,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            FormInvoice formInvoice = new FormInvoice("EX", 2, 0);
+            FormInvoice formInvoice = new("EX", 2, 0);
             formInvoice.MdiParent = this;
             formInvoice.Show();
             parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
@@ -221,25 +221,25 @@ namespace Foxoft
 
       private void accordionControlElement2_Click(object sender, EventArgs e)
       {
-         DsMethods dsMethods = new DsMethods();
-         ReportClass reportClass = new ReportClass();
+         DsMethods dsMethods = new();
+         ReportClass reportClass = new();
 
          //object[] objInvoiceHeaders = efMethods.SelectInvoiceLineForReport(invoiceHeaderId).Cast<object>().ToArray();
 
          //DataTable trInvoiceLines = adoMethods.SelectInvoiceLines(DateTime.Now.Date, DateTime.Now.Date);
          //DataTable trPaymentLines = adoMethods.SelectPaymentLines(DateTime.Now.Date, DateTime.Now.Date);
 
-         //DataSet dataSet = new DataSet("GunSonu");
+         //DataSet dataSet = new("GunSonu");
          //dataSet.Tables.AddRange(new DataTable[] { trInvoiceLines, trPaymentLines });
 
-         SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+         SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
          dataSource.Name = "GunSonu";
 
          //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
 
-         CustomSqlQuery sqlDepozit = new CustomSqlQuery("Depozit", "select 0 depozit");
+         CustomSqlQuery sqlDepozit = new("Depozit", "select 0 depozit");
 
-         DateTime dateTime = new DateTime(2022, 06, 23); // DateTime.Now.Date; // 
+         DateTime dateTime = new(2022, 06, 23); // DateTime.Now.Date; // 
 
          DateTime startDate = dateTime;
          DateTime endDate = dateTime;
@@ -265,7 +265,7 @@ namespace Foxoft
          }
          if (File.Exists(designPath))
          {
-            ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
+            ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
          }
 
@@ -274,13 +274,13 @@ namespace Foxoft
 
       private void aCE_MakePayment_Click(object sender, EventArgs e)
       {
-         using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+         using (FormCurrAccList formCurrAcc = new(0))
          {
             if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
             {
-               TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-               using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
+               using (FormPayment formPayment = new(1, -1, trInvoiceHeader))
                {
                   if (formPayment.ShowDialog(this) == DialogResult.OK)
                   {
@@ -293,13 +293,13 @@ namespace Foxoft
 
       private void aCE_receivePayment_Click(object sender, EventArgs e)
       {
-         using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+         using (FormCurrAccList formCurrAcc = new(0))
          {
             if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
             {
-               TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
                //decimal debt = 
-               using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
+               using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
                {
                   if (formPayment.ShowDialog(this) == DialogResult.OK)
                   {
@@ -327,7 +327,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            FormPaymentLineList formPaymentHeaders = new FormPaymentLineList();
+            FormPaymentLineList formPaymentHeaders = new();
             formPaymentHeaders.MdiParent = this;
             formPaymentHeaders.WindowState = FormWindowState.Maximized;
             formPaymentHeaders.Show();
@@ -337,7 +337,7 @@ namespace Foxoft
 
       private void aCE_CountIn_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new FormInvoice("CI", 1, 0);
+         FormInvoice formInvoice = new("CI", 1, 0);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -346,7 +346,7 @@ namespace Foxoft
 
       private void aCE_CountOut_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new FormInvoice("CO", 1, 0);
+         FormInvoice formInvoice = new("CO", 1, 0);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -355,7 +355,7 @@ namespace Foxoft
 
       private void aCE_PaymentDetail_Click(object sender, EventArgs e)
       {
-         FormPaymentDetail formPaymentDetail = new FormPaymentDetail();
+         FormPaymentDetail formPaymentDetail = new();
          formPaymentDetail.MdiParent = this;
          formPaymentDetail.WindowState = FormWindowState.Maximized;
          formPaymentDetail.Show();
@@ -368,9 +368,9 @@ namespace Foxoft
             e.Cancel = true;
       }
 
-      private void aCE_Transfer_Click(object sender, EventArgs e)
+      private void aCE_ProductTransfer_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new FormInvoice("TF", 1, 4);
+         FormInvoice formInvoice = new("TF", 1, 4);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -394,11 +394,20 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            UcReturn frmRtrn = new UcReturn();
+            UcReturn frmRtrn = new();
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();
          }
+      }
+
+      private void ACE_CashTransfer_Click(object sender, EventArgs e)
+      {
+         FormMoneyTransfer form = new();
+         form.MdiParent = this;
+         form.WindowState = FormWindowState.Maximized;
+         form.Show();
+         parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
       }
    }
 }

@@ -645,12 +645,8 @@ namespace Foxoft
          {
             dbContext.SaveChanges(false);
 
-            List<EntityEntry> entityEntry = new();
-
-            foreach (var entry in dbContext.ChangeTracker.Entries())
-            {
-               entityEntry.Add(entry);
-            };
+            //List<EntityEntry> entityEntry = new();
+            IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
 
             if (trInvoiceHeader.ProcessCode == "TF")
             {
@@ -658,8 +654,6 @@ namespace Foxoft
                {
                   if (entry.Entity.GetType().Name == nameof(TrInvoiceHeader))
                   {
-                     //TrInvoiceHeader trIH = entry.Entity as TrInvoiceHeader;
-
                      TrInvoiceHeader trIH = (TrInvoiceHeader)entry.CurrentValues.ToObject();
 
                      string invoHeadStr = trIH.InvoiceHeaderId.ToString();
@@ -677,27 +671,17 @@ namespace Foxoft
 
                      switch (entry.State)
                      {
-                        case EntityState.Deleted:
-                           context2.TrInvoiceHeaders.Remove(newTrIH);
-                           break;
-                        case EntityState.Modified:
-                           context2.TrInvoiceHeaders.Update(newTrIH);
-                           break;
-                        case EntityState.Added:
-                           context2.TrInvoiceHeaders.Add(newTrIH);
-                           break;
-                        default:
-                           break;
+                        case EntityState.Added: context2.TrInvoiceHeaders.Add(newTrIH); break;
+                        case EntityState.Modified: context2.TrInvoiceHeaders.Update(newTrIH); break;
+                        case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(newTrIH); break;
+                        default: break;
                      }
-                     context2.SaveChanges();
 
-                     //entry.CurrentValues.SetValues(asdasd);
+                     context2.SaveChanges();
                   }
 
                   if (entry.Entity.GetType().Name == nameof(TrInvoiceLine))
                   {
-                     //TrInvoiceLine trIL = entry.Entity as TrInvoiceLine;
-
                      TrInvoiceLine trIL = (TrInvoiceLine)entry.CurrentValues.ToObject();
 
                      string invoLineStr = trIL.InvoiceLineId.ToString();
@@ -713,24 +697,14 @@ namespace Foxoft
 
                      switch (entry.State)
                      {
-                        case EntityState.Deleted:
-                           context2.TrInvoiceLines.Remove(newTrIL);
-                           break;
-                        case EntityState.Modified:
-                           context2.TrInvoiceLines.Update(newTrIL);
-                           break;
-                        case EntityState.Added:
-                           context2.TrInvoiceLines.Add(newTrIL);
-                           break;
-                        default:
-                           break;
+                        case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
+                        case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
+                        case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
+                        default: break;
                      }
                      context2.SaveChanges();
-
-                     //entry.CurrentValues.SetValues(asdsdf);
                   }
                }
-               //context2.SaveChanges();
             }
 
             dbContext.ChangeTracker.AcceptAllChanges();
@@ -771,7 +745,7 @@ namespace Foxoft
             trPaymentHeader.DocumentNumber = NewDocNum;
             trPaymentHeader.Description = trInvoiceHeader.Description;
 
-            efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
 
             efMethods.InsertPaymentHeader(trPaymentHeader);
 
@@ -1057,7 +1031,10 @@ namespace Foxoft
          {
             if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-               efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+               if (efMethods.PaymentHeaderExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
+                  if (MessageBox.Show("Ödənişi də Silirsiniz! ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)                  
+                     efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
+
                efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
 
                ClearControlsAddNew();
@@ -1071,7 +1048,7 @@ namespace Foxoft
       {
          if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
          {
-            efMethods.DeletePaymentByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
             CalcPaidAmount();
          }
       }
