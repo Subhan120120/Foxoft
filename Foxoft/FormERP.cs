@@ -409,5 +409,53 @@ namespace Foxoft
          form.Show();
          parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
       }
+
+      private void ACE_PurchaseIsReturn_Click(object sender, EventArgs e)
+      {
+         int OpenFormCount = 0;
+
+         foreach (Form form in Application.OpenForms)
+         {
+            UcReturn frmRtrn = form as UcReturn;
+            if (frmRtrn != null)
+            {
+               frmRtrn.BringToFront();
+               frmRtrn.Activate();
+               OpenFormCount++;
+            }
+         }
+
+         if (OpenFormCount == 0)
+         {
+            UcReturn frmRtrn = new();
+            frmRtrn.MdiParent = this;
+            frmRtrn.WindowState = FormWindowState.Maximized;
+            frmRtrn.Show();
+         }
+      }
+
+      private void ACE_SaleIsReturn_Click(object sender, EventArgs e)
+      {
+         int OpenFormCount = 0;
+
+         foreach (Form form in Application.OpenForms)
+         {
+            UcReturn frmRtrn = form as UcReturn;
+            if (frmRtrn != null)
+            {
+               frmRtrn.BringToFront();
+               frmRtrn.Activate();
+               OpenFormCount++;
+            }
+         }
+
+         if (OpenFormCount == 0)
+         {
+            UcReturn frmRtrn = new();
+            frmRtrn.MdiParent = this;
+            frmRtrn.WindowState = FormWindowState.Maximized;
+            frmRtrn.Show();
+         }
+      }
    }
 }

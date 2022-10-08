@@ -19,34 +19,34 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class FormInvoiceHeaderList : XtraForm
+   public partial class FormInvoiceLineList : XtraForm
    {
       EfMethods efMethods = new();
-      public TrInvoiceHeader trInvoiceHeader { get; set; }
+      public TrInvoiceLine trInvoiceLine { get; set; }
       subContext dbContext;
       public string processCode { get; set; }
 
-
-      public FormInvoiceHeaderList()
+      public FormInvoiceLineList()
       {
          InitializeComponent();
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new(byteArray);
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-         this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
+         gV_InvoiceLineList.RestoreLayoutFromStream(stream, option);
       }
 
-      public FormInvoiceHeaderList(string processCode)
+
+      public FormInvoiceLineList(string processCode)
           : this()
       {
          this.processCode = processCode;
          LoadInvoiveHeaders();
 
          string storeCode = Authorization.StoreCode;
-         this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+         gV_InvoiceLineList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
 
-         gV_InvoiceHeaderList.BestFitColumns();
+         gV_InvoiceLineList.BestFitColumns();
       }
 
       private void LoadInvoiveHeaders()
@@ -72,45 +72,45 @@ namespace Foxoft
 
          //            }, TaskScheduler.FromCurrentSynchronizationContext());
 
-         IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
+         IQueryable<TrInvoiceLine> trInvoiceHeaders = dbContext.TrInvoiceLines;
          CriteriaToExpressionConverter converter = new();
-         IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
+         IQueryable<TrInvoiceLine> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceLineList.ActiveFilterCriteria) as IQueryable<TrInvoiceLine>;
 
 
-         List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
-                     .Include(x => x.DcCurrAcc)
-                     .Where(x => x.ProcessCode == processCode)
-                     .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
-                     .Select(x => new TrInvoiceHeader
+         var headerList = filteredData.Include(x => x.TrInvoiceHeader)
+                     .ThenInclude(x => x.DcCurrAcc)
+                     .Where(x => x.TrInvoiceHeader.ProcessCode == processCode && x.TrInvoiceHeader.IsReturn == false)
+                     .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate).ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
+                     .Select(x => new
                      {
-                        CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
-                        TotalNetAmount = x.TrInvoiceLines.Sum(l => l.NetAmountLoc),
+                        InvoiceLineId = x.InvoiceLineId,
+                        ProductCode = x.ProductCode,
+                        ProductDesc = x.DcProduct.ProductDesc,
+                        CurrAccDesc = x.TrInvoiceHeader.DcCurrAcc.CurrAccDesc,
                         InvoiceHeaderId = x.InvoiceHeaderId,
-                        CreatedDate = x.CreatedDate,
-                        CreatedUserName = x.CreatedUserName,
-                        CurrAccCode = x.CurrAccCode,
-                        CustomsDocumentNumber = x.CustomsDocumentNumber,
-                        Description = x.Description,
-                        DocumentDate = x.DocumentDate,
-                        DocumentNumber = x.DocumentNumber,
-                        DocumentTime = x.DocumentTime,
-                        FiscalPrintedState = x.FiscalPrintedState,
-                        IsCompleted = x.IsCompleted,
-                        IsLocked = x.IsLocked,
-                        PrintCount = x.PrintCount,
-                        IsReturn = x.IsReturn,
-                        IsSalesViaInternet = x.IsSalesViaInternet,
-                        IsSuspended = x.IsSuspended,
-                        LastUpdatedDate = x.LastUpdatedDate,
-                        LastUpdatedUserName = x.LastUpdatedUserName,
-                        OfficeCode = x.OfficeCode,
-                        OperationDate = x.OperationDate,
-                        OperationTime = x.OperationTime,
-                        PosTerminalId = x.PosTerminalId,
-                        ProcessCode = x.ProcessCode,
-                        RelatedInvoiceId = x.RelatedInvoiceId,
-                        StoreCode = x.StoreCode,
-                        WarehouseCode = x.WarehouseCode,
+                        CreatedDate = x.TrInvoiceHeader.CreatedDate,
+                        CreatedUserName = x.TrInvoiceHeader.CreatedUserName,
+                        CurrAccCode = x.TrInvoiceHeader.CurrAccCode,
+                        Description = x.TrInvoiceHeader.Description,
+                        DocumentDate = x.TrInvoiceHeader.DocumentDate,
+                        DocumentNumber = x.TrInvoiceHeader.DocumentNumber,
+                        DocumentTime = x.TrInvoiceHeader.DocumentTime,
+                        IsCompleted = x.TrInvoiceHeader.IsCompleted,
+                        IsLocked = x.TrInvoiceHeader.IsLocked,
+                        PrintCount = x.TrInvoiceHeader.PrintCount,
+                        IsReturn = x.TrInvoiceHeader.IsReturn,
+                        IsSalesViaInternet = x.TrInvoiceHeader.IsSalesViaInternet,
+                        IsSuspended = x.TrInvoiceHeader.IsSuspended,
+                        LastUpdatedDate = x.TrInvoiceHeader.LastUpdatedDate,
+                        LastUpdatedUserName = x.TrInvoiceHeader.LastUpdatedUserName,
+                        OfficeCode = x.TrInvoiceHeader.OfficeCode,
+                        OperationDate = x.TrInvoiceHeader.OperationDate,
+                        OperationTime = x.TrInvoiceHeader.OperationTime,
+                        PosTerminalId = x.TrInvoiceHeader.PosTerminalId,
+                        ProcessCode = x.TrInvoiceHeader.ProcessCode,
+                        RelatedInvoiceId = x.TrInvoiceHeader.RelatedInvoiceId,
+                        StoreCode = x.TrInvoiceHeader.StoreCode,
+                        WarehouseCode = x.TrInvoiceHeader.WarehouseCode,
                      })
                      .ToList();
 
@@ -124,7 +124,7 @@ namespace Foxoft
          DXMouseEventArgs ea = e as DXMouseEventArgs;
          GridView view = sender as GridView;
          GridHitInfo info = view.CalcHitInfo(ea.Location);
-         if ((info.InRow || info.InRowCell) && trInvoiceHeader is not null)
+         if ((info.InRow || info.InRowCell) && trInvoiceLine is not null)
          {
             //info.RowHandle
             //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
@@ -133,15 +133,15 @@ namespace Foxoft
          }
       }
 
-      private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
+      private void gC_InvoiceLineList_ProcessGridKey(object sender, KeyEventArgs e)
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view is null) return;
 
          if (view.SelectedRowsCount > 0)
-            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+            trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
 
-         if (e.KeyCode == Keys.Enter && trInvoiceHeader is not null)
+         if (e.KeyCode == Keys.Enter && trInvoiceLine is not null)
             DialogResult = DialogResult.OK;
 
          if (e.KeyCode == Keys.Escape)
@@ -152,9 +152,9 @@ namespace Foxoft
       {
          GridView view = sender as GridView;
          if (view.SelectedRowsCount > 0)
-            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+            trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
          else
-            trInvoiceHeader = null;
+            trInvoiceLine = null;
 
          //LoadInvoiveHeaders();
       }
@@ -200,9 +200,13 @@ namespace Foxoft
       {
          GridView view = sender as GridView;
          if (view.SelectedRowsCount > 0)
-            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+            trInvoiceLine = new()
+            {
+               InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId),
+               InvoiceHeaderId = (Guid)view.GetFocusedRowCellValue(colInvoiceHeaderId),
+            };
          else
-            trInvoiceHeader = null;
+            trInvoiceLine = null;
       }
    }
 }

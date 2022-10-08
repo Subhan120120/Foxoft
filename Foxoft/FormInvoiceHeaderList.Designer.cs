@@ -89,6 +89,8 @@ namespace Foxoft
          this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
          this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
          this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
+         this.gV_InvoiceHeaderList.OptionsFind.AlwaysVisible = true;
+         this.gV_InvoiceHeaderList.OptionsFind.FindDelay = 100;
          this.gV_InvoiceHeaderList.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
          this.gV_InvoiceHeaderList.OptionsView.FilterCriteriaDisplayStyle = DevExpress.XtraEditors.FilterCriteriaDisplayStyle.Visual;
          this.gV_InvoiceHeaderList.OptionsView.ShowAutoFilterRow = true;

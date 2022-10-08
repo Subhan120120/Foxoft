@@ -39,11 +39,11 @@ namespace Foxoft
                                                               .OrderBy(x => x.CreatedDate)
                                                               .ToList();
 
-            //InvoiceLines.ForEach(x =>
-            //{
-            //    x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);
-            //    x.RemainingQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut) + x.QtyOut;
-            //});
+            InvoiceLines.ForEach(x =>
+            {
+                x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);
+                x.RemainingQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut) + x.QtyOut;
+            });
 
             #region Comment
             //List<TrInvoiceLine> linqInvoiceLine = (from i in db.TrInvoiceLines

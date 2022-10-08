@@ -43,11 +43,14 @@ namespace Foxoft
 
       private void SelectDocNum()
       {
-         using (FormInvoiceHeaderList form = new("RS"))
+         using (FormInvoiceLineList form = new("RS"))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-               trInvoiceHeader = form.trInvoiceHeader;
+               Guid invoiceHeaderId = form.trInvoiceLine.InvoiceHeaderId;
+
+               trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+
                btnEdit_InvoiceHeader.EditValue = trInvoiceHeader.DocumentNumber;
 
                if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
@@ -58,6 +61,7 @@ namespace Foxoft
             }
          }
       }
+
       private void LoadInvoice(Guid invoiceHeaderId)
       {
          gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
@@ -65,25 +69,6 @@ namespace Foxoft
          gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeaderId);
          gC_ReturnInvoiceLine.DataSource = null;
 
-         //dbContext.TrInvoiceLines.Include(o => o.DcProduct)
-         //                        .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
-         //                        .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
-         //                        .OrderBy(x => x.CreatedDate)
-         //                        .LoadAsync()
-         //                        .ContinueWith(loadTask =>
-         //                        {
-         //                           LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
-
-         //                           lV_invoiceLine.ForEach(x => { x.ProductDesc = x.DcProduct.ProductDesc; });
-
-         //                           trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
-
-         //                           gV_InvoiceLine.BestFitColumns();
-         //                           gV_InvoiceLine.Focus();
-
-         //                        }, TaskScheduler.FromCurrentSynchronizationContext());
-
-         //dataLayoutControl1.isValid(out List<string> errorList);
          CalcPaidAmount();
       }
       private void CalcPaidAmount()
@@ -94,63 +79,71 @@ namespace Foxoft
 
       private void repobtn_ReturnLine_ButtonClick(object sender, ButtonPressedEventArgs e)
       {
-         ButtonEdit editor = (ButtonEdit)sender;
-         int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
+         //ButtonEdit editor = (ButtonEdit)sender;
+         //int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
+         //if (buttonIndex == 0)
+         //{
 
-         if (buttonIndex == 0)
+         Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
+         int maxReturn = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
+
+         if (maxReturn > 0)
          {
-            Guid invoiceLineID = (Guid)gV_InvoiceLine.GetRowCellValue(gV_InvoiceLine.FocusedRowHandle, "InvoiceLineId");
-            int maxReturn = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(gV_InvoiceLine.FocusedRowHandle, "RemainingQty"));
-
-            if (maxReturn > 0)
+            using (FormQty formQty = new(maxReturn))
             {
-               using (FormQty formQty = new FormQty(maxReturn))
+               if (formQty.ShowDialog(this) == DialogResult.OK)
                {
-                  if (formQty.ShowDialog(this) == DialogResult.OK)
+                  if (!efMethods.InvoiceHeaderExist(returnInvoiceHeaderId)) //if invoiceHeader doesnt exist
                   {
-                     if (!efMethods.InvoiceHeaderExist(returnInvoiceHeaderId)) //if invoiceHeader doesnt exist
-                     {
-                        string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
-                        TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
-                        {
-                           InvoiceHeaderId = returnInvoiceHeaderId,
-                           DocumentNumber = NewDocNum,
-                           ProcessCode = "RS",
-                           IsReturn = true
-                        };
-                        efMethods.InsertInvoiceHeader(TrInvoiceHeader);
-                     }
+                     string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
 
-                     if (!efMethods.InvoiceLineExistByRelatedLine(returnInvoiceHeaderId, invoiceLineID))
-                     {
-                        TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
+                     TrInvoiceHeader returnInvoHead = new();
 
-                        TrInvoiceLine returnInvoiceLine = new TrInvoiceLine
-                        {
-                           InvoiceLineId = Guid.NewGuid(),
-                           InvoiceHeaderId = returnInvoiceHeaderId,
-                           RelatedLineId = invoiceLineID,
-                           ProductCode = invoiceLine.ProductCode,
-                           QtyOut = formQty.qty * (-1),
-                           Price = invoiceLine.Price,
-                           Amount = Convert.ToDecimal(formQty.qty * invoiceLine.Price * (-1)),
-                           PosDiscount = formQty.qty * invoiceLine.PosDiscount / invoiceLine.QtyOut * (-1),
-                           NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.QtyOut * (-1),
-                        };
+                     returnInvoHead.InvoiceHeaderId = returnInvoiceHeaderId;
+                     returnInvoHead.DocumentNumber = NewDocNum;
+                     returnInvoHead.ProcessCode = trInvoiceHeader.ProcessCode;
+                     returnInvoHead.IsReturn = true;
+                     returnInvoHead.CurrAccCode = trInvoiceHeader.CurrAccCode;
 
-                        efMethods.InsertInvoiceLine(returnInvoiceLine);
-                        gC_ReturnInvoiceLine.DataSource = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
-                     }
-                     else
-                        efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
+                     returnInvoHead.OfficeCode = Authorization.OfficeCode;
+                     returnInvoHead.StoreCode = Authorization.StoreCode;
+                     returnInvoHead.CreatedUserName = Authorization.CurrAccCode;
+                     returnInvoHead.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
-                     gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+
+                     efMethods.InsertInvoiceHeader(returnInvoHead);
                   }
+
+                  if (!efMethods.InvoiceLineExistByRelatedLine(returnInvoiceHeaderId, invoiceLineID))
+                  {
+                     TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
+
+                     TrInvoiceLine returnInvoiceLine = new();
+
+                     returnInvoiceLine.InvoiceLineId = Guid.NewGuid();
+                     returnInvoiceLine.InvoiceHeaderId = returnInvoiceHeaderId;
+                     returnInvoiceLine.RelatedLineId = invoiceLineID;
+                     returnInvoiceLine.ProductCode = invoiceLine.ProductCode;
+                     returnInvoiceLine.QtyOut = formQty.qty * (-1);
+                     returnInvoiceLine.Price = invoiceLine.Price;
+                     returnInvoiceLine.Amount = Convert.ToDecimal(formQty.qty * invoiceLine.Price * (-1));
+                     returnInvoiceLine.PosDiscount = formQty.qty * invoiceLine.PosDiscount / invoiceLine.QtyOut * (-1);
+                     returnInvoiceLine.NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.QtyOut * (-1);
+
+
+                     efMethods.InsertInvoiceLine(returnInvoiceLine);
+                     gC_ReturnInvoiceLine.DataSource = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
+                  }
+                  else
+                     efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
+
+                  gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
                }
             }
-            else
-               XtraMessageBox.Show("Geri qaytarıla bilecek miqdar yoxdur");
          }
+         else
+            XtraMessageBox.Show("Geri qaytarıla bilecek miqdar yoxdur");
+
       }
 
       private void btn_Payment_Click(object sender, EventArgs e)
@@ -177,7 +170,7 @@ namespace Foxoft
                   break;
             }
 
-            using (FormPayment formPayment = new FormPayment(paymentType, sumNetAmount, new TrInvoiceHeader() { }))
+            using (FormPayment formPayment = new(paymentType, sumNetAmount, new TrInvoiceHeader() { }))
             {
                if (formPayment.ShowDialog(this) == DialogResult.OK)
                {

@@ -145,6 +145,7 @@ namespace Foxoft
          this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(867, 248, 264, 272);
          this.gV_CurrAccList.GridControl = this.gC_CurrAccList;
          this.gV_CurrAccList.Name = "gV_CurrAccList";
+         this.gV_CurrAccList.OptionsFind.FindDelay = 100;
          this.gV_CurrAccList.OptionsView.ShowGroupPanel = false;
          this.gV_CurrAccList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_CurrAccList_FocusedRowChanged);
          this.gV_CurrAccList.ColumnFilterChanged += new System.EventHandler(this.gV_CurrAccList_ColumnFilterChanged);

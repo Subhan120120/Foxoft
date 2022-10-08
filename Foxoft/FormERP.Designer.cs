@@ -66,8 +66,8 @@ namespace Foxoft
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.ACE_SaleIsReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.ACE_PurchaseIsReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -203,9 +203,9 @@ namespace Foxoft
             this.aCE_CurrAcc,
             this.accordionControlSeparator3,
             this.aCE_RetailPurchaseInvoice,
-            this.accordionControlElement2,
+            this.ACE_PurchaseIsReturn,
             this.aCE_RetailSaleInvoice,
-            this.accordionControlElement1,
+            this.ACE_SaleIsReturn,
             this.accordionControlSeparator5,
             this.aCE_ProductTransfer,
             this.ACE_CashTransfer,
@@ -372,19 +372,21 @@ namespace Foxoft
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
          // 
-         // accordionControlElement1
+         // ACE_SaleIsReturn
          // 
-         this.accordionControlElement1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
-         this.accordionControlElement1.Name = "accordionControlElement1";
-         this.accordionControlElement1.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.accordionControlElement1.Text = "Element1";
+         this.ACE_SaleIsReturn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
+         this.ACE_SaleIsReturn.Name = "ACE_SaleIsReturn";
+         this.ACE_SaleIsReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.ACE_SaleIsReturn.Text = "Satışın Qaytarılması";
+         this.ACE_SaleIsReturn.Click += new System.EventHandler(this.ACE_SaleIsReturn_Click);
          // 
-         // accordionControlElement2
+         // ACE_PurchaseIsReturn
          // 
-         this.accordionControlElement2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement2.ImageOptions.SvgImage")));
-         this.accordionControlElement2.Name = "accordionControlElement2";
-         this.accordionControlElement2.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.accordionControlElement2.Text = "Element2";
+         this.ACE_PurchaseIsReturn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement2.ImageOptions.SvgImage")));
+         this.ACE_PurchaseIsReturn.Name = "ACE_PurchaseIsReturn";
+         this.ACE_PurchaseIsReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.ACE_PurchaseIsReturn.Text = "Alışın Qaytarılması";
+         this.ACE_PurchaseIsReturn.Click += new System.EventHandler(this.ACE_PurchaseIsReturn_Click);
          // 
          // FormERP
          // 
@@ -448,7 +450,7 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
       private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashTransfer;
-      private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement2;
-      private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
+      private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PurchaseIsReturn;
+      private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_SaleIsReturn;
    }
 }

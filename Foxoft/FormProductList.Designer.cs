@@ -63,6 +63,7 @@ namespace Foxoft
          this.colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colBalanceF = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colBalanceM = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBalanceS = new DevExpress.XtraGrid.Columns.GridColumn();
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.BBI_ProductNew = new DevExpress.XtraBars.BarButtonItem();
          this.btn_ProductEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -77,7 +78,6 @@ namespace Foxoft
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.colBalanceS = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_ProductList)).BeginInit();
@@ -132,6 +132,7 @@ namespace Foxoft
          this.gV_ProductList.CustomizationFormBounds = new System.Drawing.Rectangle(624, 401, 264, 272);
          this.gV_ProductList.GridControl = this.gC_ProductList;
          this.gV_ProductList.Name = "gV_ProductList";
+         this.gV_ProductList.OptionsFind.FindDelay = 100;
          this.gV_ProductList.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_ProductList_RowCellStyle);
          this.gV_ProductList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_ProductList_RowStyle);
          this.gV_ProductList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_ProductList_FocusedRowChanged);
@@ -293,6 +294,13 @@ namespace Foxoft
          this.colBalanceM.VisibleIndex = 2;
          this.colBalanceM.Width = 87;
          // 
+         // colBalanceS
+         // 
+         this.colBalanceS.FieldName = "BalanceS";
+         this.colBalanceS.Name = "colBalanceS";
+         this.colBalanceS.Visible = true;
+         this.colBalanceS.VisibleIndex = 4;
+         // 
          // ribbonControl1
          // 
          this.ribbonControl1.ExpandCollapseItem.Id = 0;
@@ -416,13 +424,6 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
-         // 
-         // colBalanceS
-         // 
-         this.colBalanceS.FieldName = "BalanceS";
-         this.colBalanceS.Name = "colBalanceS";
-         this.colBalanceS.Visible = true;
-         this.colBalanceS.VisibleIndex = 4;
          // 
          // FormProductList
          // 
