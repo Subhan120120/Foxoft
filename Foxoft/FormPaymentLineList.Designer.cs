@@ -124,6 +124,7 @@ namespace Foxoft
          this.gV_PaymentLineList.OptionsView.ShowFooter = true;
          this.gV_PaymentLineList.OptionsView.ShowGroupPanel = false;
          this.gV_PaymentLineList.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gV_PaymentLineList_ShowingEditor);
+         this.gV_PaymentLineList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_PaymentLineList_FocusedRowChanged);
          this.gV_PaymentLineList.ColumnFilterChanged += new System.EventHandler(this.gV_PaymentLineList_ColumnFilterChanged);
          this.gV_PaymentLineList.DoubleClick += new System.EventHandler(this.gV_PaymentLineList_DoubleClick);
          // 

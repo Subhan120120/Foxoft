@@ -43,7 +43,7 @@ namespace Foxoft
 
       private void SelectDocNum()
       {
-         using (FormInvoiceHeaderList form = new FormInvoiceHeaderList("RS"))
+         using (FormInvoiceHeaderList form = new("RS"))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {

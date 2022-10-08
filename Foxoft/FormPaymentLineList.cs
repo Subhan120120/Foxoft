@@ -38,16 +38,28 @@ namespace Foxoft
       {
          InitializeComponent();
 
-         this.gV_PaymentLineList.ActiveFilterString = $"[DocumentDate] = #{DateTime.Now.ToString("yyyy-MM-dd")}#";
+         byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+         MemoryStream stream = new MemoryStream(byteArray);
+         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         gV_PaymentLineList.RestoreLayoutFromStream(stream, option);
+         //this.gV_PaymentLineList.ActiveFilterString = $"[DocumentDate] = #{DateTime.Now.ToString("yyyy-MM-dd")}#";
 
          LoadPaymentLines();
+
+         string storeCode = Authorization.StoreCode;
+         gV_PaymentLineList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
       }
 
       private void LoadPaymentLines()
       {
          dbContext = new subContext();
 
-         IQueryable<TrPaymentLine> trPaymentLines = dbContext.TrPaymentLines
+         IQueryable<TrPaymentLine> trPaymentLines = dbContext.TrPaymentLines;
+         CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+         IQueryable<TrPaymentLine> filteredData = trPaymentLines.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentLineList.ActiveFilterCriteria) as IQueryable<TrPaymentLine>;
+
+
+         List<TrPaymentLine> LineList = filteredData
                                                      .Include(x => x.TrPaymentHeader).ThenInclude(x => x.TrInvoiceHeader)
                                                      .Include(x => x.TrPaymentHeader).ThenInclude(x => x.DcCurrAcc)
                                                      .OrderByDescending(x => x.TrPaymentHeader.DocumentDate).ThenByDescending(x => x.CreatedDate)
@@ -72,44 +84,43 @@ namespace Foxoft
                                                         CurrencyCode = x.CurrencyCode,
                                                         PaymentLoc = x.PaymentLoc,
                                                         CashRegisterCode = x.CashRegisterCode,
-                                                     });
+                                                     }).ToList();
 
-         CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-         IQueryable<TrPaymentLine> filteredData = trPaymentLines.AppendWhere(converter, gV_PaymentLineList.ActiveFilterCriteria) as IQueryable<TrPaymentLine>;
-
-         trPaymentLinesBindingSource.DataSource = filteredData.ToList();
+         trPaymentLinesBindingSource.DataSource = LineList;
 
          gV_PaymentLineList.BestFitColumns();
       }
 
-      private void gV_PaymentLineList_ColumnFilterChanged(object sender, EventArgs e)
-      {
-         LoadPaymentLines();
-      }
+
 
       private void gV_PaymentLineList_DoubleClick(object sender, EventArgs e)
       {
-         //DXMouseEventArgs ea = e as DXMouseEventArgs;
-         //GridView view = sender as GridView;
-         //GridHitInfo info = view.CalcHitInfo(ea.Location);
-         //if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
-         //{
-         //    //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+         DXMouseEventArgs ea = e as DXMouseEventArgs;
+         GridView view = sender as GridView;
+         GridHitInfo info = view.CalcHitInfo(ea.Location);
+         if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
+         {
+            //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
-         //    trPaymentLine = view.GetRow(view.FocusedRowHandle) as TrPaymentLine;
+            trPaymentLine = view.GetFocusedRow() as TrPaymentLine;
 
-         //    DialogResult = DialogResult.OK;
-         //}
+            DialogResult = DialogResult.OK;
+         }
       }
 
       private void gC_PaymentLineList_ProcessGridKey(object sender, KeyEventArgs e)
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view == null) return;
-         if (e.KeyCode == Keys.Enter && view.SelectedRowsCount > 0)
-         {
+
+         if (view.SelectedRowsCount > 0)
+            trPaymentLine = view.GetFocusedRow() as TrPaymentLine;
+
+         if (e.KeyCode == Keys.Enter && trPaymentLine is not null)
             DialogResult = DialogResult.OK;
-         }
+
+         if (e.KeyCode == Keys.Escape)
+            Close();
       }
 
       GridColumn prevColumn = null; // Disable the Immediate Edit Cell
@@ -152,7 +163,7 @@ namespace Foxoft
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-            FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+            FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
             FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
             formInvoice.MdiParent = formERP;
             formInvoice.WindowState = FormWindowState.Maximized;
@@ -177,7 +188,7 @@ namespace Foxoft
 
             TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeader(paymentHeaderId);
 
-            FormPaymentDetail formPayment = new FormPaymentDetail(trPaymentHeader.PaymentHeaderId);
+            FormPaymentDetail formPayment = new(trPaymentHeader.PaymentHeaderId);
             FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
             formPayment.MdiParent = formERP;
             formPayment.WindowState = FormWindowState.Maximized;
@@ -188,13 +199,13 @@ namespace Foxoft
 
       private void bBI_ReceivePayment_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
-         using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+         using (FormCurrAccList formCurrAcc = new(0))
          {
             if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
             {
-               TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-               //decimal debt = 
-               using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
+               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+
+               using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
                {
                   if (formPayment.ShowDialog(this) == DialogResult.OK)
                   {
@@ -235,6 +246,15 @@ namespace Foxoft
       {
          gV_PaymentLineList.ExportToXlsx(@"C:\Users\Public\Desktop\PaymentLineList.xlsx");
       }
+      private void gV_PaymentLineList_ColumnFilterChanged(object sender, EventArgs e)
+      {
+         GridView view = sender as GridView;
+
+         if (view.SelectedRowsCount > 0)
+            trPaymentLine = view.GetFocusedRow() as TrPaymentLine;
+         else
+            trPaymentLine = null;
+      }
 
       private void test_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
       {
@@ -259,6 +279,16 @@ namespace Foxoft
 
          //   MessageBox.Show(ex.ToString());
          //}
+      }
+
+      private void gV_PaymentLineList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+      {
+         GridView view = sender as GridView;
+
+         if (view.SelectedRowsCount > 0)
+            trPaymentLine = view.GetFocusedRow() as TrPaymentLine;
+         else
+            trPaymentLine = null;
       }
    }
 }

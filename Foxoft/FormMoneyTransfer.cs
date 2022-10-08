@@ -130,6 +130,7 @@ namespace Foxoft
                   string temp = trPH.FromCashRegCode;
                   newTrIP.FromCashRegCode = trPH.ToCashRegCode;
                   newTrIP.ToCashRegCode = temp;
+                  newTrIP.IsMainTF = false;
 
                   switch (entry.State)
                   {
@@ -138,6 +139,7 @@ namespace Foxoft
                      case EntityState.Deleted: context2.TrPaymentHeaders.Remove(newTrIP); break;
                      default: break;
                   }
+
 
                   context2.SaveChanges();
                }

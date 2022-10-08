@@ -37,12 +37,12 @@ namespace Foxoft
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new MemoryStream(byteArray);
          OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
-         this.gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
+         gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
          LoadPaymentHeaders();
 
          string storeCode = Authorization.StoreCode;
-         this.gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+         gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
 
       }
 
@@ -79,7 +79,9 @@ namespace Foxoft
 
          List<TrPaymentHeader> headerList = filteredData.Include(x => x.TrPaymentLines)
                                                         .Include(x => x.DcCurrAcc)
-                                                        .OrderByDescending(x => x.OperationDate).ThenByDescending(x => x.OperationTime)
+                                                        .Where(x => x.IsMainTF == true)
+                                                        .OrderByDescending(x => x.OperationDate)
+                                                        .ThenByDescending(x => x.OperationTime)
                                                         .Select(x => new TrPaymentHeader
                                                         {
                                                            TrInvoiceHeader = x.TrInvoiceHeader,
@@ -183,7 +185,7 @@ namespace Foxoft
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-            FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+            FormInvoice formInvoice = new (trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
             FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
             formInvoice.MdiParent = formERP;
             formInvoice.WindowState = FormWindowState.Maximized;
@@ -206,7 +208,7 @@ namespace Foxoft
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);
 
-            FormPaymentDetail formaPayment = new FormPaymentDetail(trInvoiceHeader.PaymentHeaderId);
+            FormPaymentDetail formaPayment = new (trInvoiceHeader.PaymentHeaderId);
             FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
             formaPayment.MdiParent = formERP;
             formaPayment.WindowState = FormWindowState.Maximized;
@@ -217,13 +219,13 @@ namespace Foxoft
 
       private void bBI_ReceivePayment_ItemClick(object sender, ItemClickEventArgs e)
       {
-         using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+         using (FormCurrAccList formCurrAcc = new (0))
          {
             if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
             {
-               TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-               //decimal debt = 
-               using (FormPayment formPayment = new FormPayment(1, 0, trInvoiceHeader))
+               TrInvoiceHeader trInvoiceHeader = new () { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+               
+               using (FormPayment formPayment = new (1, 0, trInvoiceHeader))
                {
                   if (formPayment.ShowDialog(this) == DialogResult.OK)
                   {

@@ -52,6 +52,7 @@ namespace Foxoft
          this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.accordionControlSeparator5 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
          this.aCE_ProductTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.ACE_CashTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.accordionControlSeparator4 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
          this.aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -65,7 +66,8 @@ namespace Foxoft
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.ACE_CashTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -201,7 +203,9 @@ namespace Foxoft
             this.aCE_CurrAcc,
             this.accordionControlSeparator3,
             this.aCE_RetailPurchaseInvoice,
+            this.accordionControlElement2,
             this.aCE_RetailSaleInvoice,
+            this.accordionControlElement1,
             this.accordionControlSeparator5,
             this.aCE_ProductTransfer,
             this.ACE_CashTransfer,
@@ -211,8 +215,7 @@ namespace Foxoft
             this.accordionControlSeparator2,
             this.aCE_Expense,
             this.aCE_PaymentDetail,
-            this.accordionControlSeparator1,
-            this.aCE_ReportZet});
+            this.accordionControlSeparator1});
          this.aCE_Invoices.Expanded = true;
          this.aCE_Invoices.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Invoices.ImageOptions.SvgImage")));
          this.aCE_Invoices.Name = "aCE_Invoices";
@@ -258,13 +261,21 @@ namespace Foxoft
          // 
          this.accordionControlSeparator5.Name = "accordionControlSeparator5";
          // 
-         // aCE_Transfer
+         // aCE_ProductTransfer
          // 
-         this.aCE_ProductTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Transfer.ImageOptions.SvgImage")));
-         this.aCE_ProductTransfer.Name = "aCE_Transfer";
+         this.aCE_ProductTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_ProductTransfer.ImageOptions.SvgImage")));
+         this.aCE_ProductTransfer.Name = "aCE_ProductTransfer";
          this.aCE_ProductTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
          this.aCE_ProductTransfer.Text = "Anbarlar Arası Transfer";
          this.aCE_ProductTransfer.Click += new System.EventHandler(this.aCE_ProductTransfer_Click);
+         // 
+         // ACE_CashTransfer
+         // 
+         this.ACE_CashTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_CashTransfer.ImageOptions.SvgImage")));
+         this.ACE_CashTransfer.Name = "ACE_CashTransfer";
+         this.ACE_CashTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.ACE_CashTransfer.Text = "Kassalar Arası Transfer";
+         this.ACE_CashTransfer.Click += new System.EventHandler(this.ACE_CashTransfer_Click);
          // 
          // accordionControlSeparator4
          // 
@@ -363,11 +374,17 @@ namespace Foxoft
          // 
          // accordionControlElement1
          // 
-         this.ACE_CashTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
-         this.ACE_CashTransfer.Name = "accordionControlElement1";
-         this.ACE_CashTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.ACE_CashTransfer.Text = "Kassalar Arası Transfer";
-         this.ACE_CashTransfer.Click += new System.EventHandler(this.ACE_CashTransfer_Click);
+         this.accordionControlElement1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
+         this.accordionControlElement1.Name = "accordionControlElement1";
+         this.accordionControlElement1.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.accordionControlElement1.Text = "Element1";
+         // 
+         // accordionControlElement2
+         // 
+         this.accordionControlElement2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement2.ImageOptions.SvgImage")));
+         this.accordionControlElement2.Name = "accordionControlElement2";
+         this.accordionControlElement2.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.accordionControlElement2.Text = "Element2";
          // 
          // FormERP
          // 
@@ -431,5 +448,7 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
       private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashTransfer;
+      private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement2;
+      private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
    }
 }
