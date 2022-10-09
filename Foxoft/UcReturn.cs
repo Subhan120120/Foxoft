@@ -126,10 +126,15 @@ namespace Foxoft
                      returnInvoiceLine.ProductCode = invoiceLine.ProductCode;
                      returnInvoiceLine.QtyOut = formQty.qty * (-1);
                      returnInvoiceLine.Price = invoiceLine.Price;
+                     returnInvoiceLine.PriceLoc = invoiceLine.PriceLoc;
+                     returnInvoiceLine.CurrencyCode = invoiceLine.CurrencyCode;
                      returnInvoiceLine.Amount = Convert.ToDecimal(formQty.qty * invoiceLine.Price * (-1));
-                     returnInvoiceLine.PosDiscount = formQty.qty * invoiceLine.PosDiscount / invoiceLine.QtyOut * (-1);
-                     returnInvoiceLine.NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.QtyOut * (-1);
-
+                     returnInvoiceLine.AmountLoc = Convert.ToDecimal(formQty.qty * invoiceLine.Price * (-1));
+                     returnInvoiceLine.PosDiscount = invoiceLine.PosDiscount;
+                     returnInvoiceLine.ExchangeRate = invoiceLine.ExchangeRate;
+                     returnInvoiceLine.VatRate = invoiceLine.VatRate;
+                     returnInvoiceLine.NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.Qty * (-1);
+                     returnInvoiceLine.NetAmountLoc = formQty.qty * invoiceLine.NetAmountLoc / invoiceLine.Qty * (-1);
 
                      efMethods.InsertInvoiceLine(returnInvoiceLine);
                      gC_ReturnInvoiceLine.DataSource = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
@@ -152,37 +157,31 @@ namespace Foxoft
 
          if (sumNetAmount != 0)
          {
-            byte paymentType = 0;
+            //SimpleButton simpleButton = sender as SimpleButton;
 
-            SimpleButton simpleButton = sender as SimpleButton;
-            switch (simpleButton.Name)
-            {
-               case "simpleButtonCash":
-                  paymentType = 1;
-                  break;
-               case "simpleButtonCashless":
-                  paymentType = 2;
-                  break;
-               case "simpleButtonCustomerBonus":
-                  paymentType = 3;
-                  break;
-               default:
-                  break;
-            }
+            //byte paymentType = simpleButton.Name switch
+            //{
+            //   "simpleButtonCash" => 1,
+            //   "simpleButtonCashless" => 2,
+            //   "simpleButtonCustomerBonus" => 3,
+            //   _ => 0
+            //};
 
-            using (FormPayment formPayment = new(paymentType, sumNetAmount, new TrInvoiceHeader() { }))
-            {
-               if (formPayment.ShowDialog(this) == DialogResult.OK)
-               {
-                  returnInvoiceHeaderId = Guid.NewGuid();
-                  efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+            //using FormPayment formPayment = new(paymentType, sumNetAmount, new TrInvoiceHeader() { });
 
-                  gC_InvoiceLine.DataSource = null;
-                  gC_PaymentLine.DataSource = null;
-                  gC_ReturnInvoiceLine.DataSource = null;
-                  btnEdit_InvoiceHeader.EditValue = null;
-               }
-            }
+            //if (formPayment.ShowDialog(this) == DialogResult.OK)
+            //{
+
+            returnInvoiceHeaderId = Guid.NewGuid();
+            efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+
+            trInvoiceHeader = null;
+            gC_InvoiceLine.DataSource = null;
+            gC_PaymentLine.DataSource = null;
+            gC_ReturnInvoiceLine.DataSource = null;
+            btnEdit_InvoiceHeader.EditValue = null;
+
+
          }
          else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
       }

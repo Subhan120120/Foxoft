@@ -232,9 +232,6 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colWarehouseCode;
       private DevExpress.XtraGrid.Columns.GridColumn colToWarehouseCode;
-      private DevExpress.XtraGrid.Columns.GridColumn ProductCode;
-      private DevExpress.XtraGrid.Columns.GridColumn ProductDesc;
-      private DevExpress.XtraGrid.Columns.GridColumn InvoiceLineId;
       private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
       private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colInvoiceLineId;

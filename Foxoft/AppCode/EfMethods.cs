@@ -41,8 +41,8 @@ namespace Foxoft
 
             InvoiceLines.ForEach(x =>
             {
-                x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);
-                x.RemainingQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut) + x.QtyOut;
+               x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);
+               x.RemainingQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut) + x.QtyOut;
             });
 
             #region Comment
@@ -457,19 +457,17 @@ namespace Foxoft
          return db.SaveChanges();
       }
 
-      public int UpdateInvoiceLineQtyOut(object invoiceHeaderId, object relatedLineId, int qtyOut)
+      public int UpdateInvoiceLineQtyOut(Guid invoiceHeaderId, Guid relatedLineId, int qtyOut)
       {
-         Guid HeaderId = Guid.Parse(invoiceHeaderId.ToString());
-         Guid relatedId = Guid.Parse(relatedLineId.ToString());
-
          using subContext db = new();
 
-         TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.Where(x => x.RelatedLineId == relatedId)
-                                            .FirstOrDefault(x => x.InvoiceHeaderId == HeaderId);
+         TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                            .FirstOrDefault(x => x.RelatedLineId == relatedLineId);
 
-         trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
-         trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
-         trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
+         trInvoiceLine.Amount = qtyOut * trInvoiceLine.Price;
+         trInvoiceLine.AmountLoc = qtyOut * trInvoiceLine.PriceLoc;
+         trInvoiceLine.NetAmount = qtyOut * (trInvoiceLine.Price * (100 - trInvoiceLine.PosDiscount));
+         trInvoiceLine.NetAmountLoc = qtyOut * (trInvoiceLine.PriceLoc * (100 - trInvoiceLine.PosDiscount));
          trInvoiceLine.QtyOut = qtyOut;
 
          db.TrInvoiceLines.Update(trInvoiceLine);
