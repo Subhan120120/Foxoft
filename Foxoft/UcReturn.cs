@@ -16,13 +16,21 @@ namespace Foxoft
    {
       public Guid returnInvoiceHeaderId;
       public TrInvoiceHeader trInvoiceHeader;
+      public TrInvoiceHeader returnInvoHeader;
       public Guid invoiceLineID;
+      public string processCode;
 
       EfMethods efMethods = new EfMethods();
 
       public UcReturn()
       {
          InitializeComponent();
+      }
+
+      public UcReturn(string processCode)
+         : this()
+      {
+         this.processCode = processCode;
       }
 
       private void UcReturn_Load(object sender, EventArgs e)
@@ -43,7 +51,7 @@ namespace Foxoft
 
       private void SelectDocNum()
       {
-         using (FormInvoiceLineList form = new("RS"))
+         using (FormInvoiceLineList form = new(processCode))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -93,25 +101,26 @@ namespace Foxoft
             {
                if (formQty.ShowDialog(this) == DialogResult.OK)
                {
+
                   if (!efMethods.InvoiceHeaderExist(returnInvoiceHeaderId)) //if invoiceHeader doesnt exist
                   {
-                     string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
+                     string NewDocNum = efMethods.GetNextDocNum(processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
 
-                     TrInvoiceHeader returnInvoHead = new();
+                     returnInvoHeader = new();
 
-                     returnInvoHead.InvoiceHeaderId = returnInvoiceHeaderId;
-                     returnInvoHead.DocumentNumber = NewDocNum;
-                     returnInvoHead.ProcessCode = trInvoiceHeader.ProcessCode;
-                     returnInvoHead.IsReturn = true;
-                     returnInvoHead.CurrAccCode = trInvoiceHeader.CurrAccCode;
+                     returnInvoHeader.InvoiceHeaderId = returnInvoiceHeaderId;
+                     returnInvoHeader.DocumentNumber = NewDocNum;
+                     returnInvoHeader.ProcessCode = trInvoiceHeader.ProcessCode;
+                     returnInvoHeader.IsReturn = true;
+                     returnInvoHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
 
-                     returnInvoHead.OfficeCode = Authorization.OfficeCode;
-                     returnInvoHead.StoreCode = Authorization.StoreCode;
-                     returnInvoHead.CreatedUserName = Authorization.CurrAccCode;
-                     returnInvoHead.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+                     returnInvoHeader.OfficeCode = Authorization.OfficeCode;
+                     returnInvoHeader.StoreCode = Authorization.StoreCode;
+                     returnInvoHeader.CreatedUserName = Authorization.CurrAccCode;
+                     returnInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
 
-                     efMethods.InsertInvoiceHeader(returnInvoHead);
+                     efMethods.InsertInvoiceHeader(returnInvoHeader);
                   }
 
                   if (!efMethods.InvoiceLineExistByRelatedLine(returnInvoiceHeaderId, invoiceLineID))
@@ -120,11 +129,18 @@ namespace Foxoft
 
                      TrInvoiceLine returnInvoiceLine = new();
 
+                     //returnInvoiceLine.TrInvoiceHeader = returnInvoHeader;
+
                      returnInvoiceLine.InvoiceLineId = Guid.NewGuid();
                      returnInvoiceLine.InvoiceHeaderId = returnInvoiceHeaderId;
                      returnInvoiceLine.RelatedLineId = invoiceLineID;
                      returnInvoiceLine.ProductCode = invoiceLine.ProductCode;
-                     returnInvoiceLine.QtyOut = formQty.qty * (-1);
+
+                     if (CustomExtensions.ProcessDir(processCode) == "In")
+                        returnInvoiceLine.QtyIn = formQty.qty * (-1);
+                     else if (CustomExtensions.ProcessDir(processCode) == "Out")
+                        returnInvoiceLine.QtyOut = formQty.qty * (-1);
+
                      returnInvoiceLine.Price = invoiceLine.Price;
                      returnInvoiceLine.PriceLoc = invoiceLine.PriceLoc;
                      returnInvoiceLine.CurrencyCode = invoiceLine.CurrencyCode;
@@ -137,7 +153,9 @@ namespace Foxoft
                      returnInvoiceLine.NetAmountLoc = formQty.qty * invoiceLine.NetAmountLoc / invoiceLine.Qty * (-1);
 
                      efMethods.InsertInvoiceLine(returnInvoiceLine);
-                     gC_ReturnInvoiceLine.DataSource = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
+
+                     List<TrInvoiceLine> asdas = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
+                     gC_ReturnInvoiceLine.DataSource = asdas;
                   }
                   else
                      efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));

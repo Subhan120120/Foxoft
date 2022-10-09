@@ -50,6 +50,10 @@ namespace Foxoft
 
          colBalance.OptionsColumn.ReadOnly = true;
          colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+         col_NetAmount.OptionsColumn.ReadOnly = true;
+         colNetAmountLoc.OptionsColumn.ReadOnly = true;
+         col_Amount.OptionsColumn.ReadOnly = true;
+         colAmountLoc.OptionsColumn.ReadOnly = true;
 
          if (processCode == "EX" || processCode == "CI" || processCode == "CO" || processCode == "TF")
          {
@@ -1032,7 +1036,7 @@ namespace Foxoft
             if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                if (efMethods.PaymentHeaderExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
-                  if (MessageBox.Show("Ödənişi də Silirsiniz! ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)                  
+                  if (MessageBox.Show("Ödənişi də Silirsiniz! ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
                      efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
 
                efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);

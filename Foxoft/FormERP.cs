@@ -379,26 +379,7 @@ namespace Foxoft
 
       private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
       {
-         int OpenFormCount = 0;
 
-         foreach (Form form in Application.OpenForms)
-         {
-            UcReturn frmRtrn = form as UcReturn;
-            if (frmRtrn != null)
-            {
-               frmRtrn.BringToFront();
-               frmRtrn.Activate();
-               OpenFormCount++;
-            }
-         }
-
-         if (OpenFormCount == 0)
-         {
-            UcReturn frmRtrn = new();
-            frmRtrn.MdiParent = this;
-            frmRtrn.WindowState = FormWindowState.Maximized;
-            frmRtrn.Show();
-         }
       }
 
       private void ACE_CashTransfer_Click(object sender, EventArgs e)
@@ -427,7 +408,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            UcReturn frmRtrn = new();
+            UcReturn frmRtrn = new("RP");
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();
@@ -451,7 +432,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            UcReturn frmRtrn = new();
+            UcReturn frmRtrn = new("RS");
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();

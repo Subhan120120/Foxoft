@@ -200,11 +200,11 @@ namespace Foxoft
       {
          GridView view = sender as GridView;
          if (view.SelectedRowsCount > 0)
-            trInvoiceLine = new()
-            {
-               InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId),
-               InvoiceHeaderId = (Guid)view.GetFocusedRowCellValue(colInvoiceHeaderId),
-            };
+         {
+            trInvoiceLine = new();
+            trInvoiceLine.InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId);
+            trInvoiceLine.InvoiceHeaderId = (Guid)view.GetFocusedRowCellValue(colInvoiceHeaderId);
+         }
          else
             trInvoiceLine = null;
       }

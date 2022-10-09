@@ -35,14 +35,15 @@ namespace Foxoft
          using subContext db = new();
          {
             List<TrInvoiceLine> InvoiceLines = db.TrInvoiceLines.Include(x => x.DcProduct)
+                                                              .Include(x => x.TrInvoiceHeader)
                                                               .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                                               .OrderBy(x => x.CreatedDate)
                                                               .ToList();
 
             InvoiceLines.ForEach(x =>
             {
-               x.ReturnQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut);
-               x.RemainingQty = db.TrInvoiceLines.Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => s.QtyOut) + x.QtyOut;
+               x.ReturnQty = db.TrInvoiceLines.Include(y => y.TrInvoiceHeader).Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
+               x.RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines.Include(y => y.TrInvoiceHeader).Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
             });
 
             #region Comment
