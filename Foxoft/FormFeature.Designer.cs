@@ -1,7 +1,7 @@
 ﻿
 namespace Foxoft
 {
-   partial class XtraForm1
+   partial class FormFeature
    {
       /// <summary>
       /// Required designer variable.

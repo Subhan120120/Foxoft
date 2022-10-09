@@ -2,9 +2,9 @@
 
 namespace Foxoft
 {
-   public partial class XtraForm1 : XtraForm
+   public partial class FormFeature : XtraForm
    {
-      public XtraForm1()
+      public FormFeature()
       {
          InitializeComponent();
       }
