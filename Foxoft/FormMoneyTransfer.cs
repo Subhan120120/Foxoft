@@ -63,6 +63,7 @@ namespace Foxoft
                                  .ContinueWith(loadTask => trPaymentLinesBindingSource.DataSource = dbContext.TrPaymentLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
          lbl_ToCashRegDesc.Text = trPaymentHeader.CurrAccDesc;
+         lbl_FromCashRegDesc.Text = trPaymentHeader.CurrAccDesc;
 
          dataLayoutControl1.isValid(out List<string> errorList);
       }
@@ -139,8 +140,6 @@ namespace Foxoft
                      case EntityState.Deleted: context2.TrPaymentHeaders.Remove(newTrIP); break;
                      default: break;
                   }
-
-
                   context2.SaveChanges();
                }
 

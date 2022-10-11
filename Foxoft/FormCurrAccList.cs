@@ -119,8 +119,6 @@ namespace Foxoft
 
       private void LoadCurrAccs()
       {
-         subContext dbContext = new();
-
          if (currAccTypeCode != 0)
          {
             dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
@@ -131,7 +129,6 @@ namespace Foxoft
             //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
             dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs();
          }
-
       }
 
       private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)

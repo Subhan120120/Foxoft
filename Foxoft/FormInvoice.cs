@@ -805,7 +805,9 @@ namespace Foxoft
          trPaymentLine.PaymentTypeCode = 1;
          trPaymentLine.CurrencyCode = "USD";
          trPaymentLine.ExchangeRate = 1f;
-         trPaymentLine.CashRegisterCode = "kassa01";
+
+         trPaymentLine.CashRegisterCode = efMethods.SelectCashRegByStore(Authorization.StoreCode);
+
          trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
          return trPaymentLine;
@@ -1072,7 +1074,7 @@ namespace Foxoft
          {
             decimal summInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
-            if (summInvoice != 0)
+            if (summInvoice != 0 || trInvoiceHeader.ProcessCode == "TF")
             {
                SaveInvoice();
 

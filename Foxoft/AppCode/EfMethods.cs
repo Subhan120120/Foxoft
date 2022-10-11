@@ -598,7 +598,7 @@ namespace Foxoft
       {
          using subContext db = new();
 
-         byte[] byteArr = new byte[] { 1, 2, 3 };
+         byte[] byteArr = new byte[] { 1, 2, 3, 4, 5 };
 
          return db.DcCurrAccs.Where(x => x.IsDisabled == false && byteArr.Contains(x.CurrAccTypeCode))
                     .OrderBy(x => x.CreatedDate)
@@ -755,6 +755,20 @@ namespace Foxoft
             wareCode = dcWarehouse.WarehouseCode;
 
          return wareCode;
+      }
+
+      public string SelectCashRegByStore(string storeCode)
+      {
+         using subContext db = new();
+         string cashReg = "";
+
+         DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == 5)
+                               .FirstOrDefault(x => x.StoreCode == storeCode);
+
+         if (dcCurrAcc is not null)
+            cashReg = dcCurrAcc.CurrAccCode;
+
+         return cashReg;
       }
 
       public string SelectDefaultCashRegister(string storeCode)
