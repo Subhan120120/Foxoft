@@ -1078,7 +1078,7 @@ namespace Foxoft
             {
                SaveInvoice();
 
-               MakePayment(summInvoice, false);
+               //MakePayment(summInvoice, false);
 
                GetPrintToWarehouse();
 
