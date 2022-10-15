@@ -44,7 +44,7 @@ namespace Foxoft
       private void FormCurrAcc_Load(object sender, EventArgs e)
       {
          LoadCurrAcc();
-         dataLayoutControl1.isValid(out List<string> errorList);
+         dataLayoutControl1.IsValid(out List<string> errorList);
       }
 
       private void LoadCurrAcc()
@@ -99,7 +99,7 @@ namespace Foxoft
 
       private void btn_Ok_Click(object sender, EventArgs e)
       {
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
             if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if invoiceHeader doesnt exist

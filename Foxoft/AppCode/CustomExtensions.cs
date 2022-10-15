@@ -11,7 +11,7 @@ namespace Foxoft
 {
     public static class CustomExtensions
     {
-        public static bool isValid(this DataLayoutControl dataLayoutControl, out List<string> errorList)
+        public static bool IsValid(this DataLayoutControl dataLayoutControl, out List<string> errorList)
         {
             DXErrorProvider dXErrorProvider = new DXErrorProvider();
 

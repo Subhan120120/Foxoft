@@ -48,6 +48,7 @@ namespace Foxoft
          this.colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colWarehouseCode = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colToWarehouseCode = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colPrintCount = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceHeaderList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceHeaderList)).BeginInit();
@@ -85,7 +86,8 @@ namespace Foxoft
             this.colTotalNetAmount,
             this.colCurrAccDesc,
             this.colWarehouseCode,
-            this.colToWarehouseCode});
+            this.colToWarehouseCode,
+            this.colPrintCount});
          this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
          this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
          this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
@@ -179,6 +181,11 @@ namespace Foxoft
          this.colToWarehouseCode.Visible = true;
          this.colToWarehouseCode.VisibleIndex = 6;
          // 
+         // colPrintCount
+         // 
+         this.colPrintCount.FieldName = "PrintCount";
+         this.colPrintCount.Name = "colPrintCount";
+         // 
          // FormInvoiceHeaderList
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,5 +219,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCurrAccDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colWarehouseCode;
       private DevExpress.XtraGrid.Columns.GridColumn colToWarehouseCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colPrintCount;
    }
 }

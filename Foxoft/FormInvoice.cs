@@ -97,7 +97,7 @@ namespace Foxoft
 
       private void FormInvoice_Load(object sender, EventArgs e)
       {
-         dataLayoutControl1.isValid(out List<string> errorList);
+         dataLayoutControl1.IsValid(out List<string> errorList);
       }
 
       private void FormInvoice_Shown(object sender, EventArgs e)
@@ -130,7 +130,7 @@ namespace Foxoft
                                  .LoadAsync()
                                  .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
-         dataLayoutControl1.isValid(out List<string> errorList);
+         dataLayoutControl1.IsValid(out List<string> errorList);
 
          ShowPrintCount();
       }
@@ -175,7 +175,7 @@ namespace Foxoft
             }
          }
 
-         if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+         if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
          {
             int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
             if (count > 0)
@@ -246,7 +246,7 @@ namespace Foxoft
                                  }, TaskScheduler.FromCurrentSynchronizationContext());
 
 
-         dataLayoutControl1.isValid(out List<string> errorList);
+         dataLayoutControl1.IsValid(out List<string> errorList);
          CalcPaidAmount();
          ShowPrintCount();
       }
@@ -819,7 +819,7 @@ namespace Foxoft
 
       private void bBI_SaveAndNew_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
@@ -996,7 +996,7 @@ namespace Foxoft
 
       private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
@@ -1014,7 +1014,7 @@ namespace Foxoft
 
       private void bBI_Payment_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
@@ -1070,7 +1070,7 @@ namespace Foxoft
 
       private void bBI_SaveAndQuit_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             decimal summInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 

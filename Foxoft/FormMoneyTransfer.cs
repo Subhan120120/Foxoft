@@ -65,7 +65,7 @@ namespace Foxoft
          lbl_ToCashRegDesc.Text = trPaymentHeader.CurrAccDesc;
          lbl_FromCashRegDesc.Text = trPaymentHeader.CurrAccDesc;
 
-         dataLayoutControl1.isValid(out List<string> errorList);
+         dataLayoutControl1.IsValid(out List<string> errorList);
       }
 
       private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -96,7 +96,7 @@ namespace Foxoft
             }
          }
 
-         if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+         if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
          {
             int count = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).Count;
             if (count > 0)
@@ -236,7 +236,7 @@ namespace Foxoft
 
                                  }, TaskScheduler.FromCurrentSynchronizationContext());
 
-         dataLayoutControl1.isValid(out List<string> errorList);
+         dataLayoutControl1.IsValid(out List<string> errorList);
 
          CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
       }
@@ -337,7 +337,7 @@ namespace Foxoft
          gV_PaymentLine.SetFocusedRowCellValue(colBalanceBefor, balanceBefore);
          gV_PaymentLine.SetFocusedRowCellValue(colBalanceAfter, balanceAfter);
 
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             SavePayment();
          }
@@ -352,7 +352,7 @@ namespace Foxoft
 
       private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)
       {
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             SavePayment();
          }
@@ -374,7 +374,7 @@ namespace Foxoft
 
       private void bBI_SaveAndClose_ItemClick(object sender, ItemClickEventArgs e)
       {
-         if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.isValid(out List<string> errorList))
+         if (trPaymentHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
          {
             int count = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).Count;
             if (count > 0)

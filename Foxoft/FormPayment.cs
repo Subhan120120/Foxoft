@@ -82,8 +82,8 @@ namespace Foxoft
 
          trPaymentLine.PaymentHeaderId = PaymentHeaderId;
          trPaymentLine.PaymentTypeCode = paymentType;
-         trPaymentLine.CurrencyCode = "AZN";
-         trPaymentLine.ExchangeRate = 1.703f;
+         trPaymentLine.CurrencyCode = "USD";
+         trPaymentLine.ExchangeRate = 1;
 
          string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
          if (!String.IsNullOrEmpty(cashReg))

@@ -41,7 +41,7 @@ namespace Foxoft
       private void FormProduct_Load(object sender, EventArgs e)
       {
          FillDataLayout();
-         dataLayoutControl1.isValid(out List<string> errorList);
+         dataLayoutControl1.IsValid(out List<string> errorList);
       }
 
       private void FillDataLayout()
@@ -98,7 +98,7 @@ namespace Foxoft
 
       private void btn_Ok_Click(object sender, EventArgs e)
       {
-         if (dataLayoutControl1.isValid(out List<string> errorList))
+         if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             dcProduct = dcProductsBindingSource.Current as DcProduct;
             if (!efMethods.ProductExist(dcProduct.ProductCode)) //if invoiceHeader doesnt exist
