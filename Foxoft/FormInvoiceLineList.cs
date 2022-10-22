@@ -10,7 +10,6 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -199,7 +198,7 @@ namespace Foxoft
       private void gV_InvoiceHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
       {
          GridView view = sender as GridView;
-         if (view.SelectedRowsCount > 0)
+         if (view.SelectedRowsCount > 0 && view.FocusedRowHandle > 0)
          {
             trInvoiceLine = new();
             trInvoiceLine.InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId);
