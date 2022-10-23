@@ -5,6 +5,7 @@ declare @StartTime time =  '00:00:00.000'
 select DcProducts.ProductCode
 , DcProducts.ProductDesc
 , SUM(ISNULL(QtyIn,0) - ISNULL(QtyOut,0)) Balance 
+--, LastPurchasePrice = ()
 from DcProducts
 
 left join TrInvoiceLines il on il.ProductCode = DcProducts.ProductCode
@@ -16,3 +17,6 @@ where (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=
 
 group by DcProducts.ProductCode
 	, DcProducts.ProductDesc
+
+
+
