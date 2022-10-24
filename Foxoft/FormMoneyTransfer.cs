@@ -80,6 +80,7 @@ namespace Foxoft
          paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
          paymentHeader.OfficeCode = Authorization.OfficeCode;
          paymentHeader.StoreCode = Authorization.StoreCode;
+         paymentHeader.IsMainTF = true;
 
          e.NewObject = paymentHeader;
       }
@@ -219,7 +220,10 @@ namespace Foxoft
             if (lV_paymentHeader.Any(x => x.DcCurrAcc is not null) || lV_paymentHeader.Any(x => x.ToCashReg is not null))
             {
                lbl_FromCashRegDesc.Text = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
-               lbl_ToCashRegDesc.Text = x.ToCashReg.CurrAccDesc + " " + x.ToCashReg.FirstName + " " + x.ToCashReg.LastName;
+
+               if (x.ToCashReg is not null)
+                  lbl_ToCashRegDesc.Text = x.ToCashReg.CurrAccDesc + " " + x.ToCashReg.FirstName + " " + x.ToCashReg.LastName;
+
             }
          });
 

@@ -355,6 +355,22 @@ namespace Foxoft
                   formGrid.Show();
                }
             }
+
+            if (e.KeyCode == Keys.F5)
+            {
+               object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
+               if (productCode != null)
+               {
+                  DcReport dcReport = efMethods.SelectReport(1004);
+
+                  string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                  string filter = " where [Məhsul Kodu] = '" + productCode + "' and [Cari Hesab Kodu] = '" + trInvoiceHeader.CurrAccCode + "'";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  formGrid.Show();
+               }
+            }
          }
       }
 

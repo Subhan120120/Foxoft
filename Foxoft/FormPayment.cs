@@ -79,6 +79,7 @@ namespace Foxoft
             trPaymentHeader.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
          trPaymentHeader.OperationType = operType;
          trPaymentHeader.OperationDate = DateTime.Now;
+         trPaymentHeader.IsMainTF = true;
 
          trPaymentLine.PaymentHeaderId = PaymentHeaderId;
          trPaymentLine.PaymentTypeCode = paymentType;

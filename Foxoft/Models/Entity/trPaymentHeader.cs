@@ -97,7 +97,7 @@ namespace Foxoft.Models
       [DisplayName("Kilidlənib")]
       public bool IsLocked { get; set; }
 
-      [DefaultValue("1")]
+      //[DefaultValue("1")]
       [DisplayName("Əsas Qaimə")]
       public bool IsMainTF { get; set; }
 

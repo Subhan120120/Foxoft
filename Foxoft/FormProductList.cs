@@ -216,7 +216,6 @@ namespace Foxoft
                   formGrid.Show();
                }
             }
-
          }
       }
 

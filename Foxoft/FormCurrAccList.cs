@@ -2,6 +2,7 @@
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
@@ -12,9 +13,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using DevExpress.XtraEditors;
 
 namespace Foxoft
 {
@@ -70,7 +68,6 @@ namespace Foxoft
          //} 
          #endregion
 
-         //ApplySelectedCurrAcc();
          GridView view = sender as GridView;
          if (dcCurrAcc is not null)
             DialogResult = DialogResult.OK;
@@ -255,40 +252,6 @@ namespace Foxoft
             "^" => BinaryOperatorType.BitwiseXor,
             _ => BinaryOperatorType.Equal,
          };
-
-         //switch (filterOperatorType)
-         //{
-         //   case "+":
-         //      return BinaryOperatorType.Plus;
-         //   case "&":
-         //      return BinaryOperatorType.BitwiseAnd;
-         //   case "/":
-         //      return BinaryOperatorType.Divide;
-         //   case "==":
-         //      return BinaryOperatorType.Equal;
-         //   case ">":
-         //      return BinaryOperatorType.Greater;
-         //   case ">=":
-         //      return BinaryOperatorType.GreaterOrEqual;
-         //   case "<":
-         //      return BinaryOperatorType.Less;
-         //   case "<=":
-         //      return BinaryOperatorType.LessOrEqual;
-         //   case "%":
-         //      return BinaryOperatorType.Modulo;
-         //   case "*":
-         //      return BinaryOperatorType.Multiply;
-         //   case "!=":
-         //      return BinaryOperatorType.NotEqual;
-         //   case "|":
-         //      return BinaryOperatorType.BitwiseOr;
-         //   case "-":
-         //      return BinaryOperatorType.Minus;
-         //   case "^":
-         //      return BinaryOperatorType.BitwiseXor;
-         //   default:
-         //      return BinaryOperatorType.Equal;
-         //}
       }
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
