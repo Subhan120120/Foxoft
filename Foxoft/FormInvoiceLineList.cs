@@ -138,7 +138,11 @@ namespace Foxoft
          if (view is null) return;
 
          if (view.SelectedRowsCount > 0)
-            trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
+         {
+            trInvoiceLine = new();
+            trInvoiceLine.InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId);
+            trInvoiceLine.InvoiceHeaderId = (Guid)view.GetFocusedRowCellValue(colInvoiceHeaderId);
+         }
 
          if (e.KeyCode == Keys.Enter && trInvoiceLine is not null)
             DialogResult = DialogResult.OK;
@@ -147,11 +151,15 @@ namespace Foxoft
             Close();
       }
 
-      private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
+      private void gV_InvoiceLineList_ColumnFilterChanged(object sender, EventArgs e)
       {
          GridView view = sender as GridView;
          if (view.SelectedRowsCount > 0)
-            trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
+         {
+            trInvoiceLine = new();
+            trInvoiceLine.InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId);
+            trInvoiceLine.InvoiceHeaderId = (Guid)view.GetFocusedRowCellValue(colInvoiceHeaderId);
+         }
          else
             trInvoiceLine = null;
 
@@ -195,7 +203,7 @@ namespace Foxoft
          isFirstPaint = false;
       }
 
-      private void gV_InvoiceHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+      private void gV_InvoiceLineList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
       {
          GridView view = sender as GridView;
          if (view.SelectedRowsCount > 0 && view.FocusedRowHandle > 0)

@@ -596,11 +596,13 @@ namespace Foxoft
 
       public List<DcCurrAcc> SelectCurrAccs()
       {
+
+
          using subContext db = new();
 
-         byte[] byteArr = new byte[] { 1, 2, 3, 4, 5 };
+         byte[] byteArr = new byte[] { 1, 2, 3, 4 };
 
-         return db.DcCurrAccs.Where(x => x.IsDisabled == false && byteArr.Contains(x.CurrAccTypeCode))
+         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false && byteArr.Contains(x.CurrAccTypeCode))
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {
@@ -624,6 +626,32 @@ namespace Foxoft
                                                   .Sum(s => s.PaymentLoc),
                     })
                     .ToList(); // burdaki kolonlari dizaynda da elave et
+
+         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == 5)
+                    .OrderBy(x => x.CreatedDate)
+                    .Select(x => new DcCurrAcc
+                    {
+                       CurrAccCode = x.CurrAccCode,
+                       CurrAccDesc = x.CurrAccDesc,
+                       IsVip = x.IsVip,
+                       PhoneNum = x.PhoneNum,
+                       Address = x.Address,
+                       StoreCode = x.StoreCode,
+                       FirstName = x.FirstName,
+                       LastName = x.LastName,
+                       CreatedDate = x.CreatedDate,
+                       CreatedUserName = x.CreatedUserName,
+                       LastUpdatedDate = x.LastUpdatedDate,
+                       LastUpdatedUserName = x.LastUpdatedUserName,
+                       Balance = db.TrPaymentLines.Include(l => l.TrPaymentHeader)
+                                                  .Where(l => l.CashRegisterCode == x.CurrAccCode)
+                                                  .Sum(s => s.PaymentLoc),
+                    })
+                    .ToList(); // burdaki kolonlari dizaynda da elave et
+
+         asdasd.AddRange(asdasd2);
+
+         return asdasd;
       }
 
       public List<DcCurrAcc> SelectCurrAccsByType(byte currAccTypeCode)

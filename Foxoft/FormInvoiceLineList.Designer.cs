@@ -98,9 +98,9 @@ namespace Foxoft
          this.gV_InvoiceLineList.OptionsView.FilterCriteriaDisplayStyle = DevExpress.XtraEditors.FilterCriteriaDisplayStyle.Visual;
          this.gV_InvoiceLineList.OptionsView.ShowAutoFilterRow = true;
          this.gV_InvoiceLineList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_InvoiceHeaderList_RowStyle);
-         this.gV_InvoiceLineList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_InvoiceHeaderList_FocusedRowChanged);
+         this.gV_InvoiceLineList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_InvoiceLineList_FocusedRowChanged);
          this.gV_InvoiceLineList.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceHeaderList_CellValueChanging);
-         this.gV_InvoiceLineList.ColumnFilterChanged += new System.EventHandler(this.gV_InvoiceHeaderList_ColumnFilterChanged);
+         this.gV_InvoiceLineList.ColumnFilterChanged += new System.EventHandler(this.gV_InvoiceLineList_ColumnFilterChanged);
          this.gV_InvoiceLineList.DoubleClick += new System.EventHandler(this.gV_TrInvoiceHeaderList_DoubleClick);
          // 
          // colDocumentNumber

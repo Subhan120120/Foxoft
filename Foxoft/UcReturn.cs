@@ -65,17 +65,18 @@ namespace Foxoft
                   efMethods.DeleteInvoice(returnInvoiceHeaderId);                // delete previous invoice
                returnInvoiceHeaderId = Guid.NewGuid();                             // create next invoice
 
-               LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+               LoadInvoice(trInvoiceHeader);
             }
          }
       }
 
-      private void LoadInvoice(Guid invoiceHeaderId)
+      private void LoadInvoice(TrInvoiceHeader invoiceHeader)
       {
-         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
-
-         gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeaderId);
+         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeader.InvoiceHeaderId);
+         gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeader.InvoiceHeaderId);
          gC_ReturnInvoiceLine.DataSource = null;
+
+         txt_CurrAccDesc.Text = invoiceHeader.DcCurrAcc.CurrAccDesc;
 
          CalcPaidAmount();
       }
