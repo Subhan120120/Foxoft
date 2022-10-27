@@ -58,6 +58,8 @@ namespace Foxoft
             gV_ProductList.FocusedRowHandle = rowHandle;
             gV_ProductList.MakeRowVisible(rowHandle);
          }
+
+         gV_ProductList.ShowFindPanel();
       }
 
       private void LoadProducts(byte productTypeCode)
@@ -156,11 +158,6 @@ namespace Foxoft
             MessageBox.Show("Məhsul Seçilməyib");
       }
 
-      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
-      {
-
-      }
-
       private void gC_ProductList_ProcessGridKey(object sender, KeyEventArgs e)
       {
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
@@ -219,27 +216,23 @@ namespace Foxoft
          }
       }
 
-      private void Autoc_ItemClick(object sender, ItemClickEventArgs e)
-      {
-      }
-
       // AutoFocus FindPanel
       bool isFirstPaint = true;
       private void gC_ProductList_Paint(object sender, PaintEventArgs e)
       {
-         GridControl gC = sender as GridControl;
-         GridView gV = gC.MainView as GridView;
+         //GridControl gC = sender as GridControl;
+         //GridView gV = gC.MainView as GridView;
 
-         if (isFirstPaint)
-         {
-            if (!gV.FindPanelVisible)
-               gV.ShowFindPanel();
-            gV.ShowFindPanel();
+         //if (isFirstPaint)
+         //{
+         //   if (!gV.FindPanelVisible)
+         //      gV.ShowFindPanel();
+         //   gV.ShowFindPanel();
 
-            gV.OptionsFind.FindFilterColumns = "ProductDesc";
-            //gV.OptionsFind.FindNullPrompt = "Axtarın...";
-         }
-         isFirstPaint = false;
+         //   gV.OptionsFind.FindFilterColumns = "ProductDesc";
+         //   //gV.OptionsFind.FindNullPrompt = "Axtarın...";
+         //}
+         //isFirstPaint = false;
       }
 
       private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
@@ -344,6 +337,15 @@ namespace Foxoft
       private void BBI_Feature_ItemClick(object sender, ItemClickEventArgs e)
       {
 
+      }
+
+      //AutoFocus FindPanel
+      private void gC_ProductList_Load(object sender, EventArgs e)
+      {
+         GridControl gC = sender as GridControl;
+         GridView gV = gC.MainView as GridView;
+         if (gV != null && gC.IsLoaded)
+            gC.BeginInvoke(new Action(gV.ShowFindPanel));
       }
    }
 }

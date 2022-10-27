@@ -96,6 +96,7 @@ namespace Foxoft
          this.gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_ProductList});
          this.gC_ProductList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_ProductList_Paint);
+         this.gC_ProductList.Load += new System.EventHandler(this.gC_ProductList_Load);
          this.gC_ProductList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_ProductList_ProcessGridKey);
          // 
          // gV_ProductList
@@ -133,6 +134,7 @@ namespace Foxoft
          this.gV_ProductList.GridControl = this.gC_ProductList;
          this.gV_ProductList.Name = "gV_ProductList";
          this.gV_ProductList.OptionsFind.FindDelay = 100;
+         this.gV_ProductList.OptionsView.ShowGroupPanel = false;
          this.gV_ProductList.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_ProductList_RowCellStyle);
          this.gV_ProductList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_ProductList_RowStyle);
          this.gV_ProductList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_ProductList_FocusedRowChanged);
