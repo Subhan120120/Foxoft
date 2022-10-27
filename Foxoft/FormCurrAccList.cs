@@ -124,7 +124,7 @@ namespace Foxoft
          {
             //dbContext.DcCurrAccs.Load();
             //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
-            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { 1, 2, 3, 4 });
+            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { 1, 2, 3, 4, 5 });
          }
       }
 

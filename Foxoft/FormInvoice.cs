@@ -133,6 +133,8 @@ namespace Foxoft
          dataLayoutControl1.IsValid(out List<string> errorList);
 
          ShowPrintCount();
+
+         CheckEdit_IsReturn.Enabled = false;
       }
 
       private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -249,6 +251,8 @@ namespace Foxoft
          dataLayoutControl1.IsValid(out List<string> errorList);
          CalcPaidAmount();
          ShowPrintCount();
+
+         CheckEdit_IsReturn.Enabled = false;
       }
 
       private void CalcPaidAmount()
@@ -1286,10 +1290,12 @@ namespace Foxoft
          e.ExceptionMode = ExceptionMode.DisplayError;
       }
 
-      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
       {
-         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         gC_InvoiceLine.ExportToXlsx(pathDesktop + $@"\InvoiceLine.xlsx");
+         if (CheckEdit_IsReturn.Enabled)
+            CheckEdit_IsReturn.Enabled = false;
+         else
+            CheckEdit_IsReturn.Enabled = true;
       }
    }
 }

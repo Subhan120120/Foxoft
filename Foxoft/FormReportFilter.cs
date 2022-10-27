@@ -25,6 +25,7 @@ namespace Foxoft
       readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
       readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new RepositoryItemButtonEdit();
       readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_WarehouseCode = new RepositoryItemButtonEdit();
 
       public FormReportFilter(DcReport Report)
       {
@@ -62,6 +63,10 @@ namespace Foxoft
          this.repoBtnEdit_CashRegisterCode.AutoHeight = false;
          this.repoBtnEdit_CashRegisterCode.Name = "repoBtnEdit_CashRegisterCode";
          this.repoBtnEdit_CashRegisterCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CashRegisterCode_ButtonPressed);
+
+         this.repoBtnEdit_WarehouseCode.AutoHeight = false;
+         this.repoBtnEdit_WarehouseCode.Name = "repoBtnEdit_WarehouseCode";
+         this.repoBtnEdit_WarehouseCode.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdit_WarehouseCode_ButtonPressed);
       }
 
       private string ClearVariables(string querySql)
@@ -307,6 +312,8 @@ namespace Foxoft
             e.RepositoryItem = repoBtnEdit_StoreCode;
          if (e.Node.FirstOperand.PropertyName == "Kassa Kodu" || e.Node.FirstOperand.PropertyName == "CashRegisterCode")
             e.RepositoryItem = repoBtnEdit_CashRegisterCode;
+         if (e.Node.FirstOperand.PropertyName == "Depo Kodu" || e.Node.FirstOperand.PropertyName == "WarehouseCode")
+            e.RepositoryItem = repoBtnEdit_WarehouseCode;
       }
 
       private void repoBtnEdt_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -339,6 +346,18 @@ namespace Foxoft
       private void repobtnEdit_CashRegisterCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
       {
          SelectCurrAcc(sender, 5);
+      }
+
+      private void repoBtnEdit_WarehouseCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         ButtonEdit editor = (ButtonEdit)sender;
+         using (FormWarehouseList form = new())
+         {
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+               editor.EditValue = form.dcWarehouse.WarehouseCode;
+            }
+         }
       }
 
       private void SelectCurrAcc(object sender, byte currAccTypeCode)

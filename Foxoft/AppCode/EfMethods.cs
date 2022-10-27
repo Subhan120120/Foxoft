@@ -386,6 +386,16 @@ namespace Foxoft
 
       }
 
+      public int DeleteWarehouse(DcWarehouse dcWarehouse)
+      {
+         using subContext db = new();
+
+         if (dcWarehouse is not null)
+            db.DcWarehouses.Remove(dcWarehouse);
+
+         return db.SaveChanges();
+      }
+
       public bool PaymentHeaderExistByInvoice(Guid invoiceHeaderId)
       {
          using subContext db = new();
@@ -600,7 +610,7 @@ namespace Foxoft
 
          //byte[] byteArr = new byte[] { 1, 2, 3, 4 };
 
-         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false 
+         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false
                                            && byteArr.Contains(x.CurrAccTypeCode)
                                            && x.CurrAccTypeCode != 5)
                     .OrderBy(x => x.CreatedDate)
@@ -627,8 +637,8 @@ namespace Foxoft
                     })
                     .ToList(); // burdaki kolonlari dizaynda da elave et
 
-         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false 
-                                             && x.CurrAccTypeCode == 5 
+         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false
+                                             && x.CurrAccTypeCode == 5
                                              && byteArr.Contains(x.CurrAccTypeCode))
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
