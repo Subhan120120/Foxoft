@@ -594,15 +594,15 @@ namespace Foxoft
                                  .Sum(s => s.PaymentLoc);
       }
 
-      public List<DcCurrAcc> SelectCurrAccs()
+      public List<DcCurrAcc> SelectCurrAccs(byte[] byteArr)
       {
-
-
          using subContext db = new();
 
-         byte[] byteArr = new byte[] { 1, 2, 3, 4 };
+         //byte[] byteArr = new byte[] { 1, 2, 3, 4 };
 
-         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false && byteArr.Contains(x.CurrAccTypeCode))
+         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false 
+                                           && byteArr.Contains(x.CurrAccTypeCode)
+                                           && x.CurrAccTypeCode != 5)
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {
@@ -627,7 +627,9 @@ namespace Foxoft
                     })
                     .ToList(); // burdaki kolonlari dizaynda da elave et
 
-         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == 5)
+         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false 
+                                             && x.CurrAccTypeCode == 5 
+                                             && byteArr.Contains(x.CurrAccTypeCode))
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {

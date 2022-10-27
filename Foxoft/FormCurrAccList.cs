@@ -118,13 +118,13 @@ namespace Foxoft
       {
          if (currAccTypeCode != 0)
          {
-            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
+            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { currAccTypeCode });
          }
          else
          {
             //dbContext.DcCurrAccs.Load();
             //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
-            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs();
+            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { 1, 2, 3, 4 });
          }
       }
 

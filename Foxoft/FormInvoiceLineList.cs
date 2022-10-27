@@ -206,7 +206,7 @@ namespace Foxoft
       private void gV_InvoiceLineList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
       {
          GridView view = sender as GridView;
-         if (view.SelectedRowsCount > 0 && view.FocusedRowHandle > 0)
+         if (view.SelectedRowsCount > 0 && view.FocusedRowHandle >= 0)
          {
             trInvoiceLine = new();
             trInvoiceLine.InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId);

@@ -200,7 +200,6 @@ namespace Foxoft
             gC_ReturnInvoiceLine.DataSource = null;
             btnEdit_InvoiceHeader.EditValue = null;
 
-
          }
          else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
       }
