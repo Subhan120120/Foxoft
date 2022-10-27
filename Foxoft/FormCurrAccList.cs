@@ -164,19 +164,19 @@ namespace Foxoft
       bool isFirstPaint = true;
       private void gC_CurrAccList_Paint(object sender, PaintEventArgs e)
       {
-         GridControl gC = sender as GridControl;
-         GridView gV = gC.MainView as GridView;
+         //GridControl gC = sender as GridControl;
+         //GridView gV = gC.MainView as GridView;
 
-         if (isFirstPaint)
-         {
-            if (!gV.FindPanelVisible)
-               gV.ShowFindPanel();
-            gV.ShowFindPanel();
+         //if (isFirstPaint)
+         //{
+         //   if (!gV.FindPanelVisible)
+         //      gV.ShowFindPanel();
+         //   gV.ShowFindPanel();
 
-            gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
-            gV.OptionsFind.FindNullPrompt = "Axtarın...";
-         }
-         isFirstPaint = false;
+         //   gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
+         //   gV.OptionsFind.FindNullPrompt = "Axtarın...";
+         //}
+         //isFirstPaint = false;
       }
 
       private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
@@ -278,6 +278,15 @@ namespace Foxoft
       private void bBI_CurAccRefresh_ItemClick(object sender, ItemClickEventArgs e)
       {
          UpdateGridViewData();
+      }
+
+      //AutoFocus FindPanel 
+      private void gC_CurrAccList_Load(object sender, EventArgs e)
+      {
+         GridControl gC = sender as GridControl;
+         GridView gV = gC.MainView as GridView;
+         if (gV != null)
+            gC.BeginInvoke(new Action(gV.ShowFindPanel));
       }
    }
 }

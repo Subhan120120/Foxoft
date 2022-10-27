@@ -102,6 +102,7 @@ namespace Foxoft
          this.gC_CurrAccList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_CurrAccList});
          this.gC_CurrAccList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_CurrAccList_Paint);
+         this.gC_CurrAccList.Load += new System.EventHandler(this.gC_CurrAccList_Load);
          this.gC_CurrAccList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_CurrAccList_ProcessGridKey);
          // 
          // gV_CurrAccList
@@ -142,7 +143,7 @@ namespace Foxoft
             this.colCreatedDate,
             this.colLastUpdatedUserName,
             this.colLastUpdatedDate});
-         this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(867, 248, 264, 272);
+         this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(760, 248, 264, 272);
          this.gV_CurrAccList.GridControl = this.gC_CurrAccList;
          this.gV_CurrAccList.Name = "gV_CurrAccList";
          this.gV_CurrAccList.OptionsFind.FindDelay = 100;

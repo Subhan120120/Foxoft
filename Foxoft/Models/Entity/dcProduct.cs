@@ -98,11 +98,11 @@ namespace Foxoft.Models
       public int BalanceM { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq Filial")]
+      [DisplayName("Qalıq SIRA 20")]
       public int BalanceF { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq Sahil")]
+      [DisplayName("Qalıq SIRA 5")]
       public int BalanceS { get; set; }
 
 
