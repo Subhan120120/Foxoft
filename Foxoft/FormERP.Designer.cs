@@ -66,6 +66,7 @@ namespace Foxoft
          this.aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.ACE_ReportFinally = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -359,10 +360,20 @@ namespace Foxoft
          // 
          // aCE_Reports
          // 
+         this.aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
+            this.ACE_ReportFinally, this.aCE_ReportZet});
          this.aCE_Reports.Expanded = true;
          this.aCE_Reports.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Reports.ImageOptions.SvgImage")));
          this.aCE_Reports.Name = "aCE_Reports";
          this.aCE_Reports.Text = "Hesabat";
+         // 
+         // ACE_ReportFinally
+         // 
+         this.ACE_ReportFinally.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
+         this.ACE_ReportFinally.Name = "ACE_ReportFinally";
+         this.ACE_ReportFinally.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.ACE_ReportFinally.Text = "Element1";
+         this.ACE_ReportFinally.Click += new System.EventHandler(this.ACE_ReportFinally_Click);
          // 
          // aCE_Setting
          // 
@@ -392,7 +403,7 @@ namespace Foxoft
          this.aCE_ReportZet.Name = "aCE_ReportZet";
          this.aCE_ReportZet.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
          this.aCE_ReportZet.Text = "Gün Sonu";
-         this.aCE_ReportZet.Click += new System.EventHandler(this.accordionControlElement2_Click);
+         this.aCE_ReportZet.Click += new System.EventHandler(this.aCE_ReportZet_Click);
          // 
          // FormERP
          // 
@@ -459,5 +470,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PurchaseIsReturn;
       private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_SaleIsReturn;
       private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator6;
+      private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ReportFinally;
    }
 }

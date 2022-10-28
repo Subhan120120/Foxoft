@@ -427,7 +427,6 @@ namespace Foxoft
          // 
          // col_PosDiscount
          // 
-         this.col_PosDiscount.Caption = "Endirim";
          this.col_PosDiscount.DisplayFormat.FormatString = "{0:n2}";
          this.col_PosDiscount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.col_PosDiscount.FieldName = "PosDiscount";
@@ -803,12 +802,12 @@ namespace Foxoft
          this.bBI_Whatsapp.Name = "bBI_Whatsapp";
          this.bBI_Whatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Whatsapp_ItemClick);
          // 
-         // barButtonItem1
+         // BBI_ModifyInvoice
          // 
          this.BBI_ModifyInvoice.Caption = "Dəyiş";
          this.BBI_ModifyInvoice.Id = 19;
-         this.BBI_ModifyInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-         this.BBI_ModifyInvoice.Name = "barButtonItem1";
+         this.BBI_ModifyInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ModifyInvoice.ImageOptions.SvgImage")));
+         this.BBI_ModifyInvoice.Name = "BBI_ModifyInvoice";
          this.BBI_ModifyInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ModifyInvoice_ItemClick);
          // 
          // ribbonPage1
