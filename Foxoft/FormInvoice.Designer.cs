@@ -427,10 +427,9 @@ namespace Foxoft
          // 
          // col_PosDiscount
          // 
-         this.col_PosDiscount.DisplayFormat.FormatString = "{0:n2}";
-         this.col_PosDiscount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.col_PosDiscount.FieldName = "PosDiscount";
          this.col_PosDiscount.Name = "col_PosDiscount";
+         this.col_PosDiscount.UnboundDataType = typeof(string);
          this.col_PosDiscount.Visible = true;
          this.col_PosDiscount.VisibleIndex = 6;
          this.col_PosDiscount.Width = 89;
