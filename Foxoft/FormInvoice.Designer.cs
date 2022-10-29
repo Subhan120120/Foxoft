@@ -429,7 +429,6 @@ namespace Foxoft
          // 
          this.col_PosDiscount.FieldName = "PosDiscount";
          this.col_PosDiscount.Name = "col_PosDiscount";
-         this.col_PosDiscount.UnboundDataType = typeof(string);
          this.col_PosDiscount.Visible = true;
          this.col_PosDiscount.VisibleIndex = 6;
          this.col_PosDiscount.Width = 89;
