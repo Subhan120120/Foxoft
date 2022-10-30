@@ -25,6 +25,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -1296,6 +1297,20 @@ namespace Foxoft
             CheckEdit_IsReturn.Enabled = false;
          else
             CheckEdit_IsReturn.Enabled = true;
+      }
+
+      private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)
+      {
+         GridControl gc = sender as GridControl;
+         GridView view = gc.FocusedView as GridView;
+
+         if (view.FocusedColumn.ColumnType == typeof(decimal))
+         {
+            if ((e.KeyChar == '.') || (e.KeyChar == ','))
+            {
+               e.KeyChar = Convert.ToChar(",");
+            }
+         }
       }
    }
 }

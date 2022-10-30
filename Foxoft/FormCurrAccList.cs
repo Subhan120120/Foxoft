@@ -286,7 +286,12 @@ namespace Foxoft
          GridControl gC = sender as GridControl;
          GridView gV = gC.MainView as GridView;
          if (gV != null)
+         {
+            gV_CurrAccList.OptionsFind.FindFilterColumns = "CurrAccDesc";
+            gV_CurrAccList.OptionsFind.FindNullPrompt = "Axtarın...";
+
             gC.BeginInvoke(new Action(gV.ShowFindPanel));
+         }
       }
    }
 }

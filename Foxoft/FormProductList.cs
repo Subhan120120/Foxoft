@@ -59,7 +59,9 @@ namespace Foxoft
             gV_ProductList.MakeRowVisible(rowHandle);
          }
 
-         gV_ProductList.ShowFindPanel();
+         //gV_ProductList.ShowFindPanel();
+         //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+         //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
       }
 
       private void LoadProducts(byte productTypeCode)
@@ -344,8 +346,14 @@ namespace Foxoft
       {
          GridControl gC = sender as GridControl;
          GridView gV = gC.MainView as GridView;
-         if (gV != null && gC.IsLoaded)
-            gC.BeginInvoke(new Action(gV.ShowFindPanel));
+         if (gV != null)
+         {
+            gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+            gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+
+            if (!gV.FindPanelVisible)
+               gC.BeginInvoke(new Action(gV.ShowFindPanel));
+         }
       }
    }
 }
