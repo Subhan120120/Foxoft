@@ -19,7 +19,7 @@ namespace Foxoft
 {
    public partial class FormProductList : RibbonForm
    {
-      EfMethods efMethods = new EfMethods();
+      EfMethods efMethods = new();
       public DcProduct dcProduct { get; set; }
       public string productCode { get; set; }
       public byte productTypeCode;
@@ -31,7 +31,7 @@ namespace Foxoft
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new MemoryStream(byteArray);
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_ProductList.RestoreLayoutFromStream(stream, option);
 
          ribbonControl1.Minimized = true;
@@ -134,7 +134,7 @@ namespace Foxoft
 
       private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
       {
-         FormProduct formProduct = new FormProduct(productTypeCode);
+         FormProduct formProduct = new(productTypeCode);
          if (formProduct.ShowDialog(this) == DialogResult.OK)
          {
             LoadProducts(productTypeCode);
@@ -145,7 +145,7 @@ namespace Foxoft
       {
          if (dcProduct is not null)
          {
-            FormProduct formProduct = new FormProduct(productTypeCode, dcProduct.ProductCode);
+            FormProduct formProduct = new(productTypeCode, dcProduct.ProductCode);
 
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
@@ -183,7 +183,7 @@ namespace Foxoft
 
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  FormReportGrid formGrid = new (qryMaster + filter, dcReport);
                   formGrid.Show();
                }
             }
@@ -211,7 +211,7 @@ namespace Foxoft
 
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
                   formGrid.Show();
                }
             }

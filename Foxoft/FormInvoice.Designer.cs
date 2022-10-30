@@ -442,7 +442,7 @@ namespace Foxoft
          this.col_NetAmount.FieldName = "NetAmount";
          this.col_NetAmount.Name = "col_NetAmount";
          this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "Toplam={0:0.##}")});
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}")});
          this.col_NetAmount.Visible = true;
          this.col_NetAmount.VisibleIndex = 7;
          this.col_NetAmount.Width = 42;
