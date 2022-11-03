@@ -395,7 +395,7 @@ namespace Foxoft
 
          foreach (Form form in Application.OpenForms)
          {
-            UcReturn frmRtrn = form as UcReturn;
+            FormReturn frmRtrn = form as FormReturn;
             if (frmRtrn != null)
             {
                frmRtrn.BringToFront();
@@ -406,7 +406,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            UcReturn frmRtrn = new("RP");
+            FormReturn frmRtrn = new("RP");
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();
@@ -419,7 +419,7 @@ namespace Foxoft
 
          foreach (Form form in Application.OpenForms)
          {
-            UcReturn frmRtrn = form as UcReturn;
+            FormReturn frmRtrn = form as FormReturn;
             if (frmRtrn != null)
             {
                frmRtrn.BringToFront();
@@ -430,7 +430,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            UcReturn frmRtrn = new("RS");
+            FormReturn frmRtrn = new("RS");
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();

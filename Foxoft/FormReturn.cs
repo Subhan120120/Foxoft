@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class UcReturn : XtraForm
+   public partial class FormReturn : XtraForm
    {
       public Guid returnInvoiceHeaderId;
       public TrInvoiceHeader trInvoiceHeader;
@@ -22,12 +22,12 @@ namespace Foxoft
 
       EfMethods efMethods = new EfMethods();
 
-      public UcReturn()
+      public FormReturn()
       {
          InitializeComponent();
       }
 
-      public UcReturn(string processCode)
+      public FormReturn(string processCode)
          : this()
       {
          this.processCode = processCode;
@@ -199,6 +199,7 @@ namespace Foxoft
             gC_PaymentLine.DataSource = null;
             gC_ReturnInvoiceLine.DataSource = null;
             btnEdit_InvoiceHeader.EditValue = null;
+            txt_CurrAccDesc.Text = null;
 
          }
          else XtraMessageBox.Show("Ödəmə 0a bərabərdir");

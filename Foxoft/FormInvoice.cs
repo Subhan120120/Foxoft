@@ -121,7 +121,6 @@ namespace Foxoft
 
          trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-
          lbl_InvoicePaidSum.Text = "";
          lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
 
