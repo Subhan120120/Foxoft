@@ -38,7 +38,7 @@ namespace Foxoft
 
       public XtraReport CreateReport(object Datasource, string reportFilePath)
       {
-         XtraReport report = new XtraReport();
+         XtraReport report = new();
 
          report.LoadLayoutFromXml(reportFilePath);
 
@@ -49,6 +49,7 @@ namespace Foxoft
          //    XtraMessageBox.Show("The source file does not exist.");
 
          report.DataSource = Datasource;
+         report.ShowPrintMarginsWarning = false;
 
          return report;
       }

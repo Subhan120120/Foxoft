@@ -904,6 +904,7 @@ namespace Foxoft
             Clipboard.SetImage(img);
 
             ReportPrintTool printTool = new(report);
+
             bool? isPrinted = printTool.PrintDialog();
 
             if (isPrinted is not null)
@@ -975,6 +976,7 @@ namespace Foxoft
       {
          string designPath = "";
          XtraReport xtraReport = GetInvoiceReport(designPath);
+
          if (xtraReport is not null)
          {
             ReportDesignTool printTool = new(xtraReport);
@@ -993,6 +995,7 @@ namespace Foxoft
          string designPath = designFolder + rerportFileNameInvoice;
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
+
          if (xtraReport is not null)
          {
             ReportPrintTool printTool = new(xtraReport);
@@ -1006,7 +1009,6 @@ namespace Foxoft
          string designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
-
          if (xtraReport is not null)
          {
             ReportPrintTool printTool = new(xtraReport);
