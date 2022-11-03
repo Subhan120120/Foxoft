@@ -47,6 +47,7 @@ namespace Foxoft
          this.aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Products = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAcc = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.ACE_CashReg = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.accordionControlSeparator3 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
          this.aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -67,10 +68,9 @@ namespace Foxoft
          this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.ACE_ReportFinally = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -204,7 +204,7 @@ namespace Foxoft
          this.aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.aCE_Products,
             this.aCE_CurrAcc,
-            this.accordionControlElement1,
+            this.ACE_CashReg,
             this.accordionControlSeparator3,
             this.aCE_RetailPurchaseInvoice,
             this.aCE_RetailSaleInvoice,
@@ -239,8 +239,16 @@ namespace Foxoft
          this.aCE_CurrAcc.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CurrAcc.ImageOptions.SvgImage")));
          this.aCE_CurrAcc.Name = "aCE_CurrAcc";
          this.aCE_CurrAcc.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_CurrAcc.Text = "Cari Hesablar";
+         this.aCE_CurrAcc.Text = "Cari Hesab";
          this.aCE_CurrAcc.Click += new System.EventHandler(this.aCE_CurrAcc_Click);
+         // 
+         // ACE_CashReg
+         // 
+         this.ACE_CashReg.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("accordionControlElement1.ImageOptions.SvgImage")));
+         this.ACE_CashReg.Name = "ACE_CashReg";
+         this.ACE_CashReg.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+         this.ACE_CashReg.Text = "Kassa";
+         this.ACE_CashReg.Click += new System.EventHandler(this.ACE_CashReg_Click);
          // 
          // accordionControlSeparator3
          // 
@@ -408,12 +416,6 @@ namespace Foxoft
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
          // 
-         // accordionControlElement1
-         // 
-         this.accordionControlElement1.Name = "accordionControlElement1";
-         this.accordionControlElement1.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.accordionControlElement1.Text = "Element1";
-         // 
          // FormERP
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -481,5 +483,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator6;
       private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ReportFinally;
       private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
+      private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashReg;
    }
 }

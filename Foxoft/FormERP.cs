@@ -146,25 +146,17 @@ namespace Foxoft
       {
          FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
 
-         if (form != null)
+         try
          {
-            form.BringToFront();
-            form.Activate();
+            form = new(0);
+            form.MdiParent = this;
+            form.Show();
+            form.WindowState = FormWindowState.Maximized;
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
          }
-         else
+         catch (Exception ex)
          {
-            try
-            {
-               form = new(0);
-               form.MdiParent = this;
-               form.Show();
-               form.WindowState = FormWindowState.Maximized;
-               parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-            catch (Exception ex)
-            {
-               MessageBox.Show("Cari Hesablar acila bilmir: \n" + ex.ToString());
-            }
+            MessageBox.Show("Cari Hesablar açıla bilmir: \n" + ex.ToString());
          }
       }
 
@@ -267,44 +259,6 @@ namespace Foxoft
          {
             ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
-         }
-      }
-
-      private void aCE_MakePayment_Click(object sender, EventArgs e)
-      {
-         using (FormCurrAccList formCurrAcc = new(0))
-         {
-            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
-            {
-               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-
-               using (FormPayment formPayment = new(1, -1, trInvoiceHeader))
-               {
-                  if (formPayment.ShowDialog(this) == DialogResult.OK)
-                  {
-                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                  }
-               }
-            }
-         }
-      }
-
-      private void aCE_receivePayment_Click(object sender, EventArgs e)
-      {
-         using (FormCurrAccList formCurrAcc = new(0))
-         {
-            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
-            {
-               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-               //decimal debt = 
-               using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
-               {
-                  if (formPayment.ShowDialog(this) == DialogResult.OK)
-                  {
-                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                  }
-               }
-            }
          }
       }
 
@@ -478,6 +432,25 @@ namespace Foxoft
             ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
          }
+      }
+
+      private void ACE_CashReg_Click(object sender, EventArgs e)
+      {
+         FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
+
+         try
+         {
+            form = new(5);
+            form.MdiParent = this;
+            form.Show();
+            form.WindowState = FormWindowState.Maximized;
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show("Kassa Hesablar açıla bilmir: \n" + ex.ToString());
+         }
+
       }
    }
 }
