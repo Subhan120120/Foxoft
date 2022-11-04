@@ -68,9 +68,16 @@ namespace Foxoft
          //} 
          #endregion
 
-         GridView view = sender as GridView;
          if (dcCurrAcc is not null)
+            AcceptForm();
+      }
+
+      private void AcceptForm()
+      {
+         if (dcCurrAcc.CreditLimit > Math.Abs(dcCurrAcc.Balance) || dcCurrAcc.CreditLimit == 0)
             DialogResult = DialogResult.OK;
+         else
+            XtraMessageBox.Show("Müştəri Kredit Limitin Aşır", "Diqqət");
       }
 
       private void bBI_CurrAccNew_ItemClick(object sender, ItemClickEventArgs e)

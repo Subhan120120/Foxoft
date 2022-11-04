@@ -302,6 +302,12 @@ namespace Foxoft
          gv.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
          gv.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
          gv.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
+
+         if (trInvoiceHeader.ProcessCode == "EX")
+         {
+            gv.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
+            gv.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
+         }
       }
 
       private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)

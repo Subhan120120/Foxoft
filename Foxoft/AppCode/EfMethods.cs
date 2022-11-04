@@ -618,6 +618,7 @@ namespace Foxoft
                     {
                        CurrAccCode = x.CurrAccCode,
                        CurrAccDesc = x.CurrAccDesc,
+                       CreditLimit = x.CreditLimit,
                        IsVip = x.IsVip,
                        PhoneNum = x.PhoneNum,
                        Address = x.Address,
@@ -645,6 +646,7 @@ namespace Foxoft
                     {
                        CurrAccCode = x.CurrAccCode,
                        CurrAccDesc = x.CurrAccDesc,
+                       CreditLimit = x.CreditLimit,
                        IsVip = x.IsVip,
                        PhoneNum = x.PhoneNum,
                        Address = x.Address,
