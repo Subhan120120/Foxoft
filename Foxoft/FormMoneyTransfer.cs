@@ -447,7 +447,7 @@ namespace Foxoft
 
          string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
 
-         Process myProcess = new Process();
+         Process myProcess = new();
          myProcess.StartInfo.UseShellExecute = true;
          myProcess.StartInfo.FileName = link;
          myProcess.Start();
