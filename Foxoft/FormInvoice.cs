@@ -25,9 +25,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+//using Twilio;
+//using Twilio.Rest.Api.V2010.Account;
+//using Twilio.Types;
 
 namespace Foxoft
 {
@@ -1318,6 +1321,22 @@ namespace Foxoft
                e.KeyChar = Convert.ToChar(",");
             }
          }
+      }
+
+      private void bbi_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         //var accountSid = "ACe725fdee6c3a1280f55c0b081bde6281";
+         //var authToken = "5053054a675e8ae82d2e2af08e19e957";
+         //TwilioClient.Init(accountSid, authToken);
+
+         //var messageOptions = new CreateMessageOptions(
+         //    new PhoneNumber("+994519678909"));
+         //messageOptions.From = new PhoneNumber("+994507957252");
+         //messageOptions.Body = "Your appointment is coming up on July 21 at 3PM";
+
+         //var message = MessageResource.Create(messageOptions);
+         ////Console.WriteLine(message.Body);
+
       }
    }
 }

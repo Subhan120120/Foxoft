@@ -31,12 +31,12 @@ namespace Foxoft
       {
          this.SuspendLayout();
          // 
-         // XtraForm1
+         // FormFeature
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(479, 330);
-         this.Name = "XtraForm1";
+         this.ClientSize = new System.Drawing.Size(358, 241);
+         this.Name = "FormFeature";
          this.Text = "XtraForm1";
          this.ResumeLayout(false);
 

@@ -17,57 +17,63 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            using (subContext db = new subContext())
-            {
-                db.Database.EnsureCreated();
-                db.Database.Migrate();
+   static class Program
+   {
+      /// <summary>
+      /// The main entry point for the application.
+      /// </summary>
+      [STAThread]
+      static void Main()
+      {
+         using (subContext db = new())
+         {
+            db.Database.EnsureCreated();
+            db.Database.Migrate();
 
-                //string sql = db.Database.GenerateCreateScript();
+            //string sql = db.Database.GenerateCreateScript();
 
-                //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
-                //databaseCreator.CreateTables();
+            //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
+            //databaseCreator.CreateTables();
 
-                CreateViews(new DatabaseFacade(db));
-            }
+            CreateViews(new DatabaseFacade(db));
+         }
 
-            CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
-            Thread.CurrentThread.CurrentUICulture = culture;
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //CultureInfo.DefaultThreadCurrentCulture = culture;
-            //CultureInfo.DefaultThreadCurrentUICulture = culture;
+         MessageBox.Show("14");
 
-            WindowsFormsSettings.DefaultFont = new System.Drawing.Font("Tahoma", 10);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+         CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
+         Thread.CurrentThread.CurrentUICulture = culture;
+         //Thread.CurrentThread.CurrentCulture = culture;
+         //CultureInfo.DefaultThreadCurrentCulture = culture;
+         //CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-            Application.Run(new FormLogin());
-        }
+         MessageBox.Show("15");
 
-        private static void CreateViews(DatabaseFacade db)
-        {
-            InjectView(db, "View_RetailSales.sql", "RetailSales");
-            InjectView(db, "View_AllPayments.sql", "AllPayments");
-            InjectView(db, "View_Transactions.sql", "Transactions");
-        }
+         WindowsFormsSettings.DefaultFont = new System.Drawing.Font("Tahoma", 10);
+         Application.EnableVisualStyles();
+         Application.SetCompatibleTextRenderingDefault(false);
 
-        private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)
-        {
-            Assembly assembly = typeof(Program).Assembly;
-            string assemblyName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
-            string path = assemblyName + ".AppCode.SqlQuery" + "." + sqlFileName;
-            Stream stream = assembly.GetManifestResourceStream(path);
-            var sqlQuery = new StreamReader(stream).ReadToEnd();
+         MessageBox.Show("16");
 
-            db.ExecuteSqlRaw($"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END");
-            db.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sqlQuery}");
-        }
-    }
+         Application.Run(new FormLogin());
+      }
+
+      private static void CreateViews(DatabaseFacade db)
+      {
+         InjectView(db, "View_RetailSales.sql", "RetailSales");
+         InjectView(db, "View_AllPayments.sql", "AllPayments");
+         InjectView(db, "View_Transactions.sql", "Transactions");
+      }
+
+      private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)
+      {
+         Assembly assembly = typeof(Program).Assembly;
+         string assemblyName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
+         string path = assemblyName + ".AppCode.SqlQuery" + "." + sqlFileName;
+         Stream stream = assembly.GetManifestResourceStream(path);
+         var sqlQuery = new StreamReader(stream).ReadToEnd();
+
+         db.ExecuteSqlRaw($"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END");
+         db.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sqlQuery}");
+      }
+   }
 }

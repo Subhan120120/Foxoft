@@ -95,6 +95,7 @@ namespace Foxoft
          this.bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_ModifyInvoice = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -694,9 +695,10 @@ namespace Foxoft
             this.bBI_reportPreviewAzn,
             this.bBI_CopyInvoice,
             this.bBI_Whatsapp,
-            this.BBI_ModifyInvoice});
+            this.BBI_ModifyInvoice,
+            this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 20;
+         this.ribbonControl1.MaxItemId = 21;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -809,6 +811,13 @@ namespace Foxoft
          this.BBI_ModifyInvoice.Name = "BBI_ModifyInvoice";
          this.BBI_ModifyInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ModifyInvoice_ItemClick);
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "bbi";
+         this.barButtonItem1.Id = 20;
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbi_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -849,6 +858,7 @@ namespace Foxoft
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CopyInvoice);
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Whatsapp);
          this.ribbonPageGroup1.ItemLinks.Add(this.BBI_ModifyInvoice);
+         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Nəzarət";
          // 
@@ -1176,5 +1186,6 @@ namespace Foxoft
       private DevExpress.XtraEditors.LabelControl lbl_PrintCount;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
       private DevExpress.XtraBars.BarButtonItem BBI_ModifyInvoice;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
    }
 }
