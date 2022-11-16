@@ -74,10 +74,7 @@ namespace Foxoft
 
       private void AcceptForm()
       {
-         if (dcCurrAcc.CreditLimit > Math.Abs(dcCurrAcc.Balance) || dcCurrAcc.CreditLimit == 0)
-            DialogResult = DialogResult.OK;
-         else
-            XtraMessageBox.Show("Müştəri Kredit Limitin Aşır", "Diqqət");
+         DialogResult = DialogResult.OK;
       }
 
       private void bBI_CurrAccNew_ItemClick(object sender, ItemClickEventArgs e)

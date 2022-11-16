@@ -429,6 +429,8 @@ namespace Foxoft
          // 
          // col_PosDiscount
          // 
+         this.col_PosDiscount.DisplayFormat.FormatString = "{0:n2}";
+         this.col_PosDiscount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.col_PosDiscount.FieldName = "PosDiscount";
          this.col_PosDiscount.Name = "col_PosDiscount";
          this.col_PosDiscount.Visible = true;
@@ -508,6 +510,8 @@ namespace Foxoft
          // 
          // colLastPurchasePrice
          // 
+         this.colLastPurchasePrice.DisplayFormat.FormatString = "{0:n2}";
+         this.colLastPurchasePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
          this.colLastPurchasePrice.Visible = true;
@@ -516,6 +520,8 @@ namespace Foxoft
          // 
          // colBenefit
          // 
+         this.colBenefit.DisplayFormat.FormatString = "{0:n2}";
+         this.colBenefit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colBenefit.FieldName = "Benefit";
          this.colBenefit.Name = "colBenefit";
          this.colBenefit.Visible = true;
@@ -756,7 +762,7 @@ namespace Foxoft
          // 
          // bBI_DeleteInvoice
          // 
-         this.bBI_DeleteInvoice.Caption = "Fakturani Sil";
+         this.bBI_DeleteInvoice.Caption = "Fakturanı Sil";
          this.bBI_DeleteInvoice.Id = 11;
          this.bBI_DeleteInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeleteInvoice.ImageOptions.SvgImage")));
          this.bBI_DeleteInvoice.Name = "bBI_DeleteInvoice";
@@ -764,7 +770,7 @@ namespace Foxoft
          // 
          // bBI_DeletePayment
          // 
-         this.bBI_DeletePayment.Caption = "Odemeni Sil";
+         this.bBI_DeletePayment.Caption = "Ödəməni Sil";
          this.bBI_DeletePayment.Id = 12;
          this.bBI_DeletePayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeletePayment.ImageOptions.SvgImage")));
          this.bBI_DeletePayment.Name = "bBI_DeletePayment";

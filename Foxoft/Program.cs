@@ -38,21 +38,15 @@ namespace Foxoft
             CreateViews(new DatabaseFacade(db));
          }
 
-         MessageBox.Show("14");
-
          CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
          Thread.CurrentThread.CurrentUICulture = culture;
          //Thread.CurrentThread.CurrentCulture = culture;
          //CultureInfo.DefaultThreadCurrentCulture = culture;
          //CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-         MessageBox.Show("15");
-
          WindowsFormsSettings.DefaultFont = new System.Drawing.Font("Tahoma", 10);
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
-
-         MessageBox.Show("16");
 
          Application.Run(new FormLogin());
       }

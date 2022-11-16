@@ -292,8 +292,13 @@ namespace Foxoft
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-               btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-               FillCurrAccCode(form.dcCurrAcc);
+               if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
+               {
+                  btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+                  FillCurrAccCode(form.dcCurrAcc);
+               }
+               else
+                  XtraMessageBox.Show("Müştəri Kredit Limitin Aşır", "Diqqət");
             }
          }
       }
