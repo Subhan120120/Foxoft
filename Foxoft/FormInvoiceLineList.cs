@@ -137,7 +137,7 @@ namespace Foxoft
          ColumnView view = (sender as GridControl).FocusedView as ColumnView;
          if (view is null) return;
 
-         if (view.SelectedRowsCount > 0)
+         if (view.SelectedRowsCount > 0 && view.FocusedRowHandle >= 0)
          {
             trInvoiceLine = new();
             trInvoiceLine.InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId);
@@ -154,7 +154,7 @@ namespace Foxoft
       private void gV_InvoiceLineList_ColumnFilterChanged(object sender, EventArgs e)
       {
          GridView view = sender as GridView;
-         if (view.SelectedRowsCount > 0)
+         if (view.SelectedRowsCount > 0 && view.FocusedRowHandle >= 0)
          {
             trInvoiceLine = new();
             trInvoiceLine.InvoiceLineId = (Guid)view.GetFocusedRowCellValue(colInvoiceLineId);

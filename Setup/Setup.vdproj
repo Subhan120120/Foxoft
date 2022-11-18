@@ -69,12 +69,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3026F6FA5AC149E5B7EBAD6AB9EA8929"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_30A0263541C24B38A9CD71AF10D9AD41"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1063,26 +1057,6 @@
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3026F6FA5AC149E5B7EBAD6AB9EA8929"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\Desktop\\foxoft.png"
-            "TargetName" = "8:foxoft.png"
-            "Tag" = "8:"
-            "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
