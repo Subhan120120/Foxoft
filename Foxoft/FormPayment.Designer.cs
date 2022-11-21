@@ -231,7 +231,7 @@ namespace Foxoft
          this.btnEdit_CashRegister.StyleController = this.lC_Root;
          this.btnEdit_CashRegister.TabIndex = 3;
          this.btnEdit_CashRegister.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CashRegister_ButtonClick);
-         // 
+        // 
          // dateEdit_Date
          // 
          this.dateEdit_Date.EditValue = null;
