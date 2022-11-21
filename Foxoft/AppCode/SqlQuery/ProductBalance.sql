@@ -1,4 +1,5 @@
 
+
 declare @StartDate date = dateadd(DAY, 1, getdate())
 declare @StartTime time =  '00:00:00.000'
 
