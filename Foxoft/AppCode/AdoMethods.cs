@@ -51,6 +51,9 @@ namespace Foxoft
          SqlDataReader dr = command.ExecuteReader();
          DataTable dt = new();
          dt.Load(dr);
+
+         ReflectionExtensions.GetCaptionName(dt);
+
          return dt;
 
 
@@ -78,6 +81,9 @@ namespace Foxoft
          da.SelectCommand.Parameters.AddRange(sqlParameters);
          DataTable dt = new();
          da.Fill(dt);
+
+         ReflectionExtensions.GetCaptionName(dt);
+
          return dt;
       }
 

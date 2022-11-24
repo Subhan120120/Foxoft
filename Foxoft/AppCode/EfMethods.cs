@@ -948,7 +948,8 @@ namespace Foxoft
       public int UpdateDcReportFilter_Value(int ReportId, string fieldName, string filterValue)
       {
          using subContext db = new();
-         DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName).FirstOrDefault(x => x.ReportId == ReportId);
+         DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName)
+                                                     .FirstOrDefault(x => x.ReportId == ReportId);
          dcReport.FilterValue = filterValue;
          db.Entry(dcReport).Property(x => x.FilterValue).IsModified = true;
          return db.SaveChanges();

@@ -183,7 +183,7 @@ namespace Foxoft
 
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new (qryMaster + filter, dcReport);
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
                   formGrid.Show();
                }
             }
@@ -353,6 +353,22 @@ namespace Foxoft
 
             if (!gV.FindPanelVisible)
                gC.BeginInvoke(new Action(gV.ShowFindPanel));
+         }
+      }
+
+      private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         DcReport dcReport = efMethods.SelectReport(3);
+         object ProductCode = gV_ProductList.GetFocusedRowCellValue(colProductCode);
+
+         if (ProductCode is not null)
+         {
+            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+            string filter = " where [ProductCode] = '" + ProductCode + "' ";
+
+            FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+            formGrid.Show();
          }
       }
    }

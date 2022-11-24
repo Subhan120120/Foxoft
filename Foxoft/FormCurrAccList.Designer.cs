@@ -84,6 +84,7 @@ namespace Foxoft
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcCurrAccsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
@@ -349,9 +350,10 @@ namespace Foxoft
             this.bBI_Report1,
             this.bBI_ExportXlsx,
             this.bBI_CurrAccDelete,
-            this.bBI_CurAccRefresh});
+            this.bBI_CurAccRefresh,
+            this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 9;
+         this.ribbonControl1.MaxItemId = 10;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -434,8 +436,9 @@ namespace Foxoft
          // 
          // ribbonPageGroup3
          // 
-         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
          this.ribbonPageGroup3.ItemLinks.Add(this.bBI_ExportXlsx);
+         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
+         this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem1);
          this.ribbonPageGroup3.Name = "ribbonPageGroup3";
          this.ribbonPageGroup3.Text = "Hesabat";
          // 
@@ -450,6 +453,14 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
+         // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "Malların Bütün Hərəkəti";
+         this.barButtonItem1.Id = 9;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
          // 
          // FormCurrAccList
          // 
@@ -526,5 +537,6 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
       private DevExpress.XtraBars.BarButtonItem bBI_CurrAccDelete;
       private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
    }
 }

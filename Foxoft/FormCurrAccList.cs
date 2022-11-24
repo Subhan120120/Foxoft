@@ -297,5 +297,21 @@ namespace Foxoft
             gC.BeginInvoke(new Action(gV.ShowFindPanel));
          }
       }
+
+      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         DcReport dcReport = efMethods.SelectReport(3);
+         object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
+
+         if (currAccCode is not null)
+         {
+            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+            string filter = " where [CurrAccCode] = '" + currAccCode + "' ";
+
+            FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+            formGrid.Show();
+         }
+      }
    }
 }
