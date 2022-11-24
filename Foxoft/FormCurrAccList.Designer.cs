@@ -79,12 +79,12 @@ namespace Foxoft
          this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcCurrAccsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
@@ -288,6 +288,8 @@ namespace Foxoft
          // 
          // colBalance
          // 
+         this.colBalance.DisplayFormat.FormatString = "{0:n2}";
+         this.colBalance.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colBalance.FieldName = "Balance";
          this.colBalance.Name = "colBalance";
          this.colBalance.Visible = true;
@@ -417,6 +419,14 @@ namespace Foxoft
          this.bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
          this.bBI_CurAccRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CurAccRefresh_ItemClick);
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "Malların Bütün Hərəkəti";
+         this.barButtonItem1.Id = 9;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -453,14 +463,6 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
-         // 
-         // barButtonItem1
-         // 
-         this.barButtonItem1.Caption = "Malların Bütün Hərəkəti";
-         this.barButtonItem1.Id = 9;
-         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-         this.barButtonItem1.Name = "barButtonItem1";
-         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
          // 
          // FormCurrAccList
          // 
