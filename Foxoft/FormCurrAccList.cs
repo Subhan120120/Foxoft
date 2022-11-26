@@ -31,6 +31,11 @@ namespace Foxoft
          MemoryStream stream = new(byteArray);
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_CurrAccList.RestoreLayoutFromStream(stream, option);
+
+         //colPhoneNum.Properties.Mask.EditMask = "(00) 000 00 00";
+         //colPhoneNum.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
+         //colPhoneNum.Properties.Mask.SaveLiteral = false;
+         //colPhoneNum.Properties.Mask.UseMaskAsDisplayFormat = true;
       }
 
       public FormCurrAccList(byte currAccTypeCode)
@@ -289,13 +294,15 @@ namespace Foxoft
       {
          GridControl gC = sender as GridControl;
          GridView gV = gC.MainView as GridView;
-         if (gV != null)
+         if (gV is not null)
          {
             gV_CurrAccList.OptionsFind.FindFilterColumns = "CurrAccDesc";
             gV_CurrAccList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             gC.BeginInvoke(new Action(gV.ShowFindPanel));
          }
+
+         gV_CurrAccList.BestFitColumns();
       }
 
       private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)

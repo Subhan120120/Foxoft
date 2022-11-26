@@ -175,7 +175,12 @@ namespace Foxoft
                             BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
                             BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
                             BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
-                            LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100))).FirstOrDefault(),
+                            LastPurchasePrice = x.TrInvoiceLines
+                                                .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
+                                                .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
+                                                .ThenByDescending(l =>l.CreatedDate)
+                                                .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
+                                                .FirstOrDefault(),
                             ProductCode = x.ProductCode,
                             ProductDesc = x.ProductDesc,
                             PosDiscount = x.PosDiscount,

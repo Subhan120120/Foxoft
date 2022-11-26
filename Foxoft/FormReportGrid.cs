@@ -6,6 +6,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Localization;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using System;
@@ -23,19 +24,21 @@ namespace Foxoft
       Badge badge1;
       Badge badge2;
       AdornerUIManager adornerUIManager1;
+
       //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
-      DcReport report = new DcReport();
+      DcReport report = new();
       string qry = "select 0 Nothing";
-      EfMethods efMethods = new EfMethods();
-      AdoMethods adoMethods = new AdoMethods();
+      EfMethods efMethods = new();
+      AdoMethods adoMethods = new();
 
-      RepositoryItemHyperLinkEdit HLE_InvoiceNum = new RepositoryItemHyperLinkEdit();
-      RepositoryItemHyperLinkEdit HLE_DocumentNum = new RepositoryItemHyperLinkEdit();
+      RepositoryItemHyperLinkEdit HLE_InvoiceNum = new();
+      RepositoryItemHyperLinkEdit HLE_DocumentNum = new();
 
       public FormReportGrid()
       {
          InitializeComponent();
+         GridLocalizer.Active = new MyGridLocalizer();
 
          adornerUIManager1 = new AdornerUIManager(components);
          badge1 = new Badge();
@@ -60,6 +63,24 @@ namespace Foxoft
          LoadLayout();
       }
 
+      public class MyGridLocalizer : GridLocalizer
+      {
+         public override string GetLocalizedString(GridStringId id)
+         {
+             if (id == GridStringId.MenuFooterMaxFormat)
+                return "{0}";
+             if (id == GridStringId.MenuFooterMinFormat)
+                return "{0}";
+             if (id == GridStringId.MenuFooterSumFormat)
+                return "{0}";
+            if (id == GridStringId.MenuFooterCountFormat)
+               return "{0}";
+            if (id == GridStringId.MenuFooterAverageFormat)
+               return "{0}";
+
+            return base.GetLocalizedString(id);
+         }
+      }
       private void LoadData()
       {
          DataTable dt = adoMethods.SqlGetDt(qry);
@@ -86,6 +107,9 @@ namespace Foxoft
             col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
 
          HLE_DocumentNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
+
+         //gV_Report.Columns.ForEach(x => x.SummaryItem.DisplayFormat = "df{0}");
+
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
