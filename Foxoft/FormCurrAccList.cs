@@ -234,9 +234,9 @@ namespace Foxoft
             //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
             string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
+            string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
 
-
-            FormReportGrid formGrid = new(qryMaster, dcReport);
+            FormReportGrid formGrid = new(qryMaster, dcReport, activeFilterStr);
             formGrid.Show();
          }
       }
@@ -315,8 +315,10 @@ namespace Foxoft
             string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
             string filter = " where [CurrAccCode] = '" + currAccCode + "' ";
+            
+            string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
 
-            FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+            FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
             formGrid.Show();
          }
       }

@@ -172,7 +172,7 @@ namespace Foxoft
 
          try
          {
-            FormReportGrid myform = new FormReportGrid(qryMaster + queryFilter, dcReport);
+            FormReportGrid myform = new(qryMaster + queryFilter, dcReport);
 
             myform.MdiParent = this.MdiParent;
             myform.Show();

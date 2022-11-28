@@ -353,7 +353,9 @@ namespace Foxoft
 
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -368,8 +370,9 @@ namespace Foxoft
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
 
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -382,10 +385,9 @@ namespace Foxoft
                   DcReport dcReport = efMethods.SelectReport(1004);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' and [Cari Hesab Kodu] = '" + trInvoiceHeader.CurrAccCode + "'";
-
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -502,7 +504,7 @@ namespace Foxoft
                if (!String.IsNullOrEmpty(productCode))
                {
                   object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
-                  Guid invoiceLineId = Guid.Parse((colInvoiceLineId ??= Guid.Empty).ToString());
+                  Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
 
                   TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
                   int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
@@ -518,7 +520,37 @@ namespace Foxoft
                      e.Valid = false;
                   }
                }
+            }
 
+            if (!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS")
+            {
+               string currAccCode = trInvoiceHeader.CurrAccCode;
+               if (!String.IsNullOrEmpty(currAccCode))
+               {
+                  DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
+                  decimal creditLimit = dcCurrAcc.CreditLimit;
+
+                  decimal invoiceSumLoc = Math.Abs(efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentDate));
+
+                  object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+                  Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
+                  TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
+                  decimal currentNetAmountLoc = currTrInvoLine is null ? 0 : currTrInvoLine.NetAmountLoc;
+
+                  decimal sumInvoExpectLine = invoiceSumLoc - currentNetAmountLoc;
+
+                  object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
+
+                  decimal sumLineNet = Convert.ToInt32(e.Value ??= 0) * Convert.ToDecimal(objPriceLoc ??= 0);
+
+                  decimal sumInvo = sumInvoExpectLine + sumLineNet;
+
+                  if (sumInvo > creditLimit)
+                  {
+                     e.ErrorText = "Müştəri Kredit Limitini Aşır!";
+                     e.Valid = false;
+                  }
+               }
             }
          }
 
@@ -766,6 +798,7 @@ namespace Foxoft
          TrPaymentLine trPaymentLine = PaymentLineDefaults();
 
          decimal invoiceSumLoc = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+
 
          if (invoiceSumLoc > 0)
          {

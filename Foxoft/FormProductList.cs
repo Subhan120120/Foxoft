@@ -183,7 +183,9 @@ namespace Foxoft
 
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -211,7 +213,10 @@ namespace Foxoft
 
                   string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+
                   formGrid.Show();
                }
             }
@@ -346,7 +351,7 @@ namespace Foxoft
       {
          GridControl gC = sender as GridControl;
          GridView gV = gC.MainView as GridView;
-         if (gV != null)
+         if (gV is not null)
          {
             gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
@@ -364,10 +369,9 @@ namespace Foxoft
          if (ProductCode is not null)
          {
             string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
             string filter = " where [ProductCode] = '" + ProductCode + "' ";
-
-            FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+            string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+            FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
             formGrid.Show();
          }
       }

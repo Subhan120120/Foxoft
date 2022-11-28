@@ -53,7 +53,7 @@ namespace Foxoft
       }
 
       public FormReportGrid(string qry, DcReport report)
-      : this()
+         : this()
       {
          this.qry = qry;
          this.report = report;
@@ -63,16 +63,22 @@ namespace Foxoft
          LoadLayout();
       }
 
+      public FormReportGrid(string qry, DcReport report, string activeFilterStr)
+         : this(qry, report)
+      {
+         this.gV_Report.ActiveFilterString = activeFilterStr;
+      }
+
       public class MyGridLocalizer : GridLocalizer
       {
          public override string GetLocalizedString(GridStringId id)
          {
-             if (id == GridStringId.MenuFooterMaxFormat)
-                return "{0}";
-             if (id == GridStringId.MenuFooterMinFormat)
-                return "{0}";
-             if (id == GridStringId.MenuFooterSumFormat)
-                return "{0}";
+            if (id == GridStringId.MenuFooterMaxFormat)
+               return "{0}";
+            if (id == GridStringId.MenuFooterMinFormat)
+               return "{0}";
+            if (id == GridStringId.MenuFooterSumFormat)
+               return "{0}";
             if (id == GridStringId.MenuFooterCountFormat)
                return "{0}";
             if (id == GridStringId.MenuFooterAverageFormat)

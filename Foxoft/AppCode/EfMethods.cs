@@ -434,7 +434,6 @@ namespace Foxoft
          DcReport dcReport = new() { ReportId = ReportId };
          db.DcReports.Remove(dcReport);
          return db.SaveChanges();
-
       }
 
       public int UpdateInvoiceIsCompleted(Guid invoiceHeaderId)
