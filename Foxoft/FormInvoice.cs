@@ -530,7 +530,7 @@ namespace Foxoft
                   DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
                   decimal creditLimit = dcCurrAcc.CreditLimit;
 
-                  decimal invoiceSumLoc = Math.Abs(efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentDate));
+                  decimal invoiceSumLoc = (-1) * efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentDate);
 
                   object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
                   Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
