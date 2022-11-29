@@ -21,6 +21,7 @@ namespace Foxoft
       EfMethods efMethods = new();
       public DcCurrAcc dcCurrAcc { get; set; }
       public byte currAccTypeCode;
+      public string currAccCode;
 
       public FormCurrAccList()
       {
@@ -43,6 +44,17 @@ namespace Foxoft
       {
          this.currAccTypeCode = currAccTypeCode;
          UpdateGridViewData();
+      }
+
+      public FormCurrAccList(byte productTypeCode, string currAccCode)
+    : this(productTypeCode)
+      {
+         this.currAccCode = currAccCode;
+      }
+
+      private void FormCurrAccList_Load(object sender, EventArgs e)
+      {
+
       }
 
       private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -299,7 +311,15 @@ namespace Foxoft
             gV_CurrAccList.OptionsFind.FindFilterColumns = "CurrAccDesc";
             gV_CurrAccList.OptionsFind.FindNullPrompt = "Axtarın...";
 
-            gC.BeginInvoke(new Action(gV.ShowFindPanel));
+            if (!gV.FindPanelVisible)
+               gC.BeginInvoke(new Action(gV.ShowFindPanel));
+         }
+
+         int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
+         if (rowHandle != GridControl.InvalidRowHandle)
+         {
+            gV_CurrAccList.FocusedRowHandle = rowHandle;
+            gV_CurrAccList.MakeRowVisible(rowHandle);
          }
 
          gV_CurrAccList.BestFitColumns();
@@ -315,7 +335,7 @@ namespace Foxoft
             string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
             string filter = " where [CurrAccCode] = '" + currAccCode + "' ";
-            
+
             string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
 
             FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);

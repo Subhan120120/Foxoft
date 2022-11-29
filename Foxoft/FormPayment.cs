@@ -147,7 +147,7 @@ namespace Foxoft
       {
          ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-         using (FormCurrAccList form = new(5))
+         using (FormCurrAccList form = new(5, trInvoiceHeader.CurrAccCode))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {

@@ -363,7 +363,7 @@ namespace Foxoft
       private void SelectCurrAcc(object sender, byte currAccTypeCode)
       {
          ButtonEdit editor = (ButtonEdit)sender;
-         using (FormCurrAccList form = new FormCurrAccList(currAccTypeCode))
+         using (FormCurrAccList form = new(currAccTypeCode))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {
