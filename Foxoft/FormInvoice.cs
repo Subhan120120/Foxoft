@@ -545,7 +545,7 @@ namespace Foxoft
 
                   decimal sumInvo = sumInvoExpectLine + sumLineNet;
 
-                  if (sumInvo > creditLimit)
+                  if (sumInvo > creditLimit && creditLimit != 0)
                   {
                      e.ErrorText = "Müştəri Kredit Limitini Aşır!";
                      e.Valid = false;
