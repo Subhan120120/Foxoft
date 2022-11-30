@@ -52,11 +52,6 @@ namespace Foxoft
          this.currAccCode = currAccCode;
       }
 
-      private void FormCurrAccList_Load(object sender, EventArgs e)
-      {
-
-      }
-
       private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
       {
          GridView view = sender as GridView;
@@ -246,7 +241,7 @@ namespace Foxoft
             //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
             string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
-            string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
             FormReportGrid formGrid = new(qryMaster, dcReport, activeFilterStr);
             formGrid.Show();
@@ -311,7 +306,7 @@ namespace Foxoft
             gV_CurrAccList.OptionsFind.FindFilterColumns = "CurrAccDesc";
             gV_CurrAccList.OptionsFind.FindNullPrompt = "Axtarın...";
 
-            if (!gV.FindPanelVisible)
+            //if (!gV.FindPanelVisible)
                gC.BeginInvoke(new Action(gV.ShowFindPanel));
          }
 
@@ -336,7 +331,7 @@ namespace Foxoft
 
             string filter = " where [CurrAccCode] = '" + currAccCode + "' ";
 
-            string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
             FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
             formGrid.Show();

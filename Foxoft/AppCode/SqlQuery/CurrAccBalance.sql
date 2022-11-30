@@ -4,6 +4,8 @@ declare @EndTime time =  '00:00:00.000'
 
 select DcCurrAccs.CurrAccCode
 , CurrAccDesc
+, PhoneNum
+, IsVIP
 , Amount = sum(Amount)
 from 
 DcCurrAccs 
@@ -33,6 +35,9 @@ left join
 where 1 = 1 
 	--and DcCurrAccs.IsVIP = 1 
 	--and balance.CurrAccCode = '1403'
-group by DcCurrAccs.CurrAccCode, CurrAccDesc
+group by DcCurrAccs.CurrAccCode
+, CurrAccDesc
+, PhoneNum
+, IsVIP
 
 

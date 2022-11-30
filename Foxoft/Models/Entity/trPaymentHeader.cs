@@ -25,13 +25,13 @@ namespace Foxoft.Models
       [ForeignKey("TrInvoiceHeader")]
       public Guid? InvoiceHeaderId { get; set; }
 
-      [DisplayName("Ödəniş Nömrəsi")]
+      [DisplayName("Sənəd Nömrəsi")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string DocumentNumber { get; set; }
 
+      [DisplayName("Ödəniş Tarixi")]
       [DefaultValue("getdate()")]
       [Column(TypeName = "date")]
-      [DisplayName("Ödəniş Tarixi")]
       public DateTime DocumentDate { get; set; }
 
       [DisplayName("Ödəniş Vaxtı")]

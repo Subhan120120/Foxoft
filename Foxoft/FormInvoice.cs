@@ -351,9 +351,9 @@ namespace Foxoft
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+                  string filter = " where [ProductCode] = '" + productCode + "' ";
 
-                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
                   FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
@@ -369,8 +369,8 @@ namespace Foxoft
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
-                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+                  string filter = " where [ProductCode] = '" + productCode + "' ";
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
                   FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
@@ -385,8 +385,8 @@ namespace Foxoft
                   DcReport dcReport = efMethods.SelectReport(1004);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' and [Cari Hesab Kodu] = '" + trInvoiceHeader.CurrAccCode + "'";
-                  string activeFilterStr = "[Mağaza Kodu] = \'" + Authorization.StoreCode + "\'";
+                  string filter = " where [ProductCode] = '" + productCode + "' and [CurrAccCode] = '" + trInvoiceHeader.CurrAccCode + "'";
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
                   FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }

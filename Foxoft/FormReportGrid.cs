@@ -32,7 +32,6 @@ namespace Foxoft
       EfMethods efMethods = new();
       AdoMethods adoMethods = new();
 
-      RepositoryItemHyperLinkEdit HLE_InvoiceNum = new();
       RepositoryItemHyperLinkEdit HLE_DocumentNum = new();
 
       public FormReportGrid()
@@ -49,7 +48,7 @@ namespace Foxoft
          badge2.TargetElement = ribbonPage1;
 
          HLE_DocumentNum.SingleClick = true;
-         HLE_InvoiceNum.SingleClick = true;
+         HLE_DocumentNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
       }
 
       public FormReportGrid(string qry, DcReport report)
@@ -95,27 +94,10 @@ namespace Foxoft
          gV_Report.MoveLast();
          gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
 
-         GridColumn column_InvoiceNumber = gV_Report.Columns["InvoiceNumber"];
-
-         HLE_InvoiceNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
-
-         if (column_InvoiceNumber is null)
-            column_InvoiceNumber = gV_Report.Columns["Faktura Nömrəsi"];
-
-         if (column_InvoiceNumber is not null)
-            column_InvoiceNumber.ColumnEdit = HLE_InvoiceNum;
-
          GridColumn col_DocumentNumber = gV_Report.Columns["DocumentNumber"];
-         if (col_DocumentNumber is not null)
-            col_DocumentNumber = gV_Report.Columns["Ödəniş Nömrəsi"];
 
          if (col_DocumentNumber is not null)
             col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
-
-         HLE_DocumentNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
-
-         //gV_Report.Columns.ForEach(x => x.SummaryItem.DisplayFormat = "df{0}");
-
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -152,6 +134,9 @@ namespace Foxoft
 
       private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
       {
+
+         string asd = gV_Report.ActiveFilterString;
+
          Stream str = new MemoryStream();
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_Report.SaveLayoutToStream(str, option);
@@ -194,7 +179,7 @@ namespace Foxoft
          //   e.Cancel = true; //icine girmesin
       }
 
-      private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
+      private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
       {
          object objInv = gV_Report.GetFocusedRowCellValue("InvoiceHeaderId");
          object objPay = gV_Report.GetFocusedRowCellValue("PaymentHeaderId");
@@ -210,7 +195,7 @@ namespace Foxoft
 
                   if (trInvoiceHeader is not null)
                   {
-                     FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+                     FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
                      FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
                      formInvoice.MdiParent = formERP;
                      formInvoice.WindowState = FormWindowState.Maximized;
@@ -227,7 +212,7 @@ namespace Foxoft
          {
             if (Guid.Parse(objPay.ToString()) != Guid.Empty)
             {
-               FormPaymentDetail frm = new FormPaymentDetail(Guid.Parse(objPay.ToString()));
+               FormPaymentDetail frm = new (Guid.Parse(objPay.ToString()));
                FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
                frm.MdiParent = formERP;
                frm.WindowState = FormWindowState.Maximized;
