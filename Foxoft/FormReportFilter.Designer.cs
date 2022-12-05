@@ -92,13 +92,17 @@ namespace Foxoft
          // 
          // filterControl_Outer
          // 
+         this.filterControl_Outer.AllowAggregateEditing = DevExpress.XtraEditors.FilterControlAllowAggregateEditing.AggregateWithCondition;
+         this.filterControl_Outer.AllowCustomExpressions = DevExpress.Utils.DefaultBoolean.True;
          this.filterControl_Outer.Cursor = System.Windows.Forms.Cursors.Arrow;
          this.filterControl_Outer.Location = new System.Drawing.Point(12, 147);
          this.filterControl_Outer.Name = "filterControl_Outer";
          this.filterControl_Outer.NodeSeparatorHeight = 2;
+         this.filterControl_Outer.ShowCustomFunctions = DevExpress.Utils.DefaultBoolean.True;
          this.filterControl_Outer.Size = new System.Drawing.Size(833, 170);
          this.filterControl_Outer.TabIndex = 5;
          this.filterControl_Outer.Text = "filterControlOuter";
+         this.filterControl_Outer.UseMenuForOperandsAndOperators = true;
          this.filterControl_Outer.CustomValueEditor += new System.EventHandler<DevExpress.XtraEditors.Filtering.CustomValueEditorArgs>(this.filterControl_Outer_CustomValueEditor);
          // 
          // Root

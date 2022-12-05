@@ -20,7 +20,7 @@ namespace Foxoft
 
       public string GetNextDocNum(string processCode, string columnName, string tableName, int ReplicateNum)
       {
-         using subContext db = new();
+         using subContext db = new(); 
          string qry = $"exec [dbo].[GetNextDocNum] {processCode}, {columnName}, {tableName}, {ReplicateNum}";
 
          return db.Set<GetNextDocNum>()

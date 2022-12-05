@@ -1,10 +1,12 @@
 ﻿using DevExpress.XtraEditors;
+using Foxoft.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -51,8 +53,10 @@ namespace Foxoft
          SqlDataReader dr = command.ExecuteReader();
          DataTable dt = new();
          dt.Load(dr);
-         return dt;
 
+         ReflectionExtensions.GetCaptionName(dt);
+
+         return dt;
 
          //using (SqlDataAdapter da = new SqlDataAdapter(query, con))
          //{
@@ -78,6 +82,9 @@ namespace Foxoft
          da.SelectCommand.Parameters.AddRange(sqlParameters);
          DataTable dt = new();
          da.Fill(dt);
+
+         ReflectionExtensions.GetCaptionName(dt);
+
          return dt;
       }
 
@@ -137,6 +144,5 @@ namespace Foxoft
          dt.TableName = "trPaymentLines";
          return dt;
       }
-
    }
 }

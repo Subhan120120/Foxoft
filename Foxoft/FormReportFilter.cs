@@ -21,10 +21,10 @@ namespace Foxoft
       AdoMethods adoMethods = new AdoMethods();
       DcReport dcReport = new DcReport();
 
-      readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
-      readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
-      readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new RepositoryItemButtonEdit();
-      readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new();
 
       public FormReportFilter(DcReport Report)
       {
@@ -50,18 +50,23 @@ namespace Foxoft
          this.repoBtnEdit_ProductCode.AutoHeight = false;
          this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
          this.repoBtnEdit_ProductCode.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdt_ButtonPressed);
+         repoBtnEdit_ProductCode.ReadOnly = false;
+         repoBtnEdit_ProductCode.Buttons[0].Visible = true;
 
          this.repoBtnEdit_CurrAccCode.AutoHeight = false;
          this.repoBtnEdit_CurrAccCode.Name = "repoBtnEdit_CurrAccCode";
          this.repoBtnEdit_CurrAccCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CurrAccCode_ButtonPressed);
+         repoBtnEdit_CurrAccCode.Buttons[0].Visible = true;
 
          this.repoBtnEdit_StoreCode.AutoHeight = false;
          this.repoBtnEdit_StoreCode.Name = "repoBtnEdit_StoreCode";
          this.repoBtnEdit_StoreCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_StoreCode_ButtonPressed);
+         repoBtnEdit_StoreCode.Buttons[0].Visible = true;
 
          this.repoBtnEdit_CashRegisterCode.AutoHeight = false;
          this.repoBtnEdit_CashRegisterCode.Name = "repoBtnEdit_CashRegisterCode";
          this.repoBtnEdit_CashRegisterCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CashRegisterCode_ButtonPressed);
+         repoBtnEdit_CashRegisterCode.Buttons[0].Visible = true;
       }
 
       private string ClearVariables(string querySql)
@@ -167,7 +172,7 @@ namespace Foxoft
 
          try
          {
-            FormReportGrid myform = new FormReportGrid(qryMaster + queryFilter, dcReport);
+            FormReportGrid myform = new(qryMaster + queryFilter, dcReport);
 
             myform.MdiParent = this.MdiParent;
             myform.Show();

@@ -16,6 +16,7 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1288,6 +1289,15 @@ namespace Foxoft
 
       private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
       {
+
+         using subContext db = new();
+
+         IEnumerable<IEntityType> asd = db.Model.GetEntityTypes();
+
+         foreach (var item in asd)
+         {
+            MessageBox.Show(item.DisplayName());
+         }
          string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
          gC_InvoiceLine.ExportToXlsx(pathDesktop + $@"\InvoiceLine.xlsx");
       }

@@ -269,6 +269,7 @@ namespace Foxoft
          this.gV_InvoiceLine.OptionsSelection.MultiSelect = true;
          this.gV_InvoiceLine.OptionsView.ColumnHeaderAutoHeight = DevExpress.Utils.DefaultBoolean.False;
          this.gV_InvoiceLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+         this.gV_InvoiceLine.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
          this.gV_InvoiceLine.OptionsView.ShowFooter = true;
          this.gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
          this.gV_InvoiceLine.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_InvoiceLine_RowCellStyle);
@@ -315,6 +316,7 @@ namespace Foxoft
          this.repoBtnEdit_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
          this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
+         this.repoBtnEdit_ProductCode.UseReadOnlyAppearance = false;
          this.repoBtnEdit_ProductCode.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoBtnEdit_ProductCode_ButtonPressed);
          // 
          // colBalance
@@ -769,13 +771,13 @@ namespace Foxoft
          this.bBI_DeletePayment.Name = "bBI_DeletePayment";
          this.bBI_DeletePayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeletePayment_ItemClick);
          // 
-         // bBI_SaveQuit
+         // bBI_SaveAndQuit
          // 
          this.bBI_SaveAndQuit.Caption = "Yadda Saxla Bağla";
          this.bBI_SaveAndQuit.Id = 13;
-         this.bBI_SaveAndQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveQuit.ImageOptions.SvgImage")));
+         this.bBI_SaveAndQuit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveAndQuit.ImageOptions.SvgImage")));
          this.bBI_SaveAndQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
-         this.bBI_SaveAndQuit.Name = "bBI_SaveQuit";
+         this.bBI_SaveAndQuit.Name = "bBI_SaveAndQuit";
          this.bBI_SaveAndQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndQuit_ItemClick);
          // 
          // bBI_reportPreviewAzn

@@ -107,7 +107,7 @@ namespace Foxoft.Models
       public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
       [DefaultValue("0")]
-      [DisplayName("Qiymət")]
+      [DisplayName("Endirim")]
       [Column(TypeName = "money")]
       public decimal PosDiscount { get; set; }
 

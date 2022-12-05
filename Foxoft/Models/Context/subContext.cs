@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.ComponentModel;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -62,13 +63,13 @@ namespace Foxoft.Models
          //for DefaultValue Attribute for Entity propertires. Usage:
          // [DefaultValue("400")]
          // public int LengthInMeters { get; set; }
-         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+         foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
          {
-            foreach (var property in entityType.GetProperties())
+            foreach (IMutableProperty property in entityType.GetProperties())
             {
-               var memberInfo = property.PropertyInfo ?? (MemberInfo)property.FieldInfo;
+               MemberInfo memberInfo = property.PropertyInfo ?? (MemberInfo)property.FieldInfo;
                if (memberInfo == null) continue;
-               var defaultValue = Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) as DefaultValueAttribute;
+               DefaultValueAttribute defaultValue = Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) as DefaultValueAttribute;
                if (defaultValue == null) continue;
                property.SetDefaultValueSql(defaultValue.Value.ToString());
             }

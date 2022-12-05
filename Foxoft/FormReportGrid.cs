@@ -8,11 +8,13 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -63,6 +65,7 @@ namespace Foxoft
       private void LoadData()
       {
          DataTable dt = adoMethods.SqlGetDt(qry);
+
          gC_Report.DataSource = dt;
 
          gV_Report.MoveLast();
