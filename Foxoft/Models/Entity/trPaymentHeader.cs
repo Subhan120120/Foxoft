@@ -29,7 +29,7 @@ namespace Foxoft.Models
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string DocumentNumber { get; set; }
 
-      [DisplayName("Ödəniş Tarixi")]
+      [DisplayName("Sənəd Tarixi")]
       [DefaultValue("getdate()")]
       [Column(TypeName = "date")]
       public DateTime DocumentDate { get; set; }
