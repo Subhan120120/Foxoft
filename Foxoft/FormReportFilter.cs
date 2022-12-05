@@ -21,10 +21,11 @@ namespace Foxoft
       AdoMethods adoMethods = new AdoMethods();
       DcReport dcReport = new DcReport();
 
-      readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new();
-      readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new();
-      readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new();
-      readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_WarehouseCode = new RepositoryItemButtonEdit();
 
       public FormReportFilter(DcReport Report)
       {
@@ -50,23 +51,22 @@ namespace Foxoft
          this.repoBtnEdit_ProductCode.AutoHeight = false;
          this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
          this.repoBtnEdit_ProductCode.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdt_ButtonPressed);
-         repoBtnEdit_ProductCode.ReadOnly = false;
-         repoBtnEdit_ProductCode.Buttons[0].Visible = true;
 
          this.repoBtnEdit_CurrAccCode.AutoHeight = false;
          this.repoBtnEdit_CurrAccCode.Name = "repoBtnEdit_CurrAccCode";
          this.repoBtnEdit_CurrAccCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CurrAccCode_ButtonPressed);
-         repoBtnEdit_CurrAccCode.Buttons[0].Visible = true;
 
          this.repoBtnEdit_StoreCode.AutoHeight = false;
          this.repoBtnEdit_StoreCode.Name = "repoBtnEdit_StoreCode";
          this.repoBtnEdit_StoreCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_StoreCode_ButtonPressed);
-         repoBtnEdit_StoreCode.Buttons[0].Visible = true;
 
          this.repoBtnEdit_CashRegisterCode.AutoHeight = false;
          this.repoBtnEdit_CashRegisterCode.Name = "repoBtnEdit_CashRegisterCode";
          this.repoBtnEdit_CashRegisterCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CashRegisterCode_ButtonPressed);
-         repoBtnEdit_CashRegisterCode.Buttons[0].Visible = true;
+
+         this.repoBtnEdit_WarehouseCode.AutoHeight = false;
+         this.repoBtnEdit_WarehouseCode.Name = "repoBtnEdit_WarehouseCode";
+         this.repoBtnEdit_WarehouseCode.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdit_WarehouseCode_ButtonPressed);
       }
 
       private string ClearVariables(string querySql)
@@ -312,6 +312,8 @@ namespace Foxoft
             e.RepositoryItem = repoBtnEdit_StoreCode;
          if (e.Node.FirstOperand.PropertyName == "Kassa Kodu" || e.Node.FirstOperand.PropertyName == "CashRegisterCode")
             e.RepositoryItem = repoBtnEdit_CashRegisterCode;
+         if (e.Node.FirstOperand.PropertyName == "Depo Kodu" || e.Node.FirstOperand.PropertyName == "WarehouseCode")
+            e.RepositoryItem = repoBtnEdit_WarehouseCode;
       }
 
       private void repoBtnEdt_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -346,10 +348,22 @@ namespace Foxoft
          SelectCurrAcc(sender, 5);
       }
 
+      private void repoBtnEdit_WarehouseCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         ButtonEdit editor = (ButtonEdit)sender;
+         using (FormWarehouseList form = new())
+         {
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+               editor.EditValue = form.dcWarehouse.WarehouseCode;
+            }
+         }
+      }
+
       private void SelectCurrAcc(object sender, byte currAccTypeCode)
       {
          ButtonEdit editor = (ButtonEdit)sender;
-         using (FormCurrAccList form = new FormCurrAccList(currAccTypeCode))
+         using (FormCurrAccList form = new(currAccTypeCode))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {

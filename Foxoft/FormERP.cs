@@ -100,10 +100,10 @@ namespace Foxoft
       {
          foreach (var child in this.MdiChildren)
          {
-            var myCustomChild = child as RibbonForm;
-            if (myCustomChild == null) continue; //if there are any casting problems
+            var customChild = child as RibbonForm;
+            if (customChild == null) continue; //if there are any casting problems
 
-            myCustomChild.Close();
+            customChild.Close();
          }
       }
 
@@ -146,25 +146,17 @@ namespace Foxoft
       {
          FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
 
-         if (form != null)
+         try
          {
-            form.BringToFront();
-            form.Activate();
+            form = new(0);
+            form.MdiParent = this;
+            form.Show();
+            form.WindowState = FormWindowState.Maximized;
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
          }
-         else
+         catch (Exception ex)
          {
-            try
-            {
-               form = new(0);
-               form.MdiParent = this;
-               form.Show();
-               form.WindowState = FormWindowState.Maximized;
-               parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-            catch (Exception ex)
-            {
-               MessageBox.Show("Cari Hesablar acila bilmir: \n" + ex.ToString());
-            }
+            MessageBox.Show("Cari Hesablar açıla bilmir: \n" + ex.ToString());
          }
       }
 
@@ -219,7 +211,7 @@ namespace Foxoft
 
       private string subConnString = Settings.Default.subConnString;
 
-      private void accordionControlElement2_Click(object sender, EventArgs e)
+      private void aCE_ReportZet_Click(object sender, EventArgs e)
       {
          DsMethods dsMethods = new();
          ReportClass reportClass = new();
@@ -267,46 +259,6 @@ namespace Foxoft
          {
             ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
-         }
-
-
-      }
-
-      private void aCE_MakePayment_Click(object sender, EventArgs e)
-      {
-         using (FormCurrAccList formCurrAcc = new(0))
-         {
-            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
-            {
-               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-
-               using (FormPayment formPayment = new(1, -1, trInvoiceHeader))
-               {
-                  if (formPayment.ShowDialog(this) == DialogResult.OK)
-                  {
-                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                  }
-               }
-            }
-         }
-      }
-
-      private void aCE_receivePayment_Click(object sender, EventArgs e)
-      {
-         using (FormCurrAccList formCurrAcc = new(0))
-         {
-            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
-            {
-               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-               //decimal debt = 
-               using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
-               {
-                  if (formPayment.ShowDialog(this) == DialogResult.OK)
-                  {
-                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                  }
-               }
-            }
          }
       }
 
@@ -397,7 +349,7 @@ namespace Foxoft
 
          foreach (Form form in Application.OpenForms)
          {
-            UcReturn frmRtrn = form as UcReturn;
+            FormReturn frmRtrn = form as FormReturn;
             if (frmRtrn != null)
             {
                frmRtrn.BringToFront();
@@ -408,7 +360,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            UcReturn frmRtrn = new("RP");
+            FormReturn frmRtrn = new("RP");
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();
@@ -421,7 +373,7 @@ namespace Foxoft
 
          foreach (Form form in Application.OpenForms)
          {
-            UcReturn frmRtrn = form as UcReturn;
+            FormReturn frmRtrn = form as FormReturn;
             if (frmRtrn != null)
             {
                frmRtrn.BringToFront();
@@ -432,11 +384,73 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            UcReturn frmRtrn = new("RS");
+            FormReturn frmRtrn = new("RS");
             frmRtrn.MdiParent = this;
             frmRtrn.WindowState = FormWindowState.Maximized;
             frmRtrn.Show();
          }
+      }
+
+      private void ACE_ReportFinally_Click(object sender, EventArgs e)
+      {
+         DsMethods dsMethods = new();
+         ReportClass reportClass = new();
+
+         SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
+         dataSource.Name = "Kapital";
+
+         //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
+
+         CustomSqlQuery sqlDepozit = new("Depozit", "select 0 depozit");
+
+         DateTime dateTime = new(2022, 06, 23); // DateTime.Now.Date; // 
+
+         DateTime startDate = dateTime;
+         DateTime endDate = dateTime;
+
+         SqlQuery sqlQuerySale = dsMethods.SelectSales(startDate, endDate);
+         SqlQuery sqlQueryPayment = dsMethods.SelectPayments(startDate, endDate);
+         SqlQuery sqlQueryExpences = dsMethods.SelectExpences(startDate, endDate);
+         SqlQuery sqlQueryDbtCustomers = dsMethods.SelectDebtCustomers();
+         //SqlQuery sqlQueryDbtVendors = dsMethods.SelectDebtVendors();
+         SqlQuery sqlQueryPaymentCustomers = dsMethods.SelectPaymentCustomers(startDate, endDate);
+         SqlQuery sqlQueryPaymentVendors = dsMethods.SelectPaymentVendors(startDate, endDate);
+
+         dataSource.Queries.AddRange(new SqlQuery[] { sqlDepozit, sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryDbtCustomers, sqlQueryPaymentCustomers, sqlQueryPaymentVendors });
+         dataSource.Fill();
+
+         // string designPath = Settings.Default.AppSetting.PrintDesignPath;
+
+         string designPath = Path.Combine(Environment.CurrentDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
+
+         if (!File.Exists(designPath))
+         {
+            designPath = reportClass.SelectDesign();
+         }
+         if (File.Exists(designPath))
+         {
+            ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
+            designTool.ShowRibbonDesignerDialog();
+         }
+      }
+
+      private void ACE_CashReg_Click(object sender, EventArgs e)
+      {
+         FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
+
+         try
+         {
+            form = new(5);
+            form.MdiParent = this;
+            form.Show();
+            form.WindowState = FormWindowState.Maximized;
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show("Kassa Hesablar açıla bilmir: \n" + ex.ToString());
+         }
+
       }
    }
 }

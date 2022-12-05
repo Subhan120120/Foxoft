@@ -113,5 +113,11 @@ namespace Foxoft
             XtraMessageBox.Show(combinedString);
          }
       }
+
+      private void simpleButton1_Click(object sender, EventArgs e)
+      {
+         FormFeature formFeature = new();
+         formFeature.Show();
+      }
    }
 }

@@ -21,6 +21,7 @@ namespace Foxoft
       EfMethods efMethods = new();
       public DcCurrAcc dcCurrAcc { get; set; }
       public byte currAccTypeCode;
+      public string currAccCode;
 
       public FormCurrAccList()
       {
@@ -31,6 +32,11 @@ namespace Foxoft
          MemoryStream stream = new(byteArray);
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_CurrAccList.RestoreLayoutFromStream(stream, option);
+
+         //colPhoneNum.Properties.Mask.EditMask = "(00) 000 00 00";
+         //colPhoneNum.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
+         //colPhoneNum.Properties.Mask.SaveLiteral = false;
+         //colPhoneNum.Properties.Mask.UseMaskAsDisplayFormat = true;
       }
 
       public FormCurrAccList(byte currAccTypeCode)
@@ -38,6 +44,12 @@ namespace Foxoft
       {
          this.currAccTypeCode = currAccTypeCode;
          UpdateGridViewData();
+      }
+
+      public FormCurrAccList(byte productTypeCode, string currAccCode)
+    : this(productTypeCode)
+      {
+         this.currAccCode = currAccCode;
       }
 
       private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -68,9 +80,13 @@ namespace Foxoft
          //} 
          #endregion
 
-         GridView view = sender as GridView;
          if (dcCurrAcc is not null)
-            DialogResult = DialogResult.OK;
+            AcceptForm();
+      }
+
+      private void AcceptForm()
+      {
+         DialogResult = DialogResult.OK;
       }
 
       private void bBI_CurrAccNew_ItemClick(object sender, ItemClickEventArgs e)
@@ -118,13 +134,13 @@ namespace Foxoft
       {
          if (currAccTypeCode != 0)
          {
-            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccsByType(currAccTypeCode);
+            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { currAccTypeCode });
          }
          else
          {
             //dbContext.DcCurrAccs.Load();
             //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
-            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs();
+            dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { 1, 2, 3, 4 });
          }
       }
 
@@ -164,19 +180,19 @@ namespace Foxoft
       bool isFirstPaint = true;
       private void gC_CurrAccList_Paint(object sender, PaintEventArgs e)
       {
-         GridControl gC = sender as GridControl;
-         GridView gV = gC.MainView as GridView;
+         //GridControl gC = sender as GridControl;
+         //GridView gV = gC.MainView as GridView;
 
-         if (isFirstPaint)
-         {
-            if (!gV.FindPanelVisible)
-               gV.ShowFindPanel();
-            gV.ShowFindPanel();
+         //if (isFirstPaint)
+         //{
+         //   if (!gV.FindPanelVisible)
+         //      gV.ShowFindPanel();
+         //   gV.ShowFindPanel();
 
-            gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
-            gV.OptionsFind.FindNullPrompt = "Axtarın...";
-         }
-         isFirstPaint = false;
+         //   gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
+         //   gV.OptionsFind.FindNullPrompt = "Axtarın...";
+         //}
+         //isFirstPaint = false;
       }
 
       private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
@@ -225,9 +241,9 @@ namespace Foxoft
             //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
             string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-
-            FormReportGrid formGrid = new(qryMaster, dcReport);
+            FormReportGrid formGrid = new(qryMaster, dcReport, activeFilterStr);
             formGrid.Show();
          }
       }
@@ -278,6 +294,48 @@ namespace Foxoft
       private void bBI_CurAccRefresh_ItemClick(object sender, ItemClickEventArgs e)
       {
          UpdateGridViewData();
+      }
+
+      //AutoFocus FindPanel 
+      private void gC_CurrAccList_Load(object sender, EventArgs e)
+      {
+         GridControl gC = sender as GridControl;
+         GridView gV = gC.MainView as GridView;
+         if (gV is not null)
+         {
+            gV_CurrAccList.OptionsFind.FindFilterColumns = "CurrAccDesc";
+            gV_CurrAccList.OptionsFind.FindNullPrompt = "Axtarın...";
+
+            //if (!gV.FindPanelVisible)
+               gC.BeginInvoke(new Action(gV.ShowFindPanel));
+         }
+
+         int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
+         if (rowHandle != GridControl.InvalidRowHandle)
+         {
+            gV_CurrAccList.FocusedRowHandle = rowHandle;
+            gV_CurrAccList.MakeRowVisible(rowHandle);
+         }
+
+         gV_CurrAccList.BestFitColumns();
+      }
+
+      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         DcReport dcReport = efMethods.SelectReport(3);
+         object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
+
+         if (currAccCode is not null)
+         {
+            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+            string filter = " where [CurrAccCode] = '" + currAccCode + "' ";
+
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+            FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+            formGrid.Show();
+         }
       }
    }
 }

@@ -12,10 +12,10 @@ namespace Foxoft
    {
       private Guid PaymentHeaderId;
       //private bool autoMakePayment;
-      private TrPaymentHeader trPaymentHeader = new TrPaymentHeader();
+      private TrPaymentHeader trPaymentHeader = new();
       private TrInvoiceHeader trInvoiceHeader { get; set; }
-      private TrPaymentLine trPaymentLine = new TrPaymentLine();
-      private EfMethods efMethods = new EfMethods();
+      private TrPaymentLine trPaymentLine = new();
+      private EfMethods efMethods = new();
 
       private bool isNegativ = false;
 
@@ -147,7 +147,7 @@ namespace Foxoft
       {
          ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-         using (FormCurrAccList form = new FormCurrAccList(0))
+         using (FormCurrAccList form = new(5, trInvoiceHeader.CurrAccCode))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {

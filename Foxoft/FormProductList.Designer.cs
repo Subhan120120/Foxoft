@@ -73,9 +73,12 @@ namespace Foxoft
          this.bBI_ProductDelete = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_ProductRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_Feature = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
@@ -96,6 +99,7 @@ namespace Foxoft
          this.gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_ProductList});
          this.gC_ProductList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_ProductList_Paint);
+         this.gC_ProductList.Load += new System.EventHandler(this.gC_ProductList_Load);
          this.gC_ProductList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_ProductList_ProcessGridKey);
          // 
          // gV_ProductList
@@ -133,6 +137,7 @@ namespace Foxoft
          this.gV_ProductList.GridControl = this.gC_ProductList;
          this.gV_ProductList.Name = "gV_ProductList";
          this.gV_ProductList.OptionsFind.FindDelay = 100;
+         this.gV_ProductList.OptionsView.ShowGroupPanel = false;
          this.gV_ProductList.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_ProductList_RowCellStyle);
          this.gV_ProductList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_ProductList_RowStyle);
          this.gV_ProductList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_ProductList_FocusedRowChanged);
@@ -314,9 +319,10 @@ namespace Foxoft
             this.barButtonItem1,
             this.bBI_ProductDelete,
             this.bBI_ProductRefresh,
-            this.BBI_Feature});
+            this.BBI_Feature,
+            this.barButtonItem3});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 18;
+         this.ribbonControl1.MaxItemId = 21;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -388,11 +394,21 @@ namespace Foxoft
          this.BBI_Feature.Name = "BBI_Feature";
          this.BBI_Feature.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Feature_ItemClick);
          // 
+         // barButtonItem3
+         // 
+         this.barButtonItem3.Caption = "Məhsulun Bütün Hərəkətləri";
+         this.barButtonItem3.Id = 20;
+         this.barButtonItem3.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem3.ImageOptions.SvgImage")));
+         this.barButtonItem3.Name = "barButtonItem3";
+         this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup3,
+            this.ribbonPageGroup4});
          this.ribbonPage1.Name = "ribbonPage1";
          this.ribbonPage1.Text = "Məhsul";
          // 
@@ -412,6 +428,17 @@ namespace Foxoft
          this.ribbonPageGroup2.ItemLinks.Add(this.BBI_Feature);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Nəzarət";
+         // 
+         // ribbonPageGroup3
+         // 
+         this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem3);
+         this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+         this.ribbonPageGroup3.Text = "Hesabat";
+         // 
+         // ribbonPageGroup4
+         // 
+         this.ribbonPageGroup4.Name = "ribbonPageGroup4";
+         this.ribbonPageGroup4.Text = "ribbonPageGroup4";
          // 
          // ribbonStatusBar1
          // 
@@ -495,5 +522,8 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem bBI_ProductRefresh;
       private DevExpress.XtraBars.BarButtonItem BBI_Feature;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceS;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem3;
    }
 }

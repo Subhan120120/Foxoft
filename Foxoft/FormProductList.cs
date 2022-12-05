@@ -19,7 +19,7 @@ namespace Foxoft
 {
    public partial class FormProductList : RibbonForm
    {
-      EfMethods efMethods = new EfMethods();
+      EfMethods efMethods = new();
       public DcProduct dcProduct { get; set; }
       public string productCode { get; set; }
       public byte productTypeCode;
@@ -31,7 +31,7 @@ namespace Foxoft
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new MemoryStream(byteArray);
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_ProductList.RestoreLayoutFromStream(stream, option);
 
          ribbonControl1.Minimized = true;
@@ -58,6 +58,10 @@ namespace Foxoft
             gV_ProductList.FocusedRowHandle = rowHandle;
             gV_ProductList.MakeRowVisible(rowHandle);
          }
+
+         //gV_ProductList.ShowFindPanel();
+         //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+         //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
       }
 
       private void LoadProducts(byte productTypeCode)
@@ -130,7 +134,7 @@ namespace Foxoft
 
       private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
       {
-         FormProduct formProduct = new FormProduct(productTypeCode);
+         FormProduct formProduct = new(productTypeCode);
          if (formProduct.ShowDialog(this) == DialogResult.OK)
          {
             LoadProducts(productTypeCode);
@@ -141,7 +145,7 @@ namespace Foxoft
       {
          if (dcProduct is not null)
          {
-            FormProduct formProduct = new FormProduct(productTypeCode, dcProduct.ProductCode);
+            FormProduct formProduct = new(productTypeCode, dcProduct.ProductCode);
 
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
@@ -154,11 +158,6 @@ namespace Foxoft
          }
          else
             MessageBox.Show("Məhsul Seçilməyib");
-      }
-
-      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
-      {
-
       }
 
       private void gC_ProductList_ProcessGridKey(object sender, KeyEventArgs e)
@@ -182,9 +181,11 @@ namespace Foxoft
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+                  string filter = " where [ProductCode] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -210,36 +211,35 @@ namespace Foxoft
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+                  string filter = " where [ProductCode] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new FormReportGrid(qryMaster + filter, dcReport);
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+
                   formGrid.Show();
                }
             }
          }
       }
 
-      private void Autoc_ItemClick(object sender, ItemClickEventArgs e)
-      {
-      }
-
       // AutoFocus FindPanel
       bool isFirstPaint = true;
       private void gC_ProductList_Paint(object sender, PaintEventArgs e)
       {
-         GridControl gC = sender as GridControl;
-         GridView gV = gC.MainView as GridView;
+         //GridControl gC = sender as GridControl;
+         //GridView gV = gC.MainView as GridView;
 
-         if (isFirstPaint)
-         {
-            if (!gV.FindPanelVisible)
-               gV.ShowFindPanel();
-            gV.ShowFindPanel();
+         //if (isFirstPaint)
+         //{
+         //   if (!gV.FindPanelVisible)
+         //      gV.ShowFindPanel();
+         //   gV.ShowFindPanel();
 
-            gV.OptionsFind.FindFilterColumns = "ProductDesc";
-            //gV.OptionsFind.FindNullPrompt = "Axtarın...";
-         }
-         isFirstPaint = false;
+         //   gV.OptionsFind.FindFilterColumns = "ProductDesc";
+         //   //gV.OptionsFind.FindNullPrompt = "Axtarın...";
+         //}
+         //isFirstPaint = false;
       }
 
       private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
@@ -344,6 +344,36 @@ namespace Foxoft
       private void BBI_Feature_ItemClick(object sender, ItemClickEventArgs e)
       {
 
+      }
+
+      //AutoFocus FindPanel
+      private void gC_ProductList_Load(object sender, EventArgs e)
+      {
+         GridControl gC = sender as GridControl;
+         GridView gV = gC.MainView as GridView;
+         if (gV is not null)
+         {
+            gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+            gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+
+            if (!gV.FindPanelVisible)
+               gC.BeginInvoke(new Action(gV.ShowFindPanel));
+         }
+      }
+
+      private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         DcReport dcReport = efMethods.SelectReport(3);
+         object ProductCode = gV_ProductList.GetFocusedRowCellValue(colProductCode);
+
+         if (ProductCode is not null)
+         {
+            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+            string filter = " where [ProductCode] = '" + ProductCode + "' ";
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+            formGrid.Show();
+         }
       }
    }
 }

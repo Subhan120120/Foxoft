@@ -16,7 +16,6 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,6 +27,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+//using Twilio;
+//using Twilio.Rest.Api.V2010.Account;
+//using Twilio.Types;
 
 namespace Foxoft
 {
@@ -121,7 +124,6 @@ namespace Foxoft
 
          trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-
          lbl_InvoicePaidSum.Text = "";
          lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
 
@@ -134,6 +136,8 @@ namespace Foxoft
          dataLayoutControl1.IsValid(out List<string> errorList);
 
          ShowPrintCount();
+
+         CheckEdit_IsReturn.Enabled = false;
       }
 
       private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -250,6 +254,8 @@ namespace Foxoft
          dataLayoutControl1.IsValid(out List<string> errorList);
          CalcPaidAmount();
          ShowPrintCount();
+
+         CheckEdit_IsReturn.Enabled = false;
       }
 
       private void CalcPaidAmount()
@@ -279,15 +285,20 @@ namespace Foxoft
       {
          if (btnEdit_CurrAccCode.Enabled)
          {
-            FormCurrAccList form = new(0);
+            FormCurrAccList form = new(0, trInvoiceHeader.CurrAccCode);
 
             if (trInvoiceHeader.ProcessCode == "TF")
-               form = new(4);
+               form = new FormCurrAccList(4, trInvoiceHeader.CurrAccCode);
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-               btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-               FillCurrAccCode(form.dcCurrAcc);
+               if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
+               {
+                  btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
+                  FillCurrAccCode(form.dcCurrAcc);
+               }
+               else
+                  XtraMessageBox.Show("Müştəri Kredit Limitin Aşır", "Diqqət");
             }
          }
       }
@@ -299,6 +310,12 @@ namespace Foxoft
          gv.SetRowCellValue(e.RowHandle, col_InvoiceLineId, Guid.NewGuid());
          gv.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
          gv.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
+
+         if (trInvoiceHeader.ProcessCode == "EX")
+         {
+            gv.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
+            gv.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
+         }
       }
 
       private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -334,9 +351,11 @@ namespace Foxoft
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+                  string filter = " where [ProductCode] = '" + productCode + "' ";
 
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -350,9 +369,10 @@ namespace Foxoft
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
 
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' ";
+                  string filter = " where [ProductCode] = '" + productCode + "' ";
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -365,10 +385,9 @@ namespace Foxoft
                   DcReport dcReport = efMethods.SelectReport(1004);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
-                  string filter = " where [Məhsul Kodu] = '" + productCode + "' and [Cari Hesab Kodu] = '" + trInvoiceHeader.CurrAccCode + "'";
-
-                  FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                  string filter = " where [ProductCode] = '" + productCode + "' and [CurrAccCode] = '" + trInvoiceHeader.CurrAccCode + "'";
+                  string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+                  FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
             }
@@ -485,7 +504,7 @@ namespace Foxoft
                if (!String.IsNullOrEmpty(productCode))
                {
                   object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
-                  Guid invoiceLineId = Guid.Parse((colInvoiceLineId ??= Guid.Empty).ToString());
+                  Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
 
                   TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
                   int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
@@ -501,7 +520,37 @@ namespace Foxoft
                      e.Valid = false;
                   }
                }
+            }
 
+            if (!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS")
+            {
+               string currAccCode = trInvoiceHeader.CurrAccCode;
+               if (!String.IsNullOrEmpty(currAccCode))
+               {
+                  DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
+                  decimal creditLimit = dcCurrAcc.CreditLimit;
+
+                  decimal invoiceSumLoc = (-1) * efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentDate);
+
+                  object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+                  Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
+                  TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
+                  decimal currentNetAmountLoc = currTrInvoLine is null ? 0 : currTrInvoLine.NetAmountLoc;
+
+                  decimal sumInvoExpectLine = invoiceSumLoc - currentNetAmountLoc;
+
+                  object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
+
+                  decimal sumLineNet = Convert.ToInt32(e.Value ??= 0) * Convert.ToDecimal(objPriceLoc ??= 0);
+
+                  decimal sumInvo = sumInvoExpectLine + sumLineNet;
+
+                  if (sumInvo > creditLimit && creditLimit != 0)
+                  {
+                     e.ErrorText = "Müştəri Kredit Limitini Aşır!";
+                     e.Valid = false;
+                  }
+               }
             }
          }
 
@@ -607,7 +656,7 @@ namespace Foxoft
       private void SelectSalesPerson(object sender)
       {
          ButtonEdit editor = (ButtonEdit)sender;
-         using FormCurrAccList form = new(0);
+         using FormCurrAccList form = new(0, editor.EditValue.ToString());
 
          if (form.ShowDialog(this) == DialogResult.OK)
          {
@@ -749,6 +798,7 @@ namespace Foxoft
          TrPaymentLine trPaymentLine = PaymentLineDefaults();
 
          decimal invoiceSumLoc = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
+
 
          if (invoiceSumLoc > 0)
          {
@@ -901,6 +951,7 @@ namespace Foxoft
             Clipboard.SetImage(img);
 
             ReportPrintTool printTool = new(report);
+
             bool? isPrinted = printTool.PrintDialog();
 
             if (isPrinted is not null)
@@ -972,6 +1023,7 @@ namespace Foxoft
       {
          string designPath = "";
          XtraReport xtraReport = GetInvoiceReport(designPath);
+
          if (xtraReport is not null)
          {
             ReportDesignTool printTool = new(xtraReport);
@@ -990,6 +1042,7 @@ namespace Foxoft
          string designPath = designFolder + rerportFileNameInvoice;
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
+
          if (xtraReport is not null)
          {
             ReportPrintTool printTool = new(xtraReport);
@@ -1003,7 +1056,6 @@ namespace Foxoft
          string designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
-
          if (xtraReport is not null)
          {
             ReportPrintTool printTool = new(xtraReport);
@@ -1287,19 +1339,42 @@ namespace Foxoft
          e.ExceptionMode = ExceptionMode.DisplayError;
       }
 
-      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
       {
+         if (CheckEdit_IsReturn.Enabled)
+            CheckEdit_IsReturn.Enabled = false;
+         else
+            CheckEdit_IsReturn.Enabled = true;
+      }
 
-         using subContext db = new();
+      private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)
+      {
+         GridControl gc = sender as GridControl;
+         GridView view = gc.FocusedView as GridView;
 
-         IEnumerable<IEntityType> asd = db.Model.GetEntityTypes();
-
-         foreach (var item in asd)
+         if (view.FocusedColumn.ColumnType == typeof(decimal))
          {
-            MessageBox.Show(item.DisplayName());
+            if ((e.KeyChar == '.') || (e.KeyChar == ','))
+            {
+               e.KeyChar = Convert.ToChar(",");
+            }
          }
-         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         gC_InvoiceLine.ExportToXlsx(pathDesktop + $@"\InvoiceLine.xlsx");
+      }
+
+      private void bbi_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         //var accountSid = "ACe725fdee6c3a1280f55c0b081bde6281";
+         //var authToken = "5053054a675e8ae82d2e2af08e19e957";
+         //TwilioClient.Init(accountSid, authToken);
+
+         //var messageOptions = new CreateMessageOptions(
+         //    new PhoneNumber("+994519678909"));
+         //messageOptions.From = new PhoneNumber("+994507957252");
+         //messageOptions.Body = "Your appointment is coming up on July 21 at 3PM";
+
+         //var message = MessageResource.Create(messageOptions);
+         ////Console.WriteLine(message.Body);
+
       }
    }
 }

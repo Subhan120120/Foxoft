@@ -1,12 +1,10 @@
 ﻿using DevExpress.XtraEditors;
-using Foxoft.Models;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -57,6 +55,7 @@ namespace Foxoft
          ReflectionExtensions.GetCaptionName(dt);
 
          return dt;
+
 
          //using (SqlDataAdapter da = new SqlDataAdapter(query, con))
          //{
@@ -144,5 +143,6 @@ namespace Foxoft
          dt.TableName = "trPaymentLines";
          return dt;
       }
+
    }
 }

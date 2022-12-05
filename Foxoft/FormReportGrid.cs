@@ -6,6 +6,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Localization;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -17,6 +18,16 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using DevExpress.Data;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraEditors.Controls;
+using System.IO;
+using System.Collections;
+using DevExpress.XtraGrid.Views.Base;
+using System.Collections.Generic;
+using System.Drawing.Imaging;
 
 namespace Foxoft
 {
@@ -25,19 +36,26 @@ namespace Foxoft
       Badge badge1;
       Badge badge2;
       AdornerUIManager adornerUIManager1;
+
       //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
-      DcReport report = new DcReport();
+      DcReport report = new();
       string qry = "select 0 Nothing";
-      EfMethods efMethods = new EfMethods();
-      AdoMethods adoMethods = new AdoMethods();
+      EfMethods efMethods = new();
+      AdoMethods adoMethods = new();
 
-      RepositoryItemHyperLinkEdit HLE_InvoiceNum = new RepositoryItemHyperLinkEdit();
-      RepositoryItemHyperLinkEdit HLE_DocumentNum = new RepositoryItemHyperLinkEdit();
+      RepositoryItemHyperLinkEdit HLE_DocumentNum = new();
+      RepositoryItemHyperLinkEdit HLE_InvoiceNum = new();
+      RepositoryItemHyperLinkEdit HLE_ProductCode = new();
+      RepositoryItemHyperLinkEdit HLE_CurrAccCode = new();
+
+      RepositoryItemPictureEdit riPictureEdit = new();
+
 
       public FormReportGrid()
       {
          InitializeComponent();
+         GridLocalizer.Active = new MyGridLocalizer();
 
          adornerUIManager1 = new AdornerUIManager(components);
          badge1 = new Badge();
@@ -48,22 +66,116 @@ namespace Foxoft
          badge2.TargetElement = ribbonPage1;
 
          HLE_DocumentNum.SingleClick = true;
+         HLE_DocumentNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
          HLE_InvoiceNum.SingleClick = true;
+         HLE_InvoiceNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
+         HLE_ProductCode.SingleClick = true;
+         HLE_ProductCode.OpenLink += repoHLE_ProductCode_OpenLink;
+         HLE_CurrAccCode.SingleClick = true;
+         HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
+
+
+         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+         gC_Report.RepositoryItems.Add(riPictureEdit);
+
       }
 
       public FormReportGrid(string qry, DcReport report)
-      : this()
+         : this()
       {
          this.qry = qry;
          this.report = report;
          this.Text = report.ReportName;
 
+         //AddUnboundColumn(gV_Report);
          LoadData();
          LoadLayout();
+
       }
 
+      public FormReportGrid(string qry, DcReport report, string activeFilterStr)
+         : this(qry, report)
+      {
+         this.gV_Report.ActiveFilterString = activeFilterStr;
+      }
+
+      void AddUnboundColumn(GridView view)
+      {
+         GridColumn colImage = new();
+         colImage.FieldName = "Image";
+         colImage.Caption = "Image";
+         colImage.UnboundType = UnboundColumnType.Object;
+         colImage.OptionsColumn.AllowEdit = false;
+         colImage.Visible = true;
+
+         view.Columns.Add(colImage);
+      }
+
+      void AssignPictureEdittoImageColumn(GridColumn column)
+      {
+         RepositoryItemPictureEdit riPictureEdit = new();
+         riPictureEdit.SizeMode = PictureSizeMode.Stretch;
+
+         //gridView1.Columns["Picture"].Width = 150;
+         //gridView1.RowHeight = 150;
+
+         gC_Report.RepositoryItems.Add(riPictureEdit);
+         column.ColumnEdit = riPictureEdit;
+      }
+
+      Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
+
+      private void gV_Report_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+      {
+         if (e.Column.FieldName == "ImagePath" && e.IsGetData)
+         {
+            GridView view = sender as GridView;
+            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+            string fileName = view.GetRowCellValue(rowInd, "ImagePath") as string ?? string.Empty;
+            string path = @"D:\image\" + fileName;
+            if (!imageCache.ContainsKey(path))
+            {
+               Image img = GetImage(path);
+               imageCache.Add(path, img);
+            }
+            e.Value = imageCache[path];
+         }
+      }
+
+      Image GetImage(string path)
+      {
+         // Load an image by its local path, URL, etc.
+         // The following code loads the image from te specified file.
+         Image img = null;
+         if (File.Exists(path))
+            img = Image.FromFile(path);
+         else
+            img = Image.FromFile(@"D:\image\noimage.jpg");
+         return img;
+      }
+
+      public class MyGridLocalizer : GridLocalizer
+      {
+         public override string GetLocalizedString(GridStringId id)
+         {
+            if (id == GridStringId.MenuFooterMaxFormat)
+               return "{0}";
+            if (id == GridStringId.MenuFooterMinFormat)
+               return "{0}";
+            if (id == GridStringId.MenuFooterSumFormat)
+               return "{0}";
+            if (id == GridStringId.MenuFooterCountFormat)
+               return "{0}";
+            if (id == GridStringId.MenuFooterAverageFormat)
+               return "{0}";
+
+            return base.GetLocalizedString(id);
+         }
+      }
       private void LoadData()
       {
+
+
          DataTable dt = adoMethods.SqlGetDt(qry);
 
          gC_Report.DataSource = dt;
@@ -71,24 +183,31 @@ namespace Foxoft
          gV_Report.MoveLast();
          gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
 
-         GridColumn column_InvoiceNumber = gV_Report.Columns["InvoiceNumber"];
-
-         HLE_InvoiceNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
-
-         if (column_InvoiceNumber is null)
-            column_InvoiceNumber = gV_Report.Columns["Faktura Nömrəsi"];
-
-         if (column_InvoiceNumber is not null)
-            column_InvoiceNumber.ColumnEdit = HLE_InvoiceNum;
-
          GridColumn col_DocumentNumber = gV_Report.Columns["DocumentNumber"];
-         if (col_DocumentNumber is not null)
-            col_DocumentNumber = gV_Report.Columns["Ödəniş Nömrəsi"];
 
          if (col_DocumentNumber is not null)
             col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
 
-         HLE_DocumentNum.OpenLink += repoHLE_InvoiceNumber_OpenLink;
+         GridColumn col_ProductCode = gV_Report.Columns["ProductCode"];
+
+         if (col_ProductCode is not null)
+            col_ProductCode.ColumnEdit = HLE_ProductCode;
+
+         GridColumn col_CurrAccCode = gV_Report.Columns["CurrAccCode"];
+
+         if (col_CurrAccCode is not null)
+            col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
+
+         
+
+         GridColumn col_Image = gV_Report.Columns["ImagePath"];
+         col_Image.UnboundType = UnboundColumnType.Object;
+         col_Image.OptionsColumn.AllowEdit = false;
+         col_Image.Visible = true;
+         if (col_Image is not null)
+            col_Image.ColumnEdit = riPictureEdit;
+         //col_Image.Width = 150;
+         //gV_Report.RowHeight = 150;
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -167,40 +286,67 @@ namespace Foxoft
          //   e.Cancel = true; //icine girmesin
       }
 
-      private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
+
+      private void repoHLE_ProductCode_OpenLink(object sender, OpenLinkEventArgs e)
+      {
+         object objProductCode = gV_Report.GetFocusedRowCellValue("ProductCode");
+         if (objProductCode is not null)
+         {
+            string productCode = objProductCode.ToString();
+            FormProduct formProduct = new(0, productCode);
+            if (formProduct.ShowDialog(this) == DialogResult.OK)
+            {
+               LoadData();
+            }
+         }
+      }
+
+      private void repoHLE_CurrAccCode_OpenLink(object sender, OpenLinkEventArgs e)
+      {
+         object objCurrAccCode = gV_Report.GetFocusedRowCellValue("CurrAccCode");
+         if (objCurrAccCode is not null)
+         {
+            string currAccCode = objCurrAccCode.ToString();
+            FormCurrAcc formCurrAcc = new(currAccCode);
+            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+            {
+               LoadData();
+            }
+         }
+      }
+
+      private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
       {
          object objInv = gV_Report.GetFocusedRowCellValue("InvoiceHeaderId");
-         object objPay = gV_Report.GetFocusedRowCellValue("PaymentHeaderId");
 
          if (objInv is not null)
          {
-            if (!String.IsNullOrEmpty(objInv.ToString()))
+            Guid guidHeadId = Guid.Parse(objInv.ToString());
+            if (guidHeadId != Guid.Empty)
             {
-               if (Guid.Parse(objInv.ToString()) != Guid.Empty)
-               {
-                  Guid invoiceHeaderId = Guid.Parse(objInv.ToString());
-                  TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
+               TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(guidHeadId);
 
-                  if (trInvoiceHeader is not null)
-                  {
-                     FormInvoice formInvoice = new FormInvoice(trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
-                     FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
-                     formInvoice.MdiParent = formERP;
-                     formInvoice.WindowState = FormWindowState.Maximized;
-                     formInvoice.Show();
-                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-                  }
-                  else
-                     MessageBox.Show("Belə bir qaimə yoxdur. ");
+               if (trInvoiceHeader is not null)
+               {
+                  FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, guidHeadId);
+                  FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                  formInvoice.MdiParent = formERP;
+                  formInvoice.WindowState = FormWindowState.Maximized;
+                  formInvoice.Show();
+                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
                }
+               else
+                  MessageBox.Show("Belə bir qaimə yoxdur. ");
             }
          }
+
+         object objPay = gV_Report.GetFocusedRowCellValue("PaymentHeaderId");
 
          if (objPay is not null)
          {
             if (Guid.Parse(objPay.ToString()) != Guid.Empty)
             {
-               FormPaymentDetail frm = new FormPaymentDetail(Guid.Parse(objPay.ToString()));
+               FormPaymentDetail frm = new(Guid.Parse(objPay.ToString()));
                FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
                frm.MdiParent = formERP;
                frm.WindowState = FormWindowState.Maximized;
@@ -217,7 +363,6 @@ namespace Foxoft
          if (e.RowHandle >= 0)
          {
             object isReturn = view.GetRowCellValue(e.RowHandle, view.Columns["IsReturn"]);
-            isReturn ??= view.GetRowCellValue(e.RowHandle, view.Columns["Geri Qaytarma"]);
 
             if (isReturn is not null)
             {
@@ -265,5 +410,6 @@ namespace Foxoft
          }
 
       }
+
    }
 }

@@ -85,8 +85,9 @@ namespace Foxoft.Models
       [DisplayName("İnternetdə İstifadə Et")]
       public bool UseInternet { get; set; }
 
-      //[NotMapped]
-      //[DisplayName("Qalıq")]
+      [DisplayName("Şəkil")]
+      [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ImagePath { get; set; }
 
       [NotMapped]
       [DisplayName("Qalıq")]
@@ -98,11 +99,11 @@ namespace Foxoft.Models
       public int BalanceM { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq Filial")]
+      [DisplayName("Qalıq SIRA 20")]
       public int BalanceF { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq Sahil")]
+      [DisplayName("Qalıq SIRA 5")]
       public int BalanceS { get; set; }
 
 

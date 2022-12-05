@@ -50,6 +50,7 @@ namespace Foxoft
          this.PosDiscountTextEdit = new DevExpress.XtraEditors.TextEdit();
          this.UseInternetCheckEdit = new DevExpress.XtraEditors.CheckEdit();
          this.BalanceTextEdit = new DevExpress.XtraEditors.TextEdit();
+         this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
          this.ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
@@ -71,6 +72,7 @@ namespace Foxoft
          this.ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForBalance = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.gridControl1 = new DevExpress.XtraGrid.GridControl();
          this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -112,6 +114,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForBalance)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
          this.SuspendLayout();
@@ -135,6 +138,7 @@ namespace Foxoft
          this.dataLayoutControl1.Controls.Add(this.PosDiscountTextEdit);
          this.dataLayoutControl1.Controls.Add(this.UseInternetCheckEdit);
          this.dataLayoutControl1.Controls.Add(this.BalanceTextEdit);
+         this.dataLayoutControl1.Controls.Add(this.simpleButton1);
          this.dataLayoutControl1.DataSource = this.dcProductsBindingSource;
          this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -147,7 +151,7 @@ namespace Foxoft
          this.dataLayoutControl1.Name = "dataLayoutControl1";
          this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(545, 115, 650, 400);
          this.dataLayoutControl1.Root = this.Root;
-         this.dataLayoutControl1.Size = new System.Drawing.Size(426, 339);
+         this.dataLayoutControl1.Size = new System.Drawing.Size(346, 339);
          this.dataLayoutControl1.TabIndex = 0;
          this.dataLayoutControl1.Text = "dataLayoutControl1";
          // 
@@ -156,7 +160,7 @@ namespace Foxoft
          this.ProductCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductCode", true));
          this.ProductCodeTextEdit.Location = new System.Drawing.Point(109, 12);
          this.ProductCodeTextEdit.Name = "ProductCodeTextEdit";
-         this.ProductCodeTextEdit.Size = new System.Drawing.Size(305, 20);
+         this.ProductCodeTextEdit.Size = new System.Drawing.Size(225, 20);
          this.ProductCodeTextEdit.StyleController = this.dataLayoutControl1;
          this.ProductCodeTextEdit.TabIndex = 0;
          // 
@@ -212,9 +216,9 @@ namespace Foxoft
          this.IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
          this.IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
          this.IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-         this.IsDisabledCheckEdit.Size = new System.Drawing.Size(197, 20);
+         this.IsDisabledCheckEdit.Size = new System.Drawing.Size(157, 20);
          this.IsDisabledCheckEdit.StyleController = this.dataLayoutControl1;
-         this.IsDisabledCheckEdit.TabIndex = 6;
+         this.IsDisabledCheckEdit.TabIndex = 9;
          // 
          // ProductDescTextEdit
          // 
@@ -222,7 +226,7 @@ namespace Foxoft
          this.ProductDescTextEdit.Location = new System.Drawing.Point(109, 36);
          this.ProductDescTextEdit.Name = "ProductDescTextEdit";
          this.ProductDescTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-         this.ProductDescTextEdit.Size = new System.Drawing.Size(305, 20);
+         this.ProductDescTextEdit.Size = new System.Drawing.Size(225, 20);
          this.ProductDescTextEdit.StyleController = this.dataLayoutControl1;
          this.ProductDescTextEdit.TabIndex = 2;
          // 
@@ -230,7 +234,7 @@ namespace Foxoft
          // 
          this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
          this.btn_Ok.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Ok.ImageOptions.SvgImage")));
-         this.btn_Ok.Location = new System.Drawing.Point(340, 273);
+         this.btn_Ok.Location = new System.Drawing.Point(260, 273);
          this.btn_Ok.Name = "btn_Ok";
          this.btn_Ok.Size = new System.Drawing.Size(74, 54);
          this.btn_Ok.StyleController = this.dataLayoutControl1;
@@ -242,9 +246,9 @@ namespace Foxoft
          // 
          this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
          this.btn_Cancel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Cancel.ImageOptions.SvgImage")));
-         this.btn_Cancel.Location = new System.Drawing.Point(258, 273);
+         this.btn_Cancel.Location = new System.Drawing.Point(182, 273);
          this.btn_Cancel.Name = "btn_Cancel";
-         this.btn_Cancel.Size = new System.Drawing.Size(78, 54);
+         this.btn_Cancel.Size = new System.Drawing.Size(74, 54);
          this.btn_Cancel.StyleController = this.dataLayoutControl1;
          this.btn_Cancel.TabIndex = 11;
          this.btn_Cancel.Text = "simpleButton2";
@@ -259,7 +263,7 @@ namespace Foxoft
          this.ProductTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
          this.ProductTypeCodeLookUpEdit.Properties.NullText = "";
-         this.ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(305, 20);
+         this.ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(225, 20);
          this.ProductTypeCodeLookUpEdit.StyleController = this.dataLayoutControl1;
          this.ProductTypeCodeLookUpEdit.TabIndex = 3;
          // 
@@ -282,9 +286,9 @@ namespace Foxoft
          this.PurchasePriceTextEdit.Properties.Mask.EditMask = "G";
          this.PurchasePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
          this.PurchasePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-         this.PurchasePriceTextEdit.Size = new System.Drawing.Size(281, 20);
+         this.PurchasePriceTextEdit.Size = new System.Drawing.Size(201, 20);
          this.PurchasePriceTextEdit.StyleController = this.dataLayoutControl1;
-         this.PurchasePriceTextEdit.TabIndex = 7;
+         this.PurchasePriceTextEdit.TabIndex = 6;
          // 
          // WholesalePriceTextEdit
          // 
@@ -296,9 +300,9 @@ namespace Foxoft
          this.WholesalePriceTextEdit.Properties.Mask.EditMask = "G";
          this.WholesalePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
          this.WholesalePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-         this.WholesalePriceTextEdit.Size = new System.Drawing.Size(281, 20);
+         this.WholesalePriceTextEdit.Size = new System.Drawing.Size(201, 20);
          this.WholesalePriceTextEdit.StyleController = this.dataLayoutControl1;
-         this.WholesalePriceTextEdit.TabIndex = 8;
+         this.WholesalePriceTextEdit.TabIndex = 7;
          // 
          // RetailPriceTextEdit
          // 
@@ -310,9 +314,9 @@ namespace Foxoft
          this.RetailPriceTextEdit.Properties.Mask.EditMask = "G";
          this.RetailPriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
          this.RetailPriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-         this.RetailPriceTextEdit.Size = new System.Drawing.Size(281, 20);
+         this.RetailPriceTextEdit.Size = new System.Drawing.Size(201, 20);
          this.RetailPriceTextEdit.StyleController = this.dataLayoutControl1;
-         this.RetailPriceTextEdit.TabIndex = 9;
+         this.RetailPriceTextEdit.TabIndex = 8;
          // 
          // PosDiscountTextEdit
          // 
@@ -324,20 +328,20 @@ namespace Foxoft
          this.PosDiscountTextEdit.Properties.Mask.EditMask = "F";
          this.PosDiscountTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
          this.PosDiscountTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-         this.PosDiscountTextEdit.Size = new System.Drawing.Size(305, 20);
+         this.PosDiscountTextEdit.Size = new System.Drawing.Size(225, 20);
          this.PosDiscountTextEdit.StyleController = this.dataLayoutControl1;
          this.PosDiscountTextEdit.TabIndex = 4;
          // 
          // UseInternetCheckEdit
          // 
          this.UseInternetCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "UseInternet", true));
-         this.UseInternetCheckEdit.Location = new System.Drawing.Point(213, 249);
+         this.UseInternetCheckEdit.Location = new System.Drawing.Point(173, 249);
          this.UseInternetCheckEdit.Name = "UseInternetCheckEdit";
          this.UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
          this.UseInternetCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-         this.UseInternetCheckEdit.Size = new System.Drawing.Size(201, 20);
+         this.UseInternetCheckEdit.Size = new System.Drawing.Size(161, 20);
          this.UseInternetCheckEdit.StyleController = this.dataLayoutControl1;
-         this.UseInternetCheckEdit.TabIndex = 5;
+         this.UseInternetCheckEdit.TabIndex = 10;
          // 
          // BalanceTextEdit
          // 
@@ -349,9 +353,20 @@ namespace Foxoft
          this.BalanceTextEdit.Properties.Mask.EditMask = "N0";
          this.BalanceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
          this.BalanceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-         this.BalanceTextEdit.Size = new System.Drawing.Size(305, 20);
+         this.BalanceTextEdit.Size = new System.Drawing.Size(225, 20);
          this.BalanceTextEdit.StyleController = this.dataLayoutControl1;
-         this.BalanceTextEdit.TabIndex = 10;
+         this.BalanceTextEdit.TabIndex = 5;
+         // 
+         // simpleButton1
+         // 
+         this.simpleButton1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton1.ImageOptions.SvgImage")));
+         this.simpleButton1.Location = new System.Drawing.Point(12, 291);
+         this.simpleButton1.Name = "simpleButton1";
+         this.simpleButton1.Size = new System.Drawing.Size(166, 36);
+         this.simpleButton1.StyleController = this.dataLayoutControl1;
+         this.simpleButton1.TabIndex = 13;
+         this.simpleButton1.Text = "Ozellik";
+         this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
          // 
          // ItemForBarcode
          // 
@@ -406,7 +421,7 @@ namespace Foxoft
          this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup1});
          this.Root.Name = "Root";
-         this.Root.Size = new System.Drawing.Size(426, 339);
+         this.Root.Size = new System.Drawing.Size(346, 339);
          this.Root.TextVisible = false;
          // 
          // layoutControlGroup1
@@ -424,18 +439,19 @@ namespace Foxoft
             this.ItemForIsDisabled,
             this.ItemForUseInternet,
             this.ItemForBalance,
-            this.ItemForProductDesc});
+            this.ItemForProductDesc,
+            this.layoutControlItem3});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "autoGeneratedGroup0";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(406, 319);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(326, 319);
          // 
          // layoutControlItem2
          // 
          this.layoutControlItem2.Control = this.btn_Cancel;
-         this.layoutControlItem2.Location = new System.Drawing.Point(246, 261);
+         this.layoutControlItem2.Location = new System.Drawing.Point(170, 261);
          this.layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
          this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(82, 58);
+         this.layoutControlItem2.Size = new System.Drawing.Size(78, 58);
          this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem2.TextVisible = false;
@@ -443,7 +459,7 @@ namespace Foxoft
          // layoutControlItem1
          // 
          this.layoutControlItem1.Control = this.btn_Ok;
-         this.layoutControlItem1.Location = new System.Drawing.Point(328, 261);
+         this.layoutControlItem1.Location = new System.Drawing.Point(248, 261);
          this.layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
          this.layoutControlItem1.Name = "layoutControlItem1";
          this.layoutControlItem1.Size = new System.Drawing.Size(78, 58);
@@ -456,7 +472,7 @@ namespace Foxoft
          this.ItemForProductTypeCode.Control = this.ProductTypeCodeLookUpEdit;
          this.ItemForProductTypeCode.Location = new System.Drawing.Point(0, 48);
          this.ItemForProductTypeCode.Name = "ItemForProductTypeCode";
-         this.ItemForProductTypeCode.Size = new System.Drawing.Size(406, 24);
+         this.ItemForProductTypeCode.Size = new System.Drawing.Size(326, 24);
          this.ItemForProductTypeCode.Text = "Məhsul Tipi";
          this.ItemForProductTypeCode.TextSize = new System.Drawing.Size(85, 13);
          // 
@@ -465,7 +481,7 @@ namespace Foxoft
          this.emptySpaceItem1.AllowHotTrack = false;
          this.emptySpaceItem1.Location = new System.Drawing.Point(0, 261);
          this.emptySpaceItem1.Name = "emptySpaceItem1";
-         this.emptySpaceItem1.Size = new System.Drawing.Size(246, 58);
+         this.emptySpaceItem1.Size = new System.Drawing.Size(170, 18);
          this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
          // 
          // ItemForPosDiscount
@@ -473,7 +489,7 @@ namespace Foxoft
          this.ItemForPosDiscount.Control = this.PosDiscountTextEdit;
          this.ItemForPosDiscount.Location = new System.Drawing.Point(0, 72);
          this.ItemForPosDiscount.Name = "ItemForPosDiscount";
-         this.ItemForPosDiscount.Size = new System.Drawing.Size(406, 24);
+         this.ItemForPosDiscount.Size = new System.Drawing.Size(326, 24);
          this.ItemForPosDiscount.Text = "Pos Endirimi";
          this.ItemForPosDiscount.TextSize = new System.Drawing.Size(85, 13);
          // 
@@ -482,7 +498,7 @@ namespace Foxoft
          this.ItemForProductCode.Control = this.ProductCodeTextEdit;
          this.ItemForProductCode.Location = new System.Drawing.Point(0, 0);
          this.ItemForProductCode.Name = "ItemForProductCode";
-         this.ItemForProductCode.Size = new System.Drawing.Size(406, 24);
+         this.ItemForProductCode.Size = new System.Drawing.Size(326, 24);
          this.ItemForProductCode.Text = "Məhsul Kodu";
          this.ItemForProductCode.TextSize = new System.Drawing.Size(85, 13);
          // 
@@ -495,7 +511,7 @@ namespace Foxoft
             this.ItemForRetailPrice});
          this.layoutControlGroup2.Location = new System.Drawing.Point(0, 120);
          this.layoutControlGroup2.Name = "autoGroupForQiymətlər";
-         this.layoutControlGroup2.Size = new System.Drawing.Size(406, 117);
+         this.layoutControlGroup2.Size = new System.Drawing.Size(326, 117);
          this.layoutControlGroup2.Text = "Qiymətlər";
          // 
          // ItemForPurchasePrice
@@ -503,7 +519,7 @@ namespace Foxoft
          this.ItemForPurchasePrice.Control = this.PurchasePriceTextEdit;
          this.ItemForPurchasePrice.Location = new System.Drawing.Point(0, 0);
          this.ItemForPurchasePrice.Name = "ItemForPurchasePrice";
-         this.ItemForPurchasePrice.Size = new System.Drawing.Size(382, 24);
+         this.ItemForPurchasePrice.Size = new System.Drawing.Size(302, 24);
          this.ItemForPurchasePrice.TextSize = new System.Drawing.Size(85, 13);
          // 
          // ItemForWholesalePrice
@@ -511,7 +527,7 @@ namespace Foxoft
          this.ItemForWholesalePrice.Control = this.WholesalePriceTextEdit;
          this.ItemForWholesalePrice.Location = new System.Drawing.Point(0, 24);
          this.ItemForWholesalePrice.Name = "ItemForWholesalePrice";
-         this.ItemForWholesalePrice.Size = new System.Drawing.Size(382, 24);
+         this.ItemForWholesalePrice.Size = new System.Drawing.Size(302, 24);
          this.ItemForWholesalePrice.TextSize = new System.Drawing.Size(85, 13);
          // 
          // ItemForRetailPrice
@@ -519,7 +535,7 @@ namespace Foxoft
          this.ItemForRetailPrice.Control = this.RetailPriceTextEdit;
          this.ItemForRetailPrice.Location = new System.Drawing.Point(0, 48);
          this.ItemForRetailPrice.Name = "ItemForRetailPrice";
-         this.ItemForRetailPrice.Size = new System.Drawing.Size(382, 24);
+         this.ItemForRetailPrice.Size = new System.Drawing.Size(302, 24);
          this.ItemForRetailPrice.TextSize = new System.Drawing.Size(85, 13);
          // 
          // ItemForIsDisabled
@@ -527,7 +543,7 @@ namespace Foxoft
          this.ItemForIsDisabled.Control = this.IsDisabledCheckEdit;
          this.ItemForIsDisabled.Location = new System.Drawing.Point(0, 237);
          this.ItemForIsDisabled.Name = "ItemForIsDisabled";
-         this.ItemForIsDisabled.Size = new System.Drawing.Size(201, 24);
+         this.ItemForIsDisabled.Size = new System.Drawing.Size(161, 24);
          this.ItemForIsDisabled.Text = "Is Disabled";
          this.ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
          this.ItemForIsDisabled.TextVisible = false;
@@ -535,9 +551,9 @@ namespace Foxoft
          // ItemForUseInternet
          // 
          this.ItemForUseInternet.Control = this.UseInternetCheckEdit;
-         this.ItemForUseInternet.Location = new System.Drawing.Point(201, 237);
+         this.ItemForUseInternet.Location = new System.Drawing.Point(161, 237);
          this.ItemForUseInternet.Name = "ItemForUseInternet";
-         this.ItemForUseInternet.Size = new System.Drawing.Size(205, 24);
+         this.ItemForUseInternet.Size = new System.Drawing.Size(165, 24);
          this.ItemForUseInternet.Text = "İnternetdə İstifadə Et";
          this.ItemForUseInternet.TextSize = new System.Drawing.Size(0, 0);
          this.ItemForUseInternet.TextVisible = false;
@@ -547,7 +563,7 @@ namespace Foxoft
          this.ItemForBalance.Control = this.BalanceTextEdit;
          this.ItemForBalance.Location = new System.Drawing.Point(0, 96);
          this.ItemForBalance.Name = "ItemForBalance";
-         this.ItemForBalance.Size = new System.Drawing.Size(406, 24);
+         this.ItemForBalance.Size = new System.Drawing.Size(326, 24);
          this.ItemForBalance.Text = "Qalıq";
          this.ItemForBalance.TextSize = new System.Drawing.Size(85, 13);
          // 
@@ -556,9 +572,18 @@ namespace Foxoft
          this.ItemForProductDesc.Control = this.ProductDescTextEdit;
          this.ItemForProductDesc.Location = new System.Drawing.Point(0, 24);
          this.ItemForProductDesc.Name = "ItemForProductDesc";
-         this.ItemForProductDesc.Size = new System.Drawing.Size(406, 24);
+         this.ItemForProductDesc.Size = new System.Drawing.Size(326, 24);
          this.ItemForProductDesc.Text = "Məhsul Adı";
          this.ItemForProductDesc.TextSize = new System.Drawing.Size(85, 13);
+         // 
+         // layoutControlItem3
+         // 
+         this.layoutControlItem3.Control = this.simpleButton1;
+         this.layoutControlItem3.Location = new System.Drawing.Point(0, 279);
+         this.layoutControlItem3.Name = "layoutControlItem3";
+         this.layoutControlItem3.Size = new System.Drawing.Size(170, 40);
+         this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem3.TextVisible = false;
          // 
          // gridControl1
          // 
@@ -579,7 +604,7 @@ namespace Foxoft
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(426, 339);
+         this.ClientSize = new System.Drawing.Size(346, 339);
          this.Controls.Add(this.dataLayoutControl1);
          this.Name = "FormProduct";
          this.Text = "Məhsul";
@@ -623,6 +648,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForBalance)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
          this.ResumeLayout(false);
@@ -673,5 +699,7 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem ItemForPosDiscount;
       private DevExpress.XtraEditors.TextEdit BalanceTextEdit;
       private DevExpress.XtraLayout.LayoutControlItem ItemForBalance;
+      private DevExpress.XtraEditors.SimpleButton simpleButton1;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
    }
 }

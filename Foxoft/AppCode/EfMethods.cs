@@ -175,7 +175,12 @@ namespace Foxoft
                             BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
                             BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
                             BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
-                            LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI").OrderByDescending(l => l.TrInvoiceHeader.DocumentDate).ThenByDescending(l => l.TrInvoiceHeader.DocumentTime).Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100))).FirstOrDefault(),
+                            LastPurchasePrice = x.TrInvoiceLines
+                                                .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
+                                                .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
+                                                .ThenByDescending(l =>l.CreatedDate)
+                                                .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
+                                                .FirstOrDefault(),
                             ProductCode = x.ProductCode,
                             ProductDesc = x.ProductDesc,
                             PosDiscount = x.PosDiscount,
@@ -386,6 +391,16 @@ namespace Foxoft
 
       }
 
+      public int DeleteWarehouse(DcWarehouse dcWarehouse)
+      {
+         using subContext db = new();
+
+         if (dcWarehouse is not null)
+            db.DcWarehouses.Remove(dcWarehouse);
+
+         return db.SaveChanges();
+      }
+
       public bool PaymentHeaderExistByInvoice(Guid invoiceHeaderId)
       {
          using subContext db = new();
@@ -419,7 +434,6 @@ namespace Foxoft
          DcReport dcReport = new() { ReportId = ReportId };
          db.DcReports.Remove(dcReport);
          return db.SaveChanges();
-
       }
 
       public int UpdateInvoiceIsCompleted(Guid invoiceHeaderId)
@@ -594,20 +608,21 @@ namespace Foxoft
                                  .Sum(s => s.PaymentLoc);
       }
 
-      public List<DcCurrAcc> SelectCurrAccs()
+      public List<DcCurrAcc> SelectCurrAccs(byte[] byteArr)
       {
-
-
          using subContext db = new();
 
-         byte[] byteArr = new byte[] { 1, 2, 3, 4 };
+         //byte[] byteArr = new byte[] { 1, 2, 3, 4 };
 
-         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false && byteArr.Contains(x.CurrAccTypeCode))
+         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false
+                                           && byteArr.Contains(x.CurrAccTypeCode)
+                                           && x.CurrAccTypeCode != 5)
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {
                        CurrAccCode = x.CurrAccCode,
                        CurrAccDesc = x.CurrAccDesc,
+                       CreditLimit = x.CreditLimit,
                        IsVip = x.IsVip,
                        PhoneNum = x.PhoneNum,
                        Address = x.Address,
@@ -627,12 +642,15 @@ namespace Foxoft
                     })
                     .ToList(); // burdaki kolonlari dizaynda da elave et
 
-         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == 5)
+         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false
+                                             && x.CurrAccTypeCode == 5
+                                             && byteArr.Contains(x.CurrAccTypeCode))
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {
                        CurrAccCode = x.CurrAccCode,
                        CurrAccDesc = x.CurrAccDesc,
+                       CreditLimit = x.CreditLimit,
                        IsVip = x.IsVip,
                        PhoneNum = x.PhoneNum,
                        Address = x.Address,
@@ -934,7 +952,8 @@ namespace Foxoft
       public int UpdateDcReportFilter_Value(int ReportId, string fieldName, string filterValue)
       {
          using subContext db = new();
-         DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName).FirstOrDefault(x => x.ReportId == ReportId);
+         DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName)
+                                                     .FirstOrDefault(x => x.ReportId == ReportId);
          dcReport.FilterValue = filterValue;
          db.Entry(dcReport).Property(x => x.FilterValue).IsModified = true;
          return db.SaveChanges();

@@ -189,7 +189,7 @@ namespace Foxoft
 
       private void SelectCurrAcc()
       {
-         using (FormCurrAccList form = new FormCurrAccList(0))
+         using (FormCurrAccList form = new(0, trPaymentHeader.CurrAccCode))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -427,6 +427,19 @@ namespace Foxoft
          string CopyText = PaymentText("\n");
 
          Clipboard.SetText(CopyText);
+      }
+
+      private void repoBtnEdit_CashregisterCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+      {
+         ButtonEdit editor = (ButtonEdit)sender;
+
+         using (FormCurrAccList form = new(5, trPaymentHeader.CurrAccCode))
+         {
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+               editor.EditValue = form.dcCurrAcc.CurrAccCode;
+            }
+         }
       }
    }
 }

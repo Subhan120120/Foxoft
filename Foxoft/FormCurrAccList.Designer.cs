@@ -60,6 +60,7 @@ namespace Foxoft
          this.colBonusCardNum = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colPhoneNum = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
          this.colBirthDate = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colDcCurrAccType = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -79,6 +80,7 @@ namespace Foxoft
          this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -87,6 +89,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcCurrAccsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -97,11 +100,14 @@ namespace Foxoft
          this.gC_CurrAccList.Location = new System.Drawing.Point(0, 158);
          this.gC_CurrAccList.MainView = this.gV_CurrAccList;
          this.gC_CurrAccList.Name = "gC_CurrAccList";
+         this.gC_CurrAccList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemTextEdit1});
          this.gC_CurrAccList.Size = new System.Drawing.Size(858, 413);
          this.gC_CurrAccList.TabIndex = 0;
          this.gC_CurrAccList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_CurrAccList});
          this.gC_CurrAccList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_CurrAccList_Paint);
+         this.gC_CurrAccList.Load += new System.EventHandler(this.gC_CurrAccList_Load);
          this.gC_CurrAccList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_CurrAccList_ProcessGridKey);
          // 
          // gV_CurrAccList
@@ -142,7 +148,7 @@ namespace Foxoft
             this.colCreatedDate,
             this.colLastUpdatedUserName,
             this.colLastUpdatedDate});
-         this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(867, 248, 264, 272);
+         this.gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(760, 248, 264, 272);
          this.gV_CurrAccList.GridControl = this.gC_CurrAccList;
          this.gV_CurrAccList.Name = "gV_CurrAccList";
          this.gV_CurrAccList.OptionsFind.FindDelay = 100;
@@ -274,10 +280,20 @@ namespace Foxoft
          // 
          // colPhoneNum
          // 
+         this.colPhoneNum.ColumnEdit = this.repositoryItemTextEdit1;
          this.colPhoneNum.FieldName = "PhoneNum";
          this.colPhoneNum.Name = "colPhoneNum";
          this.colPhoneNum.Visible = true;
          this.colPhoneNum.VisibleIndex = 3;
+         // 
+         // repositoryItemTextEdit1
+         // 
+         this.repositoryItemTextEdit1.AutoHeight = false;
+         this.repositoryItemTextEdit1.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegularMaskManager));
+         this.repositoryItemTextEdit1.MaskSettings.Set("MaskManagerSignature", "ignoreMaskBlank=True");
+         this.repositoryItemTextEdit1.MaskSettings.Set("mask", "(\\d?\\d?) \\d\\d\\d-\\d\\d-\\d\\d");
+         this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+         this.repositoryItemTextEdit1.UseMaskAsDisplayFormat = true;
          // 
          // colBirthDate
          // 
@@ -286,6 +302,8 @@ namespace Foxoft
          // 
          // colBalance
          // 
+         this.colBalance.DisplayFormat.FormatString = "{0:n2}";
+         this.colBalance.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colBalance.FieldName = "Balance";
          this.colBalance.Name = "colBalance";
          this.colBalance.Visible = true;
@@ -348,9 +366,10 @@ namespace Foxoft
             this.bBI_Report1,
             this.bBI_ExportXlsx,
             this.bBI_CurrAccDelete,
-            this.bBI_CurAccRefresh});
+            this.bBI_CurAccRefresh,
+            this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 9;
+         this.ribbonControl1.MaxItemId = 10;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -414,6 +433,14 @@ namespace Foxoft
          this.bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
          this.bBI_CurAccRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CurAccRefresh_ItemClick);
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "Malların Bütün Hərəkəti";
+         this.barButtonItem1.Id = 9;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -433,8 +460,9 @@ namespace Foxoft
          // 
          // ribbonPageGroup3
          // 
-         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
          this.ribbonPageGroup3.ItemLinks.Add(this.bBI_ExportXlsx);
+         this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
+         this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem1);
          this.ribbonPageGroup3.Name = "ribbonPageGroup3";
          this.ribbonPageGroup3.Text = "Hesabat";
          // 
@@ -466,6 +494,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcCurrAccsBindingSource)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
@@ -525,5 +554,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
       private DevExpress.XtraBars.BarButtonItem bBI_CurrAccDelete;
       private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+      private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
    }
 }

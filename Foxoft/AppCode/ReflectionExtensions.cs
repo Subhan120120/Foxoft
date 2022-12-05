@@ -71,6 +71,7 @@ namespace Foxoft
          return null;
       }
 
+
       public static void GetCaptionName(DataTable dt)
       {
          subContext db = new();
@@ -91,6 +92,5 @@ namespace Foxoft
             }
          }
       }
-
    }
 }

@@ -94,6 +94,7 @@ namespace Foxoft
          this.bBI_reportPreviewAzn = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ModifyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -234,6 +235,7 @@ namespace Foxoft
          this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceLine});
          this.gC_InvoiceLine.EditorKeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
+         this.gC_InvoiceLine.EditorKeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gC_InvoiceLine_EditorKeyPress);
          this.gC_InvoiceLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
          // 
          // gV_InvoiceLine
@@ -262,7 +264,7 @@ namespace Foxoft
             this.colCreatedUserName,
             this.colLastPurchasePrice,
             this.colBenefit});
-         this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1096, 456, 264, 272);
+         this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 456, 264, 272);
          this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
          this.gV_InvoiceLine.Name = "gV_InvoiceLine";
          this.gV_InvoiceLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
@@ -429,7 +431,6 @@ namespace Foxoft
          // 
          // col_PosDiscount
          // 
-         this.col_PosDiscount.Caption = "Endirim";
          this.col_PosDiscount.DisplayFormat.FormatString = "{0:n2}";
          this.col_PosDiscount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.col_PosDiscount.FieldName = "PosDiscount";
@@ -446,7 +447,7 @@ namespace Foxoft
          this.col_NetAmount.FieldName = "NetAmount";
          this.col_NetAmount.Name = "col_NetAmount";
          this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "Toplam={0:0.##}")});
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}")});
          this.col_NetAmount.Visible = true;
          this.col_NetAmount.VisibleIndex = 7;
          this.col_NetAmount.Width = 42;
@@ -511,6 +512,8 @@ namespace Foxoft
          // 
          // colLastPurchasePrice
          // 
+         this.colLastPurchasePrice.DisplayFormat.FormatString = "{0:n2}";
+         this.colLastPurchasePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
          this.colLastPurchasePrice.Visible = true;
@@ -519,6 +522,8 @@ namespace Foxoft
          // 
          // colBenefit
          // 
+         this.colBenefit.DisplayFormat.FormatString = "{0:n2}";
+         this.colBenefit.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
          this.colBenefit.FieldName = "Benefit";
          this.colBenefit.Name = "colBenefit";
          this.colBenefit.Visible = true;
@@ -528,6 +533,7 @@ namespace Foxoft
          // CheckEdit_IsReturn
          // 
          this.CheckEdit_IsReturn.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "IsReturn", true));
+         this.CheckEdit_IsReturn.Enabled = false;
          this.CheckEdit_IsReturn.Location = new System.Drawing.Point(12, 36);
          this.CheckEdit_IsReturn.Name = "CheckEdit_IsReturn";
          this.CheckEdit_IsReturn.Properties.Caption = "Qaytarılmadır";
@@ -697,9 +703,10 @@ namespace Foxoft
             this.bBI_reportPreviewAzn,
             this.bBI_CopyInvoice,
             this.bBI_Whatsapp,
+            this.BBI_ModifyInvoice,
             this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 20;
+         this.ribbonControl1.MaxItemId = 21;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -757,7 +764,7 @@ namespace Foxoft
          // 
          // bBI_DeleteInvoice
          // 
-         this.bBI_DeleteInvoice.Caption = "Fakturani Sil";
+         this.bBI_DeleteInvoice.Caption = "Fakturanı Sil";
          this.bBI_DeleteInvoice.Id = 11;
          this.bBI_DeleteInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeleteInvoice.ImageOptions.SvgImage")));
          this.bBI_DeleteInvoice.Name = "bBI_DeleteInvoice";
@@ -765,7 +772,7 @@ namespace Foxoft
          // 
          // bBI_DeletePayment
          // 
-         this.bBI_DeletePayment.Caption = "Odemeni Sil";
+         this.bBI_DeletePayment.Caption = "Ödəməni Sil";
          this.bBI_DeletePayment.Id = 12;
          this.bBI_DeletePayment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeletePayment.ImageOptions.SvgImage")));
          this.bBI_DeletePayment.Name = "bBI_DeletePayment";
@@ -804,12 +811,20 @@ namespace Foxoft
          this.bBI_Whatsapp.Name = "bBI_Whatsapp";
          this.bBI_Whatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Whatsapp_ItemClick);
          // 
+         // BBI_ModifyInvoice
+         // 
+         this.BBI_ModifyInvoice.Caption = "Dəyiş";
+         this.BBI_ModifyInvoice.Id = 19;
+         this.BBI_ModifyInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ModifyInvoice.ImageOptions.SvgImage")));
+         this.BBI_ModifyInvoice.Name = "BBI_ModifyInvoice";
+         this.BBI_ModifyInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ModifyInvoice_ItemClick);
+         // 
          // barButtonItem1
          // 
-         this.barButtonItem1.Caption = "Test";
-         this.barButtonItem1.Id = 19;
+         this.barButtonItem1.Caption = "bbi";
+         this.barButtonItem1.Id = 20;
          this.barButtonItem1.Name = "barButtonItem1";
-         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbi_ItemClick);
          // 
          // ribbonPage1
          // 
@@ -850,6 +865,7 @@ namespace Foxoft
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CopyInvoice);
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Whatsapp);
+         this.ribbonPageGroup1.ItemLinks.Add(this.BBI_ModifyInvoice);
          this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Nəzarət";
@@ -1177,6 +1193,7 @@ namespace Foxoft
       private DevExpress.XtraEditors.LookUpEdit lUE_ToWarehouseCode;
       private DevExpress.XtraEditors.LabelControl lbl_PrintCount;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+      private DevExpress.XtraBars.BarButtonItem BBI_ModifyInvoice;
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;
    }
 }

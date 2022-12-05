@@ -1,13 +1,6 @@
-﻿using DevExpress.DataAccess.ConnectionParameters;
-using DevExpress.DataAccess.Sql;
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraReports.UI;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -38,7 +31,7 @@ namespace Foxoft
 
       public XtraReport CreateReport(object Datasource, string reportFilePath)
       {
-         XtraReport report = new XtraReport();
+         XtraReport report = new();
 
          report.LoadLayoutFromXml(reportFilePath);
 
@@ -49,6 +42,7 @@ namespace Foxoft
          //    XtraMessageBox.Show("The source file does not exist.");
 
          report.DataSource = Datasource;
+         report.ShowPrintMarginsWarning = false;
 
          return report;
       }

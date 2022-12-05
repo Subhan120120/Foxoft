@@ -25,13 +25,13 @@ namespace Foxoft.Models
       [ForeignKey("TrInvoiceHeader")]
       public Guid? InvoiceHeaderId { get; set; }
 
-      [DisplayName("Ödəniş Nömrəsi")]
+      [DisplayName("Sənəd Nömrəsi")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string DocumentNumber { get; set; }
 
+      [DisplayName("Sənəd Tarixi")]
       [DefaultValue("getdate()")]
       [Column(TypeName = "date")]
-      [DisplayName("Ödəniş Tarixi")]
       public DateTime DocumentDate { get; set; }
 
       [DisplayName("Ödəniş Vaxtı")]
@@ -81,7 +81,7 @@ namespace Foxoft.Models
       [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string OfficeCode { get; set; }
 
-      [DisplayName("Mağaza")]
+      [DisplayName("Mağaza Kodu")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string StoreCode { get; set; }

@@ -27,7 +27,7 @@ namespace Foxoft.Models
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public decimal Payment { get; set; }
 
-      [DisplayName("Ödəmə YPV")]
+      [DisplayName("Ödəmə (YPV)")]
       [Column(TypeName = "money")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public decimal PaymentLoc { get { return Math.Round(Payment / (decimal)ExchangeRate, 2); } set { } }
@@ -101,7 +101,7 @@ namespace Foxoft.Models
       public Guid? InvoiceHeaderId { get; set; }
 
       [NotMapped]
-      [DisplayName("Ödəmə Tarixi")]
+      [DisplayName("Sənəd Tarixi")]
       public DateTime DocumentDate { get; set; }      
       
       [NotMapped]
