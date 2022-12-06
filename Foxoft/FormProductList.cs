@@ -1,8 +1,12 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.Data;
+using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
@@ -23,6 +27,9 @@ namespace Foxoft
       public DcProduct dcProduct { get; set; }
       public string productCode { get; set; }
       public byte productTypeCode;
+      
+      RepositoryItemPictureEdit riPictureEdit = new();
+      GridColumn colImage = new();
 
       public FormProductList()
       {
@@ -34,6 +41,15 @@ namespace Foxoft
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_ProductList.RestoreLayoutFromStream(stream, option);
 
+         colImage.FieldName = "Image";
+         colImage.Caption = "Şəkil";
+         colImage.UnboundType = UnboundColumnType.Object;
+         colImage.OptionsColumn.AllowEdit = false;
+         colImage.Visible = true;
+         colImage.ColumnEdit = riPictureEdit;
+         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+         gC_ProductList.RepositoryItems.Add(riPictureEdit);
+
          ribbonControl1.Minimized = true;
       }
 
@@ -42,6 +58,8 @@ namespace Foxoft
       {
          this.productTypeCode = productTypeCode;
          LoadProducts(productTypeCode);
+
+         gV_ProductList.Columns.Add(colImage);
       }
 
       public FormProductList(byte productTypeCode, string productCode)
@@ -62,6 +80,37 @@ namespace Foxoft
          //gV_ProductList.ShowFindPanel();
          //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
          //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+      }
+
+      Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
+      private void gV_ProductList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+      {
+         if (e.Column.FieldName == "Image" && e.IsGetData)
+         {
+            GridView view = sender as GridView;
+            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+            string fileName = view.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
+            fileName += ".jpg";
+            string path = @"D:\Foxoft Images\" + fileName;
+            if (!imageCache.ContainsKey(path))
+            {
+               Image img = GetImage(path);
+               imageCache.Add(path, img);
+            }
+            e.Value = imageCache[path];
+         }
+      }
+
+      Image GetImage(string path)
+      {
+         // Load an image by its local path, URL, etc.
+         // The following code loads the image from te specified file.
+         Image img = null;
+         if (File.Exists(path))
+            img = Image.FromFile(path);
+         else
+            img = Image.FromFile(@"D:\Foxoft Images\noimage.jpg");
+         return img;
       }
 
       private void LoadProducts(byte productTypeCode)

@@ -64,6 +64,16 @@ namespace Foxoft
          //badge1.TargetElement = barButtonItem1;
          badge2.TargetElement = ribbonPage1;
 
+
+         colImage.FieldName = "Image";
+         colImage.Caption = "Image";
+         colImage.UnboundType = UnboundColumnType.Object;
+         colImage.OptionsColumn.AllowEdit = false;
+         colImage.Visible = true;
+         colImage.ColumnEdit = riPictureEdit;
+         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+         gC_Report.RepositoryItems.Add(riPictureEdit);
+
          HLE_DocumentNum.SingleClick = true;
          HLE_DocumentNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
          HLE_InvoiceNum.SingleClick = true;
@@ -74,8 +84,6 @@ namespace Foxoft
          HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
 
 
-         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
-         gC_Report.RepositoryItems.Add(riPictureEdit);
 
       }
 
@@ -86,7 +94,7 @@ namespace Foxoft
          this.report = report;
          this.Text = report.ReportName;
 
-         AddUnboundColumn(gV_Report);
+         //AddUnboundColumn(gV_Report);
          LoadData();
          LoadLayout();
 
@@ -99,33 +107,7 @@ namespace Foxoft
          this.gV_Report.ActiveFilterString = activeFilterStr;
       }
 
-      void AddUnboundColumn(GridView view)
-      {
-         
-         colImage.FieldName = "Image";
-         colImage.Caption = "Image";
-         colImage.UnboundType = UnboundColumnType.Object;
-         colImage.OptionsColumn.AllowEdit = false;
-         colImage.Visible = true;
-
-         colImage.ColumnEdit = riPictureEdit;
-
-      }
-
-      void AssignPictureEdittoImageColumn(GridColumn column)
-      {
-         RepositoryItemPictureEdit riPictureEdit = new();
-         riPictureEdit.SizeMode = PictureSizeMode.Stretch;
-
-         //gridView1.Columns["Picture"].Width = 150;
-         //gridView1.RowHeight = 150;
-
-         gC_Report.RepositoryItems.Add(riPictureEdit);
-         column.ColumnEdit = riPictureEdit;
-      }
-
       Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
-
       private void gV_Report_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
       {
          if (e.Column.FieldName == "Image" && e.IsGetData)
@@ -176,8 +158,6 @@ namespace Foxoft
       }
       private void LoadData()
       {
-
-
          DataTable dt = adoMethods.SqlGetDt(qry);
          gC_Report.DataSource = dt;
 
@@ -198,17 +178,6 @@ namespace Foxoft
 
          if (col_CurrAccCode is not null)
             col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
-
-         
-
-         GridColumn col_Image = gV_Report.Columns["Image"];
-
-         if (col_Image is not null)
-         {
-            col_Image.ColumnEdit = riPictureEdit;
-         }
-         //col_Image.Width = 150;
-         //gV_Report.RowHeight = 150;
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
