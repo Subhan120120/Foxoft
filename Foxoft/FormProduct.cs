@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -64,6 +66,20 @@ namespace Foxoft
             dbContext.DcProducts.Local.ForEach(x => x.Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut));
 
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
+
+
+            //var file = Path.ChangeExtension(table[8], ".jpg");
+            var fullPath = Path.Combine(@"D:\Foxoft Images\", dcProduct.ProductCode + ".jpg");
+            if (!File.Exists(fullPath))
+            {
+               MessageBox.Show("No image!");
+            }
+            else
+            {
+               pictureEdit1.Image = new Bitmap(fullPath);
+               //pictureEdit1.Image = Image.FromFile(fullPath);
+            }
+
          }
       }
 
@@ -75,7 +91,7 @@ namespace Foxoft
          dcProduct.ProductCode = NewDocNum;
          dcProduct.ProductTypeCode = productTypeCode;
          dcProduct.CreatedUserName = Authorization.CurrAccCode;
-         
+
          dcProductsBindingSource.DataSource = dcProduct;
       }
 
