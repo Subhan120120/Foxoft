@@ -67,16 +67,15 @@ namespace Foxoft
 
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
 
-
             //var file = Path.ChangeExtension(table[8], ".jpg");
-            var fullPath = Path.Combine(@"D:\Foxoft Images\", dcProduct.ProductCode + ".jpg");
+            var fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
             if (!File.Exists(fullPath))
             {
-               MessageBox.Show("No image!");
+               //MessageBox.Show("No image!");
             }
             else
             {
-               pictureEdit1.Image = new Bitmap(fullPath);
+               pictureEdit.Image = new Bitmap(fullPath);
                //pictureEdit1.Image = Image.FromFile(fullPath);
             }
 

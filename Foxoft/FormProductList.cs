@@ -109,7 +109,7 @@ namespace Foxoft
          if (File.Exists(path))
             img = Image.FromFile(path);
          else
-            img = Image.FromFile(@"D:\Foxoft Images\noimage.jpg");
+            img = Image.FromFile(@"\\192.168.2.199\Foxoft Images\noimage.jpg");
          return img;
       }
 

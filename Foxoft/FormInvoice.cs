@@ -36,8 +36,9 @@ namespace Foxoft
 {
    public partial class FormInvoice : RibbonForm
    {
-      readonly string designFolder = @"C:\Users\Administrator\Documents\";
-      string rerportFileNameInvoice = @"InvoiceRS_A5.repx";
+      readonly string designFolder = @"\\192.168.2.199\Foxoft Design Files\";
+      //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+      string reportFileNameInvoice = @"InvoiceRS_A5.repx";
       string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
 
       private TrInvoiceHeader trInvoiceHeader;
@@ -1039,7 +1040,7 @@ namespace Foxoft
       private void ShowReportPreview()
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + rerportFileNameInvoice;
+         string designPath = designFolder + reportFileNameInvoice;
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
 
@@ -1209,7 +1210,7 @@ namespace Foxoft
 
       private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
       {
-         string fileName = rerportFileNameInvoice;
+         string fileName = reportFileNameInvoice;
          if (trInvoiceHeader.CurrAccCode == "111")
             fileName = designFolder + @"InvoiceRS_A5_Azn.repx";
 
@@ -1221,7 +1222,7 @@ namespace Foxoft
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         designPath = designFolder + rerportFileNameInvoice;
+         designPath = designFolder + reportFileNameInvoice;
 
          XtraReport report = GetInvoiceReport(designPath);
 
@@ -1239,7 +1240,7 @@ namespace Foxoft
 
       private void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
       {
-         MemoryStream memoryStream = GetInvoiceReportImg(rerportFileNameInvoice);
+         MemoryStream memoryStream = GetInvoiceReportImg(reportFileNameInvoice);
          Clipboard.SetImage(Image.FromStream(memoryStream));
          string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 

@@ -51,7 +51,7 @@ namespace Foxoft
          this.UseInternetCheckEdit = new DevExpress.XtraEditors.CheckEdit();
          this.BalanceTextEdit = new DevExpress.XtraEditors.TextEdit();
          this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-         this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
+         this.pictureEdit = new DevExpress.XtraEditors.PictureEdit();
          this.ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
@@ -95,7 +95,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.PosDiscountTextEdit.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.BalanceTextEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.pictureEdit.Properties)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForBarcode)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForUsePos)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode)).BeginInit();
@@ -143,7 +143,7 @@ namespace Foxoft
          this.dataLayoutControl1.Controls.Add(this.UseInternetCheckEdit);
          this.dataLayoutControl1.Controls.Add(this.BalanceTextEdit);
          this.dataLayoutControl1.Controls.Add(this.simpleButton1);
-         this.dataLayoutControl1.Controls.Add(this.pictureEdit1);
+         this.dataLayoutControl1.Controls.Add(this.pictureEdit);
          this.dataLayoutControl1.DataSource = this.dcProductsBindingSource;
          this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -375,13 +375,13 @@ namespace Foxoft
          // 
          // pictureEdit1
          // 
-         this.pictureEdit1.Location = new System.Drawing.Point(258, 12);
-         this.pictureEdit1.Name = "pictureEdit1";
-         this.pictureEdit1.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
-         this.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-         this.pictureEdit1.Size = new System.Drawing.Size(153, 257);
-         this.pictureEdit1.StyleController = this.dataLayoutControl1;
-         this.pictureEdit1.TabIndex = 14;
+         this.pictureEdit.Location = new System.Drawing.Point(258, 12);
+         this.pictureEdit.Name = "pictureEdit1";
+         this.pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+         this.pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
+         this.pictureEdit.Size = new System.Drawing.Size(153, 257);
+         this.pictureEdit.StyleController = this.dataLayoutControl1;
+         this.pictureEdit.TabIndex = 14;
          // 
          // ItemForBarcode
          // 
@@ -583,7 +583,7 @@ namespace Foxoft
          // 
          // layoutControlItem4
          // 
-         this.layoutControlItem4.Control = this.pictureEdit1;
+         this.layoutControlItem4.Control = this.pictureEdit;
          this.layoutControlItem4.Location = new System.Drawing.Point(246, 0);
          this.layoutControlItem4.Name = "layoutControlItem4";
          this.layoutControlItem4.Size = new System.Drawing.Size(157, 261);
@@ -652,7 +652,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.PosDiscountTextEdit.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.BalanceTextEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.pictureEdit.Properties)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForBarcode)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForUsePos)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode)).EndInit();
@@ -728,7 +728,7 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem ItemForBalance;
       private DevExpress.XtraEditors.SimpleButton simpleButton1;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-      private DevExpress.XtraEditors.PictureEdit pictureEdit1;
+      private DevExpress.XtraEditors.PictureEdit pictureEdit;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
    }
 }
