@@ -373,15 +373,17 @@ namespace Foxoft
          this.simpleButton1.Text = "Ozellik";
          this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
          // 
-         // pictureEdit1
+         // pictureEdit
          // 
          this.pictureEdit.Location = new System.Drawing.Point(258, 12);
-         this.pictureEdit.Name = "pictureEdit1";
+         this.pictureEdit.Name = "pictureEdit";
          this.pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
          this.pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
          this.pictureEdit.Size = new System.Drawing.Size(153, 257);
          this.pictureEdit.StyleController = this.dataLayoutControl1;
          this.pictureEdit.TabIndex = 14;
+         this.pictureEdit.EditValueChanged += new System.EventHandler(this.pictureEdit_EditValueChanged);
+         this.pictureEdit.DoubleClick += new System.EventHandler(this.pictureEdit_DoubleClick);
          // 
          // ItemForBarcode
          // 

@@ -19,6 +19,7 @@ namespace Foxoft
       subContext dbContext = new();
       EfMethods efMethods = new();
       private DcProduct dcProduct = new();
+      Bitmap myBitmap;
       private byte productTypeCode;
 
       public FormProduct(byte productTypeCode)
@@ -120,6 +121,10 @@ namespace Foxoft
                efMethods.InsertProduct(dcProduct);
             else
                dbContext.SaveChanges();
+
+            string imagePath = @"\\192.168.2.199\Foxoft Images\";
+            pictureEdit.Image.Save(imagePath);
+
             DialogResult = DialogResult.OK;
          }
          else
@@ -133,6 +138,51 @@ namespace Foxoft
       {
          FormFeature formFeature = new();
          formFeature.Show();
+      }
+
+      private void pictureEdit_EditValueChanged(object sender, EventArgs e)
+      {
+
+      }
+
+      private void openFileDialog()
+      {
+         OpenFileDialog dialog = new();
+         dialog.Filter =
+                     "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" +
+                     "All files (*.*)|*.*";
+
+         //dialog.Multiselect = true;
+         dialog.Title = "Foxoft üçün şəkil seçin.";
+
+         DialogResult dr = dialog.ShowDialog();
+         if (dr == DialogResult.OK)
+         {
+            foreach (String file in dialog.FileNames)
+            {
+               try
+               {
+                  Image.GetThumbnailImageAbort myCallback = new(ThumbnailCallback);
+                  myBitmap = new Bitmap(file);
+                  //Image myThumbnail = myBitmap.GetThumbnailImage(300, 300, myCallback, IntPtr.Zero);
+
+                  pictureEdit.Image = myBitmap;
+               }
+               catch (Exception ex)
+               {
+                  MessageBox.Show("Error: " + ex.Message);
+               }
+            }
+         }
+      }
+      public bool ThumbnailCallback()
+      {
+         return false;
+      }
+
+      private void pictureEdit_DoubleClick(object sender, EventArgs e)
+      {
+         openFileDialog();
       }
    }
 }
