@@ -53,7 +53,7 @@ namespace Foxoft
       public FormReportGrid()
       {
          InitializeComponent();
-         DevExpress.Export.ExportSettings.DefaultExportType = DevExpress.Export.ExportType.WYSIWYG;
+
          GridLocalizer.Active = new MyGridLocalizer();
 
          adornerUIManager1 = new AdornerUIManager(components);

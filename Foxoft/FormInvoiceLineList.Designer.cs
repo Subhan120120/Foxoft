@@ -49,6 +49,10 @@ namespace Foxoft
          this.colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colInvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colPriceLoc = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colQty = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLineList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLineList)).BeginInit();
@@ -90,7 +94,11 @@ namespace Foxoft
             this.colProductCode,
             this.colProductDesc,
             this.colInvoiceLineId,
-            this.colInvoiceHeaderId});
+            this.colInvoiceHeaderId,
+            this.colCurrencyCode,
+            this.colPrice,
+            this.colPriceLoc,
+            this.colQty});
          this.gV_InvoiceLineList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
          this.gV_InvoiceLineList.GridControl = this.gC_InvoiceLineList;
          this.gV_InvoiceLineList.Name = "gV_InvoiceLineList";
@@ -199,6 +207,36 @@ namespace Foxoft
          this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
          this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
          // 
+         // colCurrencyCode
+         // 
+         this.colCurrencyCode.Caption = "Valyuta";
+         this.colCurrencyCode.FieldName = "CurrencyCode";
+         this.colCurrencyCode.Name = "colCurrencyCode";
+         this.colCurrencyCode.Visible = true;
+         this.colCurrencyCode.VisibleIndex = 6;
+         // 
+         // colPrice
+         // 
+         this.colPrice.Caption = "Qiymət";
+         this.colPrice.FieldName = "Price";
+         this.colPrice.Name = "colPrice";
+         this.colPrice.Visible = true;
+         this.colPrice.VisibleIndex = 5;
+         // 
+         // colPriceLoc
+         // 
+         this.colPriceLoc.Caption = "Qiymət (YPV)";
+         this.colPriceLoc.FieldName = "PriceLoc";
+         this.colPriceLoc.Name = "colPriceLoc";
+         // 
+         // colQty
+         // 
+         this.colQty.Caption = "Say";
+         this.colQty.FieldName = "Qty";
+         this.colQty.Name = "colQty";
+         this.colQty.Visible = true;
+         this.colQty.VisibleIndex = 4;
+         // 
          // FormInvoiceLineList
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,5 +274,9 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
       private DevExpress.XtraGrid.Columns.GridColumn colInvoiceLineId;
       private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
+      private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colPrice;
+      private DevExpress.XtraGrid.Columns.GridColumn colPriceLoc;
+      private DevExpress.XtraGrid.Columns.GridColumn colQty;
    }
 }

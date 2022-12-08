@@ -39,7 +39,6 @@ namespace Foxoft
         private void bBI_loadLayout_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             gridView1.RestoreLayoutFromXml(@"D:\GvListDefaultLayout.xml");
-
         }
     }
 }

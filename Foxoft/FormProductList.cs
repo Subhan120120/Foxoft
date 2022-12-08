@@ -27,7 +27,7 @@ namespace Foxoft
       public DcProduct dcProduct { get; set; }
       public string productCode { get; set; }
       public byte productTypeCode;
-      
+
       RepositoryItemPictureEdit riPictureEdit = new();
       GridColumn colImage = new();
 
@@ -37,7 +37,7 @@ namespace Foxoft
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-         MemoryStream stream = new MemoryStream(byteArray);
+         MemoryStream stream = new(byteArray);
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_ProductList.RestoreLayoutFromStream(stream, option);
 
@@ -294,7 +294,7 @@ namespace Foxoft
       private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
       {
          string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         gC_ProductList.ExportToXlsx(pathDesktop + @"\ProductList.xlsx");
+         gC_ProductList.ExportToXlsx(Path.Combine(pathDesktop, @"ProductList.xlsx"));
       }
 
       private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)

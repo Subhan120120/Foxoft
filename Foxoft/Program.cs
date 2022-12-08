@@ -38,6 +38,8 @@ namespace Foxoft
             CreateViews(new DatabaseFacade(db));
          }
 
+         DevExpress.Export.ExportSettings.DefaultExportType = DevExpress.Export.ExportType.WYSIWYG;
+
          CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
          Thread.CurrentThread.CurrentUICulture = culture;
          //Thread.CurrentThread.CurrentCulture = culture;
