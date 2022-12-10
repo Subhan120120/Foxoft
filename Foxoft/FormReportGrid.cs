@@ -116,7 +116,7 @@ namespace Foxoft
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
             string fileName = view.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
             fileName += ".jpg";
-            string path = @"D:\Foxoft Images 2\" + fileName;
+            string path = @"\\192.168.2.199\Foxoft Images\" + fileName;
             if (!imageCache.ContainsKey(path))
             {
                Image img = GetImage(path);
@@ -135,7 +135,7 @@ namespace Foxoft
          if (File.Exists(path))
             img = Image.FromFile(path);
          else
-            img = Image.FromFile(@"D:\Foxoft Images 2\noimage.jpg");
+            img = Image.FromFile(@"\\192.168.2.199\Foxoft Images\noimage.jpg");
          return img;
       }
 

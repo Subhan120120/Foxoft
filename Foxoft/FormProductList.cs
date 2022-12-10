@@ -91,7 +91,7 @@ namespace Foxoft
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
             string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
             fileName += ".jpg";
-            string path = @"D:\Foxoft Images 2\" + fileName;
+            string path = @"\\192.168.2.199\Foxoft Images\" + fileName;
             if (!imageCache.ContainsKey(path))
             {
                Image img = GetImage(path);
@@ -108,7 +108,7 @@ namespace Foxoft
          if (File.Exists(path))
             img = Image.FromStream(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
          else
-            img = Image.FromStream(new FileStream(@"\\192.168.2.199\Foxoft Images 2\noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+            img = Image.FromStream(new FileStream(@"\\192.168.2.199\Foxoft Images\noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
          //if (File.Exists(path))
          //   img = Image.FromFile(path);
@@ -149,8 +149,6 @@ namespace Foxoft
 
          if (gV_ProductList.FocusedRowHandle >= 0)
             dcProduct = gV_ProductList.GetRow(gV_ProductList.FocusedRowHandle) as DcProduct;
-
-
 
          gV_ProductList.BestFitColumns();
       }
@@ -210,6 +208,9 @@ namespace Foxoft
                LoadProducts(productTypeCode);
 
                gV_ProductList.FocusedRowHandle = fr;
+
+               string path = @"\\192.168.2.199\Foxoft Images\" + formProduct.dcProduct.ProductCode + ".jpg";
+               imageCache.Remove(path);
             }
          }
          else

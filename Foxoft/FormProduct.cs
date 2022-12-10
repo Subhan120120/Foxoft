@@ -19,7 +19,7 @@ namespace Foxoft
    {
       subContext dbContext = new();
       EfMethods efMethods = new();
-      private DcProduct dcProduct = new();
+      public DcProduct dcProduct = new();
       private byte productTypeCode;
 
       public FormProduct(byte productTypeCode)
@@ -69,7 +69,7 @@ namespace Foxoft
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
 
             //var file = Path.ChangeExtension(table[8], ".jpg");
-            var fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images 2\", dcProduct.ProductCode + ".jpg");
+            var fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
             if (!File.Exists(fullPath))
             {
                //MessageBox.Show("No image!");
@@ -138,7 +138,7 @@ namespace Foxoft
 
       private void SaveImage()
       {
-         string outPutImage = @"\\192.168.2.199\Foxoft Images 2\" + dcProduct.ProductCode + ".jpg";
+         string outPutImage = @"\\192.168.2.199\Foxoft Images\" + dcProduct.ProductCode + ".jpg";
          //pictureEdit.Image.Save(imagePath);
          //pictureEdit.Image.Dispose();
 
@@ -151,9 +151,11 @@ namespace Foxoft
             try
             {
                //bitmap = pictureEdit.Image
-
-               pictureEdit.Image.Save(outPutImage);
-               GC.Collect();
+               if (pictureEdit.Image is not null)
+               {
+                  pictureEdit.Image.Save(outPutImage);
+                  GC.Collect();
+               }
             }
             catch (Exception ex)
             {

@@ -271,7 +271,6 @@ namespace Foxoft
          this.gV_InvoiceLine.OptionsSelection.MultiSelect = true;
          this.gV_InvoiceLine.OptionsView.ColumnHeaderAutoHeight = DevExpress.Utils.DefaultBoolean.False;
          this.gV_InvoiceLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-         this.gV_InvoiceLine.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
          this.gV_InvoiceLine.OptionsView.ShowFooter = true;
          this.gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
          this.gV_InvoiceLine.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_InvoiceLine_RowCellStyle);
