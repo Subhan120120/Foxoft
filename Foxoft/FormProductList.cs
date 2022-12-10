@@ -82,16 +82,16 @@ namespace Foxoft
          //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
       }
 
-      Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
+      public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
       private void gV_ProductList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
       {
          if (e.Column.FieldName == "Image" && e.IsGetData)
          {
             GridView view = sender as GridView;
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
-            string fileName = view.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
+            string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
             fileName += ".jpg";
-            string path = @"D:\Foxoft Images\" + fileName;
+            string path = @"D:\Foxoft Images 2\" + fileName;
             if (!imageCache.ContainsKey(path))
             {
                Image img = GetImage(path);
@@ -103,13 +103,18 @@ namespace Foxoft
 
       Image GetImage(string path)
       {
-         // Load an image by its local path, URL, etc.
-         // The following code loads the image from te specified file.
          Image img = null;
+
          if (File.Exists(path))
-            img = Image.FromFile(path);
+            img = Image.FromStream(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
          else
-            img = Image.FromFile(@"\\192.168.2.199\Foxoft Images\noimage.jpg");
+            img = Image.FromStream(new FileStream(@"\\192.168.2.199\Foxoft Images 2\noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+         //if (File.Exists(path))
+         //   img = Image.FromFile(path);
+         //else
+         //   img = Image.FromFile(@"\\192.168.2.199\Foxoft Images\noimage.jpg");
+
          return img;
       }
 
@@ -144,6 +149,8 @@ namespace Foxoft
 
          if (gV_ProductList.FocusedRowHandle >= 0)
             dcProduct = gV_ProductList.GetRow(gV_ProductList.FocusedRowHandle) as DcProduct;
+
+
 
          gV_ProductList.BestFitColumns();
       }

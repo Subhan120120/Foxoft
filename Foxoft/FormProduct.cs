@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -19,7 +20,6 @@ namespace Foxoft
       subContext dbContext = new();
       EfMethods efMethods = new();
       private DcProduct dcProduct = new();
-      Bitmap myBitmap;
       private byte productTypeCode;
 
       public FormProduct(byte productTypeCode)
@@ -69,15 +69,18 @@ namespace Foxoft
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
 
             //var file = Path.ChangeExtension(table[8], ".jpg");
-            var fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
+            var fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images 2\", dcProduct.ProductCode + ".jpg");
             if (!File.Exists(fullPath))
             {
                //MessageBox.Show("No image!");
             }
             else
             {
-               pictureEdit.Image = new Bitmap(fullPath);
-               //pictureEdit1.Image = Image.FromFile(fullPath);
+               //Image img = new Bitmap(fullPath);
+
+               Image img = Image.FromStream(new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+               pictureEdit.Image = img;
             }
 
          }
@@ -122,8 +125,7 @@ namespace Foxoft
             else
                dbContext.SaveChanges();
 
-            string imagePath = @"\\192.168.2.199\Foxoft Images\";
-            pictureEdit.Image.Save(imagePath);
+            SaveImage();
 
             DialogResult = DialogResult.OK;
          }
@@ -132,6 +134,38 @@ namespace Foxoft
             string combinedString = errorList.Aggregate((x, y) => x + "" + y);
             XtraMessageBox.Show(combinedString);
          }
+      }
+
+      private void SaveImage()
+      {
+         string outPutImage = @"\\192.168.2.199\Foxoft Images 2\" + dcProduct.ProductCode + ".jpg";
+         //pictureEdit.Image.Save(imagePath);
+         //pictureEdit.Image.Dispose();
+
+         //using (FileStream fs = new(outPutImage, FileMode.Open, FileAccess.ReadWrite))
+         //{
+         try
+         {
+            //using (Bitmap bitmap = (Bitmap)Image.FromStream(fs, true, false))
+            //{
+            try
+            {
+               //bitmap = pictureEdit.Image
+
+               pictureEdit.Image.Save(outPutImage);
+               GC.Collect();
+            }
+            catch (Exception ex)
+            {
+               throw ex;
+            }
+            //}
+         }
+         catch (ArgumentException aex)
+         {
+            throw new Exception("The file received from the Map Server is not a valid jpeg image", aex);
+         }
+         //}
       }
 
       private void simpleButton1_Click(object sender, EventArgs e)
@@ -163,10 +197,11 @@ namespace Foxoft
                try
                {
                   Image.GetThumbnailImageAbort myCallback = new(ThumbnailCallback);
-                  myBitmap = new Bitmap(file);
+                  Bitmap myBitmap = new(file);
                   //Image myThumbnail = myBitmap.GetThumbnailImage(300, 300, myCallback, IntPtr.Zero);
 
                   pictureEdit.Image = myBitmap;
+                  //myBitmap.Dispose();
                }
                catch (Exception ex)
                {
