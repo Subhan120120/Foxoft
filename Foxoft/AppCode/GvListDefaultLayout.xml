@@ -19,6 +19,9 @@
 		<property name="Editable">false</property>
 		<property name="ReadOnly">true</property>
 	</property>
+	<property name="OptionsCustomization" isnull="true" iskey="true">
+		<property name="AllowRowSizing">true</property>
+	</property>
 	<property name="OptionsView" isnull="true" iskey="true">
 		<property name="ColumnHeaderAutoHeight">True</property>
 		<property name="ShowAutoFilterRow">true</property>

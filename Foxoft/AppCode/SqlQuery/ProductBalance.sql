@@ -8,7 +8,17 @@ select
 from (
 	select DcProducts.ProductCode
 	, DcProducts.ProductDesc
-		, WarehouseCode
+	, WarehouseCode
+	, LastPurchasePrice = (select top 1 toplam = TrInvoiceLines.PriceLoc * (1 - (TrInvoiceLines.PosDiscount / 100))  
+								from TrInvoiceLines 
+								join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId
+								where TrInvoiceLines.ProductCode = DcProducts.ProductCode
+								and (TrInvoiceHeaders.ProcessCode = 'RP' or TrInvoiceHeaders.ProcessCode = 'CI')
+								and TrInvoiceHeaders.IsReturn = 0
+								ORDER BY TrInvoiceHeaders.DocumentDate desc
+											, TrInvoiceLines.CreatedDate desc
+								)											 
+
 	, SUM(ISNULL(QtyIn,0) - ISNULL(QtyOut,0)) Balance 
 	--, LastPurchasePrice = ()
 	from DcProducts

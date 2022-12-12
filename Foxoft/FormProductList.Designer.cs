@@ -142,6 +142,7 @@ namespace Foxoft
          this.gV_ProductList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_ProductList_RowStyle);
          this.gV_ProductList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_ProductList_FocusedRowChanged);
          this.gV_ProductList.ColumnFilterChanged += new System.EventHandler(this.gV_ProductList_ColumnFilterChanged);
+         this.gV_ProductList.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gV_ProductList_CustomUnboundColumnData);
          this.gV_ProductList.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
          // 
          // colProductCode

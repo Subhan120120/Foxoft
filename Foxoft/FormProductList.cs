@@ -1,8 +1,12 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.Data;
+using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
@@ -24,15 +28,27 @@ namespace Foxoft
       public string productCode { get; set; }
       public byte productTypeCode;
 
+      RepositoryItemPictureEdit riPictureEdit = new();
+      GridColumn colImage = new();
+
       public FormProductList()
       {
          InitializeComponent();
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-         MemoryStream stream = new MemoryStream(byteArray);
+         MemoryStream stream = new(byteArray);
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_ProductList.RestoreLayoutFromStream(stream, option);
+
+         colImage.FieldName = "Image";
+         colImage.Caption = "Şəkil";
+         colImage.UnboundType = UnboundColumnType.Object;
+         colImage.OptionsColumn.AllowEdit = false;
+         colImage.Visible = true;
+         colImage.ColumnEdit = riPictureEdit;
+         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+         gC_ProductList.RepositoryItems.Add(riPictureEdit);
 
          ribbonControl1.Minimized = true;
       }
@@ -42,6 +58,8 @@ namespace Foxoft
       {
          this.productTypeCode = productTypeCode;
          LoadProducts(productTypeCode);
+
+         gV_ProductList.Columns.Add(colImage);
       }
 
       public FormProductList(byte productTypeCode, string productCode)
@@ -62,6 +80,42 @@ namespace Foxoft
          //gV_ProductList.ShowFindPanel();
          //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
          //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+      }
+
+      public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
+      private void gV_ProductList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+      {
+         if (e.Column.FieldName == "Image" && e.IsGetData)
+         {
+            GridView view = sender as GridView;
+            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+            string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
+            fileName += ".jpg";
+            string path = @"\\192.168.2.199\Foxoft Images\" + fileName;
+            if (!imageCache.ContainsKey(path))
+            {
+               Image img = GetImage(path);
+               imageCache.Add(path, img);
+            }
+            e.Value = imageCache[path];
+         }
+      }
+
+      Image GetImage(string path)
+      {
+         Image img = null;
+
+         if (File.Exists(path))
+            img = Image.FromStream(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+         else
+            img = Image.FromStream(new FileStream(@"\\192.168.2.199\Foxoft Images\noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+         //if (File.Exists(path))
+         //   img = Image.FromFile(path);
+         //else
+         //   img = Image.FromFile(@"\\192.168.2.199\Foxoft Images\noimage.jpg");
+
+         return img;
       }
 
       private void LoadProducts(byte productTypeCode)
@@ -154,6 +208,9 @@ namespace Foxoft
                LoadProducts(productTypeCode);
 
                gV_ProductList.FocusedRowHandle = fr;
+
+               string path = @"\\192.168.2.199\Foxoft Images\" + formProduct.dcProduct.ProductCode + ".jpg";
+               imageCache.Remove(path);
             }
          }
          else
@@ -197,8 +254,13 @@ namespace Foxoft
                //else
                //   MessageBox.Show("The value in the selected cell is null or empty!");
 
-               string cellValue = view.GetFocusedValue().ToString();
-               Clipboard.SetText(cellValue);
+               object cellValue = view.GetFocusedValue();
+               if (view.FocusedColumn == colImage)
+                  Clipboard.SetImage((Image)cellValue);
+               else
+                  Clipboard.SetText(cellValue.ToString());
+
+
                e.Handled = true;
             }
 
@@ -245,7 +307,7 @@ namespace Foxoft
       private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
       {
          string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         gC_ProductList.ExportToXlsx(pathDesktop + @"\ProductList.xlsx");
+         gC_ProductList.ExportToXlsx(Path.Combine(pathDesktop, @"ProductList.xlsx"));
       }
 
       private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)

@@ -204,7 +204,7 @@ namespace Foxoft.Models
          modelBuilder.Entity<DcReport>().HasData(
              new DcReport { ReportName = "Satis", ReportQuery = "select * from TrInvoiceLines", ReportId = 1 });
 
-         CustomMethods customMethods = new CustomMethods();
+         CustomMethods customMethods = new();
          string gvListDefault = customMethods.GetDataFromFile("Foxoft.AppCode.GvListDefaultLayout.xml");
 
          modelBuilder.Entity<AppSetting>().HasData(
