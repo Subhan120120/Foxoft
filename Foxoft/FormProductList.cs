@@ -254,8 +254,13 @@ namespace Foxoft
                //else
                //   MessageBox.Show("The value in the selected cell is null or empty!");
 
-               string cellValue = view.GetFocusedValue().ToString();
-               Clipboard.SetText(cellValue);
+               object cellValue = view.GetFocusedValue();
+               if (view.FocusedColumn == colImage)
+                  Clipboard.SetImage((Image)cellValue);
+               else
+                  Clipboard.SetText(cellValue.ToString());
+
+
                e.Handled = true;
             }
 

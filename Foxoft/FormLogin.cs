@@ -5,6 +5,7 @@ using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
+using System.Configuration;
 
 namespace Foxoft
 {
@@ -18,6 +19,7 @@ namespace Foxoft
          AppSetting appSetting = efMethods.SelectAppSetting();
          Settings.Default.AppSetting = appSetting;
          Settings.Default.Save();
+         AcceptButton = btn_ERP;
 
          InitializeComponent();
          SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true);
@@ -91,6 +93,21 @@ namespace Foxoft
       {
          DefaultControls defaultControls = new();
          defaultControls.Show();
+      }
+
+      Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+      string nameConStr = "Foxoft.Properties.Settings.subConnString";
+
+      private void FormLogin_Load(object sender, EventArgs e)
+      {
+         txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString; ;
+      }
+
+      private void btn_ConStringSave_Click(object sender, EventArgs e)
+      {
+         config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = txtEdit_conString.EditValue.ToString();
+         config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
+         config.Save(ConfigurationSaveMode.Modified);
       }
    }
 }
