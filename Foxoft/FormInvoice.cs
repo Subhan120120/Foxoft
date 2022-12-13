@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -967,7 +968,11 @@ namespace Foxoft
          }
       }
 
-      private string subConnString = Settings.Default.subConnString;
+      private string subConnString = ConfigurationManager
+                       .OpenExeConfiguration(ConfigurationUserLevel.None)
+                       .ConnectionStrings
+                       .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                       .ConnectionString;
       private XtraReport GetInvoiceReport(string designPath)
       {
          ReportClass reportClass = new();

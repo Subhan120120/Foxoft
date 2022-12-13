@@ -223,7 +223,7 @@ namespace Foxoft
       {
          if (trPaymentLine.PaymentLoc > 0)
          {
-            EfMethods efMethods = new EfMethods();
+            EfMethods efMethods = new();
             string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
             trPaymentHeader.DocumentNumber = NewDocNum;
 
