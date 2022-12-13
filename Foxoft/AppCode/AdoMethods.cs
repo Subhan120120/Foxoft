@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -10,7 +11,11 @@ namespace Foxoft
 {
    public class AdoMethods
    {
-      private string subConnString = Properties.Settings.Default.subConnString;
+      private string subConnString = ConfigurationManager
+                                    .OpenExeConfiguration(ConfigurationUserLevel.None)
+                                    .ConnectionStrings
+                                    .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                                    .ConnectionString;
       private SqlParameter[] paramArray = Array.Empty<SqlParameter>();
 
       public int SqlExec(string query)

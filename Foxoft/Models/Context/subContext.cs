@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Configuration;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -50,11 +51,13 @@ namespace Foxoft.Models
       public DbSet<RetailSale> RetailSales { get; set; } // view
       public DbSet<DcReportFilter> DcReportFilters { get; set; } // view
 
+      Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
+         string nameConStr = "Foxoft.Properties.Settings.subConnString";
          if (!optionsBuilder.IsConfigured)
          {
-            optionsBuilder.UseSqlServer(Properties.Settings.Default.subConnString);
+            optionsBuilder.UseSqlServer(config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString);
          }
       }
 
