@@ -12,11 +12,10 @@ namespace Foxoft
 {
    public partial class FormLogin : ToolbarForm
    {
-      EfMethods efMethods = new EfMethods();
+      EfMethods efMethods = new();
 
       public FormLogin()
       {
-         EfMethods efMethods = new EfMethods();
          AppSetting appSetting = efMethods.SelectAppSetting();
          Settings.Default.AppSetting = appSetting;
          Settings.Default.Save();
@@ -36,7 +35,8 @@ namespace Foxoft
       {
          if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
          {
-            FormPOS formPos = new FormPOS();
+            FormPOS formPos = new();
+            SaveNewConStr();
             Hide();
             formPos.ShowDialog();
             Close();
@@ -47,7 +47,8 @@ namespace Foxoft
       {
          if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
          {
-            FormERP formERP = new FormERP();
+            FormERP formERP = new();
+            SaveNewConStr();
             Hide();
             formERP.ShowDialog();
             Close();
@@ -104,7 +105,7 @@ namespace Foxoft
          txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString; ;
       }
 
-      private void btn_ConStringSave_Click(object sender, EventArgs e)
+      private void SaveNewConStr()
       {
          config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = txtEdit_conString.EditValue.ToString();
          config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";

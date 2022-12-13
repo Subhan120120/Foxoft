@@ -11,11 +11,14 @@ namespace Foxoft
 {
    public class AdoMethods
    {
+
       private string subConnString = ConfigurationManager
-                                    .OpenExeConfiguration(ConfigurationUserLevel.None)
-                                    .ConnectionStrings
-                                    .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
-                                    .ConnectionString;
+                       .OpenExeConfiguration(ConfigurationUserLevel.None)
+                       .ConnectionStrings
+                       .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                       .ConnectionString;
+
+
       private SqlParameter[] paramArray = Array.Empty<SqlParameter>();
 
       public int SqlExec(string query)

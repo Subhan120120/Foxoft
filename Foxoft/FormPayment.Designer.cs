@@ -208,7 +208,6 @@ namespace Foxoft
          this.lUE_CashlessCurrency.Size = new System.Drawing.Size(148, 32);
          this.lUE_CashlessCurrency.StyleController = this.lC_Root;
          this.lUE_CashlessCurrency.TabIndex = 4;
-         this.lUE_CashlessCurrency.EditValueChanged += new System.EventHandler(this.lUE_CashlessCurrency_EditValueChanged);
          // 
          // btnEdit_BankAccout
          // 
@@ -231,7 +230,7 @@ namespace Foxoft
          this.btnEdit_CashRegister.StyleController = this.lC_Root;
          this.btnEdit_CashRegister.TabIndex = 3;
          this.btnEdit_CashRegister.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CashRegister_ButtonClick);
-        // 
+         // 
          // dateEdit_Date
          // 
          this.dateEdit_Date.EditValue = null;
@@ -244,6 +243,7 @@ namespace Foxoft
          this.dateEdit_Date.Size = new System.Drawing.Size(256, 20);
          this.dateEdit_Date.StyleController = this.lC_Root;
          this.dateEdit_Date.TabIndex = 0;
+         this.dateEdit_Date.EditValueChanged += new System.EventHandler(this.dateEdit_Date_EditValueChanged);
          // 
          // txtEdit_Cash
          // 
@@ -596,7 +596,6 @@ namespace Foxoft
          this.btn_UpdateBonus.StyleController = this.lC_Root;
          this.btn_UpdateBonus.TabIndex = 11;
          this.btn_UpdateBonus.Text = "simpleButton1";
-         this.btn_UpdateBonus.Click += new System.EventHandler(this.simpleButtonUpdateBonus_Click);
          // 
          // lCG_Root
          // 

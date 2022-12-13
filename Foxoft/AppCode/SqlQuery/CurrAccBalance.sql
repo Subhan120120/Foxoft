@@ -4,9 +4,9 @@ declare @EndTime time =  '00:00:00.000'
 
 select DcCurrAccs.CurrAccCode
 , CurrAccDesc
+, Amount = sum(Amount)
 , PhoneNum
 , IsVIP
-, Amount = sum(Amount)
 from 
 DcCurrAccs 
 left join 

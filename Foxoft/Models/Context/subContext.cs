@@ -52,12 +52,15 @@ namespace Foxoft.Models
       public DbSet<DcReportFilter> DcReportFilters { get; set; } // view
 
       Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
-         string nameConStr = "Foxoft.Properties.Settings.subConnString";
          if (!optionsBuilder.IsConfigured)
          {
-            optionsBuilder.UseSqlServer(config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString);
+            optionsBuilder.UseSqlServer(config
+                                       .ConnectionStrings
+                                       .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                                       .ConnectionString);
          }
       }
 
