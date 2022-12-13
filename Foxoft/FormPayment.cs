@@ -110,6 +110,12 @@ namespace Foxoft
          lUE_cashCurrency.EditValue = trPaymentLine.CurrencyCode;
       }
 
+      private void dateEdit_Date_EditValueChanged(object sender, EventArgs e)
+      {
+         DateTime date = Convert.ToDateTime(dateEdit_Date.EditValue);
+         trPaymentHeader.OperationDate = date;
+      }
+
       private void textEditCash_EditValueChanged(object sender, EventArgs e)
       {
          decimal txtCash = Convert.ToDecimal(txtEdit_Cash.EditValue);
