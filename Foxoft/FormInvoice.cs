@@ -1360,10 +1360,8 @@ namespace Foxoft
 
          if (view.FocusedColumn.ColumnType == typeof(decimal))
          {
-            if ((e.KeyChar == '.') || (e.KeyChar == ','))
-            {
+            if (e.KeyChar == '.')
                e.KeyChar = Convert.ToChar(",");
-            }
          }
       }
 

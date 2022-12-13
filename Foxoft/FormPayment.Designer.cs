@@ -208,7 +208,6 @@ namespace Foxoft
          this.lUE_CashlessCurrency.Size = new System.Drawing.Size(148, 32);
          this.lUE_CashlessCurrency.StyleController = this.lC_Root;
          this.lUE_CashlessCurrency.TabIndex = 4;
-         this.lUE_CashlessCurrency.EditValueChanged += new System.EventHandler(this.lUE_CashlessCurrency_EditValueChanged);
          // 
          // btnEdit_BankAccout
          // 
@@ -597,7 +596,6 @@ namespace Foxoft
          this.btn_UpdateBonus.StyleController = this.lC_Root;
          this.btn_UpdateBonus.TabIndex = 11;
          this.btn_UpdateBonus.Text = "simpleButton1";
-         this.btn_UpdateBonus.Click += new System.EventHandler(this.simpleButtonUpdateBonus_Click);
          // 
          // lCG_Root
          // 
