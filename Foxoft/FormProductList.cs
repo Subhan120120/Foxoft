@@ -110,11 +110,6 @@ namespace Foxoft
          else
             img = Image.FromStream(new FileStream(@"\\192.168.2.199\Foxoft Images\noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
-         //if (File.Exists(path))
-         //   img = Image.FromFile(path);
-         //else
-         //   img = Image.FromFile(@"\\192.168.2.199\Foxoft Images\noimage.jpg");
-
          return img;
       }
 
@@ -151,6 +146,7 @@ namespace Foxoft
             dcProduct = gV_ProductList.GetRow(gV_ProductList.FocusedRowHandle) as DcProduct;
 
          gV_ProductList.BestFitColumns();
+         gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
       }
 
       private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)

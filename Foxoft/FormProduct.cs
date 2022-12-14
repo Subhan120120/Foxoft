@@ -159,13 +159,13 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-               throw ex;
+               MessageBox.Show(ex.Message);
             }
             //}
          }
          catch (ArgumentException aex)
          {
-            throw new Exception("The file received from the Map Server is not a valid jpeg image", aex);
+            MessageBox.Show(aex.Message);
          }
          //}
       }
