@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.Data;
+using DevExpress.Utils;
 using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -7,25 +8,17 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Localization;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using DevExpress.Data;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraEditors.Controls;
-using System.IO;
-using System.Collections;
-using DevExpress.XtraGrid.Views.Base;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
 
 namespace Foxoft
 {
@@ -42,13 +35,13 @@ namespace Foxoft
       EfMethods efMethods = new();
       AdoMethods adoMethods = new();
 
-      RepositoryItemHyperLinkEdit HLE_DocumentNum = new();
-      RepositoryItemHyperLinkEdit HLE_InvoiceNum = new();
-      RepositoryItemHyperLinkEdit HLE_ProductCode = new();
-      RepositoryItemHyperLinkEdit HLE_CurrAccCode = new();
+      //RepositoryItemHyperLinkEdit HLE_DocumentNum;
+      //RepositoryItemHyperLinkEdit HLE_InvoiceNum;
+      //RepositoryItemHyperLinkEdit HLE_ProductCode;
+      //RepositoryItemHyperLinkEdit HLE_CurrAccCode;
 
-      RepositoryItemPictureEdit riPictureEdit = new();
-      GridColumn colImage = new();
+      RepositoryItemPictureEdit riPictureEdit;
+      GridColumn colImage;
 
       public FormReportGrid()
       {
@@ -64,27 +57,6 @@ namespace Foxoft
          //badge1.TargetElement = barButtonItem1;
          badge2.TargetElement = ribbonPage1;
 
-
-         colImage.FieldName = "Image";
-         colImage.Caption = "Image";
-         colImage.UnboundType = UnboundColumnType.Object;
-         colImage.OptionsColumn.AllowEdit = false;
-         colImage.Visible = true;
-         colImage.ColumnEdit = riPictureEdit;
-         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
-         gC_Report.RepositoryItems.Add(riPictureEdit);
-
-         HLE_DocumentNum.SingleClick = true;
-         HLE_DocumentNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
-         HLE_InvoiceNum.SingleClick = true;
-         HLE_InvoiceNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
-         HLE_ProductCode.SingleClick = true;
-         HLE_ProductCode.OpenLink += repoHLE_ProductCode_OpenLink;
-         HLE_CurrAccCode.SingleClick = true;
-         HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
-
-
-
       }
 
       public FormReportGrid(string qry, DcReport report)
@@ -94,11 +66,8 @@ namespace Foxoft
          this.report = report;
          this.Text = report.ReportName;
 
-         //AddUnboundColumn(gV_Report);
          LoadData();
          LoadLayout();
-
-         gV_Report.Columns.Add(colImage);
       }
 
       public FormReportGrid(string qry, DcReport report, string activeFilterStr)
@@ -110,11 +79,11 @@ namespace Foxoft
       Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
       private void gV_Report_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
       {
-         if (e.Column.FieldName == "Image" && e.IsGetData)
+         if (e.Column == colImage && e.IsGetData)
          {
-            GridView view = sender as GridView;
-            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
-            string fileName = view.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
+            GridView gV = sender as GridView;
+            int rowInd = gV.GetRowHandle(e.ListSourceRowIndex);
+            string fileName = gV.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
             fileName += ".jpg";
             string path = @"\\192.168.2.199\Foxoft Images\" + fileName;
             if (!imageCache.ContainsKey(path))
@@ -128,9 +97,6 @@ namespace Foxoft
 
       Image GetImage(string path)
       {
-         // Load an image by its local path, URL, etc.
-         // The following code loads the image from te specified file.
-
          Image img = null;
          if (File.Exists(path))
             img = Image.FromFile(path);
@@ -160,25 +126,63 @@ namespace Foxoft
       private void LoadData()
       {
          DataTable dt = adoMethods.SqlGetDt(qry);
-         gC_Report.DataSource = dt;
 
+         gC_Report.DataSource = dt;
          gV_Report.MoveLast();
          gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
 
          GridColumn col_DocumentNumber = gV_Report.Columns["DocumentNumber"];
-
          if (col_DocumentNumber is not null)
+         {
+            RepositoryItemHyperLinkEdit HLE_DocumentNum = new();
+            HLE_DocumentNum.SingleClick = true;
+            HLE_DocumentNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
             col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
+         }
+
+         GridColumn col_InvoiceNum = gV_Report.Columns["InvoiceNumber"];
+         if (col_InvoiceNum is not null)
+         {
+            RepositoryItemHyperLinkEdit HLE_InvoiceNum = new();
+            HLE_InvoiceNum.SingleClick = true;
+            HLE_InvoiceNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
+            col_InvoiceNum.ColumnEdit = HLE_InvoiceNum;
+         }
 
          GridColumn col_ProductCode = gV_Report.Columns["ProductCode"];
-
          if (col_ProductCode is not null)
+         {
+            RepositoryItemHyperLinkEdit HLE_ProductCode = new();
+            HLE_ProductCode.SingleClick = true;
+            HLE_ProductCode.OpenLink += repoHLE_ProductCode_OpenLink;
             col_ProductCode.ColumnEdit = HLE_ProductCode;
 
-         GridColumn col_CurrAccCode = gV_Report.Columns["CurrAccCode"];
+            CreateColImage();
+            gV_Report.Columns.Add(colImage);
+         }
 
+         GridColumn col_CurrAccCode = gV_Report.Columns["CurrAccCode"];
          if (col_CurrAccCode is not null)
+         {
+            RepositoryItemHyperLinkEdit HLE_CurrAccCode = new();
+            HLE_CurrAccCode.SingleClick = true;
+            HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
             col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
+         }
+      }
+
+      private void CreateColImage()
+      {
+         colImage = new();
+         colImage.FieldName = "Image";
+         colImage.Caption = "Image";
+         colImage.UnboundType = UnboundColumnType.Object;
+         colImage.OptionsColumn.AllowEdit = false;
+         colImage.Visible = true;
+         riPictureEdit = new();
+         colImage.ColumnEdit = riPictureEdit;
+         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+         gC_Report.RepositoryItems.Add(riPictureEdit);
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -232,10 +236,6 @@ namespace Foxoft
       private void bBI_DesignClear_ItemClick(object sender, ItemClickEventArgs e)
       {
          gV_Report.PopulateColumns();
-         //foreach (GridColumn item in gV_Report.Columns)
-         //{
-         //    gV_Report.Columns.Remove(item);
-         //}
       }
 
       GridColumn prevColumn = null; // Disable the Immediate Edit Cell
@@ -264,10 +264,13 @@ namespace Foxoft
          if (objProductCode is not null)
          {
             string productCode = objProductCode.ToString();
-            FormProduct formProduct = new(0, productCode);
-            if (formProduct.ShowDialog(this) == DialogResult.OK)
+            if (!String.IsNullOrEmpty(productCode))
             {
-               LoadData();
+               FormProduct formProduct = new(0, productCode);
+               if (formProduct.ShowDialog(this) == DialogResult.OK)
+               {
+                  LoadData();
+               }
             }
          }
       }
@@ -278,10 +281,13 @@ namespace Foxoft
          if (objCurrAccCode is not null)
          {
             string currAccCode = objCurrAccCode.ToString();
-            FormCurrAcc formCurrAcc = new(currAccCode);
-            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+            if (!String.IsNullOrEmpty(currAccCode))
             {
-               LoadData();
+               FormCurrAcc formCurrAcc = new(currAccCode);
+               if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+               {
+                  LoadData();
+               }
             }
          }
       }
@@ -379,8 +385,6 @@ namespace Foxoft
             Clipboard.SetText(cellValue);
             e.Handled = true;
          }
-
       }
-
    }
 }
