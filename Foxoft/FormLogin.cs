@@ -111,15 +111,15 @@ namespace Foxoft
          config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
          config.Save(ConfigurationSaveMode.Modified);
 
-         string a1 = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
-         string a2 = Settings.Default.subConnString;
+         //string a1 = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
+         //string a2 = Settings.Default.subConnString;
 
-         var contextOptions = new DbContextOptionsBuilder<subContext>()
-               .UseSqlServer(a1)
-               .Options;
+         //var contextOptions = new DbContextOptionsBuilder<subContext>()
+         //      .UseSqlServer(a1)
+         //      .Options;
 
-         using subContext context = new subContext(contextOptions);
-         string a5 = context.Database.GetDbConnection().ConnectionString;
+         //using subContext context = new subContext(contextOptions);
+         //string a5 = context.Database.GetDbConnection().ConnectionString;
       }
    }
 }
