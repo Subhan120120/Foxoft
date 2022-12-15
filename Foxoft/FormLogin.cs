@@ -36,7 +36,7 @@ namespace Foxoft
          if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
          {
             FormPOS formPos = new();
-            SaveNewConStr();
+            //SaveNewConStr();
             Hide();
             formPos.ShowDialog();
             Close();

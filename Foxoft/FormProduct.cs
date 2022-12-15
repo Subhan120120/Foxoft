@@ -76,8 +76,6 @@ namespace Foxoft
             }
             else
             {
-               //Image img = new Bitmap(fullPath);
-
                Image img = Image.FromStream(new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
                pictureEdit.Image = img;
@@ -125,7 +123,6 @@ namespace Foxoft
             else
                dbContext.SaveChanges();
 
-            SaveImage();
 
             DialogResult = DialogResult.OK;
          }
@@ -159,13 +156,13 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-               throw ex;
+               MessageBox.Show(ex.Message);
             }
             //}
          }
          catch (ArgumentException aex)
          {
-            throw new Exception("The file received from the Map Server is not a valid jpeg image", aex);
+            MessageBox.Show(aex.Message);
          }
          //}
       }
@@ -220,6 +217,11 @@ namespace Foxoft
       private void pictureEdit_DoubleClick(object sender, EventArgs e)
       {
          openFileDialog();
+      }
+
+      private void simpleButton2_Click(object sender, EventArgs e)
+      {
+         SaveImage();
       }
    }
 }

@@ -1157,11 +1157,11 @@ namespace Foxoft
 
                GetPrintToWarehouse();
 
-               this.Close();
+               Close();
             }
             else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
             {
-               this.Close();
+               Close();
             };
          }
          else
@@ -1274,6 +1274,7 @@ namespace Foxoft
          myProcess.Start();
       }
 
+      #region Whatsapp api.ultramsg
       //private void SendWhatsapp(string number, string type, string body)
       //{
       //   if (String.IsNullOrEmpty(number))
@@ -1309,7 +1310,8 @@ namespace Foxoft
       //   var output = response.Content;
 
       //   MessageBox.Show(output.ToString());
-      //}
+      //} 
+      #endregion
 
       private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
       {
