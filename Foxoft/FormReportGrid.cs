@@ -355,8 +355,15 @@ namespace Foxoft
       {
          try
          {
-            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            gC_Report.ExportToXlsx(pathDesktop + $@"\{report.ReportName}.xlsx");
+            SaveFileDialog saveFileDialog1 = new();
+            saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
+            saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
+            saveFileDialog1.FileName = $@"\{report.ReportName}.xlsx";
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog1.DefaultExt = "*.xlsx";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+               gC_Report.ExportToXlsx(saveFileDialog1.FileName);
          }
          catch (Exception ex)
          {

@@ -47,7 +47,7 @@ namespace Foxoft
          if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
          {
             FormERP formERP = new();
-            SaveNewConStr();
+            //SaveNewConStr();
             Hide();
             formERP.ShowDialog();
             Close();
@@ -101,7 +101,7 @@ namespace Foxoft
 
       private void FormLogin_Load(object sender, EventArgs e)
       {
-         txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString; ;
+         txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
       }
 
       private void SaveNewConStr()
@@ -109,6 +109,11 @@ namespace Foxoft
          config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = txtEdit_conString.EditValue.ToString();
          config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
          config.Save(ConfigurationSaveMode.Modified);
+      }
+
+      private void simpleButton2_Click(object sender, EventArgs e)
+      {
+         SaveNewConStr();
       }
    }
 }

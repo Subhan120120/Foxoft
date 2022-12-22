@@ -44,6 +44,7 @@ namespace Foxoft
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+         this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
          this.lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
          this.lCI_ERP = new DevExpress.XtraLayout.LayoutControlItem();
          this.lCI_POS = new DevExpress.XtraLayout.LayoutControlItem();
@@ -51,6 +52,7 @@ namespace Foxoft
          this.lCI_Password = new DevExpress.XtraLayout.LayoutControlItem();
          this.lCI_RemindMe = new DevExpress.XtraLayout.LayoutControlItem();
          this.lCI_ConString = new DevExpress.XtraLayout.LayoutControlItem();
+         this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
          this.toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
          ((System.ComponentModel.ISupportInitialize)(this.lC_Root)).BeginInit();
          this.lC_Root.SuspendLayout();
@@ -66,6 +68,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.lCI_Password)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.lCI_RemindMe)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.lCI_ConString)).BeginInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).BeginInit();
          this.SuspendLayout();
          // 
@@ -75,9 +78,9 @@ namespace Foxoft
          this.btn_ERP.Appearance.Options.UseFont = true;
          this.btn_ERP.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
          this.btn_ERP.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_ERP.ImageOptions.SvgImage")));
-         this.btn_ERP.Location = new System.Drawing.Point(157, 108);
+         this.btn_ERP.Location = new System.Drawing.Point(157, 110);
          this.btn_ERP.Name = "btn_ERP";
-         this.btn_ERP.Size = new System.Drawing.Size(142, 111);
+         this.btn_ERP.Size = new System.Drawing.Size(142, 109);
          this.btn_ERP.StyleController = this.lC_Root;
          this.btn_ERP.TabIndex = 7;
          this.btn_ERP.Text = "Arxa Ofis";
@@ -91,6 +94,7 @@ namespace Foxoft
          this.lC_Root.Controls.Add(this.txtEdit_Password);
          this.lC_Root.Controls.Add(this.checkEdit_RemindMe);
          this.lC_Root.Controls.Add(this.txtEdit_conString);
+         this.lC_Root.Controls.Add(this.simpleButton2);
          this.lC_Root.Dock = System.Windows.Forms.DockStyle.Fill;
          this.lC_Root.Location = new System.Drawing.Point(0, 31);
          this.lC_Root.Name = "lC_Root";
@@ -105,9 +109,9 @@ namespace Foxoft
          this.btn_POS.Appearance.Options.UseFont = true;
          this.btn_POS.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
          this.btn_POS.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_POS.ImageOptions.SvgImage")));
-         this.btn_POS.Location = new System.Drawing.Point(12, 108);
+         this.btn_POS.Location = new System.Drawing.Point(12, 110);
          this.btn_POS.Name = "btn_POS";
-         this.btn_POS.Size = new System.Drawing.Size(141, 111);
+         this.btn_POS.Size = new System.Drawing.Size(141, 109);
          this.btn_POS.StyleController = this.lC_Root;
          this.btn_POS.TabIndex = 6;
          this.btn_POS.Text = "Satış";
@@ -115,7 +119,7 @@ namespace Foxoft
          // 
          // txtEdit_UserName
          // 
-         this.txtEdit_UserName.Location = new System.Drawing.Point(101, 36);
+         this.txtEdit_UserName.Location = new System.Drawing.Point(101, 38);
          this.txtEdit_UserName.Name = "txtEdit_UserName";
          this.txtEdit_UserName.Size = new System.Drawing.Size(198, 20);
          this.txtEdit_UserName.StyleController = this.lC_Root;
@@ -123,7 +127,7 @@ namespace Foxoft
          // 
          // txtEdit_Password
          // 
-         this.txtEdit_Password.Location = new System.Drawing.Point(101, 60);
+         this.txtEdit_Password.Location = new System.Drawing.Point(101, 62);
          this.txtEdit_Password.Name = "txtEdit_Password";
          this.txtEdit_Password.Properties.UseSystemPasswordChar = true;
          this.txtEdit_Password.Size = new System.Drawing.Size(198, 20);
@@ -132,7 +136,7 @@ namespace Foxoft
          // 
          // checkEdit_RemindMe
          // 
-         this.checkEdit_RemindMe.Location = new System.Drawing.Point(12, 84);
+         this.checkEdit_RemindMe.Location = new System.Drawing.Point(12, 86);
          this.checkEdit_RemindMe.Name = "checkEdit_RemindMe";
          this.checkEdit_RemindMe.Properties.Caption = "meni xatırla";
          this.checkEdit_RemindMe.Size = new System.Drawing.Size(287, 20);
@@ -144,7 +148,7 @@ namespace Foxoft
          this.txtEdit_conString.Location = new System.Drawing.Point(101, 12);
          this.txtEdit_conString.MenuManager = this.toolbarFormManager1;
          this.txtEdit_conString.Name = "txtEdit_conString";
-         this.txtEdit_conString.Size = new System.Drawing.Size(198, 20);
+         this.txtEdit_conString.Size = new System.Drawing.Size(120, 20);
          this.txtEdit_conString.StyleController = this.lC_Root;
          this.txtEdit_conString.TabIndex = 0;
          // 
@@ -199,6 +203,16 @@ namespace Foxoft
          this.barButtonItem1.Name = "barButtonItem1";
          this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
          // 
+         // simpleButton2
+         // 
+         this.simpleButton2.Location = new System.Drawing.Point(225, 12);
+         this.simpleButton2.Name = "simpleButton2";
+         this.simpleButton2.Size = new System.Drawing.Size(74, 22);
+         this.simpleButton2.StyleController = this.lC_Root;
+         this.simpleButton2.TabIndex = 8;
+         this.simpleButton2.Text = "Yadda Saxla";
+         this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
+         // 
          // lCG_Root
          // 
          this.lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -209,7 +223,8 @@ namespace Foxoft
             this.lCI_UserName,
             this.lCI_Password,
             this.lCI_RemindMe,
-            this.lCI_ConString});
+            this.lCI_ConString,
+            this.layoutControlItem2});
          this.lCG_Root.Name = "Root";
          this.lCG_Root.Size = new System.Drawing.Size(311, 231);
          this.lCG_Root.TextVisible = false;
@@ -217,10 +232,10 @@ namespace Foxoft
          // lCI_ERP
          // 
          this.lCI_ERP.Control = this.btn_ERP;
-         this.lCI_ERP.Location = new System.Drawing.Point(145, 96);
+         this.lCI_ERP.Location = new System.Drawing.Point(145, 98);
          this.lCI_ERP.MinSize = new System.Drawing.Size(78, 26);
          this.lCI_ERP.Name = "lCI_ERP";
-         this.lCI_ERP.Size = new System.Drawing.Size(146, 115);
+         this.lCI_ERP.Size = new System.Drawing.Size(146, 113);
          this.lCI_ERP.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.lCI_ERP.TextSize = new System.Drawing.Size(0, 0);
          this.lCI_ERP.TextVisible = false;
@@ -228,10 +243,10 @@ namespace Foxoft
          // lCI_POS
          // 
          this.lCI_POS.Control = this.btn_POS;
-         this.lCI_POS.Location = new System.Drawing.Point(0, 96);
+         this.lCI_POS.Location = new System.Drawing.Point(0, 98);
          this.lCI_POS.MinSize = new System.Drawing.Size(78, 26);
          this.lCI_POS.Name = "lCI_POS";
-         this.lCI_POS.Size = new System.Drawing.Size(145, 115);
+         this.lCI_POS.Size = new System.Drawing.Size(145, 113);
          this.lCI_POS.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.lCI_POS.TextSize = new System.Drawing.Size(0, 0);
          this.lCI_POS.TextVisible = false;
@@ -239,7 +254,7 @@ namespace Foxoft
          // lCI_UserName
          // 
          this.lCI_UserName.Control = this.txtEdit_UserName;
-         this.lCI_UserName.Location = new System.Drawing.Point(0, 24);
+         this.lCI_UserName.Location = new System.Drawing.Point(0, 26);
          this.lCI_UserName.Name = "lCI_UserName";
          this.lCI_UserName.Size = new System.Drawing.Size(291, 24);
          this.lCI_UserName.Text = "İstifadəçi";
@@ -248,7 +263,7 @@ namespace Foxoft
          // lCI_Password
          // 
          this.lCI_Password.Control = this.txtEdit_Password;
-         this.lCI_Password.Location = new System.Drawing.Point(0, 48);
+         this.lCI_Password.Location = new System.Drawing.Point(0, 50);
          this.lCI_Password.Name = "lCI_Password";
          this.lCI_Password.Size = new System.Drawing.Size(291, 24);
          this.lCI_Password.Text = "Şifrə";
@@ -257,7 +272,7 @@ namespace Foxoft
          // lCI_RemindMe
          // 
          this.lCI_RemindMe.Control = this.checkEdit_RemindMe;
-         this.lCI_RemindMe.Location = new System.Drawing.Point(0, 72);
+         this.lCI_RemindMe.Location = new System.Drawing.Point(0, 74);
          this.lCI_RemindMe.Name = "lCI_RemindMe";
          this.lCI_RemindMe.Size = new System.Drawing.Size(291, 24);
          this.lCI_RemindMe.TextSize = new System.Drawing.Size(0, 0);
@@ -268,9 +283,18 @@ namespace Foxoft
          this.lCI_ConString.Control = this.txtEdit_conString;
          this.lCI_ConString.Location = new System.Drawing.Point(0, 0);
          this.lCI_ConString.Name = "lCI_ConString";
-         this.lCI_ConString.Size = new System.Drawing.Size(291, 24);
+         this.lCI_ConString.Size = new System.Drawing.Size(213, 26);
          this.lCI_ConString.Text = "Database Əlaqə";
          this.lCI_ConString.TextSize = new System.Drawing.Size(77, 13);
+         // 
+         // layoutControlItem2
+         // 
+         this.layoutControlItem2.Control = this.simpleButton2;
+         this.layoutControlItem2.Location = new System.Drawing.Point(213, 0);
+         this.layoutControlItem2.Name = "layoutControlItem2";
+         this.layoutControlItem2.Size = new System.Drawing.Size(78, 26);
+         this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+         this.layoutControlItem2.TextVisible = false;
          // 
          // toolbarFormControl1
          // 
@@ -313,6 +337,7 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.lCI_Password)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.lCI_RemindMe)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.lCI_ConString)).EndInit();
+         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).EndInit();
          this.ResumeLayout(false);
          this.PerformLayout();
@@ -346,5 +371,7 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem lCI_ConString;
       private DevExpress.XtraEditors.SimpleButton simpleButton1;
       private DevExpress.XtraEditors.SimpleButton btn_ConStringSave;
+      private DevExpress.XtraEditors.SimpleButton simpleButton2;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
    }
 }

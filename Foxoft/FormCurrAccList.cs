@@ -272,8 +272,16 @@ namespace Foxoft
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
-         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         gC_CurrAccList.ExportToXlsx(pathDesktop + $@"\CariHesablar.xlsx");
+         SaveFileDialog saveFileDialog1 = new();
+         saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
+         saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
+         saveFileDialog1.FileName = $@"CariHesablar.xlsx";
+         saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         saveFileDialog1.DefaultExt = "*.xlsx";
+
+         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            gC_CurrAccList.ExportToXlsx(saveFileDialog1.FileName);
+
       }
 
       private void bBI_CurrAccDelete_ItemClick(object sender, ItemClickEventArgs e)
@@ -307,7 +315,7 @@ namespace Foxoft
             gV_CurrAccList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             //if (!gV.FindPanelVisible)
-               gC.BeginInvoke(new Action(gV.ShowFindPanel));
+            gC.BeginInvoke(new Action(gV.ShowFindPanel));
          }
 
          int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);

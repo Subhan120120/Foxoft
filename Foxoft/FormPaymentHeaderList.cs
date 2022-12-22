@@ -259,7 +259,15 @@ namespace Foxoft
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
-         gV_PaymentHeaderList.ExportToXlsx(@"C:\Users\Public\Desktop\PaymentHeaderList.xlsx");
+         SaveFileDialog saveFileDialog1 = new();
+         saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
+         saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
+         saveFileDialog1.FileName = $@"PaymentHeaderList.xlsx";
+         saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         saveFileDialog1.DefaultExt = "*.xlsx";
+
+         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            gV_PaymentHeaderList.ExportToXlsx(saveFileDialog1.FileName);
       }
 
       private void gV_PaymentHeaderList_ColumnFilterChanged(object sender, EventArgs e)
