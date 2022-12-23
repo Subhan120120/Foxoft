@@ -35,11 +35,6 @@ namespace Foxoft
       EfMethods efMethods = new();
       AdoMethods adoMethods = new();
 
-      //RepositoryItemHyperLinkEdit HLE_DocumentNum;
-      //RepositoryItemHyperLinkEdit HLE_InvoiceNum;
-      //RepositoryItemHyperLinkEdit HLE_ProductCode;
-      //RepositoryItemHyperLinkEdit HLE_CurrAccCode;
-
       RepositoryItemPictureEdit riPictureEdit;
       GridColumn colImage;
 
@@ -173,16 +168,23 @@ namespace Foxoft
 
       private void CreateColImage()
       {
-         colImage = new();
+         if (colImage is null)
+         {
+            colImage = new();
+         }
          colImage.FieldName = "Image";
          colImage.Caption = "Image";
          colImage.UnboundType = UnboundColumnType.Object;
          colImage.OptionsColumn.AllowEdit = false;
          colImage.Visible = true;
-         riPictureEdit = new();
-         colImage.ColumnEdit = riPictureEdit;
-         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
-         gC_Report.RepositoryItems.Add(riPictureEdit);
+
+         if (riPictureEdit is null)
+         {
+            riPictureEdit = new();
+            colImage.ColumnEdit = riPictureEdit;
+            riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+            gC_Report.RepositoryItems.Add(riPictureEdit);
+         }
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
