@@ -173,7 +173,7 @@ namespace Foxoft
             colImage = new();
          }
          colImage.FieldName = "Image";
-         colImage.Caption = "Image";
+         colImage.Caption = "Şəkil";
          colImage.UnboundType = UnboundColumnType.Object;
          colImage.OptionsColumn.AllowEdit = false;
          colImage.Visible = true;
