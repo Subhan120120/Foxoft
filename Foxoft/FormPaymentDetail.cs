@@ -44,7 +44,10 @@ namespace Foxoft
       {
          trPaymentHeader = efMethods.SelectPaymentHeader(paymentHeaderId);
 
-         LoadPayment(trPaymentHeader.PaymentHeaderId);
+         if (trPaymentHeader is not null)
+         {
+            LoadPayment(trPaymentHeader.PaymentHeaderId);
+         }
       }
 
       private void ClearControlsAddNew()

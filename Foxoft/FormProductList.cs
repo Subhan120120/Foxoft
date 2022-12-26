@@ -46,6 +46,7 @@ namespace Foxoft
          colImage.UnboundType = UnboundColumnType.Object;
          colImage.OptionsColumn.AllowEdit = false;
          colImage.Visible = true;
+         colImage.OptionsColumn.FixedWidth = true;
          colImage.ColumnEdit = riPictureEdit;
          riPictureEdit.SizeMode = PictureSizeMode.Zoom;
          gC_ProductList.RepositoryItems.Add(riPictureEdit);
@@ -442,8 +443,10 @@ namespace Foxoft
 
       private void gV_ProductList_CalcRowHeight(object sender, RowHeightEventArgs e)
       {
+         GridView gV = sender as GridView;
          if (e.RowHandle == GridControl.AutoFilterRowHandle)
             e.RowHeight = 25;
+         colImage.Width = gV.RowHeight;
       }
    }
 }

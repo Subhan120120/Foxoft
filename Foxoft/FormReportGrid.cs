@@ -176,6 +176,7 @@ namespace Foxoft
          colImage.Caption = "Şəkil";
          colImage.UnboundType = UnboundColumnType.Object;
          colImage.OptionsColumn.AllowEdit = false;
+         colImage.OptionsColumn.FixedWidth = false;
          colImage.Visible = true;
 
          if (riPictureEdit is null)
@@ -300,7 +301,10 @@ namespace Foxoft
 
          if (objInv is not null)
          {
-            Guid guidHeadId = Guid.Parse(objInv.ToString());
+            string asdasdj = objInv.ToString();
+
+            Guid guidHeadId = new Guid(asdasdj);
+
             if (guidHeadId != Guid.Empty)
             {
                TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(guidHeadId);
@@ -394,6 +398,15 @@ namespace Foxoft
             Clipboard.SetText(cellValue);
             e.Handled = true;
          }
+      }
+
+      private void gV_Report_CalcRowHeight(object sender, RowHeightEventArgs e)
+      {
+         GridView gV = sender as GridView;
+         if (e.RowHandle == GridControl.AutoFilterRowHandle)
+            e.RowHeight = 25;
+         if (colImage is not null)
+            colImage.Width = gV.RowHeight;
       }
    }
 }
