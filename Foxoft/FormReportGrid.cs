@@ -301,25 +301,27 @@ namespace Foxoft
 
          if (objInv is not null)
          {
-            string asdasdj = objInv.ToString();
+            string strHeadId = objInv.ToString();
 
-            Guid guidHeadId = new Guid(asdasdj);
-
-            if (guidHeadId != Guid.Empty)
+            if (!String.IsNullOrEmpty(strHeadId))
             {
-               TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(guidHeadId);
-
-               if (trInvoiceHeader is not null)
+               Guid guidHeadId = Guid.Parse(strHeadId);
+               if (guidHeadId != Guid.Empty)
                {
-                  FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, guidHeadId);
-                  FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
-                  formInvoice.MdiParent = formERP;
-                  formInvoice.WindowState = FormWindowState.Maximized;
-                  formInvoice.Show();
-                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(guidHeadId);
+
+                  if (trInvoiceHeader is not null)
+                  {
+                     FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, guidHeadId);
+                     FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                     formInvoice.MdiParent = formERP;
+                     formInvoice.WindowState = FormWindowState.Maximized;
+                     formInvoice.Show();
+                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  }
+                  else
+                     MessageBox.Show("Belə bir qaimə yoxdur. ");
                }
-               else
-                  MessageBox.Show("Belə bir qaimə yoxdur. ");
             }
          }
 
@@ -361,15 +363,15 @@ namespace Foxoft
       {
          try
          {
-            SaveFileDialog saveFileDialog1 = new();
-            saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
-            saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
-            saveFileDialog1.FileName = $@"\{report.ReportName}.xlsx";
-            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            saveFileDialog1.DefaultExt = "*.xlsx";
+            SaveFileDialog sFD = new();
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.FileName = $@"\{report.ReportName}.xlsx";
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            sFD.DefaultExt = "*.xlsx";
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-               gC_Report.ExportToXlsx(saveFileDialog1.FileName);
+            if (sFD.ShowDialog() == DialogResult.OK)
+               gC_Report.ExportToXlsx(sFD.FileName);
          }
          catch (Exception ex)
          {

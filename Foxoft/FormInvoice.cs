@@ -1186,7 +1186,7 @@ namespace Foxoft
                if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
                {
                   bool hasrules = false;
-                  foreach (var rule in gridView.FormatRules)
+                  foreach (GridFormatRule rule in gridView.FormatRules)
                   {
                      if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
                      {
