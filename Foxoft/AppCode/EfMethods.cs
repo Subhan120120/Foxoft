@@ -121,6 +121,22 @@ namespace Foxoft
 
       }
 
+      public List<DcFeature> SelectFeatures()
+      {
+         using subContext db = new();
+
+         List<DcFeature> features = db.DcFeatures.ToList();
+         return features;
+
+      }
+
+      public DcProductDcFeature SelectFeature(int featureId, string productCode)
+      {
+         using subContext db = new();
+         return db.DcProductDcFeatures.Where(x => x.FeatureId == featureId)
+                 .FirstOrDefault(x => x.ProductCode == productCode);
+      }
+
       public DcProduct SelectProduct(string productCode)
       {
          using subContext db = new();
@@ -188,7 +204,7 @@ namespace Foxoft
                                                 .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
                                                 .Where(l => l.TrInvoiceHeader.IsReturn == false)
                                                 .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                                                .ThenByDescending(l =>l.CreatedDate)
+                                                .ThenByDescending(l => l.CreatedDate)
                                                 .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
                                                 .FirstOrDefault(),
                             ProductCode = x.ProductCode,

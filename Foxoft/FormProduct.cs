@@ -70,7 +70,7 @@ namespace Foxoft
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
 
             //var file = Path.ChangeExtension(table[8], ".jpg");
-            var fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
+            string fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
             if (!File.Exists(fullPath))
             {
                //MessageBox.Show("No image!");
@@ -170,7 +170,7 @@ namespace Foxoft
 
       private void simpleButton1_Click(object sender, EventArgs e)
       {
-         FormFeature formFeature = new();
+         FormFeature formFeature = new(dcProduct.ProductCode);
          formFeature.Show();
       }
 

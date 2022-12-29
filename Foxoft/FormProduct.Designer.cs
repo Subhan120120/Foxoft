@@ -1,34 +1,33 @@
-﻿
-namespace Foxoft
+﻿namespace Foxoft
 {
-    partial class FormProduct
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+   partial class FormProduct
+   {
+      /// <summary>
+      /// Required designer variable.
+      /// </summary>
+      private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      /// <summary>
+      /// Clean up any resources being used.
+      /// </summary>
+      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing && (components != null))
+         {
+            components.Dispose();
+         }
+         base.Dispose(disposing);
+      }
 
-        #region Windows Form Designer generated code
+      #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+      /// <summary>
+      /// Required method for Designer support - do not modify
+      /// the contents of this method with the code editor.
+      /// </summary>
+      private void InitializeComponent()
+      {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProduct));
          this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
@@ -732,37 +731,37 @@ namespace Foxoft
          ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
          this.ResumeLayout(false);
 
-        }
+      }
 
-        #endregion
+      #endregion
 
-        private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
-        private System.Windows.Forms.BindingSource dcProductsBindingSource;
-        private DevExpress.XtraLayout.LayoutControlGroup Root;
-        private DevExpress.XtraEditors.CheckEdit UsePosCheckEdit;
-        private DevExpress.XtraEditors.TextEdit PromotionCodeTextEdit;
-        private DevExpress.XtraEditors.TextEdit PromotionCode2TextEdit;
-        private DevExpress.XtraEditors.TextEdit TaxRateTextEdit;
-        private DevExpress.XtraEditors.CheckEdit IsDisabledCheckEdit;
-        private DevExpress.XtraEditors.TextEdit ProductDescTextEdit;
-        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForBarcode;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForUsePos;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForPromotionCode;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForPromotionCode2;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForTaxRate;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForIsDisabled;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForProductDesc;
-        private DevExpress.XtraEditors.SimpleButton btn_Ok;
-        private DevExpress.XtraEditors.SimpleButton btn_Cancel;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-        private DevExpress.XtraEditors.LookUpEdit ProductTypeCodeLookUpEdit;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
-        private DevExpress.XtraEditors.TextEdit BarcodeTextEdit;
+      private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
+      private System.Windows.Forms.BindingSource dcProductsBindingSource;
+      private DevExpress.XtraLayout.LayoutControlGroup Root;
+      private DevExpress.XtraEditors.CheckEdit UsePosCheckEdit;
+      private DevExpress.XtraEditors.TextEdit PromotionCodeTextEdit;
+      private DevExpress.XtraEditors.TextEdit PromotionCode2TextEdit;
+      private DevExpress.XtraEditors.TextEdit TaxRateTextEdit;
+      private DevExpress.XtraEditors.CheckEdit IsDisabledCheckEdit;
+      private DevExpress.XtraEditors.TextEdit ProductDescTextEdit;
+      private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForBarcode;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForUsePos;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForPromotionCode;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForPromotionCode2;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForTaxRate;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForIsDisabled;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForProductDesc;
+      private DevExpress.XtraEditors.SimpleButton btn_Ok;
+      private DevExpress.XtraEditors.SimpleButton btn_Cancel;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+      private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+      private DevExpress.XtraGrid.GridControl gridControl1;
+      private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+      private DevExpress.XtraEditors.LookUpEdit ProductTypeCodeLookUpEdit;
+      private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
+      private DevExpress.XtraEditors.TextEdit BarcodeTextEdit;
       private DevExpress.XtraEditors.TextEdit ProductCodeTextEdit;
       private DevExpress.XtraLayout.LayoutControlItem ItemForProductCode;
       private DevExpress.XtraEditors.TextEdit PurchasePriceTextEdit;

@@ -366,7 +366,7 @@ namespace Foxoft
             SaveFileDialog sFD = new();
             sFD.Filter = "Excel Faylı|*.xlsx";
             sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = $@"\{report.ReportName}.xlsx";
+            sFD.FileName = $@"{report.ReportName}.xlsx";
             sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             sFD.DefaultExt = "*.xlsx";
 
