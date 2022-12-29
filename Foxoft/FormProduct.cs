@@ -170,7 +170,7 @@ namespace Foxoft
 
       private void simpleButton1_Click(object sender, EventArgs e)
       {
-         FormFeature formFeature = new(dcProduct.ProductCode);
+         FormFeatures formFeature = new(dcProduct.ProductCode);
          formFeature.Show();
       }
 

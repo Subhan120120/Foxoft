@@ -1,7 +1,7 @@
 ﻿
 namespace Foxoft
 {
-   partial class FormFeature
+   partial class FormFeatures
    {
       /// <summary>
       /// Required designer variable.
@@ -54,15 +54,15 @@ namespace Foxoft
          this.Root.Size = new System.Drawing.Size(298, 268);
          this.Root.TextVisible = false;
          // 
-         // FormFeature
+         // FormFeatures
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(298, 268);
          this.Controls.Add(this.layoutControl1);
-         this.Name = "FormFeature";
-         this.Text = "FormFeature";
-         this.Load += new System.EventHandler(this.FormFeature_Load);
+         this.Name = "FormFeatures";
+         this.Text = "FormFeatures";
+         this.Load += new System.EventHandler(this.FormFeatures_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
          this.ResumeLayout(false);
@@ -71,11 +71,7 @@ namespace Foxoft
 
       #endregion
 
-      private DevExpress.XtraLayout.LayoutControlGroup Root;
       private DevExpress.XtraLayout.LayoutControl layoutControl1;
-      private DevExpress.XtraEditors.ButtonEdit buttonEdit1;
-      private DevExpress.XtraEditors.ButtonEdit buttonEdit2;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+      private DevExpress.XtraLayout.LayoutControlGroup Root;
    }
 }

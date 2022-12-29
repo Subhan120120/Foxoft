@@ -133,8 +133,11 @@ namespace Foxoft
       public DcProductDcFeature SelectFeature(int featureId, string productCode)
       {
          using subContext db = new();
-         return db.DcProductDcFeatures.Where(x => x.FeatureId == featureId)
-                 .FirstOrDefault(x => x.ProductCode == productCode);
+
+         DcProductDcFeature dc = db.DcProductDcFeatures
+                  .Where(x => x.FeatureId == featureId)
+                  .FirstOrDefault(x => x.ProductCode == productCode);
+         return dc;
       }
 
       public DcProduct SelectProduct(string productCode)
