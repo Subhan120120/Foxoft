@@ -313,7 +313,7 @@ namespace Foxoft
                   if (trInvoiceHeader is not null)
                   {
                      FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, guidHeadId);
-                     FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+                     FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                      formInvoice.MdiParent = formERP;
                      formInvoice.WindowState = FormWindowState.Maximized;
                      formInvoice.Show();
@@ -332,7 +332,7 @@ namespace Foxoft
             if (Guid.Parse(objPay.ToString()) != Guid.Empty)
             {
                FormPaymentDetail frm = new(Guid.Parse(objPay.ToString()));
-               FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+               FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                frm.MdiParent = formERP;
                frm.WindowState = FormWindowState.Maximized;
                frm.Show();

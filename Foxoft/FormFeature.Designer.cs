@@ -1,7 +1,7 @@
 ﻿
 namespace Foxoft
 {
-   partial class FormFeatures
+   partial class FormFeature
    {
       /// <summary>
       /// Required designer variable.
@@ -40,7 +40,7 @@ namespace Foxoft
          this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
          this.layoutControl1.Location = new System.Drawing.Point(0, 0);
          this.layoutControl1.Name = "layoutControl1";
-         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(346, 16, 650, 400);
+         this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(450, 54, 399, 400);
          this.layoutControl1.Root = this.Root;
          this.layoutControl1.Size = new System.Drawing.Size(298, 268);
          this.layoutControl1.TabIndex = 0;
@@ -54,15 +54,15 @@ namespace Foxoft
          this.Root.Size = new System.Drawing.Size(298, 268);
          this.Root.TextVisible = false;
          // 
-         // FormFeatures
+         // FormFeatureTest
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(298, 268);
          this.Controls.Add(this.layoutControl1);
-         this.Name = "FormFeatures";
-         this.Text = "FormFeatures";
-         this.Load += new System.EventHandler(this.FormFeatures_Load);
+         this.Name = "FormFeatureTest";
+         this.Text = "FormFeatureTest";
+         this.Load += new System.EventHandler(this.FormFeatureTest_Load);
          ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
          this.ResumeLayout(false);

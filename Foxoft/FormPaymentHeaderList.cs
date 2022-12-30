@@ -186,7 +186,7 @@ namespace Foxoft
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
             FormInvoice formInvoice = new (trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
-            FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
             formInvoice.MdiParent = formERP;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();
@@ -209,7 +209,7 @@ namespace Foxoft
             TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);
 
             FormPaymentDetail formaPayment = new (trInvoiceHeader.PaymentHeaderId);
-            FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
             formaPayment.MdiParent = formERP;
             formaPayment.WindowState = FormWindowState.Maximized;
             formaPayment.Show();
