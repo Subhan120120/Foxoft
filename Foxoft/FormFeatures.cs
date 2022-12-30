@@ -3,35 +3,25 @@ using DevExpress.XtraLayout;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class FormFeatures : DevExpress.XtraEditors.XtraForm
+   public partial class FormFeatures : XtraForm
    {
-      EfMethods efMethods = new EfMethods();
+      EfMethods efMethods = new();
       string productCode;
 
       public FormFeatures()
       {
          InitializeComponent();
+
+         
       }
 
       public FormFeatures(string productCode)
       {
          this.productCode = productCode;
 
-
-      }
-
-      private void FormFeatures_Load(object sender, EventArgs e)
-      {
          List<DcFeature> dcFeatures = efMethods.SelectFeatures();
 
          foreach (DcFeature feature in dcFeatures)
@@ -51,6 +41,11 @@ namespace Foxoft
                Root.Items.AddRange(new BaseLayoutItem[] { layoutControlItem });
             }
          }
+      }
+
+      private void FormFeatures_Load(object sender, EventArgs e)
+      {
+         
       }
    }
 }
