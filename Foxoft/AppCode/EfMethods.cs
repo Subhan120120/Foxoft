@@ -988,6 +988,32 @@ namespace Foxoft
          return db.SaveChanges();
       }
 
+      public int UpdateDcFeature_Value(int FeatureId, string productCode, string value)
+      {
+         using subContext db = new();
+         DcProductDcFeature pf = db.DcProductDcFeatures.Where(x => x.ProductCode == productCode)
+                                                     .FirstOrDefault(x => x.FeatureId == FeatureId);
+
+         if (pf is not null)
+         {
+            pf.FeatureDesc = value;
+            db.Entry(pf).Property(x => x.FeatureDesc).IsModified = true;
+         }
+         else
+         {
+            pf = new DcProductDcFeature()
+            {
+               FeatureId = FeatureId,
+               ProductCode = productCode,
+               FeatureDesc = value
+            };
+
+            db.DcProductDcFeatures.Add(pf);
+         }
+
+         return db.SaveChanges();
+      }
+
       public int UpdateReportFilter(int id, string prop, string value)
       {
          using subContext db = new();

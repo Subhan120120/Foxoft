@@ -686,6 +686,7 @@ namespace Foxoft
                gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
 
                gV_InvoiceLine.BestFitColumns();
+               gV_InvoiceLine.FocusedColumn = colQty;
             }
          }
          catch (Exception ex)

@@ -72,7 +72,7 @@ namespace Foxoft
       }
 
 
-      public static void GetCaptionName(DataTable dt)
+      public static void SetCaptionName(DataTable dt)
       {
          subContext db = new();
          foreach (DataColumn column in dt.Columns)

@@ -40,6 +40,7 @@ namespace Foxoft
          this.bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Quit = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -92,9 +93,10 @@ namespace Foxoft
             this.bBI_DesignClear,
             this.bBI_ExportXlsx,
             this.bBI_Refresh,
-            this.bBI_Quit});
+            this.bBI_Quit,
+            this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 9;
+         this.ribbonControl1.MaxItemId = 10;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_Quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -160,6 +162,13 @@ namespace Foxoft
          this.bBI_Quit.Name = "bBI_Quit";
          this.bBI_Quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_Quit_ItemClick);
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "test";
+         this.barButtonItem1.Id = 9;
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -187,6 +196,7 @@ namespace Foxoft
          // ribbonPageGroup2
          // 
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_ExportXlsx);
+         this.ribbonPageGroup2.ItemLinks.Add(this.barButtonItem1);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Export";
          // 
@@ -241,5 +251,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
       private DevExpress.XtraBars.BarButtonItem bBI_Quit;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
    }
 }

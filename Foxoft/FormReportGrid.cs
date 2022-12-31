@@ -118,6 +118,7 @@ namespace Foxoft
             return base.GetLocalizedString(id);
          }
       }
+
       private void LoadData()
       {
          DataTable dt = adoMethods.SqlGetDt(qry);
@@ -164,6 +165,7 @@ namespace Foxoft
             HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
             col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
          }
+
       }
 
       private void CreateColImage()
@@ -218,6 +220,8 @@ namespace Foxoft
                gV_Report.RestoreLayoutFromStream(stream);
             }
          }
+
+         TrimNumbersFormat();
       }
 
       private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
@@ -409,6 +413,24 @@ namespace Foxoft
             e.RowHeight = 25;
          if (colImage is not null)
             colImage.Width = gV.RowHeight;
+      }
+
+      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         TrimNumbersFormat();
+      }
+
+      private void TrimNumbersFormat()
+      {
+         foreach (var item in gV_Report.Columns)
+         {
+            GridColumn gridColumn = (GridColumn)item;
+            if (gridColumn.ColumnType.Name == "Decimal")
+            {
+               gridColumn.DisplayFormat.FormatType = FormatType.Numeric;
+               gridColumn.DisplayFormat.FormatString = "0.00";
+            }
+         }
       }
    }
 }
