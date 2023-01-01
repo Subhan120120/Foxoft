@@ -686,6 +686,7 @@ namespace Foxoft
                gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
 
                gV_InvoiceLine.BestFitColumns();
+               gV_InvoiceLine.FocusedColumn = colQty;
             }
          }
          catch (Exception ex)
@@ -1186,7 +1187,7 @@ namespace Foxoft
                if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
                {
                   bool hasrules = false;
-                  foreach (var rule in gridView.FormatRules)
+                  foreach (GridFormatRule rule in gridView.FormatRules)
                   {
                      if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
                      {

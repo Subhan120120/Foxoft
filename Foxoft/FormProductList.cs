@@ -46,6 +46,7 @@ namespace Foxoft
          colImage.UnboundType = UnboundColumnType.Object;
          colImage.OptionsColumn.AllowEdit = false;
          colImage.Visible = true;
+         colImage.OptionsColumn.FixedWidth = true;
          colImage.ColumnEdit = riPictureEdit;
          riPictureEdit.SizeMode = PictureSizeMode.Zoom;
          gC_ProductList.RepositoryItems.Add(riPictureEdit);
@@ -302,8 +303,15 @@ namespace Foxoft
 
       private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
       {
-         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         gC_ProductList.ExportToXlsx(Path.Combine(pathDesktop, @"ProductList.xlsx"));
+         SaveFileDialog saveFileDialog1 = new();
+         saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
+         saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
+         saveFileDialog1.FileName = $@"ProductList.xlsx";
+         saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         saveFileDialog1.DefaultExt = "*.xlsx";
+
+         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            gC_ProductList.ExportToXlsx(saveFileDialog1.FileName);
       }
 
       private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
@@ -313,7 +321,6 @@ namespace Foxoft
 
       private void gV_ProductList_ColumnFilterChanged(object sender, EventArgs e)
       {
-
          GridView view = sender as GridView;
 
          if (view.FocusedRowHandle >= 0)
@@ -432,6 +439,14 @@ namespace Foxoft
             FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
             formGrid.Show();
          }
+      }
+
+      private void gV_ProductList_CalcRowHeight(object sender, RowHeightEventArgs e)
+      {
+         GridView gV = sender as GridView;
+         if (e.RowHandle == GridControl.AutoFilterRowHandle)
+            e.RowHeight = 25;
+         colImage.Width = gV.RowHeight;
       }
    }
 }

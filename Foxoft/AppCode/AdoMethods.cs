@@ -60,7 +60,7 @@ namespace Foxoft
          DataTable dt = new();
          dt.Load(dr);
 
-         ReflectionExtensions.GetCaptionName(dt);
+         ReflectionExtensions.SetCaptionName(dt);
 
          return dt;
 
@@ -90,7 +90,7 @@ namespace Foxoft
          DataTable dt = new();
          da.Fill(dt);
 
-         ReflectionExtensions.GetCaptionName(dt);
+         ReflectionExtensions.SetCaptionName(dt);
 
          return dt;
       }

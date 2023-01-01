@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -69,7 +70,7 @@ namespace Foxoft
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
 
             //var file = Path.ChangeExtension(table[8], ".jpg");
-            var fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
+            string fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
             if (!File.Exists(fullPath))
             {
                //MessageBox.Show("No image!");
@@ -169,7 +170,7 @@ namespace Foxoft
 
       private void simpleButton1_Click(object sender, EventArgs e)
       {
-         FormFeature formFeature = new();
+         FormFeature formFeature = new(dcProduct.ProductCode);
          formFeature.Show();
       }
 
@@ -216,12 +217,25 @@ namespace Foxoft
 
       private void pictureEdit_DoubleClick(object sender, EventArgs e)
       {
-         openFileDialog();
+         string outPutImage = @"\\192.168.2.199\Foxoft Images\" + dcProduct.ProductCode + ".jpg";
+         //Process.Start(outPutImage);
+
+         if (File.Exists(outPutImage))
+         {
+            ProcessStartInfo startInfo = new(outPutImage);
+            startInfo.UseShellExecute = true;
+            Process.Start(startInfo);
+         }
       }
 
       private void simpleButton2_Click(object sender, EventArgs e)
       {
          SaveImage();
+      }
+
+      private void simpleButton3_Click(object sender, EventArgs e)
+      {
+         openFileDialog();
       }
    }
 }

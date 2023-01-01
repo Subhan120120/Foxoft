@@ -119,7 +119,7 @@ namespace Foxoft
 
       private void aCE_Products_Click(object sender, EventArgs e)
       {
-         FormProductList form = Application.OpenForms["FormProductList"] as FormProductList;
+         FormProductList form = Application.OpenForms[nameof(FormProductList)] as FormProductList;
 
          if (form != null)
          {
@@ -145,7 +145,7 @@ namespace Foxoft
 
       private void aCE_CurrAcc_Click(object sender, EventArgs e)
       {
-         FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
+         FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
 
          try
          {
@@ -441,7 +441,7 @@ namespace Foxoft
 
       private void ACE_CashReg_Click(object sender, EventArgs e)
       {
-         FormCurrAccList form = Application.OpenForms["FormCurrAccList"] as FormCurrAccList;
+         FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
 
          try
          {

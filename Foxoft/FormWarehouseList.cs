@@ -183,13 +183,20 @@ namespace Foxoft
 
       private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
       {
-         
+
       }
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
-         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         gC_WarehouseList.ExportToXlsx(pathDesktop + $@"\CariHesablar.xlsx");
+         SaveFileDialog saveFileDialog1 = new();
+         saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
+         saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
+         saveFileDialog1.FileName = $@"\CariHesablar.xlsx";
+         saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+         saveFileDialog1.DefaultExt = "*.xlsx";
+
+         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            gC_WarehouseList.ExportToXlsx(saveFileDialog1.FileName);
       }
 
       private void bBI_WarehouseDelete_ItemClick(object sender, ItemClickEventArgs e)

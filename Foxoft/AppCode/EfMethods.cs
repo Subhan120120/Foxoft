@@ -122,6 +122,25 @@ namespace Foxoft
 
       }
 
+      public List<DcFeature> SelectFeatures()
+      {
+         using subContext db = new();
+
+         List<DcFeature> features = db.DcFeatures.ToList();
+         return features;
+
+      }
+
+      public DcProductDcFeature SelectFeature(int featureId, string productCode)
+      {
+         using subContext db = new();
+
+         DcProductDcFeature dc = db.DcProductDcFeatures
+                  .Where(x => x.FeatureId == featureId)
+                  .FirstOrDefault(x => x.ProductCode == productCode);
+         return dc;
+      }
+
       public DcProduct SelectProduct(string productCode)
       {
          using subContext db = new();
@@ -189,7 +208,7 @@ namespace Foxoft
                                                 .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
                                                 .Where(l => l.TrInvoiceHeader.IsReturn == false)
                                                 .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                                                .ThenByDescending(l =>l.CreatedDate)
+                                                .ThenByDescending(l => l.CreatedDate)
                                                 .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
                                                 .FirstOrDefault(),
                             ProductCode = x.ProductCode,
@@ -967,6 +986,32 @@ namespace Foxoft
                                                      .FirstOrDefault(x => x.ReportId == ReportId);
          dcReport.FilterValue = filterValue;
          db.Entry(dcReport).Property(x => x.FilterValue).IsModified = true;
+         return db.SaveChanges();
+      }
+
+      public int UpdateDcFeature_Value(int FeatureId, string productCode, string value)
+      {
+         using subContext db = new();
+         DcProductDcFeature pf = db.DcProductDcFeatures.Where(x => x.ProductCode == productCode)
+                                                     .FirstOrDefault(x => x.FeatureId == FeatureId);
+
+         if (pf is not null)
+         {
+            pf.FeatureDesc = value;
+            db.Entry(pf).Property(x => x.FeatureDesc).IsModified = true;
+         }
+         else
+         {
+            pf = new DcProductDcFeature()
+            {
+               FeatureId = FeatureId,
+               ProductCode = productCode,
+               FeatureDesc = value
+            };
+
+            db.DcProductDcFeatures.Add(pf);
+         }
+
          return db.SaveChanges();
       }
 

@@ -1,16 +1,10 @@
-﻿using DevExpress.LookAndFeel;
-using DevExpress.Skins;
-using DevExpress.UserSkins;
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
@@ -19,9 +13,6 @@ namespace Foxoft
 {
    static class Program
    {
-      /// <summary>
-      /// The main entry point for the application.
-      /// </summary>
       [STAThread]
       static void Main()
       {
@@ -67,7 +58,7 @@ namespace Foxoft
          string assemblyName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
          string path = assemblyName + ".AppCode.SqlQuery" + "." + sqlFileName;
          Stream stream = assembly.GetManifestResourceStream(path);
-         var sqlQuery = new StreamReader(stream).ReadToEnd();
+         string sqlQuery = new StreamReader(stream).ReadToEnd();
 
          db.ExecuteSqlRaw($"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END");
          db.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sqlQuery}");

@@ -33,7 +33,7 @@ namespace Foxoft
 
       public static string GetPropertyDisplayName<T>(Expression<Func<T, object>> expression)
       {
-         var memberInfo = GetPropertyInformation(expression.Body);
+         MemberInfo memberInfo = GetPropertyInformation(expression.Body);
          if (memberInfo == null)
          {
             throw new ArgumentException(
@@ -72,7 +72,7 @@ namespace Foxoft
       }
 
 
-      public static void GetCaptionName(DataTable dt)
+      public static void SetCaptionName(DataTable dt)
       {
          subContext db = new();
          foreach (DataColumn column in dt.Columns)

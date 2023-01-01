@@ -30,7 +30,11 @@ namespace Foxoft.Models
       [DisplayName("Məhsul Adı")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      public string ProductDesc { get; set; }
+      public string ProductDesc { get; set; }    
+
+      [DisplayName("Məhsul Özəlliyi")]
+      [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ProductFeature { get; set; }      
 
       [DisplayName("Barkod")]
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]

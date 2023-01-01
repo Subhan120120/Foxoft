@@ -35,11 +35,6 @@ namespace Foxoft
       EfMethods efMethods = new();
       AdoMethods adoMethods = new();
 
-      //RepositoryItemHyperLinkEdit HLE_DocumentNum;
-      //RepositoryItemHyperLinkEdit HLE_InvoiceNum;
-      //RepositoryItemHyperLinkEdit HLE_ProductCode;
-      //RepositoryItemHyperLinkEdit HLE_CurrAccCode;
-
       RepositoryItemPictureEdit riPictureEdit;
       GridColumn colImage;
 
@@ -123,6 +118,7 @@ namespace Foxoft
             return base.GetLocalizedString(id);
          }
       }
+
       private void LoadData()
       {
          DataTable dt = adoMethods.SqlGetDt(qry);
@@ -169,20 +165,29 @@ namespace Foxoft
             HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
             col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
          }
+
       }
 
       private void CreateColImage()
       {
-         colImage = new();
+         if (colImage is null)
+         {
+            colImage = new();
+         }
          colImage.FieldName = "Image";
-         colImage.Caption = "Image";
+         colImage.Caption = "Şəkil";
          colImage.UnboundType = UnboundColumnType.Object;
          colImage.OptionsColumn.AllowEdit = false;
+         colImage.OptionsColumn.FixedWidth = false;
          colImage.Visible = true;
-         riPictureEdit = new();
-         colImage.ColumnEdit = riPictureEdit;
-         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
-         gC_Report.RepositoryItems.Add(riPictureEdit);
+
+         if (riPictureEdit is null)
+         {
+            riPictureEdit = new();
+            colImage.ColumnEdit = riPictureEdit;
+            riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+            gC_Report.RepositoryItems.Add(riPictureEdit);
+         }
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -215,6 +220,8 @@ namespace Foxoft
                gV_Report.RestoreLayoutFromStream(stream);
             }
          }
+
+         TrimNumbersFormat();
       }
 
       private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
@@ -298,22 +305,27 @@ namespace Foxoft
 
          if (objInv is not null)
          {
-            Guid guidHeadId = Guid.Parse(objInv.ToString());
-            if (guidHeadId != Guid.Empty)
-            {
-               TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(guidHeadId);
+            string strHeadId = objInv.ToString();
 
-               if (trInvoiceHeader is not null)
+            if (!String.IsNullOrEmpty(strHeadId))
+            {
+               Guid guidHeadId = Guid.Parse(strHeadId);
+               if (guidHeadId != Guid.Empty)
                {
-                  FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, guidHeadId);
-                  FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
-                  formInvoice.MdiParent = formERP;
-                  formInvoice.WindowState = FormWindowState.Maximized;
-                  formInvoice.Show();
-                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(guidHeadId);
+
+                  if (trInvoiceHeader is not null)
+                  {
+                     FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, 1, 2, guidHeadId);
+                     FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                     formInvoice.MdiParent = formERP;
+                     formInvoice.WindowState = FormWindowState.Maximized;
+                     formInvoice.Show();
+                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  }
+                  else
+                     MessageBox.Show("Belə bir qaimə yoxdur. ");
                }
-               else
-                  MessageBox.Show("Belə bir qaimə yoxdur. ");
             }
          }
 
@@ -324,7 +336,7 @@ namespace Foxoft
             if (Guid.Parse(objPay.ToString()) != Guid.Empty)
             {
                FormPaymentDetail frm = new(Guid.Parse(objPay.ToString()));
-               FormERP formERP = Application.OpenForms["FormERP"] as FormERP;
+               FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                frm.MdiParent = formERP;
                frm.WindowState = FormWindowState.Maximized;
                frm.Show();
@@ -355,8 +367,15 @@ namespace Foxoft
       {
          try
          {
-            string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            gC_Report.ExportToXlsx(pathDesktop + $@"\{report.ReportName}.xlsx");
+            SaveFileDialog sFD = new();
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.FileName = $@"{report.ReportName}.xlsx";
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            sFD.DefaultExt = "*.xlsx";
+
+            if (sFD.ShowDialog() == DialogResult.OK)
+               gC_Report.ExportToXlsx(sFD.FileName);
          }
          catch (Exception ex)
          {
@@ -384,6 +403,33 @@ namespace Foxoft
             string cellValue = gV.GetFocusedValue().ToString();
             Clipboard.SetText(cellValue);
             e.Handled = true;
+         }
+      }
+
+      private void gV_Report_CalcRowHeight(object sender, RowHeightEventArgs e)
+      {
+         GridView gV = sender as GridView;
+         if (e.RowHandle == GridControl.AutoFilterRowHandle)
+            e.RowHeight = 25;
+         if (colImage is not null)
+            colImage.Width = gV.RowHeight;
+      }
+
+      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         TrimNumbersFormat();
+      }
+
+      private void TrimNumbersFormat()
+      {
+         foreach (var item in gV_Report.Columns)
+         {
+            GridColumn gridColumn = (GridColumn)item;
+            if (gridColumn.ColumnType.Name == "Decimal")
+            {
+               gridColumn.DisplayFormat.FormatType = FormatType.Numeric;
+               gridColumn.DisplayFormat.FormatString = "0.00";
+            }
          }
       }
    }
