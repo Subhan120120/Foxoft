@@ -111,6 +111,8 @@ namespace Foxoft
          config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
          config.Save(ConfigurationSaveMode.Modified);
 
+
+
          //string a1 = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
          //string a2 = Settings.Default.subConnString;
 
