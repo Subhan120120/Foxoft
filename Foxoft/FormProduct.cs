@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -20,13 +19,24 @@ namespace Foxoft
    {
       subContext dbContext = new();
       EfMethods efMethods = new();
+      string imageFolder;
       public DcProduct dcProduct = new();
       private byte productTypeCode;
+      private bool isNew;
 
-      public FormProduct(byte productTypeCode)
+      public FormProduct(byte productTypeCode, bool isNew)
       {
          InitializeComponent();
          this.productTypeCode = productTypeCode;
+         this.isNew = isNew;
+
+         string pictureFolderLocal = @"\\192.168.2.199\Foxoft Images\";
+         string pictureFolderRemote = @"\\25.10.92.123\Foxoft Images\";
+         if (Directory.Exists(pictureFolderLocal))
+            imageFolder = pictureFolderLocal;
+         else if (Directory.Exists(pictureFolderRemote))
+            imageFolder = pictureFolderRemote;
+
 
          ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectProductTypes();
          ProductTypeCodeLookUpEdit.Properties.ValueMember = "ProductTypeCode";
@@ -37,9 +47,10 @@ namespace Foxoft
       }
 
       public FormProduct(byte productTypeCode, string productCode)
-          : this(productTypeCode)
+          : this(productTypeCode, false)
       {
          this.dcProduct.ProductCode = productCode;
+         ItemForProductCode.Enabled = false;
       }
 
       private void FormProduct_Load(object sender, EventArgs e)
@@ -70,7 +81,7 @@ namespace Foxoft
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
 
             //var file = Path.ChangeExtension(table[8], ".jpg");
-            string fullPath = Path.Combine(@"\\192.168.2.199\Foxoft Images\", dcProduct.ProductCode + ".jpg");
+            string fullPath = Path.Combine(imageFolder, dcProduct.ProductCode + ".jpg");
             if (!File.Exists(fullPath))
             {
                //MessageBox.Show("No image!");
@@ -119,11 +130,15 @@ namespace Foxoft
          if (dataLayoutControl1.IsValid(out List<string> errorList))
          {
             dcProduct = dcProductsBindingSource.Current as DcProduct;
-            if (!efMethods.ProductExist(dcProduct.ProductCode)) //if invoiceHeader doesnt exist
-               efMethods.InsertProduct(dcProduct);
+            if (isNew) //if invoiceHeader doesnt exist
+               if (!efMethods.ProductExist(dcProduct.ProductCode))
+                  efMethods.InsertProduct(dcProduct);
+               else
+                  MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
+            //else if (efMethods.ProductExist(dcProduct.ProductCode))
             else
                dbContext.SaveChanges();
-
+            //MessageBox.Show("Test");
 
             DialogResult = DialogResult.OK;
          }
@@ -136,9 +151,10 @@ namespace Foxoft
 
       private void SaveImage()
       {
-         string outPutImage = @"\\192.168.2.199\Foxoft Images\" + dcProduct.ProductCode + ".jpg";
+
+         string outPutImage = imageFolder + dcProduct.ProductCode + ".jpg";
          //pictureEdit.Image.Save(imagePath);
-         //pictureEdit.Image.Dispose();//asd
+         //pictureEdit.Image.Dispose();
 
          //using (FileStream fs = new(outPutImage, FileMode.Open, FileAccess.ReadWrite))
          //{
@@ -217,7 +233,7 @@ namespace Foxoft
 
       private void pictureEdit_DoubleClick(object sender, EventArgs e)
       {
-         string outPutImage = @"\\192.168.2.199\Foxoft Images\" + dcProduct.ProductCode + ".jpg";
+         string outPutImage = imageFolder + dcProduct.ProductCode + ".jpg";
          //Process.Start(outPutImage);
 
          if (File.Exists(outPutImage))

@@ -88,7 +88,7 @@ namespace Foxoft
             this.bSI_UserName,
             this.barButtonItem1});
          this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-         this.parentRibbonControl.MaxItemId = 15;
+         this.parentRibbonControl.MaxItemId = 16;
          this.parentRibbonControl.Name = "parentRibbonControl";
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
@@ -191,11 +191,12 @@ namespace Foxoft
             this.aCE_Setting});
          this.aC_Root.Location = new System.Drawing.Point(0, 158);
          this.aC_Root.Name = "aC_Root";
-         this.aC_Root.ResizeMode = DevExpress.XtraBars.Navigation.AccordionControlResizeMode.OuterResizeZone;
+         this.aC_Root.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.True;
+         this.aC_Root.ResizeMode = DevExpress.XtraBars.Navigation.AccordionControlResizeMode.InnerResizeZone;
          this.aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
          this.aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
          this.aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-         this.aC_Root.Size = new System.Drawing.Size(223, 450);
+         this.aC_Root.Size = new System.Drawing.Size(204, 450);
          this.aC_Root.TabIndex = 2;
          // 
          // aCE_Invoices
@@ -480,5 +481,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
       private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashReg;
       private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator7;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem2;
    }
 }

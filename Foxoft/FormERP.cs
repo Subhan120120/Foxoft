@@ -457,5 +457,13 @@ namespace Foxoft
          }
 
       }
+
+      private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         if (aC_Root.OptionsMinimizing.State == AccordionControlState.Minimized)
+            aC_Root.OptionsMinimizing.State = AccordionControlState.Normal;
+         else
+            aC_Root.OptionsMinimizing.State = AccordionControlState.Minimized;
+      }
    }
 }

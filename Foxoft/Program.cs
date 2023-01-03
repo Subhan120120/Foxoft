@@ -19,7 +19,6 @@ namespace Foxoft
          using (subContext db = new())
          {
             db.Database.EnsureCreated();
-            string con = db.Database.GetDbConnection().ConnectionString;
             db.Database.Migrate();
 
             //string sql = db.Database.GenerateCreateScript();

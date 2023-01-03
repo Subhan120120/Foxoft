@@ -4,7 +4,6 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Configuration;
 
@@ -110,18 +109,6 @@ namespace Foxoft
          config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = txtEdit_conString.EditValue.ToString();
          config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
          config.Save(ConfigurationSaveMode.Modified);
-
-
-
-         //string a1 = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
-         //string a2 = Settings.Default.subConnString;
-
-         //var contextOptions = new DbContextOptionsBuilder<subContext>()
-         //      .UseSqlServer(a1)
-         //      .Options;
-
-         //using subContext context = new subContext(contextOptions);
-         //string a5 = context.Database.GetDbConnection().ConnectionString;
       }
 
       private void simpleButton2_Click(object sender, EventArgs e)

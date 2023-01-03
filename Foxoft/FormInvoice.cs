@@ -37,7 +37,7 @@ namespace Foxoft
 {
    public partial class FormInvoice : RibbonForm
    {
-      readonly string designFolder = @"\\192.168.2.199\Foxoft Design Files\";
+      readonly string designFolder;
       //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       string reportFileNameInvoice = @"InvoiceRS_A5.repx";
       string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
@@ -53,6 +53,14 @@ namespace Foxoft
       public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
       {
          InitializeComponent();
+
+         string designFolderLocal = @"\\192.168.2.199\Foxoft Design Files\";
+         string designFolderRemote = @"\\25.10.92.123\Foxoft Design Files\";
+         if (Directory.Exists(designFolderLocal))
+            designFolder = designFolderLocal;
+         else if (Directory.Exists(designFolderRemote))
+            designFolder = designFolderRemote;
+
 
          colBalance.OptionsColumn.ReadOnly = true;
          colLastPurchasePrice.OptionsColumn.ReadOnly = true;

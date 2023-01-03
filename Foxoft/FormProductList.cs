@@ -25,6 +25,7 @@ namespace Foxoft
    {
       EfMethods efMethods = new();
       public DcProduct dcProduct { get; set; }
+      string imageFolder;
       public string productCode { get; set; }
       public byte productTypeCode;
 
@@ -35,6 +36,13 @@ namespace Foxoft
       {
          InitializeComponent();
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
+
+         string pictureFolderLocal = @"\\192.168.2.199\Foxoft Images\";
+         string pictureFolderRemote = @"\\25.10.92.123\Foxoft Images\";
+         if (Directory.Exists(pictureFolderLocal))
+            imageFolder = pictureFolderLocal;
+         else if (Directory.Exists(pictureFolderRemote))
+            imageFolder = pictureFolderRemote;
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new(byteArray);
@@ -92,7 +100,7 @@ namespace Foxoft
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
             string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
             fileName += ".jpg";
-            string path = @"\\192.168.2.199\Foxoft Images\" + fileName;
+            string path = imageFolder + fileName;
             if (!imageCache.ContainsKey(path))
             {
                Image img = GetImage(path);
@@ -109,7 +117,7 @@ namespace Foxoft
          if (File.Exists(path))
             img = Image.FromStream(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
          else
-            img = Image.FromStream(new FileStream(@"\\192.168.2.199\Foxoft Images\noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+            img = Image.FromStream(new FileStream(imageFolder + "noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
          return img;
       }
@@ -185,7 +193,7 @@ namespace Foxoft
 
       private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
       {
-         FormProduct formProduct = new(productTypeCode);
+         FormProduct formProduct = new(productTypeCode, true);
          if (formProduct.ShowDialog(this) == DialogResult.OK)
          {
             LoadProducts(productTypeCode);
@@ -206,7 +214,7 @@ namespace Foxoft
 
                gV_ProductList.FocusedRowHandle = fr;
 
-               string path = @"\\192.168.2.199\Foxoft Images\" + formProduct.dcProduct.ProductCode + ".jpg";
+               string path = imageFolder + formProduct.dcProduct.ProductCode + ".jpg";
                imageCache.Remove(path);
             }
          }

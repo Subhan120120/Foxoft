@@ -32,6 +32,7 @@ namespace Foxoft
 
       DcReport report = new();
       string qry = "select 0 Nothing";
+      string imageFolder;
       EfMethods efMethods = new();
       AdoMethods adoMethods = new();
 
@@ -41,6 +42,13 @@ namespace Foxoft
       public FormReportGrid()
       {
          InitializeComponent();
+
+         string pictureFolderLocal = @"\\192.168.2.199\Foxoft Images\";
+         string pictureFolderRemote = @"\\25.10.92.123\Foxoft Images\";
+         if (Directory.Exists(pictureFolderLocal))
+            imageFolder = pictureFolderLocal;
+         else if (Directory.Exists(pictureFolderRemote))
+            imageFolder = pictureFolderRemote;
 
          GridLocalizer.Active = new MyGridLocalizer();
 
@@ -80,7 +88,7 @@ namespace Foxoft
             int rowInd = gV.GetRowHandle(e.ListSourceRowIndex);
             string fileName = gV.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
             fileName += ".jpg";
-            string path = @"\\192.168.2.199\Foxoft Images\" + fileName;
+            string path = imageFolder + fileName;
             if (!imageCache.ContainsKey(path))
             {
                Image img = GetImage(path);
@@ -96,7 +104,7 @@ namespace Foxoft
          if (File.Exists(path))
             img = Image.FromFile(path);
          else
-            img = Image.FromFile(@"\\192.168.2.199\Foxoft Images\noimage.jpg");
+            img = Image.FromFile(imageFolder + "noimage.jpg");
          return img;
       }
 
