@@ -138,7 +138,7 @@ namespace Foxoft
       {
          string outPutImage = @"\\192.168.2.199\Foxoft Images\" + dcProduct.ProductCode + ".jpg";
          //pictureEdit.Image.Save(imagePath);
-         //pictureEdit.Image.Dispose();
+         //pictureEdit.Image.Dispose();//asd
 
          //using (FileStream fs = new(outPutImage, FileMode.Open, FileAccess.ReadWrite))
          //{
