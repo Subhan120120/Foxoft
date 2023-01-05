@@ -59,7 +59,6 @@ namespace Foxoft
          adornerUIManager1.Elements.Add(badge2);
          //badge1.TargetElement = barButtonItem1;
          badge2.TargetElement = ribbonPage1;
-
       }
 
       public FormReportGrid(string qry, DcReport report)
@@ -70,6 +69,7 @@ namespace Foxoft
          this.Text = report.ReportName;
 
          LoadData();
+         HyperLinkColumns();
          LoadLayout();
       }
 
@@ -130,11 +130,13 @@ namespace Foxoft
       private void LoadData()
       {
          DataTable dt = adoMethods.SqlGetDt(qry);
-
          gC_Report.DataSource = dt;
          gV_Report.MoveLast();
          gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
+      }
 
+      private void HyperLinkColumns()
+      {
          GridColumn col_DocumentNumber = gV_Report.Columns["DocumentNumber"];
          if (col_DocumentNumber is not null)
          {
@@ -173,7 +175,6 @@ namespace Foxoft
             HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
             col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
          }
-
       }
 
       private void CreateColImage()

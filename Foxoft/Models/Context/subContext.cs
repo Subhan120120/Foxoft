@@ -182,7 +182,8 @@ namespace Foxoft.Models
 
          modelBuilder.Entity<DcProductType>().HasData(
              new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },
-             new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" }
+             new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" },
+             new DcProductType { ProductTypeCode = 3, ProductTypeDesc = "Servis" }
          );
 
          modelBuilder.Entity<DcWarehouse>().HasData(

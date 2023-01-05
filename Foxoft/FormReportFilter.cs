@@ -266,7 +266,6 @@ namespace Foxoft
          {
             dcReport.ReportQuery = formQueryEditor.dcReport.ReportQuery;
          }
-
       }
 
       private void bBI_ReportNew_ItemClick(object sender, ItemClickEventArgs e)
