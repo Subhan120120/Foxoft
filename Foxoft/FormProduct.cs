@@ -213,11 +213,16 @@ namespace Foxoft
                try
                {
                   Image.GetThumbnailImageAbort myCallback = new(ThumbnailCallback);
-                  Bitmap myBitmap = new(file);
                   //Image myThumbnail = myBitmap.GetThumbnailImage(300, 300, myCallback, IntPtr.Zero);
 
-                  pictureEdit.Image = myBitmap;
-                  //myBitmap.Dispose();
+                  using (FileStream fs = new(file, FileMode.Open, FileAccess.Read))
+                  {
+                     using (Image img = Image.FromStream(fs, true, false))
+                     {
+                        Bitmap myBitmap = new(img);
+                        pictureEdit.Image = myBitmap;
+                     }
+                  }
                }
                catch (Exception ex)
                {

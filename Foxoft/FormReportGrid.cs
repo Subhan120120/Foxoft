@@ -1,5 +1,7 @@
 ﻿using DevExpress.Data;
 using DevExpress.Utils;
+using DevExpress.Utils.Design;
+using DevExpress.Utils.Menu;
 using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -8,12 +10,18 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Localization;
+using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraReports.Design;
+using DevExpress.XtraReports.UI;
+using DevExpress.XtraReports.UserDesigner;
+using DevExpress.XtraReports.UserDesigner.Native;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -239,7 +247,7 @@ namespace Foxoft
          OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gV_Report.SaveLayoutToStream(str, option);
 
-         using (FormReportGridOptions formGridOptions = new(str))
+         using (FormReportGridOptions formGridOptions = new(str, gV_Report))
          {
             if (formGridOptions.ShowDialog(this) == DialogResult.OK)
             {
@@ -426,7 +434,7 @@ namespace Foxoft
 
       private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
       {
-         TrimNumbersFormat();
+         GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
       }
 
       private void TrimNumbersFormat()
@@ -440,6 +448,67 @@ namespace Foxoft
                gridColumn.DisplayFormat.FormatString = "0.00";
             }
          }
+      }
+
+      private void customItem_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         // Implement the custom action.
+         // ...
+      }
+
+      private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+      {
+         if (e.MenuType == GridMenuType.Column)
+         {
+            GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
+            //menu.Items.Clear();
+            if (menu.Column != null)
+            {
+               menu.Items.Add(CreateItem("Expression", menu.Column, null));
+            }
+         }
+      }
+
+      DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+      {
+         DXMenuItem item = new DXMenuItem(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);
+         item.Tag = new MenuColumnInfo(column);
+         return item;
+      }
+
+      // Menu item click handler.
+      void DXMenuCheckItem_ItemClick(object sender, EventArgs e)
+      {
+         DXMenuItem item = sender as DXMenuItem;
+         MenuColumnInfo info = item.Tag as MenuColumnInfo;
+         if (info == null) return;
+         //info.Column.OptionsColumn.AllowMove = !item.Checked;
+
+         //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
+         GridColumn col = info.Column;
+         col.UnboundType = UnboundColumnType.Object;
+         using (XRDesignFormEx designForm = new())
+         {
+            XtraReport report = new();
+            report.DataSource = gC_Report.DataSource;
+            CalculatedField calcField = new();
+            calcField.Expression = col.UnboundExpression;
+            report.CalculatedFields.Add(calcField);
+            designForm.OpenReport(report);
+            XRDesignerHost host = designForm.DesignPanel.GetService(typeof(IDesignerHost)) as XRDesignerHost;
+            IDesigner designer = host.GetDesigner(calcField);
+            string newExpression = Convert.ToString(EditorContextHelper.EditValue(designer, calcField, XRComponentPropertyNames.Expression));
+            col.UnboundExpression = calcField.Expression;
+         }
+      }
+
+      class MenuColumnInfo
+      {
+         public MenuColumnInfo(GridColumn column)
+         {
+            this.Column = column;
+         }
+         public GridColumn Column;
       }
    }
 }

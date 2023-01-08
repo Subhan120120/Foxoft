@@ -77,6 +77,7 @@ namespace Foxoft
          this.gV_Report.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.VisibleAlways;
          this.gV_Report.OptionsView.ShowFooter = true;
          this.gV_Report.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_Report_RowStyle);
+         this.gV_Report.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gV_Report_PopupMenuShowing);
          this.gV_Report.CalcRowHeight += new DevExpress.XtraGrid.Views.Grid.RowHeightEventHandler(this.gV_Report_CalcRowHeight);
          this.gV_Report.ShowingEditor += new System.ComponentModel.CancelEventHandler(this.gV_Report_ShowingEditor);
          this.gV_Report.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gV_Report_CustomUnboundColumnData);

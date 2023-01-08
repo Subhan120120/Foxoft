@@ -9,17 +9,19 @@ namespace Foxoft
    public partial class FormReportGridOptions : Form
    {
       public Stream stream = new MemoryStream();
-      GridView gridView = new GridView();
+      GridView gridView = new();
 
-      public FormReportGridOptions(Stream stream)
+      public FormReportGridOptions(Stream stream, GridView gridView)
       {
          this.stream = stream;
+         this.gridView = gridView;
          InitializeComponent();
       }
+
       private void FormReportGridOptions_Load(object sender, EventArgs e)
       {
          stream.Seek(0, SeekOrigin.Begin);
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gridView.RestoreLayoutFromStream(stream, option);
 
          if (gridView.OptionsView.GroupFooterShowMode == GroupFooterShowMode.VisibleAlways)
@@ -35,12 +37,10 @@ namespace Foxoft
             AllowRowSizing.Checked = true;
       }
 
-
-
       private void simpleButton_Ok_Click(object sender, EventArgs e)
       {
          stream = new MemoryStream();
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
          gridView.SaveLayoutToStream(stream, option);
          DialogResult = DialogResult.OK;
       }
