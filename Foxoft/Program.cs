@@ -1,8 +1,10 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.Export;
+using DevExpress.XtraEditors;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -29,15 +31,14 @@ namespace Foxoft
             CreateViews(new DatabaseFacade(db));
          }
 
-         DevExpress.Export.ExportSettings.DefaultExportType = DevExpress.Export.ExportType.WYSIWYG;
-
          CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
          Thread.CurrentThread.CurrentUICulture = culture;
          //Thread.CurrentThread.CurrentCulture = culture;
          //CultureInfo.DefaultThreadCurrentCulture = culture;
          //CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-         WindowsFormsSettings.DefaultFont = new System.Drawing.Font("Tahoma", 10);
+         ExportSettings.DefaultExportType = ExportType.WYSIWYG;
+         WindowsFormsSettings.DefaultFont = new Font("Tahoma", 10);
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
 
