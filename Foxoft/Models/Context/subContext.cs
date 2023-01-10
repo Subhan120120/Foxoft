@@ -113,12 +113,13 @@ namespace Foxoft.Models
          });
 
          modelBuilder.Entity<DcCurrAcc>().HasData(
-             new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Sübhan", LastName = "Hüseynzadə", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+             new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
              new DcCurrAcc { CurrAccCode = "CA-2", FirstName = "Mudir", LastName = "Mudir", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
              new DcCurrAcc { CurrAccCode = "CA-3", FirstName = "Operator", LastName = "Operator", NewPassword = "123", PhoneNum = "0773628800", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
              new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Satici", LastName = "Satici", NewPassword = "123", PhoneNum = "0553628804", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+             new DcCurrAcc { CurrAccCode = "CA-5", FirstName = "Ümumi Müştəri", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" },
              new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-             new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" });
+             new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" });
 
          modelBuilder.Entity<DcCurrAccType>().HasData(
              new DcCurrAccType { CurrAccTypeCode = 1, CurrAccTypeDesc = "Müştəri" },
@@ -178,7 +179,7 @@ namespace Foxoft.Models
          );
 
          modelBuilder.Entity<DcProductDcFeature>()
-            .HasKey(bc => new { bc.ProductCode, bc.FeatureId });
+                     .HasKey(bc => new { bc.ProductCode, bc.FeatureId });
 
          modelBuilder.Entity<DcProductType>().HasData(
              new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },
@@ -187,23 +188,23 @@ namespace Foxoft.Models
          );
 
          modelBuilder.Entity<DcWarehouse>().HasData(
-             new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Bakıxanov deposu", OfficeCode = "ofs01", StoreCode = "mgz01" },
+             new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Mərkəz deposu", OfficeCode = "ofs01", StoreCode = "mgz01", IsDefault = true },
              new DcWarehouse { WarehouseCode = "depo-02", WarehouseDesc = "Elmlər deposu", OfficeCode = "ofs01", StoreCode = "mgz01" });
 
          modelBuilder.Entity<TrInvoiceHeader>(entity =>
          {
             entity.Property(e => e.InvoiceHeaderId)
-                   .ValueGeneratedNever();
+                  .ValueGeneratedNever();
          });
 
          modelBuilder.Entity<TrInvoiceLine>(entity =>
          {
             entity.HasOne(x => x.TrInvoiceHeader)
-                   .WithMany(x => x.TrInvoiceLines)
-                   .OnDelete(DeleteBehavior.Cascade);
+                  .WithMany(x => x.TrInvoiceLines)
+                  .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(e => e.InvoiceLineId)
-                   .ValueGeneratedNever();
+                  .ValueGeneratedNever();
          });
 
          modelBuilder.Entity<TrPaymentLine>(entity =>
@@ -235,46 +236,51 @@ namespace Foxoft.Models
          modelBuilder.Entity<MigrationHistory>(entity =>
          {
             entity.HasKey(e => new { e.MigrationId, e.ContextKey })
-                   .HasName("PK_dbo.__MigrationHistory");
+                  .HasName("PK_dbo.__MigrationHistory");
 
             entity.ToTable("__MigrationHistory");
 
-            entity.Property(e => e.MigrationId).HasMaxLength(150);
+            entity.Property(e => e.MigrationId)
+                  .HasMaxLength(150);
 
-            entity.Property(e => e.ContextKey).HasMaxLength(300);
+            entity.Property(e => e.ContextKey)
+                  .HasMaxLength(300);
 
-            entity.Property(e => e.Model).IsRequired();
+            entity.Property(e => e.Model)
+                  .IsRequired();
 
             entity.Property(e => e.ProductVersion)
-                     .IsRequired()
-                     .HasMaxLength(32);
+                  .IsRequired()
+                  .HasMaxLength(32);
          });
 
          modelBuilder.Entity<Sysdiagrams>(entity =>
          {
             entity.HasKey(e => e.DiagramId)
-                   .HasName("PK_dbo.sysdiagrams");
+                  .HasName("PK_dbo.sysdiagrams");
 
             entity.ToTable("sysdiagrams");
 
-            entity.Property(e => e.DiagramId).HasColumnName("diagram_id");
+            entity.Property(e => e.DiagramId)
+                  .HasColumnName("diagram_id");
 
-            entity.Property(e => e.Definition).HasColumnName("definition");
+            entity.Property(e => e.Definition)
+                  .HasColumnName("definition");
 
             entity.Property(e => e.Name)
-                   .IsRequired()
-                   .HasColumnName("name")
-                   .HasMaxLength(128);
+                  .IsRequired()
+                  .HasColumnName("name")
+                  .HasMaxLength(128);
 
-            entity.Property(e => e.PrincipalId).HasColumnName("principal_id");
+            entity.Property(e => e.PrincipalId)
+                  .HasColumnName("principal_id");
 
-            entity.Property(e => e.Version).HasColumnName("version");
+            entity.Property(e => e.Version)
+                  .HasColumnName("version");
          });
 
          OnModelCreatingPartial(modelBuilder);
       }
-
-
 
       partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
    }

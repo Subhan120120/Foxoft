@@ -163,7 +163,7 @@
          this.dataLayoutControl1.Name = "dataLayoutControl1";
          this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(493, 158, 514, 400);
          this.dataLayoutControl1.Root = this.Root;
-         this.dataLayoutControl1.Size = new System.Drawing.Size(423, 339);
+         this.dataLayoutControl1.Size = new System.Drawing.Size(395, 339);
          this.dataLayoutControl1.TabIndex = 0;
          this.dataLayoutControl1.Text = "dataLayoutControl1";
          // 
@@ -224,7 +224,7 @@
          // IsDisabledCheckEdit
          // 
          this.IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "IsDisabled", true));
-         this.IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 249);
+         this.IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 225);
          this.IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
          this.IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
          this.IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -238,7 +238,7 @@
          this.ProductDescTextEdit.Location = new System.Drawing.Point(109, 36);
          this.ProductDescTextEdit.Name = "ProductDescTextEdit";
          this.ProductDescTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-         this.ProductDescTextEdit.Size = new System.Drawing.Size(110, 20);
+         this.ProductDescTextEdit.Size = new System.Drawing.Size(274, 20);
          this.ProductDescTextEdit.StyleController = this.dataLayoutControl1;
          this.ProductDescTextEdit.TabIndex = 2;
          // 
@@ -246,9 +246,9 @@
          // 
          this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
          this.btn_Ok.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Ok.ImageOptions.SvgImage")));
-         this.btn_Ok.Location = new System.Drawing.Point(282, 273);
+         this.btn_Ok.Location = new System.Drawing.Point(309, 249);
          this.btn_Ok.Name = "btn_Ok";
-         this.btn_Ok.Size = new System.Drawing.Size(129, 54);
+         this.btn_Ok.Size = new System.Drawing.Size(74, 78);
          this.btn_Ok.StyleController = this.dataLayoutControl1;
          this.btn_Ok.TabIndex = 13;
          this.btn_Ok.Text = "simpleButton1";
@@ -258,9 +258,9 @@
          // 
          this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
          this.btn_Cancel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Cancel.ImageOptions.SvgImage")));
-         this.btn_Cancel.Location = new System.Drawing.Point(196, 273);
+         this.btn_Cancel.Location = new System.Drawing.Point(231, 249);
          this.btn_Cancel.Name = "btn_Cancel";
-         this.btn_Cancel.Size = new System.Drawing.Size(82, 54);
+         this.btn_Cancel.Size = new System.Drawing.Size(74, 78);
          this.btn_Cancel.StyleController = this.dataLayoutControl1;
          this.btn_Cancel.TabIndex = 12;
          this.btn_Cancel.Text = "simpleButton2";
@@ -268,14 +268,14 @@
          // ProductTypeCodeLookUpEdit
          // 
          this.ProductTypeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductTypeCode", true));
-         this.ProductTypeCodeLookUpEdit.Location = new System.Drawing.Point(109, 60);
+         this.ProductTypeCodeLookUpEdit.Location = new System.Drawing.Point(320, 12);
          this.ProductTypeCodeLookUpEdit.Name = "ProductTypeCodeLookUpEdit";
          this.ProductTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
          this.ProductTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
          this.ProductTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
          this.ProductTypeCodeLookUpEdit.Properties.NullText = "";
-         this.ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(110, 20);
+         this.ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(63, 20);
          this.ProductTypeCodeLookUpEdit.StyleController = this.dataLayoutControl1;
          this.ProductTypeCodeLookUpEdit.TabIndex = 3;
          // 
@@ -291,7 +291,7 @@
          // PurchasePriceTextEdit
          // 
          this.PurchasePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "PurchasePrice", true));
-         this.PurchasePriceTextEdit.Location = new System.Drawing.Point(121, 165);
+         this.PurchasePriceTextEdit.Location = new System.Drawing.Point(121, 141);
          this.PurchasePriceTextEdit.Name = "PurchasePriceTextEdit";
          this.PurchasePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
          this.PurchasePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -305,7 +305,7 @@
          // WholesalePriceTextEdit
          // 
          this.WholesalePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "WholesalePrice", true));
-         this.WholesalePriceTextEdit.Location = new System.Drawing.Point(121, 189);
+         this.WholesalePriceTextEdit.Location = new System.Drawing.Point(121, 165);
          this.WholesalePriceTextEdit.Name = "WholesalePriceTextEdit";
          this.WholesalePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
          this.WholesalePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -319,7 +319,7 @@
          // RetailPriceTextEdit
          // 
          this.RetailPriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "RetailPrice", true));
-         this.RetailPriceTextEdit.Location = new System.Drawing.Point(121, 213);
+         this.RetailPriceTextEdit.Location = new System.Drawing.Point(121, 189);
          this.RetailPriceTextEdit.Name = "RetailPriceTextEdit";
          this.RetailPriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
          this.RetailPriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -333,7 +333,7 @@
          // PosDiscountTextEdit
          // 
          this.PosDiscountTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "PosDiscount", true));
-         this.PosDiscountTextEdit.Location = new System.Drawing.Point(109, 84);
+         this.PosDiscountTextEdit.Location = new System.Drawing.Point(109, 60);
          this.PosDiscountTextEdit.Name = "PosDiscountTextEdit";
          this.PosDiscountTextEdit.Properties.Appearance.Options.UseTextOptions = true;
          this.PosDiscountTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -347,7 +347,7 @@
          // UseInternetCheckEdit
          // 
          this.UseInternetCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "UseInternet", true));
-         this.UseInternetCheckEdit.Location = new System.Drawing.Point(91, 249);
+         this.UseInternetCheckEdit.Location = new System.Drawing.Point(91, 225);
          this.UseInternetCheckEdit.Name = "UseInternetCheckEdit";
          this.UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
          this.UseInternetCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -358,7 +358,7 @@
          // BalanceTextEdit
          // 
          this.BalanceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "Balance", true));
-         this.BalanceTextEdit.Location = new System.Drawing.Point(109, 108);
+         this.BalanceTextEdit.Location = new System.Drawing.Point(109, 84);
          this.BalanceTextEdit.Name = "BalanceTextEdit";
          this.BalanceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
          this.BalanceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -374,7 +374,7 @@
          this.simpleButton1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton1.ImageOptions.SvgImage")));
          this.simpleButton1.Location = new System.Drawing.Point(12, 291);
          this.simpleButton1.Name = "simpleButton1";
-         this.simpleButton1.Size = new System.Drawing.Size(180, 36);
+         this.simpleButton1.Size = new System.Drawing.Size(215, 36);
          this.simpleButton1.StyleController = this.dataLayoutControl1;
          this.simpleButton1.TabIndex = 14;
          this.simpleButton1.Text = "Ozellik";
@@ -382,11 +382,11 @@
          // 
          // pictureEdit
          // 
-         this.pictureEdit.Location = new System.Drawing.Point(223, 12);
+         this.pictureEdit.Location = new System.Drawing.Point(223, 60);
          this.pictureEdit.Name = "pictureEdit";
          this.pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
          this.pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-         this.pictureEdit.Size = new System.Drawing.Size(188, 231);
+         this.pictureEdit.Size = new System.Drawing.Size(160, 159);
          this.pictureEdit.StyleController = this.dataLayoutControl1;
          this.pictureEdit.TabIndex = 1;
          this.pictureEdit.EditValueChanged += new System.EventHandler(this.pictureEdit_EditValueChanged);
@@ -394,9 +394,9 @@
          // 
          // simpleButton2
          // 
-         this.simpleButton2.Location = new System.Drawing.Point(321, 247);
+         this.simpleButton2.Location = new System.Drawing.Point(284, 223);
          this.simpleButton2.Name = "simpleButton2";
-         this.simpleButton2.Size = new System.Drawing.Size(90, 22);
+         this.simpleButton2.Size = new System.Drawing.Size(99, 22);
          this.simpleButton2.StyleController = this.dataLayoutControl1;
          this.simpleButton2.TabIndex = 6;
          this.simpleButton2.Text = "Şəkli Yadda Saxla";
@@ -404,9 +404,9 @@
          // 
          // simpleButton3
          // 
-         this.simpleButton3.Location = new System.Drawing.Point(223, 247);
+         this.simpleButton3.Location = new System.Drawing.Point(223, 223);
          this.simpleButton3.Name = "simpleButton3";
-         this.simpleButton3.Size = new System.Drawing.Size(94, 22);
+         this.simpleButton3.Size = new System.Drawing.Size(57, 22);
          this.simpleButton3.StyleController = this.dataLayoutControl1;
          this.simpleButton3.TabIndex = 15;
          this.simpleButton3.Text = "Şəkil Yüklə";
@@ -465,7 +465,7 @@
          this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup1});
          this.Root.Name = "Root";
-         this.Root.Size = new System.Drawing.Size(423, 339);
+         this.Root.Size = new System.Drawing.Size(395, 339);
          this.Root.TextVisible = false;
          // 
          // layoutControlGroup1
@@ -475,30 +475,30 @@
          this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem2,
             this.layoutControlItem1,
-            this.ItemForProductTypeCode,
             this.emptySpaceItem1,
             this.ItemForPosDiscount,
-            this.ItemForProductCode,
             this.layoutControlGroup2,
             this.ItemForBalance,
-            this.ItemForProductDesc,
             this.layoutControlItem3,
             this.layoutControlItem4,
             this.ItemForUseInternet,
             this.ItemForIsDisabled,
             this.layoutControlItem5,
-            this.layoutControlItem6});
+            this.layoutControlItem6,
+            this.ItemForProductCode,
+            this.ItemForProductTypeCode,
+            this.ItemForProductDesc});
          this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
          this.layoutControlGroup1.Name = "autoGeneratedGroup0";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(403, 319);
+         this.layoutControlGroup1.Size = new System.Drawing.Size(375, 319);
          // 
          // layoutControlItem2
          // 
          this.layoutControlItem2.Control = this.btn_Cancel;
-         this.layoutControlItem2.Location = new System.Drawing.Point(184, 261);
+         this.layoutControlItem2.Location = new System.Drawing.Point(219, 237);
          this.layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
          this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(86, 58);
+         this.layoutControlItem2.Size = new System.Drawing.Size(78, 82);
          this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem2.TextVisible = false;
@@ -506,10 +506,10 @@
          // layoutControlItem1
          // 
          this.layoutControlItem1.Control = this.btn_Ok;
-         this.layoutControlItem1.Location = new System.Drawing.Point(270, 261);
+         this.layoutControlItem1.Location = new System.Drawing.Point(297, 237);
          this.layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
          this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(133, 58);
+         this.layoutControlItem1.Size = new System.Drawing.Size(78, 82);
          this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
          this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem1.TextVisible = false;
@@ -517,24 +517,24 @@
          // ItemForProductTypeCode
          // 
          this.ItemForProductTypeCode.Control = this.ProductTypeCodeLookUpEdit;
-         this.ItemForProductTypeCode.Location = new System.Drawing.Point(0, 48);
+         this.ItemForProductTypeCode.Location = new System.Drawing.Point(211, 0);
          this.ItemForProductTypeCode.Name = "ItemForProductTypeCode";
-         this.ItemForProductTypeCode.Size = new System.Drawing.Size(211, 24);
+         this.ItemForProductTypeCode.Size = new System.Drawing.Size(164, 24);
          this.ItemForProductTypeCode.Text = "Məhsul Tipi";
          this.ItemForProductTypeCode.TextSize = new System.Drawing.Size(85, 13);
          // 
          // emptySpaceItem1
          // 
          this.emptySpaceItem1.AllowHotTrack = false;
-         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 261);
+         this.emptySpaceItem1.Location = new System.Drawing.Point(0, 237);
          this.emptySpaceItem1.Name = "emptySpaceItem1";
-         this.emptySpaceItem1.Size = new System.Drawing.Size(184, 18);
+         this.emptySpaceItem1.Size = new System.Drawing.Size(219, 42);
          this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
          // 
          // ItemForPosDiscount
          // 
          this.ItemForPosDiscount.Control = this.PosDiscountTextEdit;
-         this.ItemForPosDiscount.Location = new System.Drawing.Point(0, 72);
+         this.ItemForPosDiscount.Location = new System.Drawing.Point(0, 48);
          this.ItemForPosDiscount.Name = "ItemForPosDiscount";
          this.ItemForPosDiscount.Size = new System.Drawing.Size(211, 24);
          this.ItemForPosDiscount.Text = "Pos Endirimi";
@@ -556,7 +556,7 @@
             this.ItemForPurchasePrice,
             this.ItemForWholesalePrice,
             this.ItemForRetailPrice});
-         this.layoutControlGroup2.Location = new System.Drawing.Point(0, 120);
+         this.layoutControlGroup2.Location = new System.Drawing.Point(0, 96);
          this.layoutControlGroup2.Name = "autoGroupForQiymətlər";
          this.layoutControlGroup2.Size = new System.Drawing.Size(211, 117);
          this.layoutControlGroup2.Text = "Qiymətlər";
@@ -588,7 +588,7 @@
          // ItemForBalance
          // 
          this.ItemForBalance.Control = this.BalanceTextEdit;
-         this.ItemForBalance.Location = new System.Drawing.Point(0, 96);
+         this.ItemForBalance.Location = new System.Drawing.Point(0, 72);
          this.ItemForBalance.Name = "ItemForBalance";
          this.ItemForBalance.Size = new System.Drawing.Size(211, 24);
          this.ItemForBalance.Text = "Qalıq";
@@ -599,7 +599,7 @@
          this.ItemForProductDesc.Control = this.ProductDescTextEdit;
          this.ItemForProductDesc.Location = new System.Drawing.Point(0, 24);
          this.ItemForProductDesc.Name = "ItemForProductDesc";
-         this.ItemForProductDesc.Size = new System.Drawing.Size(211, 24);
+         this.ItemForProductDesc.Size = new System.Drawing.Size(375, 24);
          this.ItemForProductDesc.Text = "Məhsul Adı";
          this.ItemForProductDesc.TextSize = new System.Drawing.Size(85, 13);
          // 
@@ -608,23 +608,23 @@
          this.layoutControlItem3.Control = this.simpleButton1;
          this.layoutControlItem3.Location = new System.Drawing.Point(0, 279);
          this.layoutControlItem3.Name = "layoutControlItem3";
-         this.layoutControlItem3.Size = new System.Drawing.Size(184, 40);
+         this.layoutControlItem3.Size = new System.Drawing.Size(219, 40);
          this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem3.TextVisible = false;
          // 
          // layoutControlItem4
          // 
          this.layoutControlItem4.Control = this.pictureEdit;
-         this.layoutControlItem4.Location = new System.Drawing.Point(211, 0);
+         this.layoutControlItem4.Location = new System.Drawing.Point(211, 48);
          this.layoutControlItem4.Name = "layoutControlItem4";
-         this.layoutControlItem4.Size = new System.Drawing.Size(192, 235);
+         this.layoutControlItem4.Size = new System.Drawing.Size(164, 163);
          this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem4.TextVisible = false;
          // 
          // ItemForUseInternet
          // 
          this.ItemForUseInternet.Control = this.UseInternetCheckEdit;
-         this.ItemForUseInternet.Location = new System.Drawing.Point(79, 237);
+         this.ItemForUseInternet.Location = new System.Drawing.Point(79, 213);
          this.ItemForUseInternet.Name = "ItemForUseInternet";
          this.ItemForUseInternet.Size = new System.Drawing.Size(132, 24);
          this.ItemForUseInternet.Text = "İnternetdə İstifadə Et";
@@ -634,7 +634,7 @@
          // ItemForIsDisabled
          // 
          this.ItemForIsDisabled.Control = this.IsDisabledCheckEdit;
-         this.ItemForIsDisabled.Location = new System.Drawing.Point(0, 237);
+         this.ItemForIsDisabled.Location = new System.Drawing.Point(0, 213);
          this.ItemForIsDisabled.Name = "ItemForIsDisabled";
          this.ItemForIsDisabled.Size = new System.Drawing.Size(79, 24);
          this.ItemForIsDisabled.Text = "Is Disabled";
@@ -644,18 +644,18 @@
          // layoutControlItem5
          // 
          this.layoutControlItem5.Control = this.simpleButton2;
-         this.layoutControlItem5.Location = new System.Drawing.Point(309, 235);
+         this.layoutControlItem5.Location = new System.Drawing.Point(272, 211);
          this.layoutControlItem5.Name = "layoutControlItem5";
-         this.layoutControlItem5.Size = new System.Drawing.Size(94, 26);
+         this.layoutControlItem5.Size = new System.Drawing.Size(103, 26);
          this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem5.TextVisible = false;
          // 
          // layoutControlItem6
          // 
          this.layoutControlItem6.Control = this.simpleButton3;
-         this.layoutControlItem6.Location = new System.Drawing.Point(211, 235);
+         this.layoutControlItem6.Location = new System.Drawing.Point(211, 211);
          this.layoutControlItem6.Name = "layoutControlItem6";
-         this.layoutControlItem6.Size = new System.Drawing.Size(98, 26);
+         this.layoutControlItem6.Size = new System.Drawing.Size(61, 26);
          this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
          this.layoutControlItem6.TextVisible = false;
          // 
@@ -678,7 +678,7 @@
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(423, 339);
+         this.ClientSize = new System.Drawing.Size(395, 339);
          this.Controls.Add(this.dataLayoutControl1);
          this.Name = "FormProduct";
          this.Text = "Məhsul";
