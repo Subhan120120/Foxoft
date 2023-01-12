@@ -45,6 +45,7 @@ namespace Foxoft.Models
       public DbSet<DcReport> DcReports { get; set; }
       public DbSet<DcFeature> DcFeatures { get; set; }
       public DbSet<AppSetting> AppSettings { get; set; }
+      public DbSet<SettingStore> SettingStores { get; set; }
       public DbSet<DcVariable> DcVariables { get; set; }
       public DbSet<TrPrice> TrPrices { get; set; }
       public DbSet<DcCurrency> DcCurrencies { get; set; }
@@ -127,6 +128,10 @@ namespace Foxoft.Models
              new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" },
              new DcCurrAccType { CurrAccTypeCode = 4, CurrAccTypeDesc = "Mağaza" },
              new DcCurrAccType { CurrAccTypeCode = 5, CurrAccTypeDesc = "Kassa" }
+             );
+
+         modelBuilder.Entity<SettingStore>().HasData(
+            new SettingStore { Id = 1, StoreCode = "mgz01", DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
              );
 
          modelBuilder.Entity<DcCurrency>().HasData(

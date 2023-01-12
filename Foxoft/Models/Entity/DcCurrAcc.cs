@@ -18,7 +18,6 @@ namespace Foxoft.Models
       {
          TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
          TrPaymentHeaders = new HashSet<TrPaymentHeader>();
-         //TrPaymentHeaderFromCashes = new HashSet<TrPaymentHeader>();
          TrPaymentHeaderToCashes = new HashSet<TrPaymentHeader>();
          TrPaymentLines = new HashSet<TrPaymentLine>();
       }
@@ -61,10 +60,6 @@ namespace Foxoft.Models
       [DisplayName("Ata Adı")]
       [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string FatherName { get; set; }
-
-      //[DisplayName("Şifrə")]
-      //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-      //public string Password { get; set; }
 
       [DataType(DataType.Password), Display(Name = "Yeni Şifrə")]
       public string NewPassword { get; set; }
@@ -140,13 +135,10 @@ namespace Foxoft.Models
 
 
       public virtual DcCurrAccType DcCurrAccType { get; set; }
+      public virtual SettingStore SettingStore { get; set; }
       public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
-
-
       public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
-
       public virtual ICollection<TrPaymentHeader> TrPaymentHeaderToCashes { get; set; }
-      //public virtual ICollection<TrPaymentHeader> TrPaymentHeaderFromCashes { get; set; }
       public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
       public virtual ICollection<TrCurrAccRole> TrCurrAccRole { get; set; }
    }

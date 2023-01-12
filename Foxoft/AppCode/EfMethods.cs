@@ -1044,5 +1044,11 @@ namespace Foxoft
          using subContext db = new();
          return db.AppSettings.Find(1);
       }
+
+      public SettingStore SelectSettingStore(string StoreCode)
+      {
+         using subContext db = new();
+         return db.SettingStores.FirstOrDefault(x => x.StoreCode == StoreCode);
+      }
    }
 }

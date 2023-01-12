@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -37,12 +38,9 @@ namespace Foxoft
          InitializeComponent();
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
-         string pictureFolderLocal = @"\\192.168.2.199\Foxoft Images\";
-         string pictureFolderRemote = @"\\25.10.92.123\Foxoft Images\";
-         if (Directory.Exists(pictureFolderLocal))
-            imageFolder = pictureFolderLocal;
-         else if (Directory.Exists(pictureFolderRemote))
-            imageFolder = pictureFolderRemote;
+         SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+         if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+            imageFolder = settingStore.ImageFolder;
 
          byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
          MemoryStream stream = new(byteArray);
@@ -112,12 +110,10 @@ namespace Foxoft
 
       Image GetImage(string path)
       {
-         Image img = null;
+         Image img = Resources.NoPhoto;
 
          if (File.Exists(path))
             img = Image.FromStream(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-         else
-            img = Image.FromStream(new FileStream(imageFolder + "noimage.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
          return img;
       }

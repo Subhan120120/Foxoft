@@ -54,13 +54,10 @@ namespace Foxoft
       {
          InitializeComponent();
 
-         string designFolderLocal = @"\\192.168.2.199\Foxoft Design Files\";
-         string designFolderRemote = @"\\25.10.92.123\Foxoft Design Files\";
-         if (Directory.Exists(designFolderLocal))
-            designFolder = designFolderLocal;
-         else if (Directory.Exists(designFolderRemote))
-            designFolder = designFolderRemote;
+         SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
+         if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+            designFolder = settingStore.DesignFileFolder;
 
          colBalance.OptionsColumn.ReadOnly = true;
          colLastPurchasePrice.OptionsColumn.ReadOnly = true;
@@ -118,6 +115,7 @@ namespace Foxoft
       {
          gC_InvoiceLine.Focus();
       }
+
 
       private void ClearControlsAddNew()
       {
@@ -950,7 +948,7 @@ namespace Foxoft
          //{
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         string designPath = designFolder + reportFileNameInvoiceWare;
+         string designPath = Path.Combine(designFolder, reportFileNameInvoiceWare);
 
          XtraReport report = GetInvoiceReport(designPath);
 
@@ -1054,7 +1052,7 @@ namespace Foxoft
       private void ShowReportPreview()
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + reportFileNameInvoice;
+         string designPath = Path.Combine(designFolder, reportFileNameInvoice);
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
 
@@ -1068,7 +1066,7 @@ namespace Foxoft
       private void bBI_reportPreviewAzn_ItemClick(object sender, ItemClickEventArgs e)
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + @"InvoiceRS_A5_Azn.repx";
+         string designPath = Path.Combine(designFolder, @"InvoiceRS_A5_Azn.repx");
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
          if (xtraReport is not null)
@@ -1226,7 +1224,7 @@ namespace Foxoft
       {
          string fileName = reportFileNameInvoice;
          if (trInvoiceHeader.CurrAccCode == "111")
-            fileName = designFolder + @"InvoiceRS_A5_Azn.repx";
+            fileName = Path.Combine(designFolder, @"InvoiceRS_A5_Azn.repx");
 
          Image image = Image.FromStream(GetInvoiceReportImg(fileName));
          Clipboard.SetImage(image);
@@ -1236,7 +1234,7 @@ namespace Foxoft
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         designPath = designFolder + reportFileNameInvoice;
+         designPath = Path.Combine(designFolder, reportFileNameInvoice);
 
          XtraReport report = GetInvoiceReport(designPath);
 

@@ -51,12 +51,9 @@ namespace Foxoft
       {
          InitializeComponent();
 
-         string pictureFolderLocal = @"\\192.168.2.199\Foxoft Images\";
-         string pictureFolderRemote = @"\\25.10.92.123\Foxoft Images\";
-         if (Directory.Exists(pictureFolderLocal))
-            imageFolder = pictureFolderLocal;
-         else if (Directory.Exists(pictureFolderRemote))
-            imageFolder = pictureFolderRemote;
+         SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+         if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+            imageFolder = settingStore.ImageFolder;
 
          GridLocalizer.Active = new MyGridLocalizer();
 

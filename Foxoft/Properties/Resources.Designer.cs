@@ -93,6 +93,16 @@ namespace Foxoft.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap NoPhoto {
+            get {
+                object obj = ResourceManager.GetObject("NoPhoto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap registration_32px {
             get {
                 object obj = ResourceManager.GetObject("registration_32px", resourceCulture);
