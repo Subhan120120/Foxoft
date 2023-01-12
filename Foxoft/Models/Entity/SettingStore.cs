@@ -9,7 +9,7 @@ namespace Foxoft.Models
    {
       public SettingStore()
       {
-         DcStores = new HashSet<DcCurrAcc>();
+         //DcStores = new HashSet<DcCurrAcc>();
       }
 
       [Key]
@@ -17,7 +17,6 @@ namespace Foxoft.Models
 
       [StringLength(30)]
       [DisplayName("Mağaza Kodu")]
-      [ForeignKey(nameof(DcCurrAcc))]
       public string StoreCode { get; set; }
 
       [DisplayName("Dizayn Fayl Qovluğu")]
@@ -26,7 +25,9 @@ namespace Foxoft.Models
       [DisplayName("Şəkil Qovluğu")]
       public string ImageFolder { get; set; }
 
-      public IEnumerable<DcCurrAcc> DcStores { get; set; }
+
+      [ForeignKey("StoreCode")]
+      public virtual DcCurrAcc DcStore { get; set; }
 
    }
 }

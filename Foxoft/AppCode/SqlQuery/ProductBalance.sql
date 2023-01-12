@@ -20,7 +20,7 @@ from ( select DcProducts.ProductCode
 												from TrInvoiceLines 
 												join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId
 												where TrInvoiceLines.ProductCode = DcProducts.ProductCode
-												and (TrInvoiceHeaders.ProcessCode = 'RP' or TrInvoiceHeaders.ProcessCode = 'CI')
+												and TrInvoiceHeaders.ProcessCode IN ( 'RP','CI')
 												and TrInvoiceHeaders.IsReturn = 0
 												ORDER BY TrInvoiceHeaders.DocumentDate desc
 												, TrInvoiceLines.CreatedDate desc

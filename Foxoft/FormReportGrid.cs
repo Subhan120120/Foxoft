@@ -18,6 +18,7 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using DevExpress.XtraReports.UserDesigner.Native;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -105,11 +106,10 @@ namespace Foxoft
 
       Image GetImage(string path)
       {
-         Image img = null;
+         Image img = Resources.NoPhoto;
          if (File.Exists(path))
             img = Image.FromFile(path);
-         else
-            img = Image.FromFile(imageFolder + "noimage.jpg");
+
          return img;
       }
 

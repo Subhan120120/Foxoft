@@ -98,13 +98,16 @@ namespace Foxoft
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
             string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
             fileName += ".jpg";
-            string path = imageFolder + fileName;
-            if (!imageCache.ContainsKey(path))
+            if (!string.IsNullOrEmpty(imageFolder))
             {
-               Image img = GetImage(path);
-               imageCache.Add(path, img);
+               string path = Path.Combine(imageFolder, fileName);
+               if (!imageCache.ContainsKey(path))
+               {
+                  Image img = GetImage(path);
+                  imageCache.Add(path, img);
+               }
+               e.Value = imageCache[path];
             }
-            e.Value = imageCache[path];
          }
       }
 
@@ -210,7 +213,7 @@ namespace Foxoft
 
                gV_ProductList.FocusedRowHandle = fr;
 
-               string path = imageFolder + formProduct.dcProduct.ProductCode + ".jpg";
+               string path = Path.Combine(imageFolder, formProduct.dcProduct.ProductCode + ".jpg");
                imageCache.Remove(path);
             }
          }

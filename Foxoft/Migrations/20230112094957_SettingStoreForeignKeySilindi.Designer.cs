@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230112094957_SettingStoreForeignKeySilindi")]
+    partial class SettingStoreForeignKeySilindi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1299,8 +1301,6 @@ namespace Foxoft.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoreCode");
-
                     b.ToTable("SettingStores");
 
                     b.HasData(
@@ -2201,16 +2201,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcReport");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.SettingStore", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
-                        .WithMany("SettingStores")
-                        .HasForeignKey("StoreCode")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("DcStore");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrCurrAccRole", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
@@ -2377,8 +2367,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAcc", b =>
                 {
-                    b.Navigation("SettingStores");
-
                     b.Navigation("TrCurrAccRole");
 
                     b.Navigation("TrInvoiceHeaders");
