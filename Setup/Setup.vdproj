@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_00AA2584AF4D4790809409CEE7A04CD8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0820EAAD9AEF41F3BE9748727D9850BA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -112,12 +118,6 @@
         "Entry"
         {
         "MsmKey" = "8:_4CD478E6C55944DE9AB3933E20358505"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5D45E9F79B2043709B76A9933192BF7B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -814,6 +814,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_00AA2584AF4D4790809409CEE7A04CD8"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\Desktop\\FoxoftIcon64.ico"
+            "TargetName" = "8:FoxoftIcon64.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0820EAAD9AEF41F3BE9748727D9850BA"
             {
             "AssemblyRegister" = "3:1"
@@ -1294,26 +1314,6 @@
             "TargetName" = "8:dx-rich.tr.json"
             "Tag" = "8:"
             "Folder" = "8:_A991F928559046378F1CB95FE4795579"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5D45E9F79B2043709B76A9933192BF7B"
-            {
-            "SourcePath" = "8:..\\Foxoft\\Resources\\fox_007.ico"
-            "TargetName" = "8:fox_007.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2736,7 +2736,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Foxoft"
         "ProductCode" = "8:{45CA112D-09DD-478B-AD26-1FA73E8263C8}"
-        "PackageCode" = "8:{39742670-CE84-4085-AAFB-639ED63154C1}"
+        "PackageCode" = "8:{2B5FCA36-D34F-4E99-8A39-E67937871EBF}"
         "UpgradeCode" = "8:{F9623061-39E4-403B-99A1-E6554D6C90B4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2867,7 +2867,7 @@
             "Target" = "8:_9AA614FB560C4CCF8C67B69D5C08DAFC"
             "Folder" = "8:_F578FFE419424F16B6122CD11371FAB6"
             "WorkingFolder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
-            "Icon" = "8:_5D45E9F79B2043709B76A9933192BF7B"
+            "Icon" = "8:_00AA2584AF4D4790809409CEE7A04CD8"
             "Feature" = "8:"
             }
         }
