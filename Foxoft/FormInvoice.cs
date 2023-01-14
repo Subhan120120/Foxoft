@@ -359,11 +359,8 @@ namespace Foxoft
                   DcReport dcReport = efMethods.SelectReport(1005);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
                   string filter = " where [ProductCode] = '" + productCode + "' ";
-
                   string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
                   FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
@@ -377,10 +374,8 @@ namespace Foxoft
                   DcReport dcReport = efMethods.SelectReport(1004);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
                   string filter = " where [ProductCode] = '" + productCode + "' ";
                   string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
                   FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }

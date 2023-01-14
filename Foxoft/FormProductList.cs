@@ -1,4 +1,6 @@
 ﻿using DevExpress.Data;
+using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.DataAccess.Sql;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -10,10 +12,12 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -241,11 +245,8 @@ namespace Foxoft
                   DcReport dcReport = efMethods.SelectReport(1005);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
                   string filter = " where [ProductCode] = '" + productCode + "' ";
-
                   string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
                   FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
                   formGrid.Show();
                }
@@ -276,11 +277,8 @@ namespace Foxoft
                   DcReport dcReport = efMethods.SelectReport(1004);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
                   string filter = " where [ProductCode] = '" + productCode + "' ";
-
                   string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
                   FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
 
                   formGrid.Show();
@@ -454,6 +452,39 @@ namespace Foxoft
          if (e.RowHandle == GridControl.AutoFilterRowHandle)
             e.RowHeight = 25;
          colImage.Width = gV.RowHeight;
+      }
+
+      private string subConnString = ConfigurationManager
+                 .OpenExeConfiguration(ConfigurationUserLevel.None)
+                 .ConnectionStrings
+                 .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                 .ConnectionString;
+      private void BarcodePrint_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ReportClass reportClass = new();
+
+         string designPath = "";
+
+         if (!File.Exists(designPath))
+            designPath = reportClass.SelectDesign();
+         if (File.Exists(designPath))
+         {
+            DsMethods dsMethods = new();
+            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
+            dataSource.Name = "Barcode";
+
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+            dataSource.Fill();
+
+            XtraReport xtraReport = reportClass.CreateReport(dataSource, designPath);
+
+            if (xtraReport is not null)
+            {
+               ReportDesignTool printTool = new(xtraReport);
+               printTool.ShowRibbonDesigner();
+            }
+         }
       }
    }
 }

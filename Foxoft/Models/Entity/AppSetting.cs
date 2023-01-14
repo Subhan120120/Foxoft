@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
@@ -26,6 +27,11 @@ namespace Foxoft.Models
 
       [DisplayName("Yerli Valyuta Kodu")]
       public string LocalCurrencyCode { get; set; }
+
+
+
+      [ForeignKey("LocalCurrencyCode")]
+      public virtual DcCurrency DcCurrency { get; set; }
 
    }
 }

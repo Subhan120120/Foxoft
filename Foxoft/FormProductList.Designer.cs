@@ -81,6 +81,7 @@ namespace Foxoft
          this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_ProductList)).BeginInit();
@@ -322,9 +323,10 @@ namespace Foxoft
             this.bBI_ProductDelete,
             this.bBI_ProductRefresh,
             this.BBI_Feature,
-            this.barButtonItem3});
+            this.barButtonItem3,
+            this.BarcodePrint});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 21;
+         this.ribbonControl1.MaxItemId = 22;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -434,6 +436,7 @@ namespace Foxoft
          // ribbonPageGroup3
          // 
          this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem3);
+         this.ribbonPageGroup3.ItemLinks.Add(this.BarcodePrint);
          this.ribbonPageGroup3.Name = "ribbonPageGroup3";
          this.ribbonPageGroup3.Text = "Hesabat";
          // 
@@ -453,6 +456,14 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
+         // 
+         // arkod
+         // 
+         this.BarcodePrint.Caption = "Barkod Çapı";
+         this.BarcodePrint.Id = 21;
+         this.BarcodePrint.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem2.ImageOptions.SvgImage")));
+         this.BarcodePrint.Name = "arkod";
+         this.BarcodePrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BarcodePrint_ItemClick);
          // 
          // FormProductList
          // 
@@ -527,5 +538,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
       private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+      private DevExpress.XtraBars.BarButtonItem BarcodePrint;
    }
 }
