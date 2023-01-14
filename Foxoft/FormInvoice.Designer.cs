@@ -216,7 +216,6 @@ namespace Foxoft
          this.lbl_InvoicePaidSum.Size = new System.Drawing.Size(730, 22);
          this.lbl_InvoicePaidSum.StyleController = this.dataLayoutControl1;
          this.lbl_InvoicePaidSum.TabIndex = 1;
-         this.lbl_InvoicePaidSum.Text = "Ödənilib: 0.00 USD";
          // 
          // gC_InvoiceLine
          // 

@@ -8,6 +8,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -390,7 +391,7 @@ namespace Foxoft
          }
 
          decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2);
-         string balanceTxt = "Qalıq: " + balance.ToString() + " USD";
+         string balanceTxt = "Qalıq: " + balance.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
          return paid + balanceTxt;
       }

@@ -132,7 +132,8 @@ namespace Foxoft
 
          trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-         lbl_InvoicePaidSum.Text = "";
+         lbl_InvoicePaidSum.Text = "Ödənilib: 0.00 " + Settings.Default.AppSetting.LocalCurrencyCode;
+
          lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
 
          dbContext.TrInvoiceLines.Include(x => x.DcProduct)
@@ -879,7 +880,7 @@ namespace Foxoft
       {
          TrPaymentLine trPaymentLine = new();
          trPaymentLine.PaymentTypeCode = 1;
-         trPaymentLine.CurrencyCode = "USD";
+         trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
          trPaymentLine.ExchangeRate = 1f;
 
          trPaymentLine.CashRegisterCode = efMethods.SelectCashRegByStore(Authorization.StoreCode);

@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -82,8 +83,8 @@ namespace Foxoft
          trPaymentHeader.IsMainTF = true;
 
          trPaymentLine.PaymentHeaderId = PaymentHeaderId;
-         trPaymentLine.PaymentTypeCode = paymentType;
-         trPaymentLine.CurrencyCode = "USD";
+         trPaymentLine.PaymentTypeCode = paymentType; 
+         trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
          trPaymentLine.ExchangeRate = 1;
 
          string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);

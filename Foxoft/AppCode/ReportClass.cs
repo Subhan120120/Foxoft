@@ -12,6 +12,7 @@ namespace Foxoft
       {
          string fileExt = string.Empty;
          OpenFileDialog file = new();
+         file.InitialDirectory = efMethods.SelectSettingStore(Authorization.StoreCode).DesignFileFolder;
          if (file.ShowDialog() == DialogResult.OK)
          {
             fileExt = Path.GetExtension(file.FileName);
