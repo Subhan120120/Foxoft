@@ -473,7 +473,7 @@ namespace Foxoft
             SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
             dataSource.Name = "Barcode";
 
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            SqlQuery sqlQuerySale = dsMethods.SelectProduct(productCode);
             dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
             dataSource.Fill();
 
