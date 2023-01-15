@@ -465,7 +465,7 @@ namespace Foxoft
             }
          }
       }
-
+      
       DXMenuItem CreateItem(string caption, GridColumn column, Image image)
       {
          DXMenuItem item = new DXMenuItem(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);

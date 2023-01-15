@@ -272,6 +272,7 @@ namespace Foxoft
          this.gV_InvoiceLine.OptionsView.ShowFooter = true;
          this.gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
          this.gV_InvoiceLine.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_InvoiceLine_RowCellStyle);
+         this.gV_InvoiceLine.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gV_Report_PopupMenuShowing);
          this.gV_InvoiceLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_InvoiceLine_InitNewRow);
          this.gV_InvoiceLine.HiddenEditor += new System.EventHandler(this.gV_InvoiceLine_HiddenEditor);
          this.gV_InvoiceLine.ShownEditor += new System.EventHandler(this.gV_InvoiceLine_ShownEditor);

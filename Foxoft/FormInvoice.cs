@@ -1,17 +1,24 @@
 ﻿using DevExpress.Data;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Utils.Design;
 using DevExpress.Utils.Extensions;
+using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraReports.UserDesigner;
+using DevExpress.XtraReports.UserDesigner.Native;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +26,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -1369,6 +1377,47 @@ namespace Foxoft
          //var message = MessageResource.Create(messageOptions);
          ////Console.WriteLine(message.Body);
 
+      }
+
+      private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+      {
+         if (e.MenuType == GridMenuType.Column)
+         {
+            GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
+            //menu.Items.Clear();
+            if (menu.Column != null)
+            {
+               menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+            }
+         }
+      }
+
+      DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+      {
+         DXMenuItem item = new(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);
+         item.Tag = new MenuColumnInfo(column);
+         return item;
+      }
+
+      // Menu item click handler.
+      void DXMenuCheckItem_ItemClick(object sender, EventArgs e)
+      {
+         DXMenuItem item = sender as DXMenuItem;
+         MenuColumnInfo info = item.Tag as MenuColumnInfo;
+         if (info == null) return;
+
+         //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
+
+
+      }
+
+      class MenuColumnInfo
+      {
+         public MenuColumnInfo(GridColumn column)
+         {
+            this.Column = column;
+         }
+         public GridColumn Column;
       }
    }
 }
