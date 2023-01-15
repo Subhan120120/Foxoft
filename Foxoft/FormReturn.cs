@@ -105,7 +105,7 @@ namespace Foxoft
 
                   if (!efMethods.InvoiceHeaderExist(returnInvoiceHeaderId)) //if invoiceHeader doesnt exist
                   {
-                     string NewDocNum = efMethods.GetNextDocNum(processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+                     string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
 
                      returnInvoHeader = new();
 

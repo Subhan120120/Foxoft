@@ -18,10 +18,10 @@ namespace Foxoft
          //this.db = new subContext();
       }
 
-      public string GetNextDocNum(string processCode, string columnName, string tableName, int ReplicateNum)
+      public string GetNextDocNum(bool DefisExist, string processCode, string columnName, string tableName, int ReplicateNum)
       {
          using subContext db = new();
-         string qry = $"exec [dbo].[GetNextDocNum] {processCode}, {columnName}, {tableName}, {ReplicateNum}";
+         string qry = $"exec [dbo].[GetNextDocNum] {DefisExist}, {processCode}, {columnName}, {tableName}, {ReplicateNum}";
 
          return db.Set<GetNextDocNum>()
              .FromSqlRaw(qry)
@@ -170,8 +170,10 @@ namespace Foxoft
                                 CreatedUserName = x.CreatedUserName,
                                 LastUpdatedDate = x.LastUpdatedDate,
                                 LastUpdatedUserName = x.LastUpdatedUserName,
-                             }).FirstOrDefault(x => x.ProductCode == productCode);
+                                Barcode = x.Barcode,
+                             }).FirstOrDefault(x => x.ProductCode == productCode || x.Barcode == productCode);
       }
+
 
       public int SelectProductBalance(string productCode, string warehouseCode)
       {

@@ -18,6 +18,7 @@ using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -240,10 +241,9 @@ namespace Foxoft
             if (e.KeyCode == Keys.F9)
             {
                object productCode = view.GetFocusedRowCellValue(colProductCode);
-               if (productCode != null)
+               DcReport dcReport = efMethods.SelectReport(1005);
+               if (productCode is not null && dcReport is not null)
                {
-                  DcReport dcReport = efMethods.SelectReport(1005);
-
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
                   string filter = " where [ProductCode] = '" + productCode + "' ";
                   string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
@@ -272,9 +272,9 @@ namespace Foxoft
             if (e.KeyCode == Keys.F10)
             {
                object productCode = view.GetFocusedRowCellValue(colProductCode);
-               if (productCode != null)
+               DcReport dcReport = efMethods.SelectReport(1004);
+               if (productCode is not null && dcReport is not null)
                {
-                  DcReport dcReport = efMethods.SelectReport(1004);
 
                   string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
                   string filter = " where [ProductCode] = '" + productCode + "' ";
@@ -434,12 +434,12 @@ namespace Foxoft
       private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
       {
          DcReport dcReport = efMethods.SelectReport(3);
-         object ProductCode = gV_ProductList.GetFocusedRowCellValue(colProductCode);
+         object productCode = gV_ProductList.GetFocusedRowCellValue(colProductCode);
 
-         if (ProductCode is not null)
+         if (productCode is not null && dcReport is not null)
          {
             string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-            string filter = " where [ProductCode] = '" + ProductCode + "' ";
+            string filter = " where [ProductCode] = '" + productCode + "' ";
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
             FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
             formGrid.Show();
@@ -473,9 +473,13 @@ namespace Foxoft
             SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
             dataSource.Name = "Barcode";
 
-            SqlQuery sqlQuerySale = dsMethods.SelectProduct(productCode);
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
+            SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
+            dataSource.Queries.Add(sqlQuerySale);
             dataSource.Fill();
+
+            DataTable dataTable = new DataTable();
+
+            DataTable tCxC = (DataTable)dataTable;
 
             XtraReport xtraReport = reportClass.CreateReport(dataSource, designPath);
 

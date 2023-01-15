@@ -95,7 +95,7 @@ namespace Foxoft
       {
          dcProduct = dcProductsBindingSource.AddNew() as DcProduct;
 
-         string NewDocNum = efMethods.GetNextDocNum("P", "ProductCode", "DcProducts", 6);
+         string NewDocNum = efMethods.GetNextDocNum(true, "P", "ProductCode", "DcProducts", 6);
          dcProduct.ProductCode = NewDocNum;
          dcProduct.ProductTypeCode = productTypeCode;
          dcProduct.CreatedUserName = Authorization.CurrAccCode;
@@ -252,6 +252,38 @@ namespace Foxoft
       private void simpleButton3_Click(object sender, EventArgs e)
       {
          openFileDialog();
+      }
+
+
+      private void btn_BarcodeGenerate_Click(object sender, EventArgs e)
+      {
+         string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "DcProducts", 10);
+         string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
+         BarcodeTextEdit.EditValue = genNumber + checkDigit;
+      }
+
+      public string CalculateChecksumDigit(string countryCode, string productCode)
+      {
+         string sTemp = countryCode + productCode;
+         int iSum = 0;
+         int iDigit = 0;
+
+         // Calculate the checksum digit here.
+         for (int i = sTemp.Length; i >= 1; i--)
+         {
+            iDigit = Convert.ToInt32(sTemp.Substring(i - 1, 1));
+            if (i % 2 == 0)
+            {  // odd
+               iSum += iDigit * 3;
+            }
+            else
+            {  // even
+               iSum += iDigit * 1;
+            }
+         }
+
+         int iCheckSum = (10 - (iSum % 10)) % 10;
+         return iCheckSum.ToString();
       }
    }
 }

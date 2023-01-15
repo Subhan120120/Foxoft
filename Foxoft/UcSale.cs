@@ -67,7 +67,7 @@ namespace Foxoft
             {
                if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                {
-                  string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
+                  string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
 
                   TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                   {
@@ -206,7 +206,7 @@ namespace Foxoft
 
             if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
             {
-               string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
+               string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
                TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                {
                   InvoiceHeaderId = invoiceHeaderId,
@@ -307,7 +307,7 @@ namespace Foxoft
             {
                if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                {
-                  string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
+                  string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
                   TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                   {
                      InvoiceHeaderId = invoiceHeaderId,
@@ -339,7 +339,7 @@ namespace Foxoft
             {
                if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                {
-                  string NewDocNum = efMethods.GetNextDocNum("RS", "DocumentNumber", "TrInvoiceHeaders", 6);
+                  string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
                   TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
                   {
                      InvoiceHeaderId = invoiceHeaderId,

@@ -73,7 +73,7 @@ namespace Foxoft
 
          dcCurrAcc.StoreCode = Authorization.StoreCode;
          dcCurrAcc.OfficeCode = Authorization.OfficeCode;
-         string NewDocNum = efMethods.GetNextDocNum("C", "CurrAccCode", "DcCurrAccs", 4);
+         string NewDocNum = efMethods.GetNextDocNum(true, "C", "CurrAccCode", "DcCurrAccs", 4);
          dcCurrAcc.CurrAccCode = NewDocNum;
          dcCurrAcc.DataLanguageCode = "AZ";
 

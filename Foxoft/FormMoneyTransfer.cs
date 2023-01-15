@@ -73,7 +73,7 @@ namespace Foxoft
       {
          TrPaymentHeader paymentHeader = new();
          paymentHeader.PaymentHeaderId = paymentHeaderId;
-         string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
+         string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
          paymentHeader.DocumentNumber = NewDocNum;
          paymentHeader.DocumentDate = DateTime.Now;
          paymentHeader.OperationDate = DateTime.Now;

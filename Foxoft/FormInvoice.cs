@@ -153,7 +153,7 @@ namespace Foxoft
       {
          TrInvoiceHeader invoiceHeader = new();
          invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
-         string NewDocNum = efMethods.GetNextDocNum(dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+         string NewDocNum = efMethods.GetNextDocNum(true, dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders", 6);
          invoiceHeader.DocumentNumber = NewDocNum;
          invoiceHeader.DocumentDate = DateTime.Now;
          invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
@@ -817,7 +817,7 @@ namespace Foxoft
 
             EfMethods efMethods = new();
 
-            string NewDocNum = efMethods.GetNextDocNum("PA", "DocumentNumber", "TrPaymentHeaders", 6);
+            string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
             trPaymentHeader.DocumentNumber = NewDocNum;
             trPaymentHeader.Description = trInvoiceHeader.Description;
 
