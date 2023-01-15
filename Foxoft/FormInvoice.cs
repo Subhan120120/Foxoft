@@ -39,7 +39,7 @@ namespace Foxoft
    {
       readonly string designFolder;
       //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      string reportFileNameInvoice = @"InvoiceRS_A5.repx";
+      string reportFileNameInvoice = @"InvoiceRS_A4.repx";
       string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
 
       private TrInvoiceHeader trInvoiceHeader;
@@ -1059,19 +1059,6 @@ namespace Foxoft
          }
       }
 
-      private void bBI_reportPreviewAzn_ItemClick(object sender, ItemClickEventArgs e)
-      {
-         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = Path.Combine(designFolder, @"InvoiceRS_A5_Azn.repx");
-
-         XtraReport xtraReport = GetInvoiceReport(designPath);
-         if (xtraReport is not null)
-         {
-            ReportPrintTool printTool = new(xtraReport);
-            printTool.ShowRibbonPreview();
-         }
-      }
-
       private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
       {
          if (dataLayoutControl1.IsValid(out List<string> errorList))
@@ -1219,8 +1206,6 @@ namespace Foxoft
       private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
       {
          string fileName = reportFileNameInvoice;
-         if (trInvoiceHeader.CurrAccCode == "111")
-            fileName = Path.Combine(designFolder, @"InvoiceRS_A5_Azn.repx");
 
          Image image = Image.FromStream(GetInvoiceReportImg(fileName));
          Clipboard.SetImage(image);

@@ -91,7 +91,6 @@ namespace Foxoft
          this.bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_SaveAndQuit = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_reportPreviewAzn = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_ModifyInvoice = new DevExpress.XtraBars.BarButtonItem();
@@ -697,7 +696,6 @@ namespace Foxoft
             this.bBI_DeleteInvoice,
             this.bBI_DeletePayment,
             this.bBI_SaveAndQuit,
-            this.bBI_reportPreviewAzn,
             this.bBI_CopyInvoice,
             this.bBI_Whatsapp,
             this.BBI_ModifyInvoice,
@@ -784,14 +782,6 @@ namespace Foxoft
          this.bBI_SaveAndQuit.Name = "bBI_SaveAndQuit";
          this.bBI_SaveAndQuit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndQuit_ItemClick);
          // 
-         // bBI_reportPreviewAzn
-         // 
-         this.bBI_reportPreviewAzn.Caption = "Report Görünüş Azn";
-         this.bBI_reportPreviewAzn.Id = 16;
-         this.bBI_reportPreviewAzn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_reportPreviewAzn.ImageOptions.SvgImage")));
-         this.bBI_reportPreviewAzn.Name = "bBI_reportPreviewAzn";
-         this.bBI_reportPreviewAzn.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_reportPreviewAzn_ItemClick);
-         // 
          // bBI_CopyInvoice
          // 
          this.bBI_CopyInvoice.Caption = "Kopyala";
@@ -854,7 +844,6 @@ namespace Foxoft
          // 
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
-         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreviewAzn);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Print";
          // 
