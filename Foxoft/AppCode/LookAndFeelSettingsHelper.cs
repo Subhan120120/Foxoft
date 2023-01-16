@@ -90,23 +90,25 @@ namespace Foxoft.AppCode
          DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
          if (!string.IsNullOrEmpty(dcCurrAcc.Theme) && !string.IsNullOrEmpty(dcCurrAcc.CurrAccCode))
          {
-            byte[] byteArray = Encoding.Unicode.GetBytes(dcCurrAcc.Theme);
-
-            MemoryStream stream = new (Convert.FromBase64String(dcCurrAcc.Theme));
-            BinaryFormatter formatter = new();
-            formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
-            LookAndFeelSettings settings = formatter.Deserialize(stream) as LookAndFeelSettings;
-
-            if (settings != null)
+            if (!string.IsNullOrEmpty(dcCurrAcc.Theme))
             {
-               UserLookAndFeel.Default.UseWindowsXPTheme = settings.UseWindowsXPTheme;
-               UserLookAndFeel.Default.Style = settings.Style;
-               UserLookAndFeel.Default.SkinName = settings.SkinName;
+               byte[] byteArray = Convert.FromBase64String(dcCurrAcc.Theme);
+               MemoryStream stream = new(byteArray);
+               BinaryFormatter formatter = new();
+               formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
+               LookAndFeelSettings settings = formatter.Deserialize(stream) as LookAndFeelSettings;
 
-               var skin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-               SvgPalette fireBall = skin.CustomSvgPalettes[settings.skinPaletteName];
-               skin.SvgPalettes[Skin.DefaultSkinPaletteName].SetCustomPalette(fireBall);
-               LookAndFeelHelper.ForceDefaultLookAndFeelChanged();
+               if (settings != null)
+               {
+                  UserLookAndFeel.Default.UseWindowsXPTheme = settings.UseWindowsXPTheme;
+                  UserLookAndFeel.Default.Style = settings.Style;
+                  UserLookAndFeel.Default.SkinName = settings.SkinName;
+
+                  var skin = CommonSkins.GetSkin(UserLookAndFeel.Default);
+                  SvgPalette fireBall = skin.CustomSvgPalettes[settings.skinPaletteName];
+                  skin.SvgPalettes[Skin.DefaultSkinPaletteName].SetCustomPalette(fireBall);
+                  LookAndFeelHelper.ForceDefaultLookAndFeelChanged();
+               }
             }
          }
       }
