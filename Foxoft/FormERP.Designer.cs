@@ -39,6 +39,7 @@ namespace Foxoft
          this.bBI_POS = new DevExpress.XtraBars.BarButtonItem();
          this.bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -70,6 +71,7 @@ namespace Foxoft
          this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -86,9 +88,11 @@ namespace Foxoft
             this.bBI_CloseWindows,
             this.bBI_POS,
             this.bSI_UserName,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.barButtonItem3,
+            this.barButtonItem4});
          this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-         this.parentRibbonControl.MaxItemId = 16;
+         this.parentRibbonControl.MaxItemId = 18;
          this.parentRibbonControl.Name = "parentRibbonControl";
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
@@ -151,6 +155,13 @@ namespace Foxoft
          this.barButtonItem1.Name = "barButtonItem1";
          this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
          // 
+         // barButtonItem3
+         // 
+         this.barButtonItem3.Caption = "Save";
+         this.barButtonItem3.Id = 16;
+         this.barButtonItem3.Name = "barButtonItem3";
+         this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+         // 
          // ribbonPage_Home
          // 
          this.ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -169,6 +180,8 @@ namespace Foxoft
          // ribbonPageGroup1
          // 
          this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
+         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem3);
+         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem4);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Nəzarət";
          // 
@@ -412,6 +425,13 @@ namespace Foxoft
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
          // 
+         // barButtonItem4
+         // 
+         this.barButtonItem4.Caption = "Load";
+         this.barButtonItem4.Id = 17;
+         this.barButtonItem4.Name = "barButtonItem4";
+         this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
+         // 
          // FormERP
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -482,5 +502,7 @@ namespace Foxoft
       private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashReg;
       private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator7;
       private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem4;
    }
 }

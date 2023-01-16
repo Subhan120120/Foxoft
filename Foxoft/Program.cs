@@ -39,6 +39,7 @@ namespace Foxoft
 
          ExportSettings.DefaultExportType = ExportType.WYSIWYG;
          WindowsFormsSettings.DefaultFont = new Font("Tahoma", 10);
+         //DevExpress.UserSkins.BonusSkins.Register();
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
 

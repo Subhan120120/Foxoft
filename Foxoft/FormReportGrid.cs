@@ -224,15 +224,12 @@ namespace Foxoft
 
       private void LoadLayout()
       {
-         if (report.ReportId > 0)
+         DcReport dcReport = efMethods.SelectReport(report.ReportId);
+         if (!string.IsNullOrEmpty(dcReport.ReportLayout) && report.ReportId > 0)
          {
-            DcReport dcReport = efMethods.SelectReport(report.ReportId);
-            if (!string.IsNullOrEmpty(dcReport.ReportLayout))
-            {
-               byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
-               MemoryStream stream = new(byteArray);
-               gV_Report.RestoreLayoutFromStream(stream);
-            }
+            byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
+            MemoryStream stream = new(byteArray);
+            gV_Report.RestoreLayoutFromStream(stream);
          }
 
          TrimNumbersFormat();
@@ -465,7 +462,7 @@ namespace Foxoft
             }
          }
       }
-      
+
       DXMenuItem CreateItem(string caption, GridColumn column, Image image)
       {
          DXMenuItem item = new DXMenuItem(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);

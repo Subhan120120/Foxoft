@@ -960,6 +960,14 @@ namespace Foxoft
          return db.SaveChanges();
       }
 
+      public int UpdateCurrAccTheme(string CurrAccCode, string themeLayout)
+      {
+         using subContext db = new();
+         DcCurrAcc dcCurrAcc = new() { CurrAccCode = CurrAccCode, Theme = themeLayout };
+         db.Entry(dcCurrAcc).Property(x => x.Theme).IsModified = true;
+         return db.SaveChanges();
+      }
+
       public DcReport SelectReport(int id)
       {
          using subContext db = new();

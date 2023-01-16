@@ -1,10 +1,13 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Diagram.Core.Themes;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraReports.UI;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
@@ -26,6 +29,11 @@ namespace Foxoft
          EfMethods efMethods = new();
 
          InitializeComponent();
+         LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
+
+         //SkinHelper.InitSkinGallery(skinRibbonGalleryBarItem);
+
+
          ComponentResourceManager resources = new(typeof(FormERP));
          bSI_UserName.Caption = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
 
@@ -56,6 +64,7 @@ namespace Foxoft
          //adorners1 = new List<AdornerElement>();
          //adornerUIManager1 = new AdornerUIManager(this.components);
       }
+
 
       private void RibbonControl1_Merge(object sender, RibbonMergeEventArgs e)
       {
@@ -464,6 +473,17 @@ namespace Foxoft
             aC_Root.OptionsMinimizing.State = AccordionControlState.Normal;
          else
             aC_Root.OptionsMinimizing.State = AccordionControlState.Minimized;
+      }
+
+      private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+      {
+
+         LookAndFeelSettingsHelper.Save(Authorization.CurrAccCode);
+      }
+
+      private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
       }
    }
 }

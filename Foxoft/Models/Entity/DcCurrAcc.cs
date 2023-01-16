@@ -133,6 +133,9 @@ namespace Foxoft.Models
       [DisplayName("Qalıq")]
       public decimal Balance { get; set; }
 
+      [DisplayName("Tema")]
+      public string Theme { get; set; }
+
 
       public virtual DcCurrAccType DcCurrAccType { get; set; }
       public virtual ICollection<SettingStore> SettingStores { get; set; }
