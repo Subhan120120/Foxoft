@@ -1,6 +1,7 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Diagram.Core.Themes;
+using DevExpress.LookAndFeel;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Helpers;
@@ -29,6 +30,7 @@ namespace Foxoft
          EfMethods efMethods = new();
 
          InitializeComponent();
+         UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
          LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 
          //SkinHelper.InitSkinGallery(skinRibbonGalleryBarItem);
@@ -65,6 +67,10 @@ namespace Foxoft
          //adornerUIManager1 = new AdornerUIManager(this.components);
       }
 
+      private void UserLookAndFeel_StyleChanged(object sender, EventArgs e)
+      {
+         LookAndFeelSettingsHelper.Save(Authorization.CurrAccCode);
+      }
 
       private void RibbonControl1_Merge(object sender, RibbonMergeEventArgs e)
       {
@@ -478,12 +484,10 @@ namespace Foxoft
       private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
       {
 
-         LookAndFeelSettingsHelper.Save(Authorization.CurrAccCode);
       }
 
       private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
       {
-         LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
       }
    }
 }
