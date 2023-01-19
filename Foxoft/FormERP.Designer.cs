@@ -40,6 +40,7 @@ namespace Foxoft
          this.bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -71,7 +72,6 @@ namespace Foxoft
          this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -161,6 +161,13 @@ namespace Foxoft
          this.barButtonItem3.Id = 16;
          this.barButtonItem3.Name = "barButtonItem3";
          this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+         // 
+         // barButtonItem4
+         // 
+         this.barButtonItem4.Caption = "Load";
+         this.barButtonItem4.Id = 17;
+         this.barButtonItem4.Name = "barButtonItem4";
+         this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
          // 
          // ribbonPage_Home
          // 
@@ -424,13 +431,6 @@ namespace Foxoft
          this.aCE_CurrAccs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
-         // 
-         // barButtonItem4
-         // 
-         this.barButtonItem4.Caption = "Load";
-         this.barButtonItem4.Id = 17;
-         this.barButtonItem4.Name = "barButtonItem4";
-         this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
          // 
          // FormERP
          // 

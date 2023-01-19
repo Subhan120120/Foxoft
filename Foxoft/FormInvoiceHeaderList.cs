@@ -76,7 +76,6 @@ namespace Foxoft
          CriteriaToExpressionConverter converter = new();
          IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
-
          List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
                      .Include(x => x.DcCurrAcc)
                      .Where(x => x.ProcessCode == processCode)

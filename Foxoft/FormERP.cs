@@ -470,7 +470,6 @@ namespace Foxoft
          {
             MessageBox.Show("Kassa Hesablar açıla bilmir: \n" + ex.ToString());
          }
-
       }
 
       private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
@@ -487,6 +486,14 @@ namespace Foxoft
       }
 
       private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+      {
+      }
+
+      private void skinPaletteDropDownButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+      {
+      }
+
+      private void skinPaletteDropDownButtonItem_DownChanged(object sender, ItemClickEventArgs e)
       {
       }
    }
