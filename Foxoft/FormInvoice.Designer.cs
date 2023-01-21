@@ -70,6 +70,7 @@ namespace Foxoft
          this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colBenefit = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
          this.CheckEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
          this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
          this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -261,7 +262,8 @@ namespace Foxoft
             this.colNetAmountLoc,
             this.colCreatedUserName,
             this.colLastPurchasePrice,
-            this.colBenefit});
+            this.colBenefit,
+            this.colBarcode});
          this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 456, 264, 272);
          this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
          this.gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -526,6 +528,12 @@ namespace Foxoft
          this.colBenefit.Visible = true;
          this.colBenefit.VisibleIndex = 10;
          this.colBenefit.Width = 71;
+         // 
+         // colBarcode
+         // 
+         this.colBarcode.Caption = "Barkod";
+         this.colBarcode.FieldName = "Barcode";
+         this.colBarcode.Name = "colBarcode";
          // 
          // CheckEdit_IsReturn
          // 
@@ -1182,5 +1190,6 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
       private DevExpress.XtraBars.BarButtonItem BBI_ModifyInvoice;
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+      private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
    }
 }

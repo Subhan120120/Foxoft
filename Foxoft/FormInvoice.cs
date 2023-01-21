@@ -574,7 +574,7 @@ namespace Foxoft
 
             if (product is null)
             {
-               e.ErrorText = "Belə nir məhsul yoxdur";
+               e.ErrorText = "Belə bir məhsul yoxdur";
                e.Valid = false;
             }
             else
@@ -1360,6 +1360,17 @@ namespace Foxoft
          {
             if (e.KeyChar == '.')
                e.KeyChar = Convert.ToChar(",");
+         }
+
+         if (e.KeyChar == (char)Keys.Return)
+         {
+            gV_InvoiceLine.FocusedColumn = col_ProductCode;
+
+            if (!gV_InvoiceLine.IsLastVisibleRow)
+               gV_InvoiceLine.MoveNext();
+
+            //gV_InvoiceLine.FocusedRowHandle++;
+            e.Handled = true;
          }
       }
 
