@@ -3,34 +3,34 @@ using DevExpress.Utils;
 
 namespace Foxoft
 {
-    partial class FormProductList
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+   partial class FormProductList
+   {
+      /// <summary>
+      /// Required designer variable.
+      /// </summary>
+      private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      /// <summary>
+      /// Clean up any resources being used.
+      /// </summary>
+      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing && (components != null))
+         {
+            components.Dispose();
+         }
+         base.Dispose(disposing);
+      }
 
-        #region Windows Form Designer generated code
+      #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+      /// <summary>
+      /// Required method for Designer support - do not modify
+      /// the contents of this method with the code editor.
+      /// </summary>
+      private void InitializeComponent()
+      {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductList));
          this.gC_ProductList = new DevExpress.XtraGrid.GridControl();
@@ -74,6 +74,8 @@ namespace Foxoft
          this.bBI_ProductRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_Feature = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+         this.BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -81,7 +83,6 @@ namespace Foxoft
          this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_ProductList)).BeginInit();
@@ -141,6 +142,7 @@ namespace Foxoft
          this.gV_ProductList.OptionsView.ShowGroupPanel = false;
          this.gV_ProductList.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_ProductList_RowCellStyle);
          this.gV_ProductList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_ProductList_RowStyle);
+         this.gV_ProductList.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gV_Report_PopupMenuShowing);
          this.gV_ProductList.CalcRowHeight += new DevExpress.XtraGrid.Views.Grid.RowHeightEventHandler(this.gV_ProductList_CalcRowHeight);
          this.gV_ProductList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_ProductList_FocusedRowChanged);
          this.gV_ProductList.ColumnFilterChanged += new System.EventHandler(this.gV_ProductList_ColumnFilterChanged);
@@ -324,9 +326,10 @@ namespace Foxoft
             this.bBI_ProductRefresh,
             this.BBI_Feature,
             this.barButtonItem3,
-            this.BarcodePrint});
+            this.BarcodePrint,
+            this.barButtonItem2});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 22;
+         this.ribbonControl1.MaxItemId = 23;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -406,6 +409,21 @@ namespace Foxoft
          this.barButtonItem3.Name = "barButtonItem3";
          this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
          // 
+         // BarcodePrint
+         // 
+         this.BarcodePrint.Caption = "Barkod Çapı";
+         this.BarcodePrint.Id = 21;
+         this.BarcodePrint.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BarcodePrint.ImageOptions.SvgImage")));
+         this.BarcodePrint.Name = "BarcodePrint";
+         this.BarcodePrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BarcodePrint_ItemClick);
+         // 
+         // barButtonItem2
+         // 
+         this.barButtonItem2.Caption = "BarEdit";
+         this.barButtonItem2.Id = 22;
+         this.barButtonItem2.Name = "barButtonItem2";
+         this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -442,6 +460,7 @@ namespace Foxoft
          // 
          // ribbonPageGroup4
          // 
+         this.ribbonPageGroup4.ItemLinks.Add(this.barButtonItem2);
          this.ribbonPageGroup4.Name = "ribbonPageGroup4";
          this.ribbonPageGroup4.Text = "ribbonPageGroup4";
          // 
@@ -456,14 +475,6 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
-         // 
-         // arkod
-         // 
-         this.BarcodePrint.Caption = "Barkod Çapı";
-         this.BarcodePrint.Id = 21;
-         this.BarcodePrint.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem2.ImageOptions.SvgImage")));
-         this.BarcodePrint.Name = "arkod";
-         this.BarcodePrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BarcodePrint_ItemClick);
          // 
          // FormProductList
          // 
@@ -486,49 +497,49 @@ namespace Foxoft
          this.ResumeLayout(false);
          this.PerformLayout();
 
-        }
+      }
 
-        #endregion
+      #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_ProductList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_ProductList;
-        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-        private DevExpress.XtraBars.BarButtonItem BBI_ProductNew;
-        private DevExpress.XtraBars.BarButtonItem btn_ProductEdit;
-        private DevExpress.XtraBars.BarButtonItem bBI_ExportExcel;
-        private DevExpress.XtraBars.BarButtonItem bBI_quit;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
-        private System.Windows.Forms.BindingSource dcProductsBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
-        private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductTypeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colUsePos;
-        private DevExpress.XtraGrid.Columns.GridColumn colPromotionCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colPromotionCode2;
-        private DevExpress.XtraGrid.Columns.GridColumn colTaxRate;
-        private DevExpress.XtraGrid.Columns.GridColumn colPosDiscount;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
-        private DevExpress.XtraGrid.Columns.GridColumn colRetailPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colPurchasePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colWholesalePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colUseInternet;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalance;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastSalePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colDcProductType;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrPrices;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrInvoiceLines;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrFeature;
-        private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
-        private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
+      private DevExpress.XtraGrid.GridControl gC_ProductList;
+      private DevExpress.XtraGrid.Views.Grid.GridView gV_ProductList;
+      private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+      private DevExpress.XtraBars.BarButtonItem BBI_ProductNew;
+      private DevExpress.XtraBars.BarButtonItem btn_ProductEdit;
+      private DevExpress.XtraBars.BarButtonItem bBI_ExportExcel;
+      private DevExpress.XtraBars.BarButtonItem bBI_quit;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+      private System.Windows.Forms.BindingSource dcProductsBindingSource;
+      private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
+      private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
+      private DevExpress.XtraGrid.Columns.GridColumn colProductTypeCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colUsePos;
+      private DevExpress.XtraGrid.Columns.GridColumn colPromotionCode;
+      private DevExpress.XtraGrid.Columns.GridColumn colPromotionCode2;
+      private DevExpress.XtraGrid.Columns.GridColumn colTaxRate;
+      private DevExpress.XtraGrid.Columns.GridColumn colPosDiscount;
+      private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
+      private DevExpress.XtraGrid.Columns.GridColumn colRetailPrice;
+      private DevExpress.XtraGrid.Columns.GridColumn colPurchasePrice;
+      private DevExpress.XtraGrid.Columns.GridColumn colWholesalePrice;
+      private DevExpress.XtraGrid.Columns.GridColumn colUseInternet;
+      private DevExpress.XtraGrid.Columns.GridColumn colBalance;
+      private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
+      private DevExpress.XtraGrid.Columns.GridColumn colLastSalePrice;
+      private DevExpress.XtraGrid.Columns.GridColumn colDcProductType;
+      private DevExpress.XtraGrid.Columns.GridColumn colTrPrices;
+      private DevExpress.XtraGrid.Columns.GridColumn colTrInvoiceLines;
+      private DevExpress.XtraGrid.Columns.GridColumn colTrFeature;
+      private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
+      private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
+      private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
+      private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceF;
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceM;
       private DevExpress.XtraBars.BarButtonItem bBI_ProductDelete;
@@ -539,5 +550,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
       private DevExpress.XtraBars.BarButtonItem barButtonItem3;
       private DevExpress.XtraBars.BarButtonItem BarcodePrint;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem2;
    }
 }

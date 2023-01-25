@@ -4,8 +4,14 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Configuration;
+using System.IO;
+using System.Reflection;
+using System.Threading;
+using System.Windows;
 
 namespace Foxoft
 {
@@ -15,19 +21,56 @@ namespace Foxoft
 
       public FormLogin()
       {
+         // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
+
+         SplashScreenManager.ShowForm(this, typeof(SplashScreenStartup), true, true, true);
+
+         using (subContext db = new())
+         {
+            db.Database.EnsureCreated();
+            //db.Database.Migrate();
+
+            //string sql = db.Database.GenerateCreateScript();
+
+            //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
+            //databaseCreator.CreateTables();
+
+            CreateViews(new DatabaseFacade(db));
+         }
+
          AppSetting appSetting = efMethods.SelectAppSetting();
          Settings.Default.AppSetting = appSetting;
          Settings.Default.Save();
+
          AcceptButton = btn_ERP;
 
          InitializeComponent();
-         SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true);
-         sSM.ClosingDelay = 500;
-         //System.Threading.Thread.Sleep(7000);
 
          txtEdit_UserName.Text = Settings.Default.LoginName;
          txtEdit_Password.Text = Settings.Default.LoginPassword;
          checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
+
+
+         SplashScreenManager.CloseForm();
+      }
+
+      private static void CreateViews(DatabaseFacade db)
+      {
+         InjectView(db, "View_RetailSales.sql", "RetailSales");
+         InjectView(db, "View_AllPayments.sql", "AllPayments");
+         InjectView(db, "View_Transactions.sql", "Transactions");
+      }
+
+      private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)
+      {
+         Assembly assembly = typeof(Program).Assembly;
+         string assemblyName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
+         string path = assemblyName + ".AppCode.SqlQuery" + "." + sqlFileName;
+         Stream stream = assembly.GetManifestResourceStream(path);
+         string sqlQuery = new StreamReader(stream).ReadToEnd();
+
+         db.ExecuteSqlRaw($"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END");
+         db.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sqlQuery}");
       }
 
       private void btn_POS_Click(object sender, EventArgs e)
@@ -109,6 +152,7 @@ namespace Foxoft
          config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = txtEdit_conString.EditValue.ToString();
          config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
          config.Save(ConfigurationSaveMode.Modified);
+
       }
 
       private void simpleButton2_Click(object sender, EventArgs e)

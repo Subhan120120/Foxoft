@@ -323,7 +323,7 @@ namespace Foxoft
       private void SelectProduct(object sender)
       {
          ButtonEdit editor = (ButtonEdit)sender;
-         using (FormProductList form = new FormProductList(1))
+         using (FormProductList form = new FormProductList(new byte[] { 1, 3 }))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {

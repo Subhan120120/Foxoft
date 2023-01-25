@@ -2,6 +2,7 @@
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils;
+using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -9,6 +10,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
@@ -19,9 +21,11 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Windows.Forms;
 
@@ -31,9 +35,11 @@ namespace Foxoft
    {
       EfMethods efMethods = new();
       public DcProduct dcProduct { get; set; }
+      readonly string designFolder;
+      string barcodeDesignFile = @"Barcode.repx";
       string imageFolder;
       public string productCode { get; set; }
-      public byte productTypeCode;
+      public byte[] productTypeArr;
 
       RepositoryItemPictureEdit riPictureEdit = new();
       GridColumn colImage = new();
@@ -44,13 +50,14 @@ namespace Foxoft
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
          SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+
+         if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+            designFolder = settingStore.DesignFileFolder;
+
          if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
             imageFolder = settingStore.ImageFolder;
 
-         byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-         MemoryStream stream = new(byteArray);
-         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-         gV_ProductList.RestoreLayoutFromStream(stream, option);
+         LoadLayout();
 
          colImage.FieldName = "Image";
          colImage.Caption = "Şəkil";
@@ -65,17 +72,17 @@ namespace Foxoft
          ribbonControl1.Minimized = true;
       }
 
-      public FormProductList(byte productTypeCode)
+      public FormProductList(byte[] productTypeArr)
           : this()
       {
-         this.productTypeCode = productTypeCode;
-         LoadProducts(productTypeCode);
+         this.productTypeArr = productTypeArr;
+         LoadProducts(productTypeArr);
 
          gV_ProductList.Columns.Add(colImage);
       }
 
-      public FormProductList(byte productTypeCode, string productCode)
-          : this(productTypeCode)
+      public FormProductList(byte[] productTypeArr, string productCode)
+          : this(productTypeArr)
       {
          this.productCode = productCode;
       }
@@ -94,6 +101,31 @@ namespace Foxoft
          //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
       }
 
+      private void SaveLayout()
+      {
+         string fileName = "FormProductList.xml";
+         string layoutFileDir = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files");
+         if (!Directory.Exists(layoutFileDir))
+            Directory.CreateDirectory(layoutFileDir);
+         gV_ProductList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+      }
+
+      private void LoadLayout()
+      {
+         string fileName = "FormProductList.xml";
+         string layoutFilePath = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files", fileName);
+
+         if (File.Exists(layoutFilePath))
+            gV_ProductList.RestoreLayoutFromXml(layoutFilePath);
+         else
+         {
+            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+            MemoryStream stream = new(byteArray);
+            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+            gV_ProductList.RestoreLayoutFromStream(stream, option);
+         }
+      }
+
       public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
       private void gV_ProductList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
       {
@@ -105,7 +137,7 @@ namespace Foxoft
             fileName += ".jpg";
             if (!string.IsNullOrEmpty(imageFolder))
             {
-               string path = Path.Combine(imageFolder, fileName);
+               string path = imageFolder + @"\" + fileName;
                if (!imageCache.ContainsKey(path))
                {
                   Image img = GetImage(path);
@@ -126,7 +158,7 @@ namespace Foxoft
          return img;
       }
 
-      private void LoadProducts(byte productTypeCode)
+      private void LoadProducts(byte[] productTypeArr)
       {
          //subContext dbContext = new subContext();
 
@@ -144,12 +176,12 @@ namespace Foxoft
          //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
 
-         if (productTypeCode != 0)
+         if (productTypeArr != null && productTypeArr.Length > 0)
          {
-            List<DcProduct> dcProducts = efMethods.SelectProductsByType(productTypeCode, gV_ProductList.ActiveFilterCriteria);
+            List<DcProduct> dcProducts = efMethods.SelectProductsByType(productTypeArr, gV_ProductList.ActiveFilterCriteria);
             dcProductsBindingSource.DataSource = dcProducts;
          }
-         else if (productTypeCode == 0)
+         else if (productTypeArr == null)
          {
             List<DcProduct> dcProducts = efMethods.SelectProducts();
             dcProductsBindingSource.DataSource = dcProducts;
@@ -197,10 +229,10 @@ namespace Foxoft
 
       private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
       {
-         FormProduct formProduct = new(productTypeCode, true);
+         FormProduct formProduct = new(productTypeArr.FirstOrDefault(), true);
          if (formProduct.ShowDialog(this) == DialogResult.OK)
          {
-            LoadProducts(productTypeCode);
+            LoadProducts(productTypeArr);
          }
       }
 
@@ -208,17 +240,17 @@ namespace Foxoft
       {
          if (dcProduct is not null)
          {
-            FormProduct formProduct = new(productTypeCode, dcProduct.ProductCode);
+            FormProduct formProduct = new(dcProduct.ProductTypeCode, dcProduct.ProductCode);
 
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
                int fr = gV_ProductList.FocusedRowHandle;
 
-               LoadProducts(productTypeCode);
+               LoadProducts(productTypeArr);
 
                gV_ProductList.FocusedRowHandle = fr;
 
-               string path = Path.Combine(imageFolder, formProduct.dcProduct.ProductCode + ".jpg");
+               string path = imageFolder + @"\" + formProduct.dcProduct.ProductCode + ".jpg";
                imageCache.Remove(path);
             }
          }
@@ -399,7 +431,7 @@ namespace Foxoft
             {
                efMethods.DeleteProduct(dcProduct);
 
-               LoadProducts(productTypeCode);
+               LoadProducts(productTypeArr);
             }
          }
          else
@@ -408,7 +440,7 @@ namespace Foxoft
 
       private void bBI_ProductRefresh_ItemClick(object sender, ItemClickEventArgs e)
       {
-         LoadProducts(productTypeCode);
+         LoadProducts(productTypeArr);
       }
 
       private void BBI_Feature_ItemClick(object sender, ItemClickEventArgs e)
@@ -461,9 +493,25 @@ namespace Foxoft
                  .ConnectionString;
       private void BarcodePrint_ItemClick(object sender, ItemClickEventArgs e)
       {
-         ReportClass reportClass = new();
+         ShowReportPreview();
+      }
+      private void ShowReportPreview()
+      {
+         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
+         string designPath = designFolder + @"\" + barcodeDesignFile;
 
-         string designPath = "";
+         XtraReport xtraReport = GetBarcodeReport(designPath);
+
+         if (xtraReport is not null)
+         {
+            ReportPrintTool printTool = new(xtraReport);
+            printTool.ShowRibbonPreview();
+         }
+      }
+
+      private XtraReport GetBarcodeReport(string designPath)
+      {
+         ReportClass reportClass = new();
 
          if (!File.Exists(designPath))
             designPath = reportClass.SelectDesign();
@@ -474,21 +522,67 @@ namespace Foxoft
             dataSource.Name = "Barcode";
 
             SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
-            dataSource.Queries.Add(sqlQuerySale);
+            dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
             dataSource.Fill();
 
-            DataTable dataTable = new DataTable();
+            return reportClass.CreateReport(dataSource, designPath);
+         }
+         else
+         {
+            return null;
+         }
+      }
 
-            DataTable tCxC = (DataTable)dataTable;
+      private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         XtraReport xtraReport = GetBarcodeReport(designFolder);
 
-            XtraReport xtraReport = reportClass.CreateReport(dataSource, designPath);
+         if (xtraReport is not null)
+         {
+            ReportDesignTool printTool = new(xtraReport);
+            printTool.ShowRibbonDesigner();
+         }
+      }
 
-            if (xtraReport is not null)
+      private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+      {
+         if (e.MenuType == GridMenuType.Column)
+         {
+            GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
+            //menu.Items.Clear();
+            if (menu.Column != null)
             {
-               ReportDesignTool printTool = new(xtraReport);
-               printTool.ShowRibbonDesigner();
+               menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
             }
          }
+      }
+
+      DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+      {
+         DXMenuItem item = new(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);
+         item.Tag = new MenuColumnInfo(column);
+         return item;
+      }
+
+      // Menu item click handler.
+      void DXMenuCheckItem_ItemClick(object sender, EventArgs e)
+      {
+         DXMenuItem item = sender as DXMenuItem;
+         MenuColumnInfo info = item.Tag as MenuColumnInfo;
+         if (info == null) return;
+
+         SaveLayout();
+
+         //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
+      }
+
+      class MenuColumnInfo
+      {
+         public MenuColumnInfo(GridColumn column)
+         {
+            this.Column = column;
+         }
+         public GridColumn Column;
       }
    }
 }

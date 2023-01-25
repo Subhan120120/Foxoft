@@ -25,20 +25,24 @@ namespace Foxoft
       //AdornerUIManager adornerUIManager1;
       //IList<AdornerElement> adorners1;
 
+      EfMethods efMethods = new();
+
       public FormERP()
       {
-         EfMethods efMethods = new();
 
          InitializeComponent();
          UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
          LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 
-         //SkinHelper.InitSkinGallery(skinRibbonGalleryBarItem);
-
-
-         ComponentResourceManager resources = new(typeof(FormERP));
          bSI_UserName.Caption = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+         InitializeReports();
+         //adorners1 = new List<AdornerElement>();
+         //adornerUIManager1 = new AdornerUIManager(this.components);
+      }
 
+      private void InitializeReports()
+      {
+         ComponentResourceManager resources = new(typeof(FormERP));
          List<DcReport> dcReports = efMethods.SelectReports();
 
          foreach (DcReport dcReport in dcReports)
@@ -63,8 +67,6 @@ namespace Foxoft
 
             this.aCE_Reports.Elements.Add(aCE);
          }
-         //adorners1 = new List<AdornerElement>();
-         //adornerUIManager1 = new AdornerUIManager(this.components);
       }
 
       private void UserLookAndFeel_StyleChanged(object sender, EventArgs e)
@@ -145,7 +147,7 @@ namespace Foxoft
          {
             try
             {
-               form = new(1);
+               form = new(new byte[] { 1 });
                form.MdiParent = this;
                form.Show();
                form.WindowState = FormWindowState.Maximized;
@@ -183,7 +185,7 @@ namespace Foxoft
 
       private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new("RP", 1, 2);
+         FormInvoice formInvoice = new("RP", new byte[] { 1, 3 }, 2);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -193,7 +195,7 @@ namespace Foxoft
 
       private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new("RS", 1, 1);
+         FormInvoice formInvoice = new("RS", new byte[] { 1, 3 }, 1);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -218,7 +220,7 @@ namespace Foxoft
 
          if (OpenFormCount == 0)
          {
-            FormInvoice formInvoice = new("EX", 2, 0);
+            FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, 0);
             formInvoice.MdiParent = this;
             formInvoice.Show();
             parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
@@ -309,7 +311,7 @@ namespace Foxoft
 
       private void aCE_CountIn_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new("CI", 1, 0);
+         FormInvoice formInvoice = new("CI", new byte[] { 1 }, 0);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -318,7 +320,7 @@ namespace Foxoft
 
       private void aCE_CountOut_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new("CO", 1, 0);
+         FormInvoice formInvoice = new("CO", new byte[] { 1 }, 0);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -342,7 +344,7 @@ namespace Foxoft
 
       private void aCE_ProductTransfer_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new("TF", 1, 4);
+         FormInvoice formInvoice = new("TF", new byte[] { 1 }, 4);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
@@ -470,14 +472,7 @@ namespace Foxoft
          {
             MessageBox.Show("Kassa Hesablar açıla bilmir: \n" + ex.ToString());
          }
-      }
 
-      private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
-      {
-         if (aC_Root.OptionsMinimizing.State == AccordionControlState.Minimized)
-            aC_Root.OptionsMinimizing.State = AccordionControlState.Normal;
-         else
-            aC_Root.OptionsMinimizing.State = AccordionControlState.Minimized;
       }
 
       private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
@@ -486,14 +481,6 @@ namespace Foxoft
       }
 
       private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
-      {
-      }
-
-      private void skinPaletteDropDownButtonItem_ItemClick(object sender, ItemClickEventArgs e)
-      {
-      }
-
-      private void skinPaletteDropDownButtonItem_DownChanged(object sender, ItemClickEventArgs e)
       {
       }
    }

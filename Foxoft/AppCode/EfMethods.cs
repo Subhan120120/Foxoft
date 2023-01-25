@@ -72,7 +72,6 @@ namespace Foxoft
 
       }
 
-
       public List<DcProductType> SelectProductTypes()
       {
          using subContext db = new();
@@ -85,41 +84,6 @@ namespace Foxoft
          return db.DcCurrAccTypes.ToList();
       }
 
-      public List<DcProduct> SelectProducts()
-      {
-         using subContext db = new();
-
-         List<DcProduct> products = db.DcProducts.Include(x => x.TrInvoiceLines)
-                                                     .ThenInclude(x => x.TrInvoiceHeader)
-                                                 .Select(x => new DcProduct
-                                                 {
-                                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                                    BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
-                                                    BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                                                    LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
-                                                                                        .Where(l => l.TrInvoiceHeader.IsReturn == false)
-                                                                                        .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                                                                                        .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
-                                                                                        .Select(x => x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100))
-                                                                                        .FirstOrDefault(),
-                                                    ProductCode = x.ProductCode,
-                                                    ProductDesc = x.ProductDesc,
-                                                    PosDiscount = x.PosDiscount,
-                                                    RetailPrice = x.RetailPrice,
-                                                    PurchasePrice = x.PurchasePrice,
-                                                    ProductTypeCode = x.ProductTypeCode,
-                                                    WholesalePrice = x.WholesalePrice,
-                                                    UsePos = x.UsePos,
-                                                    UseInternet = x.UseInternet,
-                                                    CreatedDate = x.CreatedDate,
-                                                    CreatedUserName = x.CreatedUserName,
-                                                    LastUpdatedDate = x.LastUpdatedDate,
-                                                    LastUpdatedUserName = x.LastUpdatedUserName,
-                                                 })
-                                                 .ToList();
-         return products;
-
-      }
 
       public List<DcFeature> SelectFeatures()
       {
@@ -140,10 +104,28 @@ namespace Foxoft
          return dc;
       }
 
+      public DcProduct SelectProductByBarcode(string barCode)
+      {
+         if (string.IsNullOrEmpty(barCode))
+            return null;
+         using subContext db = new();
+         return QueryableSelectProducts(db).FirstOrDefault(x => x.Barcode == barCode);
+      }
+
       public DcProduct SelectProduct(string productCode)
       {
          using subContext db = new();
+         return QueryableSelectProducts(db).FirstOrDefault(x => x.ProductCode == productCode);
+      }
 
+      public List<DcProduct> SelectProducts()
+      {
+         using subContext db = new();
+         return QueryableSelectProducts(db).ToList();
+      }
+
+      public IQueryable<DcProduct> QueryableSelectProducts(subContext db)
+      {
          return db.DcProducts.Include(x => x.TrInvoiceLines)
                                  .ThenInclude(x => x.TrInvoiceHeader)
                              .Select(x => new DcProduct
@@ -171,9 +153,8 @@ namespace Foxoft
                                 LastUpdatedDate = x.LastUpdatedDate,
                                 LastUpdatedUserName = x.LastUpdatedUserName,
                                 Barcode = x.Barcode,
-                             }).FirstOrDefault(x => x.ProductCode == productCode || x.Barcode == productCode);
+                             });
       }
-
 
       public int SelectProductBalance(string productCode, string warehouseCode)
       {
@@ -185,49 +166,14 @@ namespace Foxoft
 
       }
 
-      public List<DcProduct> SelectProductsByType(byte productTypeCode, CriteriaOperator filterCriteria)
+      public List<DcProduct> SelectProductsByType(byte[] productTypeArr, CriteriaOperator filterCriteria)
       {
          using subContext db = new();
 
-         IQueryable<DcProduct> DcProducts = db.DcProducts;
-         CriteriaToExpressionConverter converter = new();
+         IQueryable<DcProduct> DcProducts = QueryableSelectProducts(db).Where(x => productTypeArr.Contains(x.ProductTypeCode));
          IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), filterCriteria) as IQueryable<DcProduct>;
 
-         //filteredData = filteredData.Take(100);
-
-         IQueryable<DcProduct> dcProducts = DcProducts.Where(x => x.ProductTypeCode == productTypeCode)
-                         .Include(x => x.TrInvoiceLines)
-                             .ThenInclude(l => l.TrInvoiceHeader)
-                         .OrderBy(x => x.ProductDesc)
-                         .Select(x => new DcProduct
-                         {
-                            Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                            BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
-                            BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                            BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
-                            LastPurchasePrice = x.TrInvoiceLines
-                                                .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
-                                                .Where(l => l.TrInvoiceHeader.IsReturn == false)
-                                                .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                                                .ThenByDescending(l => l.CreatedDate)
-                                                .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
-                                                .FirstOrDefault(),
-                            ProductCode = x.ProductCode,
-                            ProductDesc = x.ProductDesc,
-                            PosDiscount = x.PosDiscount,
-                            RetailPrice = x.RetailPrice,
-                            PurchasePrice = x.PurchasePrice,
-                            ProductTypeCode = x.ProductTypeCode,
-                            WholesalePrice = x.WholesalePrice,
-                            UsePos = x.UsePos,
-                            UseInternet = x.UseInternet,
-                            CreatedDate = x.CreatedDate,
-                            CreatedUserName = x.CreatedUserName,
-                            LastUpdatedDate = x.LastUpdatedDate,
-                            LastUpdatedUserName = x.LastUpdatedUserName,
-                         });
-
-         return dcProducts.ToList();
+         return DcProducts.ToList();
       }
 
       public List<TrInvoiceHeader> SelectInvoiceHeaders()
@@ -639,15 +585,15 @@ namespace Foxoft
                                  .Sum(s => s.PaymentLoc);
       }
 
-      public List<DcCurrAcc> SelectCurrAccs(byte[] byteArr)
+      public List<DcCurrAcc> SelectCurrAccs(byte[] currAccTypeArr)
       {
          using subContext db = new();
 
          //byte[] byteArr = new byte[] { 1, 2, 3, 4 };
 
-         var asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false
-                                           && byteArr.Contains(x.CurrAccTypeCode)
-                                           && x.CurrAccTypeCode != 5)
+         List<DcCurrAcc> asdasd = db.DcCurrAccs.Where(x => x.IsDisabled == false
+                                           && currAccTypeArr.Contains(x.CurrAccTypeCode)
+                                           && x.CurrAccTypeCode != 5) // kassanin balansi ayri hesablanir , ona gore yazilib
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {
@@ -673,9 +619,9 @@ namespace Foxoft
                     })
                     .ToList(); // burdaki kolonlari dizaynda da elave et
 
-         var asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false
-                                             && x.CurrAccTypeCode == 5
-                                             && byteArr.Contains(x.CurrAccTypeCode))
+         List<DcCurrAcc> asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false
+                                             && x.CurrAccTypeCode == 5 // kassanin balansi ayri hesablanir , ona gore yazilib
+                                             && currAccTypeArr.Contains(x.CurrAccTypeCode))
                     .OrderBy(x => x.CreatedDate)
                     .Select(x => new DcCurrAcc
                     {
@@ -776,6 +722,12 @@ namespace Foxoft
 
          return db.DcCurrencies.ToList(); // burdaki kolonlari dizaynda da elave et
 
+      }
+
+      public DcCurrency SelectCurrency(string currencyCode)
+      {
+         using subContext db = new();
+         return db.DcCurrencies.FirstOrDefault(x => x.CurrencyCode == currencyCode); // burdaki kolonlari dizaynda da elave et
       }
 
       public List<DcPaymentType> SelectPaymentTypes()

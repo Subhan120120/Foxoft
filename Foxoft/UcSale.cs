@@ -61,7 +61,7 @@ namespace Foxoft
 
       private void btn_ProductSearch_Click(object sender, EventArgs e)
       {
-         using (FormProductList formProductList = new FormProductList(1))
+         using (FormProductList formProductList = new FormProductList(new byte[] { 1 }))
          {
             if (formProductList.ShowDialog(this) == DialogResult.OK)
             {
@@ -410,7 +410,7 @@ namespace Foxoft
                      .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
                      .ConnectionString;
 
-        private void btn_ReportZ_Click(object sender, EventArgs e)
+      private void btn_ReportZ_Click(object sender, EventArgs e)
       {
          //object[] objInvoiceHeaders = efMethods.SelectInvoiceLineForReport(invoiceHeaderId).Cast<object>().ToArray();
 

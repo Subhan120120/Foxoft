@@ -1,15 +1,19 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.Utils;
+using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -28,10 +32,7 @@ namespace Foxoft
          InitializeComponent();
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
-         byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-         MemoryStream stream = new(byteArray);
-         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-         gV_CurrAccList.RestoreLayoutFromStream(stream, option);
+         LoadLayout();
 
          //colPhoneNum.Properties.Mask.EditMask = "(00) 000 00 00";
          //colPhoneNum.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
@@ -50,6 +51,31 @@ namespace Foxoft
     : this(productTypeCode)
       {
          this.currAccCode = currAccCode;
+      }
+
+      private void SaveLayout()
+      {
+         string fileName = "FormCurrAccList.xml";
+         string layoutFileDir = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files");
+         if (!Directory.Exists(layoutFileDir))
+            Directory.CreateDirectory(layoutFileDir);
+         gV_CurrAccList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+      }
+
+      private void LoadLayout()
+      {
+         string fileName = "FormCurrAccList.xml";
+         string layoutFilePath = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files", fileName);
+
+         if (File.Exists(layoutFilePath))
+            gV_CurrAccList.RestoreLayoutFromXml(layoutFilePath);
+         else
+         {
+            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+            MemoryStream stream = new(byteArray);
+            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+            gV_CurrAccList.RestoreLayoutFromStream(stream, option);
+         }
       }
 
       private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -344,6 +370,47 @@ namespace Foxoft
             FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
             formGrid.Show();
          }
+      }
+
+      private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+      {
+         if (e.MenuType == GridMenuType.Column)
+         {
+            GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
+            //menu.Items.Clear();
+            if (menu.Column != null)
+            {
+               menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+            }
+         }
+      }
+
+      DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+      {
+         DXMenuItem item = new(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);
+         item.Tag = new MenuColumnInfo(column);
+         return item;
+      }
+
+      // Menu item click handler.
+      void DXMenuCheckItem_ItemClick(object sender, EventArgs e)
+      {
+         DXMenuItem item = sender as DXMenuItem;
+         MenuColumnInfo info = item.Tag as MenuColumnInfo;
+         if (info == null) return;
+
+         SaveLayout();
+
+         //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
+      }
+
+      class MenuColumnInfo
+      {
+         public MenuColumnInfo(GridColumn column)
+         {
+            this.Column = column;
+         }
+         public GridColumn Column;
       }
    }
 }

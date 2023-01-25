@@ -3,34 +3,34 @@ using DevExpress.Utils;
 
 namespace Foxoft
 {
-    partial class FormCurrAccList
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+   partial class FormCurrAccList
+   {
+      /// <summary>
+      /// Required designer variable.
+      /// </summary>
+      private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      /// <summary>
+      /// Clean up any resources being used.
+      /// </summary>
+      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing && (components != null))
+         {
+            components.Dispose();
+         }
+         base.Dispose(disposing);
+      }
 
-        #region Windows Form Designer generated code
+      #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+      /// <summary>
+      /// Required method for Designer support - do not modify
+      /// the contents of this method with the code editor.
+      /// </summary>
+      private void InitializeComponent()
+      {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAccList));
          this.gC_CurrAccList = new DevExpress.XtraGrid.GridControl();
@@ -153,6 +153,7 @@ namespace Foxoft
          this.gV_CurrAccList.Name = "gV_CurrAccList";
          this.gV_CurrAccList.OptionsFind.FindDelay = 100;
          this.gV_CurrAccList.OptionsView.ShowGroupPanel = false;
+         this.gV_CurrAccList.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gV_Report_PopupMenuShowing);
          this.gV_CurrAccList.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gV_CurrAccList_FocusedRowChanged);
          this.gV_CurrAccList.ColumnFilterChanged += new System.EventHandler(this.gV_CurrAccList_ColumnFilterChanged);
          this.gV_CurrAccList.DoubleClick += new System.EventHandler(this.gV_CurrAccList_DoubleClick);
@@ -499,20 +500,20 @@ namespace Foxoft
          this.ResumeLayout(false);
          this.PerformLayout();
 
-        }
+      }
 
-        #endregion
+      #endregion
 
-        private DevExpress.XtraGrid.GridControl gC_CurrAccList;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_CurrAccList;
-        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-        private DevExpress.XtraBars.BarButtonItem bBI_CurrAccNew;
-        private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
-        private DevExpress.XtraBars.BarButtonItem bBI_quit;
+      private DevExpress.XtraGrid.GridControl gC_CurrAccList;
+      private DevExpress.XtraGrid.Views.Grid.GridView gV_CurrAccList;
+      private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+      private DevExpress.XtraBars.BarButtonItem bBI_CurrAccNew;
+      private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
+      private DevExpress.XtraBars.BarButtonItem bBI_quit;
       private DevExpress.XtraBars.BarButtonItem bBI_Report1;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
       private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;

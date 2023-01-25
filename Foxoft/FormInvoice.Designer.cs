@@ -233,9 +233,12 @@ namespace Foxoft
          this.gC_InvoiceLine.TabIndex = 11;
          this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceLine});
+         this.gC_InvoiceLine.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_ProcessGridKey);
          this.gC_InvoiceLine.EditorKeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
+         this.gC_InvoiceLine.EditorKeyUp += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_EditorKeyUp);
          this.gC_InvoiceLine.EditorKeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gC_InvoiceLine_EditorKeyPress);
          this.gC_InvoiceLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
+         this.gC_InvoiceLine.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyUp);
          // 
          // gV_InvoiceLine
          // 
@@ -278,6 +281,7 @@ namespace Foxoft
          this.gV_InvoiceLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_InvoiceLine_InitNewRow);
          this.gV_InvoiceLine.HiddenEditor += new System.EventHandler(this.gV_InvoiceLine_HiddenEditor);
          this.gV_InvoiceLine.ShownEditor += new System.EventHandler(this.gV_InvoiceLine_ShownEditor);
+         this.gV_InvoiceLine.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceLine_CellValueChanged);
          this.gV_InvoiceLine.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceLine_CellValueChanging);
          this.gV_InvoiceLine.InvalidRowException += new DevExpress.XtraGrid.Views.Base.InvalidRowExceptionEventHandler(this.gV_InvoiceLine_InvalidRowException);
          this.gV_InvoiceLine.RowDeleted += new DevExpress.Data.RowDeletedEventHandler(this.gV_InvoiceLine_RowDeleted);
@@ -285,8 +289,10 @@ namespace Foxoft
          this.gV_InvoiceLine.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gV_InvoiceLine_RowUpdated);
          this.gV_InvoiceLine.RowLoaded += new DevExpress.XtraGrid.Views.Base.RowEventHandler(this.gV_InvoiceLine_RowLoaded);
          this.gV_InvoiceLine.AsyncCompleted += new System.EventHandler(this.gV_InvoiceLine_AsyncCompleted);
+         this.gV_InvoiceLine.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gV_InvoiceLine_KeyPress);
          this.gV_InvoiceLine.DoubleClick += new System.EventHandler(this.gV_InvoiceLine_DoubleClick);
          this.gV_InvoiceLine.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gV_InvoiceLine_ValidatingEditor);
+         this.gV_InvoiceLine.RowCountChanged += new System.EventHandler(this.gV_InvoiceLine_RowCountChanged);
          this.gV_InvoiceLine.InvalidValueException += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.gV_InvoiceLine_InvalidValueException);
          // 
          // col_InvoiceLineId
@@ -309,7 +315,7 @@ namespace Foxoft
          this.col_ProductCode.FieldName = "ProductCode";
          this.col_ProductCode.Name = "col_ProductCode";
          this.col_ProductCode.Visible = true;
-         this.col_ProductCode.VisibleIndex = 0;
+         this.col_ProductCode.VisibleIndex = 1;
          this.col_ProductCode.Width = 42;
          // 
          // repoBtnEdit_ProductCode
@@ -325,7 +331,7 @@ namespace Foxoft
          this.colBalance.FieldName = "Balance";
          this.colBalance.Name = "colBalance";
          this.colBalance.Visible = true;
-         this.colBalance.VisibleIndex = 2;
+         this.colBalance.VisibleIndex = 3;
          this.colBalance.Width = 33;
          // 
          // colQty
@@ -333,7 +339,7 @@ namespace Foxoft
          this.colQty.FieldName = "Qty";
          this.colQty.Name = "colQty";
          this.colQty.Visible = true;
-         this.colQty.VisibleIndex = 3;
+         this.colQty.VisibleIndex = 4;
          this.colQty.Width = 34;
          // 
          // colQtyIn
@@ -370,7 +376,7 @@ namespace Foxoft
          this.col_Price.FieldName = "Price";
          this.col_Price.Name = "col_Price";
          this.col_Price.Visible = true;
-         this.col_Price.VisibleIndex = 4;
+         this.col_Price.VisibleIndex = 5;
          this.col_Price.Width = 45;
          // 
          // repoCalcEdit_Price
@@ -390,7 +396,7 @@ namespace Foxoft
          this.colCurrencyCode.FieldName = "CurrencyCode";
          this.colCurrencyCode.Name = "colCurrencyCode";
          this.colCurrencyCode.Visible = true;
-         this.colCurrencyCode.VisibleIndex = 5;
+         this.colCurrencyCode.VisibleIndex = 6;
          this.colCurrencyCode.Width = 45;
          // 
          // repoLUE_CurrencyCode
@@ -435,7 +441,7 @@ namespace Foxoft
          this.col_PosDiscount.FieldName = "PosDiscount";
          this.col_PosDiscount.Name = "col_PosDiscount";
          this.col_PosDiscount.Visible = true;
-         this.col_PosDiscount.VisibleIndex = 6;
+         this.col_PosDiscount.VisibleIndex = 7;
          this.col_PosDiscount.Width = 89;
          // 
          // col_NetAmount
@@ -448,7 +454,7 @@ namespace Foxoft
          this.col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}")});
          this.col_NetAmount.Visible = true;
-         this.col_NetAmount.VisibleIndex = 7;
+         this.col_NetAmount.VisibleIndex = 8;
          this.col_NetAmount.Width = 42;
          // 
          // col_LineDesc
@@ -457,7 +463,7 @@ namespace Foxoft
          this.col_LineDesc.FieldName = "LineDescription";
          this.col_LineDesc.Name = "col_LineDesc";
          this.col_LineDesc.Visible = true;
-         this.col_LineDesc.VisibleIndex = 8;
+         this.col_LineDesc.VisibleIndex = 9;
          this.col_LineDesc.Width = 34;
          // 
          // col_SalesPersonCode
@@ -486,7 +492,7 @@ namespace Foxoft
          this.col_ProductDesc.Name = "col_ProductDesc";
          this.col_ProductDesc.OptionsColumn.AllowEdit = false;
          this.col_ProductDesc.Visible = true;
-         this.col_ProductDesc.VisibleIndex = 1;
+         this.col_ProductDesc.VisibleIndex = 2;
          this.col_ProductDesc.Width = 225;
          // 
          // colAmountLoc
@@ -516,7 +522,7 @@ namespace Foxoft
          this.colLastPurchasePrice.FieldName = "LastPurchasePrice";
          this.colLastPurchasePrice.Name = "colLastPurchasePrice";
          this.colLastPurchasePrice.Visible = true;
-         this.colLastPurchasePrice.VisibleIndex = 9;
+         this.colLastPurchasePrice.VisibleIndex = 10;
          this.colLastPurchasePrice.Width = 57;
          // 
          // colBenefit
@@ -526,7 +532,7 @@ namespace Foxoft
          this.colBenefit.FieldName = "Benefit";
          this.colBenefit.Name = "colBenefit";
          this.colBenefit.Visible = true;
-         this.colBenefit.VisibleIndex = 10;
+         this.colBenefit.VisibleIndex = 11;
          this.colBenefit.Width = 71;
          // 
          // colBarcode
@@ -534,6 +540,8 @@ namespace Foxoft
          this.colBarcode.Caption = "Barkod";
          this.colBarcode.FieldName = "Barcode";
          this.colBarcode.Name = "colBarcode";
+         this.colBarcode.Visible = true;
+         this.colBarcode.VisibleIndex = 0;
          // 
          // CheckEdit_IsReturn
          // 

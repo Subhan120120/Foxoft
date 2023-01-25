@@ -77,7 +77,7 @@ namespace Foxoft
             dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
 
             //var file = Path.ChangeExtension(table[8], ".jpg");
-            string fullPath = Path.Combine(imageFolder, dcProduct.ProductCode + ".jpg");
+            string fullPath = imageFolder + @"\" + dcProduct.ProductCode + ".jpg";
             if (!File.Exists(fullPath))
             {
                //MessageBox.Show("No image!");

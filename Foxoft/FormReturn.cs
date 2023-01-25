@@ -194,6 +194,8 @@ namespace Foxoft
             returnInvoiceHeaderId = Guid.NewGuid();
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
+            MakePayment(sumNetAmount, false);
+
             trInvoiceHeader = null;
             gC_InvoiceLine.DataSource = null;
             gC_PaymentLine.DataSource = null;
@@ -203,6 +205,16 @@ namespace Foxoft
 
          }
          else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+      }
+
+      private void MakePayment(decimal summaryInvoice, bool autoPayment)
+      {
+         using FormPayment formPayment = new(1, summaryInvoice, returnInvoHeader, autoPayment);
+
+         if (formPayment.ShowDialog(this) == DialogResult.OK)
+         {
+
+         }
       }
 
       private void gV_ReturnInvoiceLine_CalcPreviewText(object sender, CalcPreviewTextEventArgs e)
@@ -220,5 +232,10 @@ namespace Foxoft
          e.PreviewText = CustomExtensions.GetPreviewText(PosDiscount, Amount, NetAmount, VatRate, String.Empty, SalesPersonCode);
       }
 
+      private void btn_Cancel_Click(object sender, EventArgs e)
+      {
+         if (MessageBox.Show("Geri Qaytarma Ləğv Edilsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            efMethods.DeleteInvoice(returnInvoiceHeaderId);
+      }
    }
 }

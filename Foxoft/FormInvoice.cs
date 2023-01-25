@@ -1,7 +1,6 @@
 ﻿using DevExpress.Data;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
-using DevExpress.Utils.Design;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -15,10 +14,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraPrinting;
-using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
-using DevExpress.XtraReports.UserDesigner;
-using DevExpress.XtraReports.UserDesigner.Native;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +22,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -34,6 +29,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -52,51 +49,26 @@ namespace Foxoft
 
       private TrInvoiceHeader trInvoiceHeader;
       public DcProcess dcProcess;
-      private byte productTypeCode;
+      private byte[] productTypeArr;
       private EfMethods efMethods = new();
       private subContext dbContext;
       Guid invoiceHeaderId;
 
       //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
-      public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode)
+      public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode)
       {
          InitializeComponent();
+
+         dcProcess = efMethods.SelectProcess(processCode);
+
+         LoadLayout();
 
          SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
          if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
             designFolder = settingStore.DesignFileFolder;
 
-         colBalance.OptionsColumn.ReadOnly = true;
-         colLastPurchasePrice.OptionsColumn.ReadOnly = true;
-         col_NetAmount.OptionsColumn.ReadOnly = true;
-         colNetAmountLoc.OptionsColumn.ReadOnly = true;
-         col_Amount.OptionsColumn.ReadOnly = true;
-         colAmountLoc.OptionsColumn.ReadOnly = true;
-
-         if (processCode == "EX" || processCode == "CI" || processCode == "CO" || processCode == "TF")
-         {
-            btnEdit_CurrAccCode.Enabled = false;
-            colBalance.Visible = false;
-            col_PosDiscount.Visible = false;
-            colLastPurchasePrice.Visible = false;
-            colBenefit.Visible = false;
-
-            if (processCode == "EX")
-               colQty.Visible = false;
-            if (processCode == "TF")
-            {
-               btnEdit_CurrAccCode.Enabled = true;
-               col_Price.Visible = false;
-               colCurrencyCode.Visible = false;
-               col_NetAmount.Visible = false;
-            }
-         }
-
-         this.productTypeCode = productTypeCode;
-
-         dcProcess = efMethods.SelectProcess(processCode);
-
+         this.productTypeArr = productTypeArr;
          this.Text = dcProcess.ProcessDesc;
 
          lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
@@ -107,8 +79,8 @@ namespace Foxoft
          ClearControlsAddNew();
       }
 
-      public FormInvoice(string processCode, byte productTypeCode, byte currAccTypeCode, Guid invoiceHeaderId)
-          : this(processCode, productTypeCode, currAccTypeCode)
+      public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode, Guid invoiceHeaderId)
+          : this(processCode, productTypeArr, currAccTypeCode)
       {
          trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
          LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
@@ -123,7 +95,6 @@ namespace Foxoft
       {
          gC_InvoiceLine.Focus();
       }
-
 
       private void ClearControlsAddNew()
       {
@@ -140,7 +111,8 @@ namespace Foxoft
 
          trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-         lbl_InvoicePaidSum.Text = "Ödənilib: 0.00 " + Settings.Default.AppSetting.LocalCurrencyCode;
+         //lbl_InvoicePaidSum.Text = "Ödənilib: 0.00 " + Settings.Default.AppSetting.LocalCurrencyCode;
+         CalcPaidAmount();
 
          lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
 
@@ -278,7 +250,7 @@ namespace Foxoft
       private void CalcPaidAmount()
       {
          decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
-         lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " USD";
+         lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
       }
 
       private void ShowPrintCount()
@@ -328,11 +300,22 @@ namespace Foxoft
          gv.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
          gv.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
 
+         //if (trInvoiceHeader.ProcessCode == "EX")
+         //{
+         //   gv.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
+         //   string locCurrency = Settings.Default.AppSetting.LocalCurrencyCode;
+         //   Single exRate = efMethods.SelectCurrency(locCurrency).ExchangeRate;
+         //   gv.SetRowCellValue(e.RowHandle, colExchangeRate, exRate);
+         //}
+
          if (trInvoiceHeader.ProcessCode == "EX")
          {
             gv.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
             gv.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
          }
+
+         //GridColumn qty = CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut;
+         //gv.SetRowCellValue(e.RowHandle, qty, 1);
       }
 
       private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -435,7 +418,9 @@ namespace Foxoft
          GridView view = (GridView)sender;
 
          if (view == null) return;
-         if (e.Column != col_ProductCode) return;
+
+         //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+
       }
 
       #region CalcRowLocNetAmount
@@ -505,33 +490,30 @@ namespace Foxoft
       private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
       {
          GridView view = sender as GridView;
+         GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
 
-         if (view.FocusedColumn == colQty)
+
+
+         if (column == colQty)
          {
+            int eValue = Convert.ToInt32(e.Value ??= 0);
             if (!trInvoiceHeader.IsReturn && (trInvoiceHeader.ProcessCode == "RS" || trInvoiceHeader.ProcessCode == "TF"))
             {
-               object colProductCode = view.GetFocusedRowCellValue(col_ProductCode);
-               string productCode = (colProductCode ??= "").ToString();
+               object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
+               object objInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+               int balance = CalcProductBalance(objProductCode, objInvoiceLineId);
 
-               if (!String.IsNullOrEmpty(productCode))
-               {
-                  object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
-                  Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
+               string productCode = (objProductCode ??= "").ToString();
+               DcProduct product = efMethods.SelectProduct(productCode);
 
-                  TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
-                  int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
+               bool isServis = product.ProductTypeCode == 3;
 
-                  string warehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
-                  int balance = efMethods.SelectProductBalance(productCode, warehouseCode) + currentQty;
-
-                  int eValue = Convert.ToInt32(e.Value ??= 0);
-
+               if (!isServis)
                   if (eValue > balance)
                   {
                      e.ErrorText = "Stokda miqdar yoxdur";
                      e.Valid = false;
                   }
-               }
             }
 
             if (!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS")
@@ -541,21 +523,7 @@ namespace Foxoft
                {
                   DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
                   decimal creditLimit = dcCurrAcc.CreditLimit;
-
-                  decimal invoiceSumLoc = (-1) * efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentDate);
-
-                  object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
-                  Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
-                  TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
-                  decimal currentNetAmountLoc = currTrInvoLine is null ? 0 : currTrInvoLine.NetAmountLoc;
-
-                  decimal sumInvoExpectLine = invoiceSumLoc - currentNetAmountLoc;
-
-                  object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
-
-                  decimal sumLineNet = Convert.ToInt32(e.Value ??= 0) * Convert.ToDecimal(objPriceLoc ??= 0);
-
-                  decimal sumInvo = sumInvoExpectLine + sumLineNet;
+                  decimal sumInvo = CalcCurrAccCreditBalance(eValue, view, currAccCode);
 
                   if (sumInvo > creditLimit && creditLimit != 0)
                   {
@@ -566,15 +534,14 @@ namespace Foxoft
             }
          }
 
-         if (view.FocusedColumn == col_ProductCode)
+         if (column == colBarcode)
          {
             string eValue = (e.Value ??= String.Empty).ToString();
-
-            DcProduct product = efMethods.SelectProduct(eValue);
+            DcProduct product = efMethods.SelectProductByBarcode(eValue);
 
             if (product is null)
             {
-               e.ErrorText = "Belə bir məhsul yoxdur";
+               e.ErrorText = "Belə nir məhsul yoxdur";
                e.Valid = false;
             }
             else
@@ -596,8 +563,80 @@ namespace Foxoft
 
                if (dcProcess.ProcessCode == "EX")
                   gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+
+               //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
             }
          }
+
+         if (column == col_ProductCode)
+         {
+            string eValue = (e.Value ??= String.Empty).ToString();
+            DcProduct product = efMethods.SelectProduct(eValue);
+
+            if (product is null)
+            {
+               e.ErrorText = "Belə nir məhsul yoxdur";
+               e.Valid = false;
+            }
+            else
+            {
+               //ButtonEdit editor = (ButtonEdit)view.ActiveEditor;
+               //editor.EditValue = product.ProductCode;
+
+               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, product.ProductCode);
+               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, product.ProductDesc);
+               gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
+               gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
+
+               decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+               decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_Price));
+               if (priceInvoice == 0)
+                  gV_InvoiceLine.SetFocusedRowCellValue(col_Price, priceProduct);
+
+               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+               if (dcProcess.ProcessCode == "EX")
+                  gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+
+               //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+            }
+         }
+      }
+
+      private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
+      {
+         decimal invoiceSumLoc = (-1) * efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentDate);
+
+         object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+         Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
+         TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
+         decimal currentNetAmountLoc = currTrInvoLine is null ? 0 : currTrInvoLine.NetAmountLoc;
+
+         decimal sumInvoExpectLine = invoiceSumLoc - currentNetAmountLoc;
+
+         object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
+
+         decimal sumLineNet = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
+
+         decimal sumInvo = sumInvoExpectLine + sumLineNet;
+         return sumInvo;
+      }
+
+      private int CalcProductBalance(object objProductCode, object objInvoicelineId)
+      {
+         string productCode = (objProductCode ??= "").ToString();
+
+         if (!String.IsNullOrEmpty(productCode))
+         {
+            Guid invoiceLineId = (Guid)(objInvoicelineId ??= Guid.Empty);
+
+            TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
+            int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
+
+            string warehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+            return efMethods.SelectProductBalance(productCode, warehouseCode) + currentQty;
+         }
+         else return 0;
       }
 
       private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
@@ -622,12 +661,29 @@ namespace Foxoft
          GridView view = sender as GridView;
          editorCustom = view.ActiveEditor;
          editorCustom.DoubleClick += editor_DoubleClick;
+
+         //Barcode Move Next Row
+         //BaseEdit edit = (sender as GridView).ActiveEditor;
+         //edit.KeyDown -= Edit_KeyDown;
+         //edit.KeyDown += Edit_KeyDown;
       }
+
+      //private void Edit_KeyDown(object sender, KeyEventArgs e)
+      //{
+      //   if (e.KeyCode == Keys.Enter)
+      //   {
+      //      if (!this.gV_InvoiceLine.IsLastVisibleRow)
+      //         this.gV_InvoiceLine.MoveNext();
+      //      else
+      //         this.gV_InvoiceLine.MoveFirst();
+      //   }
+      //}
 
       void gV_InvoiceLine_HiddenEditor(object sender, EventArgs e)
       {
          editorCustom.DoubleClick -= editor_DoubleClick;
          editorCustom = null;
+
       }
 
       private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
@@ -674,7 +730,6 @@ namespace Foxoft
          {
             editor.EditValue = form.dcCurrAcc.CurrAccCode;
          }
-
       }
 
       private void SelectProduct(object sender)
@@ -685,7 +740,7 @@ namespace Foxoft
 
          ButtonEdit editor = (ButtonEdit)sender;
 
-         using FormProductList form = new(productTypeCode, productCode);
+         using FormProductList form = new(productTypeArr, productCode);
 
          try
          {
@@ -703,13 +758,23 @@ namespace Foxoft
          {
             MessageBox.Show(ex.ToString());
          }
-
       }
 
       private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
       {
          //DataRowView rowView = e.Row as DataRowView;
          //DataRow row = rowView.Row;
+
+         //if (gV_InvoiceLine.FocusedColumn == colBarcode)
+         //{
+
+         //   //if (gV_InvoiceLine.FocusedRowHandle == GridControl.NewItemRowHandle)
+         //   //   gV_InvoiceLine.FocusedRowHandle = 1;
+         //   //else
+         ///////////////////gV_InvoiceLine.MoveNext();
+         //   gV_InvoiceLine.MoveNext();
+         //   //gv.FocusedRowHandle++;
+         //}
 
          SaveInvoice();
       }
@@ -952,7 +1017,7 @@ namespace Foxoft
          //{
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         string designPath = Path.Combine(designFolder, reportFileNameInvoiceWare);
+         string designPath = designFolder + @"\" + reportFileNameInvoiceWare;
 
          XtraReport report = GetInvoiceReport(designPath);
 
@@ -1056,7 +1121,7 @@ namespace Foxoft
       private void ShowReportPreview()
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = Path.Combine(designFolder, reportFileNameInvoice);
+         string designPath = designFolder + @"\" + reportFileNameInvoice;
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
 
@@ -1223,7 +1288,7 @@ namespace Foxoft
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-         designPath = Path.Combine(designFolder, reportFileNameInvoice);
+         designPath = designFolder + @"\" + reportFileNameInvoice;
 
          XtraReport report = GetInvoiceReport(designPath);
 
@@ -1354,40 +1419,99 @@ namespace Foxoft
       private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)
       {
          GridControl gc = sender as GridControl;
-         GridView view = gc.FocusedView as GridView;
+         GridView gv = gc.FocusedView as GridView;
 
-         if (view.FocusedColumn.ColumnType == typeof(decimal))
+         if (gv.FocusedColumn.ColumnType == typeof(decimal))
          {
             if (e.KeyChar == '.')
                e.KeyChar = Convert.ToChar(",");
          }
 
-         if (e.KeyChar == (char)Keys.Return)
+
+
+         if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
          {
-            gV_InvoiceLine.FocusedColumn = col_ProductCode;
+            //////////gv.FocusedColumn = colBarcode;
+            //////////if (gv.FocusedRowHandle == GridControl.NewItemRowHandle)
+            //////////{
+            //////////   gv.MoveNext();
+            //////////}
+            //////////else
+            //////////   gv.MoveNext();
 
-            if (!gV_InvoiceLine.IsLastVisibleRow)
-               gV_InvoiceLine.MoveNext();
 
-            //gV_InvoiceLine.FocusedRowHandle++;
+            //gv.FocusedColumn = colBarcode;
+
             e.Handled = true;
+
+
+            //gv.FocusedRowHandle++;
          }
       }
 
       private void bbi_ItemClick(object sender, ItemClickEventArgs e)
       {
-         //var accountSid = "ACe725fdee6c3a1280f55c0b081bde6281";
-         //var authToken = "5053054a675e8ae82d2e2af08e19e957";
-         //TwilioClient.Init(accountSid, authToken);
+         //gV_InvoiceLine.FocusedColumn = colBarcode;
 
-         //var messageOptions = new CreateMessageOptions(
-         //    new PhoneNumber("+994519678909"));
-         //messageOptions.From = new PhoneNumber("+994507957252");
-         //messageOptions.Body = "Your appointment is coming up on July 21 at 3PM";
+         //MessageBox.Show($"\nEnvironment.CurrentDirectory: from \n{Environment.CurrentDirectory}"
+         //+ $"\n\nAppDomain.CurrentDomain.BaseDirectory: \n{AppDomain.CurrentDomain.BaseDirectory}"
+         //+ $"\n\nAppContext.BaseDirectory: \n{AppContext.BaseDirectory}"
+         //+ $"\n\nLocation: \n{Assembly.GetEntryAssembly().Location}"
+         //+ $"\n\nPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location): \n{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}"
+         //+ $"\n\nPath.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName): \n{Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}");
 
-         //var message = MessageResource.Create(messageOptions);
-         ////Console.WriteLine(message.Body);
+      }
 
+      private void LoadLayout()
+      {
+         //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
+
+         colBalance.OptionsColumn.ReadOnly = true;
+         colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+         col_NetAmount.OptionsColumn.ReadOnly = true;
+         colNetAmountLoc.OptionsColumn.ReadOnly = true;
+         col_Amount.OptionsColumn.ReadOnly = true;
+         colAmountLoc.OptionsColumn.ReadOnly = true;
+
+         if (dcProcess.ProcessCode == "EX" || dcProcess.ProcessCode == "CI" || dcProcess.ProcessCode == "CO" || dcProcess.ProcessCode == "TF")
+         {
+            btnEdit_CurrAccCode.Enabled = false;
+            colBalance.Visible = false;
+            col_PosDiscount.Visible = false;
+            colLastPurchasePrice.Visible = false;
+            colBenefit.Visible = false;
+
+            if (dcProcess.ProcessCode == "EX")
+               colQty.Visible = false;
+            if (dcProcess.ProcessCode == "TF")
+            {
+               btnEdit_CurrAccCode.Enabled = true;
+               col_Price.Visible = false;
+               colCurrencyCode.Visible = false;
+               col_NetAmount.Visible = false;
+            }
+         }
+
+         if (true)
+         {
+
+         }
+
+
+         string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
+         string layoutFilePath = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files", fileName);
+         if (File.Exists(layoutFilePath))
+            gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
+
+      }
+
+      private void SaveLayout()
+      {
+         string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
+         string layoutFileDir = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files");
+         if (!Directory.Exists(layoutFileDir))
+            Directory.CreateDirectory(layoutFileDir);
+         gV_InvoiceLine.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
       }
 
       private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
@@ -1417,9 +1541,9 @@ namespace Foxoft
          MenuColumnInfo info = item.Tag as MenuColumnInfo;
          if (info == null) return;
 
+         SaveLayout();
+
          //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
-
-
       }
 
       class MenuColumnInfo
@@ -1429,6 +1553,60 @@ namespace Foxoft
             this.Column = column;
          }
          public GridColumn Column;
+      }
+
+      private void gV_InvoiceLine_KeyPress(object sender, KeyPressEventArgs e)
+      {
+         //GridView gv = sender as GridView;
+
+         //if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
+         //{
+         //   gv.MoveNext();
+         //}
+
+
+         //DcProduct product = efMethods.SelectProduct(currValue);
+
+         //int balance = CalcProductBalance(view);
+
+         //if (product is null)
+         //{
+         //   e.ErrorText = "Belə nir məhsul yoxdur";
+         //   e.Valid = false;
+         //}
+      }
+
+      private void gV_InvoiceLine_RowCountChanged(object sender, EventArgs e)
+      {
+         //gV_InvoiceLine.FocusedColumn = colBarcode;
+      }
+
+      private void gC_InvoiceLine_EditorKeyUp(object sender, KeyEventArgs e)
+      {
+         if (e.KeyCode == Keys.Return) // Barcode Scan Device 
+         {
+            gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+            gV_InvoiceLine.MoveNext();
+            gV_InvoiceLine.FocusedColumn = colBarcode;
+         }
+      }
+
+      private void gC_InvoiceLine_ProcessGridKey(object sender, KeyEventArgs e)
+      {
+         if (e.KeyCode == Keys.Return)
+         {
+
+            //gV_InvoiceLine.FocusedColumn = colBarcode;
+         }
+      }
+
+      private void gC_InvoiceLine_KeyUp(object sender, KeyEventArgs e)
+      {
+         if (e.KeyCode == Keys.Return)
+         {
+
+            //gV_InvoiceLine.FocusedColumn = colBarcode;
+         }
       }
    }
 }

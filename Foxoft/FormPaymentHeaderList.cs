@@ -185,7 +185,18 @@ namespace Foxoft
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-            FormInvoice formInvoice = new (trInvoiceHeader.ProcessCode, 1, 2, invoiceHeaderId);
+            byte[] bytes = trInvoiceHeader.ProcessCode switch
+            {
+               "TF" => new byte[] { 1 },
+               "CI" => new byte[] { 1 },
+               "CO" => new byte[] { 1 },
+               "RS" => new byte[] { 1, 3 },
+               "RP" => new byte[] { 1, 3 },
+               "EX" => new byte[] { 2, 3 },
+               _ => new byte[] { }
+            };
+
+            FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, 2, invoiceHeaderId);
             FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
             formInvoice.MdiParent = formERP;
             formInvoice.WindowState = FormWindowState.Maximized;
@@ -208,7 +219,7 @@ namespace Foxoft
             Guid invoiceHeaderId = Guid.Parse(obj.ToString());
             TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);
 
-            FormPaymentDetail formaPayment = new (trInvoiceHeader.PaymentHeaderId);
+            FormPaymentDetail formaPayment = new(trInvoiceHeader.PaymentHeaderId);
             FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
             formaPayment.MdiParent = formERP;
             formaPayment.WindowState = FormWindowState.Maximized;
@@ -219,13 +230,13 @@ namespace Foxoft
 
       private void bBI_ReceivePayment_ItemClick(object sender, ItemClickEventArgs e)
       {
-         using (FormCurrAccList formCurrAcc = new (0))
+         using (FormCurrAccList formCurrAcc = new(0))
          {
             if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
             {
-               TrInvoiceHeader trInvoiceHeader = new () { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-               
-               using (FormPayment formPayment = new (1, 0, trInvoiceHeader))
+               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+
+               using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
                {
                   if (formPayment.ShowDialog(this) == DialogResult.OK)
                   {
