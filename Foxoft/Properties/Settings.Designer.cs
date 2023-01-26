@@ -26,7 +26,7 @@ namespace Foxoft.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=WIN-2183FPKAV6J\\SUBSQL;Initial Catalog=Foxoft ;Persist Security Info=T" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Foxoft ;Persist Security Info=T" +
             "rue;User ID=sa;Password=sql123_")]
         public string subConnString {
             get {

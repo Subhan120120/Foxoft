@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -23,9 +24,15 @@ namespace Foxoft
       {
          // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
 
+         Trace.Write("\n FormLogin Started. \n SplashScreenStartup Starting... ");
+
          SplashScreenManager.ShowForm(this, typeof(SplashScreenStartup), true, true, true);
 
-         using (subContext db = new())
+         Trace.Write("\n SplashScreenStartup Started. \n tring db.CanConnect... ");
+
+         using subContext db = new();
+
+         if (db.Database.CanConnect())
          {
             db.Database.EnsureCreated();
             //db.Database.Migrate();
@@ -38,18 +45,27 @@ namespace Foxoft
             CreateViews(new DatabaseFacade(db));
          }
 
+
+         Trace.Write("\n db.Database.CanConnect() = " + db.Database.CanConnect().ToString() + " \n InitializeComponent starting... ");
+
          AppSetting appSetting = efMethods.SelectAppSetting();
+         Trace.Write("\n AppSetting appSetting = " + appSetting.Id.ToString() + " \n InitializeComponent starting... ");
          Settings.Default.AppSetting = appSetting;
          Settings.Default.Save();
 
          AcceptButton = btn_ERP;
 
+
          InitializeComponent();
+
+
 
          txtEdit_UserName.Text = Settings.Default.LoginName;
          txtEdit_Password.Text = Settings.Default.LoginPassword;
          checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
 
+         Trace.Write("\n InitializeComponent Finished. \n SplashScreenStartup closing... ");
+         Trace.Flush();
 
          SplashScreenManager.CloseForm();
       }
