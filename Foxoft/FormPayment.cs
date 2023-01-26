@@ -83,7 +83,7 @@ namespace Foxoft
          trPaymentHeader.IsMainTF = true;
 
          trPaymentLine.PaymentHeaderId = PaymentHeaderId;
-         trPaymentLine.PaymentTypeCode = paymentType; 
+         trPaymentLine.PaymentTypeCode = paymentType;
          trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
          trPaymentLine.ExchangeRate = 1;
 
@@ -264,6 +264,31 @@ namespace Foxoft
 
             DialogResult = DialogResult.OK;
          }
+      }
+
+      private void btnEdit_CashRegister_Validating(object sender, CancelEventArgs e)
+      {
+         object eValue = btnEdit_CashRegister.EditValue;
+
+         if (eValue is not null)
+         {
+            DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+
+            if (curr is null)
+            {
+               e.Cancel = true;
+            }
+            else
+            {
+               //FillCurrAccCode(curr);
+            }
+         }
+      }
+
+      private void btnEdit_CashRegister_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+      {
+         e.ErrorText = "Belə bir kassa yoxdur";
+         e.ExceptionMode = ExceptionMode.DisplayError;
       }
    }
 }

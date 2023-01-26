@@ -73,7 +73,9 @@ namespace Foxoft.AppCode
          {
             formatter = new BinaryFormatter();
             formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
+#pragma warning disable SYSLIB0011
             formatter.Serialize(stream, settings);
+#pragma warning restore SYSLIB0011
 
 
             //to database

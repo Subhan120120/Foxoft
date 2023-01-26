@@ -30,14 +30,14 @@ namespace Foxoft
         private void InitializeComponent()
         {
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPayment));
-         DevExpress.XtraLayout.ColumnDefinition columnDefinition1 = new DevExpress.XtraLayout.ColumnDefinition();
-         DevExpress.XtraLayout.ColumnDefinition columnDefinition2 = new DevExpress.XtraLayout.ColumnDefinition();
-         DevExpress.XtraLayout.ColumnDefinition columnDefinition3 = new DevExpress.XtraLayout.ColumnDefinition();
-         DevExpress.XtraLayout.ColumnDefinition columnDefinition4 = new DevExpress.XtraLayout.ColumnDefinition();
-         DevExpress.XtraLayout.RowDefinition rowDefinition1 = new DevExpress.XtraLayout.RowDefinition();
-         DevExpress.XtraLayout.RowDefinition rowDefinition2 = new DevExpress.XtraLayout.RowDefinition();
-         DevExpress.XtraLayout.RowDefinition rowDefinition3 = new DevExpress.XtraLayout.RowDefinition();
-         DevExpress.XtraLayout.RowDefinition rowDefinition4 = new DevExpress.XtraLayout.RowDefinition();
+         DevExpress.XtraLayout.ColumnDefinition columnDefinition5 = new DevExpress.XtraLayout.ColumnDefinition();
+         DevExpress.XtraLayout.ColumnDefinition columnDefinition6 = new DevExpress.XtraLayout.ColumnDefinition();
+         DevExpress.XtraLayout.ColumnDefinition columnDefinition7 = new DevExpress.XtraLayout.ColumnDefinition();
+         DevExpress.XtraLayout.ColumnDefinition columnDefinition8 = new DevExpress.XtraLayout.ColumnDefinition();
+         DevExpress.XtraLayout.RowDefinition rowDefinition5 = new DevExpress.XtraLayout.RowDefinition();
+         DevExpress.XtraLayout.RowDefinition rowDefinition6 = new DevExpress.XtraLayout.RowDefinition();
+         DevExpress.XtraLayout.RowDefinition rowDefinition7 = new DevExpress.XtraLayout.RowDefinition();
+         DevExpress.XtraLayout.RowDefinition rowDefinition8 = new DevExpress.XtraLayout.RowDefinition();
          this.lC_Root = new DevExpress.XtraLayout.LayoutControl();
          this.lUE_CashlessCurrency = new DevExpress.XtraEditors.LookUpEdit();
          this.btnEdit_BankAccout = new DevExpress.XtraEditors.ButtonEdit();
@@ -230,6 +230,8 @@ namespace Foxoft
          this.btnEdit_CashRegister.StyleController = this.lC_Root;
          this.btnEdit_CashRegister.TabIndex = 3;
          this.btnEdit_CashRegister.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CashRegister_ButtonClick);
+         this.btnEdit_CashRegister.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CashRegister_InvalidValue);
+         this.btnEdit_CashRegister.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CashRegister_Validating);
          // 
          // dateEdit_Date
          // 
@@ -742,32 +744,32 @@ namespace Foxoft
          this.lCG_Barcode.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
          this.lCG_Barcode.Location = new System.Drawing.Point(254, 24);
          this.lCG_Barcode.Name = "layoutControlGroupBarcode";
-         columnDefinition1.SizeType = System.Windows.Forms.SizeType.Percent;
-         columnDefinition1.Width = 25D;
-         columnDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
-         columnDefinition2.Width = 25D;
-         columnDefinition3.SizeType = System.Windows.Forms.SizeType.Percent;
-         columnDefinition3.Width = 25D;
-         columnDefinition4.SizeType = System.Windows.Forms.SizeType.Percent;
-         columnDefinition4.Width = 25D;
+         columnDefinition5.SizeType = System.Windows.Forms.SizeType.Percent;
+         columnDefinition5.Width = 25D;
+         columnDefinition6.SizeType = System.Windows.Forms.SizeType.Percent;
+         columnDefinition6.Width = 25D;
+         columnDefinition7.SizeType = System.Windows.Forms.SizeType.Percent;
+         columnDefinition7.Width = 25D;
+         columnDefinition8.SizeType = System.Windows.Forms.SizeType.Percent;
+         columnDefinition8.Width = 25D;
          this.lCG_Barcode.OptionsTableLayoutGroup.ColumnDefinitions.AddRange(new DevExpress.XtraLayout.ColumnDefinition[] {
-            columnDefinition1,
-            columnDefinition2,
-            columnDefinition3,
-            columnDefinition4});
-         rowDefinition1.Height = 25D;
-         rowDefinition1.SizeType = System.Windows.Forms.SizeType.Percent;
-         rowDefinition2.Height = 25D;
-         rowDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
-         rowDefinition3.Height = 25D;
-         rowDefinition3.SizeType = System.Windows.Forms.SizeType.Percent;
-         rowDefinition4.Height = 25D;
-         rowDefinition4.SizeType = System.Windows.Forms.SizeType.Percent;
+            columnDefinition5,
+            columnDefinition6,
+            columnDefinition7,
+            columnDefinition8});
+         rowDefinition5.Height = 25D;
+         rowDefinition5.SizeType = System.Windows.Forms.SizeType.Percent;
+         rowDefinition6.Height = 25D;
+         rowDefinition6.SizeType = System.Windows.Forms.SizeType.Percent;
+         rowDefinition7.Height = 25D;
+         rowDefinition7.SizeType = System.Windows.Forms.SizeType.Percent;
+         rowDefinition8.Height = 25D;
+         rowDefinition8.SizeType = System.Windows.Forms.SizeType.Percent;
          this.lCG_Barcode.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] {
-            rowDefinition1,
-            rowDefinition2,
-            rowDefinition3,
-            rowDefinition4});
+            rowDefinition5,
+            rowDefinition6,
+            rowDefinition7,
+            rowDefinition8});
          this.lCG_Barcode.Size = new System.Drawing.Size(338, 375);
          this.lCG_Barcode.Text = "Barcode";
          // 
