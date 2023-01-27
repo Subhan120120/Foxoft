@@ -157,7 +157,7 @@ namespace Foxoft
          {
             Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             img = Image.FromStream(stream);
-            stream.Close();
+            //stream.Close();
          }
 
 
