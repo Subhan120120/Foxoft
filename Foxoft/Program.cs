@@ -22,16 +22,14 @@ namespace Foxoft
          string path = Path.Combine(Environment.CurrentDirectory, "Log");
          if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
-         Stream myFile = File.Create(Path.Combine(path, DateTime.Now.ToShortDateString() + " - " + Process.GetCurrentProcess().Id.ToString() + " - " + "Program.cs.txt"));
+         string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + " - " + Process.GetCurrentProcess().Id.ToString() + " - " + "Program.cs.txt";
+         Stream myFile = File.Create(Path.Combine(path, fileName));
 
-         /* Create a new text writer using the output stream, and add it to the trace listeners. */
          TextWriterTraceListener myTextListener = new(myFile);
          Trace.Listeners.Add(myTextListener);
 
-         // Write output to the file.
          Trace.Write("Program Started \n Initializing custom settings...");
          Trace.Flush();
-         // Flush the output.
 
          CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
          Thread.CurrentThread.CurrentUICulture = culture;
@@ -41,7 +39,6 @@ namespace Foxoft
 
          ExportSettings.DefaultExportType = ExportType.WYSIWYG;
          WindowsFormsSettings.DefaultFont = new Font("Tahoma", 10);
-         //DevExpress.UserSkins.BonusSkins.Register();
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
 
