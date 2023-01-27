@@ -142,6 +142,7 @@ namespace Foxoft
                {
                   Image img = GetImage(path);
                   imageCache.Add(path, img);
+                  //img.Dispose();
                }
                e.Value = imageCache[path];
             }
@@ -153,7 +154,12 @@ namespace Foxoft
          Image img = Resources.NoPhoto;
 
          if (File.Exists(path))
-            img = Image.FromStream(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+         {
+            Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            img = Image.FromStream(stream);
+            stream.Close();
+         }
+
 
          return img;
       }
@@ -249,9 +255,6 @@ namespace Foxoft
                LoadProducts(productTypeArr);
 
                gV_ProductList.FocusedRowHandle = fr;
-
-               string path = imageFolder + @"\" + formProduct.dcProduct.ProductCode + ".jpg";
-               imageCache.Remove(path);
             }
          }
          else
@@ -430,6 +433,9 @@ namespace Foxoft
             if (MessageBox.Show("Silmek Isteyirsiz? \n " + dcProduct.ProductDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                efMethods.DeleteProduct(dcProduct);
+
+               string path = imageFolder + @"\" + dcProduct.ProductCode + ".jpg";
+               imageCache.Remove(path);
 
                LoadProducts(productTypeArr);
             }
