@@ -22,7 +22,7 @@ namespace Foxoft
          string path = Path.Combine(Environment.CurrentDirectory, "Log");
          if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
-         string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + " - " + Process.GetCurrentProcess().Id.ToString() + " - " + "Program.cs.txt";
+         string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
          Stream myFile = File.Create(Path.Combine(path, fileName));
 
          TextWriterTraceListener myTextListener = new(myFile);
