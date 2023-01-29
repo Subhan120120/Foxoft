@@ -190,7 +190,6 @@ namespace Foxoft
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();
          parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-
       }
 
       private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)

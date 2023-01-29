@@ -24,7 +24,7 @@ namespace Foxoft
             Directory.CreateDirectory(path);
          string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
          Stream myFile = File.Create(Path.Combine(path, fileName));
-
+         
          TextWriterTraceListener myTextListener = new(myFile);
          Trace.Listeners.Add(myTextListener);
 

@@ -11,14 +11,12 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Threading;
 using System.Windows;
 
 namespace Foxoft
 {
    public partial class FormLogin : ToolbarForm
    {
-      EfMethods efMethods = new();
 
       public FormLogin()
       {
@@ -42,23 +40,21 @@ namespace Foxoft
             //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
             //databaseCreator.CreateTables();
 
-            CreateViews(new DatabaseFacade(db));
+            CreateViews(db.Database);
+
+            Trace.Write("\n db.Database.CanConnect() = " + db.Database.CanConnect().ToString() + " \n InitializeComponent starting... ");
+
+            EfMethods efMethods = new();
+            AppSetting appSetting = efMethods.SelectAppSetting();
+            Trace.Write("\n AppSetting appSetting = " + appSetting.Id.ToString() + " \n InitializeComponent starting... ");
+            Settings.Default.AppSetting = appSetting;
+            Settings.Default.Save();
          }
-
-
-         Trace.Write("\n db.Database.CanConnect() = " + db.Database.CanConnect().ToString() + " \n InitializeComponent starting... ");
-
-         AppSetting appSetting = efMethods.SelectAppSetting();
-         Trace.Write("\n AppSetting appSetting = " + appSetting.Id.ToString() + " \n InitializeComponent starting... ");
-         Settings.Default.AppSetting = appSetting;
-         Settings.Default.Save();
+         else MessageBox.Show("Databasa ilə əlaqə qurula bilmir. \n connection string: \n" + db.Database.GetConnectionString());
 
          AcceptButton = btn_ERP;
 
-
          InitializeComponent();
-
-
 
          txtEdit_UserName.Text = Settings.Default.LoginName;
          txtEdit_Password.Text = Settings.Default.LoginPassword;
@@ -117,6 +113,7 @@ namespace Foxoft
 
       public bool Login(string user, string password)
       {
+         EfMethods efMethods = new();
          if (efMethods.Login(user, password))
          {
             SessionSave();
@@ -128,6 +125,8 @@ namespace Foxoft
 
       private void SessionSave()
       {
+         EfMethods efMethods = new();
+
          if (checkEdit_RemindMe.Checked)
          {
             Settings.Default.LoginName = txtEdit_UserName.Text;
