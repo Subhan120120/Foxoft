@@ -13,19 +13,15 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using System.Windows.Forms;
 
@@ -159,7 +155,6 @@ namespace Foxoft
             img = Image.FromStream(stream);
             //stream.Close();
          }
-
 
          return img;
       }
