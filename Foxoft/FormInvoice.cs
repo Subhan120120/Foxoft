@@ -1027,11 +1027,11 @@ namespace Foxoft
             report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
             Image img = Image.FromStream(ms);
             Clipboard.SetImage(img);
-
+            
             ReportPrintTool printTool = new(report);
-
+            
             bool? isPrinted = printTool.PrintDialog();
-
+            
             if (isPrinted is not null)
             {
                bool printed = Convert.ToBoolean(isPrinted);
