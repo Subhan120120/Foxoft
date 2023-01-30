@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -31,6 +32,11 @@ namespace Foxoft
       {
 
          InitializeComponent();
+         this.BackgroundImageLayoutStore = ImageLayout.Stretch;
+         string path = Path.Combine(Environment.CurrentDirectory, "backgroundImage.png");
+         Stream stream = File.OpenRead(path);
+         this.BackgroundImage = Image.FromStream(stream);
+
          UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
          LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 

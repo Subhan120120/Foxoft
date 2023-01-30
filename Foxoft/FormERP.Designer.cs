@@ -436,8 +436,6 @@ namespace Foxoft
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.BackgroundImageLayoutStore = System.Windows.Forms.ImageLayout.Stretch;
-         this.BackgroundImageStore = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImageStore")));
          this.ClientSize = new System.Drawing.Size(1023, 632);
          this.Controls.Add(this.aC_Root);
          this.Controls.Add(this.ribbonStatusBar);
