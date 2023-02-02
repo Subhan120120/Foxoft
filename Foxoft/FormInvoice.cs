@@ -1013,10 +1013,6 @@ namespace Foxoft
 
       private void GetPrintToWarehouse()
       {
-         //if (Settings.Default.AppSetting.GetPrint == true)
-         //{
-         //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-
          string designPath = designFolder + @"\" + reportFileNameInvoiceWare;
 
          XtraReport report = GetInvoiceReport(designPath);

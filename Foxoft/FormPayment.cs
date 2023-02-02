@@ -280,7 +280,7 @@ namespace Foxoft
             }
             else
             {
-               //FillCurrAccCode(curr);
+               trPaymentLine.CashRegisterCode = eValue.ToString();
             }
          }
       }

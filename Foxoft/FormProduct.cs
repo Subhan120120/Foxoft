@@ -146,8 +146,8 @@ namespace Foxoft
 
       private void SaveImage()
       {
+         string outPutImage = Path.Combine(imageFolder, dcProduct.ProductCode + ".jpg");
 
-         string outPutImage = imageFolder + dcProduct.ProductCode + ".jpg";
          //pictureEdit.Image.Save(imagePath);
          //pictureEdit.Image.Dispose();
 
@@ -155,28 +155,17 @@ namespace Foxoft
          //{
          try
          {
-            //using (Bitmap bitmap = (Bitmap)Image.FromStream(fs, true, false))
-            //{
-            try
+            //bitmap = pictureEdit.Image
+            if (pictureEdit.Image is not null)
             {
-               //bitmap = pictureEdit.Image
-               if (pictureEdit.Image is not null)
-               {
-                  pictureEdit.Image.Save(outPutImage);
-                  GC.Collect();
-               }
+               pictureEdit.Image.Save(outPutImage);
+               GC.Collect();
             }
-            catch (Exception ex)
-            {
-               MessageBox.Show(ex.Message);
-            }
-            //}
          }
-         catch (ArgumentException aex)
+         catch (Exception ex)
          {
-            MessageBox.Show(aex.Message);
+            MessageBox.Show(ex.Message);
          }
-         //}
       }
 
       private void simpleButton1_Click(object sender, EventArgs e)

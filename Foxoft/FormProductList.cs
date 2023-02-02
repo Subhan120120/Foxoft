@@ -19,6 +19,7 @@ using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -338,15 +339,31 @@ namespace Foxoft
 
       private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
       {
-         SaveFileDialog saveFileDialog1 = new();
-         saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
-         saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
-         saveFileDialog1.FileName = $@"ProductList.xlsx";
-         saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         saveFileDialog1.DefaultExt = "*.xlsx";
+         try
+         {
+            Trace.Write("\n Before 'SaveFileDialog saveFileDialog1 = new();' ");
+            SaveFileDialog sFD = new();
+            Trace.Write("\n Before ' saveFileDialog1.Filter = 'Excel Faylı | *.xlsx';' ");
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            Trace.Write("\n Before 'saveFileDialog1.Title = 'Excel Faylı Yadda Saxla';' ");
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            Trace.Write("\n Before 'saveFileDialog1.FileName = this.Text");
+            sFD.FileName = this.Text;
+            Trace.Write("\n Before 'saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            Trace.Write("\n Before 'saveFileDialog1.DefaultExt = ' *.xlsx';' ");
+            sFD.DefaultExt = "*.xlsx";
 
-         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            gC_ProductList.ExportToXlsx(saveFileDialog1.FileName);
+            if (sFD.ShowDialog() == DialogResult.OK)
+            {
+               Trace.Write("\n Before 'gC_ProductList.ExportToXlsx(saveFileDialog1.FileName);' ");
+               gC_ProductList.ExportToXlsx(sFD.FileName);
+            }
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(ex.ToString());
+         }
       }
 
       private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)

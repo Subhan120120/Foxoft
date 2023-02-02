@@ -32,11 +32,15 @@ namespace Foxoft
       {
 
          InitializeComponent();
-         this.BackgroundImageLayoutStore = ImageLayout.Stretch;
-         string path = Path.Combine(Environment.CurrentDirectory, "backgroundImage.png");
-         Stream stream = File.OpenRead(path);
-         this.BackgroundImage = Image.FromStream(stream);
 
+         string path = Path.Combine(Environment.CurrentDirectory, "backgroundImage.png");
+
+         if (File.Exists(path))
+         {
+            this.BackgroundImageLayoutStore = ImageLayout.Stretch;
+            Stream stream = File.OpenRead(path);
+            this.BackgroundImage = Image.FromStream(stream);
+         }
          UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
          LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 

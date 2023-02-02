@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -389,15 +390,24 @@ namespace Foxoft
       {
          try
          {
+            Trace.Write("\n Before 'SaveFileDialog sFD = new();' ");
             SaveFileDialog sFD = new();
+            Trace.Write("\n Before ' sFD.Filter = 'Excel Faylı | *.xlsx';' ");
             sFD.Filter = "Excel Faylı|*.xlsx";
+            Trace.Write("\n Before 'sFD.Title = 'Excel Faylı Yadda Saxla';' ");
             sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = $@"{report.ReportName}.xlsx";
+            Trace.Write("\n Before 'sFD.FileName = report.ReportName");
+            sFD.FileName = report.ReportName;
+            Trace.Write("\n Before 'sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
             sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            Trace.Write("\n Before 'sFD.DefaultExt = ' *.xlsx';' ");
             sFD.DefaultExt = "*.xlsx";
 
             if (sFD.ShowDialog() == DialogResult.OK)
+            {
+               Trace.Write("\n Before 'gC_CurrAccList.ExportToXlsx(sFD.FileName);' ");
                gC_Report.ExportToXlsx(sFD.FileName);
+            }
          }
          catch (Exception ex)
          {

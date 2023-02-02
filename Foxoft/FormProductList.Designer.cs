@@ -488,7 +488,7 @@ namespace Foxoft
          this.Ribbon = this.ribbonControl1;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
          this.StatusBar = this.ribbonStatusBar1;
-         this.Text = "FormProductList";
+         this.Text = "Məhsul Siyahısı";
          this.Load += new System.EventHandler(this.FormProductList_Load);
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).EndInit();

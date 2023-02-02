@@ -1,34 +1,34 @@
 ﻿
 namespace Foxoft
 {
-    partial class FormLogin
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+   partial class FormLogin
+   {
+      /// <summary>
+      /// Required designer variable.
+      /// </summary>
+      private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      /// <summary>
+      /// Clean up any resources being used.
+      /// </summary>
+      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing && (components != null))
+         {
+            components.Dispose();
+         }
+         base.Dispose(disposing);
+      }
 
-        #region Windows Form Designer generated code
+      #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+      /// <summary>
+      /// Required method for Designer support - do not modify
+      /// the contents of this method with the code editor.
+      /// </summary>
+      private void InitializeComponent()
+      {
          this.components = new System.ComponentModel.Container();
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
          this.btn_ERP = new DevExpress.XtraEditors.SimpleButton();
@@ -44,7 +44,7 @@ namespace Foxoft
          this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
          this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-         this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+         this.btn_SaveConn = new DevExpress.XtraEditors.SimpleButton();
          this.lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
          this.lCI_ERP = new DevExpress.XtraLayout.LayoutControlItem();
          this.lCI_POS = new DevExpress.XtraLayout.LayoutControlItem();
@@ -94,7 +94,7 @@ namespace Foxoft
          this.lC_Root.Controls.Add(this.txtEdit_Password);
          this.lC_Root.Controls.Add(this.checkEdit_RemindMe);
          this.lC_Root.Controls.Add(this.txtEdit_conString);
-         this.lC_Root.Controls.Add(this.simpleButton2);
+         this.lC_Root.Controls.Add(this.btn_SaveConn);
          this.lC_Root.Dock = System.Windows.Forms.DockStyle.Fill;
          this.lC_Root.Location = new System.Drawing.Point(0, 31);
          this.lC_Root.Name = "lC_Root";
@@ -205,13 +205,13 @@ namespace Foxoft
          // 
          // simpleButton2
          // 
-         this.simpleButton2.Location = new System.Drawing.Point(225, 12);
-         this.simpleButton2.Name = "simpleButton2";
-         this.simpleButton2.Size = new System.Drawing.Size(74, 22);
-         this.simpleButton2.StyleController = this.lC_Root;
-         this.simpleButton2.TabIndex = 8;
-         this.simpleButton2.Text = "Yadda Saxla";
-         this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
+         this.btn_SaveConn.Location = new System.Drawing.Point(225, 12);
+         this.btn_SaveConn.Name = "btn_Save";
+         this.btn_SaveConn.Size = new System.Drawing.Size(74, 22);
+         this.btn_SaveConn.StyleController = this.lC_Root;
+         this.btn_SaveConn.TabIndex = 8;
+         this.btn_SaveConn.Text = "Yadda Saxla";
+         this.btn_SaveConn.Click += new System.EventHandler(this.btn_SaveConn_Click);
          // 
          // lCG_Root
          // 
@@ -289,7 +289,7 @@ namespace Foxoft
          // 
          // layoutControlItem2
          // 
-         this.layoutControlItem2.Control = this.simpleButton2;
+         this.layoutControlItem2.Control = this.btn_SaveConn;
          this.layoutControlItem2.Location = new System.Drawing.Point(213, 0);
          this.layoutControlItem2.Name = "layoutControlItem2";
          this.layoutControlItem2.Size = new System.Drawing.Size(78, 26);
@@ -342,36 +342,36 @@ namespace Foxoft
          this.ResumeLayout(false);
          this.PerformLayout();
 
-        }
+      }
 
-        #endregion
+      #endregion
 
-        private DevExpress.XtraEditors.SimpleButton btn_ERP;
-        private DevExpress.XtraLayout.LayoutControl lC_Root;
-        private DevExpress.XtraEditors.SimpleButton btn_POS;
-        private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
-        private DevExpress.XtraLayout.LayoutControlItem lCI_POS;
-        private DevExpress.XtraLayout.LayoutControlItem lCI_ERP;
-        private DevExpress.XtraEditors.TextEdit txtEdit_UserName;
-        private DevExpress.XtraEditors.TextEdit txtEdit_Password;
-        private DevExpress.XtraLayout.LayoutControlItem lCI_UserName;
-        private DevExpress.XtraLayout.LayoutControlItem lCI_Password;
-        private DevExpress.XtraEditors.CheckEdit checkEdit_RemindMe;
-        private DevExpress.XtraLayout.LayoutControlItem lCI_RemindMe;
-        private DevExpress.XtraBars.ToolbarForm.ToolbarFormControl toolbarFormControl1;
-        private DevExpress.XtraBars.ToolbarForm.ToolbarFormManager toolbarFormManager1;
-        private DevExpress.XtraBars.BarDockControl barDockControlTop;
-        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
-        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
-        private DevExpress.XtraBars.BarDockControl barDockControlRight;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+      private DevExpress.XtraEditors.SimpleButton btn_ERP;
+      private DevExpress.XtraLayout.LayoutControl lC_Root;
+      private DevExpress.XtraEditors.SimpleButton btn_POS;
+      private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
+      private DevExpress.XtraLayout.LayoutControlItem lCI_POS;
+      private DevExpress.XtraLayout.LayoutControlItem lCI_ERP;
+      private DevExpress.XtraEditors.TextEdit txtEdit_UserName;
+      private DevExpress.XtraEditors.TextEdit txtEdit_Password;
+      private DevExpress.XtraLayout.LayoutControlItem lCI_UserName;
+      private DevExpress.XtraLayout.LayoutControlItem lCI_Password;
+      private DevExpress.XtraEditors.CheckEdit checkEdit_RemindMe;
+      private DevExpress.XtraLayout.LayoutControlItem lCI_RemindMe;
+      private DevExpress.XtraBars.ToolbarForm.ToolbarFormControl toolbarFormControl1;
+      private DevExpress.XtraBars.ToolbarForm.ToolbarFormManager toolbarFormManager1;
+      private DevExpress.XtraBars.BarDockControl barDockControlTop;
+      private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+      private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+      private DevExpress.XtraBars.BarDockControl barDockControlRight;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
       private DevExpress.XtraEditors.TextEdit textEdit1;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
       private DevExpress.XtraEditors.TextEdit txtEdit_conString;
       private DevExpress.XtraLayout.LayoutControlItem lCI_ConString;
       private DevExpress.XtraEditors.SimpleButton simpleButton1;
       private DevExpress.XtraEditors.SimpleButton btn_ConStringSave;
-      private DevExpress.XtraEditors.SimpleButton simpleButton2;
+      private DevExpress.XtraEditors.SimpleButton btn_SaveConn;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
    }
 }

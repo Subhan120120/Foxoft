@@ -17,7 +17,6 @@ namespace Foxoft
 {
    public partial class FormLogin : ToolbarForm
    {
-
       public FormLogin()
       {
          // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
@@ -159,18 +158,21 @@ namespace Foxoft
 
       private void FormLogin_Load(object sender, EventArgs e)
       {
-         txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
+         //txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
+         txtEdit_conString.EditValue = Settings.Default.subConnString;
       }
 
       private void SaveNewConStr()
       {
-         config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = txtEdit_conString.EditValue.ToString();
-         config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
-         config.Save(ConfigurationSaveMode.Modified);
+         Settings.Default.subConnString = txtEdit_conString.EditValue.ToString();
+         Settings.Default.Save(); // Save for subcontext
 
+         config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = Settings.Default.subConnString;
+         config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
+         config.Save(ConfigurationSaveMode.Modified); // Save permenantly
       }
 
-      private void simpleButton2_Click(object sender, EventArgs e)
+      private void btn_SaveConn_Click(object sender, EventArgs e)
       {
          SaveNewConStr();
       }

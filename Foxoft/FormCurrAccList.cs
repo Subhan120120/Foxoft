@@ -13,6 +13,7 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -298,16 +299,31 @@ namespace Foxoft
 
       private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
       {
-         SaveFileDialog saveFileDialog1 = new();
-         saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
-         saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
-         saveFileDialog1.FileName = $@"CariHesablar.xlsx";
-         saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         saveFileDialog1.DefaultExt = "*.xlsx";
+         try
+         {
+            Trace.Write("\n Before 'SaveFileDialog sFD = new();' ");
+            SaveFileDialog sFD = new();
+            Trace.Write("\n Before ' sFD.Filter = 'Excel Faylı | *.xlsx';' ");
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            Trace.Write("\n Before 'sFD.Title = 'Excel Faylı Yadda Saxla';' ");
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            Trace.Write("\n Before 'sFD.FileName = this.Text");
+            sFD.FileName = this.Text;
+            Trace.Write("\n Before 'sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            Trace.Write("\n Before 'sFD.DefaultExt = ' *.xlsx';' ");
+            sFD.DefaultExt = "*.xlsx";
 
-         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            gC_CurrAccList.ExportToXlsx(saveFileDialog1.FileName);
-
+            if (sFD.ShowDialog() == DialogResult.OK)
+            {
+               Trace.Write("\n Before 'gC_CurrAccList.ExportToXlsx(sFD.FileName);' ");
+               gC_CurrAccList.ExportToXlsx(sFD.FileName);
+            }
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(ex.ToString());
+         }
       }
 
       private void bBI_CurrAccDelete_ItemClick(object sender, ItemClickEventArgs e)
