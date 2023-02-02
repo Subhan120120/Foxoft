@@ -51,8 +51,8 @@
          this.BalanceTextEdit = new DevExpress.XtraEditors.TextEdit();
          this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
          this.pictureEdit = new DevExpress.XtraEditors.PictureEdit();
-         this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-         this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+         this.btn_saveImage = new DevExpress.XtraEditors.SimpleButton();
+         this.btn_loadImage = new DevExpress.XtraEditors.SimpleButton();
          this.Btn_BarcodeGenerate = new DevExpress.XtraEditors.SimpleButton();
          this.ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
          this.ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
@@ -152,8 +152,8 @@
          this.dataLayoutControl1.Controls.Add(this.BalanceTextEdit);
          this.dataLayoutControl1.Controls.Add(this.simpleButton1);
          this.dataLayoutControl1.Controls.Add(this.pictureEdit);
-         this.dataLayoutControl1.Controls.Add(this.simpleButton2);
-         this.dataLayoutControl1.Controls.Add(this.simpleButton3);
+         this.dataLayoutControl1.Controls.Add(this.btn_saveImage);
+         this.dataLayoutControl1.Controls.Add(this.btn_loadImage);
          this.dataLayoutControl1.Controls.Add(this.Btn_BarcodeGenerate);
          this.dataLayoutControl1.DataSource = this.dcProductsBindingSource;
          this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -397,23 +397,23 @@
          // 
          // simpleButton2
          // 
-         this.simpleButton2.Location = new System.Drawing.Point(293, 225);
-         this.simpleButton2.Name = "simpleButton2";
-         this.simpleButton2.Size = new System.Drawing.Size(90, 22);
-         this.simpleButton2.StyleController = this.dataLayoutControl1;
-         this.simpleButton2.TabIndex = 6;
-         this.simpleButton2.Text = "Şəkli Yadda Saxla";
-         this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
+         this.btn_saveImage.Location = new System.Drawing.Point(293, 225);
+         this.btn_saveImage.Name = "simpleButton2";
+         this.btn_saveImage.Size = new System.Drawing.Size(90, 22);
+         this.btn_saveImage.StyleController = this.dataLayoutControl1;
+         this.btn_saveImage.TabIndex = 6;
+         this.btn_saveImage.Text = "Şəkli Yadda Saxla";
+         this.btn_saveImage.Click += new System.EventHandler(this.btn_saveImage_Click);
          // 
          // simpleButton3
          // 
-         this.simpleButton3.Location = new System.Drawing.Point(223, 225);
-         this.simpleButton3.Name = "simpleButton3";
-         this.simpleButton3.Size = new System.Drawing.Size(66, 22);
-         this.simpleButton3.StyleController = this.dataLayoutControl1;
-         this.simpleButton3.TabIndex = 15;
-         this.simpleButton3.Text = "Şəkil Yüklə";
-         this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
+         this.btn_loadImage.Location = new System.Drawing.Point(223, 225);
+         this.btn_loadImage.Name = "simpleButton3";
+         this.btn_loadImage.Size = new System.Drawing.Size(66, 22);
+         this.btn_loadImage.StyleController = this.dataLayoutControl1;
+         this.btn_loadImage.TabIndex = 15;
+         this.btn_loadImage.Text = "Şəkil Yüklə";
+         this.btn_loadImage.Click += new System.EventHandler(this.btn_loadImage_Click);
          // 
          // Btn_BarcodeGenerate
          // 
@@ -631,7 +631,7 @@
          // 
          // layoutControlItem5
          // 
-         this.layoutControlItem5.Control = this.simpleButton2;
+         this.layoutControlItem5.Control = this.btn_saveImage;
          this.layoutControlItem5.Location = new System.Drawing.Point(281, 213);
          this.layoutControlItem5.Name = "layoutControlItem5";
          this.layoutControlItem5.Size = new System.Drawing.Size(94, 50);
@@ -640,7 +640,7 @@
          // 
          // layoutControlItem6
          // 
-         this.layoutControlItem6.Control = this.simpleButton3;
+         this.layoutControlItem6.Control = this.btn_loadImage;
          this.layoutControlItem6.Location = new System.Drawing.Point(211, 213);
          this.layoutControlItem6.Name = "layoutControlItem6";
          this.layoutControlItem6.Size = new System.Drawing.Size(70, 50);
@@ -808,9 +808,9 @@
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
       private DevExpress.XtraEditors.PictureEdit pictureEdit;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-      private DevExpress.XtraEditors.SimpleButton simpleButton2;
+      private DevExpress.XtraEditors.SimpleButton btn_saveImage;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-      private DevExpress.XtraEditors.SimpleButton simpleButton3;
+      private DevExpress.XtraEditors.SimpleButton btn_loadImage;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
       private DevExpress.XtraEditors.SimpleButton Btn_BarcodeGenerate;
       private DevExpress.XtraLayout.LayoutControlItem lCI_BarcodeGenerate;

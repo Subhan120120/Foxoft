@@ -233,12 +233,12 @@ namespace Foxoft
          }
       }
 
-      private void simpleButton2_Click(object sender, EventArgs e)
+      private void btn_saveImage_Click(object sender, EventArgs e)
       {
          SaveImage();
       }
 
-      private void simpleButton3_Click(object sender, EventArgs e)
+      private void btn_loadImage_Click(object sender, EventArgs e)
       {
          openFileDialog();
       }
