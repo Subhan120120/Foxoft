@@ -218,6 +218,8 @@ namespace Foxoft
          trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
          trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
+         dcProcess = efMethods.SelectProcess(trInvoiceHeader.ProcessCode);
+
          dbContext.TrInvoiceLines.Include(o => o.DcProduct)
                                  .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                  .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
@@ -300,21 +302,15 @@ namespace Foxoft
          gv.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
          gv.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
 
-         //if (trInvoiceHeader.ProcessCode == "EX")
-         //{
-         //   gv.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
-         //   string locCurrency = Settings.Default.AppSetting.LocalCurrencyCode;
-         //   Single exRate = efMethods.SelectCurrency(locCurrency).ExchangeRate;
-         //   gv.SetRowCellValue(e.RowHandle, colExchangeRate, exRate);
-         //}
-
-         if (trInvoiceHeader.ProcessCode == "EX")
+         string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+         if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
+            currencyCode = dcProcess.CustomCurrencyCode;
+         DcCurrency currency = efMethods.SelectCurrency(currencyCode);
+         if (currency is not null)
          {
-            gv.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
-            DcCurrency currency = efMethods.SelectCurrency("AZN");
+            gv.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
             gv.SetRowCellValue(e.RowHandle, colExchangeRate, currency.ExchangeRate);
          }
-
          //GridColumn qty = CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut;
          //gv.SetRowCellValue(e.RowHandle, qty, 1);
       }
