@@ -10,29 +10,36 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    public partial class DcProcess
-    {
-        public DcProcess()
-        {
-            TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
-        }
+   public partial class DcProcess
+   {
+      public DcProcess()
+      {
+         TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
+      }
 
-        [Key]
-        [DisplayName("Proses Kodu")]
-        [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ProcessCode { get; set; }
+      [Key]
+      [DisplayName("Proses Kodu")]
+      [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ProcessCode { get; set; }
 
-        [DisplayName("Proses Adı")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ProcessDesc { get; set; }
+      [DisplayName("Proses Adı")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ProcessDesc { get; set; }
 
-        [DisplayName("Proses İstiqaməti")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public byte ProcessDir { get; set; }
+      [DisplayName("Proses İstiqaməti")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public byte ProcessDir { get; set; }
+
+      [DisplayName("Xüsusi Valyuta")]
+      [ForeignKey("DcCurrency")]
+      public string CustomCurrencyCode { get; set; }
 
 
-        public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
-    }
+
+      public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
+
+      public virtual DcCurrency DcCurrency { get; set; }
+   }
 }

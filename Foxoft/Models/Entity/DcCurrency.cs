@@ -30,5 +30,6 @@ namespace Foxoft.Models
       public virtual AppSetting AppSetting { get; set; }
       public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
       public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
+      public virtual ICollection<DcProcess> DcProcesses { get; set; }
    }
 }

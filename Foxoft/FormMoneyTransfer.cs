@@ -81,6 +81,7 @@ namespace Foxoft
          paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
          paymentHeader.OfficeCode = Authorization.OfficeCode;
          paymentHeader.StoreCode = Authorization.StoreCode;
+         paymentHeader.CreatedUserName = Authorization.CurrAccCode;
          paymentHeader.IsMainTF = true;
 
          e.NewObject = paymentHeader;
@@ -287,6 +288,7 @@ namespace Foxoft
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
+         gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
       }
 
       private void gC_PaymentLine_KeyDown(object sender, KeyEventArgs e)
