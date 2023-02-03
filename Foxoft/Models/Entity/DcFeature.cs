@@ -20,5 +20,6 @@ namespace Foxoft.Models
       public string FeatureName { get; set; }
 
       public virtual ICollection<DcProduct> DcProducts { get; set; }
+      //public virtual ICollection<DcProductDcFeature> DcProductDcFeatures { get; set; }
    }
 }

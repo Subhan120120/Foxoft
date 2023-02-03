@@ -123,5 +123,6 @@ namespace Foxoft.Models
       public virtual ICollection<TrPrice> TrPrices { get; set; }
       public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
       public virtual ICollection<DcFeature> DcFeatures { get; set; }
+      //public virtual ICollection<DcProductDcFeature> DcProductDcFeatures { get; set; }
    }
 }

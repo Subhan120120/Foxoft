@@ -212,6 +212,13 @@ namespace Foxoft.Models
                   .ValueGeneratedNever();
          });
 
+         modelBuilder.Entity<DcProductDcFeature>(entity =>
+         {
+            entity.HasOne(x => x.DcProduct)
+                  .WithMany()
+                  .OnDelete(DeleteBehavior.Cascade);
+         });
+
          modelBuilder.Entity<TrPaymentLine>(entity =>
          {
             entity.HasOne(x => x.TrPaymentHeader)
