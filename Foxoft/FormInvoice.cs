@@ -29,8 +29,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -489,16 +487,19 @@ namespace Foxoft
          GridView view = sender as GridView;
          GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
 
-
-
          if (column == colQty)
          {
             int eValue = Convert.ToInt32(e.Value ??= 0);
-            if (!trInvoiceHeader.IsReturn && (trInvoiceHeader.ProcessCode == "RS" || trInvoiceHeader.ProcessCode == "TF"))
+            if (trInvoiceHeader.ProcessCode == "RS" || trInvoiceHeader.ProcessCode == "TF")
             {
                object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
                object objInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
-               int balance = CalcProductBalance(objProductCode, objInvoiceLineId);
+
+               string wareHouse = lUE_WarehouseCode.EditValue.ToString();
+               if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "TF")
+                  wareHouse = lUE_ToWarehouseCode.EditValue.ToString();
+
+               int balance = CalcProductBalance(objProductCode, objInvoiceLineId, wareHouse);
 
                string productCode = (objProductCode ??= "").ToString();
                DcProduct product = efMethods.SelectProduct(productCode);
@@ -619,7 +620,7 @@ namespace Foxoft
          return sumInvo;
       }
 
-      private int CalcProductBalance(object objProductCode, object objInvoicelineId)
+      private int CalcProductBalance(object objProductCode, object objInvoicelineId, string wareHouse)
       {
          string productCode = (objProductCode ??= "").ToString();
 
@@ -630,8 +631,7 @@ namespace Foxoft
             TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
             int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
 
-            string warehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
-            return efMethods.SelectProductBalance(productCode, warehouseCode) + currentQty;
+            return efMethods.SelectProductBalance(productCode, wareHouse) + currentQty;
          }
          else return 0;
       }
