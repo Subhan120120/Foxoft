@@ -285,8 +285,16 @@ namespace Foxoft
          if (!String.IsNullOrEmpty(cashReg))
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);
 
-         gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, "AZN");
-         gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, 1.703f);
+         string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+         DcProcess dcProcess = efMethods.SelectProcess("PA");
+         if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
+            currencyCode = dcProcess.CustomCurrencyCode;
+         DcCurrency currency = efMethods.SelectCurrency(currencyCode);
+         if (currency is not null)
+         {
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
+            gV_PaymentLine.SetRowCellValue(e.RowHandle, colExchangeRate, currency.ExchangeRate);
+         }
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
          gV_PaymentLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
       }

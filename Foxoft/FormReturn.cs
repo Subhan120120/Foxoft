@@ -152,6 +152,7 @@ namespace Foxoft
                      returnInvoiceLine.VatRate = invoiceLine.VatRate;
                      returnInvoiceLine.NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.Qty * (-1);
                      returnInvoiceLine.NetAmountLoc = formQty.qty * invoiceLine.NetAmountLoc / invoiceLine.Qty * (-1);
+                     returnInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
 
                      efMethods.InsertInvoiceLine(returnInvoiceLine);
 
