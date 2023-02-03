@@ -1492,7 +1492,7 @@ namespace Foxoft
 
 
          string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
-         string layoutFilePath = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files", fileName);
+         string layoutFilePath = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files", fileName);
          if (File.Exists(layoutFilePath))
             gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
 
@@ -1501,7 +1501,7 @@ namespace Foxoft
       private void SaveLayout()
       {
          string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
-         string layoutFileDir = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files");
+         string layoutFileDir = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files");
          if (!Directory.Exists(layoutFileDir))
             Directory.CreateDirectory(layoutFileDir);
          gV_InvoiceLine.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));

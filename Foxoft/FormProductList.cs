@@ -101,24 +101,26 @@ namespace Foxoft
       private void SaveLayout()
       {
          string fileName = "FormProductList.xml";
-         string layoutFileDir = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files");
+         string layoutFileDir = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files");
          if (!Directory.Exists(layoutFileDir))
             Directory.CreateDirectory(layoutFileDir);
-         gV_ProductList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+         gV_ProductList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName), option);
       }
 
       private void LoadLayout()
       {
          string fileName = "FormProductList.xml";
-         string layoutFilePath = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files", fileName);
+         string layoutFilePath = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files", fileName);
+         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
 
          if (File.Exists(layoutFilePath))
-            gV_ProductList.RestoreLayoutFromXml(layoutFilePath);
+            gV_ProductList.RestoreLayoutFromXml(layoutFilePath, option);
          else
          {
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new(byteArray);
-            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             gV_ProductList.RestoreLayoutFromStream(stream, option);
          }
       }

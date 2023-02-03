@@ -57,7 +57,7 @@ namespace Foxoft
       private void SaveLayout()
       {
          string fileName = "FormCurrAccList.xml";
-         string layoutFileDir = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files");
+         string layoutFileDir = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files");
          if (!Directory.Exists(layoutFileDir))
             Directory.CreateDirectory(layoutFileDir);
          gV_CurrAccList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
@@ -66,7 +66,7 @@ namespace Foxoft
       private void LoadLayout()
       {
          string fileName = "FormCurrAccList.xml";
-         string layoutFilePath = Path.Combine(Path.GetTempPath(), "Foxoft", "Layout Xml Files", fileName);
+         string layoutFilePath = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files", fileName);
 
          if (File.Exists(layoutFilePath))
             gV_CurrAccList.RestoreLayoutFromXml(layoutFilePath);
