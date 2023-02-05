@@ -1017,7 +1017,7 @@ namespace Foxoft
          if (report is not null)
          {
             using MemoryStream ms = new();
-            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile});
             Image img = Image.FromStream(ms);
             Clipboard.SetImage(img);
 
