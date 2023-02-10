@@ -123,6 +123,9 @@ namespace Foxoft.Models
       [DisplayName("Kilidlənib")]
       public bool IsLocked { get; set; }
 
+      [DisplayName("Əsas Transfer")]
+      public bool IsMainTF { get; set; }
+
       //[NotMapped] //datalayoutColntrola gore
       //[DisplayName("Cari Hesab Adı")]
       //public string CurrAccDescription { get { if (!Object.ReferenceEquals(DcCurrAcc, null)) { return DcCurrAcc.CurrAccDesc; } else return ""; } }

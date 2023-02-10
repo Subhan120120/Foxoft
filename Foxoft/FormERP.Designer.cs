@@ -72,6 +72,7 @@ namespace Foxoft
          this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
          this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+         this.BSI_StoreDesc = new DevExpress.XtraBars.BarStaticItem();
          ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
          this.SuspendLayout();
@@ -90,9 +91,10 @@ namespace Foxoft
             this.bSI_UserName,
             this.barButtonItem1,
             this.barButtonItem3,
-            this.barButtonItem4});
+            this.barButtonItem4,
+            this.BSI_StoreDesc});
          this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-         this.parentRibbonControl.MaxItemId = 18;
+         this.parentRibbonControl.MaxItemId = 19;
          this.parentRibbonControl.Name = "parentRibbonControl";
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
@@ -143,7 +145,7 @@ namespace Foxoft
          // bSI_UserName
          // 
          this.bSI_UserName.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-         this.bSI_UserName.Caption = "İstifadəçi Adı";
+         this.bSI_UserName.Caption = "| İstifadəçi Adı";
          this.bSI_UserName.Id = 13;
          this.bSI_UserName.Name = "bSI_UserName";
          // 
@@ -194,6 +196,7 @@ namespace Foxoft
          // 
          // ribbonStatusBar
          // 
+         this.ribbonStatusBar.ItemLinks.Add(this.BSI_StoreDesc);
          this.ribbonStatusBar.ItemLinks.Add(this.bSI_UserName);
          this.ribbonStatusBar.Location = new System.Drawing.Point(0, 608);
          this.ribbonStatusBar.Name = "ribbonStatusBar";
@@ -432,6 +435,13 @@ namespace Foxoft
          this.aCE_CurrAccs.Text = "İstifadəçilər";
          this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
          // 
+         // BSI_StoreDesc
+         // 
+         this.BSI_StoreDesc.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+         this.BSI_StoreDesc.Caption = "| Mağaza Adı";
+         this.BSI_StoreDesc.Id = 18;
+         this.BSI_StoreDesc.Name = "BSI_StoreDesc";
+         // 
          // FormERP
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -502,5 +512,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem barButtonItem2;
       private DevExpress.XtraBars.BarButtonItem barButtonItem3;
       private DevExpress.XtraBars.BarButtonItem barButtonItem4;
+      private DevExpress.XtraBars.BarStaticItem BSI_StoreDesc;
    }
 }

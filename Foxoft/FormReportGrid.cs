@@ -313,57 +313,48 @@ namespace Foxoft
 
       private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
       {
-         object objInv = gV_Report.GetFocusedRowCellValue("InvoiceHeaderId");
+         object objDocNum = gV_Report.GetFocusedRowCellValue("DocumentNumber");
 
-         if (objInv is not null)
+         if (objDocNum is not null)
          {
-            string strHeadId = objInv.ToString();
+            string strDocNum = objDocNum.ToString();
 
-            if (!String.IsNullOrEmpty(strHeadId))
+            if (!String.IsNullOrEmpty(strDocNum))
             {
-               Guid guidHeadId = Guid.Parse(strHeadId);
-               if (guidHeadId != Guid.Empty)
+               TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
+               TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
+
+               if (trPaymentHeader is not null)
                {
-                  TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(guidHeadId);
-
-                  if (trInvoiceHeader is not null)
-                  {
-                     byte[] bytes = trInvoiceHeader.ProcessCode switch
-                     {
-                        "TF" => new byte[] { 1 },
-                        "CI" => new byte[] { 1 },
-                        "CO" => new byte[] { 1 },
-                        "RS" => new byte[] { 1, 3 },
-                        "RP" => new byte[] { 1, 3 },
-                        "EX" => new byte[] { 2, 3 },
-                        _ => new byte[] { }
-                     };
-
-                     FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, 2, guidHeadId);
-                     FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                     formInvoice.MdiParent = formERP;
-                     formInvoice.WindowState = FormWindowState.Maximized;
-                     formInvoice.Show();
-                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-                  }
-                  else
-                     MessageBox.Show("Belə bir qaimə yoxdur. ");
+                  FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
+                  FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                  frm.MdiParent = formERP;
+                  frm.WindowState = FormWindowState.Maximized;
+                  frm.Show();
+                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
                }
-            }
-         }
+               else if (trInvoiceHeader is not null)
+               {
+                  byte[] bytes = trInvoiceHeader.ProcessCode switch
+                  {
+                     "IT" => new byte[] { 1 },
+                     "CI" => new byte[] { 1 },
+                     "CO" => new byte[] { 1 },
+                     "RS" => new byte[] { 1, 3 },
+                     "RP" => new byte[] { 1, 3 },
+                     "EX" => new byte[] { 2, 3 },
+                     _ => new byte[] { }
+                  };
 
-         object objPay = gV_Report.GetFocusedRowCellValue("PaymentHeaderId");
-
-         if (objPay is not null)
-         {
-            if (Guid.Parse(objPay.ToString()) != Guid.Empty)
-            {
-               FormPaymentDetail frm = new(Guid.Parse(objPay.ToString()));
-               FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-               frm.MdiParent = formERP;
-               frm.WindowState = FormWindowState.Maximized;
-               frm.Show();
-               formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, 2, trInvoiceHeader.InvoiceHeaderId);
+                  FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                  frm.MdiParent = formERP;
+                  frm.WindowState = FormWindowState.Maximized;
+                  frm.Show();
+                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+               }
+               else
+                  MessageBox.Show("Belə bir sənəd yoxdur.");
             }
          }
       }

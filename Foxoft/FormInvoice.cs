@@ -276,7 +276,7 @@ namespace Foxoft
          {
             FormCurrAccList form = new(0, trInvoiceHeader.CurrAccCode);
 
-            if (trInvoiceHeader.ProcessCode == "TF")
+            if (trInvoiceHeader.ProcessCode == "IT")
                form = new FormCurrAccList(4, trInvoiceHeader.CurrAccCode);
 
             if (form.ShowDialog(this) == DialogResult.OK)
@@ -490,13 +490,13 @@ namespace Foxoft
          if (column == colQty)
          {
             int eValue = Convert.ToInt32(e.Value ??= 0);
-            if (trInvoiceHeader.ProcessCode == "RS" || trInvoiceHeader.ProcessCode == "TF")
+            if (trInvoiceHeader.ProcessCode == "RS" || trInvoiceHeader.ProcessCode == "IT")
             {
                object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
                object objInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
 
                string wareHouse = lUE_WarehouseCode.EditValue.ToString();
-               if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "TF")
+               if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
                   wareHouse = lUE_ToWarehouseCode.EditValue.ToString();
 
                int balance = CalcProductBalance(objProductCode, objInvoiceLineId, wareHouse);
@@ -793,7 +793,7 @@ namespace Foxoft
             //List<EntityEntry> entityEntry = new();
             IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
 
-            if (trInvoiceHeader.ProcessCode == "TF")
+            if (trInvoiceHeader.ProcessCode == "IT")
             {
                foreach (var entry in entityEntry)
                {
@@ -965,7 +965,7 @@ namespace Foxoft
          {
             decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
-            if (summaryInvoice != 0 || trInvoiceHeader.ProcessCode == "TF")
+            if (summaryInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
             {
                SaveInvoice();
 
@@ -1205,7 +1205,7 @@ namespace Foxoft
          {
             decimal summInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
-            if (summInvoice != 0 || trInvoiceHeader.ProcessCode == "TF")
+            if (summInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
             {
                SaveInvoice();
 
@@ -1466,7 +1466,7 @@ namespace Foxoft
          col_Amount.OptionsColumn.ReadOnly = true;
          colAmountLoc.OptionsColumn.ReadOnly = true;
 
-         if (dcProcess.ProcessCode == "EX" || dcProcess.ProcessCode == "CI" || dcProcess.ProcessCode == "CO" || dcProcess.ProcessCode == "TF")
+         if (dcProcess.ProcessCode == "EX" || dcProcess.ProcessCode == "CI" || dcProcess.ProcessCode == "CO" || dcProcess.ProcessCode == "IT")
          {
             btnEdit_CurrAccCode.Enabled = false;
             colBalance.Visible = false;
@@ -1476,7 +1476,7 @@ namespace Foxoft
 
             if (dcProcess.ProcessCode == "EX")
                colQty.Visible = false;
-            if (dcProcess.ProcessCode == "TF")
+            if (dcProcess.ProcessCode == "IT")
             {
                btnEdit_CurrAccCode.Enabled = true;
                col_Price.Visible = false;

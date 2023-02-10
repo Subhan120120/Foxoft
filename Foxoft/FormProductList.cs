@@ -48,11 +48,14 @@ namespace Foxoft
 
          SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
-         if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-            designFolder = settingStore.DesignFileFolder;
+         if (settingStore is not null)
+         {
+            if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+               designFolder = settingStore.DesignFileFolder;
 
-         if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-            imageFolder = settingStore.ImageFolder;
+            if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+               imageFolder = settingStore.ImageFolder;
+         }
 
          LoadLayout();
 

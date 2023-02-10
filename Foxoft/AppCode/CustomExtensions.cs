@@ -78,7 +78,7 @@ namespace Foxoft
             case "EX": return "In";
             case "SB": return "In";
             case "CI": return "In";
-            case "TF": return "Out";
+            case "IT": return "Out";
             case "RS": return "Out";
             case "WS": return "Out";
             case "CO": return "Out";

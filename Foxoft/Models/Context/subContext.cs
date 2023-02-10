@@ -65,7 +65,6 @@ namespace Foxoft.Models
             //                    .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
             //                    .ConnectionString;
 
-
             optionsBuilder.UseSqlServer(def);
          }
       }
@@ -173,7 +172,9 @@ namespace Foxoft.Models
              new DcProcess { ProcessCode = "PE", ProcessDesc = "Dovr", ProcessDir = 1 },
              new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma", ProcessDir = 1 },
              new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma", ProcessDir = 2 },
-             new DcProcess { ProcessCode = "TF", ProcessDesc = "Transfer", ProcessDir = 2 }
+             new DcProcess { ProcessCode = "TF", ProcessDesc = "Transfer", ProcessDir = 2 },
+             new DcProcess { ProcessCode = "IT", ProcessDesc = "Mal Transferi", ProcessDir = 2 },
+             new DcProcess { ProcessCode = "CT", ProcessDesc = "Pul Transferi", ProcessDir = 2 }
              );
 
          modelBuilder.Entity<DcProduct>().HasData(
@@ -237,13 +238,18 @@ namespace Foxoft.Models
 
          modelBuilder.Entity<DcVariable>().HasData(
              new DcVariable { VariableCode = "C", VariableDesc = "Cari" },
+             new DcVariable { VariableCode = "CI", VariableDesc = "Sayım Artırma" },
+             new DcVariable { VariableCode = "CO", VariableDesc = "Sayım Azaltma" },
              new DcVariable { VariableCode = "P", VariableDesc = "Məhsul" },
              new DcVariable { VariableCode = "RS", VariableDesc = "Pərakəndə Satış" },
              new DcVariable { VariableCode = "RP", VariableDesc = "Pərakəndə Alış" },
              new DcVariable { VariableCode = "PA", VariableDesc = "Ödəmə" },
              new DcVariable { VariableCode = "SB", VariableDesc = "Toptan Alış" },
              new DcVariable { VariableCode = "WS", VariableDesc = "Toptan Satış" },
-             new DcVariable { VariableCode = "EX", VariableDesc = "Xərclər" });
+             new DcVariable { VariableCode = "EX", VariableDesc = "Xərclər" },
+             new DcVariable { VariableCode = "IT", VariableDesc = "Mal Transferi" },
+             new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" }
+             );
 
          modelBuilder.Entity<MigrationHistory>(entity =>
          {

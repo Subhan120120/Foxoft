@@ -63,6 +63,9 @@ namespace Foxoft
          Trace.Flush();
 
          SplashScreenManager.CloseForm();
+
+         if (Settings.Default.AppSetting.LocalCurrencyCode is null)
+            MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
       }
 
       private static void CreateViews(DatabaseFacade db)

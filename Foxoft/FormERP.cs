@@ -44,7 +44,8 @@ namespace Foxoft
          UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
          LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 
-         bSI_UserName.Caption = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+         bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+         BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
          InitializeReports();
          //adorners1 = new List<AdornerElement>();
          //adornerUIManager1 = new AdornerUIManager(this.components);
@@ -353,7 +354,7 @@ namespace Foxoft
 
       private void aCE_ProductTransfer_Click(object sender, EventArgs e)
       {
-         FormInvoice formInvoice = new("TF", new byte[] { 1 }, 4);
+         FormInvoice formInvoice = new("IT", new byte[] { 1 }, 4);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
          formInvoice.Show();

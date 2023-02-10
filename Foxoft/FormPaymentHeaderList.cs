@@ -187,7 +187,7 @@ namespace Foxoft
 
             byte[] bytes = trInvoiceHeader.ProcessCode switch
             {
-               "TF" => new byte[] { 1 },
+               "IT" => new byte[] { 1 },
                "CI" => new byte[] { 1 },
                "CO" => new byte[] { 1 },
                "RS" => new byte[] { 1, 3 },

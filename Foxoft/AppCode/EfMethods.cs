@@ -195,6 +195,16 @@ namespace Foxoft
                                    .FirstOrDefault();
       }
 
+      public TrInvoiceHeader SelectInvoiceHeaderByDocNum(string documentNumber)
+      {
+         using subContext db = new();
+
+         return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
+                                   .Include(x => x.TrInvoiceLines)
+                                   .Where(x => x.DocumentNumber == documentNumber)
+                                   .FirstOrDefault();// (x => x.IsMainTF == true)
+      }
+
       public TrPaymentHeader SelectPaymentHeader(Guid paymentHeaderId)
       {
          using subContext db = new();
@@ -203,6 +213,17 @@ namespace Foxoft
                                    .Include(x => x.TrPaymentLines)
                                    .Where(x => x.PaymentHeaderId == paymentHeaderId)
                                    .FirstOrDefault();
+
+      }
+
+      public TrPaymentHeader SelectPaymentHeaderByDocNum(string documentNumber)
+      {
+         using subContext db = new();
+
+         return db.TrPaymentHeaders.Include(x => x.DcCurrAcc)
+                                   .Include(x => x.TrPaymentLines)
+                                   .Where(x => x.DocumentNumber == documentNumber)
+                                   .FirstOrDefault(x => x.IsMainTF == true);
 
       }
 

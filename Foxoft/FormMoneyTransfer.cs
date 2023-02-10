@@ -73,7 +73,7 @@ namespace Foxoft
       {
          TrPaymentHeader paymentHeader = new();
          paymentHeader.PaymentHeaderId = paymentHeaderId;
-         string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+         string NewDocNum = efMethods.GetNextDocNum(true, "CT", "DocumentNumber", "TrPaymentHeaders", 6);
          paymentHeader.DocumentNumber = NewDocNum;
          paymentHeader.DocumentDate = DateTime.Now;
          paymentHeader.OperationDate = DateTime.Now;
@@ -129,18 +129,18 @@ namespace Foxoft
 
                   using subContext context2 = new();
 
-                  TrPaymentHeader newTrIP = trPH;
-                  newTrIP.PaymentHeaderId = guidHead;
+                  TrPaymentHeader copyTrPH = trPH;
+                  copyTrPH.PaymentHeaderId = guidHead;
                   string temp = trPH.FromCashRegCode;
-                  newTrIP.FromCashRegCode = trPH.ToCashRegCode;
-                  newTrIP.ToCashRegCode = temp;
-                  newTrIP.IsMainTF = false;
+                  copyTrPH.FromCashRegCode = trPH.ToCashRegCode;
+                  copyTrPH.ToCashRegCode = temp;
+                  copyTrPH.IsMainTF = false;
 
                   switch (entry.State)
                   {
-                     case EntityState.Added: context2.TrPaymentHeaders.Add(newTrIP); break;
-                     case EntityState.Modified: context2.TrPaymentHeaders.Update(newTrIP); break;
-                     case EntityState.Deleted: context2.TrPaymentHeaders.Remove(newTrIP); break;
+                     case EntityState.Added: context2.TrPaymentHeaders.Add(copyTrPH); break;
+                     case EntityState.Modified: context2.TrPaymentHeaders.Update(copyTrPH); break;
+                     case EntityState.Deleted: context2.TrPaymentHeaders.Remove(copyTrPH); break;
                      default: break;
                   }
                   context2.SaveChanges();
@@ -286,7 +286,7 @@ namespace Foxoft
             gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);
 
          string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-         DcProcess dcProcess = efMethods.SelectProcess("PA");
+         DcProcess dcProcess = efMethods.SelectProcess("CT");
          if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
             currencyCode = dcProcess.CustomCurrencyCode;
          DcCurrency currency = efMethods.SelectCurrency(currencyCode);
