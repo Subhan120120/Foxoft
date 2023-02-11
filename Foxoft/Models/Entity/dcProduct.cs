@@ -30,11 +30,11 @@ namespace Foxoft.Models
       [Display(Name = "Məhsul Adı")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      public string ProductDesc { get; set; }    
+      public string ProductDesc { get; set; }
 
       [Display(Name = "Məhsul Özəlliyi")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      public string ProductFeature { get; set; }      
+      public string ProductFeature { get; set; }
 
       [Display(Name = "Barkod")]
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -73,12 +73,12 @@ namespace Foxoft.Models
       const string qiymetler = "Qiymətlər";
       [DefaultValue("0")]
       [Display(Name = "Alış Qiyməti", GroupName = qiymetler, Order = 0)]
-      [Display(Name = "Alış Qiyməti")]
+      //[DisplayName("Alış Qiyməti")]
       public decimal PurchasePrice { get; set; }
 
       [DefaultValue("0")]
       [Display(Name = "Topdan Satış Qiy.", GroupName = qiymetler, Order = 1)]
-      [Display(Name = "Toptan Satış Qiyməti")]
+      //[DisplayName("Toptan Satış Qiyməti")]
       public decimal WholesalePrice { get; set; }
 
       [DefaultValue("0")]
