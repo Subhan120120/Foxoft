@@ -16,13 +16,13 @@ namespace Foxoft.Models
       public int Id { get; set; }
 
       [StringLength(30)]
-      [DisplayName("Mağaza Kodu")]
+      [Display(Name = "Mağaza Kodu")]
       public string StoreCode { get; set; }
 
-      [DisplayName("Dizayn Fayl Qovluğu")]
+      [Display(Name = "Dizayn Fayl Qovluğu")]
       public string DesignFileFolder { get; set; }
 
-      [DisplayName("Şəkil Qovluğu")]
+      [Display(Name = "Şəkil Qovluğu")]
       public string ImageFolder { get; set; }
 
 

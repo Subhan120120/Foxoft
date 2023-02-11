@@ -14,15 +14,15 @@ namespace Foxoft.Models
       }
 
       [Key]
-      [DisplayName("Valyuta")]
+      [Display(Name = "Valyuta")]
       [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string CurrencyCode { get; set; }
 
-      [DisplayName("Valyuta Açıqlaması")]
+      [Display(Name = "Valyuta Açıqlaması")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string CurrencyDesc { get; set; }
 
-      [DisplayName("Valyuta Kursu")]
+      [Display(Name = "Valyuta Kursu")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public float ExchangeRate { get; set; }
 

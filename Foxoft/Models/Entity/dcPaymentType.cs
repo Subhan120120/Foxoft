@@ -13,10 +13,10 @@ namespace Foxoft.Models
     public partial class DcPaymentType
     {
         [Key]
-        [DisplayName("Ödəmə Tipi Kodu")]
+        [Display(Name = "Ödəmə Tipi Kodu")]
         public byte PaymentTypeCode { get; set; }
 
-        [DisplayName("Ödəmə Tipi Açıqlaması")]
+        [Display(Name = "Ödəmə Tipi Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string PaymentTypeDesc { get; set; }

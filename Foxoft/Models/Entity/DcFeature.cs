@@ -12,10 +12,10 @@ namespace Foxoft.Models
       }
 
       [Key]
-      [DisplayName("Özəllik Kodu")]
+      [Display(Name = "Özəllik Kodu")]
       public int Id { get; set; }
 
-      [DisplayName("Özəllik Adı")]
+      [Display(Name = "Özəllik Adı")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string FeatureName { get; set; }
 

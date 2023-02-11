@@ -200,9 +200,11 @@ namespace Foxoft
       private void LoadInvoice(Guid InvoiceHeaderId)
       {
          dbContext = new subContext();
+
          dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                    .Include(x => x.DcProcess)
-                                   .Where(x => x.InvoiceHeaderId == InvoiceHeaderId).Load();
+                                   .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
+                                   .Load();
 
          LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
@@ -1017,7 +1019,7 @@ namespace Foxoft
          if (report is not null)
          {
             using MemoryStream ms = new();
-            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile});
+            report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
             Image img = Image.FromStream(ms);
             Clipboard.SetImage(img);
 

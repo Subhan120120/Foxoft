@@ -13,19 +13,19 @@ namespace Foxoft.Models
     public partial class DcTerminal : BaseEntity
     {
         [Key]
-        [DisplayName("Terminal Kodu")]
+        [Display(Name = "Terminal Kodu")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string TerminalCode { get; set; }
 
-        [DisplayName("Terminal Açıqlaması")]
+        [Display(Name = "Terminal Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string TerminalDesc { get; set; }
 
-        [DisplayName("Qeyri-Aktiv")]
+        [Display(Name = "Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }
 
-        [DisplayName("Guid Id")]
+        [Display(Name = "Guid Id")]
         public Guid RowGuid { get; set; }
     }
 }

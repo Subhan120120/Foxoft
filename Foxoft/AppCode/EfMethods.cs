@@ -133,6 +133,7 @@ namespace Foxoft
                                 Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
                                 BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
                                 BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
+                                BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
                                 LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
                                                                     .Where(l => l.TrInvoiceHeader.IsReturn == false)
                                                                     .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)

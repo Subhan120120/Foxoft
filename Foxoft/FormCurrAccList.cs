@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 
@@ -60,7 +62,39 @@ namespace Foxoft
          string layoutFileDir = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files");
          if (!Directory.Exists(layoutFileDir))
             Directory.CreateDirectory(layoutFileDir);
-         gV_CurrAccList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+         //CreateDirectory(layoutFileDir, Environment.UserName);
+
+         string fullName = Path.Combine(layoutFileDir, fileName);
+
+         DirectoryInfo dInfo = new DirectoryInfo(fullName);
+         DirectorySecurity dSecurity = dInfo.GetAccessControl();
+         dSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
+         dInfo.SetAccessControl(dSecurity);
+
+         gV_CurrAccList.SaveLayoutToXml(fullName);
+      }
+
+      public void CreateDirectory(string DirectoryName, string UserAccount)
+      {
+         if (!Directory.Exists(DirectoryName))
+            Directory.CreateDirectory(DirectoryName);
+         // Calls the another function to add users and permissions
+         AddUsersAndPermissions(DirectoryName, UserAccount, FileSystemRights.FullControl, AccessControlType.Allow);
+      }
+
+      public void AddUsersAndPermissions(string DirectoryName, string UserAccount, FileSystemRights UserRights, AccessControlType AccessType)
+      {
+         // Create a DirectoryInfo object.
+         DirectoryInfo directoryInfo = new DirectoryInfo(DirectoryName);
+
+         // Get security settings.
+         DirectorySecurity dirSecurity = directoryInfo.GetAccessControl();
+
+         // Add the FileSystemAccessRule to the security settings.
+         dirSecurity.AddAccessRule(new FileSystemAccessRule(UserAccount, UserRights, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessType));
+
+         // Set the access settings.
+         directoryInfo.SetAccessControl(dirSecurity);
       }
 
       private void LoadLayout()

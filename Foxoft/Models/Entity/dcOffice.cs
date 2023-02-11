@@ -13,24 +13,24 @@ namespace Foxoft.Models
     public partial class DcOffice : BaseEntity
     {
         [Key]
-        [DisplayName("Ofis Kodu")]
+        [Display(Name = "Ofis Kodu")]
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string OfficeCode { get; set; }
 
-        [DisplayName("Ofis Açıqlaması")]
+        [Display(Name = "Ofis Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string OfficeDesc { get; set; }
 
-        [DisplayName("Şirkət")]
+        [Display(Name = "Şirkət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [Column(TypeName = "numeric(4, 0)")]
         public decimal CompanyCode { get; set; }
 
-        [DisplayName("Qeyri-Aktiv")]
+        [Display(Name = "Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }
 
-        [DisplayName("Guid Id")]
+        [Display(Name = "Guid Id")]
         public Guid RowGuid { get; set; }
     }
 }

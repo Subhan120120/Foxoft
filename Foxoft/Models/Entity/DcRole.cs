@@ -18,10 +18,10 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [DisplayName("Rol Kodu")]
+        [Display(Name = "Rol Kodu")]
         public string RoleCode { get; set; }
 
-        [DisplayName("Rol Açıqlaması")]
+        [Display(Name = "Rol Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string RoleDesc { get; set; }
 

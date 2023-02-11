@@ -9,47 +9,47 @@ namespace Foxoft.Models
     public partial class DcWarehouse : BaseEntity
     {
         [Key]
-        [DisplayName("Depo Kodu")]
+        [Display(Name = "Depo Kodu")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string WarehouseCode { get; set; }
 
-        [DisplayName("Depo Açıqlaması")]
+        [Display(Name = "Depo Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string WarehouseDesc { get; set; }
 
-        [DisplayName("Depo Tipi")]
+        [Display(Name = "Depo Tipi")]
         public byte WarehouseTypeCode { get; set; }
 
-        [DisplayName("Ofis")]
+        [Display(Name = "Ofis")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string OfficeCode { get; set; }
 
-        [DisplayName("Mağaza Kodu")]
+        [Display(Name = "Mağaza Kodu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string StoreCode { get; set; }
 
-        [DisplayName("Mənfi Stoka İcazə Ver")]
+        [Display(Name = "Mənfi Stoka İcazə Ver")]
         public bool PermitNegativeStock { get; set; }
 
-        [DisplayName("Mənfi Stokda Xəbərdar Et")]
+        [Display(Name = "Mənfi Stokda Xəbərdar Et")]
         public bool WarnNegativeStock { get; set; }
 
-        [DisplayName("Stok Səviyyəsi")]
+        [Display(Name = "Stok Səviyyəsi")]
         public bool ControlStockLevel { get; set; }
 
-        [DisplayName("Stok Səviyyəsini Xəbardar Et")]
+        [Display(Name = "Stok Səviyyəsini Xəbardar Et")]
         public bool WarnStockLevelRate { get; set; }
 
-        [DisplayName("Varsayılandır")]
+        [Display(Name = "Varsayılandır")]
         public bool IsDefault { get; set; }
 
-        [DisplayName("Qeyri-Aktiv")]
+        [Display(Name = "Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }
 
-        [DisplayName("Guid Id")]
+        [Display(Name = "Guid Id")]
         public Guid RowGuid { get; set; }
     }
 }

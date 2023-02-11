@@ -17,30 +17,30 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [DisplayName("Filter ID")]
+        [Display(Name = "Filter ID")]
         public int FilterId { get; set; }
 
-        [DisplayName("Filter String")]
+        [Display(Name = "Filter String")]
         [ForeignKey("DcReport")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public int ReportId { get; set; }
 
-        [DisplayName("Property")]
+        [Display(Name = "Property")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string FilterProperty { get; set; }
 
-        [DisplayName("Value")]
+        [Display(Name = "Value")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string FilterValue { get; set; }
 
-        [DisplayName("Filter String")]
+        [Display(Name = "Filter String")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string FilterOperatorType { get; set; }
 
-        [DisplayName("Filter Təmsilci")]
+        [Display(Name = "Filter Təmsilci")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string Representative { get; set; }

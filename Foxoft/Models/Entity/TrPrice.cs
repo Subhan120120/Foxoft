@@ -13,7 +13,7 @@ namespace Foxoft.Models
         [ForeignKey("DcProduct")]
         public string ProductCode { get; set; }
 
-        [DisplayName("Qiymət")]
+        [Display(Name = "Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal Price { get; set; }
 

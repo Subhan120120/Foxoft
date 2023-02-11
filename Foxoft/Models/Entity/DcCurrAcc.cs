@@ -24,40 +24,40 @@ namespace Foxoft.Models
 
       [Key]
       [StringLength(30)]
-      [DisplayName("Cari Hesab Kodu")]
+      [Display(Name = "Cari Hesab Kodu")]
       public string CurrAccCode { get; set; }
 
-      [DisplayName("Cari Hesab Adı")]
+      [Display(Name = "Cari Hesab Adı")]
       [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string CurrAccDesc { get; set; }
 
       [ForeignKey("DcCurrAccType")]
-      [DisplayName("Cari Hesab Tipi")]
+      [Display(Name = "Cari Hesab Tipi")]
       [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]
       public byte CurrAccTypeCode { get; set; }
 
-      [DisplayName("Şirkət")]
+      [Display(Name = "Şirkət")]
       public byte CompanyCode { get; set; }
 
-      [DisplayName("Ofis")]
+      [Display(Name = "Ofis")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string OfficeCode { get; set; }
 
-      [DisplayName("Mağaza Kodu")]
+      [Display(Name = "Mağaza Kodu")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string StoreCode { get; set; }
 
-      [DisplayName("Adı")]
+      [Display(Name = "Adı")]
       [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string FirstName { get; set; }
 
-      [DisplayName("Soyadı")]
+      [Display(Name = "Soyadı")]
       [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string LastName { get; set; }
 
-      [DisplayName("Ata Adı")]
+      [Display(Name = "Ata Adı")]
       [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string FatherName { get; set; }
 
@@ -68,72 +68,72 @@ namespace Foxoft.Models
       public string ConfirmPassword { get; set; }
 
 
-      [DisplayName("Ş.V.Nömrəsi")]
+      [Display(Name = "Ş.V.Nömrəsi")]
       [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string IdentityNum { get; set; }
 
-      [DisplayName("Vergi Nömrəsi")]
+      [Display(Name = "Vergi Nömrəsi")]
       [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string TaxNum { get; set; }
 
-      [DisplayName("İstifadəçi Dili")]
+      [Display(Name = "İstifadəçi Dili")]
       [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string DataLanguageCode { get; set; }
 
       [DefaultValue("0")]
       [Column(TypeName = "money")]
-      [DisplayName("Kredit Limiti")]
+      [Display(Name = "Kredit Limiti")]
       public decimal CreditLimit { get; set; }
 
       [Column("IsVIP")]
       [DefaultValue("0")]
-      [DisplayName("VIP")]
+      [Display(Name = "VIP")]
       public bool IsVip { get; set; }
 
-      [DisplayName("Müştəri Tipi")]
+      [Display(Name = "Müştəri Tipi")]
       public byte? CustomerTypeCode { get; set; }
 
-      [DisplayName("Tədarikçi Tipi")]
+      [Display(Name = "Tədarikçi Tipi")]
       public byte? VendorTypeCode { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Müştəri Endirim Dərəcəsi")]
+      [Display(Name = "Müştəri Endirim Dərəcəsi")]
       public double CustomerPosDiscountRate { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Qeyri-Aktiv")]
+      [Display(Name = "Qeyri-Aktiv")]
       public bool IsDisabled { get; set; }
 
-      [DisplayName("Guid Id")]
+      [Display(Name = "Guid Id")]
       public Guid RowGuid { get; set; }
 
-      [DisplayName("Bonus Kartı")]
+      [Display(Name = "Bonus Kartı")]
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string BonusCardNum { get; set; }
 
-      [DisplayName("Adres")]
+      [Display(Name = "Adres")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string Address { get; set; }
 
-      [DisplayName("Telefon")]
+      [Display(Name = "Telefon")]
       [DataType(DataType.PhoneNumber)]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       //[RegularExpression(@"\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2}", ErrorMessage = "Duzgun Format Daxil Edin.")]
       public string PhoneNum { get; set; }
 
-      [DisplayName("Doğum Günü")]
+      [Display(Name = "Doğum Günü")]
       [Column(TypeName = "date")]
       [DefaultValue("'1901-01-01'")]
       public DateTime? BirthDate { get; set; }
 
-      [DisplayName("Varsayılan Müstəri")]
+      [Display(Name = "Varsayılan Müstəri")]
       public bool IsDefault { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq")]
+      [Display(Name = "Qalıq")]
       public decimal Balance { get; set; }
 
-      [DisplayName("Tema")]
+      [Display(Name = "Tema")]
       public string Theme { get; set; }
 
 

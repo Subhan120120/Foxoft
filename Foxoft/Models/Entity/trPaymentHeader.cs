@@ -21,92 +21,92 @@ namespace Foxoft.Models
       [Key]
       public Guid PaymentHeaderId { get; set; }
 
-      [DisplayName("Faktura İd")]
+      [Display(Name = "Faktura İd")]
       [ForeignKey("TrInvoiceHeader")]
       public Guid? InvoiceHeaderId { get; set; }
 
-      [DisplayName("Sənəd Nömrəsi")]
+      [Display(Name = "Sənəd Nömrəsi")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string DocumentNumber { get; set; }
 
-      [DisplayName("Sənəd Tarixi")]
+      [Display(Name = "Sənəd Tarixi")]
       [DefaultValue("getdate()")]
       [Column(TypeName = "date")]
       public DateTime DocumentDate { get; set; }
 
-      [DisplayName("Ödəniş Vaxtı")]
+      [Display(Name = "Ödəniş Vaxtı")]
       [Column(TypeName = "time(0)")]
       [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
       public TimeSpan DocumentTime { get; set; }
 
       [DefaultValue("getdate()")]
       [Column(TypeName = "date")]
-      [DisplayName("Əməliyat Tarixi")]
+      [Display(Name = "Əməliyat Tarixi")]
       public DateTime OperationDate { get; set; }
 
-      [DisplayName("Əməliyat Vaxtı")]
+      [Display(Name = "Əməliyat Vaxtı")]
       [Column(TypeName = "time(0)")]
       [DefaultValue("convert(varchar(10), GETDATE(), 108)")]
       public TimeSpan OperationTime { get; set; }
 
-      [DisplayName("Cari Hesab")]
+      [Display(Name = "Cari Hesab")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       [ForeignKey("DcCurrAcc")]
       public string CurrAccCode { get; set; }
 
-      [DisplayName("Kassaya")]
+      [Display(Name = "Kassaya")]
       [ForeignKey("ToCashReg")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ToCashRegCode { get; set; }
 
       //[NotMapped]
-      [DisplayName("Kassadan")]
+      [Display(Name = "Kassadan")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string FromCashRegCode { get { return CurrAccCode; } set { CurrAccCode = value; } }
 
-      [DisplayName("Açıqlama")]
+      [Display(Name = "Açıqlama")]
       [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string Description { get; set; }
 
-      [DisplayName("Əməliyat tipi")]
+      [Display(Name = "Əməliyat tipi")]
       [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string OperationType { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Şirkət")]
+      [Display(Name = "Şirkət")]
       public decimal CompanyCode { get; set; }
 
-      [DisplayName("Ofis")]
+      [Display(Name = "Ofis")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string OfficeCode { get; set; }
 
-      [DisplayName("Mağaza Kodu")]
+      [Display(Name = "Mağaza Kodu")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string StoreCode { get; set; }
 
-      [DisplayName("POS Terminal")]
+      [Display(Name = "POS Terminal")]
       public short PosterminalId { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Tamamlanıb")]
+      [Display(Name = "Tamamlanıb")]
       public bool IsCompleted { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Kilidlənib")]
+      [Display(Name = "Kilidlənib")]
       public bool IsLocked { get; set; }
 
       //[DefaultValue("1")]
-      [DisplayName("Əsas Qaimə")]
+      [Display(Name = "Əsas Qaimə")]
       public bool IsMainTF { get; set; }
 
       [NotMapped] //datalayoutColntrola gore
-      [DisplayName("Cari Hesab Adı")]
+      [Display(Name = "Cari Hesab Adı")]
       public string CurrAccDesc { get; set; }
 
       [NotMapped]
-      [DisplayName("Toplam")]
+      [Display(Name = "Toplam")]
       public decimal TotalPayment { get; set; }
 
 

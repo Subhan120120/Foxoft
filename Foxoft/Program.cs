@@ -1,14 +1,10 @@
 ﻿using DevExpress.Export;
 using DevExpress.XtraEditors;
-using Foxoft.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -19,7 +15,8 @@ namespace Foxoft
       [STAThread]
       static void Main()
       {
-         string path = Path.Combine(Environment.CurrentDirectory, "Log");
+         ;
+         string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Foxoft Log");
          if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
          string fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";

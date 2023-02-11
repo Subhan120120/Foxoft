@@ -9,15 +9,15 @@ namespace Foxoft.Models
    {
       [Key, Column(Order = 0)]
       [ForeignKey("DcProduct")]
-      [DisplayName("Məhsul Kodu")]
+      [Display(Name = "Məhsul Kodu")]
       public string ProductCode { get; set; }
 
       [Key, Column(Order = 1)]
       [ForeignKey("DcFeature")]
-      [DisplayName("Özəllik Kodu")]
+      [Display(Name = "Özəllik Kodu")]
       public int FeatureId { get; set; }
 
-      [DisplayName("Özəllik Dəyəri")]
+      [Display(Name = "Özəllik Dəyəri")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string FeatureDesc { get; set; }
 

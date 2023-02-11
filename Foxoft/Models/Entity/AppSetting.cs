@@ -10,22 +10,22 @@ namespace Foxoft.Models
       [Key]
       public int Id { get; set; }
 
-      [DisplayName("Cədvəl Dizaynı")]
+      [Display(Name = "Cədvəl Dizaynı")]
       public string GridViewLayout { get; set; }
 
-      [DisplayName("Print Edilsin")]
+      [Display(Name = "Print Edilsin")]
       public bool GetPrint { get; set; }
 
-      [DisplayName("Printer Adı")]
+      [Display(Name = "Printer Adı")]
       public string PrinterName { get; set; }
 
-      [DisplayName("Çap sayı")]
+      [Display(Name = "Çap sayı")]
       public int PrinterCopyNum { get; set; }
 
-      [DisplayName("Print Dizayn Yolu")]
+      [Display(Name = "Print Dizayn Yolu")]
       public string PrintDesignPath { get; set; }
 
-      [DisplayName("Yerli Valyuta Kodu")]
+      [Display(Name = "Yerli Valyuta Kodu")]
       public string LocalCurrencyCode { get; set; }
 
 

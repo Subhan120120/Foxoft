@@ -23,62 +23,62 @@ namespace Foxoft.Models
       }
 
       [Key]
-      [DisplayName("Məhsul Kodu")]
+      [Display(Name = "Məhsul Kodu")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ProductCode { get; set; }
 
-      [DisplayName("Məhsul Adı")]
+      [Display(Name = "Məhsul Adı")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ProductDesc { get; set; }    
 
-      [DisplayName("Məhsul Özəlliyi")]
+      [Display(Name = "Məhsul Özəlliyi")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ProductFeature { get; set; }      
 
-      [DisplayName("Barkod")]
+      [Display(Name = "Barkod")]
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string Barcode { get; set; }
 
-      [DisplayName("Məhsul Tipi")]
+      [Display(Name = "Məhsul Tipi")]
       [ForeignKey("DcProductType")]
       [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]
       public byte ProductTypeCode { get; set; }
 
       [DefaultValue("1")]
-      [DisplayName("POSda İstifadə Et")]
+      [Display(Name = "POSda İstifadə Et")]
       public bool UsePos { get; set; }
 
-      [DisplayName("Tanıtım")]
+      [Display(Name = "Tanıtım")]
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string PromotionCode { get; set; }
 
-      [DisplayName("Tanıtım2")]
+      [Display(Name = "Tanıtım2")]
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string PromotionCode2 { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Vergi Dərəcəsi")]
+      [Display(Name = "Vergi Dərəcəsi")]
       public double TaxRate { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Pos Endirimi")]
+      [Display(Name = "Pos Endirimi")]
       public double PosDiscount { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Qeyri-Aktiv")]
+      [Display(Name = "Qeyri-Aktiv")]
       public bool IsDisabled { get; set; }
 
 
       const string qiymetler = "Qiymətlər";
       [DefaultValue("0")]
       [Display(Name = "Alış Qiyməti", GroupName = qiymetler, Order = 0)]
-      [DisplayName("Alış Qiyməti")]
+      [Display(Name = "Alış Qiyməti")]
       public decimal PurchasePrice { get; set; }
 
       [DefaultValue("0")]
       [Display(Name = "Topdan Satış Qiy.", GroupName = qiymetler, Order = 1)]
-      [DisplayName("Toptan Satış Qiyməti")]
+      [Display(Name = "Toptan Satış Qiyməti")]
       public decimal WholesalePrice { get; set; }
 
       [DefaultValue("0")]
@@ -86,37 +86,37 @@ namespace Foxoft.Models
       public decimal RetailPrice { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("İnternetdə İstifadə Et")]
+      [Display(Name = "İnternetdə İstifadə Et")]
       public bool UseInternet { get; set; }
 
-      [DisplayName("Şəkil")]
+      [Display(Name = "Şəkil")]
       [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ImagePath { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq")]
+      [Display(Name = "Qalıq")]
       public int Balance { get; set; }
       //public int Balance { get { return TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut); } set { } }
 
       [NotMapped]
-      [DisplayName("Qalıq Merkez")]
+      [Display(Name = "Qalıq Merkez")]
       public int BalanceM { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq SIRA 20")]
+      [Display(Name = "Qalıq SIRA 20")]
       public int BalanceF { get; set; }
 
       [NotMapped]
-      [DisplayName("Qalıq SIRA 5")]
+      [Display(Name = "Qalıq SIRA 5")]
       public int BalanceS { get; set; }
 
 
       [NotMapped]
-      [DisplayName("Son Alış Qiy.")]
+      [Display(Name = "Son Alış Qiy.")]
       public decimal? LastPurchasePrice { get; set; }
 
       [NotMapped]
-      [DisplayName("Son Satış Qiy.")]
+      [Display(Name = "Son Satış Qiy.")]
       public decimal? LastSalePrice { get; set; }
 
       public virtual DcProductType DcProductType { get; set; }

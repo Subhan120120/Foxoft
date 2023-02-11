@@ -18,19 +18,19 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [DisplayName("Cari Hesab Tipi Kodu")]
+        [Display(Name = "Cari Hesab Tipi Kodu")]
         public byte CurrAccTypeCode { get; set; }
 
 
-        [DisplayName("Cari Hesab Tipi Açıqlaması")]
+        [Display(Name = "Cari Hesab Tipi Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string CurrAccTypeDesc { get; set; }
 
-        [DisplayName("Qeyri-Aktiv")]
+        [Display(Name = "Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }
 
-        [DisplayName("Guid Id")]
+        [Display(Name = "Guid Id")]
         public Guid RowGuid { get; set; }
 
         public virtual ICollection<DcCurrAcc> DcCurrAccs { get; set; }

@@ -13,19 +13,19 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [DisplayName("Report ID")]
+        [Display(Name = "Report ID")]
         public int ReportId { get; set; }
 
-        [DisplayName("Hesabat Adı")]
+        [Display(Name = "Hesabat Adı")]
         public string ReportName { get; set; }
 
-        [DisplayName("Hesabat Sorğusu")]
+        [Display(Name = "Hesabat Sorğusu")]
         public string ReportQuery { get; set; }
 
-        [DisplayName("Hesabat Dizaynı")]
+        [Display(Name = "Hesabat Dizaynı")]
         public string ReportLayout { get; set; }
 
-        [DisplayName("Xarici Filter")]
+        [Display(Name = "Xarici Filter")]
         public string ReportFilter { get; set; }
 
         public virtual ICollection<DcReportFilter> DcReportFilters { get; set; }

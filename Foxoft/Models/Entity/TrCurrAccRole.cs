@@ -12,14 +12,14 @@ namespace Foxoft.Models
     public partial class TrCurrAccRole : BaseEntity
     {
         [Key]
-        [DisplayName("Cari Hesab Rol Id")]
+        [Display(Name = "Cari Hesab Rol Id")]
         public int CurrAccRoleId { get; set; }
 
         [ForeignKey("DcCurrAcc")]
-        [DisplayName("Cari Hesab")]
+        [Display(Name = "Cari Hesab")]
         public string CurrAccCode { get; set; }
 
-        [DisplayName("Rol")]
+        [Display(Name = "Rol")]
         [ForeignKey("DcRole")]
         public string RoleCode { get; set; }
 

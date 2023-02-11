@@ -18,21 +18,21 @@ namespace Foxoft.Models
       }
 
       [Key]
-      [DisplayName("Proses Kodu")]
+      [Display(Name = "Proses Kodu")]
       [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ProcessCode { get; set; }
 
-      [DisplayName("Proses Adı")]
+      [Display(Name = "Proses Adı")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ProcessDesc { get; set; }
 
-      [DisplayName("Proses İstiqaməti")]
+      [Display(Name = "Proses İstiqaməti")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public byte ProcessDir { get; set; }
 
-      [DisplayName("Xüsusi Valyuta")]
+      [Display(Name = "Xüsusi Valyuta")]
       [ForeignKey("DcCurrency")]
       public string CustomCurrencyCode { get; set; }
 

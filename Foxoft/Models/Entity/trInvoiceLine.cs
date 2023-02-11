@@ -24,14 +24,14 @@ namespace Foxoft.Models
       public Guid? RelatedLineId { get; set; }
 
 
-      [DisplayName("Məhsul")]
+      [Display(Name = "Məhsul")]
       [ForeignKey("DcProduct")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string ProductCode { get; set; }
 
       [NotMapped]
-      [DisplayName("Say")]
+      [Display(Name = "Say")]
       [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
       public int Qty
       {
@@ -73,78 +73,78 @@ namespace Foxoft.Models
       }
 
       [DefaultValue("0")]
-      [DisplayName("Say Giriş")]
+      [Display(Name = "Say Giriş")]
       [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
       public int QtyIn { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("Say Çıxış")]
+      [Display(Name = "Say Çıxış")]
       [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
       public int QtyOut { get; set; }
 
-      [DisplayName("Qiymət")]
+      [Display(Name = "Qiymət")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public decimal Price { get; set; }
 
-      [DisplayName("Valyuta")]
+      [Display(Name = "Valyuta")]
       [ForeignKey("DcCurrency")]
       public string CurrencyCode { get; set; } = Settings.Default.AppSetting.LocalCurrencyCode;
 
       [DefaultValue("1")]
-      [DisplayName("Valyuta Kursu")]
+      [Display(Name = "Valyuta Kursu")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public float ExchangeRate { get; set; } = 1;
 
-      [DisplayName("Qiymət (YPV)")]
+      [Display(Name = "Qiymət (YPV)")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public decimal PriceLoc { get { return Math.Round(Price / (decimal)ExchangeRate, 2); } set { } }
 
       [Column(TypeName = "money")]
-      [DisplayName("Tutar")]
+      [Display(Name = "Tutar")]
       public decimal Amount { get { return (QtyIn + QtyOut) * Price; } set { } }
 
       [Column(TypeName = "money")]
-      [DisplayName("Tutar (YPV)")]
+      [Display(Name = "Tutar (YPV)")]
       public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
       [DefaultValue("0")]
-      [DisplayName("Endirim")]
+      [Display(Name = "Endirim")]
       [Column(TypeName = "money")]
       public decimal PosDiscount { get; set; }
 
       [Column(TypeName = "money")]
-      [DisplayName("Net Tutar")]
+      [Display(Name = "Net Tutar")]
       public decimal NetAmount { get { return (QtyIn + QtyOut) * (Price - (Price * PosDiscount / 100)); } set { } }
 
       [Column(TypeName = "money")]
-      [DisplayName("Net Tutar (YPV)")]
+      [Display(Name = "Net Tutar (YPV)")]
       public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)); } set { } }
 
       [DefaultValue("0")]
       [Column(TypeName = "money")]
-      [DisplayName("Kampaniya Endirimi")]
+      [Display(Name = "Kampaniya Endirimi")]
       public decimal DiscountCampaign { get; set; }
 
       [DefaultValue("0")]
-      [DisplayName("ƏDV")]
+      [Display(Name = "ƏDV")]
       public float VatRate { get; set; }
 
-      [DisplayName("Açıqlama")]
+      [Display(Name = "Açıqlama")]
       [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
       public string LineDescription { get; set; }
 
-      [DisplayName("Satıcı")]
+      [Display(Name = "Satıcı")]
       [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
       public string SalesPersonCode { get; set; }
 
-      [DisplayName("Son Alış Qiy.")]
+      [Display(Name = "Son Alış Qiy.")]
       public decimal? LastPurchasePrice { get; set; }
 
-      [DisplayName("Mənfəət")]
+      [Display(Name = "Mənfəət")]
       public decimal? Benefit { get { return (decimal?)PriceLoc - LastPurchasePrice; } }
 
       [NotMapped]
-      [DisplayName("Qalıq")]
+      [Display(Name = "Qalıq")]
       public int Balance { get; set; }
 
 
@@ -155,7 +155,7 @@ namespace Foxoft.Models
       public int RemainingQty { get; set; }
 
       [NotMapped]
-      [DisplayName("Məhsul Adı")]
+      [Display(Name = "Məhsul Adı")]
       public string ProductDesc { get; set; }
 
       //public string ProductDesc { get { if (!Object.ReferenceEquals(DcProduct, null)) return DcProduct.ProductDesc; else return ""; } set { } }  // gridview da set{} iwlemir
