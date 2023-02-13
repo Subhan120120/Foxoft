@@ -492,7 +492,7 @@ namespace Foxoft
          if (column == colQty)
          {
             int eValue = Convert.ToInt32(e.Value ??= 0);
-            if (trInvoiceHeader.ProcessCode == "RS" || trInvoiceHeader.ProcessCode == "IT")
+            if ((!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS") || trInvoiceHeader.ProcessCode == "IT")
             {
                object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
                object objInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
@@ -949,9 +949,7 @@ namespace Foxoft
          trPaymentLine.PaymentTypeCode = 1;
          trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
          trPaymentLine.ExchangeRate = 1f;
-
          trPaymentLine.CashRegisterCode = efMethods.SelectCashRegByStore(Authorization.StoreCode);
-
          trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
          return trPaymentLine;
