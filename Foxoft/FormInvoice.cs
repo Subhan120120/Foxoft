@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -58,6 +59,7 @@ namespace Foxoft
          InitializeComponent();
 
          dcProcess = efMethods.SelectProcess(processCode);
+
 
          LoadLayout();
 
@@ -96,6 +98,9 @@ namespace Foxoft
 
       private void ClearControlsAddNew()
       {
+         if (dcProcess.ProcessCode == "IT")
+            gC_InvoiceLine.Enabled = false;
+
          dbContext = new subContext();
 
          invoiceHeaderId = Guid.NewGuid();
@@ -106,6 +111,8 @@ namespace Foxoft
                                    .Load();
 
          trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+
+
 
          trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
@@ -173,6 +180,12 @@ namespace Foxoft
             if (count > 0)
                SaveInvoice();
          }
+
+         if (trInvoiceHeader is not null)
+            if (trInvoiceHeader.ToWarehouseCode is not null)
+            {
+               gC_InvoiceLine.Enabled = true;
+            }
 
          gV_InvoiceLine.Focus();
       }
@@ -483,11 +496,19 @@ namespace Foxoft
       {
       }
 
-
       private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
       {
          GridView view = sender as GridView;
          GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
+
+         if (trInvoiceHeader.ProcessCode == "IT")
+         {
+            if (trInvoiceHeader.ToWarehouseCode is null)
+            {
+               e.ErrorText = "Transfer Deposu qeyd Olunmayıb";
+               e.Valid = false;
+            }
+         }
 
          if (column == colQty)
          {
@@ -823,7 +844,6 @@ namespace Foxoft
                         case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(newTrIH); break;
                         default: break;
                      }
-
                      context2.SaveChanges();
                   }
 
@@ -1420,8 +1440,6 @@ namespace Foxoft
                e.KeyChar = Convert.ToChar(",");
          }
 
-
-
          if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
          {
             //////////gv.FocusedColumn = colBarcode;
@@ -1431,7 +1449,6 @@ namespace Foxoft
             //////////}
             //////////else
             //////////   gv.MoveNext();
-
 
             //gv.FocusedColumn = colBarcode;
 
@@ -1452,7 +1469,6 @@ namespace Foxoft
          //+ $"\n\nLocation: \n{Assembly.GetEntryAssembly().Location}"
          //+ $"\n\nPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location): \n{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}"
          //+ $"\n\nPath.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName): \n{Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}");
-
       }
 
       private void LoadLayout()
@@ -1489,7 +1505,6 @@ namespace Foxoft
          {
 
          }
-
 
          string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
          string layoutFilePath = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files", fileName);
@@ -1557,7 +1572,6 @@ namespace Foxoft
          //   gv.MoveNext();
          //}
 
-
          //DcProduct product = efMethods.SelectProduct(currValue);
 
          //int balance = CalcProductBalance(view);
@@ -1588,7 +1602,6 @@ namespace Foxoft
       {
          if (e.KeyCode == Keys.Return)
          {
-
             //gV_InvoiceLine.FocusedColumn = colBarcode;
          }
       }
@@ -1597,7 +1610,6 @@ namespace Foxoft
       {
          if (e.KeyCode == Keys.Return)
          {
-
             //gV_InvoiceLine.FocusedColumn = colBarcode;
          }
       }

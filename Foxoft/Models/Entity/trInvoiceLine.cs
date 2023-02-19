@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-   [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
+   [Microsoft.EntityFrameworkCore.Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
    public partial class TrInvoiceLine : BaseEntity
    {
       [Key]

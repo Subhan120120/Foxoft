@@ -324,16 +324,7 @@ namespace Foxoft
                TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
                TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
 
-               if (trPaymentHeader is not null)
-               {
-                  FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
-                  FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                  frm.MdiParent = formERP;
-                  frm.WindowState = FormWindowState.Maximized;
-                  frm.Show();
-                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-               }
-               else if (trInvoiceHeader is not null)
+               if (trInvoiceHeader is not null)
                {
                   byte[] bytes = trInvoiceHeader.ProcessCode switch
                   {
@@ -347,6 +338,15 @@ namespace Foxoft
                   };
 
                   FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, 2, trInvoiceHeader.InvoiceHeaderId);
+                  FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                  frm.MdiParent = formERP;
+                  frm.WindowState = FormWindowState.Maximized;
+                  frm.Show();
+                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+               }
+               else if (trPaymentHeader is not null)
+               {
+                  FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
                   FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                   frm.MdiParent = formERP;
                   frm.WindowState = FormWindowState.Maximized;

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Foxoft.Models
 {
-   [Index(nameof(DocumentNumber), nameof(ProcessCode), nameof(CurrAccCode))]
+   [Microsoft.EntityFrameworkCore.Index(nameof(DocumentNumber), nameof(ProcessCode), nameof(CurrAccCode))]
    public partial class TrInvoiceHeader : BaseEntity
    {
       public TrInvoiceHeader()
