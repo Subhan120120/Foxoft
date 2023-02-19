@@ -76,11 +76,14 @@ namespace Foxoft
          this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
          this.BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_query = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
@@ -327,13 +330,15 @@ namespace Foxoft
             this.BBI_Feature,
             this.barButtonItem3,
             this.BarcodePrint,
-            this.barButtonItem2});
+            this.barButtonItem2,
+            this.BBI_query});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 23;
+         this.ribbonControl1.MaxItemId = 24;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
+            this.ribbonPage1,
+            this.ribbonPage3});
          this.ribbonControl1.Size = new System.Drawing.Size(865, 158);
          this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
          // 
@@ -413,16 +418,23 @@ namespace Foxoft
          // 
          this.BarcodePrint.Caption = "Barkod Çapı";
          this.BarcodePrint.Id = 21;
-         this.BarcodePrint.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BarcodePrint.ImageOptions.SvgImage")));
          this.BarcodePrint.Name = "BarcodePrint";
          this.BarcodePrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BarcodePrint_ItemClick);
          // 
          // barButtonItem2
          // 
-         this.barButtonItem2.Caption = "BarEdit";
+         this.barButtonItem2.Caption = "Barkod Dizayn";
          this.barButtonItem2.Id = 22;
          this.barButtonItem2.Name = "barButtonItem2";
          this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+         // 
+         // BBI_query
+         // 
+         this.BBI_query.Caption = "Sorğu";
+         this.BBI_query.Id = 23;
+         this.BBI_query.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_query.ImageOptions.SvgImage")));
+         this.BBI_query.Name = "BBI_query";
+         this.BBI_query.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Query_ItemClick);
          // 
          // ribbonPage1
          // 
@@ -454,15 +466,28 @@ namespace Foxoft
          // ribbonPageGroup3
          // 
          this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem3);
-         this.ribbonPageGroup3.ItemLinks.Add(this.BarcodePrint);
          this.ribbonPageGroup3.Name = "ribbonPageGroup3";
          this.ribbonPageGroup3.Text = "Hesabat";
          // 
          // ribbonPageGroup4
          // 
+         this.ribbonPageGroup4.ItemLinks.Add(this.BarcodePrint);
          this.ribbonPageGroup4.ItemLinks.Add(this.barButtonItem2);
          this.ribbonPageGroup4.Name = "ribbonPageGroup4";
-         this.ribbonPageGroup4.Text = "ribbonPageGroup4";
+         this.ribbonPageGroup4.Text = "Barkod";
+         // 
+         // ribbonPage3
+         // 
+         this.ribbonPage3.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup5});
+         this.ribbonPage3.Name = "ribbonPage3";
+         this.ribbonPage3.Text = "Ayarlar";
+         // 
+         // ribbonPageGroup5
+         // 
+         this.ribbonPageGroup5.ItemLinks.Add(this.BBI_query);
+         this.ribbonPageGroup5.Name = "ribbonPageGroup5";
+         this.ribbonPageGroup5.Text = "Data";
          // 
          // ribbonStatusBar1
          // 
@@ -551,5 +576,8 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem barButtonItem3;
       private DevExpress.XtraBars.BarButtonItem BarcodePrint;
       private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
+      private DevExpress.XtraBars.BarButtonItem BBI_query;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
    }
 }

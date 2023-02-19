@@ -182,6 +182,7 @@ namespace Foxoft
          //                .LoadAsync()
          //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
+            
 
          if (productTypeArr != null && productTypeArr.Length > 0)
          {
@@ -606,6 +607,11 @@ namespace Foxoft
             this.Column = column;
          }
          public GridColumn Column;
+      }
+
+      private void BBI_Query_ItemClick(object sender, ItemClickEventArgs e)
+      {
+
       }
    }
 }
