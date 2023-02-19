@@ -123,6 +123,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5F122AFB93A74EFDAD2978F2E6436B75"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_607C52380E594A2BBFBDFEE6C634B063"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -304,12 +310,6 @@
         "Entry"
         {
         "MsmKey" = "8:_D2927C748B2F4864B9361F17E347F6C9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D6A72342BF5940F28A9CDF7490BE9937"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1339,6 +1339,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5F122AFB93A74EFDAD2978F2E6436B75"
+            {
+            "SourcePath" = "8:..\\Foxoft\\FoxoftIcon64.ico"
+            "TargetName" = "8:FoxoftIcon64.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_607C52380E594A2BBFBDFEE6C634B063"
             {
             "AssemblyRegister" = "3:1"
@@ -2214,26 +2234,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D6A72342BF5940F28A9CDF7490BE9937"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\Desktop\\Doc\\media\\FoxoftIcon64.ico"
-            "TargetName" = "8:FoxoftIcon64.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D983B1D13B0245A881E25865A748B6F2"
             {
             "AssemblyRegister" = "3:1"
@@ -2864,10 +2864,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_9AA614FB560C4CCF8C67B69D5C08DAFC"
+            "Target" = "8:_5F122AFB93A74EFDAD2978F2E6436B75"
             "Folder" = "8:_F578FFE419424F16B6122CD11371FAB6"
             "WorkingFolder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
-            "Icon" = "8:_D6A72342BF5940F28A9CDF7490BE9937"
+            "Icon" = "8:_5F122AFB93A74EFDAD2978F2E6436B75"
             "Feature" = "8:"
             }
         }

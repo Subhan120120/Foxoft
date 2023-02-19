@@ -98,8 +98,8 @@ namespace Foxoft
 
       private void ClearControlsAddNew()
       {
-         if (dcProcess.ProcessCode == "IT")
-            gC_InvoiceLine.Enabled = false;
+         // if (dcProcess.ProcessCode == "IT")
+         //    gC_InvoiceLine.Enabled = false;
 
          dbContext = new subContext();
 
@@ -181,11 +181,11 @@ namespace Foxoft
                SaveInvoice();
          }
 
-         if (trInvoiceHeader is not null)
-            if (trInvoiceHeader.ToWarehouseCode is not null)
-            {
-               gC_InvoiceLine.Enabled = true;
-            }
+         //if (trInvoiceHeader is not null)
+         //   if (trInvoiceHeader.ToWarehouseCode is not null)
+         //   {
+         //      gC_InvoiceLine.Enabled = true;
+         //   }
 
          gV_InvoiceLine.Focus();
       }
@@ -501,14 +501,14 @@ namespace Foxoft
          GridView view = sender as GridView;
          GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
 
-         if (trInvoiceHeader.ProcessCode == "IT")
-         {
-            if (trInvoiceHeader.ToWarehouseCode is null)
-            {
-               e.ErrorText = "Transfer Deposu qeyd Olunmayıb";
-               e.Valid = false;
-            }
-         }
+         //if (trInvoiceHeader.ProcessCode == "IT")
+         //{
+         //   if (trInvoiceHeader.ToWarehouseCode is null)
+         //   {
+         //      e.ErrorText = "Transfer Deposu qeyd Olunmayıb";
+         //      e.Valid = false;
+         //   }
+         //}
 
          if (column == colQty)
          {
@@ -809,77 +809,77 @@ namespace Foxoft
       {
          efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
 
-         try
+         //try
+         //{
+         dbContext.SaveChanges(false);
+
+         //List<EntityEntry> entityEntry = new();
+         IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
+
+         if (trInvoiceHeader.ProcessCode == "IT")
          {
-            dbContext.SaveChanges(false);
-
-            //List<EntityEntry> entityEntry = new();
-            IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
-
-            if (trInvoiceHeader.ProcessCode == "IT")
+            foreach (var entry in entityEntry)
             {
-               foreach (var entry in entityEntry)
+               if (entry.Entity.GetType().Name == nameof(TrInvoiceHeader))
                {
-                  if (entry.Entity.GetType().Name == nameof(TrInvoiceHeader))
+                  TrInvoiceHeader trIH = (TrInvoiceHeader)entry.CurrentValues.ToObject();
+
+                  string invoHeadStr = trIH.InvoiceHeaderId.ToString();
+
+                  quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                  using subContext context2 = new();
+
+                  TrInvoiceHeader newTrIH = trIH;
+                  newTrIH.InvoiceHeaderId = quidHead;
+                  string temp = trIH.WarehouseCode;
+                  newTrIH.WarehouseCode = trIH.ToWarehouseCode;
+                  newTrIH.ToWarehouseCode = temp;
+                  newTrIH.StoreCode = trIH.StoreCode;
+
+                  switch (entry.State)
                   {
-                     TrInvoiceHeader trIH = (TrInvoiceHeader)entry.CurrentValues.ToObject();
-
-                     string invoHeadStr = trIH.InvoiceHeaderId.ToString();
-
-                     quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
-
-                     using subContext context2 = new();
-
-                     TrInvoiceHeader newTrIH = trIH;
-                     newTrIH.InvoiceHeaderId = quidHead;
-                     string temp = trIH.WarehouseCode;
-                     newTrIH.WarehouseCode = trIH.ToWarehouseCode;
-                     newTrIH.ToWarehouseCode = temp;
-                     newTrIH.StoreCode = trIH.CurrAccCode;
-
-                     switch (entry.State)
-                     {
-                        case EntityState.Added: context2.TrInvoiceHeaders.Add(newTrIH); break;
-                        case EntityState.Modified: context2.TrInvoiceHeaders.Update(newTrIH); break;
-                        case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(newTrIH); break;
-                        default: break;
-                     }
-                     context2.SaveChanges();
+                     case EntityState.Added: context2.TrInvoiceHeaders.Add(newTrIH); break;
+                     case EntityState.Modified: context2.TrInvoiceHeaders.Update(newTrIH); break;
+                     case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(newTrIH); break;
+                     default: break;
                   }
+                  context2.SaveChanges();
+               }
 
-                  if (entry.Entity.GetType().Name == nameof(TrInvoiceLine))
+               if (entry.Entity.GetType().Name == nameof(TrInvoiceLine))
+               {
+                  TrInvoiceLine trIL = (TrInvoiceLine)entry.CurrentValues.ToObject();
+
+                  string invoLineStr = trIL.InvoiceLineId.ToString();
+                  Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                  using subContext context2 = new();
+
+                  TrInvoiceLine newTrIL = trIL;
+                  newTrIL.InvoiceHeaderId = quidHead;
+                  newTrIL.InvoiceLineId = quidLine;
+                  newTrIL.QtyIn = trIL.QtyOut;
+                  newTrIL.QtyOut -= trIL.QtyOut;
+
+                  switch (entry.State)
                   {
-                     TrInvoiceLine trIL = (TrInvoiceLine)entry.CurrentValues.ToObject();
-
-                     string invoLineStr = trIL.InvoiceLineId.ToString();
-                     Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
-
-                     using subContext context2 = new();
-
-                     TrInvoiceLine newTrIL = trIL;
-                     newTrIL.InvoiceHeaderId = quidHead;
-                     newTrIL.InvoiceLineId = quidLine;
-                     newTrIL.QtyIn = trIL.QtyOut;
-                     newTrIL.QtyOut -= trIL.QtyOut;
-
-                     switch (entry.State)
-                     {
-                        case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
-                        case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
-                        case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
-                        default: break;
-                     }
-                     context2.SaveChanges();
+                     case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
+                     case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
+                     case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
+                     default: break;
                   }
+                  context2.SaveChanges();
                }
             }
+         }
 
-            dbContext.ChangeTracker.AcceptAllChanges();
-         }
-         catch (Exception ex)
-         {
-            MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
-         }
+         dbContext.ChangeTracker.AcceptAllChanges();
+         //}
+         //catch (Exception ex)
+         //{
+         //   MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
+         //}
 
          if (trInvoiceHeader.ProcessCode == "EX")
          {

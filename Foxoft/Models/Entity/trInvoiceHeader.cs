@@ -82,7 +82,7 @@ namespace Foxoft.Models
       public string StoreCode { get; set; }
 
       [Display(Name = "Depodan")]
-      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
       public string WarehouseCode { get; set; }
 
