@@ -32,6 +32,7 @@ namespace Foxoft
    public partial class FormProductList : RibbonForm
    {
       EfMethods efMethods = new();
+      AdoMethods adoMethods = new();
       public DcProduct dcProduct { get; set; }
       readonly string designFolder;
       string barcodeDesignFile = @"Barcode.repx";
@@ -184,13 +185,12 @@ namespace Foxoft
          //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
 
-         AdoMethods adoMethods = new();
          object dataSource = null;
 
          DcReport dcReport = efMethods.SelectReportByName("FormProductList");
          if (dcReport is not null)
          {
-            if (!string.IsNullOrEmpty(dcReport.ReportQuery))
+            if (!String.IsNullOrEmpty(dcReport.ReportQuery))
             {
                DataTable dataTable = adoMethods.SqlGetDt(dcReport.ReportQuery);
                if (dataTable.Rows.Count > 0)
