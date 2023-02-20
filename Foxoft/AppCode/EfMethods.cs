@@ -948,6 +948,12 @@ namespace Foxoft
          return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportId == id);
       }
 
+      public DcReport SelectReportByName(string name)
+      {
+         using subContext db = new();
+         return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportName == name);
+      }
+
       public List<DcReport> SelectReports()
       {
          using subContext db = new();

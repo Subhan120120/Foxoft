@@ -61,7 +61,7 @@ namespace Foxoft
          dt.Load(dr);
 
          ReflectionExtensions.SetCaptionName(dt);
-       
+
          return dt;
 
 

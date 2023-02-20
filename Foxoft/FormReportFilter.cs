@@ -88,7 +88,7 @@ namespace Foxoft
 
       private DataTable opToDt(GroupOperator groupOperand)
       {
-         DataTable dt = new DataTable();
+         DataTable dt = new();
          dt.Clear();
          Dictionary<string, object> keyValuePairs = Extract(groupOperand);
          foreach (var item in keyValuePairs)

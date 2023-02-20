@@ -19,6 +19,7 @@ using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -182,18 +183,31 @@ namespace Foxoft
          //                .LoadAsync()
          //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
-            
 
-         if (productTypeArr != null && productTypeArr.Length > 0)
+         AdoMethods adoMethods = new();
+         object dataSource = null;
+
+         DcReport dcReport = efMethods.SelectReportByName("FormProductList");
+         if (dcReport is not null)
          {
-            List<DcProduct> dcProducts = efMethods.SelectProductsByType(productTypeArr, gV_ProductList.ActiveFilterCriteria);
-            dcProductsBindingSource.DataSource = dcProducts;
+            if (!string.IsNullOrEmpty(dcReport.ReportQuery))
+            {
+               DataTable dataTable = adoMethods.SqlGetDt(dcReport.ReportQuery);
+               if (dataTable.Rows.Count > 0)
+                  dataSource = dataTable;
+            }
          }
-         else if (productTypeArr == null)
+
+         if (dataSource is null)
          {
-            List<DcProduct> dcProducts = efMethods.SelectProducts();
-            dcProductsBindingSource.DataSource = dcProducts;
+            if (productTypeArr != null && productTypeArr.Length > 0)
+               dataSource = efMethods.SelectProductsByType(productTypeArr, gV_ProductList.ActiveFilterCriteria);
+            else if (productTypeArr == null)
+               dataSource = efMethods.SelectProducts();
          }
+
+         dcProductsBindingSource.DataSource = dataSource;
+
 
          if (gV_ProductList.FocusedRowHandle >= 0)
             dcProduct = gV_ProductList.GetRow(gV_ProductList.FocusedRowHandle) as DcProduct;
@@ -611,7 +625,14 @@ namespace Foxoft
 
       private void BBI_Query_ItemClick(object sender, ItemClickEventArgs e)
       {
-
+         DcReport dcReport = efMethods.SelectReportByName("FormProductList");
+         if (dcReport is not null)
+         {
+            int id = dcReport.ReportId;
+            FormReportEditor formQueryEditor = new(id);
+            if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
+               LoadProducts(productTypeArr);
+         }
       }
    }
 }
