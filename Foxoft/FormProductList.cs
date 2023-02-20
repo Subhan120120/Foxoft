@@ -169,22 +169,6 @@ namespace Foxoft
 
       private void LoadProducts(byte[] productTypeArr)
       {
-         //subContext dbContext = new subContext();
-
-         //IQueryable<DcProduct> DcProducts = dbContext.DcProducts;
-         //CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-         //IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), gV_ProductList.ActiveFilterCriteria) as IQueryable<DcProduct>;
-
-         //if (gV_ProductList.ActiveFilterCriteria is null)
-         //    filteredData = filteredData.Take(10);
-
-         //filteredData.Where(x => x.ProductTypeCode == productTypeCode)
-         //                .Include(x => x.TrInvoiceLines)
-         //                    .ThenInclude(x => x.TrInvoiceHeader)
-         //                .LoadAsync()
-         //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-
-
          object dataSource = null;
 
          DcReport dcReport = efMethods.SelectReportByName("FormProductList");
@@ -194,7 +178,10 @@ namespace Foxoft
             {
                DataTable dataTable = adoMethods.SqlGetDt(dcReport.ReportQuery);
                if (dataTable.Rows.Count > 0)
+               {
                   dataSource = dataTable;
+                  gV_ProductList.PopulateColumns();
+               }
             }
          }
 
@@ -214,6 +201,20 @@ namespace Foxoft
 
          gV_ProductList.BestFitColumns();
          gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
+
+         //IQueryable<DcProduct> DcProducts = dbContext.DcProducts;
+         //CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+         //IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), gV_ProductList.ActiveFilterCriteria) as IQueryable<DcProduct>;
+
+         //if (gV_ProductList.ActiveFilterCriteria is null)
+         //    filteredData = filteredData.Take(10);
+
+         //filteredData.Where(x => x.ProductTypeCode == productTypeCode)
+         //                .Include(x => x.TrInvoiceLines)
+         //                    .ThenInclude(x => x.TrInvoiceHeader)
+         //                .LoadAsync()
+         //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+
       }
 
       private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
