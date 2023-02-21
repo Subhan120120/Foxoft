@@ -5,9 +5,9 @@ declare @StartTime time =  '00:00:00.000'
 select ProductCode
 	  , ProductDesc
 	  , LastPurchasePrice
-	  , Mərkəz = [depo-01]
-	  , [Sıra 20] = [depo-02]
-	  , [Sıra 5] = [depo-03]
+	  , Mərkəz = ISNULL([depo-01],0)
+	  , [Sıra 20] = ISNULL([depo-02],0)
+	  , [Sıra 5] = ISNULL([depo-03],0)
 	  , Balance = isnull([depo-01],0) + isnull([depo-02],0) + isnull([depo-03],0)
 	  , WholesalePrice
 	  , Marka

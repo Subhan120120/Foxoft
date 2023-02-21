@@ -80,6 +80,7 @@ namespace Foxoft
          this.productTypeArr = productTypeArr;
          LoadProducts(productTypeArr);
 
+         LoadLayout();
          gV_ProductList.Columns.Add(colImage);
       }
 
@@ -169,6 +170,9 @@ namespace Foxoft
 
       private void LoadProducts(byte[] productTypeArr)
       {
+         string ts = String.Join(",", productTypeArr);
+         string where = "Where  ProductTypeCode in (" + ts + ");";
+
          object dataSource = null;
 
          DcReport dcReport = efMethods.SelectReportByName("FormProductList");
@@ -195,9 +199,14 @@ namespace Foxoft
 
          dcProductsBindingSource.DataSource = dataSource;
 
-
          if (gV_ProductList.FocusedRowHandle >= 0)
-            dcProduct = gV_ProductList.GetRow(gV_ProductList.FocusedRowHandle) as DcProduct;
+         {
+            object productCode = gV_ProductList.GetFocusedRowCellValue("ProductCode");
+            if (productCode is not null)
+               dcProduct = efMethods.SelectProduct(productCode.ToString());
+         }
+         else
+            dcProduct = null;
 
          gV_ProductList.BestFitColumns();
          gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
@@ -222,7 +231,11 @@ namespace Foxoft
          GridView view = sender as GridView;
 
          if (view.FocusedRowHandle >= 0)
-            dcProduct = view.GetRow(view.FocusedRowHandle) as DcProduct;
+         {
+            object productCode = view.GetFocusedRowCellValue("ProductCode");
+            if (productCode is not null)
+               dcProduct = efMethods.SelectProduct(productCode.ToString());
+         }
          else
             dcProduct = null;
       }
@@ -397,7 +410,11 @@ namespace Foxoft
          GridView view = sender as GridView;
 
          if (view.FocusedRowHandle >= 0)
-            dcProduct = view.GetRow(view.FocusedRowHandle) as DcProduct;
+         {
+            object productCode = view.GetFocusedRowCellValue("ProductCode");
+            if (productCode is not null)
+               dcProduct = efMethods.SelectProduct(productCode.ToString());
+         }
          else
             dcProduct = null;
 
