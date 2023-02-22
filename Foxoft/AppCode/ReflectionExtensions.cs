@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
@@ -84,10 +85,10 @@ namespace Foxoft
 
                if (myPropInfo is not null)
                {
-                  DisplayNameAttribute attName = myPropInfo.PropertyInfo.GetAttribute<DisplayNameAttribute>(false);
+                  DisplayAttribute attName = myPropInfo.PropertyInfo.GetAttribute<DisplayAttribute>(false);
 
                   if (attName is not null)
-                     column.Caption = attName.DisplayName;
+                     column.Caption = attName.Name;
                }
             }
          }

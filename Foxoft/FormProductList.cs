@@ -170,9 +170,6 @@ namespace Foxoft
 
       private void LoadProducts(byte[] productTypeArr)
       {
-         string ts = String.Join(",", productTypeArr);
-         string where = "Where  ProductTypeCode in (" + ts + ");";
-
          object dataSource = null;
 
          DcReport dcReport = efMethods.SelectReportByName("FormProductList");
@@ -180,10 +177,13 @@ namespace Foxoft
          {
             if (!String.IsNullOrEmpty(dcReport.ReportQuery))
             {
-               DataTable dataTable = adoMethods.SqlGetDt(dcReport.ReportQuery);
-               if (dataTable.Rows.Count > 0)
+               string ts = String.Join(",", productTypeArr);
+               string where = " Where ProductTypeCode in (" + ts + ") ";
+               string qryMaster = dcReport.ReportQuery + where;
+               DataTable dt = adoMethods.SqlGetDt(qryMaster);
+               if (dt.Rows.Count > 0)
                {
-                  dataSource = dataTable;
+                  dataSource = dt;
                   gV_ProductList.PopulateColumns();
                }
             }
