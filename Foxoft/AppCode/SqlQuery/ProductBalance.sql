@@ -2,7 +2,7 @@
 --declare @StartDate date = dateadd(DAY, 1, getdate())
 --declare @StartTime time =  '00:00:00.000'
 
-select ProductCode
+select top 10000000 ProductCode
 	  , ProductDesc
 	  , LastPurchasePrice
 	  , Mərkəz = ISNULL([depo-01],0)
@@ -52,4 +52,4 @@ PIVOT
 (  
  AVG(Balance)
   FOR WarehouseCode IN ([depo-01], [depo-02], [depo-03])  
-) AS PivotTable
+) AS PivotTable order by ProductDesc
