@@ -225,7 +225,6 @@ namespace Foxoft
                                    .Include(x => x.TrPaymentLines)
                                    .Where(x => x.DocumentNumber == documentNumber)
                                    .FirstOrDefault(x => x.IsMainTF == true);
-
       }
 
       public List<TrInvoiceHeader> SelectInvoiceHeadersByProcessCode(string processCode)

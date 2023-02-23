@@ -124,6 +124,7 @@ namespace Foxoft.Models
       public bool IsLocked { get; set; }
 
       [Display(Name = "Əsas Transfer")]
+      [DefaultValue("1")]
       public bool IsMainTF { get; set; }
 
       //[NotMapped] //datalayoutColntrola gore

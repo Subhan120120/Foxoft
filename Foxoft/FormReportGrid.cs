@@ -346,12 +346,25 @@ namespace Foxoft
                }
                else if (trPaymentHeader is not null)
                {
-                  FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
-                  FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                  frm.MdiParent = formERP;
-                  frm.WindowState = FormWindowState.Maximized;
-                  frm.Show();
-                  formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  if (trPaymentHeader.ProcessCode == "PA")
+                  {
+                     FormPaymentDetail frm = new(trPaymentHeader.PaymentHeaderId);
+                     FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                     frm.MdiParent = formERP;
+                     frm.WindowState = FormWindowState.Maximized;
+                     frm.Show();
+                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  }
+                  else if(trPaymentHeader.ProcessCode == "CT")
+                  {
+                     FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
+                     FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                     frm.MdiParent = formERP;
+                     frm.WindowState = FormWindowState.Maximized;
+                     frm.Show();
+                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                  }
+
                }
                else
                   MessageBox.Show("Belə bir sənəd yoxdur.");

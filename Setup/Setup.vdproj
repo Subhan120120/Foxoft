@@ -2736,7 +2736,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Foxoft"
         "ProductCode" = "8:{45CA112D-09DD-478B-AD26-1FA73E8263C8}"
-        "PackageCode" = "8:{2B5FCA36-D34F-4E99-8A39-E67937871EBF}"
+        "PackageCode" = "8:{6652AFD7-2F1A-4A44-BD54-7CEA495A8290}"
         "UpgradeCode" = "8:{F9623061-39E4-403B-99A1-E6554D6C90B4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2856,7 +2856,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A7A8585E25884F35BCAEB11A4228D49D"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D28DFF2C7372472A977AC1BC24EA139E"
             {
             "Name" = "8:Foxoft"
             "Arguments" = "8:"
@@ -2864,7 +2864,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_5F122AFB93A74EFDAD2978F2E6436B75"
+            "Target" = "8:_9AA614FB560C4CCF8C67B69D5C08DAFC"
             "Folder" = "8:_F578FFE419424F16B6122CD11371FAB6"
             "WorkingFolder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
             "Icon" = "8:_5F122AFB93A74EFDAD2978F2E6436B75"

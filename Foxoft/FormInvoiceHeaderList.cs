@@ -78,7 +78,7 @@ namespace Foxoft
 
          List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
                      .Include(x => x.DcCurrAcc)
-                     .Where(x => x.ProcessCode == processCode)
+                     .Where(x => x.ProcessCode == processCode && x.IsMainTF == true)
                      .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
                      .Select(x => new TrInvoiceHeader
                      {
