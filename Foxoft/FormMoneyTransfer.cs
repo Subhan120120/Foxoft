@@ -77,6 +77,7 @@ namespace Foxoft
          paymentHeader.DocumentNumber = NewDocNum;
          paymentHeader.DocumentDate = DateTime.Now;
          paymentHeader.OperationDate = DateTime.Now;
+         paymentHeader.ProcessCode = "CT";
          paymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
          paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
          paymentHeader.OfficeCode = Authorization.OfficeCode;

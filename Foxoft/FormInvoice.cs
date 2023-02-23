@@ -949,6 +949,7 @@ namespace Foxoft
 
          trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
          trPaymentHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
+         trPaymentHeader.ProcessCode = "PA";
          trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
          trPaymentHeader.OfficeCode = Authorization.OfficeCode;
          trPaymentHeader.StoreCode = Authorization.StoreCode;

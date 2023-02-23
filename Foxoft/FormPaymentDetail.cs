@@ -85,6 +85,7 @@ namespace Foxoft
          paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
          paymentHeader.OfficeCode = Authorization.OfficeCode;
          paymentHeader.StoreCode = Authorization.StoreCode;
+         paymentHeader.ProcessCode = "PA";
          paymentHeader.CreatedUserName = Authorization.CurrAccCode;
          paymentHeader.IsMainTF = true;
 

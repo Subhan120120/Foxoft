@@ -74,6 +74,7 @@ namespace Foxoft
          trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
          trPaymentHeader.OfficeCode = Authorization.OfficeCode;
          trPaymentHeader.StoreCode = Authorization.StoreCode;
+         trPaymentHeader.ProcessCode = "PA";
          trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
          trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
          if (invoiceExist)

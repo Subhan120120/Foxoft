@@ -52,4 +52,5 @@ PIVOT
 (  
  AVG(Balance)
   FOR WarehouseCode IN ([depo-01], [depo-02], [depo-03])  
-) AS PivotTable order by ProductDesc
+) AS PivotTable 
+--order by ProductDesc

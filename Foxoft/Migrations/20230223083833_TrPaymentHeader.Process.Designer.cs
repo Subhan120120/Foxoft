@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230223083833_TrPaymentHeader.Process")]
+    partial class TrPaymentHeaderProcess
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1812,8 +1814,6 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("InvoiceHeaderId");
 
-                    b.HasIndex("ProcessCode");
-
                     b.HasIndex("ToCashRegCode");
 
                     b.ToTable("TrPaymentHeaders");
@@ -2356,19 +2356,11 @@ namespace Foxoft.Migrations
                         .HasForeignKey("InvoiceHeaderId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcProcess", "DcProcess")
-                        .WithMany("TrPaymentHeaders")
-                        .HasForeignKey("ProcessCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Foxoft.Models.DcCurrAcc", "ToCashReg")
                         .WithMany("TrPaymentHeaderToCashes")
                         .HasForeignKey("ToCashRegCode");
 
                     b.Navigation("DcCurrAcc");
-
-                    b.Navigation("DcProcess");
 
                     b.Navigation("ToCashReg");
 
@@ -2495,8 +2487,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcProcess", b =>
                 {
                     b.Navigation("TrInvoiceHeaders");
-
-                    b.Navigation("TrPaymentHeaders");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProduct", b =>

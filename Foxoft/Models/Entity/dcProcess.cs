@@ -15,6 +15,7 @@ namespace Foxoft.Models
       public DcProcess()
       {
          TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
+         TrPaymentHeaders = new HashSet<TrPaymentHeader>();
       }
 
       [Key]
@@ -37,8 +38,8 @@ namespace Foxoft.Models
       public string CustomCurrencyCode { get; set; }
 
 
-
       public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
+      public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
 
       public virtual DcCurrency DcCurrency { get; set; }
    }

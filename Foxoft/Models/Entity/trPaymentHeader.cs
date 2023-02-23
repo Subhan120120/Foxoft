@@ -29,6 +29,12 @@ namespace Foxoft.Models
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       public string DocumentNumber { get; set; }
 
+      [Display(Name = "Proses")]
+      [ForeignKey("DcProcess")]
+      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+      [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+      public string ProcessCode { get; set; }
+
       [Display(Name = "Sənəd Tarixi")]
       [DefaultValue("getdate()")]
       [Column(TypeName = "date")]
@@ -112,6 +118,7 @@ namespace Foxoft.Models
 
       public virtual DcCurrAcc DcCurrAcc { get; set; }
       public virtual DcCurrAcc ToCashReg { get; set; }
+      public virtual DcProcess DcProcess { get; set; }
       //public virtual DcCurrAcc FromCashReg { get; set; }
       public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
       public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
