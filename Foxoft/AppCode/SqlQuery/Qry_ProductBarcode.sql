@@ -4,6 +4,7 @@ select DcProducts.ProductCode
 				, WholesalePrice 
 				, Marka = FeatureDesc		
 				, Barcode
+				, RetailPrice
 	from DcProducts
 	left join DcProductDcFeatures fea on fea.ProductCode = DcProducts.ProductCode
 					and fea.FeatureId = 3

@@ -652,5 +652,46 @@ namespace Foxoft
                LoadProducts(productTypeArr);
          }
       }
+
+      private void BBI_ReportProduct_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         AppDomain.CurrentDomain.SetData("DXResourceDirectory", imageFolder);
+
+         ColumnView View = gC_ProductList.MainView as ColumnView;
+         List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
+
+         XtraReport xtraReport = GetBarcodeReport(designFolder, mydata);
+
+         if (xtraReport is not null)
+         {
+            ReportPrintTool printTool = new(xtraReport);
+            printTool.ShowPreview();
+         }
+      }
+
+      public static List<T> GetFilteredData<T>(ColumnView view)
+      {
+         List<T> resp = new List<T>();
+         for (int i = 0; i < view.DataRowCount; i++)
+            resp.Add((T)view.GetRow(i));
+
+         return resp;
+      }
+
+      private XtraReport GetBarcodeReport(string designPath, object datasource)
+      {
+         ReportClass reportClass = new();
+
+         if (!File.Exists(designPath))
+            designPath = reportClass.SelectDesign();
+         if (File.Exists(designPath))
+         {
+            return reportClass.CreateReport(datasource, designPath);
+         }
+         else
+         {
+            return null;
+         }
+      }
    }
 }
