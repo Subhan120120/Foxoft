@@ -896,7 +896,6 @@ namespace Foxoft
 
          decimal invoiceSumLoc = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
-
          if (invoiceSumLoc > 0)
          {
             if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
@@ -953,6 +952,7 @@ namespace Foxoft
          trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
          trPaymentHeader.OfficeCode = Authorization.OfficeCode;
          trPaymentHeader.StoreCode = Authorization.StoreCode;
+         trPaymentHeader.IsMainTF = true;
          trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
          trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
          if (invoiceExist)
