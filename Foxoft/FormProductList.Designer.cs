@@ -77,6 +77,7 @@ namespace Foxoft
          this.BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_query = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ReportProduct = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -86,7 +87,7 @@ namespace Foxoft
          this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.BBI_ReportProduct = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ReportDesignProduct = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_ProductList)).BeginInit();
@@ -333,9 +334,10 @@ namespace Foxoft
             this.BarcodePrint,
             this.barButtonItem2,
             this.BBI_query,
-            this.BBI_ReportProduct});
+            this.BBI_ReportProduct,
+            this.BBI_ReportDesignProduct});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 25;
+         this.ribbonControl1.MaxItemId = 26;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -438,6 +440,14 @@ namespace Foxoft
          this.BBI_query.Name = "BBI_query";
          this.BBI_query.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Query_ItemClick);
          // 
+         // BBI_ReportProduct
+         // 
+         this.BBI_ReportProduct.Caption = "Hesabat";
+         this.BBI_ReportProduct.Id = 24;
+         this.BBI_ReportProduct.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportProduct.ImageOptions.SvgImage")));
+         this.BBI_ReportProduct.Name = "BBI_ReportProduct";
+         this.BBI_ReportProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportProduct_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -489,6 +499,7 @@ namespace Foxoft
          // ribbonPageGroup5
          // 
          this.ribbonPageGroup5.ItemLinks.Add(this.BBI_query);
+         this.ribbonPageGroup5.ItemLinks.Add(this.BBI_ReportDesignProduct);
          this.ribbonPageGroup5.Name = "ribbonPageGroup5";
          this.ribbonPageGroup5.Text = "Data";
          // 
@@ -504,13 +515,13 @@ namespace Foxoft
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
          // 
-         // barButtonItem4
+         // BBI_ReportDesignProduct
          // 
-         this.BBI_ReportProduct.Caption = "Hesabat";
-         this.BBI_ReportProduct.Id = 24;
-         this.BBI_ReportProduct.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem4.ImageOptions.SvgImage")));
-         this.BBI_ReportProduct.Name = "barButtonItem4";
-         this.BBI_ReportProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportProduct_ItemClick);
+         this.BBI_ReportDesignProduct.Caption = "Hesabat";
+         this.BBI_ReportDesignProduct.Id = 25;
+         this.BBI_ReportDesignProduct.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportDesignProduct.ImageOptions.SvgImage")));
+         this.BBI_ReportDesignProduct.Name = "BBI_ReportDesignProduct";
+         this.BBI_ReportDesignProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportDesignProduct_ItemClick);
          // 
          // FormProductList
          // 
@@ -591,5 +602,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem BBI_query;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
       private DevExpress.XtraBars.BarButtonItem BBI_ReportProduct;
+      private DevExpress.XtraBars.BarButtonItem BBI_ReportDesignProduct;
    }
 }

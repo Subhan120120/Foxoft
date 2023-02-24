@@ -830,18 +830,19 @@ namespace Foxoft
 
                      using subContext context2 = new();
 
-                     TrInvoiceHeader newTrIH = trIH;
-                     newTrIH.InvoiceHeaderId = quidHead;
+                     TrInvoiceHeader copyTrIH = trIH;
+                     copyTrIH.InvoiceHeaderId = quidHead;
                      string temp = trIH.WarehouseCode;
-                     newTrIH.WarehouseCode = trIH.ToWarehouseCode;
-                     newTrIH.ToWarehouseCode = temp;
-                     newTrIH.StoreCode = trIH.StoreCode;
+                     copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
+                     copyTrIH.ToWarehouseCode = temp;
+                     copyTrIH.StoreCode = trIH.StoreCode;
+                     copyTrIH.IsMainTF = false;
 
                      switch (entry.State)
                      {
-                        case EntityState.Added: context2.TrInvoiceHeaders.Add(newTrIH); break;
-                        case EntityState.Modified: context2.TrInvoiceHeaders.Update(newTrIH); break;
-                        case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(newTrIH); break;
+                        case EntityState.Added: context2.TrInvoiceHeaders.Add(copyTrIH); break;
+                        case EntityState.Modified: context2.TrInvoiceHeaders.Update(copyTrIH); break;
+                        case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(copyTrIH); break;
                         default: break;
                      }
                      context2.SaveChanges();
@@ -1500,11 +1501,6 @@ namespace Foxoft
                colCurrencyCode.Visible = false;
                col_NetAmount.Visible = false;
             }
-         }
-
-         if (true)
-         {
-
          }
 
          string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";

@@ -17,6 +17,7 @@ namespace Foxoft
 {
    public partial class FormLogin : ToolbarForm
    {
+      EfMethods efMethods = new();
       public FormLogin()
       {
          // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);

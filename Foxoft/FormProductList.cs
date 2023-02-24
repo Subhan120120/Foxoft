@@ -46,10 +46,10 @@ namespace Foxoft
       public FormProductList()
       {
          InitializeComponent();
+
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
          SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-
          if (settingStore is not null)
          {
             if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
@@ -58,6 +58,8 @@ namespace Foxoft
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                imageFolder = settingStore.ImageFolder;
          }
+
+         AppDomain.CurrentDomain.SetData("DXResourceDirectory", imageFolder);
 
          LoadLayout();
 
@@ -655,12 +657,11 @@ namespace Foxoft
 
       private void BBI_ReportProduct_ItemClick(object sender, ItemClickEventArgs e)
       {
-         AppDomain.CurrentDomain.SetData("DXResourceDirectory", imageFolder);
-
          ColumnView View = gC_ProductList.MainView as ColumnView;
          List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
+         string designFile = designFolder + @"\" + "HesabatProduct_toplu.repx";
 
-         XtraReport xtraReport = GetBarcodeReport(designFolder, mydata);
+         XtraReport xtraReport = GetBarcodeReport(designFile, mydata);
 
          if (xtraReport is not null)
          {
@@ -691,6 +692,20 @@ namespace Foxoft
          else
          {
             return null;
+         }
+      }
+
+      private void BBI_ReportDesignProduct_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ColumnView View = gC_ProductList.MainView as ColumnView;
+         List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
+
+         XtraReport xtraReport = GetBarcodeReport(designFolder, mydata);
+
+         if (xtraReport is not null)
+         {
+            ReportDesignTool printTool = new(xtraReport);
+            printTool.ShowRibbonDesigner();
          }
       }
    }

@@ -14,8 +14,7 @@ namespace Foxoft
    {
       [STAThread]
       static void Main()
-      {
-         ;
+      {         
          string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Foxoft Log");
          if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
