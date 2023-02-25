@@ -908,6 +908,18 @@ namespace Foxoft
                  .ToList();
       }
 
+      public bool CurrAccHasClaims(string currAccCode, string claim)
+      {
+         using subContext db = new();
+
+
+         return db.TrCurrAccRoles.Include(x => x.DcRole)
+                                    .ThenInclude(x => x.TrRoleClaims)
+                                 .Where(x => x.CurrAccCode == currAccCode)
+                                 .Any(x => x.DcRole.TrRoleClaims.Any(x => x.ClaimCode == claim));
+
+      }
+
       public string SelectOfficeCode(string CurrAccCode)
       {
          using subContext db = new();

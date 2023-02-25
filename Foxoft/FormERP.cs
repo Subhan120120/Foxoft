@@ -147,6 +147,13 @@ namespace Foxoft
 
       private void aCE_Products_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormProductList form = Application.OpenForms[nameof(FormProductList)] as FormProductList;
 
          if (form != null)
@@ -171,16 +178,22 @@ namespace Foxoft
          }
       }
 
-      private void aCE_CurrAcc_Click(object sender, EventArgs e)
+      private void aCE_CurrAccs_Click(object sender, EventArgs e)
       {
-         FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
 
          try
          {
+            FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
             form = new(0);
             form.MdiParent = this;
-            form.Show();
             form.WindowState = FormWindowState.Maximized;
+            form.Show();
             parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
          }
          catch (Exception ex)
@@ -189,13 +202,20 @@ namespace Foxoft
          }
       }
 
-      private void aCE_CurrAccs_Click(object sender, EventArgs e)
+      private void aCE_CurrAccAll_Click(object sender, EventArgs e)
       {
 
       }
 
       private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormInvoice formInvoice = new("RP", new byte[] { 1, 3 }, 2);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
@@ -205,6 +225,13 @@ namespace Foxoft
 
       private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormInvoice formInvoice = new("RS", new byte[] { 1, 3 }, 1);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
@@ -215,6 +242,13 @@ namespace Foxoft
 
       private void aCE_Expense_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          int OpenFormCount = 0;
 
          foreach (Form form in Application.OpenForms)
@@ -245,6 +279,13 @@ namespace Foxoft
 
       private void aCE_ReportZet_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          DsMethods dsMethods = new();
          ReportClass reportClass = new();
 
@@ -296,6 +337,13 @@ namespace Foxoft
 
       private void aCE_Payments_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          int OpenFormCount = 0;
 
          foreach (Form form in Application.OpenForms)
@@ -321,6 +369,13 @@ namespace Foxoft
 
       private void aCE_CountIn_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormInvoice formInvoice = new("CI", new byte[] { 1 }, 0);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
@@ -330,6 +385,13 @@ namespace Foxoft
 
       private void aCE_CountOut_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormInvoice formInvoice = new("CO", new byte[] { 1 }, 0);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
@@ -339,6 +401,13 @@ namespace Foxoft
 
       private void aCE_PaymentDetail_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormPaymentDetail formPaymentDetail = new();
          formPaymentDetail.MdiParent = this;
          formPaymentDetail.WindowState = FormWindowState.Maximized;
@@ -352,8 +421,15 @@ namespace Foxoft
             e.Cancel = true;
       }
 
-      private void aCE_ProductTransfer_Click(object sender, EventArgs e)
+      private void aCE_InventoryTransfer_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormInvoice formInvoice = new("IT", new byte[] { 1 }, 4);
          formInvoice.MdiParent = this;
          formInvoice.WindowState = FormWindowState.Maximized;
@@ -368,6 +444,13 @@ namespace Foxoft
 
       private void ACE_CashTransfer_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormMoneyTransfer form = new();
          form.MdiParent = this;
          form.WindowState = FormWindowState.Maximized;
@@ -377,6 +460,13 @@ namespace Foxoft
 
       private void ACE_PurchaseIsReturn_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          int OpenFormCount = 0;
 
          foreach (Form form in Application.OpenForms)
@@ -401,6 +491,13 @@ namespace Foxoft
 
       private void ACE_SaleIsReturn_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          int OpenFormCount = 0;
 
          foreach (Form form in Application.OpenForms)
@@ -425,6 +522,13 @@ namespace Foxoft
 
       private void ACE_ReportFinally_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          DsMethods dsMethods = new();
          ReportClass reportClass = new();
 
@@ -466,8 +570,15 @@ namespace Foxoft
          }
       }
 
-      private void ACE_CashReg_Click(object sender, EventArgs e)
+      private void ACE_CashRegs_Click(object sender, EventArgs e)
       {
+         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+         if (!currAccHasClaims)
+         {
+            MessageBox.Show("Yetkiniz yoxdur! ");
+            return;
+         }
+
          FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
 
          try

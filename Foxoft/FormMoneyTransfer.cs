@@ -193,7 +193,7 @@ namespace Foxoft
 
       private void SelectDocNum()
       {
-         using (FormPaymentHeaderList form = new FormPaymentHeaderList())
+         using (FormPaymentHeaderList form = new FormPaymentHeaderList("CT"))
          {
             if (form.ShowDialog(this) == DialogResult.OK)
             {

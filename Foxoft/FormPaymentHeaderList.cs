@@ -25,6 +25,7 @@ namespace Foxoft
    public partial class FormPaymentHeaderList : RibbonForm
    {
       subContext dbContext;
+      string processCode;
       EfMethods efMethods = new EfMethods();
       public TrPaymentHeader trPaymentHeader { get; set; }
 
@@ -43,7 +44,12 @@ namespace Foxoft
 
          string storeCode = Authorization.StoreCode;
          gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+      }
 
+      public FormPaymentHeaderList(string processCode)
+         : this()
+      {
+         processCode = processCode;
       }
 
       private void LoadPaymentHeaders()
@@ -80,6 +86,7 @@ namespace Foxoft
          List<TrPaymentHeader> headerList = filteredData.Include(x => x.TrPaymentLines)
                                                         .Include(x => x.DcCurrAcc)
                                                         .Where(x => x.IsMainTF == true)
+                                                        .Where(x => x.ProcessCode == processCode)
                                                         .OrderByDescending(x => x.OperationDate)
                                                         .ThenByDescending(x => x.OperationTime)
                                                         .Select(x => new TrPaymentHeader

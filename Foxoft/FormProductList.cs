@@ -131,6 +131,9 @@ namespace Foxoft
             MemoryStream stream = new(byteArray);
             gV_ProductList.RestoreLayoutFromStream(stream, option);
          }
+
+         gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+         gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
       }
 
       public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
@@ -513,8 +516,8 @@ namespace Foxoft
          GridView gV = gC.MainView as GridView;
          if (gV is not null)
          {
-            gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
-            gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+            //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+            //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             if (!gV.FindPanelVisible)
                gC.BeginInvoke(new Action(gV.ShowFindPanel));

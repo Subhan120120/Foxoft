@@ -78,6 +78,7 @@ namespace Foxoft
          this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_query = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_ReportProduct = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ReportDesignProduct = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -87,7 +88,6 @@ namespace Foxoft
          this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.BBI_ReportDesignProduct = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.gC_ProductList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_ProductList)).BeginInit();
@@ -144,6 +144,7 @@ namespace Foxoft
          this.gV_ProductList.GridControl = this.gC_ProductList;
          this.gV_ProductList.Name = "gV_ProductList";
          this.gV_ProductList.OptionsFind.FindDelay = 100;
+         this.gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
          this.gV_ProductList.OptionsView.ShowGroupPanel = false;
          this.gV_ProductList.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_ProductList_RowCellStyle);
          this.gV_ProductList.RowStyle += new DevExpress.XtraGrid.Views.Grid.RowStyleEventHandler(this.gV_ProductList_RowStyle);
@@ -448,6 +449,14 @@ namespace Foxoft
          this.BBI_ReportProduct.Name = "BBI_ReportProduct";
          this.BBI_ReportProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportProduct_ItemClick);
          // 
+         // BBI_ReportDesignProduct
+         // 
+         this.BBI_ReportDesignProduct.Caption = "Hesabat";
+         this.BBI_ReportDesignProduct.Id = 25;
+         this.BBI_ReportDesignProduct.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportDesignProduct.ImageOptions.SvgImage")));
+         this.BBI_ReportDesignProduct.Name = "BBI_ReportDesignProduct";
+         this.BBI_ReportDesignProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportDesignProduct_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -514,14 +523,6 @@ namespace Foxoft
          // 
          this.ribbonPage2.Name = "ribbonPage2";
          this.ribbonPage2.Text = "ribbonPage2";
-         // 
-         // BBI_ReportDesignProduct
-         // 
-         this.BBI_ReportDesignProduct.Caption = "Hesabat";
-         this.BBI_ReportDesignProduct.Id = 25;
-         this.BBI_ReportDesignProduct.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportDesignProduct.ImageOptions.SvgImage")));
-         this.BBI_ReportDesignProduct.Name = "BBI_ReportDesignProduct";
-         this.BBI_ReportDesignProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportDesignProduct_ItemClick);
          // 
          // FormProductList
          // 

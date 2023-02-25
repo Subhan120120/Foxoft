@@ -492,6 +492,7 @@ namespace Foxoft
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.StatusBar = this.ribbonStatusBar1;
          this.Text = "Cari Hesablar";
+         this.VisibleChanged += new System.EventHandler(this.FormCurrAccList_VisibleChanged);
          ((System.ComponentModel.ISupportInitialize)(this.gC_CurrAccList)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcCurrAccsBindingSource)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_CurrAccList)).EndInit();

@@ -32,7 +32,8 @@ namespace Foxoft
 
       public FormCurrAccList()
       {
-         InitializeComponent();
+         InitializeComponent(); 
+         
          bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
          LoadLayout();
@@ -462,5 +463,11 @@ namespace Foxoft
          }
          public GridColumn Column;
       }
+
+      private void FormCurrAccList_VisibleChanged(object sender, EventArgs e)
+      {
+
+      }
+
    }
 }
