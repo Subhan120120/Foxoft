@@ -96,11 +96,14 @@ namespace Foxoft
          this.bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_ModifyInvoice = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ReportPriceList = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+         this.RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -716,13 +719,15 @@ namespace Foxoft
             this.bBI_CopyInvoice,
             this.bBI_Whatsapp,
             this.BBI_ModifyInvoice,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.BBI_ReportPriceList});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 21;
+         this.ribbonControl1.MaxItemId = 22;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
+            this.ribbonPage1,
+            this.ribbonPage2});
          this.ribbonControl1.Size = new System.Drawing.Size(886, 158);
          this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
          // 
@@ -830,6 +835,14 @@ namespace Foxoft
          this.barButtonItem1.Name = "barButtonItem1";
          this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbi_ItemClick);
          // 
+         // BBI_ReportPriceList
+         // 
+         this.BBI_ReportPriceList.Caption = "Price List";
+         this.BBI_ReportPriceList.Id = 21;
+         this.BBI_ReportPriceList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportPriceList.ImageOptions.SvgImage")));
+         this.BBI_ReportPriceList.Name = "BBI_ReportPriceList";
+         this.BBI_ReportPriceList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportPriceList_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -869,9 +882,22 @@ namespace Foxoft
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CopyInvoice);
          this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Whatsapp);
          this.ribbonPageGroup1.ItemLinks.Add(this.BBI_ModifyInvoice);
-         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
          this.ribbonPageGroup1.Name = "ribbonPageGroup1";
          this.ribbonPageGroup1.Text = "Nəzarət";
+         // 
+         // ribbonPage2
+         // 
+         this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.RibbonPageGroup5});
+         this.ribbonPage2.Name = "ribbonPage2";
+         this.ribbonPage2.Text = "Ayarlar";
+         // 
+         // RibbonPageGroup5
+         // 
+         this.RibbonPageGroup5.ItemLinks.Add(this.BBI_ReportPriceList);
+         this.RibbonPageGroup5.ItemLinks.Add(this.barButtonItem1);
+         this.RibbonPageGroup5.Name = "RibbonPageGroup5";
+         this.RibbonPageGroup5.Text = "Hesabat";
          // 
          // ribbonStatusBar1
          // 
@@ -1064,6 +1090,7 @@ namespace Foxoft
          this.StatusBar = this.ribbonStatusBar1;
          this.Text = "Faktura";
          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+         this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormInvoice_FormClosing);
          this.Load += new System.EventHandler(this.FormInvoice_Load);
          this.Shown += new System.EventHandler(this.FormInvoice_Shown);
          ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
@@ -1199,5 +1226,8 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem BBI_ModifyInvoice;
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;
       private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
+      private DevExpress.XtraBars.BarButtonItem BBI_ReportPriceList;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup RibbonPageGroup5;
    }
 }

@@ -42,6 +42,7 @@ namespace Foxoft
    public partial class FormInvoice : RibbonForm
    {
       readonly string designFolder;
+      readonly string imageFolder;
       //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       string reportFileNameInvoice = @"InvoiceRS_A4.repx";
       string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
@@ -60,13 +61,18 @@ namespace Foxoft
 
          dcProcess = efMethods.SelectProcess(processCode);
 
-
          LoadLayout();
 
          SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+         if (settingStore is not null)
+         {
+            if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+               designFolder = settingStore.DesignFileFolder;
 
-         if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-            designFolder = settingStore.DesignFileFolder;
+            if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+               imageFolder = settingStore.ImageFolder;
+         }
+         AppDomain.CurrentDomain.SetData("DXResourceDirectory", imageFolder);
 
          this.productTypeArr = productTypeArr;
          this.Text = dcProcess.ProcessDesc;
@@ -203,8 +209,12 @@ namespace Foxoft
       private void SelectDocNum()
       {
          using FormInvoiceHeaderList form = new(dcProcess.ProcessCode);
+
+
          if (form.ShowDialog(this) == DialogResult.OK)
          {
+            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
+
             trInvoiceHeader = form.trInvoiceHeader;
             LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
          }
@@ -1608,6 +1618,50 @@ namespace Foxoft
          if (e.KeyCode == Keys.Return)
          {
             //gV_InvoiceLine.FocusedColumn = colBarcode;
+         }
+      }
+
+      private void FormInvoice_FormClosing(object sender, FormClosingEventArgs e)
+      {
+         efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
+      }
+
+      private void BBI_ReportPriceList_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         ColumnView View = gC_InvoiceLine.MainView as ColumnView;
+         List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(View).ToList();
+
+         XtraReport xtraReport = GetBarcodeReport(designFolder, mydata);
+
+         if (xtraReport is not null)
+         {
+            ReportDesignTool printTool = new(xtraReport);
+            printTool.ShowRibbonDesigner();
+         }
+      }
+
+      public static List<T> GetFilteredData<T>(ColumnView view)
+      {
+         List<T> resp = new List<T>();
+         for (int i = 0; i < view.DataRowCount; i++)
+            resp.Add((T)view.GetRow(i));
+
+         return resp;
+      }
+
+      private XtraReport GetBarcodeReport(string designPath, object datasource)
+      {
+         ReportClass reportClass = new();
+
+         if (!File.Exists(designPath))
+            designPath = reportClass.SelectDesign();
+         if (File.Exists(designPath))
+         {
+            return reportClass.CreateReport(datasource, designPath);
+         }
+         else
+         {
+            return null;
          }
       }
    }

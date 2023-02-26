@@ -106,6 +106,21 @@ namespace Foxoft.Properties
 
       [global::System.Configuration.UserScopedSettingAttribute()]
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      [global::System.Configuration.DefaultSettingValueAttribute("")]
+      public string OpenDocNum
+      {
+         get
+         {
+            return ((string)(this["OpenDocNum"]));
+         }
+         set
+         {
+            this["OpenDocNum"] = value;
+         }
+      }
+
+      [global::System.Configuration.UserScopedSettingAttribute()]
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
       public global::Foxoft.Models.AppSetting AppSetting
       {
          get

@@ -104,6 +104,10 @@ namespace Foxoft.Models
       public bool IsSuspended { get; set; }
 
       [DefaultValue("0")]
+      [Display(Name = "Açıqdır")]
+      public bool IsOpen { get; set; }
+
+      [DefaultValue("0")]
       [Display(Name = "Tamamlanıb")]
       public bool IsCompleted { get; set; }
 

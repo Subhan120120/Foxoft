@@ -98,6 +98,7 @@ namespace Foxoft
                         IsLocked = x.IsLocked,
                         PrintCount = x.PrintCount,
                         IsReturn = x.IsReturn,
+                        IsOpen = x.IsOpen,
                         IsSalesViaInternet = x.IsSalesViaInternet,
                         IsSuspended = x.IsSuspended,
                         LastUpdatedDate = x.LastUpdatedDate,
@@ -125,10 +126,10 @@ namespace Foxoft
          GridHitInfo info = view.CalcHitInfo(ea.Location);
          if ((info.InRow || info.InRowCell) && trInvoiceHeader is not null)
          {
-            //info.RowHandle
-            //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-
+            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
             DialogResult = DialogResult.OK;
+            Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
+            Settings.Default.Save();
          }
       }
 
@@ -141,7 +142,13 @@ namespace Foxoft
             trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
 
          if (e.KeyCode == Keys.Enter && trInvoiceHeader is not null)
+         {
+            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
+            Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
+            Settings.Default.Save();
+
             DialogResult = DialogResult.OK;
+         }
 
          if (e.KeyCode == Keys.Escape)
             Close();
@@ -172,10 +179,22 @@ namespace Foxoft
          {
             //string col = view.GetRowCellDisplayText(e.RowHandle, isre);
             object isReturn = view.GetRowCellValue(e.RowHandle, colIsReturn);
-            bool value = (bool)isReturn;
-
-            if (value)
+            bool bIsReturn = (bool)isReturn;
+            if (bIsReturn)
                e.Appearance.BackColor = Color.MistyRose;
+
+            object isOpen = view.GetRowCellValue(e.RowHandle, colIsOpen);
+            object documentNumber = view.GetRowCellValue(e.RowHandle, colDocumentNumber);
+            bool bIsOpen = (bool)isOpen;
+            string docNum = documentNumber.ToString();
+
+            if (bIsOpen && docNum != Settings.Default.OpenDocNum)
+            {
+               //e.Appearance.ForeColor = Color.Red;
+               e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+            }
+
+
          }
       }
 

@@ -453,6 +453,22 @@ namespace Foxoft
          return trInvoiceHeader.PrintCount;
       }
 
+      public int UpdateInvoiceIsOpen(string docNum, bool isOpen)
+      {
+         using subContext db = new();
+         TrInvoiceHeader trInvoiceHeader = db.TrInvoiceHeaders.Where(x => x.DocumentNumber == docNum)
+                                                              .FirstOrDefault(x => x.IsMainTF == true);
+         if (trInvoiceHeader is not null)
+         {
+            trInvoiceHeader.IsOpen = isOpen;
+            db.Entry(trInvoiceHeader).Property(x => x.IsOpen).IsModified = true;
+            return db.SaveChanges();
+         }
+         else
+            return 0;
+
+      }
+
       public int UpdateInvoiceLineQtyOut(object invoiceLineId, int qtyOut)
       {
          Guid variable = Guid.Parse(invoiceLineId.ToString());

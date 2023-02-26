@@ -423,6 +423,7 @@ namespace Foxoft
          // 
          this.BarcodePrint.Caption = "Barkod Çapı";
          this.BarcodePrint.Id = 21;
+         this.BarcodePrint.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BarcodePrint.ImageOptions.SvgImage")));
          this.BarcodePrint.Name = "BarcodePrint";
          this.BarcodePrint.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BarcodePrint_ItemClick);
          // 
@@ -430,6 +431,7 @@ namespace Foxoft
          // 
          this.barButtonItem2.Caption = "Barkod Dizayn";
          this.barButtonItem2.Id = 22;
+         this.barButtonItem2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem2.ImageOptions.SvgImage")));
          this.barButtonItem2.Name = "barButtonItem2";
          this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
          // 
@@ -494,7 +496,6 @@ namespace Foxoft
          // ribbonPageGroup4
          // 
          this.ribbonPageGroup4.ItemLinks.Add(this.BarcodePrint);
-         this.ribbonPageGroup4.ItemLinks.Add(this.barButtonItem2);
          this.ribbonPageGroup4.Name = "ribbonPageGroup4";
          this.ribbonPageGroup4.Text = "Barkod";
          // 
@@ -509,6 +510,7 @@ namespace Foxoft
          // 
          this.ribbonPageGroup5.ItemLinks.Add(this.BBI_query);
          this.ribbonPageGroup5.ItemLinks.Add(this.BBI_ReportDesignProduct);
+         this.ribbonPageGroup5.ItemLinks.Add(this.barButtonItem2);
          this.ribbonPageGroup5.Name = "ribbonPageGroup5";
          this.ribbonPageGroup5.Text = "Data";
          // 
