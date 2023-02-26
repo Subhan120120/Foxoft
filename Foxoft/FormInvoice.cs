@@ -1,4 +1,6 @@
-﻿using DevExpress.Data;
+﻿
+
+using DevExpress.Data;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
@@ -24,7 +26,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
-using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -41,8 +42,7 @@ namespace Foxoft
 {
    public partial class FormInvoice : RibbonForm
    {
-      readonly string designFolder;
-      readonly string imageFolder;
+      readonly SettingStore settingStore;
       //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       string reportFileNameInvoice = @"InvoiceRS_A4.repx";
       string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
@@ -63,16 +63,11 @@ namespace Foxoft
 
          LoadLayout();
 
-         SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-         if (settingStore is not null)
-         {
-            if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-               designFolder = settingStore.DesignFileFolder;
+         settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
+         if (settingStore is not null)
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-               imageFolder = settingStore.ImageFolder;
-         }
-         AppDomain.CurrentDomain.SetData("DXResourceDirectory", imageFolder);
+               AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
 
          this.productTypeArr = productTypeArr;
          this.Text = dcProcess.ProcessDesc;
@@ -1042,7 +1037,10 @@ namespace Foxoft
 
       private void GetPrintToWarehouse()
       {
-         string designPath = designFolder + @"\" + reportFileNameInvoiceWare;
+         string designPath = string.Empty;
+         if (settingStore is not null)
+            if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+               designPath = settingStore.DesignFileFolder + @"\" + reportFileNameInvoiceWare;
 
          XtraReport report = GetInvoiceReport(designPath);
 
@@ -1146,7 +1144,10 @@ namespace Foxoft
       private void ShowReportPreview()
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-         string designPath = designFolder + @"\" + reportFileNameInvoice;
+         string designPath = string.Empty;
+         if (settingStore is not null)
+            if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+               designPath = settingStore.DesignFileFolder + @"\" + reportFileNameInvoice;
 
          XtraReport xtraReport = GetInvoiceReport(designPath);
 
@@ -1312,8 +1313,9 @@ namespace Foxoft
       private MemoryStream GetInvoiceReportImg(string designPath)
       {
          //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-
-         designPath = designFolder + @"\" + reportFileNameInvoice;
+         if (settingStore is not null)
+            if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+               designPath = settingStore.DesignFileFolder + @"\" + reportFileNameInvoice;
 
          XtraReport report = GetInvoiceReport(designPath);
 
@@ -1631,6 +1633,10 @@ namespace Foxoft
          ColumnView View = gC_InvoiceLine.MainView as ColumnView;
          List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(View).ToList();
 
+         string designFolder = string.Empty;
+         if (settingStore is not null)
+            if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+               designFolder = settingStore.DesignFileFolder;
          XtraReport xtraReport = GetBarcodeReport(designFolder, mydata);
 
          if (xtraReport is not null)
