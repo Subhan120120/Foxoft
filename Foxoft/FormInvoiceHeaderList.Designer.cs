@@ -51,6 +51,8 @@ namespace Foxoft
          this.colPrintCount = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
          this.colIsOpen = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colIsMainTF = new DevExpress.XtraGrid.Columns.GridColumn();
+         this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
          ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceHeaderList)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceHeaderList)).BeginInit();
@@ -91,7 +93,9 @@ namespace Foxoft
             this.colToWarehouseCode,
             this.colPrintCount,
             this.colDescription,
-            this.colIsOpen});
+            this.colIsOpen,
+            this.colIsMainTF,
+            this.colInvoiceHeaderId});
          this.gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
          this.gV_InvoiceHeaderList.GridControl = this.gC_InvoiceHeaderList;
          this.gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
@@ -200,6 +204,16 @@ namespace Foxoft
          this.colIsOpen.FieldName = "IsOpen";
          this.colIsOpen.Name = "colIsOpen";
          // 
+         // colIsMainTF
+         // 
+         this.colIsMainTF.FieldName = "IsMainTF";
+         this.colIsMainTF.Name = "colIsMainTF";
+         // 
+         // colInvoiceHeaderId
+         // 
+         this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
+         this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
+         // 
          // FormInvoiceHeaderList
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -236,5 +250,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colPrintCount;
       private DevExpress.XtraGrid.Columns.GridColumn colDescription;
       private DevExpress.XtraGrid.Columns.GridColumn colIsOpen;
+      private DevExpress.XtraGrid.Columns.GridColumn colIsMainTF;
+      private DevExpress.XtraGrid.Columns.GridColumn colInvoiceHeaderId;
    }
 }

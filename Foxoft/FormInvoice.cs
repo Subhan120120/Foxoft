@@ -1,5 +1,5 @@
 ﻿
-
+#region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
@@ -32,7 +32,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows.Forms; 
+#endregion
 
 //using Twilio;
 //using Twilio.Rest.Api.V2010.Account;
@@ -205,12 +206,12 @@ namespace Foxoft
       {
          using FormInvoiceHeaderList form = new(dcProcess.ProcessCode);
 
-
          if (form.ShowDialog(this) == DialogResult.OK)
          {
             efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
 
             trInvoiceHeader = form.trInvoiceHeader;
+
             LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
          }
       }

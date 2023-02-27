@@ -25,7 +25,7 @@ namespace Foxoft
    public partial class FormPaymentHeaderList : RibbonForm
    {
       subContext dbContext;
-      string processCode;
+      string processCode { get; set; }
       EfMethods efMethods = new EfMethods();
       public TrPaymentHeader trPaymentHeader { get; set; }
 
@@ -40,16 +40,17 @@ namespace Foxoft
          OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
          gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
-         LoadPaymentHeaders();
 
-         string storeCode = Authorization.StoreCode;
-         gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
       }
 
       public FormPaymentHeaderList(string processCode)
          : this()
       {
-         processCode = processCode;
+         string storeCode = Authorization.StoreCode;
+         this.processCode = processCode;
+
+         LoadPaymentHeaders();
+         gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
       }
 
       private void LoadPaymentHeaders()
