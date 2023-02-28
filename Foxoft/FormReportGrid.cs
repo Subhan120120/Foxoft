@@ -95,7 +95,7 @@ namespace Foxoft
             int rowInd = gV.GetRowHandle(e.ListSourceRowIndex);
             string fileName = gV.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
             fileName += ".jpg";
-            string path = imageFolder + fileName;
+            string path = imageFolder + @"\" + fileName;
             if (!imageCache.ContainsKey(path))
             {
                Image img = GetImage(path);
