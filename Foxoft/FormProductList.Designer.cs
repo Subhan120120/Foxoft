@@ -77,7 +77,7 @@ namespace Foxoft
          this.BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_query = new DevExpress.XtraBars.BarButtonItem();
-         this.BBI_ReportProduct = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ReportPriceList = new DevExpress.XtraBars.BarButtonItem();
          this.BBI_ReportDesignProduct = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -335,7 +335,7 @@ namespace Foxoft
             this.BarcodePrint,
             this.barButtonItem2,
             this.BBI_query,
-            this.BBI_ReportProduct,
+            this.BBI_ReportPriceList,
             this.BBI_ReportDesignProduct});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
          this.ribbonControl1.MaxItemId = 26;
@@ -443,13 +443,13 @@ namespace Foxoft
          this.BBI_query.Name = "BBI_query";
          this.BBI_query.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Query_ItemClick);
          // 
-         // BBI_ReportProduct
+         // BBI_ReportPriceList
          // 
-         this.BBI_ReportProduct.Caption = "Hesabat";
-         this.BBI_ReportProduct.Id = 24;
-         this.BBI_ReportProduct.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportProduct.ImageOptions.SvgImage")));
-         this.BBI_ReportProduct.Name = "BBI_ReportProduct";
-         this.BBI_ReportProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportProduct_ItemClick);
+         this.BBI_ReportPriceList.Caption = "Qiymət Siyahısı";
+         this.BBI_ReportPriceList.Id = 24;
+         this.BBI_ReportPriceList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportProduct.ImageOptions.SvgImage")));
+         this.BBI_ReportPriceList.Name = "BBI_ReportPriceList";
+         this.BBI_ReportPriceList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportPriceList_ItemClick);
          // 
          // BBI_ReportDesignProduct
          // 
@@ -489,7 +489,7 @@ namespace Foxoft
          // ribbonPageGroup3
          // 
          this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem3);
-         this.ribbonPageGroup3.ItemLinks.Add(this.BBI_ReportProduct);
+         this.ribbonPageGroup3.ItemLinks.Add(this.BBI_ReportPriceList);
          this.ribbonPageGroup3.Name = "ribbonPageGroup3";
          this.ribbonPageGroup3.Text = "Hesabat";
          // 
@@ -606,5 +606,6 @@ namespace Foxoft
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
       private DevExpress.XtraBars.BarButtonItem BBI_ReportProduct;
       private DevExpress.XtraBars.BarButtonItem BBI_ReportDesignProduct;
+      private DevExpress.XtraBars.BarButtonItem BBI_ReportPriceList;
    }
 }

@@ -21,11 +21,11 @@ namespace Foxoft
       AdoMethods adoMethods = new AdoMethods();
       DcReport dcReport = new DcReport();
 
-      readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
-      readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new RepositoryItemButtonEdit();
-      readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new RepositoryItemButtonEdit();
-      readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new RepositoryItemButtonEdit();
-      readonly RepositoryItemButtonEdit repoBtnEdit_WarehouseCode = new RepositoryItemButtonEdit();
+      readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new();
+      readonly RepositoryItemButtonEdit repoBtnEdit_WarehouseCode = new();
 
       public FormReportFilter(DcReport Report)
       {

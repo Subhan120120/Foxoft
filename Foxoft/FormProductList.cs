@@ -658,7 +658,7 @@ namespace Foxoft
          }
       }
 
-      private void BBI_ReportProduct_ItemClick(object sender, ItemClickEventArgs e)
+      private void BBI_ReportPriceList_ItemClick(object sender, ItemClickEventArgs e)
       {
          ColumnView View = gC_ProductList.MainView as ColumnView;
          List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();

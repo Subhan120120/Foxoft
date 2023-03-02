@@ -469,7 +469,7 @@ namespace Foxoft
 
       }
 
-      private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+      private void BBI_ReportCashReg_ItemClick(object sender, ItemClickEventArgs e)
       {
          DcReport dcReport = efMethods.SelectReport(1006);
          object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
@@ -479,7 +479,6 @@ namespace Foxoft
             string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
             string activeFilterStr = $"[CashRegisterCode] = \'" + currAccCode + "\' AND " +
                                      $"[OperationDate] Between(#{DateTime.Now.ToString("yyyy -MM-dd")}#, #{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}#) ";
-
 
             FormReportGrid formGrid = new(qryMaster, dcReport, activeFilterStr);
             formGrid.Show();

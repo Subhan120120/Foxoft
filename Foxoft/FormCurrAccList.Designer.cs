@@ -81,6 +81,7 @@ namespace Foxoft
          this.bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
          this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ReportCashReg = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -368,9 +369,10 @@ namespace Foxoft
             this.bBI_ExportXlsx,
             this.bBI_CurrAccDelete,
             this.bBI_CurAccRefresh,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.BBI_ReportCashReg});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 11;
+         this.ribbonControl1.MaxItemId = 12;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -442,6 +444,14 @@ namespace Foxoft
          this.barButtonItem1.Name = "barButtonItem1";
          this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
          // 
+         // BBI_ReportCashReg
+         // 
+         this.BBI_ReportCashReg.Caption = "Kassa Hesabat";
+         this.BBI_ReportCashReg.Id = 11;
+         this.BBI_ReportCashReg.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportCashReg.ImageOptions.SvgImage")));
+         this.BBI_ReportCashReg.Name = "BBI_ReportCashReg";
+         this.BBI_ReportCashReg.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportCashReg_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -464,6 +474,7 @@ namespace Foxoft
          this.ribbonPageGroup3.ItemLinks.Add(this.bBI_ExportXlsx);
          this.ribbonPageGroup3.ItemLinks.Add(this.bBI_Report1);
          this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem1);
+         this.ribbonPageGroup3.ItemLinks.Add(this.BBI_ReportCashReg);
          this.ribbonPageGroup3.Name = "ribbonPageGroup3";
          this.ribbonPageGroup3.Text = "Hesabat";
          // 
@@ -558,5 +569,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
       private DevExpress.XtraBars.BarButtonItem barButtonItem1;
       private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
+      private DevExpress.XtraBars.BarButtonItem BBI_ReportCashReg;
    }
 }
