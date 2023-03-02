@@ -370,7 +370,7 @@ namespace Foxoft
             this.bBI_CurAccRefresh,
             this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 10;
+         this.ribbonControl1.MaxItemId = 11;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {

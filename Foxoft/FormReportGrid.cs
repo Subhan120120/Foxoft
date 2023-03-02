@@ -46,8 +46,8 @@ namespace Foxoft
       EfMethods efMethods = new();
       AdoMethods adoMethods = new();
 
-      RepositoryItemPictureEdit riPictureEdit;
-      GridColumn colImage;
+      RepositoryItemPictureEdit riPictureEdit = new();
+      GridColumn colImage = new();
 
       public FormReportGrid()
       {
@@ -107,7 +107,7 @@ namespace Foxoft
 
       Image GetImage(string path)
       {
-         Image img = Resources.NoPhoto;
+         Image img = null;
          if (File.Exists(path))
             img = Image.FromFile(path);
 
@@ -185,10 +185,10 @@ namespace Foxoft
 
       private void CreateColImage()
       {
-         if (colImage is null)
-         {
-            colImage = new();
-         }
+         //if (colImage is null)
+         //{
+         //   colImage = new();
+         //}
          colImage.FieldName = "Image";
          colImage.Caption = "Şəkil";
          colImage.UnboundType = UnboundColumnType.Object;
@@ -196,13 +196,13 @@ namespace Foxoft
          colImage.OptionsColumn.FixedWidth = false;
          colImage.Visible = true;
 
-         if (riPictureEdit is null)
-         {
-            riPictureEdit = new();
-            colImage.ColumnEdit = riPictureEdit;
-            riPictureEdit.SizeMode = PictureSizeMode.Zoom;
-            gC_Report.RepositoryItems.Add(riPictureEdit);
-         }
+         //if (riPictureEdit is null)
+         //{
+         //   riPictureEdit = new();
+         colImage.ColumnEdit = riPictureEdit;
+         riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+         gC_Report.RepositoryItems.Add(riPictureEdit);
+         //}
       }
 
       private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -355,7 +355,7 @@ namespace Foxoft
                      frm.Show();
                      formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
                   }
-                  else if(trPaymentHeader.ProcessCode == "CT")
+                  else if (trPaymentHeader.ProcessCode == "CT")
                   {
                      FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
                      FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;

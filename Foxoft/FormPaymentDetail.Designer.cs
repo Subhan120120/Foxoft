@@ -37,9 +37,11 @@ namespace Foxoft
          this.bBI_SendWhatsapp = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+         this.RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
          this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
          this.lbl_CurrAccBalansBefore = new DevExpress.XtraEditors.LabelControl();
@@ -132,9 +134,10 @@ namespace Foxoft
             this.bBI_SaveAndClose,
             this.bBI_SendWhatsapp,
             this.bBI_NewPayment,
-            this.bBI_CopyPayment});
+            this.bBI_CopyPayment,
+            this.barButtonItem1});
          this.ribbon.Location = new System.Drawing.Point(0, 0);
-         this.ribbon.MaxItemId = 7;
+         this.ribbon.MaxItemId = 8;
          this.ribbon.Name = "ribbon";
          this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -182,11 +185,20 @@ namespace Foxoft
          this.bBI_CopyPayment.Name = "bBI_CopyPayment";
          this.bBI_CopyPayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CopyPayment_ItemClick);
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "Pulun Bütün Hərəkətləri";
+         this.barButtonItem1.Id = 7;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup2,
+            this.RPG_Report});
          this.ribbonPage1.Name = "ribbonPage1";
          this.ribbonPage1.Text = "Ödəmə";
          // 
@@ -204,6 +216,12 @@ namespace Foxoft
          this.ribbonPageGroup2.ItemLinks.Add(this.bBI_CopyPayment);
          this.ribbonPageGroup2.Name = "ribbonPageGroup2";
          this.ribbonPageGroup2.Text = "Alət";
+         // 
+         // RPG_Report
+         // 
+         this.RPG_Report.ItemLinks.Add(this.barButtonItem1);
+         this.RPG_Report.Name = "RPG_Report";
+         this.RPG_Report.Text = "Hesabat";
          // 
          // ribbonStatusBar
          // 
@@ -809,5 +827,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn colBalanceAfter;
       private DevExpress.XtraBars.BarButtonItem bBI_NewPayment;
       private DevExpress.XtraBars.BarButtonItem bBI_CopyPayment;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Report;
    }
 }
