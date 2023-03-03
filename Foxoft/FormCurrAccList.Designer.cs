@@ -438,7 +438,7 @@ namespace Foxoft
          // 
          // barButtonItem1
          // 
-         this.barButtonItem1.Caption = "Malların Bütün Hərəkəti";
+         this.barButtonItem1.Caption = "Malın Bütün Hərəkəti";
          this.barButtonItem1.Id = 9;
          this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
          this.barButtonItem1.Name = "barButtonItem1";
@@ -446,7 +446,7 @@ namespace Foxoft
          // 
          // BBI_ReportCashReg
          // 
-         this.BBI_ReportCashReg.Caption = "Kassa Hesabat";
+         this.BBI_ReportCashReg.Caption = "Pulun Bütün Hərəkəti";
          this.BBI_ReportCashReg.Id = 11;
          this.BBI_ReportCashReg.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportCashReg.ImageOptions.SvgImage")));
          this.BBI_ReportCashReg.Name = "BBI_ReportCashReg";

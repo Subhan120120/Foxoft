@@ -313,7 +313,7 @@ namespace Foxoft
 
       private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
       {
-         object objDocNum = gV_Report.GetFocusedRowCellValue("DocumentNumber");
+         object objDocNum = gV_Report.GetFocusedValue();
 
          if (objDocNum is not null)
          {
