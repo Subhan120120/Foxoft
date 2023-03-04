@@ -176,7 +176,7 @@ namespace Foxoft
          this.BSI_StoreDesc.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
          this.BSI_StoreDesc.Caption = "| Mağaza Adı";
          this.BSI_StoreDesc.Id = 18;
-         this.BSI_StoreDesc.Name = "StoreDesc";
+         this.BSI_StoreDesc.Name = "BSI_StoreDesc";
          // 
          // ribbonPage_Home
          // 
@@ -226,7 +226,7 @@ namespace Foxoft
          this.aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
          this.aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
          this.aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-         this.aC_Root.Size = new System.Drawing.Size(282, 450);
+         this.aC_Root.Size = new System.Drawing.Size(216, 450);
          this.aC_Root.TabIndex = 2;
          // 
          // aCE_Invoices
