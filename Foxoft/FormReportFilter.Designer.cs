@@ -1,39 +1,41 @@
 ﻿
+using Foxoft.AppCode;
+
 namespace Foxoft
 {
-    partial class FormReportFilter
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+   partial class FormReportFilter
+   {
+      /// <summary>
+      /// Required designer variable.
+      /// </summary>
+      private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+      /// <summary>
+      /// Clean up any resources being used.
+      /// </summary>
+      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing && (components != null))
+         {
+            components.Dispose();
+         }
+         base.Dispose(disposing);
+      }
 
-        #region Windows Form Designer generated code
+      #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+      /// <summary>
+      /// Required method for Designer support - do not modify
+      /// the contents of this method with the code editor.
+      /// </summary>
+      private void InitializeComponent()
+      {
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportFilter));
          this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-         this.filterControl_Inner = new Foxoft.FormReportFilter.MyFilterControl();
+         this.filterControl_Inner = new Foxoft.AppCode.NotEditableFilterControl();
          this.btn_ShowReport = new DevExpress.XtraEditors.SimpleButton();
-         this.filterControl_Outer = new DevExpress.XtraEditors.FilterControl();
+         this.filterControl_Outer = new Foxoft.AppCode.ExcelButtonFilterControl();
          this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -42,6 +44,7 @@ namespace Foxoft
          this.bBI_ReportEdit = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_ReportNew = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_ReportDelete = new DevExpress.XtraBars.BarButtonItem();
+         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
          this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
          this.Hesaba = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
          this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -94,6 +97,7 @@ namespace Foxoft
          // 
          this.filterControl_Outer.Cursor = System.Windows.Forms.Cursors.Arrow;
          this.filterControl_Outer.Location = new System.Drawing.Point(12, 147);
+         this.filterControl_Outer.MyIcon = null;
          this.filterControl_Outer.Name = "filterControl_Outer";
          this.filterControl_Outer.NodeSeparatorHeight = 2;
          this.filterControl_Outer.Size = new System.Drawing.Size(833, 170);
@@ -150,9 +154,10 @@ namespace Foxoft
             this.ribbonControl1.SearchEditItem,
             this.bBI_ReportEdit,
             this.bBI_ReportNew,
-            this.bBI_ReportDelete});
+            this.bBI_ReportDelete,
+            this.barButtonItem1});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 7;
+         this.ribbonControl1.MaxItemId = 8;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -183,6 +188,14 @@ namespace Foxoft
          this.bBI_ReportDelete.Name = "bBI_ReportDelete";
          this.bBI_ReportDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ReportDelete_ItemClick);
          // 
+         // barButtonItem1
+         // 
+         this.barButtonItem1.Caption = "barButtonItem1";
+         this.barButtonItem1.Id = 7;
+         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+         this.barButtonItem1.Name = "barButtonItem1";
+         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+         // 
          // ribbonPage1
          // 
          this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -195,6 +208,7 @@ namespace Foxoft
          this.Hesaba.ItemLinks.Add(this.bBI_ReportNew);
          this.Hesaba.ItemLinks.Add(this.bBI_ReportEdit);
          this.Hesaba.ItemLinks.Add(this.bBI_ReportDelete);
+         this.Hesaba.ItemLinks.Add(this.barButtonItem1);
          this.Hesaba.Name = "Hesaba";
          this.Hesaba.Text = "Kontrol";
          // 
@@ -234,25 +248,26 @@ namespace Foxoft
          this.ResumeLayout(false);
          this.PerformLayout();
 
-        }
+      }
 
-        #endregion
+      #endregion
 
-        private DevExpress.XtraEditors.SimpleButton btn_ShowReport;
-        private DevExpress.XtraEditors.FilterControl filterControl_Outer;
-        private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup Hesaba;
-        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
-        private DevExpress.XtraLayout.LayoutControl layoutControl1;
-        private DevExpress.XtraLayout.LayoutControlGroup Root;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        private DevExpress.XtraBars.BarButtonItem bBI_ReportEdit;
-        private DevExpress.XtraBars.BarButtonItem bBI_ReportNew;
-        private DevExpress.XtraBars.BarButtonItem bBI_ReportDelete;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-      private MyFilterControl filterControl_Inner;
+      private DevExpress.XtraEditors.SimpleButton btn_ShowReport;
+      private ExcelButtonFilterControl filterControl_Outer;
+      private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+      private DevExpress.XtraBars.Ribbon.RibbonPageGroup Hesaba;
+      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+      private DevExpress.XtraLayout.LayoutControl layoutControl1;
+      private DevExpress.XtraLayout.LayoutControlGroup Root;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+      private DevExpress.XtraBars.BarButtonItem bBI_ReportEdit;
+      private DevExpress.XtraBars.BarButtonItem bBI_ReportNew;
+      private DevExpress.XtraBars.BarButtonItem bBI_ReportDelete;
+      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+      private NotEditableFilterControl filterControl_Inner;
+      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
    }
 }

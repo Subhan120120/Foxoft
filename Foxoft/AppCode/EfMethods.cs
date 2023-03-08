@@ -767,6 +767,12 @@ namespace Foxoft
          return db.DcCurrencies.FirstOrDefault(x => x.CurrencyCode == currencyCode); // burdaki kolonlari dizaynda da elave et
       }
 
+      public DcCurrency SelectCurrencyByName(string currencyDesc)
+      {
+         using subContext db = new();
+         return db.DcCurrencies.FirstOrDefault(x => x.CurrencyDesc == currencyDesc); // burdaki kolonlari dizaynda da elave et
+      }
+
       public List<DcPaymentType> SelectPaymentTypes()
       {
          using subContext db = new();

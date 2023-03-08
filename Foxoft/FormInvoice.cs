@@ -2,26 +2,36 @@
 #region Using
 using DevExpress.Data;
 using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.DataAccess.Excel;
+using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Filtering;
+using DevExpress.XtraExport;
+using DevExpress.XtraExport;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Export;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Export;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraVerticalGrid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -32,7 +42,10 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms; 
+using System.Windows.Forms;
+using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
+using Microsoft.IdentityModel.Tokens;
+
 #endregion
 
 //using Twilio;
@@ -533,7 +546,9 @@ namespace Foxoft
                string productCode = (objProductCode ??= "").ToString();
                DcProduct product = efMethods.SelectProduct(productCode);
 
-               bool isServis = product.ProductTypeCode == 3;
+               bool isServis = false;
+               if (product is not null)
+                  isServis = product.ProductTypeCode == 3;
 
                if (!isServis)
                   if (eValue > balance)
@@ -568,30 +583,15 @@ namespace Foxoft
 
             if (product is null)
             {
-               e.ErrorText = "Belə nir məhsul yoxdur";
-               e.Valid = false;
+               FillRow(gV_InvoiceLine.FocusedRowHandle, product);
+               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+               if (dcProcess.ProcessCode == "EX")
+                  gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, colQty, 1);
             }
             else
             {
-               //ButtonEdit editor = (ButtonEdit)view.ActiveEditor;
-               //editor.EditValue = product.ProductCode;
-
-               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, product.ProductCode);
-               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, product.ProductDesc);
-               gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
-               gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
-
-               decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
-               decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_Price));
-               if (priceInvoice == 0)
-                  gV_InvoiceLine.SetFocusedRowCellValue(col_Price, priceProduct);
-
-               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-
-               if (dcProcess.ProcessCode == "EX")
-                  gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
-
-               //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+               e.ErrorText = "Belə nir məhsul yoxdur";
+               e.Valid = false;
             }
          }
 
@@ -600,32 +600,18 @@ namespace Foxoft
             string eValue = (e.Value ??= String.Empty).ToString();
             DcProduct product = efMethods.SelectProduct(eValue);
 
-            if (product is null)
+            if (product is not null)
+            {
+               FillRow(view.FocusedRowHandle, product);
+               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+               if (dcProcess.ProcessCode == "EX")
+                  gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, colQty, 1);
+            }
+
+            else
             {
                e.ErrorText = "Belə nir məhsul yoxdur";
                e.Valid = false;
-            }
-            else
-            {
-               //ButtonEdit editor = (ButtonEdit)view.ActiveEditor;
-               //editor.EditValue = product.ProductCode;
-
-               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductCode, product.ProductCode);
-               gV_InvoiceLine.SetFocusedRowCellValue(col_ProductDesc, product.ProductDesc);
-               gV_InvoiceLine.SetFocusedRowCellValue(colBalance, product.Balance);
-               gV_InvoiceLine.SetFocusedRowCellValue(colLastPurchasePrice, product.LastPurchasePrice);
-
-               decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
-               decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_Price));
-               if (priceInvoice == 0)
-                  gV_InvoiceLine.SetFocusedRowCellValue(col_Price, priceProduct);
-
-               gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-
-               if (dcProcess.ProcessCode == "EX")
-                  gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
-
-               //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
             }
          }
       }
@@ -1671,5 +1657,188 @@ namespace Foxoft
             return null;
          }
       }
+
+      private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         try
+         {
+            SaveFileDialog sFD = new();
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.FileName = dcProcess.ProcessDesc;
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            sFD.DefaultExt = "*.xlsx";
+
+            if (sFD.ShowDialog() == DialogResult.OK)
+            {
+               XlsxExportOptionsEx expOpt = new XlsxExportOptionsEx
+               {
+                  ExportMode = XlsxExportMode.SingleFile,
+                  TextExportMode = TextExportMode.Value,
+                  AllowLookupValues = DefaultBoolean.True,
+               };
+
+               gC_InvoiceLine.ExportToXlsx(sFD.FileName, expOpt);
+            }
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(ex.ToString());
+         }
+      }
+
+      private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
+      {
+         OpenFileDialog dialog = new();
+         dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
+                         "All files (*.*)|*.*";
+         dialog.Title = "Excel faylı seçin.";
+
+         DialogResult dr = dialog.ShowDialog();
+         if (dr == DialogResult.OK)
+         {
+            ExcelDataSource excelDataSource = new();
+            excelDataSource.FileName = dialog.FileName;
+
+            ExcelWorksheetSettings excelWorksheetSettings = new(0);
+            //ExcelWorksheetSettings excelWorksheetSettings = new(0, "A1:A10000");
+            //excelWorksheetSettings.WorksheetName = "10QK";
+
+            ExcelSourceOptions excelOptions = new();
+            excelOptions.ImportSettings = excelWorksheetSettings;
+            excelOptions.SkipHiddenRows = false;
+            excelOptions.SkipHiddenColumns = false;
+            excelOptions.UseFirstRowAsHeader = true;
+            excelDataSource.SourceOptions = excelOptions;
+
+            excelDataSource.Fill();
+
+            DataTable dt = new();
+            dt = ToDataTableFromExcelDataSource(excelDataSource);
+
+            string errorCodes = "";
+
+            foreach (DataRow row in dt.Rows)
+            {
+               string captionProductCode = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.ProductCode);
+               string productCode = row[captionProductCode].ToString();
+
+               if (!string.IsNullOrEmpty(productCode))
+               {
+                  DcProduct product = efMethods.SelectProduct(productCode);
+                  if (product is not null)
+                  {
+                     object objInvoiceHeadId = gV_InvoiceLine.GetRowCellValue(GridControl.NewItemRowHandle, col_InvoiceHeaderId);
+                     if (objInvoiceHeadId is null) // Check InitNewRow
+                        gV_InvoiceLine.AddNewRow();
+
+                     FillRow(GridControl.NewItemRowHandle, product);
+
+                     foreach (DataColumn column in dt.Columns)
+                     {
+                        try
+                        {
+                           string captionQty = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.Qty);
+                           if (column.ColumnName == captionQty)
+                           {
+                              GridColumn qty = CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut;
+                              gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, qty, row[captionQty].ToString());
+                           }
+
+                           string captionLineDesc = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.LineDescription);
+                           if (column.ColumnName == captionLineDesc)
+                              gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
+
+                           if (dcProcess.ProcessCode != "IT")
+                           {
+                              string captionPrice = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.Price);
+                              if (column.ColumnName == captionPrice)
+                                 gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_Price, row[captionPrice].ToString());
+
+                              string captionCurrency = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
+                              if (column.ColumnName == captionCurrency)
+                              {
+                                 if (!string.IsNullOrEmpty(row[captionCurrency].ToString()))
+                                 {
+                                    DcCurrency currency = efMethods.SelectCurrency(row[captionCurrency].ToString());
+                                    if (currency is null)
+                                       currency = efMethods.SelectCurrencyByName(row[captionCurrency].ToString());
+
+                                    if (currency is not null)
+                                    {
+                                       gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colCurrencyCode, currency.CurrencyCode);
+                                       gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colExchangeRate, currency.ExchangeRate);
+                                    }
+                                    else
+                                       errorCodes += captionCurrency + ": " + row[captionCurrency].ToString() + "\n";
+                                 }
+                              }
+
+                              string captionExRate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.ExchangeRate);
+                              if (column.ColumnName == captionExRate)
+                                 gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colExchangeRate, row[captionExRate].ToString());
+
+                              string captionPosDiscount = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.PosDiscount);
+                              if (column.ColumnName == captionPosDiscount)
+                                 gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_PosDiscount, row[captionPosDiscount].ToString());
+                           }
+                        }
+                        catch (ArgumentException ae)
+                        {
+                           //throw new Exception();
+                        }
+                     }
+
+                     gV_InvoiceLine.UpdateCurrentRow();
+                  }
+                  else
+                     errorCodes += captionProductCode + ": " + row[captionProductCode].ToString() + "\n";
+               }
+            }
+
+            if (!string.IsNullOrEmpty(errorCodes))
+               MessageBox.Show("Aşağıdakı kodlar üzrə Dəyər tapılmadı \n" + errorCodes, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+         }
+      }
+
+
+      private void FillRow(int rowHandle, DcProduct product)
+      {
+         gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductCode, product.ProductCode);
+         gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductDesc, product.ProductDesc);
+         gV_InvoiceLine.SetRowCellValue(rowHandle, colBalance, product.Balance);
+         gV_InvoiceLine.SetRowCellValue(rowHandle, colLastPurchasePrice, product.LastPurchasePrice);
+
+         decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+         decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
+         if (priceInvoice == 0)
+            gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
+
+      }
+
+      public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
+      {
+         IList list = ((IListSource)excelDataSource).GetList();
+         DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
+         List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
+
+         DataTable dt = new();
+         for (int i = 0; i < props.Count; i++)
+         {
+            PropertyDescriptor prop = props[i];
+            dt.Columns.Add(prop.Name, prop.PropertyType);
+         }
+         object[] values = new object[props.Count];
+         foreach (ViewRow item in list)
+         {
+            for (int i = 0; i < values.Length; i++)
+            {
+               values[i] = props[i].GetValue(item);
+            }
+            dt.Rows.Add(values);
+         }
+         return dt;
+      }
+
    }
 }

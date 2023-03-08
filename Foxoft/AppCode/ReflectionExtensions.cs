@@ -42,13 +42,13 @@ namespace Foxoft
                 "propertyExpression");
          }
 
-         var attr = memberInfo.GetAttribute<DisplayNameAttribute>(false);
+         var attr = memberInfo.GetAttribute<DisplayAttribute>(false);
          if (attr == null)
          {
             return memberInfo.Name;
          }
 
-         return attr.DisplayName;
+         return attr.Name;
       }
 
       public static MemberInfo GetPropertyInformation(Expression expression)

@@ -122,6 +122,8 @@ namespace Foxoft
          this.ItemForToWarehouseCode = new DevExpress.XtraLayout.LayoutControlItem();
          this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
          this.adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
+         this.BBI_exportXLSX = new DevExpress.XtraBars.BarButtonItem();
+         this.BBI_ImportExcel = new DevExpress.XtraBars.BarButtonItem();
          ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -720,9 +722,11 @@ namespace Foxoft
             this.bBI_Whatsapp,
             this.BBI_ModifyInvoice,
             this.barButtonItem1,
-            this.BBI_ReportPriceList});
+            this.BBI_ReportPriceList,
+            this.BBI_exportXLSX,
+            this.BBI_ImportExcel});
          this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-         this.ribbonControl1.MaxItemId = 22;
+         this.ribbonControl1.MaxItemId = 24;
          this.ribbonControl1.Name = "ribbonControl1";
          this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
          this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -896,6 +900,8 @@ namespace Foxoft
          // 
          this.RibbonPageGroup5.ItemLinks.Add(this.BBI_ReportPriceList);
          this.RibbonPageGroup5.ItemLinks.Add(this.barButtonItem1);
+         this.RibbonPageGroup5.ItemLinks.Add(this.BBI_exportXLSX);
+         this.RibbonPageGroup5.ItemLinks.Add(this.BBI_ImportExcel);
          this.RibbonPageGroup5.Name = "RibbonPageGroup5";
          this.RibbonPageGroup5.Text = "Hesabat";
          // 
@@ -1076,6 +1082,20 @@ namespace Foxoft
          // 
          this.adorneruıManager1.Owner = this;
          // 
+         // BBI_exportXLSX
+         // 
+         this.BBI_exportXLSX.Caption = "Excel\'ə Göndər";
+         this.BBI_exportXLSX.Id = 22;
+         this.BBI_exportXLSX.Name = "BBI_exportXLSX";
+         this.BBI_exportXLSX.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_exportXLSX_ItemClick);
+         // 
+         // BBI_ImportExcel
+         // 
+         this.BBI_ImportExcel.Caption = "Excel\'dən Al";
+         this.BBI_ImportExcel.Id = 23;
+         this.BBI_ImportExcel.Name = "BBI_ImportExcel";
+         this.BBI_ImportExcel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ImportExcel_ItemClick);
+         // 
          // FormInvoice
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1229,5 +1249,7 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem BBI_ReportPriceList;
       private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
       private DevExpress.XtraBars.Ribbon.RibbonPageGroup RibbonPageGroup5;
+      private DevExpress.XtraBars.BarButtonItem BBI_exportXLSX;
+      private DevExpress.XtraBars.BarButtonItem BBI_ImportExcel;
    }
 }

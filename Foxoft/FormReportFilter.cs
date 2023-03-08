@@ -1,5 +1,8 @@
 ﻿using DevExpress.Data.Filtering;
+using DevExpress.Data.Filtering.Helpers;
+using DevExpress.DataAccess.Excel;
 using DevExpress.Utils.Drawing;
+using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -7,10 +10,15 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Drawing;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -30,6 +38,16 @@ namespace Foxoft
       public FormReportFilter(DcReport Report)
       {
          InitializeComponent();
+
+         ComponentResourceManager resources = new(typeof(FormReportFilter));
+
+         SvgImage ımage = ((SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+
+         SvgBitmap bm = new SvgBitmap(ımage);
+         Image img = bm.Render(null, 0.5);
+         filterControl_Outer.MyIcon = img;
+         filterControl_Outer.ExcelButtonClick += new ExcelButtonFilterControl.ExcelButtonEventHandler(this.ExcelButtonFilterControl_ExcelButtonClick);
+
          WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
          AcceptButton = btn_ShowReport;
 
@@ -370,53 +388,73 @@ namespace Foxoft
          }
       }
 
-      // Prevent delete filter
-      public class MyFilterControl : FilterControl
+      private void ExcelButtonFilterControl_ExcelButtonClick(object sender, ExcelButtonEventArgs e)
       {
-         public MyFilterControl() : base() { }
-         protected override BaseControlPainter CreatePainter()
-         {
-            return new MyFilterControlPainter(this);
-         }
+         OpenFileDialog dialog = new();
+         dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
+                         "All files (*.*)|*.*";
+         dialog.Title = "Excel faylı seçin.";
 
-         protected override void RaisePopupMenuShowing(PopupMenuShowingEventArgs e)
+         DialogResult dr = dialog.ShowDialog();
+         if (dr == DialogResult.OK)
          {
-            base.RaisePopupMenuShowing(e);
-            e.Cancel = true;
+            ExcelDataSource excelDataSource = new();
+            excelDataSource.FileName = dialog.FileName;
+
+            ExcelWorksheetSettings excelWorksheetSettings = new(0, "A1:A10000");
+            //excelWorksheetSettings.WorksheetName = "10QK";
+
+            ExcelSourceOptions excelOptions = new();
+            excelOptions.ImportSettings = excelWorksheetSettings;
+            excelOptions.SkipHiddenRows = false;
+            excelOptions.SkipHiddenColumns = false;
+            excelOptions.UseFirstRowAsHeader = true;
+            excelDataSource.SourceOptions = excelOptions;
+
+            excelDataSource.Fill();
+
+            DataTable dt = new();
+            dt = ToDataTableFromExcelDataSource(excelDataSource);
+
+            ClauseNode clauseNode = (ClauseNode)e.LabelInfo.Owner;
+
+            if (clauseNode.Operation == ClauseType.AnyOf || clauseNode.Operation == ClauseType.NoneOf)
+            {
+               foreach (DataRow row in dt.Rows)
+               {
+                  clauseNode.AdditionalOperands.Add(row[0].ToString());
+               }
+            }
          }
       }
 
-      public class MyFilterControlPainter : FilterControlPainter
+      public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
       {
-         public MyFilterControlPainter(FilterControl filterControl) : base(filterControl) { }
+         IList list = ((IListSource)excelDataSource).GetList();
+         DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
+         List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
 
-         protected override void DrawNodeLabel(Node node, ControlGraphicsInfoArgs info)
+         DataTable table = new ();
+         for (int i = 0; i < props.Count; i++)
          {
-            //base.DrawNodeLabel(node, info);
-            if (Model[node] == null) return;
-            Paint(Model[node], info);
+            PropertyDescriptor prop = props[i];
+            table.Columns.Add(prop.Name, prop.PropertyType);
          }
-
-         public virtual void Paint(FilterControlLabelInfo labelInfo, ControlGraphicsInfoArgs info)
+         object[] values = new object[props.Count];
+         foreach (DevExpress.DataAccess.Native.Excel.ViewRow item in list)
          {
-            labelInfo.ViewInfo.Calculate(new GraphicsCache(info.Graphics));
-            labelInfo.ViewInfo.TopLine = 0;
-            for (int i = 0; i < labelInfo.ViewInfo.Count; i++)
+            for (int i = 0; i < values.Length; i++)
             {
-               NodeEditableElement elem = labelInfo.ViewInfo[i].InfoText.Tag as NodeEditableElement;
-               if (elem == null || (elem.ElementType == ElementType.NodeAdd
-                   || elem.ElementType == ElementType.NodeRemove
-                   || elem.ElementType == ElementType.Group))
-               {
-                  labelInfo.ViewInfo[i].InfoText.Tag = null;
-                  continue;
-               }
-               labelInfo.ViewInfo[i].ViewInfo.Calculate(new GraphicsCache(info.Graphics));
-               labelInfo.ViewInfo[i].Draw(info.Cache, info.ViewInfo.Appearance.GetFont(), labelInfo.ViewInfo[i].InfoText.Color, info.ViewInfo.Appearance.GetStringFormat());
+               values[i] = props[i].GetValue(item);
             }
+            table.Rows.Add(values);
          }
+         return table;
+      }
 
-         public override void DrawFocusRectangle(ControlGraphicsInfoArgs info) { }
+      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+      {
+
       }
    }
 }
