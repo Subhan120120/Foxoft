@@ -393,7 +393,7 @@ namespace Foxoft
          OpenFileDialog dialog = new();
          dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
                          "All files (*.*)|*.*";
-         dialog.Title = "Excel faylı seçin.";
+         dialog.Title = "Yalnız ilk sütünda olan məlumatlar daxil edilir.";
 
          DialogResult dr = dialog.ShowDialog();
          if (dr == DialogResult.OK)

@@ -447,13 +447,13 @@ namespace Foxoft
          // 
          this.BBI_ReportPriceList.Caption = "Qiymət Siyahısı";
          this.BBI_ReportPriceList.Id = 24;
-         this.BBI_ReportPriceList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportProduct.ImageOptions.SvgImage")));
+         this.BBI_ReportPriceList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportPriceList.ImageOptions.SvgImage")));
          this.BBI_ReportPriceList.Name = "BBI_ReportPriceList";
          this.BBI_ReportPriceList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportPriceList_ItemClick);
          // 
          // BBI_ReportDesignProduct
          // 
-         this.BBI_ReportDesignProduct.Caption = "Hesabat";
+         this.BBI_ReportDesignProduct.Caption = "Məhsul Siyahısı Dizaynı";
          this.BBI_ReportDesignProduct.Id = 25;
          this.BBI_ReportDesignProduct.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ReportDesignProduct.ImageOptions.SvgImage")));
          this.BBI_ReportDesignProduct.Name = "BBI_ReportDesignProduct";
