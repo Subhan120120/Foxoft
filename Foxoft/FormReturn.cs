@@ -119,7 +119,7 @@ namespace Foxoft
                      returnInvoHeader.StoreCode = Authorization.StoreCode;
                      returnInvoHeader.CreatedUserName = Authorization.CurrAccCode;
                      returnInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
-
+                     returnInvoHeader.IsMainTF = true;
 
                      efMethods.InsertInvoiceHeader(returnInvoHeader);
                   }
@@ -203,7 +203,6 @@ namespace Foxoft
             gC_ReturnInvoiceLine.DataSource = null;
             btnEdit_InvoiceHeader.EditValue = null;
             txt_CurrAccDesc.Text = null;
-
          }
          else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
       }
