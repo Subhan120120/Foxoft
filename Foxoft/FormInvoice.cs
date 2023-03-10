@@ -161,6 +161,7 @@ namespace Foxoft
          invoiceHeader.OfficeCode = Authorization.OfficeCode;
          invoiceHeader.StoreCode = Authorization.StoreCode;
          invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
+         invoiceHeader.IsMainTF = true;
          invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
          if (dcProcess.ProcessCode == "RS")
