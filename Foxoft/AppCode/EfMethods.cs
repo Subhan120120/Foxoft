@@ -332,7 +332,6 @@ namespace Foxoft
          if (transferHeader is not null)
             db.TrInvoiceHeaders.Remove(transferHeader);
 
-
          IQueryable<TrInvoiceLine> trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId);
          if (trInvoiceLine.Any())
             db.TrInvoiceLines.Remove(trInvoiceLine.First());
