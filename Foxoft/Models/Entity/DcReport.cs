@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
@@ -22,6 +23,10 @@ namespace Foxoft.Models
         [Display(Name = "Hesabat Sorğusu")]
         public string ReportQuery { get; set; }
 
+        [Display(Name = "Hesabat Tipi")]
+        [ForeignKey("DcReportType")]
+        public byte ReportTypeId { get; set; }
+
         [Display(Name = "Hesabat Dizaynı")]
         public string ReportLayout { get; set; }
 
@@ -29,6 +34,7 @@ namespace Foxoft.Models
         public string ReportFilter { get; set; }
 
         public virtual ICollection<DcReportFilter> DcReportFilters { get; set; }
+        public virtual DcReportType DcReportType { get; set; }
 
     }
 }

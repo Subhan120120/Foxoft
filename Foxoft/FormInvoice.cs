@@ -13,19 +13,14 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
-using DevExpress.XtraExport;
-using DevExpress.XtraExport;
 using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Export;
 using DevExpress.XtraGrid.Columns;
-using DevExpress.XtraGrid.Export;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
-using DevExpress.XtraVerticalGrid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +39,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
-using Microsoft.IdentityModel.Tokens;
 
 #endregion
 
@@ -54,7 +48,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Foxoft
 {
-   public partial class FormInvoice : RibbonForm
+    public partial class FormInvoice : RibbonForm
    {
       readonly SettingStore settingStore;
       //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
