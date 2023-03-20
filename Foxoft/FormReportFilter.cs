@@ -1,13 +1,11 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.Excel;
-using DevExpress.Utils.Drawing;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors.Drawing;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
 using Foxoft.AppCode;
@@ -168,6 +166,55 @@ namespace Foxoft
         {
             string reportQuery = dcReport.ReportQuery;
             ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
+            reportQuery = AddFilterToQuery(reportQuery, dcReportFilters);
+            //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
+            string qryMaster = "Select * from ( " + reportQuery + ") as master";
+
+            string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
+            if (!string.IsNullOrEmpty(queryFilter))
+                queryFilter = " where " + queryFilter;
+
+            string qry = qryMaster + queryFilter;
+
+            switch (dcReport.ReportTypeId)
+            {
+                case 1: OpenGridReport(qry); break;
+                default:
+                    break;
+            }
+
+
+            
+
+            SaveFilterToDB();
+        }
+
+        private void SaveFilterToDB()
+        {
+            string filterCriteria = "";
+            if (filterControl_Outer.FilterCriteria is not null)
+                filterCriteria = filterControl_Outer.FilterCriteria.ToString();
+
+            efMethods.UpdateDcReport_Filter(dcReport.ReportId, filterCriteria); //save filter to database
+        }
+
+        private void OpenGridReport(string qry)
+        {
+            try
+            {
+                FormReportGrid myform = new(qry, dcReport);
+
+                myform.MdiParent = this.MdiParent;
+                myform.Show();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.ToString());
+            }
+        }
+
+        private string AddFilterToQuery(string reportQuery, ICollection<DcReportFilter> dcReportFilters)
+        {
             CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
             int index = 0;
             foreach (DcReportFilter rf in dcReportFilters)
@@ -181,67 +228,30 @@ namespace Foxoft
 
                 index++;
             }
-            //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
-            string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
-            string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
-            if (!string.IsNullOrEmpty(queryFilter))
-                queryFilter = " where " + queryFilter;
-
-            try
-            {
-                FormReportGrid myform = new(qryMaster + queryFilter, dcReport);
-
-                myform.MdiParent = this.MdiParent;
-                myform.Show();
-            }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show(ex.ToString());
-            }
-
-            string filterCriteria = "";
-            if (filterControl_Outer.FilterCriteria is not null)
-                filterCriteria = filterControl_Outer.FilterCriteria.ToString();
-
-            efMethods.UpdateDcReport_Filter(dcReport.ReportId, filterCriteria); //save filter to database
+            return reportQuery;
         }
 
         private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
         {
-            switch (filterOperatorType)
+            return filterOperatorType switch
             {
-                case "+":
-                    return BinaryOperatorType.Plus;
-                case "&":
-                    return BinaryOperatorType.BitwiseAnd;
-                case "/":
-                    return BinaryOperatorType.Divide;
-                case "==":
-                    return BinaryOperatorType.Equal;
-                case ">":
-                    return BinaryOperatorType.Greater;
-                case ">=":
-                    return BinaryOperatorType.GreaterOrEqual;
-                case "<":
-                    return BinaryOperatorType.Less;
-                case "<=":
-                    return BinaryOperatorType.LessOrEqual;
-                case "%":
-                    return BinaryOperatorType.Modulo;
-                case "*":
-                    return BinaryOperatorType.Multiply;
-                case "!=":
-                    return BinaryOperatorType.NotEqual;
-                case "|":
-                    return BinaryOperatorType.BitwiseOr;
-                case "-":
-                    return BinaryOperatorType.Minus;
-                case "^":
-                    return BinaryOperatorType.BitwiseXor;
-                default:
-                    return BinaryOperatorType.Equal;
-            }
+                "+" => BinaryOperatorType.Plus,
+                "&" => BinaryOperatorType.BitwiseAnd,
+                "/" => BinaryOperatorType.Divide,
+                "==" => BinaryOperatorType.Equal,
+                ">" => BinaryOperatorType.Greater,
+                ">=" => BinaryOperatorType.GreaterOrEqual,
+                "<" => BinaryOperatorType.Less,
+                "<=" => BinaryOperatorType.LessOrEqual,
+                "%" => BinaryOperatorType.Modulo,
+                "*" => BinaryOperatorType.Multiply,
+                "!=" => BinaryOperatorType.NotEqual,
+                "|" => BinaryOperatorType.BitwiseOr,
+                "-" => BinaryOperatorType.Minus,
+                "^" => BinaryOperatorType.BitwiseXor,
+                _ => BinaryOperatorType.Equal,
+            };
         }
 
         Dictionary<string, object> Extract(CriteriaOperator op)
@@ -282,7 +292,6 @@ namespace Foxoft
             FormReportEditor formQueryEditor = new FormReportEditor(id);
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
                 dcReport.ReportQuery = formQueryEditor.dcReport.ReportQuery;
-
         }
 
         private void bBI_ReportNew_ItemClick(object sender, ItemClickEventArgs e)

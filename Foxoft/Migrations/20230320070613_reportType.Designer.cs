@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20230319120111_reportTypes")]
-    partial class reportTypes
+    [Migration("20230320070613_reportType")]
+    partial class reportType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -951,8 +951,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("tinyint");
 
                     b.HasKey("ReportId");
-
-                    b.HasIndex("ReportTypeId");
 
                     b.ToTable("DcReports");
 
@@ -2313,17 +2311,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcReport", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcReportType", "DcReportType")
-                        .WithMany("DcReports")
-                        .HasForeignKey("ReportTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcReportType");
-                });
-
             modelBuilder.Entity("Foxoft.Models.DcReportFilter", b =>
                 {
                     b.HasOne("Foxoft.Models.DcReport", "DcReport")
@@ -2575,11 +2562,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
                     b.Navigation("DcReportFilters");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcReportType", b =>
-                {
-                    b.Navigation("DcReports");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcRole", b =>
