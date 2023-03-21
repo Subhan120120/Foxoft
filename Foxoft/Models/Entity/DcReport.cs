@@ -11,10 +11,11 @@ namespace Foxoft.Models
         public DcReport()
         {
             DcReportFilters = new HashSet<DcReportFilter>();
+            //DcSqlQueries = new HashSet<DcSqlQuery>();
         }
 
         [Key]
-        [Display(Name = "Report ID")]
+        [Display(Name = "Hesabat Id")]
         public int ReportId { get; set; }
 
         [Display(Name = "Hesabat Adı")]
@@ -34,6 +35,7 @@ namespace Foxoft.Models
         public string ReportFilter { get; set; }
 
         public virtual ICollection<DcReportFilter> DcReportFilters { get; set; }
+        //public virtual ICollection<DcSqlQuery> DcSqlQueries { get; set; }
         public virtual DcReportType DcReportType { get; set; }
 
     }

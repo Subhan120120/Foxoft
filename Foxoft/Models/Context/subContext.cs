@@ -44,6 +44,9 @@ namespace Foxoft.Models
         public DbSet<TrShipmentLine> TrShipmentLines { get; set; }
         public DbSet<DcReport> DcReports { get; set; }
         public DbSet<DcReportType> DcReportTypes { get; set; }
+        public DbSet<DcReportFilter> DcReportFilters { get; set; }
+        public DbSet<DcReportQuery> DcReportQueries { get; set; }
+        public DbSet<DcQueryParam> DcQueryParams { get; set; }
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<SettingStore> SettingStores { get; set; }
@@ -52,7 +55,6 @@ namespace Foxoft.Models
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<DcProductDcFeature> DcProductDcFeatures { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
-        public DbSet<DcReportFilter> DcReportFilters { get; set; } // view
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
