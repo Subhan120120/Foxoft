@@ -225,7 +225,7 @@ namespace Foxoft
         {
             try
             {
-                XtraReport xtraReport = GetInvoiceReport(dcReport.ReportName, qry);
+                XtraReport xtraReport = GetInvoiceReport(dcReport, qry);
                 //ReportPrintTool printTool = new(xtraReport);
                 //printTool.ShowRibbonPreview();
 
@@ -250,12 +250,12 @@ namespace Foxoft
                  .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
                  .ConnectionString;
 
-        private XtraReport GetInvoiceReport(string reportName, string qry)
+        private XtraReport GetInvoiceReport(DcReport dcReport, string qry)
         {
             string designPath = string.Empty;
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designPath = settingStore.DesignFileFolder + @"\" + reportName;
+                    designPath = settingStore.DesignFileFolder + @"\" + dcReport.ReportName;
 
             ReportClass reportClass = new();
 
@@ -264,13 +264,13 @@ namespace Foxoft
             if (File.Exists(designPath))
             {
                 SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-                dataSource.Name = reportName;
+                dataSource.Name = dcReport.ReportName;
 
-                List<DcReportQuery> dcReportQueries = new List<DcReportQuery>();
+                List<DcReportQuery> dcReportQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
 
                 foreach (DcReportQuery reportQuery in dcReportQueries)
                 {
-                    CustomSqlQuery sqlQuery = SelectQry(reportName, qry, new List<DcQueryParam>());
+                    CustomSqlQuery sqlQuery = SelectQry(reportQuery);
                     dataSource.Queries.Add(sqlQuery);
                 }
 
@@ -284,16 +284,19 @@ namespace Foxoft
             }
         }
 
-        public CustomSqlQuery SelectQry(string qryName, string qry, List<DcQueryParam> dcQueryParams)
+        public CustomSqlQuery SelectQry(DcReportQuery dcReportQuery)
         {
-            List<QueryParameter> queryParametersList = new();
+            List<DcQueryParam> dcQueryParams = efMethods.SelectQueryParamsByQuery(dcReportQuery.QueryId);
 
-            foreach (var queryParam in dcQueryParams)
+            CustomSqlQuery sqlQuery = new(dcReportQuery.QueryName, dcReportQuery.QueryText);
+
+            foreach (DcQueryParam queryParam in dcQueryParams)
             {
                 //string typeName = typeof(DateTime).FullName;
 
-                QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), queryParam.ParameterValue);
-                queryParametersList.Add(queryParameter);
+                object value = Convert.ChangeType(queryParam.ParameterValue, Type.GetType(queryParam.ParameterType));
+                QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), value);
+                sqlQuery.Parameters.Add(queryParameter);
 
                 //QueryParameter queryParameter2 = new();
                 //queryParameter2.Name = "EndDate";
@@ -301,10 +304,7 @@ namespace Foxoft
                 //queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
             }
 
-            CustomSqlQuery sqlQuerySale = new(qryName, qry);
-            sqlQuerySale.Parameters.AddRange(queryParametersList);
-
-            return sqlQuerySale;
+            return sqlQuery;
         }
 
         private BarButtonItem CreateItem()
@@ -572,5 +572,19 @@ namespace Foxoft
         {
 
         }
+    }
+
+    public class TypedProperty<T> : Property where T : IConvertible
+    {
+        public T TypedValue
+        {
+            get { return (T)Convert.ChangeType(base.Value, typeof(T)); }
+            set { base.Value = value.ToString(); }
+        }
+    }
+
+    public class Property
+    {
+        public string Value { get; set; }
     }
 }
