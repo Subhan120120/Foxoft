@@ -1,6 +1,8 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
+using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Excel;
+using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -8,14 +10,17 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -23,6 +28,7 @@ namespace Foxoft
 {
     public partial class FormReportFilter : RibbonForm
     {
+        readonly SettingStore settingStore;
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
         DcReport dcReport = new();
@@ -36,6 +42,8 @@ namespace Foxoft
         public FormReportFilter(DcReport Report)
         {
             InitializeComponent();
+
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
             ComponentResourceManager resources = new(typeof(FormReportFilter));
 
@@ -179,12 +187,12 @@ namespace Foxoft
             switch (dcReport.ReportTypeId)
             {
                 case 1: OpenGridReport(qry); break;
-                default:
-                    break;
+                case 2: OpenDetailReport(qry); break;
+                default: OpenGridReport(qry); break;
             }
 
 
-            
+
 
             SaveFilterToDB();
         }
@@ -211,6 +219,105 @@ namespace Foxoft
             {
                 XtraMessageBox.Show(ex.ToString());
             }
+        }
+
+        private void OpenDetailReport(string qry)
+        {
+            try
+            {
+                XtraReport xtraReport = GetInvoiceReport(dcReport.ReportName, qry);
+                //ReportPrintTool printTool = new(xtraReport);
+                //printTool.ShowRibbonPreview();
+
+                var xrDesignRibbonForm = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonForm();
+
+                RibbonPageGroup pageGroup = xrDesignRibbonForm.RibbonControl.Pages[0].GetGroupByName("Report");
+                BarButtonItem item = CreateItem();
+                pageGroup.ItemLinks.Add(item);
+
+                xrDesignRibbonForm.OpenReport(xtraReport);
+                xrDesignRibbonForm.Show();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.ToString());
+            }
+        }
+
+        private string subConnString = ConfigurationManager
+                 .OpenExeConfiguration(ConfigurationUserLevel.None)
+                 .ConnectionStrings
+                 .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                 .ConnectionString;
+
+        private XtraReport GetInvoiceReport(string reportName, string qry)
+        {
+            string designPath = string.Empty;
+            if (settingStore is not null)
+                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+                    designPath = settingStore.DesignFileFolder + @"\" + reportName;
+
+            ReportClass reportClass = new();
+
+            if (!File.Exists(designPath))
+                designPath = reportClass.SelectDesign();
+            if (File.Exists(designPath))
+            {
+                SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
+                dataSource.Name = reportName;
+
+                List<DcReportQuery> dcReportQueries = new List<DcReportQuery>();
+
+                foreach (DcReportQuery reportQuery in dcReportQueries)
+                {
+                    CustomSqlQuery sqlQuery = SelectQry(reportName, qry, new List<DcQueryParam>());
+                    dataSource.Queries.Add(sqlQuery);
+                }
+
+                dataSource.Fill();
+
+                return reportClass.CreateReport(dataSource, designPath);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public CustomSqlQuery SelectQry(string qryName, string qry, List<DcQueryParam> dcQueryParams)
+        {
+            List<QueryParameter> queryParametersList = new();
+
+            foreach (var queryParam in dcQueryParams)
+            {
+                //string typeName = typeof(DateTime).FullName;
+
+                QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), queryParam.ParameterValue);
+                queryParametersList.Add(queryParameter);
+
+                //QueryParameter queryParameter2 = new();
+                //queryParameter2.Name = "EndDate";
+                //queryParameter2.Type = typeof(DateTime);
+                //queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
+            }
+
+            CustomSqlQuery sqlQuerySale = new(qryName, qry);
+            sqlQuerySale.Parameters.AddRange(queryParametersList);
+
+            return sqlQuerySale;
+        }
+
+        private BarButtonItem CreateItem()
+        {
+            BarButtonItem item = new BarButtonItem();
+            item.ItemClick += item_ItemClick;
+            item.Caption = "Get Help";
+            return item;
+        }
+
+        void item_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MessageBox.Show("Item clicked");
         }
 
         private string AddFilterToQuery(string reportQuery, ICollection<DcReportFilter> dcReportFilters)

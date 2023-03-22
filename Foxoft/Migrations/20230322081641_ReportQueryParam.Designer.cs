@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230322081641_ReportQueryParam")]
+    partial class ReportQueryParam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -911,6 +913,9 @@ namespace Foxoft.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("DcReportQueryQueryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ParameterName")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -931,7 +936,7 @@ namespace Foxoft.Migrations
 
                     b.HasKey("ParameterId");
 
-                    b.HasIndex("QueryId");
+                    b.HasIndex("DcReportQueryQueryId");
 
                     b.ToTable("DcQueryParams");
                 });
@@ -1054,8 +1059,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("QueryId");
-
-                    b.HasIndex("ReportId");
 
                     b.ToTable("DcReportQueries");
                 });
@@ -2370,13 +2373,10 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcQueryParam", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcReportQuery", "DcReportQuery")
+                    b.HasOne("Foxoft.Models.DcReportQuery", null)
                         .WithMany("DcQueryParams")
-                        .HasForeignKey("QueryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcReportQuery");
+                        .HasForeignKey("DcReportQueryQueryId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
@@ -2394,17 +2394,6 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.DcReport", "DcReport")
                         .WithMany("DcReportFilters")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcReport");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcReportQuery", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcReport", "DcReport")
-                        .WithMany()
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
