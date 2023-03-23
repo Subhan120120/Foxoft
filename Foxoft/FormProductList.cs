@@ -161,7 +161,7 @@ namespace Foxoft
 
         Image GetImage(string path)
         {
-            Image img = Resources.NoPhoto;
+            Image img = null;
 
             if (File.Exists(path))
             {
@@ -338,7 +338,6 @@ namespace Foxoft
                     else
                         Clipboard.SetText(cellValue.ToString());
 
-
                     e.Handled = true;
                 }
 
@@ -348,7 +347,6 @@ namespace Foxoft
                     DcReport dcReport = efMethods.SelectReport(1004);
                     if (productCode is not null && dcReport is not null)
                     {
-
                         string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
                         string filter = " where [ProductCode] = '" + productCode + "' ";
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
