@@ -3,6 +3,7 @@ using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.UI.Sql;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -255,7 +256,7 @@ namespace Foxoft
             string designPath = string.Empty;
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designPath = settingStore.DesignFileFolder + @"\" + dcReport.ReportName;
+                    designPath = settingStore.DesignFileFolder + @"\" + dcReport.ReportName + ".repx";
 
             ReportClass reportClass = new();
 

@@ -154,7 +154,8 @@ namespace Foxoft
                                     LastUpdatedDate = x.LastUpdatedDate,
                                     LastUpdatedUserName = x.LastUpdatedUserName,
                                     Barcode = x.Barcode,
-                                });
+                                })
+                                .OrderBy(x => x.ProductDesc);
         }
 
         public int SelectProductBalance(string productCode, string warehouseCode)
