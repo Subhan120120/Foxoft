@@ -30,7 +30,7 @@ namespace Foxoft
             return "";
       }
 
-      public XtraReport CreateReport(object Datasource, string reportFilePath)
+      public XtraReport CreateReport(object datasource, string reportFilePath)
       {
          XtraReport report = new();
 
@@ -42,7 +42,7 @@ namespace Foxoft
          //else
          //    XtraMessageBox.Show("The source file does not exist.");
 
-         report.DataSource = Datasource;
+         report.DataSource = datasource;
          report.ShowPrintMarginsWarning = false;
 
          return report;

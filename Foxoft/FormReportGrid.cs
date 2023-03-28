@@ -201,6 +201,7 @@ namespace Foxoft
             //   riPictureEdit = new();
             colImage.ColumnEdit = riPictureEdit;
             riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+            riPictureEdit.NullText = " ";
             gC_Report.RepositoryItems.Add(riPictureEdit);
             //}
         }

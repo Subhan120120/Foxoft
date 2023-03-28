@@ -53,7 +53,7 @@ namespace Foxoft
       readonly SettingStore settingStore;
       //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       string reportFileNameInvoice = @"InvoiceRS_A4.repx";
-      string reportFileNameInvoiceWare = @"InvoiceRS_depo_A5.repx";
+      string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
       private TrInvoiceHeader trInvoiceHeader;
       public DcProcess dcProcess;

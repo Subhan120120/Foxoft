@@ -13,6 +13,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -22,6 +23,7 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,6 +33,7 @@ namespace Foxoft
 {
     public partial class FormProductList : RibbonForm
     {
+        SettingStore settingStore;
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
         public DcProduct dcProduct { get; set; }
@@ -49,7 +52,7 @@ namespace Foxoft
 
             bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
-            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             if (settingStore is not null)
             {
                 if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
@@ -71,6 +74,7 @@ namespace Foxoft
             colImage.OptionsColumn.FixedWidth = true;
             colImage.ColumnEdit = riPictureEdit;
             riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+            riPictureEdit.NullText = " ";
             gC_ProductList.RepositoryItems.Add(riPictureEdit);
 
             ribbonControl1.Minimized = true;
@@ -337,6 +341,31 @@ namespace Foxoft
                         Clipboard.SetImage((Image)cellValue);
                     else
                         Clipboard.SetText(cellValue.ToString());
+
+                    e.Handled = true;
+                }
+
+                if (e.KeyCode == Keys.B && e.Control)
+                {
+                    ColumnView View = gC_ProductList.MainView as ColumnView;
+
+                    string designFolder = string.Empty;
+                    if (settingStore is not null)
+                        if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
+                            designFolder = settingStore.DesignFileFolder;
+
+                    List<DcProduct> dcProducts = new();
+                    dcProducts.Add(dcProduct);
+
+                    string designPath = designFolder + @"/" + "PriceList_OneProduct.repx";
+                    XtraReport xtraReport = GetBarcodeReport(designPath, dcProducts);
+
+                    using MemoryStream ms = new();
+                    xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
+                    Image img = Image.FromStream(ms);
+                    Clipboard.SetImage(img);
+
+
 
                     e.Handled = true;
                 }
