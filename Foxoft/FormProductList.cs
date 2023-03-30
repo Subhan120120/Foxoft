@@ -169,9 +169,12 @@ namespace Foxoft
 
             if (File.Exists(path))
             {
-                Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                img = Image.FromStream(stream);
-                //stream.Close();
+                using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    img = Image.FromStream(stream);
+                    //stream.Close();
+                }
+
             }
 
             return img;

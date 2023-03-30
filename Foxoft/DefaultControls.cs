@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.FilterEditor;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,5 +41,7 @@ namespace Foxoft
         {
             gridView1.RestoreLayoutFromXml(@"D:\GvListDefaultLayout.xml");
         }
+
+
     }
 }
