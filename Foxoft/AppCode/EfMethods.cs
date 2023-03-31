@@ -204,6 +204,7 @@ namespace Foxoft
             return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Include(x => x.TrInvoiceLines)
                                       .Where(x => x.DocumentNumber == documentNumber)
+                                      .Where(x => x.IsMainTF == true)
                                       .FirstOrDefault();// (x => x.IsMainTF == true)
         }
 

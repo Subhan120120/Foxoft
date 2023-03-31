@@ -1,4 +1,6 @@
-﻿using DevExpress.Data;
+﻿
+#region usings
+using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.Utils.Design;
 using DevExpress.Utils.Menu;
@@ -29,6 +31,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+#endregion
 
 namespace Foxoft
 {
