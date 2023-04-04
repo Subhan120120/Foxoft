@@ -168,14 +168,8 @@ namespace Foxoft
             Image img = null;
 
             if (File.Exists(path))
-            {
                 using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                {
                     img = Image.FromStream(stream);
-                    //stream.Close();
-                }
-
-            }
 
             return img;
         }
@@ -367,8 +361,6 @@ namespace Foxoft
                     xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
                     Image img = Image.FromStream(ms);
                     Clipboard.SetImage(img);
-
-
 
                     e.Handled = true;
                 }

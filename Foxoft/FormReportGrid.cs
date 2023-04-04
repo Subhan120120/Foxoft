@@ -111,8 +111,10 @@ namespace Foxoft
         Image GetImage(string path)
         {
             Image img = null;
+
             if (File.Exists(path))
-                img = Image.FromFile(path);
+                using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    img = Image.FromStream(stream);
 
             return img;
         }
