@@ -816,6 +816,15 @@ namespace Foxoft
                          .ToList(); // burdaki kolonlari dizaynda da elave et
         }
 
+        public List<DcWarehouse> SelectWarehousesByStore(string storeCode)
+        {
+            using subContext db = new();
+            return db.DcWarehouses.Where(x => x.IsDisabled == false)
+                                  .Where(x => x.StoreCode == storeCode)
+                                  .OrderBy(x => x.CreatedDate)
+                                  .ToList(); // burdaki kolonlari dizaynda da elave et
+        }
+
         public string SelectWarehouseByStore(string storeCode)
         {
             using subContext db = new();

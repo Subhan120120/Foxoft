@@ -641,6 +641,7 @@ namespace Foxoft
             this.btnEdit_CurrAccCode.TabIndex = 2;
             this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
             this.btnEdit_CurrAccCode.InvalidValue += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.btnEdit_CurrAccCode_InvalidValue);
+            this.btnEdit_CurrAccCode.EditValueChanged += new System.EventHandler(this.btnEdit_CurrAccCode_EditValueChanged);
             this.btnEdit_CurrAccCode.DoubleClick += new System.EventHandler(this.btnEdit_CurrAccCode_DoubleClick);
             this.btnEdit_CurrAccCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             this.btnEdit_CurrAccCode.Validating += new System.ComponentModel.CancelEventHandler(this.btnEdit_CurrAccCode_Validating);
@@ -663,6 +664,7 @@ namespace Foxoft
             this.lUE_StoreCode.Size = new System.Drawing.Size(337, 20);
             this.lUE_StoreCode.StyleController = this.dataLayoutControl1;
             this.lUE_StoreCode.TabIndex = 6;
+            this.lUE_StoreCode.EditValueChanged += new System.EventHandler(this.lUE_StoreCode_EditValueChanged);
             this.lUE_StoreCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // lUE_WarehouseCode
@@ -683,6 +685,7 @@ namespace Foxoft
             this.lUE_WarehouseCode.Size = new System.Drawing.Size(337, 20);
             this.lUE_WarehouseCode.StyleController = this.dataLayoutControl1;
             this.lUE_WarehouseCode.TabIndex = 8;
+            this.lUE_WarehouseCode.EditValueChanged += new System.EventHandler(this.lUE_WarehouseCode_EditValueChanged);
             this.lUE_WarehouseCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // lUE_ToWarehouseCode

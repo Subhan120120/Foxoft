@@ -34,12 +34,6 @@ namespace Foxoft
         AdoMethods adoMethods = new AdoMethods();
         DcReport dcReport = new();
 
-        readonly RepositoryItemButtonEdit repoBtnEdit_ProductCode = new();
-        readonly RepositoryItemButtonEdit repoBtnEdit_CurrAccCode = new();
-        readonly RepositoryItemButtonEdit repoBtnEdit_StoreCode = new();
-        readonly RepositoryItemButtonEdit repoBtnEdit_CashRegisterCode = new();
-        readonly RepositoryItemButtonEdit repoBtnEdit_WarehouseCode = new();
-
         public FormReportFilter(DcReport Report)
         {
             InitializeComponent();
@@ -72,26 +66,6 @@ namespace Foxoft
             GroupOperator groupOperator = GetFiltersFromDatabase(dcReport.DcReportFilters);
             filterControl_Inner.SourceControl = opToDt(groupOperator);
             filterControl_Inner.FilterCriteria = groupOperator;
-
-            this.repoBtnEdit_ProductCode.AutoHeight = false;
-            this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
-            this.repoBtnEdit_ProductCode.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdt_ButtonPressed);
-
-            this.repoBtnEdit_CurrAccCode.AutoHeight = false;
-            this.repoBtnEdit_CurrAccCode.Name = "repoBtnEdit_CurrAccCode";
-            this.repoBtnEdit_CurrAccCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CurrAccCode_ButtonPressed);
-
-            this.repoBtnEdit_StoreCode.AutoHeight = false;
-            this.repoBtnEdit_StoreCode.Name = "repoBtnEdit_StoreCode";
-            this.repoBtnEdit_StoreCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_StoreCode_ButtonPressed);
-
-            this.repoBtnEdit_CashRegisterCode.AutoHeight = false;
-            this.repoBtnEdit_CashRegisterCode.Name = "repoBtnEdit_CashRegisterCode";
-            this.repoBtnEdit_CashRegisterCode.ButtonPressed += new ButtonPressedEventHandler(this.repobtnEdit_CashRegisterCode_ButtonPressed);
-
-            this.repoBtnEdit_WarehouseCode.AutoHeight = false;
-            this.repoBtnEdit_WarehouseCode.Name = "repoBtnEdit_WarehouseCode";
-            this.repoBtnEdit_WarehouseCode.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdit_WarehouseCode_ButtonPressed);
         }
 
         private string ClearVariables(string querySql)
@@ -420,10 +394,7 @@ namespace Foxoft
 
         private void filterControl_Inner_CustomValueEditor(object sender, CustomValueEditorArgs e)
         {
-            if (e.Node.FirstOperand.PropertyName == "Məhsul Kodu" || e.Node.FirstOperand.PropertyName == "ProductCode")
-                e.RepositoryItem = repoBtnEdit_ProductCode;
-            if (e.Node.FirstOperand.PropertyName == "Cari Hesab Kodu" || e.Node.FirstOperand.PropertyName == "CurrAccCode")
-                e.RepositoryItem = repoBtnEdit_CurrAccCode;
+            e.InitFilterRepositoryItems(this);
 
             if (e.Value is not null && e.PropertyName is not null)
             {
@@ -437,72 +408,7 @@ namespace Foxoft
 
         private void filterControl_Outer_CustomValueEditor(object sender, CustomValueEditorArgs e)
         {
-            if (e.Node.FirstOperand.PropertyName == "Məhsul Kodu" || e.Node.FirstOperand.PropertyName == "ProductCode")
-                e.RepositoryItem = repoBtnEdit_ProductCode;
-            if (e.Node.FirstOperand.PropertyName == "Cari Hesab Kodu" || e.Node.FirstOperand.PropertyName == "CurrAccCode")
-                e.RepositoryItem = repoBtnEdit_CurrAccCode;
-            if (e.Node.FirstOperand.PropertyName == "Mağaza Kodu" || e.Node.FirstOperand.PropertyName == "StoreCode")
-                e.RepositoryItem = repoBtnEdit_StoreCode;
-            if (e.Node.FirstOperand.PropertyName == "Kassa Kodu" || e.Node.FirstOperand.PropertyName == "CashRegisterCode")
-                e.RepositoryItem = repoBtnEdit_CashRegisterCode;
-            if (e.Node.FirstOperand.PropertyName == "Depo Kodu" || e.Node.FirstOperand.PropertyName == "WarehouseCode")
-                e.RepositoryItem = repoBtnEdit_WarehouseCode;
-        }
-
-        private void repoBtnEdt_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            SelectProduct(sender);
-        }
-
-        private void SelectProduct(object sender)
-        {
-            ButtonEdit editor = (ButtonEdit)sender;
-            using (FormProductList form = new FormProductList(new byte[] { 1, 3 }))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    editor.EditValue = form.dcProduct.ProductCode;
-                }
-            }
-        }
-
-        private void repobtnEdit_CurrAccCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            SelectCurrAcc(sender, 0);
-        }
-
-        private void repobtnEdit_StoreCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            SelectCurrAcc(sender, 4);
-        }
-
-        private void repobtnEdit_CashRegisterCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            SelectCurrAcc(sender, 5);
-        }
-
-        private void repoBtnEdit_WarehouseCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            ButtonEdit editor = (ButtonEdit)sender;
-            using (FormWarehouseList form = new())
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    editor.EditValue = form.dcWarehouse.WarehouseCode;
-                }
-            }
-        }
-
-        private void SelectCurrAcc(object sender, byte currAccTypeCode)
-        {
-            ButtonEdit editor = (ButtonEdit)sender;
-            using (FormCurrAccList form = new(currAccTypeCode))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    editor.EditValue = form.dcCurrAcc.CurrAccCode;
-                }
-            }
+            e.InitFilterRepositoryItems(this);
         }
 
         private void ExcelButtonFilterControl_ExcelButtonClick(object sender, ExcelButtonEventArgs e)

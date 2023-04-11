@@ -50,6 +50,8 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
+
             bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
@@ -357,10 +359,12 @@ namespace Foxoft
                     string designPath = designFolder + @"/" + "PriceList_OneProduct.repx";
                     XtraReport xtraReport = GetBarcodeReport(designPath, dcProducts);
 
-                    using MemoryStream ms = new();
-                    xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
-                    Image img = Image.FromStream(ms);
-                    Clipboard.SetImage(img);
+                    using (MemoryStream ms = new())
+                    {
+                        xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
+                        Image img = Image.FromStream(ms);
+                        Clipboard.SetImage(img);
+                    };
 
                     e.Handled = true;
                 }

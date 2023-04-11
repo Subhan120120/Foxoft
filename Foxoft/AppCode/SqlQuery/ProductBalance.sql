@@ -27,7 +27,7 @@ from ( select DcProducts.ProductCode
 												ORDER BY TrInvoiceHeaders.DocumentDate desc
 												, TrInvoiceLines.CreatedDate desc
 								)											 
-	, SUM(ISNULL(QtyIn,0) - ISNULL(QtyOut,0)) Balance 
+	, Balance = SUM(ISNULL(QtyIn,0) - ISNULL(QtyOut,0))  
 	--, LastPurchasePrice = ()
 	from DcProducts
 	
