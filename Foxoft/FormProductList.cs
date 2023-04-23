@@ -356,8 +356,8 @@ namespace Foxoft
                     List<DcProduct> dcProducts = new();
                     dcProducts.Add(dcProduct);
 
-                    string designPath = designFolder + @"/" + "PriceList_OneProduct.repx";
-                    XtraReport xtraReport = GetBarcodeReport(designPath, dcProducts);
+                    ReportClass reportClass = new();
+                    XtraReport xtraReport = reportClass.CreateReport(dcProducts, "PriceList_OneProduct.repx");
 
                     using (MemoryStream ms = new())
                     {
@@ -585,12 +585,10 @@ namespace Foxoft
         {
             ShowReportPreview();
         }
+
         private void ShowReportPreview()
         {
-            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = designFolder + @"\" + barcodeDesignFile;
-
-            XtraReport xtraReport = GetBarcodeReport(designPath);
+            XtraReport xtraReport = GetBarcodeReport();
 
             if (xtraReport is not null)
             {
@@ -599,33 +597,17 @@ namespace Foxoft
             }
         }
 
-        private XtraReport GetBarcodeReport(string designPath)
+        private XtraReport GetBarcodeReport()
         {
             ReportClass reportClass = new();
-
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
-            if (File.Exists(designPath))
-            {
-                DsMethods dsMethods = new();
-                SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-                dataSource.Name = "Barcode";
-
-                SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
-                dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
-                dataSource.Fill();
-
-                return reportClass.CreateReport(dataSource, designPath);
-            }
-            else
-            {
-                return null;
-            }
+            DsMethods dsMethods = new();
+            SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
+            return reportClass.GetReport("Barcode", barcodeDesignFile, new SqlQuery[] { sqlQuerySale });
         }
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraReport xtraReport = GetBarcodeReport(designFolder);
+            XtraReport xtraReport = GetBarcodeReport();
 
             if (xtraReport is not null)
             {
@@ -691,9 +673,9 @@ namespace Foxoft
         {
             ColumnView View = gC_ProductList.MainView as ColumnView;
             List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
-            string designFile = designFolder + @"\" + "HesabatProduct_toplu.repx";
 
-            XtraReport xtraReport = GetBarcodeReport(designFile, mydata);
+            ReportClass reportClass = new();
+            XtraReport xtraReport = reportClass.CreateReport(mydata, "HesabatProduct_toplu.repx");
 
             if (xtraReport is not null)
             {
@@ -711,28 +693,13 @@ namespace Foxoft
             return resp;
         }
 
-        private XtraReport GetBarcodeReport(string designPath, object datasource)
-        {
-            ReportClass reportClass = new();
-
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
-            if (File.Exists(designPath))
-            {
-                return reportClass.CreateReport(datasource, designPath);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         private void BBI_ReportDesignProduct_ItemClick(object sender, ItemClickEventArgs e)
         {
             ColumnView View = gC_ProductList.MainView as ColumnView;
             List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
 
-            XtraReport xtraReport = GetBarcodeReport(designFolder, mydata);
+            ReportClass reportClass = new();
+            XtraReport xtraReport = reportClass.CreateReport(mydata, "");
 
             if (xtraReport is not null)
             {

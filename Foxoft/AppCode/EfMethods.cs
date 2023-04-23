@@ -91,7 +91,6 @@ namespace Foxoft
 
             List<DcFeature> features = db.DcFeatures.ToList();
             return features;
-
         }
 
         public DcProductDcFeature SelectFeature(int featureId, string productCode)
@@ -400,6 +399,16 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int DeleteFeature(DcFeature dcFeature)
+        {
+            using subContext db = new();
+
+            if (dcFeature is not null)
+                db.DcFeatures.Remove(dcFeature);
+
+            return db.SaveChanges();
+        }
+
         public bool PaymentHeaderExistByInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -441,7 +450,22 @@ namespace Foxoft
             TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsCompleted = true };
             db.Entry(trInvoiceHeader).Property(x => x.IsCompleted).IsModified = true;
             return db.SaveChanges();
+        }
 
+        public int UpdateInvoiceIsSent(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsSent = true };
+            db.Entry(trInvoiceHeader).Property(x => x.IsSent).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdatePaymentIsSent(Guid paymentHeaderId)
+        {
+            using subContext db = new();
+            TrPaymentHeader trPaymentHeader = new() { PaymentHeaderId = paymentHeaderId, IsSent = true };
+            db.Entry(trPaymentHeader).Property(x => x.IsSent).IsModified = true;
+            return db.SaveChanges();
         }
 
         public int UpdateInvoicePrintCount(Guid invoiceHeaderId)
@@ -901,6 +925,12 @@ namespace Foxoft
                                 .Any(x => x.CurrAccCode == CurrAccCode);
         }
 
+        public bool FeatureExist(int Id)
+        {
+            using subContext db = new();
+            return db.DcFeatures.Any(x => x.Id == Id);
+        }
+
         public bool ReportExist(int Id)
         {
             using subContext db = new();
@@ -1081,6 +1111,22 @@ namespace Foxoft
             using subContext db = new();
             AppSetting appSetting = new() { Id = 1, GridViewLayout = layout };
             db.Entry(appSetting).Property(x => x.GridViewLayout).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateAppSettingTwilioInstance(string instanceId)
+        {
+            using subContext db = new();
+            AppSetting appSetting = new() { Id = 1, TwilioInstanceId = instanceId };
+            db.Entry(appSetting).Property(x => x.TwilioInstanceId).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateAppSettingTwilioToken(string token)
+        {
+            using subContext db = new();
+            AppSetting appSetting = new() { Id = 1, TwilioToken = token };
+            db.Entry(appSetting).Property(x => x.TwilioToken).IsModified = true;
             return db.SaveChanges();
         }
 

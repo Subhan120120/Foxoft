@@ -227,36 +227,17 @@ namespace Foxoft
 
         private XtraReport GetInvoiceReport(DcReport dcReport, string qry)
         {
-            string designPath = string.Empty;
-            if (settingStore is not null)
-                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designPath = settingStore.DesignFileFolder + @"\" + dcReport.ReportName + ".repx";
+            List<DcReportQuery> dcReportQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
+            List<CustomSqlQuery> sqlQueries = null;
+
+            foreach (DcReportQuery reportQuery in dcReportQueries)
+            {
+                CustomSqlQuery sqlQuery = SelectQry(reportQuery);
+                sqlQueries.Add(sqlQuery);
+            }
 
             ReportClass reportClass = new();
-
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
-            if (File.Exists(designPath))
-            {
-                SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-                dataSource.Name = dcReport.ReportName;
-
-                List<DcReportQuery> dcReportQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
-
-                foreach (DcReportQuery reportQuery in dcReportQueries)
-                {
-                    CustomSqlQuery sqlQuery = SelectQry(reportQuery);
-                    dataSource.Queries.Add(sqlQuery);
-                }
-
-                dataSource.Fill();
-
-                return reportClass.CreateReport(dataSource, designPath);
-            }
-            else
-            {
-                return null;
-            }
+            return reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
         }
 
         public CustomSqlQuery SelectQry(DcReportQuery dcReportQuery)

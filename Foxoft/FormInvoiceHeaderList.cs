@@ -19,209 +19,210 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class FormInvoiceHeaderList : XtraForm
-   {
-      EfMethods efMethods = new();
-      public TrInvoiceHeader trInvoiceHeader { get; set; }
-      subContext dbContext;
-      public string processCode { get; set; }
+    public partial class FormInvoiceHeaderList : XtraForm
+    {
+        EfMethods efMethods = new();
+        public TrInvoiceHeader trInvoiceHeader { get; set; }
+        subContext dbContext;
+        public string processCode { get; set; }
 
 
-      public FormInvoiceHeaderList()
-      {
-         InitializeComponent();
+        public FormInvoiceHeaderList()
+        {
+            InitializeComponent();
 
-         byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-         MemoryStream stream = new(byteArray);
-         OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-         this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
-      }
+            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+            MemoryStream stream = new(byteArray);
+            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+            this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
+        }
 
-      public FormInvoiceHeaderList(string processCode)
-          : this()
-      {
-         this.processCode = processCode;
-         LoadInvoiveHeaders();
+        public FormInvoiceHeaderList(string processCode)
+            : this()
+        {
+            this.processCode = processCode;
+            LoadInvoiveHeaders();
 
-         string storeCode = Authorization.StoreCode;
-         this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+            string storeCode = Authorization.StoreCode;
+            this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
 
-         gV_InvoiceHeaderList.BestFitColumns();
-      }
+            gV_InvoiceHeaderList.BestFitColumns();
+        }
 
-      private void LoadInvoiveHeaders()
-      {
-         dbContext = new subContext();
+        private void LoadInvoiveHeaders()
+        {
+            dbContext = new subContext();
 
-         //filteredData
-         //            .Include(x => x.DcCurrAcc)
-         //            .Include(x => x.TrInvoiceLines)
-         //            .Where(x => x.ProcessCode == processCode)
-         //            .OrderByDescending(x => x.DocumentDate)
-         //            .LoadAsync()
-         //            .ContinueWith(loadTask =>
-         //            {
-         //                LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
+            //filteredData
+            //            .Include(x => x.DcCurrAcc)
+            //            .Include(x => x.TrInvoiceLines)
+            //            .Where(x => x.ProcessCode == processCode)
+            //            .OrderByDescending(x => x.DocumentDate)
+            //            .LoadAsync()
+            //            .ContinueWith(loadTask =>
+            //            {
+            //                LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
-         //                lV_invoiceHeader.ForEach(x =>
-         //                {
-         //                    x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
-         //                });
+            //                lV_invoiceHeader.ForEach(x =>
+            //                {
+            //                    x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
+            //                });
 
-         //                trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+            //                trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
 
-         //            }, TaskScheduler.FromCurrentSynchronizationContext());
+            //            }, TaskScheduler.FromCurrentSynchronizationContext());
 
-         IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
-         CriteriaToExpressionConverter converter = new();
-         IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
+            IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
+            CriteriaToExpressionConverter converter = new();
+            IQueryable<TrInvoiceHeader> filteredData = trInvoiceHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceHeaderList.ActiveFilterCriteria) as IQueryable<TrInvoiceHeader>;
 
-         List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
-                     .Include(x => x.DcCurrAcc)
-                     .Where(x => x.ProcessCode == processCode && x.IsMainTF == true)
-                     .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
-                     .Select(x => new TrInvoiceHeader
-                     {
-                        CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
-                        TotalNetAmount = x.TrInvoiceLines.Sum(l => l.NetAmountLoc),
-                        InvoiceHeaderId = x.InvoiceHeaderId,
-                        CreatedDate = x.CreatedDate,
-                        CreatedUserName = x.CreatedUserName,
-                        CurrAccCode = x.CurrAccCode,
-                        CustomsDocumentNumber = x.CustomsDocumentNumber,
-                        Description = x.Description,
-                        DocumentDate = x.DocumentDate,
-                        DocumentNumber = x.DocumentNumber,
-                        DocumentTime = x.DocumentTime,
-                        FiscalPrintedState = x.FiscalPrintedState,
-                        IsCompleted = x.IsCompleted,
-                        IsLocked = x.IsLocked,
-                        PrintCount = x.PrintCount,
-                        IsReturn = x.IsReturn,
-                        IsOpen = x.IsOpen,
-                        IsSalesViaInternet = x.IsSalesViaInternet,
-                        IsSuspended = x.IsSuspended,
-                        LastUpdatedDate = x.LastUpdatedDate,
-                        LastUpdatedUserName = x.LastUpdatedUserName,
-                        OfficeCode = x.OfficeCode,
-                        OperationDate = x.OperationDate,
-                        OperationTime = x.OperationTime,
-                        PosTerminalId = x.PosTerminalId,
-                        ProcessCode = x.ProcessCode,
-                        RelatedInvoiceId = x.RelatedInvoiceId,
-                        StoreCode = x.StoreCode,
-                        WarehouseCode = x.WarehouseCode,
-                        IsMainTF = x.IsMainTF,
-                     })
-                     .ToList();
+            List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
+                        .Include(x => x.DcCurrAcc)
+                        .Where(x => x.ProcessCode == processCode && x.IsMainTF == true)
+                        .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
+                        .Select(x => new TrInvoiceHeader
+                        {
+                            CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
+                            TotalNetAmount = x.TrInvoiceLines.Sum(l => l.NetAmountLoc),
+                            InvoiceHeaderId = x.InvoiceHeaderId,
+                            CreatedDate = x.CreatedDate,
+                            CreatedUserName = x.CreatedUserName,
+                            CurrAccCode = x.CurrAccCode,
+                            CustomsDocumentNumber = x.CustomsDocumentNumber,
+                            Description = x.Description,
+                            DocumentDate = x.DocumentDate,
+                            DocumentNumber = x.DocumentNumber,
+                            DocumentTime = x.DocumentTime,
+                            FiscalPrintedState = x.FiscalPrintedState,
+                            IsCompleted = x.IsCompleted,
+                            IsLocked = x.IsLocked,
+                            PrintCount = x.PrintCount,
+                            IsReturn = x.IsReturn,
+                            IsOpen = x.IsOpen,
+                            IsSent = x.IsSent,
+                            IsSalesViaInternet = x.IsSalesViaInternet,
+                            IsSuspended = x.IsSuspended,
+                            LastUpdatedDate = x.LastUpdatedDate,
+                            LastUpdatedUserName = x.LastUpdatedUserName,
+                            OfficeCode = x.OfficeCode,
+                            OperationDate = x.OperationDate,
+                            OperationTime = x.OperationTime,
+                            PosTerminalId = x.PosTerminalId,
+                            ProcessCode = x.ProcessCode,
+                            RelatedInvoiceId = x.RelatedInvoiceId,
+                            StoreCode = x.StoreCode,
+                            WarehouseCode = x.WarehouseCode,
+                            IsMainTF = x.IsMainTF
+                        })
+                        .ToList();
 
-         trInvoiceHeadersBindingSource.DataSource = headerList;
+            trInvoiceHeadersBindingSource.DataSource = headerList;
 
-         //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
-      }
+            //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
+        }
 
-      private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
-      {
-         DXMouseEventArgs ea = e as DXMouseEventArgs;
-         GridView view = sender as GridView;
-         GridHitInfo info = view.CalcHitInfo(ea.Location);
-         if ((info.InRow || info.InRowCell) && trInvoiceHeader is not null)
-         {
-            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
-            DialogResult = DialogResult.OK;
-            Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
-            Settings.Default.Save();
-         }
-      }
-
-      private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
-      {
-         ColumnView view = (sender as GridControl).FocusedView as ColumnView;
-         if (view is null) return;
-
-         if (view.SelectedRowsCount > 0)
-            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
-
-         if (e.KeyCode == Keys.Enter && trInvoiceHeader is not null)
-         {
-            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
-            Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
-            Settings.Default.Save();
-
-            DialogResult = DialogResult.OK;
-         }
-
-         if (e.KeyCode == Keys.Escape)
-            Close();
-      }
-
-      private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
-      {
-         GridView view = sender as GridView;
-         if (view.SelectedRowsCount > 0)
-            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
-         else
-            trInvoiceHeader = null;
-
-         //LoadInvoiveHeaders();
-      }
-
-      private void gV_InvoiceHeaderList_CellValueChanging(object sender, CellValueChangedEventArgs e)
-      {
-         //if ((sender as GridView).IsFilterRow(e.RowHandle))
-         //    LoadInvoiveHeaders();
-      }
-
-      private void gV_InvoiceHeaderList_RowStyle(object sender, RowStyleEventArgs e)
-      {
-         GridView view = sender as GridView;
-
-         if (e.RowHandle >= 0)
-         {
-            //string col = view.GetRowCellDisplayText(e.RowHandle, isre);
-            object isReturn = view.GetRowCellValue(e.RowHandle, colIsReturn);
-            bool bIsReturn = (bool)isReturn;
-            if (bIsReturn)
-               e.Appearance.BackColor = Color.MistyRose;
-
-            object isOpen = view.GetRowCellValue(e.RowHandle, colIsOpen);
-            object documentNumber = view.GetRowCellValue(e.RowHandle, colDocumentNumber);
-            bool bIsOpen = (bool)isOpen;
-            string docNum = documentNumber.ToString();
-
-            if (bIsOpen && docNum != Settings.Default.OpenDocNum)
+        private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
+        {
+            DXMouseEventArgs ea = e as DXMouseEventArgs;
+            GridView view = sender as GridView;
+            GridHitInfo info = view.CalcHitInfo(ea.Location);
+            if ((info.InRow || info.InRowCell) && trInvoiceHeader is not null)
             {
-               //e.Appearance.ForeColor = Color.Red;
-               e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+                efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
+                DialogResult = DialogResult.OK;
+                Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
+                Settings.Default.Save();
+            }
+        }
+
+        private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
+        {
+            ColumnView view = (sender as GridControl).FocusedView as ColumnView;
+            if (view is null) return;
+
+            if (view.SelectedRowsCount > 0)
+                trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+
+            if (e.KeyCode == Keys.Enter && trInvoiceHeader is not null)
+            {
+                efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
+                Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
+                Settings.Default.Save();
+
+                DialogResult = DialogResult.OK;
             }
 
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
 
-         }
-      }
+        private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (view.SelectedRowsCount > 0)
+                trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+            else
+                trInvoiceHeader = null;
 
-      // AutoFocus FindPanel
-      bool isFirstPaint = true;
-      private void gC_InvoiceHeaderList_Paint(object sender, PaintEventArgs e)
-      {
-         GridControl gC = sender as GridControl;
-         GridView gV = gC.MainView as GridView;
+            //LoadInvoiveHeaders();
+        }
 
-         if (isFirstPaint)
-         {
-            if (!gV.FindPanelVisible)
-               gV.ShowFindPanel();
-            gV.ShowFindPanel();
-         }
-         isFirstPaint = false;
-      }
+        private void gV_InvoiceHeaderList_CellValueChanging(object sender, CellValueChangedEventArgs e)
+        {
+            //if ((sender as GridView).IsFilterRow(e.RowHandle))
+            //    LoadInvoiveHeaders();
+        }
 
-      private void gV_InvoiceHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
-      {
-         GridView view = sender as GridView;
-         if (view.SelectedRowsCount > 0)
-            trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
-         else
-            trInvoiceHeader = null;
-      }
-   }
+        private void gV_InvoiceHeaderList_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            GridView view = sender as GridView;
+
+            if (e.RowHandle >= 0)
+            {
+                //string col = view.GetRowCellDisplayText(e.RowHandle, isre);
+                object isReturn = view.GetRowCellValue(e.RowHandle, colIsReturn);
+                bool bIsReturn = (bool)isReturn;
+                if (bIsReturn)
+                    e.Appearance.BackColor = Color.MistyRose;
+
+                object isOpen = view.GetRowCellValue(e.RowHandle, colIsOpen);
+                object documentNumber = view.GetRowCellValue(e.RowHandle, colDocumentNumber);
+                bool bIsOpen = (bool)isOpen;
+                string docNum = documentNumber.ToString();
+
+                if (bIsOpen && docNum != Settings.Default.OpenDocNum)
+                {
+                    //e.Appearance.ForeColor = Color.Red;
+                    e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
+                }
+
+
+            }
+        }
+
+        // AutoFocus FindPanel
+        bool isFirstPaint = true;
+        private void gC_InvoiceHeaderList_Paint(object sender, PaintEventArgs e)
+        {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
+            if (isFirstPaint)
+            {
+                if (!gV.FindPanelVisible)
+                    gV.ShowFindPanel();
+                gV.ShowFindPanel();
+            }
+            isFirstPaint = false;
+        }
+
+        private void gV_InvoiceHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (view.SelectedRowsCount > 0)
+                trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
+            else
+                trInvoiceHeader = null;
+        }
+    }
 }

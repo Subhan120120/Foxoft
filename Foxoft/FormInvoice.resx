@@ -355,6 +355,65 @@
         MTUuNDA0OCkiIC8+DQogIDwvZz4NCjwvc3ZnPgs=
 </value>
   </data>
+  <metadata name="barButtonItem1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
+  <data name="barButtonItem1.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAFcLAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgd2lkdGg9IjQ4cHgiIGhl
+        aWdodD0iNDhweCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAw
+        MC9zdmciIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbC1ydWxlPSJldmVub2RkIj4NCiAgPHBhdGggZD0i
+        TTQuODY4LDQzLjMwM2wyLjY5NC05LjgzNUM1LjksMzAuNTksNS4wMjYsMjcuMzI0LDUuMDI3LDIzLjk3
+        OUM1LjAzMiwxMy41MTQsMTMuNTQ4LDUsMjQuMDE0LDVjNS4wNzksMC4wMDIsOS44NDUsMS45NzksMTMu
+        NDMsNS41NjZjMy41ODQsMy41ODgsNS41NTgsOC4zNTYsNS41NTYsMTMuNDI4Yy0wLjAwNCwxMC40NjUt
+        OC41MjIsMTguOTgtMTguOTg2LDE4Ljk4Yy0wLjAwMSwwLDAsMCwwLDBoLTAuMDA4Yy0zLjE3Ny0wLjAw
+        MS02LjMtMC43OTgtOS4wNzMtMi4zMTFMNC44NjgsNDMuMzAzeiIgZmlsbD0iI2ZmZiIgLz4NCiAgPHBh
+        dGggZD0iTTQuODY4LDQzLjgwM2MtMC4xMzIsMC0wLjI2LTAuMDUyLTAuMzU1LTAuMTQ4Yy0wLjEyNS0w
+        LjEyNy0wLjE3NC0wLjMxMi0wLjEyNy0wLjQ4M2wyLjYzOS05LjYzNmMtMS42MzYtMi45MDYtMi40OTkt
+        Ni4yMDYtMi40OTctOS41NTZDNC41MzIsMTMuMjM4LDEzLjI3Myw0LjUsMjQuMDE0LDQuNWM1LjIxLDAu
+        MDAyLDEwLjEwNSwyLjAzMSwxMy43ODQsNS43MTNjMy42NzksMy42ODMsNS43MDQsOC41NzcsNS43MDIs
+        MTMuNzgxYy0wLjAwNCwxMC43NDEtOC43NDYsMTkuNDgtMTkuNDg2LDE5LjQ4Yy0zLjE4OS0wLjAwMS02
+        LjM0NC0wLjc4OC05LjE0NC0yLjI3N2wtOS44NzUsMi41ODlDNC45NTMsNDMuNzk4LDQuOTExLDQzLjgw
+        Myw0Ljg2OCw0My44MDN6IiBmaWxsPSIjZmZmIiAvPg0KICA8cGF0aCBkPSJNMjQuMDE0LDVjNS4wNzks
+        MC4wMDIsOS44NDUsMS45NzksMTMuNDMsNS41NjZjMy41ODQsMy41ODgsNS41NTgsOC4zNTYsNS41NTYs
+        MTMuNDI4Yy0wLjAwNCwxMC40NjUtOC41MjIsMTguOTgtMTguOTg2LDE4Ljk4aC0wLjAwOGMtMy4xNzct
+        MC4wMDEtNi4zLTAuNzk4LTkuMDczLTIuMzExTDQuODY4LDQzLjMwM2wyLjY5NC05LjgzNUM1LjksMzAu
+        NTksNS4wMjYsMjcuMzI0LDUuMDI3LDIzLjk3OUM1LjAzMiwxMy41MTQsMTMuNTQ4LDUsMjQuMDE0LDUg
+        TTI0LjAxNCw0Mi45NzRDMjQuMDE0LDQyLjk3NCwyNC4wMTQsNDIuOTc0LDI0LjAxNCw0Mi45NzRDMjQu
+        MDE0LDQyLjk3NCwyNC4wMTQsNDIuOTc0LDI0LjAxNCw0Mi45NzQgTTI0LjAxNCw0Mi45NzRDMjQuMDE0
+        LDQyLjk3NCwyNC4wMTQsNDIuOTc0LDI0LjAxNCw0Mi45NzRDMjQuMDE0LDQyLjk3NCwyNC4wMTQsNDIu
+        OTc0LDI0LjAxNCw0Mi45NzQgTTI0LjAxNCw0QzI0LjAxNCw0LDI0LjAxNCw0LDI0LjAxNCw0QzEyLjk5
+        OCw0LDQuMDMyLDEyLjk2Miw0LjAyNywyMy45NzljLTAuMDAxLDMuMzY3LDAuODQ5LDYuNjg1LDIuNDYx
+        LDkuNjIybC0yLjU4NSw5LjQzOWMtMC4wOTQsMC4zNDUsMC4wMDIsMC43MTMsMC4yNTQsMC45NjdjMC4x
+        OSwwLjE5MiwwLjQ0NywwLjI5NywwLjcxMSwwLjI5N2MwLjA4NSwwLDAuMTctMC4wMTEsMC4yNTQtMC4w
+        MzNsOS42ODctMi41NGMyLjgyOCwxLjQ2OCw1Ljk5OCwyLjI0Myw5LjE5NywyLjI0NGMxMS4wMjQsMCwx
+        OS45OS04Ljk2MywxOS45OTUtMTkuOThjMC4wMDItNS4zMzktMi4wNzUtMTAuMzU5LTUuODQ4LTE0LjEz
+        NUMzNC4zNzgsNi4wODMsMjkuMzU3LDQuMDAyLDI0LjAxNCw0TDI0LjAxNCw0eiIgZmlsbD0iI2NmZDhk
+        YyIgLz4NCiAgPHBhdGggZD0iTTM1LjE3NiwxMi44MzJjLTIuOTgtMi45ODItNi45NDEtNC42MjUtMTEu
+        MTU3LTQuNjI2Yy04LjcwNCwwLTE1Ljc4Myw3LjA3Ni0xNS43ODcsMTUuNzc0Yy0wLjAwMSwyLjk4MSww
+        LjgzMyw1Ljg4MywyLjQxMyw4LjM5NmwwLjM3NiwwLjU5N2wtMS41OTUsNS44MjFsNS45NzMtMS41NjZs
+        MC41NzcsMC4zNDJjMi40MjIsMS40MzgsNS4yLDIuMTk4LDguMDMyLDIuMTk5aDAuMDA2YzguNjk4LDAs
+        MTUuNzc3LTcuMDc3LDE1Ljc4LTE1Ljc3NkMzOS43OTUsMTkuNzc4LDM4LjE1NiwxNS44MTQsMzUuMTc2
+        LDEyLjgzMnoiIGZpbGw9IiM0MGMzNTEiIC8+DQogIDxwYXRoIGQ9Ik0xOS4yNjgsMTYuMDQ1Yy0wLjM1
+        NS0wLjc5LTAuNzI5LTAuODA2LTEuMDY4LTAuODJjLTAuMjc3LTAuMDEyLTAuNTkzLTAuMDExLTAuOTA5
+        LTAuMDExYy0wLjMxNiwwLTAuODMsMC4xMTktMS4yNjUsMC41OTRjLTAuNDM1LDAuNDc1LTEuNjYxLDEu
+        NjIyLTEuNjYxLDMuOTU2YzAsMi4zMzQsMS43LDQuNTksMS45MzcsNC45MDZjMC4yMzcsMC4zMTYsMy4y
+        ODIsNS4yNTksOC4xMDQsNy4xNjFjNC4wMDcsMS41OCw0LjgyMywxLjI2Niw1LjY5MywxLjE4N2MwLjg3
+        LTAuMDc5LDIuODA3LTEuMTQ3LDMuMjAyLTIuMjU1YzAuMzk1LTEuMTA4LDAuMzk1LTIuMDU3LDAuMjc3
+        LTIuMjU1Yy0wLjExOS0wLjE5OC0wLjQzNS0wLjMxNi0wLjkwOS0wLjU1NHMtMi44MDctMS4zODUtMy4y
+        NDItMS41NDNjLTAuNDM1LTAuMTU4LTAuNzUxLTAuMjM3LTEuMDY4LDAuMjM4Yy0wLjMxNiwwLjQ3NC0x
+        LjIyNSwxLjU0My0xLjUwMiwxLjg1OWMtMC4yNzcsMC4zMTctMC41NTQsMC4zNTctMS4wMjgsMC4xMTlj
+        LTAuNDc0LTAuMjM4LTIuMDAyLTAuNzM4LTMuODE1LTIuMzU0Yy0xLjQxLTEuMjU3LTIuMzYyLTIuODEt
+        Mi42MzktMy4yODVjLTAuMjc3LTAuNDc0LTAuMDMtMC43MzEsMC4yMDgtMC45NjhjMC4yMTMtMC4yMTMs
+        MC40NzQtMC41NTQsMC43MTItMC44MzFjMC4yMzctMC4yNzcsMC4zMTYtMC40NzUsMC40NzQtMC43OTFj
+        MC4xNTgtMC4zMTcsMC4wNzktMC41OTQtMC4wNC0wLjgzMUMyMC42MTIsMTkuMzI5LDE5LjY5LDE2Ljk4
+        MywxOS4yNjgsMTYuMDQ1eiIgZmlsbD0iI2ZmZiIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsLXJ1bGU9
+        ImV2ZW5vZGQiIC8+DQo8L3N2Zz4L
+</value>
+  </data>
   <data name="BBI_ReportPriceList.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
@@ -381,6 +440,12 @@
         MTJ2MkgxMFYxNnoiIGNsYXNzPSJCbGFjayIgLz4NCiAgICA8L2c+DQogIDwvZz4NCjwvc3ZnPgs=
 </value>
   </data>
+  <metadata name="ribbonPage1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
+  <metadata name="ribbonPage2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>-100, -100</value>
+  </metadata>
   <metadata name="adorneruıManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1, 7</value>
   </metadata>

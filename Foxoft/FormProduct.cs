@@ -173,7 +173,7 @@ namespace Foxoft
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             FormFeature formFeature = new(dcProduct.ProductCode);
-            formFeature.Show();
+            formFeature.ShowDialog();
         }
 
         private void pictureEdit_EditValueChanged(object sender, EventArgs e)

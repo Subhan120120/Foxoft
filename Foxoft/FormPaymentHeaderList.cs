@@ -22,290 +22,291 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class FormPaymentHeaderList : RibbonForm
-   {
-      subContext dbContext;
-      string processCode { get; set; }
-      EfMethods efMethods = new EfMethods();
-      public TrPaymentHeader trPaymentHeader { get; set; }
+    public partial class FormPaymentHeaderList : RibbonForm
+    {
+        subContext dbContext;
+        string processCode { get; set; }
+        EfMethods efMethods = new EfMethods();
+        public TrPaymentHeader trPaymentHeader { get; set; }
 
-      public FormPaymentHeaderList()
-      {
-         InitializeComponent();
+        public FormPaymentHeaderList()
+        {
+            InitializeComponent();
 
-         //gV_PaymentHeaderList.OptionsFilter.filter = true;
+            //gV_PaymentHeaderList.OptionsFilter.filter = true;
 
-         byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-         MemoryStream stream = new MemoryStream(byteArray);
-         OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
-         gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
-
-
-      }
-
-      public FormPaymentHeaderList(string processCode)
-         : this()
-      {
-         string storeCode = Authorization.StoreCode;
-         this.processCode = processCode;
-
-         LoadPaymentHeaders();
-         gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
-      }
-
-      private void LoadPaymentHeaders()
-      {
-         dbContext = new subContext();
-
-         //dbContext.TrPaymentHeaders.Include(x => x.TrPaymentLines)
-         //                          .Include(x => x.TrInvoiceHeader)
-         //                          .Include(x => x.DcCurrAcc)
-         //                          .OrderByDescending(x => x.OperationDate)
-         //                          .LoadAsync()
-         //                          .ContinueWith(loadTask =>
-         //                          {
-         //                              LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
-
-         //                              //lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
-
-         //                              trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
-
-         //                              //string date = DateTime.Now.ToString("2022.06.30");
-         //                              //this.gV_PaymentHeaderList.ActiveFilterCriteria = CriteriaOperator.Parse("DocumentDate >= " + date);
-         //                              //string result = CriteriaToWhereClauseHelper.GetDataSetWhere(gV_PaymentHeaderList.ActiveFilterString);
-         //                              //trPaymentHeadersBindingSource.Filter = result;
-
-         //                              gV_PaymentHeaderList.BestFitColumns();
-
-         //                          }, TaskScheduler.FromCurrentSynchronizationContext());
-
-         IQueryable<TrPaymentHeader> trPaymentHeaders = dbContext.TrPaymentHeaders;
-         CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-         IQueryable<TrPaymentHeader> filteredData = trPaymentHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentHeaderList.ActiveFilterCriteria) as IQueryable<TrPaymentHeader>;
+            byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
+            MemoryStream stream = new MemoryStream(byteArray);
+            OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
+            gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
 
-         List<TrPaymentHeader> headerList = filteredData.Include(x => x.TrPaymentLines)
-                                                        .Include(x => x.DcCurrAcc)
-                                                        .Where(x => x.IsMainTF == true)
-                                                        .Where(x => x.ProcessCode == processCode)
-                                                        .OrderByDescending(x => x.OperationDate)
-                                                        .ThenByDescending(x => x.OperationTime)
-                                                        .Select(x => new TrPaymentHeader
-                                                        {
-                                                           TrInvoiceHeader = x.TrInvoiceHeader,
-                                                           CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
-                                                           TotalPayment = x.TrPaymentLines.Sum(x => x.PaymentLoc),
-                                                           PaymentHeaderId = x.PaymentHeaderId,
-                                                           InvoiceHeaderId = x.InvoiceHeaderId,
-                                                           DocumentNumber = x.DocumentNumber,
-                                                           DocumentDate = x.DocumentDate,
-                                                           DocumentTime = x.DocumentTime,
-                                                           OperationDate = x.OperationDate,
-                                                           OperationTime = x.OperationTime,
-                                                           CurrAccCode = x.CurrAccCode,
-                                                           Description = x.Description,
-                                                           OperationType = x.OperationType,
-                                                           CompanyCode = x.CompanyCode,
-                                                           OfficeCode = x.OfficeCode,
-                                                           StoreCode = x.StoreCode,
-                                                           PosterminalId = x.PosterminalId,
-                                                           IsCompleted = x.IsCompleted,
-                                                           IsLocked = x.IsLocked,
-                                                           CreatedUserName = x.CreatedUserName,
-                                                           CreatedDate = x.CreatedDate,
-                                                           LastUpdatedUserName = x.LastUpdatedUserName,
-                                                           LastUpdatedDate = x.LastUpdatedDate,
-                                                           //FromCashRegCode = x.FromCashRegCode,
-                                                           ToCashRegCode = x.ToCashRegCode,
-                                                        })
-                                                        .ToList();
+        }
 
-         trPaymentHeadersBindingSource.DataSource = headerList;
-      }
+        public FormPaymentHeaderList(string processCode)
+           : this()
+        {
+            string storeCode = Authorization.StoreCode;
+            this.processCode = processCode;
 
-      private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
-      {
-         DXMouseEventArgs ea = e as DXMouseEventArgs;
-         GridView view = sender as GridView;
-         GridHitInfo info = view.CalcHitInfo(ea.Location);
-         if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
-         {
-            //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
+            LoadPaymentHeaders();
+            gV_PaymentHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+        }
 
-            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+        private void LoadPaymentHeaders()
+        {
+            dbContext = new subContext();
 
-            DialogResult = DialogResult.OK;
-         }
-      }
+            //dbContext.TrPaymentHeaders.Include(x => x.TrPaymentLines)
+            //                          .Include(x => x.TrInvoiceHeader)
+            //                          .Include(x => x.DcCurrAcc)
+            //                          .OrderByDescending(x => x.OperationDate)
+            //                          .LoadAsync()
+            //                          .ContinueWith(loadTask =>
+            //                          {
+            //                              LocalView<TrPaymentHeader> lV_trPaymentHeaders = dbContext.TrPaymentHeaders.Local;
 
-      private void gC_PaymentHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
-      {
-         ColumnView view = (sender as GridControl).FocusedView as ColumnView;
-         if (view == null) return;
+            //                              //lV_trPaymentHeaders.ForEach(x => x.TotalNetAmountLoc = x.TrPaymentLines.Sum(x => Math.Round(x.PaymentLoc / (decimal)1.703, 2)));
 
-         if (view.SelectedRowsCount > 0)
-            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+            //                              trPaymentHeadersBindingSource.DataSource = lV_trPaymentHeaders.ToBindingList();
 
-         if (e.KeyCode == Keys.Enter && trPaymentHeader is not null)
-            DialogResult = DialogResult.OK;
+            //                              //string date = DateTime.Now.ToString("2022.06.30");
+            //                              //this.gV_PaymentHeaderList.ActiveFilterCriteria = CriteriaOperator.Parse("DocumentDate >= " + date);
+            //                              //string result = CriteriaToWhereClauseHelper.GetDataSetWhere(gV_PaymentHeaderList.ActiveFilterString);
+            //                              //trPaymentHeadersBindingSource.Filter = result;
 
-         if (e.KeyCode == Keys.Escape)
-            Close();
-      }
+            //                              gV_PaymentHeaderList.BestFitColumns();
 
-      GridColumn prevColumn = null; // Disable the Immediate Edit Cell
-      int prevRow = -1;
-      private void gV_PaymentHeaderList_ShowingEditor(object sender, CancelEventArgs e)
-      {
-         GridView view = sender as GridView;
-         if (prevColumn != view.FocusedColumn || prevRow != view.FocusedRowHandle)
-            e.Cancel = true;
-         prevColumn = view.FocusedColumn;
-         prevRow = view.FocusedRowHandle;
-      }
+            //                          }, TaskScheduler.FromCurrentSynchronizationContext());
 
-      bool isFirstPaint = true; // Focus FindPanel
-      private void gC_ProductList_Paint(object sender, PaintEventArgs e)
-      {
-         GridControl gC = sender as GridControl;
-         GridView gV = gC.MainView as GridView;
+            IQueryable<TrPaymentHeader> trPaymentHeaders = dbContext.TrPaymentHeaders;
+            CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
+            IQueryable<TrPaymentHeader> filteredData = trPaymentHeaders.AppendWhere(new CriteriaToExpressionConverter(), gV_PaymentHeaderList.ActiveFilterCriteria) as IQueryable<TrPaymentHeader>;
 
-         if (isFirstPaint)
-         {
-            if (!gV.FindPanelVisible)
-               gV.ShowFindPanel();
-            gV.ShowFindPanel();
-         }
-         isFirstPaint = false;
-      }
 
-      private void repoHLE_InvoiceNumber_ButtonClick(object sender, ButtonPressedEventArgs e)
-      {
-         MessageBox.Show("repoHLE_InvoiceNumber_ButtonClick klik");
-      }
+            List<TrPaymentHeader> headerList = filteredData.Include(x => x.TrPaymentLines)
+                                                           .Include(x => x.DcCurrAcc)
+                                                           .Where(x => x.IsMainTF == true)
+                                                           .Where(x => x.ProcessCode == processCode)
+                                                           .OrderByDescending(x => x.OperationDate)
+                                                           .ThenByDescending(x => x.OperationTime)
+                                                           .Select(x => new TrPaymentHeader
+                                                           {
+                                                               TrInvoiceHeader = x.TrInvoiceHeader,
+                                                               CurrAccDesc = x.DcCurrAcc.CurrAccDesc,
+                                                               TotalPayment = x.TrPaymentLines.Sum(x => x.PaymentLoc),
+                                                               PaymentHeaderId = x.PaymentHeaderId,
+                                                               InvoiceHeaderId = x.InvoiceHeaderId,
+                                                               DocumentNumber = x.DocumentNumber,
+                                                               DocumentDate = x.DocumentDate,
+                                                               DocumentTime = x.DocumentTime,
+                                                               OperationDate = x.OperationDate,
+                                                               OperationTime = x.OperationTime,
+                                                               CurrAccCode = x.CurrAccCode,
+                                                               Description = x.Description,
+                                                               OperationType = x.OperationType,
+                                                               CompanyCode = x.CompanyCode,
+                                                               OfficeCode = x.OfficeCode,
+                                                               StoreCode = x.StoreCode,
+                                                               PosterminalId = x.PosterminalId,
+                                                               IsCompleted = x.IsCompleted,
+                                                               IsLocked = x.IsLocked,
+                                                               IsSent = x.IsSent,
+                                                               CreatedUserName = x.CreatedUserName,
+                                                               CreatedDate = x.CreatedDate,
+                                                               LastUpdatedUserName = x.LastUpdatedUserName,
+                                                               LastUpdatedDate = x.LastUpdatedDate,
+                                                            //FromCashRegCode = x.FromCashRegCode,
+                                                            ToCashRegCode = x.ToCashRegCode,
+                                                           })
+                                                           .ToList();
 
-      private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
-      {
-         object obj = gV_PaymentHeaderList.GetFocusedRowCellValue(colInvoiceHeaderId);
+            trPaymentHeadersBindingSource.DataSource = headerList;
+        }
 
-         if (obj is not null)
-         {
-            Guid invoiceHeaderId = Guid.Parse(obj.ToString());
-            TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
-
-            byte[] bytes = trInvoiceHeader.ProcessCode switch
+        private void gV_PaymentHeaderList_DoubleClick(object sender, EventArgs e)
+        {
+            DXMouseEventArgs ea = e as DXMouseEventArgs;
+            GridView view = sender as GridView;
+            GridHitInfo info = view.CalcHitInfo(ea.Location);
+            if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
             {
-               "IT" => new byte[] { 1 },
-               "CI" => new byte[] { 1 },
-               "CO" => new byte[] { 1 },
-               "RS" => new byte[] { 1, 3 },
-               "RP" => new byte[] { 1, 3 },
-               "EX" => new byte[] { 2, 3 },
-               _ => new byte[] { }
-            };
+                //string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
 
-            FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, 2, invoiceHeaderId);
-            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-            formInvoice.MdiParent = formERP;
-            formInvoice.WindowState = FormWindowState.Maximized;
-            formInvoice.Show();
-            formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-         }
-      }
+                trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
 
-      private void repoHLE_DocNum_ButtonClick(object sender, ButtonPressedEventArgs e)
-      {
-         MessageBox.Show("repoHLE_DocNum_ButtonClick klik");
-      }
-
-      private void repoHLE_DocNum_OpenLink(object sender, OpenLinkEventArgs e)
-      {
-         object obj = gV_PaymentHeaderList.GetFocusedRowCellValue(colPaymentHeaderId);
-
-         if (obj is not null)
-         {
-            Guid invoiceHeaderId = Guid.Parse(obj.ToString());
-            TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);
-
-            FormPaymentDetail formaPayment = new(trInvoiceHeader.PaymentHeaderId);
-            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-            formaPayment.MdiParent = formERP;
-            formaPayment.WindowState = FormWindowState.Maximized;
-            formaPayment.Show();
-            formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-         }
-      }
-
-      private void bBI_ReceivePayment_ItemClick(object sender, ItemClickEventArgs e)
-      {
-         using (FormCurrAccList formCurrAcc = new(0))
-         {
-            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
-            {
-               TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-
-               using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
-               {
-                  if (formPayment.ShowDialog(this) == DialogResult.OK)
-                  {
-                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                     LoadPaymentHeaders();
-                  }
-               }
+                DialogResult = DialogResult.OK;
             }
-         }
-      }
+        }
 
-      private void bBI_MakePayment_ItemClick(object sender, ItemClickEventArgs e)
-      {
-         using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
-         {
-            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+        private void gC_PaymentHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
+        {
+            ColumnView view = (sender as GridControl).FocusedView as ColumnView;
+            if (view == null) return;
+
+            if (view.SelectedRowsCount > 0)
+                trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+
+            if (e.KeyCode == Keys.Enter && trPaymentHeader is not null)
+                DialogResult = DialogResult.OK;
+
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
+
+        GridColumn prevColumn = null; // Disable the Immediate Edit Cell
+        int prevRow = -1;
+        private void gV_PaymentHeaderList_ShowingEditor(object sender, CancelEventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (prevColumn != view.FocusedColumn || prevRow != view.FocusedRowHandle)
+                e.Cancel = true;
+            prevColumn = view.FocusedColumn;
+            prevRow = view.FocusedRowHandle;
+        }
+
+        bool isFirstPaint = true; // Focus FindPanel
+        private void gC_ProductList_Paint(object sender, PaintEventArgs e)
+        {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
+            if (isFirstPaint)
             {
-               TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
-
-               using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
-               {
-                  if (formPayment.ShowDialog(this) == DialogResult.OK)
-                  {
-                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                     LoadPaymentHeaders();
-                  }
-               }
+                if (!gV.FindPanelVisible)
+                    gV.ShowFindPanel();
+                gV.ShowFindPanel();
             }
-         }
-      }
+            isFirstPaint = false;
+        }
 
-      private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
-      {
-         SaveFileDialog saveFileDialog1 = new();
-         saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
-         saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
-         saveFileDialog1.FileName = $@"PaymentHeaderList.xlsx";
-         saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-         saveFileDialog1.DefaultExt = "*.xlsx";
+        private void repoHLE_InvoiceNumber_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            MessageBox.Show("repoHLE_InvoiceNumber_ButtonClick klik");
+        }
 
-         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            gV_PaymentHeaderList.ExportToXlsx(saveFileDialog1.FileName);
-      }
+        private void repoHLE_InvoiceNumber_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            object obj = gV_PaymentHeaderList.GetFocusedRowCellValue(colInvoiceHeaderId);
 
-      private void gV_PaymentHeaderList_ColumnFilterChanged(object sender, EventArgs e)
-      {
-         GridView view = sender as GridView;
+            if (obj is not null)
+            {
+                Guid invoiceHeaderId = Guid.Parse(obj.ToString());
+                TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-         if (view.SelectedRowsCount > 0)
-            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
-         else
-            trPaymentHeader = null;
-      }
+                byte[] bytes = trInvoiceHeader.ProcessCode switch
+                {
+                    "IT" => new byte[] { 1 },
+                    "CI" => new byte[] { 1 },
+                    "CO" => new byte[] { 1 },
+                    "RS" => new byte[] { 1, 3 },
+                    "RP" => new byte[] { 1, 3 },
+                    "EX" => new byte[] { 2, 3 },
+                    _ => new byte[] { }
+                };
 
-      private void gV_PaymentHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
-      {
-         GridView view = sender as GridView;
-         if (view.SelectedRowsCount > 0)
-            trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
-         else
-            trPaymentHeader = null;
-      }
-   }
+                FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, 2, invoiceHeaderId);
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                formInvoice.MdiParent = formERP;
+                formInvoice.WindowState = FormWindowState.Maximized;
+                formInvoice.Show();
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
+        }
+
+        private void repoHLE_DocNum_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            MessageBox.Show("repoHLE_DocNum_ButtonClick klik");
+        }
+
+        private void repoHLE_DocNum_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            object obj = gV_PaymentHeaderList.GetFocusedRowCellValue(colPaymentHeaderId);
+
+            if (obj is not null)
+            {
+                Guid invoiceHeaderId = Guid.Parse(obj.ToString());
+                TrPaymentHeader trInvoiceHeader = efMethods.SelectPaymentHeader(invoiceHeaderId);
+
+                FormPaymentDetail formaPayment = new(trInvoiceHeader.PaymentHeaderId);
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                formaPayment.MdiParent = formERP;
+                formaPayment.WindowState = FormWindowState.Maximized;
+                formaPayment.Show();
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
+        }
+
+        private void bBI_ReceivePayment_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using (FormCurrAccList formCurrAcc = new(0))
+            {
+                if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+                {
+                    TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+
+                    using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
+                    {
+                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        {
+                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                            LoadPaymentHeaders();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void bBI_MakePayment_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using (FormCurrAccList formCurrAcc = new FormCurrAccList(0))
+            {
+                if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+                {
+                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+
+                    using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
+                    {
+                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        {
+                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                            LoadPaymentHeaders();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new();
+            saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
+            saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
+            saveFileDialog1.FileName = $@"PaymentHeaderList.xlsx";
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog1.DefaultExt = "*.xlsx";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                gV_PaymentHeaderList.ExportToXlsx(saveFileDialog1.FileName);
+        }
+
+        private void gV_PaymentHeaderList_ColumnFilterChanged(object sender, EventArgs e)
+        {
+            GridView view = sender as GridView;
+
+            if (view.SelectedRowsCount > 0)
+                trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+            else
+                trPaymentHeader = null;
+        }
+
+        private void gV_PaymentHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (view.SelectedRowsCount > 0)
+                trPaymentHeader = view.GetFocusedRow() as TrPaymentHeader;
+            else
+                trPaymentHeader = null;
+        }
+    }
 }

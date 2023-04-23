@@ -21,10 +21,13 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,9 +41,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using Twilio;
-//using Twilio.Rest.Api.V2010.Account;
-//using Twilio.Types;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -65,6 +68,9 @@ namespace Foxoft
         public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode)
         {
             InitializeComponent();
+
+            BEI_TwilioInstance.EditValue = Settings.Default.AppSetting.TwilioInstanceId;
+            BEI_TwilioToken.EditValue = Settings.Default.AppSetting.TwilioToken;
 
             dcProcess = efMethods.SelectProcess(processCode);
 
@@ -139,7 +145,7 @@ namespace Foxoft
 
             ShowPrintCount();
 
-            CheckEdit_IsReturn.Enabled = false;
+            checkEdit_IsReturn.Enabled = false;
         }
 
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -272,7 +278,7 @@ namespace Foxoft
             CalcPaidAmount();
             ShowPrintCount();
 
-            CheckEdit_IsReturn.Enabled = false;
+            checkEdit_IsReturn.Enabled = false;
         }
 
         private void CalcPaidAmount()
@@ -1019,12 +1025,7 @@ namespace Foxoft
 
         private void GetPrintToWarehouse()
         {
-            string designPath = string.Empty;
-            if (settingStore is not null)
-                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designPath = settingStore.DesignFileFolder + @"\" + reportFileNameInvoiceWare;
-
-            XtraReport report = GetInvoiceReport(designPath);
+            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
 
             if (report is not null)
             {
@@ -1049,33 +1050,12 @@ namespace Foxoft
             }
         }
 
-        private string subConnString = ConfigurationManager
-                         .OpenExeConfiguration(ConfigurationUserLevel.None)
-                         .ConnectionStrings
-                         .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
-                         .ConnectionString;
-        private XtraReport GetInvoiceReport(string designPath)
+        private XtraReport GetInvoiceReport(string fileName)
         {
             ReportClass reportClass = new();
-
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
-            if (File.Exists(designPath))
-            {
-                DsMethods dsMethods = new();
-                SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-                dataSource.Name = "Invoice";
-
-                SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-                dataSource.Queries.AddRange(new SqlQuery[] { sqlQuerySale });
-                dataSource.Fill();
-
-                return reportClass.CreateReport(dataSource, designPath);
-            }
-            else
-            {
-                return null;
-            }
+            DsMethods dsMethods = new();
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            return reportClass.GetReport("invocie", fileName, new SqlQuery[] { sqlQuerySale });
         }
 
         private void MakePayment(decimal summaryInvoice, bool autoPayment)
@@ -1125,13 +1105,7 @@ namespace Foxoft
 
         private void ShowReportPreview()
         {
-            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            string designPath = string.Empty;
-            if (settingStore is not null)
-                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designPath = settingStore.DesignFileFolder + @"\" + reportFileNameInvoice;
-
-            XtraReport xtraReport = GetInvoiceReport(designPath);
+            XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
 
             if (xtraReport is not null)
             {
@@ -1294,12 +1268,7 @@ namespace Foxoft
 
         private MemoryStream GetInvoiceReportImg(string designPath)
         {
-            //string designPath = Settings.Default.AppSetting.PrintDesignPath;
-            if (settingStore is not null)
-                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designPath = settingStore.DesignFileFolder + @"\" + reportFileNameInvoice;
-
-            XtraReport report = GetInvoiceReport(designPath);
+            XtraReport report = GetInvoiceReport(reportFileNameInvoice);
 
             if (report is not null)
             {
@@ -1344,44 +1313,7 @@ namespace Foxoft
             myProcess.Start();
         }
 
-        #region Whatsapp api.ultramsg
-        //private void SendWhatsapp(string number, string type, string body)
-        //{
-        //   if (String.IsNullOrEmpty(number))
-        //   {
-        //      MessageBox.Show("Nömrə qeyd olunmayıb.");
-        //      return;
-        //   }
 
-        //   number = number.Trim();
-        //   number = "+994" + number;
-
-        //   string instanceId = "instance17384";
-        //   string token = "y4hm0p00tuganpqt";
-        //   string url = "https://api.ultramsg.com/" + instanceId + "/messages/";
-
-        //   //byte[] AsBytes = File.ReadAllBytes(body);
-        //   //string AsBase64String = Convert.ToBase64String(AsBytes);
-
-        //   url += type == "image" ? "image" : "chat";
-
-        //   var client = new RestClient(url);
-        //   var request = new RestRequest(url, Method.Post);
-        //   request.AddHeader("content-type", "application/x-www-form-urlencoded");
-        //   request.AddParameter("token", token);
-        //   request.AddParameter("to", number);
-
-        //   if (type == "chat")
-        //      request.AddParameter("body", body);
-        //   else if (type == "image")
-        //      request.AddParameter("image", body);
-
-        //   RestResponse response = client.Execute(request);
-        //   var output = response.Content;
-
-        //   MessageBox.Show(output.ToString());
-        //} 
-        #endregion
 
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
         {
@@ -1419,10 +1351,10 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (CheckEdit_IsReturn.Enabled)
-                CheckEdit_IsReturn.Enabled = false;
+            if (checkEdit_IsReturn.Enabled)
+                checkEdit_IsReturn.Enabled = false;
             else
-                CheckEdit_IsReturn.Enabled = true;
+                checkEdit_IsReturn.Enabled = true;
         }
 
         private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)
@@ -1615,11 +1547,8 @@ namespace Foxoft
             ColumnView View = gC_InvoiceLine.MainView as ColumnView;
             List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(View).ToList();
 
-            string designFolder = string.Empty;
-            if (settingStore is not null)
-                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designFolder = settingStore.DesignFileFolder;
-            XtraReport xtraReport = GetBarcodeReport(designFolder, mydata);
+            ReportClass reportClass = new();
+            XtraReport xtraReport = reportClass.CreateReport(mydata, "");
 
             if (xtraReport is not null)
             {
@@ -1635,22 +1564,6 @@ namespace Foxoft
                 resp.Add((T)view.GetRow(i));
 
             return resp;
-        }
-
-        private XtraReport GetBarcodeReport(string designPath, object datasource)
-        {
-            ReportClass reportClass = new();
-
-            if (!File.Exists(designPath))
-                designPath = reportClass.SelectDesign();
-            if (File.Exists(designPath))
-            {
-                return reportClass.CreateReport(datasource, designPath);
-            }
-            else
-            {
-                return null;
-            }
         }
 
         private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
@@ -1879,6 +1792,44 @@ namespace Foxoft
                 }
             }
 
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MemoryStream memoryStream = GetInvoiceReportImg(reportFileNameInvoice);
+            Clipboard.SetImage(Image.FromStream(memoryStream));
+
+            string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
+            string address = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).Address;
+
+            byte[] imageBytes = memoryStream.ToArray();
+            string AsBase64String = Convert.ToBase64String(imageBytes);
+
+            if (!string.IsNullOrEmpty(address))
+                phoneNum = address;
+
+            TwilioClass twilioClass = new();
+            TwilioResponce responce = twilioClass.SendWhatsapp(phoneNum, "image", AsBase64String);
+
+            if (responce.message == "ok")
+            {
+                efMethods.UpdateInvoiceIsSent(trInvoiceHeader.InvoiceHeaderId);
+                checkEdit_IsSent.EditValue = true;
+                MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (responce.message != "ok")
+                MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void BBI_TwilioSave_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            efMethods.UpdateAppSettingTwilioInstance(BEI_TwilioInstance.EditValue.ToString());
+            efMethods.UpdateAppSettingTwilioToken(BEI_TwilioToken.EditValue.ToString());
+
+            //AppSetting appSetting = efMethods.SelectAppSetting();
+            Settings.Default.AppSetting.TwilioInstanceId = BEI_TwilioInstance.EditValue.ToString();
+            Settings.Default.AppSetting.TwilioToken = BEI_TwilioToken.EditValue.ToString();
+            Settings.Default.Save();
         }
     }
 }

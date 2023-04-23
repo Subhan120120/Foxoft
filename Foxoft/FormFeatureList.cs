@@ -16,12 +16,12 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormWarehouseList : RibbonForm
+    public partial class FormFeatureList : RibbonForm
     {
         EfMethods efMethods = new();
-        public DcWarehouse dcWarehouse { get; set; }
+        public DcFeature dcFeature { get; set; }
 
-        public FormWarehouseList()
+        public FormFeatureList()
         {
             InitializeComponent();
             bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
@@ -29,22 +29,22 @@ namespace Foxoft
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new(byteArray);
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-            gV_WarehouseList.RestoreLayoutFromStream(stream, option);
+            gV_FeatureList.RestoreLayoutFromStream(stream, option);
 
             UpdateGridViewData();
         }
 
-        private void gV_WarehouseList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+        private void gV_FeatureList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             GridView view = sender as GridView;
 
             if (view.FocusedRowHandle >= 0)
-                dcWarehouse = view.GetFocusedRow() as DcWarehouse;
+                dcFeature = view.GetFocusedRow() as DcFeature;
             else
-                dcWarehouse = null;
+                dcFeature = null;
         }
 
-        private void gV_WarehouseList_DoubleClick(object sender, EventArgs e)
+        private void gV_FeatureList_DoubleClick(object sender, EventArgs e)
         {
             #region comment
             //DXMouseEventArgs ea = e as DXMouseEventArgs;
@@ -63,13 +63,13 @@ namespace Foxoft
             #endregion
 
             GridView view = sender as GridView;
-            if (dcWarehouse is not null)
+            if (dcFeature is not null)
                 DialogResult = DialogResult.OK;
         }
 
-        private void bBI_WarehouseNew_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_FeatureNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            dcWarehouse = new DcWarehouse();
+            dcFeature = new DcFeature();
             FormCurrAcc form = new();
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -77,40 +77,40 @@ namespace Foxoft
             }
         }
 
-        private void bBI_WarehouseEdit_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_FeatureEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
             //ApplySelectedCurrAcc();
 
-            if (dcWarehouse is not null)
-            {
-                FormCurrAcc form = new(dcWarehouse.WarehouseCode);
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    UpdateGridViewData();
-                }
-            }
+            //if (dcFeature is not null)
+            //{
+            //    FormCurrAcc form = new(dcFeature.FeatureCode);
+            //    if (form.ShowDialog(this) == DialogResult.OK)
+            //    {
+            //        UpdateGridViewData();
+            //    }
+            //}
         }
 
         private void UpdateGridViewData()
         {
-            int fr = gV_WarehouseList.FocusedRowHandle;
+            int fr = gV_FeatureList.FocusedRowHandle;
 
-            LoadWarehouses();
+            LoadFeatures();
 
             if (fr > 0)
-                gV_WarehouseList.FocusedRowHandle = fr;
+                gV_FeatureList.FocusedRowHandle = fr;
             else
-                gV_WarehouseList.MoveLast();
+                gV_FeatureList.MoveLast();
 
-            if (gV_WarehouseList.FocusedRowHandle >= 0)
-                dcWarehouse = gV_WarehouseList.GetFocusedRow() as DcWarehouse;
+            if (gV_FeatureList.FocusedRowHandle >= 0)
+                dcFeature = gV_FeatureList.GetFocusedRow() as DcFeature;
             else
-                dcWarehouse = null;
+                dcFeature = null;
         }
 
-        private void LoadWarehouses()
+        private void LoadFeatures()
         {
-            dcWarehousesBindingSource.DataSource = efMethods.SelectWarehouses();
+            dcFeaturesBindingSource.DataSource = efMethods.SelectFeatures();
         }
 
         private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -118,12 +118,12 @@ namespace Foxoft
             UpdateGridViewData();
         }
 
-        private void gC_WarehouseList_ProcessGridKey(object sender, KeyEventArgs e)
+        private void gC_FeatureList_ProcessGridKey(object sender, KeyEventArgs e)
         {
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
             if (view == null) return;
 
-            if (dcWarehouse is not null)
+            if (dcFeature is not null)
             {
                 if (e.KeyCode == Keys.Enter)
                 {
@@ -137,7 +137,7 @@ namespace Foxoft
                     //else
                     //   MessageBox.Show("The value in the selected cell is null or empty!");
 
-                    string cellValue = gV_WarehouseList.GetFocusedValue().ToString();
+                    string cellValue = gV_FeatureList.GetFocusedValue().ToString();
                     Clipboard.SetText(cellValue);
                     e.Handled = true;
                 }
@@ -147,7 +147,7 @@ namespace Foxoft
 
         // AutoFocus FindPanel
         bool isFirstPaint = true;
-        private void gC_WarehouseList_Paint(object sender, PaintEventArgs e)
+        private void gC_FeatureList_Paint(object sender, PaintEventArgs e)
         {
             GridControl gC = sender as GridControl;
             GridView gV = gC.MainView as GridView;
@@ -169,15 +169,15 @@ namespace Foxoft
             this.Close();
         }
 
-        private void gV_WarehouseList_ColumnFilterChanged(object sender, EventArgs e)
+        private void gV_FeatureList_ColumnFilterChanged(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
 
 
             if (view.FocusedRowHandle >= 0)
-                dcWarehouse = view.GetFocusedRow() as DcWarehouse;
+                dcFeature = view.GetFocusedRow() as DcFeature;
             else
-                dcWarehouse = null;
+                dcFeature = null;
         }
 
         private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
@@ -195,25 +195,25 @@ namespace Foxoft
             saveFileDialog1.DefaultExt = "*.xlsx";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                gC_WarehouseList.ExportToXlsx(saveFileDialog1.FileName);
+                gC_FeatureList.ExportToXlsx(saveFileDialog1.FileName);
         }
 
-        private void bBI_WarehouseDelete_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_FeatureDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.CurrAccExist(dcWarehouse.WarehouseCode))
+            if (efMethods.FeatureExist(dcFeature.Id))
             {
-                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcWarehouse.WarehouseDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcFeature.FeatureName, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeleteWarehouse(dcWarehouse);
+                    efMethods.DeleteFeature(dcFeature);
 
-                    LoadWarehouses();
+                    LoadFeatures();
                 }
             }
             else
                 XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
         }
 
-        private void bBI_WarehouseRefresh_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_FeatureRefresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             UpdateGridViewData();
         }

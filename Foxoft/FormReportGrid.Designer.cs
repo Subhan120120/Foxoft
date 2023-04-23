@@ -30,8 +30,8 @@ namespace Foxoft
         private void InitializeComponent()
         {
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportGrid));
-         this.gC_Report = new DevExpress.XtraGrid.GridControl();
-         this.gV_Report = new DevExpress.XtraGrid.Views.Grid.GridView();
+         this.gC_Report = new MyGridControl();
+         this.gV_Report = new MyGridView(this);
          this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
          this.bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
          this.bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
@@ -236,8 +236,8 @@ namespace Foxoft
 
         #endregion
 
-        public DevExpress.XtraGrid.GridControl gC_Report;
-        private DevExpress.XtraGrid.Views.Grid.GridView gV_Report;
+        public MyGridControl gC_Report;
+        private MyGridView gV_Report;
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;

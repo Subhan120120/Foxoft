@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230417131011_InvoiceHead.IsSent")]
+    partial class InvoiceHeadIsSent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,12 +59,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PrinterName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TwilioInstanceId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TwilioToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1874,11 +1870,6 @@ namespace Foxoft.Migrations
 
                     b.Property<bool>("IsMainTF")
                         .HasColumnType("bit");
-
-                    b.Property<bool>("IsSent")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()

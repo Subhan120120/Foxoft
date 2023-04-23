@@ -101,6 +101,10 @@ namespace Foxoft.Models
         public bool IsCompleted { get; set; }
 
         [DefaultValue("0")]
+        [Display(Name = "Göndərilib")]
+        public bool IsSent { get; set; }
+
+        [DefaultValue("0")]
         [Display(Name = "Kilidlənib")]
         public bool IsLocked { get; set; }
 
