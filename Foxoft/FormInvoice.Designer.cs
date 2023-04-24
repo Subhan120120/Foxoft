@@ -252,7 +252,6 @@ namespace Foxoft
             this.gC_InvoiceLine.TabIndex = 12;
             this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceLine});
-            this.gC_InvoiceLine.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_ProcessGridKey);
             this.gC_InvoiceLine.EditorKeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
             this.gC_InvoiceLine.EditorKeyUp += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_EditorKeyUp);
             this.gC_InvoiceLine.EditorKeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gC_InvoiceLine_EditorKeyPress);
@@ -311,7 +310,6 @@ namespace Foxoft
             this.gV_InvoiceLine.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gV_InvoiceLine_KeyPress);
             this.gV_InvoiceLine.DoubleClick += new System.EventHandler(this.gV_InvoiceLine_DoubleClick);
             this.gV_InvoiceLine.ValidatingEditor += new DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventHandler(this.gV_InvoiceLine_ValidatingEditor);
-            this.gV_InvoiceLine.RowCountChanged += new System.EventHandler(this.gV_InvoiceLine_RowCountChanged);
             this.gV_InvoiceLine.InvalidValueException += new DevExpress.XtraEditors.Controls.InvalidValueExceptionEventHandler(this.gV_InvoiceLine_InvalidValueException);
             // 
             // col_InvoiceLineId
@@ -711,7 +709,6 @@ namespace Foxoft
             this.lUE_WarehouseCode.Size = new System.Drawing.Size(337, 20);
             this.lUE_WarehouseCode.StyleController = this.dataLayoutControl1;
             this.lUE_WarehouseCode.TabIndex = 9;
-            this.lUE_WarehouseCode.EditValueChanged += new System.EventHandler(this.lUE_WarehouseCode_EditValueChanged);
             this.lUE_WarehouseCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // lUE_ToWarehouseCode

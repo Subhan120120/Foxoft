@@ -12,7 +12,6 @@ namespace Foxoft
 {
     class ReportClass
     {
-        SettingStore settingStore;
         EfMethods efMethods = new();
 
         private string subConnString = ConfigurationManager

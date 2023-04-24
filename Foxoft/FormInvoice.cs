@@ -126,8 +126,6 @@ namespace Foxoft
 
             trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
 
-
-
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
             //lbl_InvoicePaidSum.Text = "Ödənilib: 0.00 " + Settings.Default.AppSetting.LocalCurrencyCode;
@@ -695,7 +693,6 @@ namespace Foxoft
         {
             editorCustom.DoubleClick -= editor_DoubleClick;
             editorCustom = null;
-
         }
 
         private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
@@ -776,17 +773,6 @@ namespace Foxoft
         {
             //DataRowView rowView = e.Row as DataRowView;
             //DataRow row = rowView.Row;
-
-            //if (gV_InvoiceLine.FocusedColumn == colBarcode)
-            //{
-
-            //   //if (gV_InvoiceLine.FocusedRowHandle == GridControl.NewItemRowHandle)
-            //   //   gV_InvoiceLine.FocusedRowHandle = 1;
-            //   //else
-            ///////////////////gV_InvoiceLine.MoveNext();
-            //   gV_InvoiceLine.MoveNext();
-            //   //gv.FocusedRowHandle++;
-            //}
 
             SaveInvoice();
         }
@@ -969,10 +955,6 @@ namespace Foxoft
 
             return trPaymentLine;
         }
-        private void FormInvoice_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            dbContext.Dispose();
-        }
 
         private void bBI_SaveAndNew_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -999,19 +981,6 @@ namespace Foxoft
                 XtraMessageBox.Show(combinedString);
             }
         }
-
-        //private decimal CalcSumInvoice()
-        //{
-        //    decimal summaryNetAmount = 0;
-
-        //    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-        //    {
-        //        decimal netAmount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc));
-        //        summaryNetAmount += netAmount;
-        //    }
-
-        //    return summaryNetAmount;
-        //}
 
         private void SaveSession()
         {
@@ -1260,9 +1229,7 @@ namespace Foxoft
 
         private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string fileName = reportFileNameInvoice;
-
-            Image image = Image.FromStream(GetInvoiceReportImg(fileName));
+            Image image = Image.FromStream(GetInvoiceReportImg(reportFileNameInvoice));
             Clipboard.SetImage(image);
         }
 
@@ -1313,8 +1280,6 @@ namespace Foxoft
             myProcess.Start();
         }
 
-
-
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
         {
             object eValue = trInvoiceHeader.CurrAccCode;
@@ -1332,15 +1297,6 @@ namespace Foxoft
                     //FillCurrAccCode(curr);
                 }
             }
-        }
-
-        private void FillCurrAccCode(DcCurrAcc curr)
-        {
-            trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
-            lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
-
-            trInvoiceHeader.ToWarehouseCode = efMethods.SelectWarehouseByStore(trInvoiceHeader.CurrAccCode);
-            lUE_ToWarehouseCode.EditValue = trInvoiceHeader.ToWarehouseCode;
         }
 
         private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
@@ -1370,20 +1326,7 @@ namespace Foxoft
 
             if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
             {
-                //////////gv.FocusedColumn = colBarcode;
-                //////////if (gv.FocusedRowHandle == GridControl.NewItemRowHandle)
-                //////////{
-                //////////   gv.MoveNext();
-                //////////}
-                //////////else
-                //////////   gv.MoveNext();
-
-                //gv.FocusedColumn = colBarcode;
-
                 e.Handled = true;
-
-
-                //gv.FocusedRowHandle++;
             }
         }
 
@@ -1506,11 +1449,6 @@ namespace Foxoft
             //}
         }
 
-        private void gV_InvoiceLine_RowCountChanged(object sender, EventArgs e)
-        {
-            //gV_InvoiceLine.FocusedColumn = colBarcode;
-        }
-
         private void gC_InvoiceLine_EditorKeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return) // Barcode Scan Device 
@@ -1518,14 +1456,6 @@ namespace Foxoft
                 gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
                 gV_InvoiceLine.MoveNext();
                 gV_InvoiceLine.FocusedColumn = colBarcode;
-            }
-        }
-
-        private void gC_InvoiceLine_ProcessGridKey(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Return)
-            {
-                //gV_InvoiceLine.FocusedColumn = colBarcode;
             }
         }
 
@@ -1721,7 +1651,6 @@ namespace Foxoft
             decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
             if (priceInvoice == 0)
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
-
         }
 
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
@@ -1748,12 +1677,6 @@ namespace Foxoft
             return dt;
         }
 
-        private void lUE_WarehouseCode_EditValueChanged(object sender, EventArgs e)
-        {
-            //string storeCode = lUE_StoreCode.EditValue.ToString();
-            //lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStore(storeCode);
-        }
-
         private void lUE_StoreCode_EditValueChanged(object sender, EventArgs e)
         {
             string storeCode = lUE_StoreCode.EditValue.ToString();
@@ -1765,7 +1688,6 @@ namespace Foxoft
                 if (dcWarehouse is not null)
                     lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
             }
-
         }
 
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
@@ -1791,7 +1713,6 @@ namespace Foxoft
                     }
                 }
             }
-
         }
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
