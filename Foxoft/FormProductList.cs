@@ -346,13 +346,6 @@ namespace Foxoft
 
                 if (e.KeyCode == Keys.B && e.Control)
                 {
-                    ColumnView View = gC_ProductList.MainView as ColumnView;
-
-                    string designFolder = string.Empty;
-                    if (settingStore is not null)
-                        if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                            designFolder = settingStore.DesignFileFolder;
-
                     List<DcProduct> dcProducts = new();
                     dcProducts.Add(dcProduct);
 
