@@ -998,11 +998,6 @@ namespace Foxoft
 
             if (report is not null)
             {
-                using MemoryStream ms = new();
-                report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
-                Image img = Image.FromStream(ms);
-                Clipboard.SetImage(img);
-
                 ReportPrintTool printTool = new(report);
 
                 bool? isPrinted = printTool.PrintDialog();
@@ -1500,24 +1495,30 @@ namespace Foxoft
         {
             try
             {
-                SaveFileDialog sFD = new();
+                XtraSaveFileDialog sFD = new();
                 sFD.Filter = "Excel Faylı|*.xlsx";
                 sFD.Title = "Excel Faylı Yadda Saxla";
                 sFD.FileName = dcProcess.ProcessDesc;
                 sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 sFD.DefaultExt = "*.xlsx";
 
-                if (sFD.ShowDialog() == DialogResult.OK)
+                var fileName = Invoke((Func<string>)(() =>
                 {
-                    XlsxExportOptionsEx expOpt = new XlsxExportOptionsEx
+                    if (sFD.ShowDialog() == DialogResult.OK)
                     {
-                        ExportMode = XlsxExportMode.SingleFile,
-                        TextExportMode = TextExportMode.Value,
-                        AllowLookupValues = DefaultBoolean.True,
-                    };
+                        XlsxExportOptionsEx expOpt = new()
+                        {
+                            ExportMode = XlsxExportMode.SingleFile,
+                            TextExportMode = TextExportMode.Value,
+                            AllowLookupValues = DefaultBoolean.True,
+                        };
 
-                    gC_InvoiceLine.ExportToXlsx(sFD.FileName, expOpt);
-                }
+                        gC_InvoiceLine.ExportToXlsx(sFD.FileName, expOpt);
+                        return "Ok";
+                    }
+                    else
+                        return "Fail";
+                }));
             }
             catch (Exception ex)
             {
@@ -1718,7 +1719,6 @@ namespace Foxoft
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
             MemoryStream memoryStream = GetInvoiceReportImg(reportFileNameInvoice);
-            Clipboard.SetImage(Image.FromStream(memoryStream));
 
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
             string address = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).Address;
@@ -1751,6 +1751,17 @@ namespace Foxoft
             Settings.Default.AppSetting.TwilioInstanceId = BEI_TwilioInstance.EditValue.ToString();
             Settings.Default.AppSetting.TwilioToken = BEI_TwilioToken.EditValue.ToString();
             Settings.Default.Save();
+        }
+
+        private void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
+
+            if (xtraReport is not null)
+            {
+                ReportPrintTool printTool = new(xtraReport);
+                printTool.PrintDialog();
+            }
         }
     }
 }

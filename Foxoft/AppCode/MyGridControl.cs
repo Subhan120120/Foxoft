@@ -111,6 +111,7 @@ namespace Foxoft
             dialog.Title = "Yalnız ilk sütünda olan məlumatlar daxil edilir.";
 
             DialogResult dr = dialog.ShowDialog();
+
             if (dr == DialogResult.OK)
             {
                 ExcelDataSource excelDataSource = new();

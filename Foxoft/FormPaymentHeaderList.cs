@@ -3,6 +3,7 @@ using DevExpress.Data.Linq.Helpers;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
@@ -116,8 +117,8 @@ namespace Foxoft
                                                                CreatedDate = x.CreatedDate,
                                                                LastUpdatedUserName = x.LastUpdatedUserName,
                                                                LastUpdatedDate = x.LastUpdatedDate,
-                                                            //FromCashRegCode = x.FromCashRegCode,
-                                                            ToCashRegCode = x.ToCashRegCode,
+                                                               //FromCashRegCode = x.FromCashRegCode,
+                                                               ToCashRegCode = x.ToCashRegCode,
                                                            })
                                                            .ToList();
 
@@ -279,15 +280,23 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            SaveFileDialog saveFileDialog1 = new();
-            saveFileDialog1.Filter = "Excel Faylı|*.xlsx";
-            saveFileDialog1.Title = "Excel Faylı Yadda Saxla";
-            saveFileDialog1.FileName = $@"PaymentHeaderList.xlsx";
-            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            saveFileDialog1.DefaultExt = "*.xlsx";
+            XtraSaveFileDialog sFD = new();
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.FileName = $@"PaymentHeaderList.xlsx";
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            sFD.DefaultExt = "*.xlsx";
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                gV_PaymentHeaderList.ExportToXlsx(saveFileDialog1.FileName);
+            var fileName = Invoke((Func<string>)(() =>
+            {
+                if (sFD.ShowDialog() == DialogResult.OK)
+                {
+                    gV_PaymentHeaderList.ExportToXlsx(sFD.FileName);
+                    return "Ok";
+                }
+                else
+                    return "Fail";
+            }));
         }
 
         private void gV_PaymentHeaderList_ColumnFilterChanged(object sender, EventArgs e)

@@ -372,9 +372,6 @@ namespace Foxoft
                 string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
 
                 string copyText = PaymentText("%0A");
-                string CopyText2 = PaymentText("\n");
-
-                Clipboard.SetText(CopyText2);
 
                 sendWhatsApp(phoneNum, copyText);
             }
@@ -480,8 +477,6 @@ namespace Foxoft
                 //if (responce.sent == true)
                 //    efMethods.UpdateInvoiceIsSent(trPaymentHeader.PaymentHeaderId);
                 //else
-                if (responce.message != "ok")
-                    MessageBox.Show(responce.message);
 
                 if (responce.message == "ok")
                 {

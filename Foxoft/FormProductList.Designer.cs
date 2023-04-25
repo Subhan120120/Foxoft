@@ -34,8 +34,8 @@ namespace Foxoft
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductList));
             this.gC_ProductList = new Foxoft.MyGridControl();
-            this.dcProductsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gV_ProductList = new Foxoft.MyGridView(this);
+            this.dcProductsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -73,12 +73,14 @@ namespace Foxoft
             this.bBI_ProductDelete = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_ProductRefresh = new DevExpress.XtraBars.BarButtonItem();
             this.BBI_Feature = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.BBI_reportProductMove = new DevExpress.XtraBars.BarButtonItem();
             this.BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.BBI_query = new DevExpress.XtraBars.BarButtonItem();
             this.BBI_ReportPriceList = new DevExpress.XtraBars.BarButtonItem();
             this.BBI_ReportDesignProduct = new DevExpress.XtraBars.BarButtonItem();
+            this.BBI_Report = new DevExpress.XtraBars.BarSubItem();
+            this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -331,14 +333,16 @@ namespace Foxoft
             this.bBI_ProductDelete,
             this.bBI_ProductRefresh,
             this.BBI_Feature,
-            this.barButtonItem3,
+            this.BBI_reportProductMove,
             this.BarcodePrint,
             this.barButtonItem2,
             this.BBI_query,
             this.BBI_ReportPriceList,
-            this.BBI_ReportDesignProduct});
+            this.BBI_ReportDesignProduct,
+            this.BBI_Report,
+            this.barButtonItem4});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 26;
+            this.ribbonControl1.MaxItemId = 29;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.PageHeaderItemLinks.Add(this.bBI_quit);
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -411,13 +415,13 @@ namespace Foxoft
             this.BBI_Feature.Name = "BBI_Feature";
             this.BBI_Feature.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Feature_ItemClick);
             // 
-            // barButtonItem3
+            // BBI_reportProductMove
             // 
-            this.barButtonItem3.Caption = "Məhsulun Bütün Hərəkətləri";
-            this.barButtonItem3.Id = 20;
-            this.barButtonItem3.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem3.ImageOptions.SvgImage")));
-            this.barButtonItem3.Name = "barButtonItem3";
-            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+            this.BBI_reportProductMove.Caption = "Məhsulun Bütün Hərəkətləri";
+            this.BBI_reportProductMove.Id = 20;
+            this.BBI_reportProductMove.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_reportProductMove.ImageOptions.SvgImage")));
+            this.BBI_reportProductMove.Name = "BBI_reportProductMove";
+            this.BBI_reportProductMove.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
             // 
             // BarcodePrint
             // 
@@ -459,6 +463,21 @@ namespace Foxoft
             this.BBI_ReportDesignProduct.Name = "BBI_ReportDesignProduct";
             this.BBI_ReportDesignProduct.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportDesignProduct_ItemClick);
             // 
+            // BBI_Report
+            // 
+            this.BBI_Report.Caption = "Hesabat";
+            this.BBI_Report.Id = 27;
+            this.BBI_Report.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_Report.ImageOptions.SvgImage")));
+            this.BBI_Report.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.BBI_reportProductMove)});
+            this.BBI_Report.Name = "BBI_Report";
+            // 
+            // barButtonItem4
+            // 
+            this.barButtonItem4.Caption = "test";
+            this.barButtonItem4.Id = 28;
+            this.barButtonItem4.Name = "barButtonItem4";
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -488,8 +507,8 @@ namespace Foxoft
             // 
             // ribbonPageGroup3
             // 
-            this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem3);
             this.ribbonPageGroup3.ItemLinks.Add(this.BBI_ReportPriceList);
+            this.ribbonPageGroup3.ItemLinks.Add(this.BBI_Report);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "Hesabat";
             // 
@@ -598,7 +617,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colBalanceS;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private DevExpress.XtraBars.BarButtonItem BBI_reportProductMove;
         private DevExpress.XtraBars.BarButtonItem BarcodePrint;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
@@ -607,5 +626,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_ReportProduct;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportDesignProduct;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportPriceList;
+        private DevExpress.XtraBars.BarSubItem BBI_Report;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem4;
     }
 }

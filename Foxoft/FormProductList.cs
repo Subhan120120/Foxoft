@@ -400,31 +400,29 @@ namespace Foxoft
 
         private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            try
-            {
-                Trace.Write("\n Before 'SaveFileDialog saveFileDialog1 = new();' ");
-                SaveFileDialog sFD = new();
-                Trace.Write("\n Before ' saveFileDialog1.Filter = 'Excel Faylı | *.xlsx';' ");
-                sFD.Filter = "Excel Faylı|*.xlsx";
-                Trace.Write("\n Before 'saveFileDialog1.Title = 'Excel Faylı Yadda Saxla';' ");
-                sFD.Title = "Excel Faylı Yadda Saxla";
-                Trace.Write("\n Before 'saveFileDialog1.FileName = this.Text");
-                sFD.FileName = this.Text;
-                Trace.Write("\n Before 'saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
-                sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                Trace.Write("\n Before 'saveFileDialog1.DefaultExt = ' *.xlsx';' ");
-                sFD.DefaultExt = "*.xlsx";
+            Trace.Write("\n Before 'SaveFileDialog saveFileDialog1 = new();' ");
+            XtraSaveFileDialog sFD = new();
+            Trace.Write("\n Before ' saveFileDialog1.Filter = 'Excel Faylı | *.xlsx';' ");
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            Trace.Write("\n Before 'saveFileDialog1.Title = 'Excel Faylı Yadda Saxla';' ");
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            Trace.Write("\n Before 'saveFileDialog1.FileName = this.Text");
+            sFD.FileName = this.Text;
+            Trace.Write("\n Before 'saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            Trace.Write("\n Before 'saveFileDialog1.DefaultExt = ' *.xlsx';' ");
+            sFD.DefaultExt = "*.xlsx";
 
+            var fileName = Invoke((Func<string>)(() =>
+            {
                 if (sFD.ShowDialog() == DialogResult.OK)
                 {
-                    Trace.Write("\n Before 'gC_ProductList.ExportToXlsx(saveFileDialog1.FileName);' ");
                     gC_ProductList.ExportToXlsx(sFD.FileName);
+                    return "Ok";
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+                else
+                    return "Fail";
+            }));
         }
 
         private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)

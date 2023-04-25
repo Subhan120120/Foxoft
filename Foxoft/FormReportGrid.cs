@@ -7,6 +7,7 @@ using DevExpress.Utils.Menu;
 using DevExpress.Utils.VisualEffects;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
@@ -401,31 +402,29 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            try
-            {
-                Trace.Write("\n Before 'SaveFileDialog sFD = new();' ");
-                SaveFileDialog sFD = new();
-                Trace.Write("\n Before ' sFD.Filter = 'Excel Faylı | *.xlsx';' ");
-                sFD.Filter = "Excel Faylı|*.xlsx";
-                Trace.Write("\n Before 'sFD.Title = 'Excel Faylı Yadda Saxla';' ");
-                sFD.Title = "Excel Faylı Yadda Saxla";
-                Trace.Write("\n Before 'sFD.FileName = report.ReportName");
-                sFD.FileName = report.ReportName;
-                Trace.Write("\n Before 'sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
-                sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                Trace.Write("\n Before 'sFD.DefaultExt = ' *.xlsx';' ");
-                sFD.DefaultExt = "*.xlsx";
+            Trace.Write("\n Before 'SaveFileDialog sFD = new();' ");
+            XtraSaveFileDialog sFD = new();
+            Trace.Write("\n Before ' sFD.Filter = 'Excel Faylı | *.xlsx';' ");
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            Trace.Write("\n Before 'sFD.Title = 'Excel Faylı Yadda Saxla';' ");
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            Trace.Write("\n Before 'sFD.FileName = report.ReportName");
+            sFD.FileName = report.ReportName;
+            Trace.Write("\n Before 'sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            Trace.Write("\n Before 'sFD.DefaultExt = ' *.xlsx';' ");
+            sFD.DefaultExt = "*.xlsx";
 
+            var fileName = Invoke((Func<string>)(() =>
+            {
                 if (sFD.ShowDialog() == DialogResult.OK)
                 {
-                    Trace.Write("\n Before 'gC_CurrAccList.ExportToXlsx(sFD.FileName);' ");
                     gC_Report.ExportToXlsx(sFD.FileName);
+                    return "Ok";
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+                else
+                    return "Fail";
+            }));
         }
 
         private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)

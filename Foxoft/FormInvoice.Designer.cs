@@ -133,6 +133,7 @@ namespace Foxoft
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
+            this.BBI_ReportPrintFast = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -754,9 +755,10 @@ namespace Foxoft
             this.barButtonItem2,
             this.BBI_TwilioSave,
             this.BEI_TwilioInstance,
-            this.BEI_TwilioToken});
+            this.BEI_TwilioToken,
+            this.BBI_ReportPrintFast});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 30;
+            this.ribbonControl1.MaxItemId = 31;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -965,6 +967,7 @@ namespace Foxoft
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportDesign);
             this.ribbonPageGroup2.ItemLinks.Add(this.bBI_reportPreview);
+            this.ribbonPageGroup2.ItemLinks.Add(this.BBI_ReportPrintFast);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "Print";
             // 
@@ -1189,6 +1192,14 @@ namespace Foxoft
             // 
             this.adorneruıManager1.Owner = this;
             // 
+            // BBI_ReportPrintFast
+            // 
+            this.BBI_ReportPrintFast.Caption = "Sürətli Çap Et";
+            this.BBI_ReportPrintFast.Id = 30;
+            this.BBI_ReportPrintFast.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem3.ImageOptions.SvgImage")));
+            this.BBI_ReportPrintFast.Name = "BBI_ReportPrintFast";
+            this.BBI_ReportPrintFast.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ReportPrintFast_ItemClick);
+            // 
             // FormInvoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1357,5 +1368,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoTxtEdit_TwilioToken;
         private DevExpress.XtraEditors.CheckEdit checkEdit_IsSent;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private DevExpress.XtraBars.BarButtonItem BBI_ReportPrintFast;
     }
 }
