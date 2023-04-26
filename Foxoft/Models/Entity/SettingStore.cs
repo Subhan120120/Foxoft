@@ -25,6 +25,9 @@ namespace Foxoft.Models
       [Display(Name = "Şəkil Qovluğu")]
       public string ImageFolder { get; set; }
 
+      [Display(Name = "Printer Adı")]
+      public string PrinterName { get; set; }
+
 
       [ForeignKey("StoreCode")]
       public virtual DcCurrAcc DcStore { get; set; }

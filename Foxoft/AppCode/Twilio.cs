@@ -14,7 +14,7 @@ namespace Foxoft.AppCode
 
             number = number.Trim();
             if (number.Length < 13)
-                number = "+994" + number;
+                number = "994" + number;
 
             string instanceId = Settings.Default.AppSetting.TwilioInstanceId;
             string token = Settings.Default.AppSetting.TwilioToken;
@@ -38,18 +38,51 @@ namespace Foxoft.AppCode
             if (!string.IsNullOrEmpty(response.Content))
             {
                 string output = response.Content;
-                return JsonConvert.DeserializeObject<TwilioResponce>(output);
+                TwilioResponce twilioResponce = JsonConvert.DeserializeObject<TwilioResponce>(output);
+
+                if (twilioResponce.message == "ok")
+                {
+                    TwilioCheck check = CheckNumber(number, instanceId, token);
+                    if (check.status == "valid")
+                        return JsonConvert.DeserializeObject<TwilioResponce>(output);
+                    else return new TwilioResponce() { message = "Bu nömrə üzrə whatsapp hesabı yoxdur" };
+                }
+                else return twilioResponce;
             }
             else
-                return new() { sent = false, message = "Serverə qoşula bilmədi." };
+                return new () { sent = false, message = "Serverə qoşula bilmədi." };
+        }
+
+        public TwilioCheck CheckNumber(string number, string instanceId, string token)
+        {
+            string url = "https://api.ultramsg.com/" + instanceId + "/contacts/check";
+
+            var client = new RestClient(url);
+            var request = new RestRequest(url, Method.Get);
+            request.AddHeader("content-type", "application/x-www-form-urlencoded");
+            request.AddParameter("token", token);
+            request.AddParameter("chatId", number + "@c.us");
+            request.AddParameter("nocache", "");
+
+            RestResponse response = client.Execute(request);
+
+            string output = response.Content;
+            return JsonConvert.DeserializeObject<TwilioCheck>(output);
         }
     }
+
 
     class TwilioResponce
     {
         public int id { get; set; }
         public bool sent { get; set; }
         public string message { get; set; }
+    }
+
+    class TwilioCheck
+    {
+        public string status { get; set; }
+        public string chatId { get; set; }
     }
 
 }

@@ -453,7 +453,6 @@ namespace Foxoft
 
         private void FormCurrAccList_VisibleChanged(object sender, EventArgs e)
         {
-
         }
 
         private void BBI_ReportCashReg_ItemClick(object sender, ItemClickEventArgs e)
@@ -484,28 +483,23 @@ namespace Foxoft
 
         private void BBI_test_ItemClick(object sender, ItemClickEventArgs e)
         {
-            for (int i = 0; i < 1000000; i++)
+            SaveFileDialog sFD = new();
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.FileName = this.Text;
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            sFD.DefaultExt = "*.xlsx";
+
+            var fileName = Invoke((Func<string>)(() =>
             {
-                XtraSaveFileDialog sFD = new();
-                sFD.Filter = "Excel Faylı|*.xlsx";
-                sFD.Title = "Excel Faylı Yadda Saxla";
-                sFD.FileName = this.Text;
-                sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                sFD.DefaultExt = "*.xlsx";
-
-                var fileName = Invoke((Func<string>)(() =>
+                if (sFD.ShowDialog() == DialogResult.OK)
                 {
-                    if (sFD.ShowDialog() == DialogResult.OK)
-                    {
-                        gC_CurrAccList.ExportToXlsx(sFD.FileName);
-                        return "Ok";
-                    }
-                    else
-                        return "Fail";
-                }));
-            }
-            MessageBox.Show("Ok");
-
+                    gC_CurrAccList.ExportToXlsx(sFD.FileName);
+                    return "Ok";
+                }
+                else
+                    return "Fail";
+            }));
         }
     }
 }

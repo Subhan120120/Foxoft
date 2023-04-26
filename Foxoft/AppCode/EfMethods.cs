@@ -1114,6 +1114,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateStoreSettingPrinterName(string printerName)
+        {
+            using subContext db = new();
+            SettingStore settingStore = new() { Id = 1, PrinterName = printerName };
+            db.Entry(settingStore).Property(x => x.PrinterName).IsModified = true;
+            return db.SaveChanges();
+        }
+
         public int UpdateAppSettingTwilioInstance(string instanceId)
         {
             using subContext db = new();

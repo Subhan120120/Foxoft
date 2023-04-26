@@ -468,15 +468,10 @@ namespace Foxoft
             if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
             {
                 string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
-
                 string CopyText2 = PaymentText("\n");
 
                 TwilioClass twilioClass = new();
                 TwilioResponce responce = twilioClass.SendWhatsapp(phoneNum, "chat", CopyText2);
-
-                //if (responce.sent == true)
-                //    efMethods.UpdateInvoiceIsSent(trPaymentHeader.PaymentHeaderId);
-                //else
 
                 if (responce.message == "ok")
                 {
@@ -484,7 +479,7 @@ namespace Foxoft
                     checkEdit_IsSent.EditValue = true;
                     MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else if (responce.message != "ok")
+                else
                     MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else

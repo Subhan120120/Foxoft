@@ -37,6 +37,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,14 +70,21 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+
             BEI_TwilioInstance.EditValue = Settings.Default.AppSetting.TwilioInstanceId;
             BEI_TwilioToken.EditValue = Settings.Default.AppSetting.TwilioToken;
+
+            foreach (string printer in PrinterSettings.InstalledPrinters)
+            {
+                repoCBE_PrinterName.Items.Add(printer);
+            }
+            BEI_PrinterName.EditValue = settingStore.PrinterName;
 
             dcProcess = efMethods.SelectProcess(processCode);
 
             LoadLayout();
 
-            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
@@ -1738,7 +1746,7 @@ namespace Foxoft
                 checkEdit_IsSent.EditValue = true;
                 MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (responce.message != "ok")
+            else 
                 MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -1756,12 +1764,18 @@ namespace Foxoft
         private void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {
             XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
+            xtraReport.PrinterName = settingStore.PrinterName;
 
             if (xtraReport is not null)
             {
                 ReportPrintTool printTool = new(xtraReport);
                 printTool.PrintDialog();
             }
+        }
+
+        private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            efMethods.UpdateStoreSettingPrinterName(BEI_PrinterName.EditValue.ToString());
         }
     }
 }
