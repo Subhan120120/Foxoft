@@ -40,6 +40,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Twilio;
@@ -1335,14 +1336,12 @@ namespace Foxoft
 
         private void bbi_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //gV_InvoiceLine.FocusedColumn = colBarcode;
-
-            //MessageBox.Show($"\nEnvironment.CurrentDirectory: from \n{Environment.CurrentDirectory}"
-            //+ $"\n\nAppDomain.CurrentDomain.BaseDirectory: \n{AppDomain.CurrentDomain.BaseDirectory}"
-            //+ $"\n\nAppContext.BaseDirectory: \n{AppContext.BaseDirectory}"
-            //+ $"\n\nLocation: \n{Assembly.GetEntryAssembly().Location}"
-            //+ $"\n\nPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location): \n{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}"
-            //+ $"\n\nPath.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName): \n{Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}");
+            XtraMessageBox.Show($"\nEnvironment.CurrentDirectory: from \n{Environment.CurrentDirectory}"
+            + $"\n\nAppDomain.CurrentDomain.BaseDirectory: \n{AppDomain.CurrentDomain.BaseDirectory}"
+            + $"\n\nAppContext.BaseDirectory: \n{AppContext.BaseDirectory}"
+            + $"\n\nAssembly.GetEntryAssembly().Location: \n{Assembly.GetEntryAssembly().Location}"
+            + $"\n\nPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location): \n{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}"
+            + $"\n\nPath.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName): \n{Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}");
         }
 
         private void LoadLayout()
@@ -1376,7 +1375,7 @@ namespace Foxoft
             }
 
             string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
-            string layoutFilePath = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
             if (File.Exists(layoutFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
 
@@ -1385,7 +1384,7 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
-            string layoutFileDir = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files");
+            string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
             gV_InvoiceLine.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
@@ -1648,7 +1647,6 @@ namespace Foxoft
             }
         }
 
-
         private void FillRow(int rowHandle, DcProduct product)
         {
             gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductCode, product.ProductCode);
@@ -1776,6 +1774,14 @@ namespace Foxoft
         private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
         {
             efMethods.UpdateStoreSettingPrinterName(BEI_PrinterName.EditValue.ToString());
+        }
+
+        private void Btn_EditInvoice_Click(object sender, EventArgs e)
+        {
+            if (checkEdit_IsReturn.Enabled)
+                checkEdit_IsReturn.Enabled = false;
+            else
+                checkEdit_IsReturn.Enabled = true;
         }
     }
 }

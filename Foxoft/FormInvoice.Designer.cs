@@ -108,7 +108,8 @@ namespace Foxoft
             this.repoTxtEdit_TwilioToken = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.BBI_ReportPrintFast = new DevExpress.XtraBars.BarButtonItem();
             this.BBI_PrintSettingSave = new DevExpress.XtraBars.BarButtonItem();
-            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.BEI_PrinterName = new DevExpress.XtraBars.BarEditItem();
+            this.repoCBE_PrinterName = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -118,6 +119,8 @@ namespace Foxoft
             this.RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.repo = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -137,9 +140,7 @@ namespace Foxoft
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(this.components);
-            this.repo = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
-            this.BEI_PrinterName = new DevExpress.XtraBars.BarEditItem();
-            this.repoCBE_PrinterName = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
@@ -167,7 +168,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoTxtEdit_TwilioInstance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoTxtEdit_TwilioToken)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCBE_PrinterName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForIsReturn)).BeginInit();
@@ -186,8 +189,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.adorneruıManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCBE_PrinterName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataLayoutControl1
@@ -259,7 +261,7 @@ namespace Foxoft
             this.repoLUE_CurrencyCode,
             this.repoCalcEdit_PriceLoc});
             this.gC_InvoiceLine.Size = new System.Drawing.Size(862, 221);
-            this.gC_InvoiceLine.TabIndex = 12;
+            this.gC_InvoiceLine.TabIndex = 11;
             this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gV_InvoiceLine});
             this.gC_InvoiceLine.EditorKeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_InvoiceLine_KeyDown);
@@ -580,7 +582,7 @@ namespace Foxoft
             this.checkEdit_IsSent.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             this.checkEdit_IsSent.Size = new System.Drawing.Size(87, 20);
             this.checkEdit_IsSent.StyleController = this.dataLayoutControl1;
-            this.checkEdit_IsSent.TabIndex = 5;
+            this.checkEdit_IsSent.TabIndex = 12;
             // 
             // trInvoiceHeadersBindingSource
             // 
@@ -595,7 +597,7 @@ namespace Foxoft
             this.checkEdit_IsReturn.Name = "checkEdit_IsReturn";
             this.checkEdit_IsReturn.Properties.Caption = "Qaytarılmadır";
             this.checkEdit_IsReturn.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.checkEdit_IsReturn.Size = new System.Drawing.Size(411, 20);
+            this.checkEdit_IsReturn.Size = new System.Drawing.Size(109, 20);
             this.checkEdit_IsReturn.StyleController = this.dataLayoutControl1;
             this.checkEdit_IsReturn.TabIndex = 3;
             // 
@@ -611,7 +613,7 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.DocumentDateDateEdit.Size = new System.Drawing.Size(301, 20);
             this.DocumentDateDateEdit.StyleController = this.dataLayoutControl1;
-            this.DocumentDateDateEdit.TabIndex = 8;
+            this.DocumentDateDateEdit.TabIndex = 7;
             this.DocumentDateDateEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // DocumentTimeTimeSpanEdit
@@ -624,7 +626,7 @@ namespace Foxoft
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.DocumentTimeTimeSpanEdit.Size = new System.Drawing.Size(301, 20);
             this.DocumentTimeTimeSpanEdit.StyleController = this.dataLayoutControl1;
-            this.DocumentTimeTimeSpanEdit.TabIndex = 10;
+            this.DocumentTimeTimeSpanEdit.TabIndex = 9;
             this.DocumentTimeTimeSpanEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // CustomsDocumentNumberTextEdit
@@ -635,7 +637,7 @@ namespace Foxoft
             this.CustomsDocumentNumberTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             this.CustomsDocumentNumberTextEdit.Size = new System.Drawing.Size(301, 20);
             this.CustomsDocumentNumberTextEdit.StyleController = this.dataLayoutControl1;
-            this.CustomsDocumentNumberTextEdit.TabIndex = 7;
+            this.CustomsDocumentNumberTextEdit.TabIndex = 5;
             this.CustomsDocumentNumberTextEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // btnEdit_DocNum
@@ -660,7 +662,7 @@ namespace Foxoft
             this.memoEdit_Desc.Name = "memoEdit_Desc";
             this.memoEdit_Desc.Size = new System.Drawing.Size(337, 20);
             this.memoEdit_Desc.StyleController = this.dataLayoutControl1;
-            this.memoEdit_Desc.TabIndex = 11;
+            this.memoEdit_Desc.TabIndex = 10;
             this.memoEdit_Desc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // btnEdit_CurrAccCode
@@ -718,7 +720,7 @@ namespace Foxoft
             this.lUE_WarehouseCode.Properties.ValueMember = "WarehouseCode";
             this.lUE_WarehouseCode.Size = new System.Drawing.Size(337, 20);
             this.lUE_WarehouseCode.StyleController = this.dataLayoutControl1;
-            this.lUE_WarehouseCode.TabIndex = 9;
+            this.lUE_WarehouseCode.TabIndex = 8;
             this.lUE_WarehouseCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayoutControls_KeyDown);
             // 
             // lUE_ToWarehouseCode
@@ -965,10 +967,19 @@ namespace Foxoft
             this.BBI_PrintSettingSave.Name = "BBI_PrintSettingSave";
             this.BBI_PrintSettingSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_PrintSettingSave_ItemClick);
             // 
-            // repositoryItemTextEdit1
+            // BEI_PrinterName
             // 
-            this.repositoryItemTextEdit1.AutoHeight = false;
-            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            this.BEI_PrinterName.Caption = "barEditItem1";
+            this.BEI_PrinterName.Edit = this.repoCBE_PrinterName;
+            this.BEI_PrinterName.Id = 35;
+            this.BEI_PrinterName.Name = "BEI_PrinterName";
+            // 
+            // repoCBE_PrinterName
+            // 
+            this.repoCBE_PrinterName.AutoHeight = false;
+            this.repoCBE_PrinterName.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repoCBE_PrinterName.Name = "repoCBE_PrinterName";
             // 
             // ribbonPage1
             // 
@@ -1009,7 +1020,7 @@ namespace Foxoft
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_CopyInvoice);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Whatsapp);
-            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_ModifyInvoice);
+            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_ModifyInvoice, true);
             this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem2);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Nəzarət";
@@ -1047,6 +1058,18 @@ namespace Foxoft
             this.ribbonPageGroup6.Name = "ribbonPageGroup6";
             this.ribbonPageGroup6.Text = "Print";
             // 
+            // repositoryItemTextEdit1
+            // 
+            this.repositoryItemTextEdit1.AutoHeight = false;
+            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            // 
+            // repo
+            // 
+            this.repo.AutoHeight = false;
+            this.repo.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repo.Name = "repo";
+            // 
             // ribbonStatusBar1
             // 
             this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 547);
@@ -1083,7 +1106,8 @@ namespace Foxoft
             this.layoutControlItem2,
             this.ItemForToWarehouseCode,
             this.layoutControlItem3,
-            this.layoutControlItem4});
+            this.layoutControlItem4,
+            this.emptySpaceItem1});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "autoGeneratedGroup0";
             this.layoutControlGroup1.Size = new System.Drawing.Size(866, 369);
@@ -1093,7 +1117,7 @@ namespace Foxoft
             this.ItemForIsReturn.Control = this.checkEdit_IsReturn;
             this.ItemForIsReturn.Location = new System.Drawing.Point(0, 24);
             this.ItemForIsReturn.Name = "ItemForIsReturn";
-            this.ItemForIsReturn.Size = new System.Drawing.Size(415, 24);
+            this.ItemForIsReturn.Size = new System.Drawing.Size(113, 24);
             this.ItemForIsReturn.Text = "Qaytarılmadır";
             this.ItemForIsReturn.TextSize = new System.Drawing.Size(0, 0);
             this.ItemForIsReturn.TextVisible = false;
@@ -1234,26 +1258,13 @@ namespace Foxoft
             // 
             this.adorneruıManager1.Owner = this;
             // 
-            // repo
+            // emptySpaceItem1
             // 
-            this.repo.AutoHeight = false;
-            this.repo.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repo.Name = "repo";
-            // 
-            // BEI_PrinterName
-            // 
-            this.BEI_PrinterName.Caption = "barEditItem1";
-            this.BEI_PrinterName.Edit = this.repoCBE_PrinterName;
-            this.BEI_PrinterName.Id = 35;
-            this.BEI_PrinterName.Name = "BEI_PrinterName";
-            // 
-            // repoCBE_PrinterName
-            // 
-            this.repoCBE_PrinterName.AutoHeight = false;
-            this.repoCBE_PrinterName.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoCBE_PrinterName.Name = "repoCBE_PrinterName";
+            this.emptySpaceItem1.AllowHotTrack = false;
+            this.emptySpaceItem1.Location = new System.Drawing.Point(113, 24);
+            this.emptySpaceItem1.Name = "emptySpaceItem1";
+            this.emptySpaceItem1.Size = new System.Drawing.Size(302, 24);
+            this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // FormInvoice
             // 
@@ -1299,7 +1310,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoTxtEdit_TwilioInstance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repoTxtEdit_TwilioToken)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repoCBE_PrinterName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForIsReturn)).EndInit();
@@ -1318,8 +1331,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.adorneruıManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCBE_PrinterName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1433,5 +1445,8 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repo;
         private DevExpress.XtraBars.BarEditItem BEI_PrinterName;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repoCBE_PrinterName;
+        private DevExpress.XtraEditors.SimpleButton Btn_EditInvoice;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
     }
 }
