@@ -33,18 +33,15 @@ namespace Foxoft
 {
     public partial class FormProductList : RibbonForm
     {
-        SettingStore settingStore;
+        SettingStore settingStore = new();
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        public DcProduct dcProduct { get; set; }
-        readonly string designFolder;
         string barcodeDesignFile = @"Barcode.repx";
-        string imageFolder;
-        public string productCode { get; set; }
         public byte[] productTypeArr;
-
         RepositoryItemPictureEdit riPictureEdit = new();
         GridColumn colImage = new();
+        public DcProduct dcProduct { get; set; }
+        public string productCode { get; set; }
 
         public FormProductList()
         {
@@ -52,19 +49,9 @@ namespace Foxoft
 
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
-            bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
-
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            if (settingStore is not null)
-            {
-                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designFolder = settingStore.DesignFileFolder;
 
-                if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-                    imageFolder = settingStore.ImageFolder;
-            }
-
-            AppDomain.CurrentDomain.SetData("DXResourceDirectory", imageFolder);
+            AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
 
             LoadLayout();
 
@@ -151,9 +138,9 @@ namespace Foxoft
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
                 fileName += ".jpg";
-                if (!string.IsNullOrEmpty(imageFolder))
+                if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                 {
-                    string path = imageFolder + @"\" + fileName;
+                    string path = settingStore.ImageFolder + @"\" + fileName;
                     if (!imageCache.ContainsKey(path))
                     {
                         Image img = GetImage(path);
@@ -290,8 +277,11 @@ namespace Foxoft
                 {
                     int fr = gV_ProductList.FocusedRowHandle;
 
-                    string path = imageFolder + @"\" + dcProduct.ProductCode + ".jpg";
-                    imageCache.Remove(path);
+                    if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                    {
+                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + ".jpg";
+                        imageCache.Remove(path);
+                    }
 
                     LoadProducts(productTypeArr);
 
@@ -509,8 +499,11 @@ namespace Foxoft
                 {
                     efMethods.DeleteProduct(dcProduct);
 
-                    string path = imageFolder + @"\" + dcProduct.ProductCode + ".jpg";
-                    imageCache.Remove(path);
+                    if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                    {
+                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + ".jpg";
+                        imageCache.Remove(path);
+                    }
 
                     LoadProducts(productTypeArr);
                 }

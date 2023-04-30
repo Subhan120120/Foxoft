@@ -381,6 +381,7 @@ namespace Foxoft
             this.bBI_quit.Id = 6;
             this.bBI_quit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_quit.ImageOptions.SvgImage")));
             this.bBI_quit.Name = "bBI_quit";
+            this.bBI_quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
             this.bBI_quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_quit_ItemClick);
             // 
             // barButtonItem1

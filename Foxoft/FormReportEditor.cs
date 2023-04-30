@@ -50,7 +50,7 @@ namespace Foxoft
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {
-            EfMethods efMethods = new EfMethods();
+            EfMethods efMethods = new();
 
             //dcReport = efMethods.SelectReport(dcReport.ReportId);
             //efMethods.UpdateReport(dcReport);

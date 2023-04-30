@@ -50,24 +50,39 @@ namespace Foxoft.AppCode
                 else return twilioResponce;
             }
             else
-                return new () { sent = false, message = "Serverə qoşula bilmədi." };
+                return new() { sent = false, message = "Serverə qoşula bilmədi." };
         }
 
         public TwilioCheck CheckNumber(string number, string instanceId, string token)
         {
-            string url = "https://api.ultramsg.com/" + instanceId + "/contacts/check";
-
-            var client = new RestClient(url);
-            var request = new RestRequest(url, Method.Get);
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("token", token);
-            request.AddParameter("chatId", number + "@c.us");
-            request.AddParameter("nocache", "");
-
-            RestResponse response = client.Execute(request);
-
-            string output = response.Content;
-            return JsonConvert.DeserializeObject<TwilioCheck>(output);
+            RestResponse response = new();
+            if (number.Contains("@g.us"))
+            {
+                string url = "https://api.ultramsg.com/" + instanceId + "/groups/group";
+                var client = new RestClient(url);
+                var request = new RestRequest(url, Method.Get);
+                request.AddHeader("content-type", "application/x-www-form-urlencoded");
+                request.AddParameter("token", token);
+                request.AddParameter("groupId", number);
+                request.AddParameter("priority", "");
+                response = client.Execute(request);
+                string output = response.Content;
+                if (!output.Contains("error"))
+                    return new TwilioCheck() { status = "valid" };
+                else return new TwilioCheck() { status = "invalid" };
+            }
+            else
+            {
+                string url = "https://api.ultramsg.com/" + instanceId + "/contacts/check"; var client = new RestClient(url);
+                var request = new RestRequest(url, Method.Get);
+                request.AddHeader("content-type", "application/x-www-form-urlencoded");
+                request.AddParameter("token", token);
+                request.AddParameter("chatId", number + "@c.us");
+                request.AddParameter("nocache", "");
+                response = client.Execute(request);
+                string output = response.Content;
+                return JsonConvert.DeserializeObject<TwilioCheck>(output);
+            }
         }
     }
 
