@@ -86,12 +86,12 @@ namespace Foxoft.AppCode
         }
     }
 
-
     class TwilioResponce
     {
         public int id { get; set; }
         public bool sent { get; set; }
         public string message { get; set; }
+        public string error { get; set; }
     }
 
     class TwilioCheck

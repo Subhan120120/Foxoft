@@ -470,20 +470,37 @@ namespace Foxoft
                 string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
                 string CopyText2 = PaymentText("\n");
 
-                TwilioClass twilioClass = new();
-                TwilioResponce responce = twilioClass.SendWhatsapp(phoneNum, "chat", CopyText2);
+                //TwilioClass twilioClass = new();
+                //TwilioResponce responce = twilioClass.SendWhatsapp(phoneNum, "chat", CopyText2);
 
-                if (responce.message == "ok")
+                //if (responce.message == "ok")
+                //{
+                //    efMethods.UpdatePaymentIsSent(trPaymentHeader.PaymentHeaderId);
+                //    checkEdit_IsSent.EditValue = true;
+                //    MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+                //else
+                //    MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+                MetaWhatsapp meta = new();
+                var metaResponce = meta.SendWhatsapp(phoneNum, CopyText2);
+
+                if (metaResponce.error is not null)
+                    MessageBox.Show(metaResponce.error.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else //(!string.IsNullOrEmpty(metaResponce.messages.FirstOrDefault().id))
                 {
                     efMethods.UpdatePaymentIsSent(trPaymentHeader.PaymentHeaderId);
                     checkEdit_IsSent.EditValue = true;
                     MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
-                    MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
             }
             else
                 MessageBox.Show("Cari Hesab qeyd olunmayıb.");
+
+
         }
     }
 }

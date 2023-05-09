@@ -195,15 +195,10 @@ namespace Foxoft
         private void LoadCurrAccs()
         {
             if (currAccTypeCode != 0)
-            {
                 dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { currAccTypeCode });
-            }
             else
-            {
-                //dbContext.DcCurrAccs.Load();
-                //dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
                 dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { 1, 2, 3, 4 });
-            }
+
         }
 
         private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -260,7 +255,6 @@ namespace Foxoft
         private void gV_CurrAccList_ColumnFilterChanged(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
-
 
             if (view.FocusedRowHandle >= 0)
                 dcCurrAcc = view.GetFocusedRow() as DcCurrAcc;
@@ -473,12 +467,10 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
 
         private void BBI_test_ItemClick(object sender, ItemClickEventArgs e)

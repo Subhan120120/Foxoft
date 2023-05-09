@@ -659,7 +659,7 @@ namespace Foxoft
             List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
 
             ReportClass reportClass = new();
-            XtraReport xtraReport = reportClass.CreateReport(mydata, "HesabatProduct_toplu.repx");
+            XtraReport xtraReport = reportClass.CreateReport(mydata, "PriceList_OneProduct.repx");
 
             if (xtraReport is not null)
             {

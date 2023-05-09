@@ -31,7 +31,7 @@ namespace Foxoft
          Thread.CurrentThread.CurrentUICulture = culture;
          //Thread.CurrentThread.CurrentCulture = culture;
          //CultureInfo.DefaultThreadCurrentCulture = culture;
-         //CultureInfo.DefaultThreadCurrentUICulture = culture;
+         CultureInfo.DefaultThreadCurrentUICulture = culture;
 
          ExportSettings.DefaultExportType = ExportType.WYSIWYG;
          WindowsFormsSettings.DefaultFont = new Font("Tahoma", 10);

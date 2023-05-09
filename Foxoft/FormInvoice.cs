@@ -86,7 +86,6 @@ namespace Foxoft
 
             LoadLayout();
 
-
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
@@ -150,7 +149,7 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            ShowPrintCount();
+            //ShowPrintCount();
 
             checkEdit_IsReturn.Enabled = false;
         }
@@ -283,7 +282,7 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
             CalcPaidAmount();
-            ShowPrintCount();
+            //ShowPrintCount();
 
             checkEdit_IsReturn.Enabled = false;
         }
@@ -298,7 +297,7 @@ namespace Foxoft
         {
             int printCount = efMethods.SelectInvoicePrinCount(trInvoiceHeader.InvoiceHeaderId);
 
-            lbl_PrintCount.Text = "Print Edilib: " + printCount + " nüsxə";
+            txtEdit_PrintCount.Text = printCount.ToString();
         }
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -1017,7 +1016,6 @@ namespace Foxoft
                     if (printed)
                     {
                         efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
-                        //ShowPrintCount();
                     }
                 }
             }
@@ -1744,8 +1742,8 @@ namespace Foxoft
                 checkEdit_IsSent.EditValue = true;
                 MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else 
-                MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                MessageBox.Show(responce.message + "\n" + responce.error, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void BBI_TwilioSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -1782,6 +1780,12 @@ namespace Foxoft
                 checkEdit_IsReturn.Enabled = false;
             else
                 checkEdit_IsReturn.Enabled = true;
+        }
+
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MetaWhatsapp metaWhatsapp = new MetaWhatsapp();
+            //MetaResponce metaResponce = metaWhatsapp.SendWhatsapp("", "");
         }
     }
 }
