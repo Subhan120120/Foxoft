@@ -74,7 +74,7 @@ namespace Foxoft
         {
             this.productTypeArr = productTypeArr;
             LoadProducts(productTypeArr);
-
+            gV_ProductList.PopulateColumns();
             LoadLayout();
             gV_ProductList.Columns.Add(colImage);
         }
@@ -179,7 +179,6 @@ namespace Foxoft
                     if (dt.Rows.Count > 0)
                     {
                         dataSource = dt;
-                        gV_ProductList.PopulateColumns();
                     }
                 }
             }

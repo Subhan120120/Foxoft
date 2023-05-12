@@ -69,34 +69,32 @@ namespace Foxoft
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
         public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode)
         {
-            InitializeComponent();
-
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            dcProcess = efMethods.SelectProcess(processCode);
+
+            InitializeComponent();
 
             BEI_TwilioInstance.EditValue = Settings.Default.AppSetting.TwilioInstanceId;
             BEI_TwilioToken.EditValue = Settings.Default.AppSetting.TwilioToken;
+            BEI_PrinterName.EditValue = settingStore.PrinterName;
+            this.productTypeArr = productTypeArr;
+            this.Text = dcProcess.ProcessDesc;
+            lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
+            lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
+            lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
+            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
             {
                 repoCBE_PrinterName.Items.Add(printer);
             }
-            BEI_PrinterName.EditValue = settingStore.PrinterName;
 
-            dcProcess = efMethods.SelectProcess(processCode);
 
             LoadLayout();
 
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
-
-            this.productTypeArr = productTypeArr;
-            this.Text = dcProcess.ProcessDesc;
-
-            lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
-            lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
-            lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
-            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
             ClearControlsAddNew();
         }
