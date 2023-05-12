@@ -77,6 +77,7 @@ namespace Foxoft
             gV_ProductList.PopulateColumns();
             LoadLayout();
             gV_ProductList.Columns.Add(colImage);
+            gV_ProductList.BestFitColumns();
         }
 
         public FormProductList(byte[] productTypeArr, string productCode)
@@ -102,7 +103,7 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormProductList.xml";
-            string layoutFileDir = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files");
+            string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
 
@@ -113,7 +114,7 @@ namespace Foxoft
         private void LoadLayout()
         {
             string fileName = "FormProductList.xml";
-            string layoutFilePath = Path.Combine(Environment.CurrentDirectory, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
 
             if (File.Exists(layoutFilePath))
@@ -655,7 +656,7 @@ namespace Foxoft
         private void BBI_ReportPriceList_ItemClick(object sender, ItemClickEventArgs e)
         {
             ColumnView View = gC_ProductList.MainView as ColumnView;
-            List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
+            List<DataRowView> mydata = GetFilteredData<DataRowView>(View).ToList();
 
             ReportClass reportClass = new();
             XtraReport xtraReport = reportClass.CreateReport(mydata, "PriceList_OneProduct.repx");
@@ -679,7 +680,7 @@ namespace Foxoft
         private void BBI_ReportDesignProduct_ItemClick(object sender, ItemClickEventArgs e)
         {
             ColumnView View = gC_ProductList.MainView as ColumnView;
-            List<DcProduct> mydata = GetFilteredData<DcProduct>(View).ToList();
+            List<DataRowView> mydata = GetFilteredData<DataRowView>(View).ToList();
 
             ReportClass reportClass = new();
             XtraReport xtraReport = reportClass.CreateReport(mydata, "");

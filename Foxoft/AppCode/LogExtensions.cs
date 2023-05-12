@@ -14,7 +14,7 @@ namespace Foxoft
 {
    public static class LogExtensions
    {
-      static string path = Path.Combine(Environment.CurrentDirectory, "Log");
+      static string path = Path.Combine(AppContext.BaseDirectory, "Log");
       public static void GetPropertyDisplayName(string fileName)
       {
          if (!Directory.Exists(path))

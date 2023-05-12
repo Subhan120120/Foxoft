@@ -32,7 +32,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            string path = Path.Combine(Environment.CurrentDirectory, "backgroundImage.png");
+            string path = Path.Combine(AppContext.BaseDirectory, "backgroundImage.png");
 
             if (File.Exists(path))
             {
@@ -321,7 +321,7 @@ namespace Foxoft
 
             // string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-            string designPath = Path.Combine(Environment.CurrentDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
+            string designPath = Path.Combine(AppContext.BaseDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
 
             ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
@@ -549,7 +549,7 @@ namespace Foxoft
 
             // string designPath = Settings.Default.AppSetting.PrintDesignPath;
 
-            string designPath = Path.Combine(Environment.CurrentDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
+            string designPath = Path.Combine(AppContext.BaseDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
 
             ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
