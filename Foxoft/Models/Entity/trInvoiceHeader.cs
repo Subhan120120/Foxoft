@@ -116,7 +116,7 @@ namespace Foxoft.Models
       public bool IsCompleted { get; set; }
 
       [DefaultValue("0")]
-      [Display(Name = "Print Sayı")]
+      [Display(Name = "Çap Sayı")]
       public byte PrintCount { get; set; }
 
       [DefaultValue("0")]
