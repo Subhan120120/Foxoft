@@ -126,8 +126,20 @@ namespace Foxoft
                 gV_ProductList.RestoreLayoutFromStream(stream, option);
             }
 
-            gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+            gV_ProductList.OptionsFind.FindFilterColumns = nameof(dcProduct.ProductDesc);
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+
+            // Kolonlarin Yetkisi 
+            colLastPurchasePrice = gV_ProductList.Columns[nameof(dcProduct.LastPurchasePrice)];
+            colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = false;
+            colLastPurchasePrice.Visible = false;
+
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_LastPurchasePrice");
+            if (currAccHasClaims)
+            {
+                colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = true;
+                colLastPurchasePrice.Visible = true;
+            }
         }
 
         public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
@@ -227,7 +239,7 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object productCode = view.GetFocusedRowCellValue("ProductCode");
+                object productCode = view.GetFocusedRowCellValue(nameof(dcProduct.ProductCode));
                 if (productCode is not null)
                     dcProduct = efMethods.SelectProduct(productCode.ToString());
             }
@@ -408,6 +420,14 @@ namespace Foxoft
                 if (sFD.ShowDialog() == DialogResult.OK)
                 {
                     gC_ProductList.ExportToXlsx(sFD.FileName);
+
+                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        Process p = new Process();
+                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                        p.Start();
+                    }
+
                     return "Ok";
                 }
                 else
@@ -426,7 +446,7 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object productCode = view.GetFocusedRowCellValue("ProductCode");
+                object productCode = view.GetFocusedRowCellValue(nameof(dcProduct.ProductCode));
                 if (productCode is not null)
                     dcProduct = efMethods.SelectProduct(productCode.ToString());
             }
@@ -655,17 +675,51 @@ namespace Foxoft
 
         private void BBI_ReportPriceList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ColumnView View = gC_ProductList.MainView as ColumnView;
-            List<DataRowView> mydata = GetFilteredData<DataRowView>(View).ToList();
-
-            ReportClass reportClass = new();
-            XtraReport xtraReport = reportClass.CreateReport(mydata, "PriceList_OneProduct.repx");
-
-            if (xtraReport is not null)
+            try
             {
-                ReportPrintTool printTool = new(xtraReport);
-                printTool.ShowPreview();
+                XtraSaveFileDialog sFD = new();
+                sFD.Filter = "PDF Faylı|*.pdf";
+                sFD.Title = "PDF Faylı Yadda Saxla";
+                sFD.FileName = "Qiymət Siyahısı";
+                sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                sFD.DefaultExt = "*.pdf";
+
+                var fileName = Invoke((Func<string>)(() =>
+                {
+                    if (sFD.ShowDialog() == DialogResult.OK)
+                    {
+                        ColumnView View = gC_ProductList.MainView as ColumnView;
+                        List<DataRowView> mydata = GetFilteredData<DataRowView>(View).ToList();
+
+                        ReportClass reportClass = new();
+                        XtraReport xtraReport = reportClass.CreateReport(mydata, "PriceList_OneProduct.repx");
+
+                        if (xtraReport is not null)
+                        {
+                            xtraReport.ExportToPdf(sFD.FileName, new PdfExportOptions() { });
+
+                            if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                            {
+                                Process p = new Process();
+                                p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                                p.Start();
+                            }
+
+                            return "Ok";
+                        }
+                        else
+                            return "Fail";
+
+                    }
+                    else
+                        return "Fail";
+                }));
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
         }
 
         public static List<T> GetFilteredData<T>(ColumnView view)

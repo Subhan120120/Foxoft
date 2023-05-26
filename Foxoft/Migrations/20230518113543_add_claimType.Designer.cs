@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230518113543_add_claimType")]
+    partial class add_claimType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("GridViewLayout")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("License")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocalCurrencyCode")
@@ -95,12 +94,7 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("ClaimTypeId")
-                        .HasColumnType("tinyint");
-
                     b.HasKey("ClaimCode");
-
-                    b.HasIndex("ClaimTypeId");
 
                     b.ToTable("DcClaims");
 
@@ -108,8 +102,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ClaimCode = "PosDiscount",
-                            ClaimDesc = "POS Endirimi",
-                            ClaimTypeId = (byte)0
+                            ClaimDesc = "POS Endirimi"
                         });
                 });
 
@@ -1507,51 +1500,6 @@ namespace Foxoft.Migrations
                     b.ToTable("sysdiagrams");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrClaimReport", b =>
-                {
-                    b.Property<int>("ClaimReportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClaimCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ClaimReportId");
-
-                    b.HasIndex("ClaimCode");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("TrClaimReport");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrCurrAccRole", b =>
                 {
                     b.Property<int>("CurrAccRoleId")
@@ -2367,7 +2315,7 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.dcClaimType", b =>
                 {
-                    b.Property<byte>("ClaimTypeId")
+                    b.Property<byte>("ClaimTypeCode")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("ClaimTypeDesc")
@@ -2375,24 +2323,24 @@ namespace Foxoft.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ClaimTypeId");
+                    b.HasKey("ClaimTypeCode");
 
                     b.ToTable("DcClaimTypes");
 
                     b.HasData(
                         new
                         {
-                            ClaimTypeId = (byte)1,
+                            ClaimTypeCode = (byte)1,
                             ClaimTypeDesc = "Embaded"
                         },
                         new
                         {
-                            ClaimTypeId = (byte)2,
+                            ClaimTypeCode = (byte)2,
                             ClaimTypeDesc = "Report"
                         },
                         new
                         {
-                            ClaimTypeId = (byte)3,
+                            ClaimTypeCode = (byte)3,
                             ClaimTypeDesc = "Column"
                         });
                 });
@@ -2420,17 +2368,6 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DcCurrency");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcClaim", b =>
-                {
-                    b.HasOne("Foxoft.Models.dcClaimType", "DcClaimType")
-                        .WithMany("DcClaims")
-                        .HasForeignKey("ClaimTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcClaimType");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAcc", b =>
@@ -2536,25 +2473,6 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DcStore");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrClaimReport", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcClaim", "DcClaim")
-                        .WithMany("TrClaimReports")
-                        .HasForeignKey("ClaimCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Foxoft.Models.DcReport", "DcReport")
-                        .WithMany("TrClaimReports")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcClaim");
-
-                    b.Navigation("DcReport");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrCurrAccRole", b =>
@@ -2726,8 +2644,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcClaim", b =>
                 {
-                    b.Navigation("TrClaimReports");
-
                     b.Navigation("TrRoleClaims");
                 });
 
@@ -2789,8 +2705,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
                     b.Navigation("DcReportFilters");
-
-                    b.Navigation("TrClaimReports");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReportQuery", b =>
@@ -2825,11 +2739,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrShipmentHeader", b =>
                 {
                     b.Navigation("TrShipmentLines");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.dcClaimType", b =>
-                {
-                    b.Navigation("DcClaims");
                 });
 #pragma warning restore 612, 618
         }

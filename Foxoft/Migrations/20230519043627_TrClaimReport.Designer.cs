@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230519043627_TrClaimReport")]
+    partial class TrClaimReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("GridViewLayout")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("License")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocalCurrencyCode")
@@ -95,12 +94,7 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("ClaimTypeId")
-                        .HasColumnType("tinyint");
-
                     b.HasKey("ClaimCode");
-
-                    b.HasIndex("ClaimTypeId");
 
                     b.ToTable("DcClaims");
 
@@ -108,8 +102,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ClaimCode = "PosDiscount",
-                            ClaimDesc = "POS Endirimi",
-                            ClaimTypeId = (byte)0
+                            ClaimDesc = "POS Endirimi"
                         });
                 });
 
@@ -2367,7 +2360,7 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.dcClaimType", b =>
                 {
-                    b.Property<byte>("ClaimTypeId")
+                    b.Property<byte>("ClaimTypeCode")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("ClaimTypeDesc")
@@ -2375,24 +2368,24 @@ namespace Foxoft.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ClaimTypeId");
+                    b.HasKey("ClaimTypeCode");
 
                     b.ToTable("DcClaimTypes");
 
                     b.HasData(
                         new
                         {
-                            ClaimTypeId = (byte)1,
+                            ClaimTypeCode = (byte)1,
                             ClaimTypeDesc = "Embaded"
                         },
                         new
                         {
-                            ClaimTypeId = (byte)2,
+                            ClaimTypeCode = (byte)2,
                             ClaimTypeDesc = "Report"
                         },
                         new
                         {
-                            ClaimTypeId = (byte)3,
+                            ClaimTypeCode = (byte)3,
                             ClaimTypeDesc = "Column"
                         });
                 });
@@ -2420,17 +2413,6 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DcCurrency");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcClaim", b =>
-                {
-                    b.HasOne("Foxoft.Models.dcClaimType", "DcClaimType")
-                        .WithMany("DcClaims")
-                        .HasForeignKey("ClaimTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcClaimType");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAcc", b =>
@@ -2825,11 +2807,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrShipmentHeader", b =>
                 {
                     b.Navigation("TrShipmentLines");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.dcClaimType", b =>
-                {
-                    b.Navigation("DcClaims");
                 });
 #pragma warning restore 612, 618
         }

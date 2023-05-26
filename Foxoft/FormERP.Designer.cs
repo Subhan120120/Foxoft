@@ -29,58 +29,58 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-         this.components = new System.ComponentModel.Container();
-         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
-         this.parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
-         this.skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
-         this.skinPaletteDropDownButtonItem = new DevExpress.XtraBars.SkinPaletteDropDownButtonItem();
-         this.bBI_MdiChildrenList = new DevExpress.XtraBars.BarMdiChildrenListItem();
-         this.bBI_CloseWindows = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_POS = new DevExpress.XtraBars.BarButtonItem();
-         this.bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
-         this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
-         this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
-         this.BSI_StoreDesc = new DevExpress.XtraBars.BarStaticItem();
-         this.ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-         this.aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
-         this.aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_Products = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.ACE_CashRegs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlSeparator3 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-         this.aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlSeparator6 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-         this.ACE_PurchaseIsReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.ACE_SaleIsReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlSeparator5 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-         this.aCE_InventoryTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.ACE_CashTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlSeparator7 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-         this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_PaymentDetail = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-         this.aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.ACE_ReportFinally = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         this.aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-         ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
-         this.SuspendLayout();
-         // 
-         // parentRibbonControl
-         // 
-         this.parentRibbonControl.ExpandCollapseItem.Id = 0;
-         this.parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
+            this.parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
+            this.skinPaletteDropDownButtonItem = new DevExpress.XtraBars.SkinPaletteDropDownButtonItem();
+            this.bBI_MdiChildrenList = new DevExpress.XtraBars.BarMdiChildrenListItem();
+            this.bBI_CloseWindows = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_POS = new DevExpress.XtraBars.BarButtonItem();
+            this.bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
+            this.BSI_StoreDesc = new DevExpress.XtraBars.BarStaticItem();
+            this.ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            this.aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
+            this.aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_Products = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CurrAccs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.ACE_CashRegs = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator3 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            this.aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator6 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            this.ACE_PurchaseIsReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.ACE_SaleIsReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator5 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            this.aCE_InventoryTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.ACE_CashTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator7 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            this.aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_PaymentDetail = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            this.aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.ACE_ReportFinally = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // parentRibbonControl
+            // 
+            this.parentRibbonControl.ExpandCollapseItem.Id = 0;
+            this.parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.parentRibbonControl.ExpandCollapseItem,
             this.parentRibbonControl.SearchEditItem,
             this.skinRibbonGalleryBarItem,
@@ -93,145 +93,145 @@ namespace Foxoft
             this.barButtonItem3,
             this.barButtonItem4,
             this.BSI_StoreDesc});
-         this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-         this.parentRibbonControl.MaxItemId = 19;
-         this.parentRibbonControl.Name = "parentRibbonControl";
-         this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
-         this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
-         this.parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.parentRibbonControl.Location = new System.Drawing.Point(0, 0);
+            this.parentRibbonControl.MaxItemId = 19;
+            this.parentRibbonControl.Name = "parentRibbonControl";
+            this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
+            this.parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
+            this.parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage_Home});
-         this.parentRibbonControl.QuickToolbarItemLinks.Add(this.skinRibbonGalleryBarItem);
-         this.parentRibbonControl.QuickToolbarItemLinks.Add(this.skinPaletteDropDownButtonItem);
-         this.parentRibbonControl.QuickToolbarItemLinks.Add(this.bBI_POS);
-         this.parentRibbonControl.Size = new System.Drawing.Size(1023, 158);
-         this.parentRibbonControl.StatusBar = this.ribbonStatusBar;
-         // 
-         // skinRibbonGalleryBarItem
-         // 
-         this.skinRibbonGalleryBarItem.Caption = "skinRibbonGalleryBarItem1";
-         this.skinRibbonGalleryBarItem.Id = 1;
-         this.skinRibbonGalleryBarItem.Name = "skinRibbonGalleryBarItem";
-         // 
-         // skinPaletteDropDownButtonItem
-         // 
-         this.skinPaletteDropDownButtonItem.ActAsDropDown = true;
-         this.skinPaletteDropDownButtonItem.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
-         this.skinPaletteDropDownButtonItem.Id = 3;
-         this.skinPaletteDropDownButtonItem.Name = "skinPaletteDropDownButtonItem";
-         // 
-         // bBI_MdiChildrenList
-         // 
-         this.bBI_MdiChildrenList.Caption = "Aktiv Pencereler";
-         this.bBI_MdiChildrenList.Id = 4;
-         this.bBI_MdiChildrenList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_MdiChildrenList.ImageOptions.SvgImage")));
-         this.bBI_MdiChildrenList.Name = "bBI_MdiChildrenList";
-         // 
-         // bBI_CloseWindows
-         // 
-         this.bBI_CloseWindows.Caption = "Pəncərələri Bağla";
-         this.bBI_CloseWindows.Id = 9;
-         this.bBI_CloseWindows.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CloseWindows.ImageOptions.SvgImage")));
-         this.bBI_CloseWindows.Name = "bBI_CloseWindows";
-         this.bBI_CloseWindows.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CloseWindows_ItemClick);
-         // 
-         // bBI_POS
-         // 
-         this.bBI_POS.Caption = "barButtonItem1";
-         this.bBI_POS.Id = 12;
-         this.bBI_POS.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_POS.ImageOptions.SvgImage")));
-         this.bBI_POS.Name = "bBI_POS";
-         this.bBI_POS.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_POS_ItemClick);
-         // 
-         // bSI_UserName
-         // 
-         this.bSI_UserName.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-         this.bSI_UserName.Caption = "| İstifadəçi Adı";
-         this.bSI_UserName.Id = 13;
-         this.bSI_UserName.Name = "bSI_UserName";
-         // 
-         // barButtonItem1
-         // 
-         this.barButtonItem1.Caption = "Test";
-         this.barButtonItem1.Id = 14;
-         this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-         this.barButtonItem1.Name = "barButtonItem1";
-         this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
-         // 
-         // barButtonItem3
-         // 
-         this.barButtonItem3.Caption = "Save";
-         this.barButtonItem3.Id = 16;
-         this.barButtonItem3.Name = "barButtonItem3";
-         this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
-         // 
-         // barButtonItem4
-         // 
-         this.barButtonItem4.Caption = "Load";
-         this.barButtonItem4.Id = 17;
-         this.barButtonItem4.Name = "barButtonItem4";
-         this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
-         // 
-         // BSI_StoreDesc
-         // 
-         this.BSI_StoreDesc.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-         this.BSI_StoreDesc.Caption = "| Mağaza Adı";
-         this.BSI_StoreDesc.Id = 18;
-         this.BSI_StoreDesc.Name = "BSI_StoreDesc";
-         // 
-         // ribbonPage_Home
-         // 
-         this.ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.parentRibbonControl.QuickToolbarItemLinks.Add(this.skinRibbonGalleryBarItem);
+            this.parentRibbonControl.QuickToolbarItemLinks.Add(this.skinPaletteDropDownButtonItem);
+            this.parentRibbonControl.QuickToolbarItemLinks.Add(this.bBI_POS);
+            this.parentRibbonControl.Size = new System.Drawing.Size(1023, 158);
+            this.parentRibbonControl.StatusBar = this.ribbonStatusBar;
+            // 
+            // skinRibbonGalleryBarItem
+            // 
+            this.skinRibbonGalleryBarItem.Caption = "skinRibbonGalleryBarItem1";
+            this.skinRibbonGalleryBarItem.Id = 1;
+            this.skinRibbonGalleryBarItem.Name = "skinRibbonGalleryBarItem";
+            // 
+            // skinPaletteDropDownButtonItem
+            // 
+            this.skinPaletteDropDownButtonItem.ActAsDropDown = true;
+            this.skinPaletteDropDownButtonItem.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            this.skinPaletteDropDownButtonItem.Id = 3;
+            this.skinPaletteDropDownButtonItem.Name = "skinPaletteDropDownButtonItem";
+            // 
+            // bBI_MdiChildrenList
+            // 
+            this.bBI_MdiChildrenList.Caption = "Aktiv Pencereler";
+            this.bBI_MdiChildrenList.Id = 4;
+            this.bBI_MdiChildrenList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_MdiChildrenList.ImageOptions.SvgImage")));
+            this.bBI_MdiChildrenList.Name = "bBI_MdiChildrenList";
+            // 
+            // bBI_CloseWindows
+            // 
+            this.bBI_CloseWindows.Caption = "Pəncərələri Bağla";
+            this.bBI_CloseWindows.Id = 9;
+            this.bBI_CloseWindows.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CloseWindows.ImageOptions.SvgImage")));
+            this.bBI_CloseWindows.Name = "bBI_CloseWindows";
+            this.bBI_CloseWindows.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CloseWindows_ItemClick);
+            // 
+            // bBI_POS
+            // 
+            this.bBI_POS.Caption = "barButtonItem1";
+            this.bBI_POS.Id = 12;
+            this.bBI_POS.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_POS.ImageOptions.SvgImage")));
+            this.bBI_POS.Name = "bBI_POS";
+            this.bBI_POS.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_POS_ItemClick);
+            // 
+            // bSI_UserName
+            // 
+            this.bSI_UserName.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.bSI_UserName.Caption = "| İstifadəçi Adı";
+            this.bSI_UserName.Id = 13;
+            this.bSI_UserName.Name = "bSI_UserName";
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "Test";
+            this.barButtonItem1.Id = 14;
+            this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+            this.barButtonItem1.Name = "barButtonItem1";
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            // 
+            // barButtonItem3
+            // 
+            this.barButtonItem3.Caption = "Save";
+            this.barButtonItem3.Id = 16;
+            this.barButtonItem3.Name = "barButtonItem3";
+            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+            // 
+            // barButtonItem4
+            // 
+            this.barButtonItem4.Caption = "Load";
+            this.barButtonItem4.Id = 17;
+            this.barButtonItem4.Name = "barButtonItem4";
+            this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
+            // 
+            // BSI_StoreDesc
+            // 
+            this.BSI_StoreDesc.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.BSI_StoreDesc.Caption = "| Mağaza Adı";
+            this.BSI_StoreDesc.Id = 18;
+            this.BSI_StoreDesc.Name = "BSI_StoreDesc";
+            // 
+            // ribbonPage_Home
+            // 
+            this.ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGr_Control,
             this.ribbonPageGroup1});
-         this.ribbonPage_Home.MergeOrder = 0;
-         this.ribbonPage_Home.Name = "ribbonPage_Home";
-         this.ribbonPage_Home.Text = "Ümumi";
-         // 
-         // ribbonPageGr_Control
-         // 
-         this.ribbonPageGr_Control.ItemLinks.Add(this.bBI_MdiChildrenList);
-         this.ribbonPageGr_Control.ItemLinks.Add(this.bBI_CloseWindows);
-         this.ribbonPageGr_Control.Name = "ribbonPageGr_Control";
-         // 
-         // ribbonPageGroup1
-         // 
-         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
-         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem3);
-         this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem4);
-         this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-         this.ribbonPageGroup1.Text = "Nəzarət";
-         // 
-         // ribbonStatusBar
-         // 
-         this.ribbonStatusBar.ItemLinks.Add(this.BSI_StoreDesc);
-         this.ribbonStatusBar.ItemLinks.Add(this.bSI_UserName);
-         this.ribbonStatusBar.Location = new System.Drawing.Point(0, 608);
-         this.ribbonStatusBar.Name = "ribbonStatusBar";
-         this.ribbonStatusBar.Ribbon = this.parentRibbonControl;
-         this.ribbonStatusBar.Size = new System.Drawing.Size(1023, 24);
-         // 
-         // aC_Root
-         // 
-         this.aC_Root.Dock = System.Windows.Forms.DockStyle.Left;
-         this.aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
+            this.ribbonPage_Home.MergeOrder = 0;
+            this.ribbonPage_Home.Name = "ribbonPage_Home";
+            this.ribbonPage_Home.Text = "Ümumi";
+            // 
+            // ribbonPageGr_Control
+            // 
+            this.ribbonPageGr_Control.ItemLinks.Add(this.bBI_MdiChildrenList);
+            this.ribbonPageGr_Control.ItemLinks.Add(this.bBI_CloseWindows);
+            this.ribbonPageGr_Control.Name = "ribbonPageGr_Control";
+            // 
+            // ribbonPageGroup1
+            // 
+            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem1);
+            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem3);
+            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem4);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "Nəzarət";
+            // 
+            // ribbonStatusBar
+            // 
+            this.ribbonStatusBar.ItemLinks.Add(this.BSI_StoreDesc);
+            this.ribbonStatusBar.ItemLinks.Add(this.bSI_UserName);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 608);
+            this.ribbonStatusBar.Name = "ribbonStatusBar";
+            this.ribbonStatusBar.Ribbon = this.parentRibbonControl;
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1023, 24);
+            // 
+            // aC_Root
+            // 
+            this.aC_Root.Dock = System.Windows.Forms.DockStyle.Left;
+            this.aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.aCE_Invoices,
             this.aCE_Acounting,
             this.aCE_HumanResource,
             this.aCE_Reports,
             this.aCE_Setting});
-         this.aC_Root.Location = new System.Drawing.Point(0, 158);
-         this.aC_Root.Name = "aC_Root";
-         this.aC_Root.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.True;
-         this.aC_Root.ResizeMode = DevExpress.XtraBars.Navigation.AccordionControlResizeMode.InnerResizeZone;
-         this.aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
-         this.aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
-         this.aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-         this.aC_Root.Size = new System.Drawing.Size(216, 450);
-         this.aC_Root.TabIndex = 2;
-         // 
-         // aCE_Invoices
-         // 
-         this.aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
+            this.aC_Root.Location = new System.Drawing.Point(0, 158);
+            this.aC_Root.Name = "aC_Root";
+            this.aC_Root.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.True;
+            this.aC_Root.ResizeMode = DevExpress.XtraBars.Navigation.AccordionControlResizeMode.InnerResizeZone;
+            this.aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
+            this.aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
+            this.aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
+            this.aC_Root.Size = new System.Drawing.Size(216, 450);
+            this.aC_Root.TabIndex = 2;
+            // 
+            // aCE_Invoices
+            // 
+            this.aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.aCE_Products,
             this.aCE_CurrAccs,
             this.ACE_CashRegs,
@@ -248,220 +248,220 @@ namespace Foxoft
             this.aCE_Expense,
             this.aCE_PaymentDetail,
             this.accordionControlSeparator1});
-         this.aCE_Invoices.Expanded = true;
-         this.aCE_Invoices.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Invoices.ImageOptions.SvgImage")));
-         this.aCE_Invoices.Name = "Invoices";
-         this.aCE_Invoices.Text = "Əməliyatlar";
-         // 
-         // aCE_Products
-         // 
-         this.aCE_Products.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Products.ImageOptions.SvgImage")));
-         this.aCE_Products.Name = "Products";
-         this.aCE_Products.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_Products.Text = "Məhsul";
-         this.aCE_Products.Click += new System.EventHandler(this.aCE_Products_Click);
-         // 
-         // aCE_CurrAccs
-         // 
-         this.aCE_CurrAccs.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CurrAccs.ImageOptions.SvgImage")));
-         this.aCE_CurrAccs.Name = "CurrAccs";
-         this.aCE_CurrAccs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_CurrAccs.Text = "Cari Hesab";
-         this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
-         // 
-         // ACE_CashRegs
-         // 
-         this.ACE_CashRegs.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_CashRegs.ImageOptions.SvgImage")));
-         this.ACE_CashRegs.Name = "CashRegs";
-         this.ACE_CashRegs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.ACE_CashRegs.Text = "Kassa";
-         this.ACE_CashRegs.Click += new System.EventHandler(this.ACE_CashRegs_Click);
-         // 
-         // accordionControlSeparator3
-         // 
-         this.accordionControlSeparator3.Name = "accordionControlSeparator3";
-         // 
-         // aCE_RetailPurchaseInvoice
-         // 
-         this.aCE_RetailPurchaseInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_RetailPurchaseInvoice.ImageOptions.SvgImage")));
-         this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
-         this.aCE_RetailPurchaseInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_RetailPurchaseInvoice.Text = "Alış Fakturası";
-         this.aCE_RetailPurchaseInvoice.Click += new System.EventHandler(this.aCE_RetailPurchaseInvoice_Click);
-         // 
-         // aCE_RetailSaleInvoice
-         // 
-         this.aCE_RetailSaleInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_RetailSaleInvoice.ImageOptions.SvgImage")));
-         this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
-         this.aCE_RetailSaleInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_RetailSaleInvoice.Text = "Satış Fakturası";
-         this.aCE_RetailSaleInvoice.Click += new System.EventHandler(this.aCE_RetailSaleInvoice_Click);
-         // 
-         // accordionControlSeparator6
-         // 
-         this.accordionControlSeparator6.Name = "accordionControlSeparator6";
-         // 
-         // ACE_PurchaseIsReturn
-         // 
-         this.ACE_PurchaseIsReturn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_PurchaseIsReturn.ImageOptions.SvgImage")));
-         this.ACE_PurchaseIsReturn.Name = "PurchaseIsReturn";
-         this.ACE_PurchaseIsReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.ACE_PurchaseIsReturn.Text = "Alışın Qaytarılması";
-         this.ACE_PurchaseIsReturn.Click += new System.EventHandler(this.ACE_PurchaseIsReturn_Click);
-         // 
-         // ACE_SaleIsReturn
-         // 
-         this.ACE_SaleIsReturn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_SaleIsReturn.ImageOptions.SvgImage")));
-         this.ACE_SaleIsReturn.Name = "SaleIsReturn";
-         this.ACE_SaleIsReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.ACE_SaleIsReturn.Text = "Satışın Qaytarılması";
-         this.ACE_SaleIsReturn.Click += new System.EventHandler(this.ACE_SaleIsReturn_Click);
-         // 
-         // accordionControlSeparator5
-         // 
-         this.accordionControlSeparator5.Name = "accordionControlSeparator5";
-         // 
-         // aCE_InventoryTransfer
-         // 
-         this.aCE_InventoryTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_InventoryTransfer.ImageOptions.SvgImage")));
-         this.aCE_InventoryTransfer.Name = "InventoryTransfer";
-         this.aCE_InventoryTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_InventoryTransfer.Text = "Anbarlar Arası Transfer";
-         this.aCE_InventoryTransfer.Click += new System.EventHandler(this.aCE_InventoryTransfer_Click);
-         // 
-         // ACE_CashTransfer
-         // 
-         this.ACE_CashTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_CashTransfer.ImageOptions.SvgImage")));
-         this.ACE_CashTransfer.Name = "CashTransfer";
-         this.ACE_CashTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.ACE_CashTransfer.Text = "Kassalar Arası Transfer";
-         this.ACE_CashTransfer.Click += new System.EventHandler(this.ACE_CashTransfer_Click);
-         // 
-         // accordionControlSeparator7
-         // 
-         this.accordionControlSeparator7.Name = "accordionControlSeparator7";
-         // 
-         // aCE_Expense
-         // 
-         this.aCE_Expense.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Expense.ImageOptions.SvgImage")));
-         this.aCE_Expense.Name = "Expense";
-         this.aCE_Expense.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_Expense.Text = "Xərclər";
-         this.aCE_Expense.Click += new System.EventHandler(this.aCE_Expense_Click);
-         // 
-         // aCE_PaymentDetail
-         // 
-         this.aCE_PaymentDetail.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_PaymentDetail.ImageOptions.SvgImage")));
-         this.aCE_PaymentDetail.Name = "PaymentDetail";
-         this.aCE_PaymentDetail.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_PaymentDetail.Text = "Ödəniş Qəbzi";
-         this.aCE_PaymentDetail.Click += new System.EventHandler(this.aCE_PaymentDetail_Click);
-         // 
-         // accordionControlSeparator1
-         // 
-         this.accordionControlSeparator1.Name = "accordionControlSeparator1";
-         // 
-         // aCE_Acounting
-         // 
-         this.aCE_Acounting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
+            this.aCE_Invoices.Expanded = true;
+            this.aCE_Invoices.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Invoices.ImageOptions.SvgImage")));
+            this.aCE_Invoices.Name = "aCE_Invoices";
+            this.aCE_Invoices.Text = "Əməliyatlar";
+            // 
+            // aCE_Products
+            // 
+            this.aCE_Products.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Products.ImageOptions.SvgImage")));
+            this.aCE_Products.Name = "aCE_Products";
+            this.aCE_Products.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_Products.Text = "Məhsul";
+            this.aCE_Products.Click += new System.EventHandler(this.aCE_Products_Click);
+            // 
+            // aCE_CurrAccs
+            // 
+            this.aCE_CurrAccs.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CurrAccs.ImageOptions.SvgImage")));
+            this.aCE_CurrAccs.Name = "aCE_CurrAccs";
+            this.aCE_CurrAccs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CurrAccs.Text = "Cari Hesab";
+            this.aCE_CurrAccs.Click += new System.EventHandler(this.aCE_CurrAccs_Click);
+            // 
+            // ACE_CashRegs
+            // 
+            this.ACE_CashRegs.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_CashRegs.ImageOptions.SvgImage")));
+            this.ACE_CashRegs.Name = "ACE_CashRegs";
+            this.ACE_CashRegs.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.ACE_CashRegs.Text = "Kassa";
+            this.ACE_CashRegs.Click += new System.EventHandler(this.ACE_CashRegs_Click);
+            // 
+            // accordionControlSeparator3
+            // 
+            this.accordionControlSeparator3.Name = "accordionControlSeparator3";
+            // 
+            // aCE_RetailPurchaseInvoice
+            // 
+            this.aCE_RetailPurchaseInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_RetailPurchaseInvoice.ImageOptions.SvgImage")));
+            this.aCE_RetailPurchaseInvoice.Name = "aCE_RetailPurchaseInvoice";
+            this.aCE_RetailPurchaseInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_RetailPurchaseInvoice.Text = "Alış Fakturası";
+            this.aCE_RetailPurchaseInvoice.Click += new System.EventHandler(this.aCE_RetailPurchaseInvoice_Click);
+            // 
+            // aCE_RetailSaleInvoice
+            // 
+            this.aCE_RetailSaleInvoice.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_RetailSaleInvoice.ImageOptions.SvgImage")));
+            this.aCE_RetailSaleInvoice.Name = "aCE_RetailSaleInvoice";
+            this.aCE_RetailSaleInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_RetailSaleInvoice.Text = "Satış Fakturası";
+            this.aCE_RetailSaleInvoice.Click += new System.EventHandler(this.aCE_RetailSaleInvoice_Click);
+            // 
+            // accordionControlSeparator6
+            // 
+            this.accordionControlSeparator6.Name = "accordionControlSeparator6";
+            // 
+            // ACE_PurchaseIsReturn
+            // 
+            this.ACE_PurchaseIsReturn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_PurchaseIsReturn.ImageOptions.SvgImage")));
+            this.ACE_PurchaseIsReturn.Name = "ACE_PurchaseIsReturn";
+            this.ACE_PurchaseIsReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.ACE_PurchaseIsReturn.Text = "Alışın Qaytarılması";
+            this.ACE_PurchaseIsReturn.Click += new System.EventHandler(this.ACE_PurchaseIsReturn_Click);
+            // 
+            // ACE_SaleIsReturn
+            // 
+            this.ACE_SaleIsReturn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_SaleIsReturn.ImageOptions.SvgImage")));
+            this.ACE_SaleIsReturn.Name = "ACE_SaleIsReturn";
+            this.ACE_SaleIsReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.ACE_SaleIsReturn.Text = "Satışın Qaytarılması";
+            this.ACE_SaleIsReturn.Click += new System.EventHandler(this.ACE_SaleIsReturn_Click);
+            // 
+            // accordionControlSeparator5
+            // 
+            this.accordionControlSeparator5.Name = "accordionControlSeparator5";
+            // 
+            // aCE_InventoryTransfer
+            // 
+            this.aCE_InventoryTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_InventoryTransfer.ImageOptions.SvgImage")));
+            this.aCE_InventoryTransfer.Name = "aCE_InventoryTransfer";
+            this.aCE_InventoryTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_InventoryTransfer.Text = "Anbarlar Arası Transfer";
+            this.aCE_InventoryTransfer.Click += new System.EventHandler(this.aCE_InventoryTransfer_Click);
+            // 
+            // ACE_CashTransfer
+            // 
+            this.ACE_CashTransfer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_CashTransfer.ImageOptions.SvgImage")));
+            this.ACE_CashTransfer.Name = "ACE_CashTransfer";
+            this.ACE_CashTransfer.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.ACE_CashTransfer.Text = "Kassalar Arası Transfer";
+            this.ACE_CashTransfer.Click += new System.EventHandler(this.ACE_CashTransfer_Click);
+            // 
+            // accordionControlSeparator7
+            // 
+            this.accordionControlSeparator7.Name = "accordionControlSeparator7";
+            // 
+            // aCE_Expense
+            // 
+            this.aCE_Expense.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Expense.ImageOptions.SvgImage")));
+            this.aCE_Expense.Name = "aCE_Expense";
+            this.aCE_Expense.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_Expense.Text = "Xərclər";
+            this.aCE_Expense.Click += new System.EventHandler(this.aCE_Expense_Click);
+            // 
+            // aCE_PaymentDetail
+            // 
+            this.aCE_PaymentDetail.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_PaymentDetail.ImageOptions.SvgImage")));
+            this.aCE_PaymentDetail.Name = "aCE_PaymentDetail";
+            this.aCE_PaymentDetail.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_PaymentDetail.Text = "Ödəniş Qəbzi";
+            this.aCE_PaymentDetail.Click += new System.EventHandler(this.aCE_PaymentDetail_Click);
+            // 
+            // accordionControlSeparator1
+            // 
+            this.accordionControlSeparator1.Name = "accordionControlSeparator1";
+            // 
+            // aCE_Acounting
+            // 
+            this.aCE_Acounting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.aCE_CountIn,
             this.aCE_CountOut});
-         this.aCE_Acounting.Expanded = true;
-         this.aCE_Acounting.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Acounting.ImageOptions.SvgImage")));
-         this.aCE_Acounting.Name = "Acounting";
-         this.aCE_Acounting.Text = "Sayım";
-         // 
-         // aCE_CountIn
-         // 
-         this.aCE_CountIn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CountIn.ImageOptions.SvgImage")));
-         this.aCE_CountIn.Name = "CountIn";
-         this.aCE_CountIn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_CountIn.Text = "Sayım Artırma";
-         this.aCE_CountIn.Click += new System.EventHandler(this.aCE_CountIn_Click);
-         // 
-         // aCE_CountOut
-         // 
-         this.aCE_CountOut.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CountOut.ImageOptions.SvgImage")));
-         this.aCE_CountOut.Name = "CountOut";
-         this.aCE_CountOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_CountOut.Text = "Sayım Azaltma";
-         this.aCE_CountOut.Click += new System.EventHandler(this.aCE_CountOut_Click);
-         // 
-         // aCE_HumanResource
-         // 
-         this.aCE_HumanResource.Expanded = true;
-         this.aCE_HumanResource.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage")));
-         this.aCE_HumanResource.Name = "HumanResource";
-         this.aCE_HumanResource.Text = "İnsan Resursları";
-         // 
-         // aCE_Reports
-         // 
-         this.aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
+            this.aCE_Acounting.Expanded = true;
+            this.aCE_Acounting.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Acounting.ImageOptions.SvgImage")));
+            this.aCE_Acounting.Name = "aCE_Acounting";
+            this.aCE_Acounting.Text = "Sayım";
+            // 
+            // aCE_CountIn
+            // 
+            this.aCE_CountIn.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CountIn.ImageOptions.SvgImage")));
+            this.aCE_CountIn.Name = "aCE_CountIn";
+            this.aCE_CountIn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CountIn.Text = "Sayım Artırma";
+            this.aCE_CountIn.Click += new System.EventHandler(this.aCE_CountIn_Click);
+            // 
+            // aCE_CountOut
+            // 
+            this.aCE_CountOut.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CountOut.ImageOptions.SvgImage")));
+            this.aCE_CountOut.Name = "aCE_CountOut";
+            this.aCE_CountOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CountOut.Text = "Sayım Azaltma";
+            this.aCE_CountOut.Click += new System.EventHandler(this.aCE_CountOut_Click);
+            // 
+            // aCE_HumanResource
+            // 
+            this.aCE_HumanResource.Expanded = true;
+            this.aCE_HumanResource.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage")));
+            this.aCE_HumanResource.Name = "aCE_HumanResource";
+            this.aCE_HumanResource.Text = "İnsan Resursları";
+            // 
+            // aCE_Reports
+            // 
+            this.aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.ACE_ReportFinally,
             this.aCE_ReportZet});
-         this.aCE_Reports.Expanded = true;
-         this.aCE_Reports.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Reports.ImageOptions.SvgImage")));
-         this.aCE_Reports.Name = "Reports";
-         this.aCE_Reports.Text = "Hesabat";
-         // 
-         // ACE_ReportFinally
-         // 
-         this.ACE_ReportFinally.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_ReportFinally.ImageOptions.SvgImage")));
-         this.ACE_ReportFinally.Name = "ReportFinally";
-         this.ACE_ReportFinally.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.ACE_ReportFinally.Text = "Element1";
-         this.ACE_ReportFinally.Click += new System.EventHandler(this.ACE_ReportFinally_Click);
-         // 
-         // aCE_ReportZet
-         // 
-         this.aCE_ReportZet.HeaderTemplate.AddRange(new DevExpress.XtraBars.Navigation.HeaderElementInfo[] {
+            this.aCE_Reports.Expanded = true;
+            this.aCE_Reports.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Reports.ImageOptions.SvgImage")));
+            this.aCE_Reports.Name = "aCE_Reports";
+            this.aCE_Reports.Text = "Hesabat";
+            // 
+            // ACE_ReportFinally
+            // 
+            this.ACE_ReportFinally.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("ACE_ReportFinally.ImageOptions.SvgImage")));
+            this.ACE_ReportFinally.Name = "ACE_ReportFinally";
+            this.ACE_ReportFinally.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.ACE_ReportFinally.Text = "Element1";
+            this.ACE_ReportFinally.Click += new System.EventHandler(this.ACE_ReportFinally_Click);
+            // 
+            // aCE_ReportZet
+            // 
+            this.aCE_ReportZet.HeaderTemplate.AddRange(new DevExpress.XtraBars.Navigation.HeaderElementInfo[] {
             new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.Image),
             new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.Text),
             new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.ContextButtons),
             new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.HeaderControl)});
-         this.aCE_ReportZet.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage")));
-         this.aCE_ReportZet.Name = "ReportZet";
-         this.aCE_ReportZet.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_ReportZet.Text = "Gün Sonu";
-         this.aCE_ReportZet.Click += new System.EventHandler(this.aCE_ReportZet_Click);
-         // 
-         // aCE_Setting
-         // 
-         this.aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
+            this.aCE_ReportZet.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage")));
+            this.aCE_ReportZet.Name = "aCE_ReportZet";
+            this.aCE_ReportZet.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_ReportZet.Text = "Gün Sonu";
+            this.aCE_ReportZet.Click += new System.EventHandler(this.aCE_ReportZet_Click);
+            // 
+            // aCE_Setting
+            // 
+            this.aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.aCE_CurrAccAll});
-         this.aCE_Setting.Expanded = true;
-         this.aCE_Setting.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Setting.ImageOptions.SvgImage")));
-         this.aCE_Setting.Name = "Setting";
-         this.aCE_Setting.Text = "Parametr";
-         // 
-         // aCE_CurrAccAll
-         // 
-         this.aCE_CurrAccAll.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CurrAccAll.ImageOptions.SvgImage")));
-         this.aCE_CurrAccAll.Name = "CurrAccAll";
-         this.aCE_CurrAccAll.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-         this.aCE_CurrAccAll.Text = "İstifadəçilər";
-         this.aCE_CurrAccAll.Click += new System.EventHandler(this.aCE_CurrAccAll_Click);
-         // 
-         // FormERP
-         // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(1023, 632);
-         this.Controls.Add(this.aC_Root);
-         this.Controls.Add(this.ribbonStatusBar);
-         this.Controls.Add(this.parentRibbonControl);
-         this.IsMdiContainer = true;
-         this.Name = "FormERP";
-         this.Ribbon = this.parentRibbonControl;
-         this.StatusBar = this.ribbonStatusBar;
-         this.Text = "Foxoft";
-         this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-         this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormERP_FormClosing);
-         this.MdiChildActivate += new System.EventHandler(this.FormERP_MdiChildActivate);
-         ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).EndInit();
-         this.ResumeLayout(false);
-         this.PerformLayout();
+            this.aCE_Setting.Expanded = true;
+            this.aCE_Setting.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_Setting.ImageOptions.SvgImage")));
+            this.aCE_Setting.Name = "aCE_Setting";
+            this.aCE_Setting.Text = "Parametr";
+            // 
+            // aCE_CurrAccAll
+            // 
+            this.aCE_CurrAccAll.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("aCE_CurrAccAll.ImageOptions.SvgImage")));
+            this.aCE_CurrAccAll.Name = "aCE_CurrAccAll";
+            this.aCE_CurrAccAll.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.aCE_CurrAccAll.Text = "İstifadəçilər";
+            this.aCE_CurrAccAll.Click += new System.EventHandler(this.aCE_CurrAccAll_Click);
+            // 
+            // FormERP
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1023, 632);
+            this.Controls.Add(this.aC_Root);
+            this.Controls.Add(this.ribbonStatusBar);
+            this.Controls.Add(this.parentRibbonControl);
+            this.IsMdiContainer = true;
+            this.Name = "FormERP";
+            this.Ribbon = this.parentRibbonControl;
+            this.StatusBar = this.ribbonStatusBar;
+            this.Text = "Foxoft";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormERP_FormClosing);
+            this.MdiChildActivate += new System.EventHandler(this.FormERP_MdiChildActivate);
+            ((System.ComponentModel.ISupportInitialize)(this.parentRibbonControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aC_Root)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

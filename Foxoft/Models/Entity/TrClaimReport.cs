@@ -8,21 +8,21 @@ using System.Threading.Tasks;
 
 namespace Foxoft.Models
 {
-    public partial class TrRoleClaim : BaseEntity
+    public partial class TrClaimReport : BaseEntity
     {
         [Key]
-        public int RoleClaimId { get; set; }
-
-        [Required]
-        [ForeignKey("DcRole")]
-        public string RoleCode { get; set; }
+        public int ClaimReportId { get; set; }
 
         [Required]
         [ForeignKey("DcClaim")]
         public string ClaimCode { get; set; }
 
+        [Required]
+        [ForeignKey("DcReport")]
+        public int ReportId { get; set; }
 
-        public virtual DcRole DcRole { get; set; }
+
+        public virtual DcReport DcReport { get; set; }
         public virtual DcClaim DcClaim { get; set; }
     }
 }

@@ -1,16 +1,13 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
-using DevExpress.Diagram.Core.Themes;
 using DevExpress.LookAndFeel;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Helpers;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
-using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +29,8 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            InitComponentName();
+
             string path = Path.Combine(AppContext.BaseDirectory, "backgroundImage.png");
 
             if (File.Exists(path))
@@ -48,6 +47,31 @@ namespace Foxoft
             InitializeReports();
             //adorners1 = new List<AdornerElement>();
             //adornerUIManager1 = new AdornerUIManager(this.components);
+        }
+
+        private void InitComponentName()
+        {
+            this.aCE_Invoices.Name = "Invoices";
+            this.aCE_Products.Name = "Products";
+            this.aCE_CurrAccs.Name = "CurrAccs";
+            this.ACE_CashRegs.Name = "CashRegs";
+            this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
+            this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
+            this.ACE_PurchaseIsReturn.Name = "PurchaseIsReturn";
+            this.ACE_SaleIsReturn.Name = "SaleIsReturn";
+            this.aCE_InventoryTransfer.Name = "InventoryTransfer";
+            this.ACE_CashTransfer.Name = "CashTransfer";
+            this.aCE_Expense.Name = "Expense";
+            this.aCE_PaymentDetail.Name = "PaymentDetail";
+            this.aCE_Acounting.Name = "Acounting";
+            this.aCE_CountIn.Name = "CountIn";
+            this.aCE_CountOut.Name = "CountOut";
+            this.aCE_HumanResource.Name = "HumanResource";
+            this.aCE_Reports.Name = "Reports";
+            this.ACE_ReportFinally.Name = "ReportFinally";
+            this.aCE_ReportZet.Name = "ReportZet";
+            this.aCE_Setting.Name = "Setting";
+            this.aCE_CurrAccAll.Name = "CurrAccAll";
         }
 
         private void InitializeReports()
@@ -69,6 +93,12 @@ namespace Foxoft
                 aCE.Text = dcReport.ReportName;
                 aCE.Click += (sender, e) =>
                 {
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportName);
+                    if (!currAccHasClaims)
+                    {
+                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        return;
+                    }
                     FormReportFilter formReport = new(dcReport);
                     formReport.MdiParent = this;
                     formReport.Show();

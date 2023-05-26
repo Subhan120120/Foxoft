@@ -13,6 +13,7 @@ namespace Foxoft.Models
         public DcClaim()
         {
             TrRoleClaims = new HashSet<TrRoleClaim>();
+            TrClaimReports = new HashSet<TrClaimReport>();
         }
 
         [Key]
@@ -21,7 +22,13 @@ namespace Foxoft.Models
         [Required]
         public string ClaimDesc { get; set; }
 
+        [Required]
+        [ForeignKey("DcClaimType")]
+        public byte ClaimTypeId { get; set; }
 
+
+        public virtual dcClaimType DcClaimType { get; set; }
         public virtual ICollection<TrRoleClaim> TrRoleClaims { get; set; }
+        public virtual ICollection<TrClaimReport> TrClaimReports { get; set; }
     }
 }

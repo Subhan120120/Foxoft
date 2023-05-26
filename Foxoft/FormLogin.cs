@@ -10,175 +10,216 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 
 namespace Foxoft
 {
-   public partial class FormLogin : ToolbarForm
-   {
-      EfMethods efMethods = new();
-      public FormLogin()
-      {
-         // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
+    public partial class FormLogin : ToolbarForm
+    {
+        EfMethods efMethods = new();
+        public FormLogin()
+        {
+            // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
 
-         Trace.Write("\n FormLogin Started. \n SplashScreenStartup Starting... ");
+            Trace.Write("\n FormLogin Started. \n SplashScreenStartup Starting... ");
 
-         SplashScreenManager.ShowForm(this, typeof(SplashScreenStartup), true, true, true);
+            SplashScreenManager.ShowForm(this, typeof(SplashScreenStartup), true, true, true);
 
-         Trace.Write("\n SplashScreenStartup Started. \n tring db.CanConnect... ");
+            Trace.Write("\n SplashScreenStartup Started. \n tring db.CanConnect... ");
 
-         using subContext db = new();
+            using subContext db = new();
 
-         if (db.Database.CanConnect())
-         {
-            db.Database.EnsureCreated();
-            //db.Database.Migrate();
+            if (db.Database.CanConnect())
+            {
+                db.Database.EnsureCreated();
+                //db.Database.Migrate();
 
-            //string sql = db.Database.GenerateCreateScript();
+                //string sql = db.Database.GenerateCreateScript();
 
-            //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
-            //databaseCreator.CreateTables();
+                //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
+                //databaseCreator.CreateTables();
 
-            CreateViews(db.Database);
+                CreateViews(db.Database);
 
-            Trace.Write("\n db.Database.CanConnect() = " + db.Database.CanConnect().ToString() + " \n InitializeComponent starting... ");
+                Trace.Write("\n db.Database.CanConnect() = " + db.Database.CanConnect().ToString() + " \n InitializeComponent starting... ");
 
+                EfMethods efMethods = new();
+                AppSetting appSetting = efMethods.SelectAppSetting();
+                Trace.Write("\n AppSetting appSetting = " + appSetting.Id.ToString() + " \n InitializeComponent starting... ");
+                Settings.Default.AppSetting = appSetting;
+                Settings.Default.Save();
+            }
+            else MessageBox.Show("Databasa ilə əlaqə qurula bilmir. \n connection string: \n" + db.Database.GetConnectionString());
+
+            AcceptButton = btn_ERP;
+
+            InitializeComponent();
+
+            txtEdit_UserName.Text = Settings.Default.LoginName;
+            txtEdit_Password.Text = Settings.Default.LoginPassword;
+            checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
+
+            Trace.Write("\n InitializeComponent Finished. \n SplashScreenStartup closing... ");
+            Trace.Flush();
+
+            SplashScreenManager.CloseForm();
+
+            if (Settings.Default.AppSetting.LocalCurrencyCode is null)
+                MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
+        }
+
+        private static void CreateViews(DatabaseFacade db)
+        {
+            InjectView(db, "View_RetailSales.sql", "RetailSales");
+            InjectView(db, "View_AllPayments.sql", "AllPayments");
+            InjectView(db, "View_Transactions.sql", "Transactions");
+        }
+
+        private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)
+        {
+            Assembly assembly = typeof(Program).Assembly;
+            string assemblyName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
+            string path = assemblyName + ".AppCode.SqlQuery" + "." + sqlFileName;
+            Stream stream = assembly.GetManifestResourceStream(path);
+            string sqlQuery = new StreamReader(stream).ReadToEnd();
+
+            db.ExecuteSqlRaw($"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END");
+            db.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sqlQuery}");
+        }
+
+        private void btn_POS_Click(object sender, EventArgs e)
+        {
+            if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
+            {
+                FormPOS formPos = new();
+                //SaveNewConStr();
+                Hide();
+                formPos.ShowDialog();
+                Close();
+            }
+        }
+
+        private void btn_ERP_Click(object sender, EventArgs e)
+        {
+            if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
+            {
+                if (CheckHasLicense())
+                {
+                    FormERP formERP = new();
+                    //SaveNewConStr();
+                    Hide();
+                    formERP.ShowDialog();
+                    Close();
+                }
+                else
+                    XtraMessageBox.Show("Lisenziya Aktiv Deyil!");
+            }
+            else
+                XtraMessageBox.Show("İstifadəçi və ya şifrə yanlışdır");
+        }
+
+        public bool Login(string user, string password)
+        {
             EfMethods efMethods = new();
-            AppSetting appSetting = efMethods.SelectAppSetting();
-            Trace.Write("\n AppSetting appSetting = " + appSetting.Id.ToString() + " \n InitializeComponent starting... ");
-            Settings.Default.AppSetting = appSetting;
-            Settings.Default.Save();
-         }
-         else MessageBox.Show("Databasa ilə əlaqə qurula bilmir. \n connection string: \n" + db.Database.GetConnectionString());
+            if (efMethods.Login(user, password))
+            {
+                SessionSave();
+                return true;
+            }
+            else
+                return false;
+        }
 
-         AcceptButton = btn_ERP;
+        private void SessionSave()
+        {
+            EfMethods efMethods = new();
 
-         InitializeComponent();
+            if (checkEdit_RemindMe.Checked)
+            {
+                Settings.Default.LoginName = txtEdit_UserName.Text;
+                Settings.Default.LoginPassword = txtEdit_Password.Text;
+                Settings.Default.LoginChecked = checkEdit_RemindMe.Checked;
+                Settings.Default.Save();
+            }
+            else
+            {
+                Settings.Default.LoginName = string.Empty;
+                Settings.Default.LoginPassword = string.Empty;
+                Settings.Default.LoginChecked = false;
+                Settings.Default.Save();
+            }
 
-         txtEdit_UserName.Text = Settings.Default.LoginName;
-         txtEdit_Password.Text = Settings.Default.LoginPassword;
-         checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
+            Authorization.CurrAccCode = txtEdit_UserName.Text;
+            Authorization.DcRoles = efMethods.SelectRoles(txtEdit_UserName.Text);
+            Authorization.StoreCode = efMethods.SelectStoreCode(txtEdit_UserName.Text);
+            Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
+        }
 
-         Trace.Write("\n InitializeComponent Finished. \n SplashScreenStartup closing... ");
-         Trace.Flush();
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DefaultControls defaultControls = new();
+            defaultControls.Show();
+        }
 
-         SplashScreenManager.CloseForm();
+        Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        string nameConStr = "Foxoft.Properties.Settings.subConnString";
 
-         if (Settings.Default.AppSetting.LocalCurrencyCode is null)
-            MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
-      }
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+            //txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
+            txtEdit_conString.EditValue = Settings.Default.subConnString;
+        }
 
-      private static void CreateViews(DatabaseFacade db)
-      {
-         InjectView(db, "View_RetailSales.sql", "RetailSales");
-         InjectView(db, "View_AllPayments.sql", "AllPayments");
-         InjectView(db, "View_Transactions.sql", "Transactions");
-      }
+        private void SaveNewConStr()
+        {
+            Settings.Default.subConnString = txtEdit_conString.EditValue.ToString();
+            Settings.Default.Save(); // Save for subcontext
 
-      private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)
-      {
-         Assembly assembly = typeof(Program).Assembly;
-         string assemblyName = assembly.FullName.Substring(0, assembly.FullName.IndexOf(','));
-         string path = assemblyName + ".AppCode.SqlQuery" + "." + sqlFileName;
-         Stream stream = assembly.GetManifestResourceStream(path);
-         string sqlQuery = new StreamReader(stream).ReadToEnd();
+            config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = Settings.Default.subConnString;
+            config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
+            config.Save(ConfigurationSaveMode.Modified); // Save permenantly
+        }
 
-         db.ExecuteSqlRaw($"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END");
-         db.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sqlQuery}");
-      }
+        private void btn_SaveConn_Click(object sender, EventArgs e)
+        {
+            SaveNewConStr();
+        }
 
-      private void btn_POS_Click(object sender, EventArgs e)
-      {
-         if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
-         {
-            FormPOS formPos = new();
-            //SaveNewConStr();
-            Hide();
-            formPos.ShowDialog();
-            Close();
-         }
-      }
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            using (var client = new WebClient())
+            using (var completedSignal = new AutoResetEvent(false))
+            {
+                client.DownloadFileCompleted += (s, e) =>
+                {
+                    completedSignal.Set();
+                    //Process p = new Process();
+                    //p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                    //p.Start();
+                };
 
-      private void btn_ERP_Click(object sender, EventArgs e)
-      {
-         if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
-         {
-            FormERP formERP = new();
-            //SaveNewConStr();
-            Hide();
-            formERP.ShowDialog();
-            Close();
-         }
-         else
-            XtraMessageBox.Show("İstifadəçi və ya şifrə yanlışdır");
-      }
+                //client.DownloadProgressChanged += (s, e) => Console.WriteLine($"Downloading {e.ProgressPercentage}%");
+                client.DownloadFileAsync(new Uri("https://via.placeholder.com/300.png"), AppContext.BaseDirectory + "/100.png");
 
-      public bool Login(string user, string password)
-      {
-         EfMethods efMethods = new();
-         if (efMethods.Login(user, password))
-         {
-            SessionSave();
-            return true;
-         }
-         else
+                completedSignal.WaitOne();
+            }
+        }
+
+        private bool CheckHasLicense()
+        {
+            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                var pInterfaceProperties = nic.GetPhysicalAddress();
+
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                    if (nic.Name == "Ethernet" && efMethods.CheckHasLicense(nic.Id + pInterfaceProperties))
+                        return true;
+            }
             return false;
-      }
-
-      private void SessionSave()
-      {
-         EfMethods efMethods = new();
-
-         if (checkEdit_RemindMe.Checked)
-         {
-            Settings.Default.LoginName = txtEdit_UserName.Text;
-            Settings.Default.LoginPassword = txtEdit_Password.Text;
-            Settings.Default.LoginChecked = checkEdit_RemindMe.Checked;
-            Settings.Default.Save();
-         }
-         else
-         {
-            Settings.Default.LoginName = string.Empty;
-            Settings.Default.LoginPassword = string.Empty;
-            Settings.Default.LoginChecked = false;
-            Settings.Default.Save();
-         }
-
-         Authorization.CurrAccCode = txtEdit_UserName.Text;
-         Authorization.DcRoles = efMethods.SelectRoles(txtEdit_UserName.Text);
-         Authorization.StoreCode = efMethods.SelectStoreCode(txtEdit_UserName.Text);
-         Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
-      }
-
-      private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
-      {
-         DefaultControls defaultControls = new();
-         defaultControls.Show();
-      }
-
-      Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-      string nameConStr = "Foxoft.Properties.Settings.subConnString";
-
-      private void FormLogin_Load(object sender, EventArgs e)
-      {
-         //txtEdit_conString.EditValue = config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString;
-         txtEdit_conString.EditValue = Settings.Default.subConnString;
-      }
-
-      private void SaveNewConStr()
-      {
-         Settings.Default.subConnString = txtEdit_conString.EditValue.ToString();
-         Settings.Default.Save(); // Save for subcontext
-
-         config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = Settings.Default.subConnString;
-         config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
-         config.Save(ConfigurationSaveMode.Modified); // Save permenantly
-      }
-
-      private void btn_SaveConn_Click(object sender, EventArgs e)
-      {
-         SaveNewConStr();
-      }
-   }
+        }
+    }
 }

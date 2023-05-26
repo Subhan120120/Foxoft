@@ -267,6 +267,15 @@ namespace Foxoft
                 if (sFD.ShowDialog() == DialogResult.OK)
                 {
                     gV_PaymentLineList.ExportToXlsx(sFD.FileName);
+
+                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        Process p = new Process();
+                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                        p.Start();
+
+                    }
+
                     return "Ok";
                 }
                 else

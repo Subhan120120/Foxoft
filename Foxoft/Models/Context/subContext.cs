@@ -22,6 +22,7 @@ namespace Foxoft.Models
             : base(options) { }
 
         public DbSet<DcClaim> DcClaims { get; set; }
+        public DbSet<dcClaimType> DcClaimTypes { get; set; }
         public DbSet<DcCurrAcc> DcCurrAccs { get; set; }
         public DbSet<DcCurrAccType> DcCurrAccTypes { get; set; }
         public DbSet<DcOffice> DcOffices { get; set; }
@@ -130,6 +131,12 @@ namespace Foxoft.Models
                 new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" },
                 new DcCurrAccType { CurrAccTypeCode = 4, CurrAccTypeDesc = "Mağaza" },
                 new DcCurrAccType { CurrAccTypeCode = 5, CurrAccTypeDesc = "Kassa" }
+                );
+
+            modelBuilder.Entity<dcClaimType>().HasData(
+                new dcClaimType { ClaimTypeId = 1, ClaimTypeDesc = "Embaded" },
+                new dcClaimType { ClaimTypeId = 2, ClaimTypeDesc = "Report" },
+                new dcClaimType { ClaimTypeId = 3, ClaimTypeDesc = "Column" }
                 );
 
             modelBuilder.Entity<SettingStore>().HasData(

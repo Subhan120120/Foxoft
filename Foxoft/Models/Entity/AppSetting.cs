@@ -34,6 +34,9 @@ namespace Foxoft.Models
         [Display(Name = "Twilio Token")]
         public string TwilioToken { get; set; }
 
+        [Display(Name = "Lisenziya")]
+        public string License { get; set; }
+
 
 
         [ForeignKey("LocalCurrencyCode")]

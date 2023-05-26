@@ -10,6 +10,7 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -199,6 +200,14 @@ namespace Foxoft
                 if (sFD.ShowDialog() == DialogResult.OK)
                 {
                     gC_FeatureList.ExportToXlsx(sFD.FileName);
+
+                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        Process p = new Process();
+                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                        p.Start();
+                    }
+
                     return "Ok";
                 }
                 else

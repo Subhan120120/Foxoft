@@ -58,7 +58,7 @@ namespace Foxoft
         //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string reportFileNameInvoice = @"InvoiceRS_A4.repx";
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
-
+            
         private TrInvoiceHeader trInvoiceHeader;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
@@ -1517,6 +1517,14 @@ namespace Foxoft
                         };
 
                         gC_InvoiceLine.ExportToXlsx(sFD.FileName, expOpt);
+
+                        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        {
+                            Process p = new Process();
+                            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                            p.Start();
+                        }
+
                         return "Ok";
                     }
                     else
@@ -1731,8 +1739,8 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(address))
                 phoneNum = address;
 
-            TwilioClass twilioClass = new();
-            TwilioResponce responce = twilioClass.SendWhatsapp(phoneNum, "image", AsBase64String);
+            UltramsgClass twilioClass = new();
+            UltramsgResponce responce = twilioClass.SendWhatsapp(phoneNum, "image", AsBase64String);
 
             if (responce.message == "ok")
             {

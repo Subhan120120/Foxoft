@@ -927,6 +927,13 @@ namespace Foxoft
                                 .Any(x => x.CurrAccCode == CurrAccCode);
         }
 
+        public bool CheckHasLicense(string id)
+        {
+            using subContext db = new();
+            AppSetting AppSetting = db.AppSettings.FirstOrDefault(x => x.License == id);
+            return db.AppSettings.Any(x => x.License == id);
+        }
+
         public bool FeatureExist(int Id)
         {
             using subContext db = new();
@@ -976,12 +983,23 @@ namespace Foxoft
         {
             using subContext db = new();
 
+            bool hasClaim;
 
-            return db.TrCurrAccRoles.Include(x => x.DcRole)
+            hasClaim = db.TrCurrAccRoles.Include(x => x.DcRole)
                                        .ThenInclude(x => x.TrRoleClaims)
                                     .Where(x => x.CurrAccCode == currAccCode)
                                     .Any(x => x.DcRole.TrRoleClaims.Any(x => x.ClaimCode == claim));
 
+            if (!hasClaim)
+                hasClaim = db.TrCurrAccRoles.Include(x => x.DcRole)
+                           .ThenInclude(x => x.TrRoleClaims)
+                           .ThenInclude(x => x.DcClaim)
+                           .ThenInclude(x => x.TrClaimReports)
+                           .ThenInclude(x => x.DcReport)
+                        .Where(x => x.CurrAccCode == currAccCode)
+                        .Any(x => x.DcRole.TrRoleClaims.Any(x => x.DcClaim.TrClaimReports.Any(x => x.DcReport.ReportName == claim)));
+
+            return hasClaim;
         }
 
         public string SelectOfficeCode(string CurrAccCode)

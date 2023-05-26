@@ -5,12 +5,12 @@ using System;
 
 namespace Foxoft.AppCode
 {
-    class TwilioClass
+    class UltramsgClass
     {
-        public TwilioResponce SendWhatsapp(string number, string type, string body)
+        public UltramsgResponce SendWhatsapp(string number, string type, string body)
         {
             if (String.IsNullOrEmpty(number))
-                return new TwilioResponce() { sent = false, message = "Nömrə qeyd olunmayıb." };
+                return new UltramsgResponce() { sent = false, message = "Nömrə qeyd olunmayıb." };
 
             number = number.Trim();
             if (number.Length < 13)
@@ -38,22 +38,22 @@ namespace Foxoft.AppCode
             if (!string.IsNullOrEmpty(response.Content))
             {
                 string output = response.Content;
-                TwilioResponce twilioResponce = JsonConvert.DeserializeObject<TwilioResponce>(output);
+                UltramsgResponce UltramsgResponce = JsonConvert.DeserializeObject<UltramsgResponce>(output);
 
-                if (twilioResponce.message == "ok")
+                if (UltramsgResponce.message == "ok")
                 {
-                    TwilioCheck check = CheckNumber(number, instanceId, token);
+                    UltramsgCheck check = CheckNumber(number, instanceId, token);
                     if (check.status == "valid")
-                        return JsonConvert.DeserializeObject<TwilioResponce>(output);
-                    else return new TwilioResponce() { message = "Bu nömrə üzrə whatsapp hesabı yoxdur" };
+                        return JsonConvert.DeserializeObject<UltramsgResponce>(output);
+                    else return new UltramsgResponce() { message = "Bu nömrə üzrə whatsapp hesabı yoxdur" };
                 }
-                else return twilioResponce;
+                else return UltramsgResponce;
             }
             else
                 return new() { sent = false, message = "Serverə qoşula bilmədi." };
         }
 
-        public TwilioCheck CheckNumber(string number, string instanceId, string token)
+        public UltramsgCheck CheckNumber(string number, string instanceId, string token)
         {
             RestResponse response = new();
             if (number.Contains("@g.us"))
@@ -68,8 +68,8 @@ namespace Foxoft.AppCode
                 response = client.Execute(request);
                 string output = response.Content;
                 if (!output.Contains("error"))
-                    return new TwilioCheck() { status = "valid" };
-                else return new TwilioCheck() { status = "invalid" };
+                    return new UltramsgCheck() { status = "valid" };
+                else return new UltramsgCheck() { status = "invalid" };
             }
             else
             {
@@ -81,12 +81,12 @@ namespace Foxoft.AppCode
                 request.AddParameter("nocache", "");
                 response = client.Execute(request);
                 string output = response.Content;
-                return JsonConvert.DeserializeObject<TwilioCheck>(output);
+                return JsonConvert.DeserializeObject<UltramsgCheck>(output);
             }
         }
     }
 
-    class TwilioResponce
+    class UltramsgResponce
     {
         public int id { get; set; }
         public bool sent { get; set; }
@@ -94,7 +94,7 @@ namespace Foxoft.AppCode
         public string error { get; set; }
     }
 
-    class TwilioCheck
+    class UltramsgCheck
     {
         public string status { get; set; }
         public string chatId { get; set; }

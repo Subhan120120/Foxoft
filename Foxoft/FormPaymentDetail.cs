@@ -502,5 +502,11 @@ namespace Foxoft
 
 
         }
+
+        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            TwilioClass twilio = new TwilioClass();
+            twilio.AlmaDolmasi();
+        }
     }
 }

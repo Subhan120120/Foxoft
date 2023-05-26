@@ -45,6 +45,8 @@ namespace Foxoft
             this.RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            this.checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
+            this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lbl_CurrAccBalansBefore = new DevExpress.XtraEditors.LabelControl();
             this.lbl_CurrAccBalansAfter = new DevExpress.XtraEditors.LabelControl();
             this.lbl_CurrAccDesc = new DevExpress.XtraEditors.LabelControl();
@@ -74,7 +76,6 @@ namespace Foxoft
             this.colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
             this.OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
-            this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             this.DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.StoreCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
@@ -92,11 +93,13 @@ namespace Foxoft
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEdit_IsSent.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).BeginInit();
@@ -107,7 +110,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationTimeTimeSpanEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreCodeLookUpEdit.Properties)).BeginInit();
@@ -125,7 +127,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit_IsSent.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,9 +142,10 @@ namespace Foxoft
             this.bBI_NewPayment,
             this.bBI_CopyPayment,
             this.barButtonItem1,
-            this.barButtonItem2});
+            this.barButtonItem2,
+            this.barButtonItem3});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 9;
+            this.ribbon.MaxItemId = 10;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -235,6 +237,7 @@ namespace Foxoft
             // RPG_Report
             // 
             this.RPG_Report.ItemLinks.Add(this.barButtonItem1);
+            this.RPG_Report.ItemLinks.Add(this.barButtonItem3);
             this.RPG_Report.Name = "RPG_Report";
             this.RPG_Report.Text = "Hesabat";
             // 
@@ -266,6 +269,23 @@ namespace Foxoft
             this.dataLayoutControl1.Size = new System.Drawing.Size(899, 396);
             this.dataLayoutControl1.TabIndex = 2;
             this.dataLayoutControl1.Text = "dataLayoutControl1";
+            // 
+            // checkEdit_IsSent
+            // 
+            this.checkEdit_IsSent.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "IsSent", true));
+            this.checkEdit_IsSent.Enabled = false;
+            this.checkEdit_IsSent.Location = new System.Drawing.Point(367, 364);
+            this.checkEdit_IsSent.Name = "checkEdit_IsSent";
+            this.checkEdit_IsSent.Properties.Caption = "Göndərilib";
+            this.checkEdit_IsSent.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            this.checkEdit_IsSent.Size = new System.Drawing.Size(106, 20);
+            this.checkEdit_IsSent.StyleController = this.dataLayoutControl1;
+            this.checkEdit_IsSent.TabIndex = 6;
+            // 
+            // trPaymentHeadersBindingSource
+            // 
+            this.trPaymentHeadersBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trPaymentHeadersBindingSource_AddingNew);
+            this.trPaymentHeadersBindingSource.CurrentItemChanged += new System.EventHandler(this.trPaymentHeadersBindingSource_CurrentItemChanged);
             // 
             // lbl_CurrAccBalansBefore
             // 
@@ -530,11 +550,6 @@ namespace Foxoft
             this.OperationDateDateEdit.TabIndex = 3;
             this.OperationDateDateEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
             // 
-            // trPaymentHeadersBindingSource
-            // 
-            this.trPaymentHeadersBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trPaymentHeadersBindingSource_AddingNew);
-            this.trPaymentHeadersBindingSource.CurrentItemChanged += new System.EventHandler(this.trPaymentHeadersBindingSource_CurrentItemChanged);
-            // 
             // OperationTimeTimeSpanEdit
             // 
             this.OperationTimeTimeSpanEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "OperationTime", true));
@@ -736,18 +751,6 @@ namespace Foxoft
             this.layoutControlItem2.Text = "Mağaza";
             this.layoutControlItem2.TextSize = new System.Drawing.Size(74, 13);
             // 
-            // checkEdit_IsSent
-            // 
-            this.checkEdit_IsSent.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "IsSent", true));
-            this.checkEdit_IsSent.Enabled = false;
-            this.checkEdit_IsSent.Location = new System.Drawing.Point(367, 364);
-            this.checkEdit_IsSent.Name = "checkEdit_IsSent";
-            this.checkEdit_IsSent.Properties.Caption = "Göndərilib";
-            this.checkEdit_IsSent.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.checkEdit_IsSent.Size = new System.Drawing.Size(106, 20);
-            this.checkEdit_IsSent.StyleController = this.dataLayoutControl1;
-            this.checkEdit_IsSent.TabIndex = 6;
-            // 
             // layoutControlItem6
             // 
             this.layoutControlItem6.Control = this.checkEdit_IsSent;
@@ -756,6 +759,13 @@ namespace Foxoft
             this.layoutControlItem6.Size = new System.Drawing.Size(110, 24);
             this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem6.TextVisible = false;
+            // 
+            // barButtonItem3
+            // 
+            this.barButtonItem3.Caption = "test";
+            this.barButtonItem3.Id = 9;
+            this.barButtonItem3.Name = "barButtonItem3";
+            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
             // 
             // FormPaymentDetail
             // 
@@ -772,6 +782,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             this.dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.checkEdit_IsSent.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).EndInit();
@@ -782,7 +794,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.OperationTimeTimeSpanEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreCodeLookUpEdit.Properties)).EndInit();
@@ -800,7 +811,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit_IsSent.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -872,5 +882,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraEditors.CheckEdit checkEdit_IsSent;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
     }
 }

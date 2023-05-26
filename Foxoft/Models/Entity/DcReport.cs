@@ -11,6 +11,7 @@ namespace Foxoft.Models
         public DcReport()
         {
             DcReportFilters = new HashSet<DcReportFilter>();
+            TrClaimReports = new HashSet<TrClaimReport>();
             //DcSqlQueries = new HashSet<DcSqlQuery>();
         }
 
@@ -34,9 +35,9 @@ namespace Foxoft.Models
         [Display(Name = "Xarici Filter")]
         public string ReportFilter { get; set; }
 
-        public virtual ICollection<DcReportFilter> DcReportFilters { get; set; }
-        //public virtual ICollection<DcSqlQuery> DcSqlQueries { get; set; }
         public virtual DcReportType DcReportType { get; set; }
+        public virtual ICollection<DcReportFilter> DcReportFilters { get; set; }
+        public virtual ICollection<TrClaimReport> TrClaimReports { get; set; }
 
     }
 }
