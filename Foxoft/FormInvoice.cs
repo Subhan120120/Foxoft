@@ -58,7 +58,7 @@ namespace Foxoft
         //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         string reportFileNameInvoice = @"InvoiceRS_A4.repx";
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
-            
+
         private TrInvoiceHeader trInvoiceHeader;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
@@ -1800,14 +1800,14 @@ namespace Foxoft
 
             if (e.RowHandle >= 0)
             {
-                object isReturn = view.GetRowCellValue(e.RowHandle, view.Columns["IsReturn"]);
+                object isReturn = view.GetRowCellValue(e.RowHandle, view.Columns["Benefit"]);
 
                 if (isReturn is not null)
                 {
-                    bool value = (bool)isReturn;
+                    decimal value = (decimal)isReturn;
 
-                    if (value)
-                        e.Appearance.BackColor = Color.MistyRose;
+                    if (value <= 0)
+                        e.Appearance.ForeColor = Color.Red;
                 }
             }
         }
