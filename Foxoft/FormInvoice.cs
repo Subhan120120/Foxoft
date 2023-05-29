@@ -1793,5 +1793,23 @@ namespace Foxoft
             MetaWhatsapp metaWhatsapp = new MetaWhatsapp();
             //MetaResponce metaResponce = metaWhatsapp.SendWhatsapp("", "");
         }
+
+        private void gV_Report_RowStyle(object sender, RowStyleEventArgs e)
+        {
+            GridView view = sender as GridView;
+
+            if (e.RowHandle >= 0)
+            {
+                object isReturn = view.GetRowCellValue(e.RowHandle, view.Columns["IsReturn"]);
+
+                if (isReturn is not null)
+                {
+                    bool value = (bool)isReturn;
+
+                    if (value)
+                        e.Appearance.BackColor = Color.MistyRose;
+                }
+            }
+        }
     }
 }

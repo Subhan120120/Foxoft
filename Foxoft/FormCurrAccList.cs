@@ -465,8 +465,16 @@ namespace Foxoft
             if (currAccCode is not null && dcReport is not null)
             {
                 string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                string activeFilterStr = $"[CashRegisterCode] = \'" + currAccCode + "\' AND " +
-                                         $"[OperationDate] Between(#{DateTime.Now.ToString("yyyy -MM-dd")}#, #{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}#) ";
+                string columnName = "[CurrAccCode]";
+                string dateFilter = "";
+
+                if (currAccTypeCode == 5)
+                {
+                    columnName = "[CashRegisterCode]";
+                    dateFilter = $" AND [OperationDate] Between(#{DateTime.Now.ToString("yyyy-MM-dd")}#, #{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}#) ";
+                }
+
+                string activeFilterStr = $"{columnName} = \'{currAccCode}\'" + dateFilter;
 
                 FormReportGrid formGrid = new(qryMaster, dcReport, activeFilterStr);
                 formGrid.Show();
