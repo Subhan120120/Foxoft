@@ -1806,7 +1806,7 @@ namespace Foxoft
                 {
                     decimal value = (decimal)isReturn;
 
-                    if (value <= 0)
+                    if (value <= 0 && dcProcess.ProcessCode == "RS")
                         e.Appearance.ForeColor = Color.Red;
                 }
             }

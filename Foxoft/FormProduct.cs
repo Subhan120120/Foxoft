@@ -132,10 +132,10 @@ namespace Foxoft
                         efMethods.InsertProduct(dcProduct);
                     else
                         MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
-                //else if (efMethods.ProductExist(dcProduct.ProductCode))
                 else
                     dbContext.SaveChanges();
-                //MessageBox.Show("Test");
+
+                //SaveImage();
 
                 DialogResult = DialogResult.OK;
             }
@@ -235,11 +235,6 @@ namespace Foxoft
             }
         }
 
-        private void btn_saveImage_Click(object sender, EventArgs e)
-        {
-            SaveImage();
-        }
-
         private void btn_loadImage_Click(object sender, EventArgs e)
         {
             openFileDialog();
@@ -274,6 +269,11 @@ namespace Foxoft
 
             int iCheckSum = (10 - (iSum % 10)) % 10;
             return iCheckSum.ToString();
+        }
+
+        private void btn_SaveImage_Click(object sender, EventArgs e)
+        {
+            SaveImage();
         }
     }
 }

@@ -38,7 +38,6 @@ namespace Foxoft
                 "WarehouseCode" => MyWarehouseCode(),
                 _ => null,
             };
-
         }
 
         private static RepositoryItem MyProductCode()
@@ -93,7 +92,7 @@ namespace Foxoft
         private static void SelectProduct(object sender)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            using (FormProductList form = new FormProductList(new byte[] { 1, 3 }))
+            using (FormProductList form = new(new byte[] { 1, 3 }, editor.EditValue.ToString()))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
                 {
@@ -105,7 +104,7 @@ namespace Foxoft
         private static void SelectCurrAcc(object sender, byte currAccTypeCode)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            using (FormCurrAccList form = new(currAccTypeCode))
+            using (FormCurrAccList form = new(currAccTypeCode, editor.EditValue.ToString()))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
                 {

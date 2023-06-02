@@ -166,7 +166,7 @@ namespace Foxoft
         }
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-        string nameConStr = "Foxoft.Properties.Settings.subConnString";
+        string nameConStr = "subConnString";
 
         private void FormLogin_Load(object sender, EventArgs e)
         {

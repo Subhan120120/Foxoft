@@ -222,7 +222,7 @@ namespace Foxoft
         private string subConnString = ConfigurationManager
                  .OpenExeConfiguration(ConfigurationUserLevel.None)
                  .ConnectionStrings
-                 .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                 .ConnectionStrings["subConnString"]
                  .ConnectionString;
 
         private XtraReport GetInvoiceReport(DcReport dcReport, string qry)

@@ -17,7 +17,7 @@ namespace Foxoft
         private string subConnString = ConfigurationManager
                  .OpenExeConfiguration(ConfigurationUserLevel.None)
                  .ConnectionStrings
-                 .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                 .ConnectionStrings["subConnString"]
                  .ConnectionString;
 
         public string SelectDesign()

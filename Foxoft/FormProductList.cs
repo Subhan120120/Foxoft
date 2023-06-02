@@ -583,7 +583,7 @@ namespace Foxoft
         private string subConnString = ConfigurationManager
                    .OpenExeConfiguration(ConfigurationUserLevel.None)
                    .ConnectionStrings
-                   .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                   .ConnectionStrings["subConnString"]
                    .ConnectionString;
         private void BarcodePrint_ItemClick(object sender, ItemClickEventArgs e)
         {

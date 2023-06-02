@@ -66,7 +66,7 @@ namespace Foxoft.Models
                 string def = Settings.Default.subConnString;
                 //string conf = config
                 //                    .ConnectionStrings
-                //                    .ConnectionStrings["Foxoft.Properties.Settings.subConnString"]
+                //                    .ConnectionStrings["subConnString"]
                 //                    .ConnectionString;
 
                 optionsBuilder.UseSqlServer(def);

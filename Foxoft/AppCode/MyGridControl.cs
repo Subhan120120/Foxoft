@@ -105,7 +105,7 @@ namespace Foxoft
 
         private void ExcelBtnFilterControl_ExcelBtnClick(object sender, ExcelBtnEventArgs e)
         {
-            OpenFileDialog dialog = new();
+            XtraOpenFileDialog dialog = new();
             dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
                             "All files (*.*)|*.*";
             dialog.Title = "Yalnız ilk sütünda olan məlumatlar daxil edilir.";
