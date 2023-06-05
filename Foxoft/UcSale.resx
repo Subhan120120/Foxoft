@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+  <!--
     Microsoft ResX Schema 
-    
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -117,57 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="lC_InvoiceLine.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="btn_Star.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>714, 95</value>
-  </metadata>
-  <metadata name="btn_Comma.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>810, 95</value>
-  </metadata>
-  <metadata name="btn_Num0.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>928, 95</value>
-  </metadata>
-  <metadata name="btn_Num1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1037, 95</value>
-  </metadata>
-  <metadata name="btn_Num2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 134</value>
-  </metadata>
-  <metadata name="btn_Num3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>126, 134</value>
-  </metadata>
-  <metadata name="btn_Num4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>235, 134</value>
-  </metadata>
-  <metadata name="btn_Num6.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>463, 134</value>
-  </metadata>
-  <metadata name="btn_Num8.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>212, 173</value>
-  </metadata>
-  <metadata name="btn_Num9.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>572, 134</value>
-  </metadata>
-  <metadata name="btn_Num7.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>681, 134</value>
-  </metadata>
-  <metadata name="btn_Enter.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>790, 134</value>
-  </metadata>
-  <metadata name="btn_C.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>893, 134</value>
-  </metadata>
-  <metadata name="btn_BackSpace.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>976, 134</value>
-  </metadata>
-  <metadata name="txtEdit_Barcode.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1109, 134</value>
-  </metadata>
-  <metadata name="imageComboEdit_Barcode.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 173</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="imageComboEdit_Barcode.Properties.ContextImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -178,7 +127,7 @@
         pIwMtyY96McAAAAASUVORK5CYII=
 </value>
   </data>
-  <assembly alias="DevExpress.Data.v21.2" name="DevExpress.Data.v21.2, Version=21.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <assembly alias="DevExpress.Data.v21.2" name="DevExpress.Data.v21.2, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="imageComboEdit_Barcode.Properties.ContextImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
@@ -229,12 +178,6 @@
         DQo8L3N2Zz4L
 </value>
   </data>
-  <metadata name="gC_InvoiceLine.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>582, 95</value>
-  </metadata>
-  <metadata name="btn_ProductSearch.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>428, 95</value>
-  </metadata>
   <data name="btn_ProductSearch.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
@@ -261,9 +204,6 @@
         QmxhY2siIC8+DQogIDwvZz4NCjwvc3ZnPgs=
 </value>
   </data>
-  <metadata name="btn_Discount.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>305, 95</value>
-  </metadata>
   <data name="btn_Discount.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -302,9 +242,6 @@
         QmCC
 </value>
   </data>
-  <metadata name="btn_CancelInvoice.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>155, 95</value>
-  </metadata>
   <data name="btn_CancelInvoice.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACV0RVh0VGl0
@@ -329,9 +266,6 @@
         XyTVxS1wr2hN3j3KmP8AEPJiSeQUIA4AAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="btn_DeleteLine.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>145, 17</value>
-  </metadata>
   <data name="btn_DeleteLine.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACB0RVh0VGl0
@@ -370,9 +304,6 @@
         gf8Ar1EoZwSbY/8AAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="btn_SalesPerson.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>278, 17</value>
-  </metadata>
   <data name="btn_SalesPerson.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -412,22 +343,10 @@
         lN7Z34NPMQ7et5QR5UQ+YSYCNirg/Q+Bt1x66fUAVwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="txtEdit_CustomerPhoneNum.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>418, 17</value>
-  </metadata>
-  <metadata name="txtEdit_CustomerAddress.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>624, 17</value>
-  </metadata>
-  <metadata name="txtEdit_CustomerName.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>812, 17</value>
-  </metadata>
-  <metadata name="btn_CustomerSearch.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>989, 17</value>
-  </metadata>
   <data name="btn_CustomerSearch.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAACZ
-        ygAAmcoB45GkIgAABstJREFUWEeVlnlsVFUUhw9UQFokrAXEJaBhiRBKIaW0076ZNwsgUCjQlsVIFBRB
+        yQAAmckBTiiFTwAABstJREFUWEeVlnlsVFUUhw9UQFokrAXEJaBhiRBKIaW0076ZNwsgUCjQlsVIFBRB
         FiWCWKDzZrrQlk1QgxGBVAIIpoZEE2OMKyYuifIPEeJGlJCYYFBcICbo+J37ZjrTaekyyZf33txzz/3d
         c88990osFpMOfxOXiIR23i7BhtlihY+J5XwvXucKz8t8fyh27XraRvIusvC4SNkbcKpLmLE7F1AxSgL1
         zeINxxjYxYo/Wwh/w3OhLDopUtEsshgRFZ2TFDB1VRpPiOSuZPClo6Vw02diV8fEB5ZzRnzO0xJ0KsQX
@@ -459,13 +378,10 @@
         Ulo9QJYw6IzuCIjJ/9Pqg0iH6zfyAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="btn_CustomerEdit.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
-  </metadata>
   <data name="btn_CustomerEdit.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAACZ
-        ygAAmcoB45GkIgAABshJREFUWEfFln9slVcZx7/tBYZsA1dGZW5zARxg7GLLlpbS2/veH70XJj8LlOLQ
+        yQAAmckBTiiFTwAABshJREFUWEfFln9slVcZx7/tBYZsA1dGZW5zARxg7GLLlpbS2/veH70XJj8LlOLQ
         EXAG59yvKHOj0Pve2xbaUmC4RbLh2K9sixgSE/5QQ9QpJuof6ozLJDrdMl1MxG24HxCT6fXznPe93B9l
         t+wvm3x63vu+5zzP9zznOc85KhQKqvl3w+ekzN6pSo8sl5d9Rp7/suL+adrX+f0TJYfu4tvVPEvrnpV6
         vgtHLwrne2IBvXPUNXxM8WwBxwFe2J4n+xLtOq3/jtR7TNqIiN6JKQm4aVsVX5YW3YbzW+aqY/svlBwo
@@ -497,13 +413,10 @@
         sDGOagH/Pwr6H+EvCF7tcOSpAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="btn_CustomerAdd.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>166, 56</value>
-  </metadata>
   <data name="btn_CustomerAdd.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAABtdJREFUWEedl3uM1NUVx7+yYpQiCwgICY1KaynvZRXJwsz8fr95LIjLsshjwZS2
+        EgAACxIB0t1+/AAABtdJREFUWEedl3uM1NUVx7+yYpQiCwgICY1KaynvZRXJwsz8fr95LIjLsshjwZS2
         QepSSEi1BYM85jezL5aHUgpt06JFCQ8lIprWtP2jjW1KW2ib9P2HqWmtmChSLRqJbe34Ofc3ywyzsLu4
         yTf3t/ece873nnPuuXdUKBTU69+0z0n1229Qpmu+vK1H5IV/kx++xXhGXvanSravQzYWmbTosLTkGHim
         X3C++yQw9b5xSncel58t4DiCVxxL+AtYpMVPS83PSssg0Q+UCNzxQAVapNpV0pTlt2v2+lNKthYU5M3x
@@ -535,15 +448,6 @@
         SoqbNMXR7r5Fr5JA6fvyMMc95/tNoKCPALesko19lkQQAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="txtEdit_BonCardNum.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>316, 56</value>
-  </metadata>
-  <metadata name="txtEdit_CustomerCode.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>481, 56</value>
-  </metadata>
-  <metadata name="btn_Cash.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>654, 56</value>
-  </metadata>
   <data name="btn_Cash.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGeYUxB9wAAACBjSFJNAACH
@@ -552,8 +456,8 @@
         1gWZxUAa4EouKCoB0n+A2CgltTgZaKQBkJ1dXlIAFGecA2SLJGWD2RtA7KKQIGcg+wiQzZcOYV8BsZMg
         7CcgdhHQE0D2F5D6dDCbiQNsDoQtA2KXpFaA7GVwzi+oLMpMzyhRMLS0tFRwTMlPSlUIriwuSc0tVvDM
         S84vKsgvSixJTQGqhbgPDAQhCkEhpgHUaKHJQGUAigcI63MgOHwZxc4gxBAgubSoDBYXTMaE+Qgz5kgw
-        MPgvZWBg+YMQM+llYFigw8DAPxUhpmbIwCCgz8Cwbw4AwrNP/sZG7OUAAAAJcEhZcwAATOUAAEzlAXXO
-        8JUAAAmASURBVFhHxVdnUJXZGf5mUiczKbP5sUn+bGYyyWwywRiBSwdp0kSaAo6FFeldkV6lc+mdCyig
+        MPgvZWBg+YMQM+llYFigw8DAPxUhpmbIwCCgz8Cwbw4AwrNP/sZG7OUAAAAJcEhZcwAATOQAAEzkAaeJ
+        EnEAAAmASURBVFhHxVdnUJXZGf5mUiczKbP5sUn+bGYyyWwywRiBSwdp0kSaAo6FFeldkV6lc+mdCyig
         IqEIAoKgKLKuq1FhFUWDZV0BUen1cvuT93wXzP4wMykz7o93+ObcU57zvM/7nBcOwHca7x38kPHewQ8Z
         nEy1xikh4d6uPPl93XWvh70PMpvvTbSHTC4May7LZn+mgvLdZBXNkykXOLlSzEkUYvoWc+uqRU6hEnNS
         GpdhhRPLFziJbI1bVSxz64pVmiunkHJyOkeuWKLvNVonp/mLNDbPAKzTxjJu7O0V95h6QxzK0kJouR6O
@@ -596,13 +500,10 @@
         FHy3K1cpKI+0jg6X0z8nMmrD/ycA/7rJdxPvHfyQ8d7BDxfg/gkjQbOYFFODggAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="btn_Cashless.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>755, 56</value>
-  </metadata>
   <data name="btn_Cashless.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAP
-        YQAAD2EBqD+naQAABXZJREFUWEfFl3tQVFUcx4/j9G9/NTnIKzdARJG1acV1gX2AssuyPJc3u6CxvN+w
+        YAAAD2ABenhFjQAABXZJREFUWEfFl3tQVFUcx4/j9G9/NTnIKzdARJG1acV1gX2AssuyPJc3u6CxvN+w
         tPIaoCQkIAKkQnGcnCacYSZ1MmucQsucbKy0EWfIxqnGBxVNDT5GR+XX73cu97ILO+Wkbn98OOf89t77
         +/4e59wLA4D/FbdGT+LW6ElYU1MT27ZtGysoKGDFxcXMZrOxkpISlpuby/Lz81lhYSG35+XlscrKSn6d
         1WplGRkZrL6+nq+zs7NZVlaWt9lstkXHmcdfLBiYldt230lPzygdHh5m/wRrbGzkAsixKIBGEkBOnQVU
@@ -628,9 +529,6 @@
         r3C/AF1HHNdFzGG2G93+t+JJ3Bo9iVujJ3Fr9BzA/gbvc0/6a+SCZgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="btn_CustomerBonus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>876, 56</value>
-  </metadata>
   <data name="btn_CustomerBonus.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABZ0RVh0VGl0
@@ -680,9 +578,6 @@
         6DeXnp51hPWzrTiBfqvp8398lrPxNpH/Dqh/A+C3jUP6m+s+AAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="btn_Print.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1037, 56</value>
-  </metadata>
   <data name="btn_Print.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -725,9 +620,6 @@
         HfNhGQlLqn4/eNq+jQX/BRbqweZ/Pa0K/+6HvEAAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="btn_PrintDesign.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 95</value>
-  </metadata>
   <data name="btn_PrintDesign.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -770,9 +662,6 @@
         Z5n8RZPYWX3Nm/dvFPPQyCmtzU4AAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="btn_ReportZ.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>344, 134</value>
-  </metadata>
   <data name="btn_ReportZ.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -808,9 +697,6 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <metadata name="btn_Num5.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>321, 173</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>60</value>
   </metadata>

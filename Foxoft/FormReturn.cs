@@ -20,7 +20,7 @@ namespace Foxoft
         public Guid invoiceLineID;
         public string processCode;
 
-        EfMethods efMethods = new EfMethods();
+        EfMethods efMethods = new();
 
         public FormReturn()
         {

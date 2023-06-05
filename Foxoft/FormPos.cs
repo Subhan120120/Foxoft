@@ -12,15 +12,15 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            UcSale ucSale = new UcSale();
+            UcSale ucSale = new();
             ucSale.Dock = DockStyle.Fill;
             navPage_Sale.Controls.Add(ucSale);
 
-            FormReturn ucReturn = new FormReturn();
+            FormReturn ucReturn = new();
             ucReturn.Dock = DockStyle.Fill;
             navPage_Return.Controls.Add(ucReturn);
 
-            UcExpense ucExpense = new UcExpense();
+            UcExpense ucExpense = new();
             ucExpense.Dock = DockStyle.Fill;
             navPage_Expenses.Controls.Add(ucExpense);
 

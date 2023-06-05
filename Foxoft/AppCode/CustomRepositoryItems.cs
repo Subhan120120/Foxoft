@@ -1,5 +1,4 @@
 ﻿using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
 using System.Windows.Forms;
@@ -81,9 +80,7 @@ namespace Foxoft
                 using (FormWarehouseList form = new())
                 {
                     if (form.ShowDialog(parentForm) == DialogResult.OK)
-                    {
                         editor.EditValue = form.dcWarehouse.WarehouseCode;
-                    }
                 }
             };
             return repoBtnEdit;
@@ -92,24 +89,30 @@ namespace Foxoft
         private static void SelectProduct(object sender)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            using (FormProductList form = new(new byte[] { 1, 3 }, editor.EditValue.ToString()))
+
+            string value = "";
+            if (editor.EditValue is not null)
+                value = editor.EditValue.ToString();
+
+            using (FormProductList form = new(new byte[] { 1, 3 }, value))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
-                {
                     editor.EditValue = form.dcProduct.ProductCode;
-                }
             }
         }
 
         private static void SelectCurrAcc(object sender, byte currAccTypeCode)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            using (FormCurrAccList form = new(currAccTypeCode, editor.EditValue.ToString()))
+
+            string value = "";
+            if (editor.EditValue is not null)
+                value = editor.EditValue.ToString();
+
+            using (FormCurrAccList form = new(currAccTypeCode, value))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
-                {
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;
-                }
             }
         }
     }
