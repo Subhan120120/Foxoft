@@ -89,7 +89,6 @@ namespace Foxoft
                 repoCBE_PrinterName.Items.Add(printer);
             }
 
-
             LoadLayout();
 
             if (settingStore is not null)

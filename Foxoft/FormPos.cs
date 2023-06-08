@@ -16,7 +16,7 @@ namespace Foxoft
             ucSale.Dock = DockStyle.Fill;
             navPage_Sale.Controls.Add(ucSale);
 
-            FormReturn ucReturn = new();
+            UcReturn ucReturn = new();
             ucReturn.Dock = DockStyle.Fill;
             navPage_Return.Controls.Add(ucReturn);
 

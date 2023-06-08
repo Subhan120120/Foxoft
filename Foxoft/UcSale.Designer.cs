@@ -529,9 +529,9 @@ namespace Foxoft
             // col_ProductDesc
             // 
             col_ProductDesc.Caption = "Məhsul";
-            col_ProductDesc.FieldName = "DcProduct.ProductDescription";
+            col_ProductDesc.FieldName = "ProductDesc";
             col_ProductDesc.Name = "col_ProductDesc";
-            col_ProductDesc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Custom, "DcProduct.ProductDescription", "Toplam:") });
+            col_ProductDesc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Custom, "ProductDes", "Toplam:") });
             col_ProductDesc.Visible = true;
             col_ProductDesc.VisibleIndex = 0;
             // 

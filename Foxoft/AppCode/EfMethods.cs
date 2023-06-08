@@ -42,6 +42,7 @@ namespace Foxoft
 
                 InvoiceLines.ForEach(x =>
                 {
+                    x.ProductDesc = x.DcProduct.ProductDesc;
                     x.ReturnQty = db.TrInvoiceLines.Include(y => y.TrInvoiceHeader).Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
                     x.RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines.Include(y => y.TrInvoiceHeader).Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
                 });
@@ -502,7 +503,8 @@ namespace Foxoft
 
             TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.FirstOrDefault(x => x.InvoiceLineId == variable);
 
-            trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
+            if (trInvoiceLine.QtyOut != 0)
+                trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
             trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
             trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
             trInvoiceLine.QtyOut = qtyOut;

@@ -9,6 +9,7 @@ using Foxoft.Properties;
 using System;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -61,23 +62,13 @@ namespace Foxoft
 
         private void btn_ProductSearch_Click(object sender, EventArgs e)
         {
-            using (FormProductList formProductList = new FormProductList(new byte[] { 1 }))
+            using (FormProductList formProductList = new (new byte[] { 1 }))
             {
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
                     if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
                     {
-                        string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
-
-                        TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
-                        {
-                            InvoiceHeaderId = invoiceHeaderId,
-                            ProcessCode = "RS",
-                            DocumentNumber = NewDocNum,
-                            DocumentDate = DateTime.Now,
-                            DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"))
-                        };
-                        efMethods.InsertInvoiceHeader(TrInvoiceHeader);
+                        InsertInvoiceHeader();
                     }
 
                     DcProduct DcProduct = formProductList.dcProduct;
@@ -92,6 +83,31 @@ namespace Foxoft
                         XtraMessageBox.Show("Məhsul əlavə edilə bilmədi");
                 }
             }
+        }
+
+        private void InsertInvoiceHeader()
+        {
+            TrInvoiceHeader trInvoiceHeader = new();
+            trInvoiceHeader.InvoiceHeaderId = invoiceHeaderId;
+            string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
+            trInvoiceHeader.DocumentNumber = NewDocNum;
+            trInvoiceHeader.DocumentDate = DateTime.Now;
+            trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+            trInvoiceHeader.ProcessCode = "RS";
+            trInvoiceHeader.OfficeCode = Authorization.OfficeCode;
+            trInvoiceHeader.StoreCode = Authorization.StoreCode;
+            trInvoiceHeader.CreatedUserName = Authorization.CurrAccCode;
+            trInvoiceHeader.IsMainTF = true;
+            trInvoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+
+            string defaultCustomer = efMethods.SelectCustomerByStore(Authorization.StoreCode);
+            trInvoiceHeader.CurrAccCode = defaultCustomer;
+
+            if (efMethods.SelectCurrAcc(defaultCustomer) is not null)
+                trInvoiceHeader.CurrAccDesc = efMethods.SelectCurrAcc(defaultCustomer).CurrAccDesc;
+
+
+            efMethods.InsertInvoiceHeader(trInvoiceHeader);
         }
 
         private void btn_CancelInvoice_Click(object sender, EventArgs e)
@@ -148,13 +164,13 @@ namespace Foxoft
                     decimal PosDiscount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(rowIndx, "PosDiscount"));
                     decimal Amount = Convert.ToDecimal(gV_InvoiceLine.GetRowCellValue(rowIndx, "Amount"));
 
-                    using (FormPosDiscount formPosDiscount = new FormPosDiscount(PosDiscount, Amount))
+                    using (FormPosDiscount formPosDiscount = new(PosDiscount, Amount))
                     {
                         if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
                         {
                             object invoiceLineId = gV_InvoiceLine.GetRowCellValue(rowIndx, "InvoiceLineId");
 
-                            TrInvoiceLine TrInvoiceLine = new TrInvoiceLine()
+                            TrInvoiceLine TrInvoiceLine = new()
                             {
                                 InvoiceLineId = (Guid)invoiceLineId,
                                 NetAmount = Amount - formPosDiscount.PosDiscount,
@@ -205,16 +221,8 @@ namespace Foxoft
                 DcProduct DcProduct = new DcProduct { Barcode = txtEdit_Barcode.EditValue.ToString() };
 
                 if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                {
-                    string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
-                    TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
-                    {
-                        InvoiceHeaderId = invoiceHeaderId,
-                        ProcessCode = "RS",
-                        DocumentNumber = NewDocNum,
-                    };
-                    efMethods.InsertInvoiceHeader(TrInvoiceHeader);
-                }
+                    InsertInvoiceHeader();
+
                 int result = efMethods.InsertInvoiceLine(DcProduct, invoiceHeaderId);
 
                 if (result > 0)
@@ -258,7 +266,7 @@ namespace Foxoft
                         break;
                 }
 
-                using (FormPayment formPayment = new FormPayment(paymentType, summaryNetAmount, new TrInvoiceHeader() { }))
+                using (FormPayment formPayment = new (paymentType, summaryNetAmount, new TrInvoiceHeader() { }))
                 {
                     if (formPayment.ShowDialog(this) == DialogResult.OK)
                     {
@@ -270,7 +278,7 @@ namespace Foxoft
                             if (!File.Exists(designPath))
                                 designPath = reportClass.SelectDesign();
 
-                            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
+                            ReportPrintTool printTool = new (reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
                             printTool.Print();
                         }
 
@@ -285,7 +293,7 @@ namespace Foxoft
         private void btn_Customer_Click(object sender, EventArgs e)
         {
             SimpleButton simpleButton = (SimpleButton)sender;
-            DcCurrAcc DcCurrAcc = new DcCurrAcc();
+            DcCurrAcc DcCurrAcc = new ();
 
             if (simpleButton.Name == "btn_CustomerEdit")
             {
@@ -301,21 +309,12 @@ namespace Foxoft
                 }
             }
 
-            using (FormCustomer formCustomer = new FormCustomer(DcCurrAcc))
+            using (FormCustomer formCustomer = new (DcCurrAcc))
             {
                 if (formCustomer.ShowDialog(this) == DialogResult.OK)
                 {
                     if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                    {
-                        string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
-                        TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
-                        {
-                            InvoiceHeaderId = invoiceHeaderId,
-                            ProcessCode = "RS",
-                            DocumentNumber = NewDocNum,
-                        };
-                        efMethods.InsertInvoiceHeader(TrInvoiceHeader);
-                    }
+                        InsertInvoiceHeader();
 
                     int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, formCustomer.DcCurrAcc.CurrAccCode);
 
@@ -333,21 +332,12 @@ namespace Foxoft
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
-            using (FormCurrAccList form = new FormCurrAccList(1))
+            using (FormCurrAccList form = new (1))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                    {
-                        string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
-                        TrInvoiceHeader TrInvoiceHeader = new TrInvoiceHeader()
-                        {
-                            InvoiceHeaderId = invoiceHeaderId,
-                            ProcessCode = "RS",
-                            DocumentNumber = NewDocNum,
-                        };
-                        efMethods.InsertInvoiceHeader(TrInvoiceHeader);
-                    }
+                        InsertInvoiceHeader();
 
                     int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, form.dcCurrAcc.CurrAccCode);
 
@@ -366,8 +356,7 @@ namespace Foxoft
         private void gC_Sale_DoubleClick(object sender, EventArgs e)
         {
             if (gV_InvoiceLine.FocusedColumn == col_Qty)
-            {
-                using (FormQty formQty = new FormQty())
+                using (FormQty formQty = new ())
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
@@ -377,7 +366,6 @@ namespace Foxoft
                         gV_InvoiceLine.MoveLast();
                     }
                 }
-            }
         }
 
         private void btn_Print_Click(object sender, EventArgs e)
@@ -387,9 +375,8 @@ namespace Foxoft
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
-            ReportPrintTool printTool = new ReportPrintTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
+            ReportPrintTool printTool = new(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
             printTool.ShowPreview();
-
         }
 
         private void btn_PrintDesign_Click(object sender, EventArgs e)
@@ -399,7 +386,7 @@ namespace Foxoft
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
-            ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
+            ReportDesignTool designTool = new (reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
             designTool.ShowRibbonDesignerDialog();
 
         }
@@ -420,7 +407,7 @@ namespace Foxoft
             //DataSet dataSet = new DataSet("GunSonu");
             //dataSet.Tables.AddRange(new DataTable[] { trInvoiceLines, trPaymentLines });
 
-            SqlDataSource dataSource = new SqlDataSource(new CustomStringConnectionParameters(subConnString));
+            SqlDataSource dataSource = new (new CustomStringConnectionParameters(subConnString));
             dataSource.Name = "GunSonu";
 
             //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
@@ -435,7 +422,7 @@ namespace Foxoft
             string designPath = Settings.Default.AppSetting.PrintDesignPath;
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
-            ReportDesignTool designTool = new ReportDesignTool(reportClass.CreateReport(dataSource, designPath));
+            ReportDesignTool designTool = new (reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
 
         }
@@ -444,7 +431,7 @@ namespace Foxoft
         {
             if (rowIndx >= 0)
             {
-                using (FormCurrAccList form = new FormCurrAccList(1))
+                using (FormCurrAccList form = new (1))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
