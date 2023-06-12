@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230612075243_TrProductFeature")]
+    partial class TrProductFeature
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2107,7 +2109,7 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("FeatureId");
 
-                    b.ToTable("TrProductFeatures");
+                    b.ToTable("DcProductDcFeatures");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrRoleClaim", b =>

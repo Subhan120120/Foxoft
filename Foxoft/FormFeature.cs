@@ -26,11 +26,11 @@ namespace Foxoft
 
         private void FormFeatureTest_Load(object sender, EventArgs e)
         {
-            List<DcFeature> dcFeatures = efMethods.SelectFeatures();
+            List<DcFeatureType> dcFeatures = efMethods.SelectFeatures();
 
-            foreach (DcFeature feature in dcFeatures)
+            foreach (DcFeatureType feature in dcFeatures)
             {
-                DcProductDcFeature proFea = efMethods.SelectFeature(feature.Id, productCode);
+                TrProductFeature proFea = efMethods.SelectFeature(feature.Id, productCode);
 
                 ButtonEdit btn = new();
                 btn.Name = feature.Id.ToString();

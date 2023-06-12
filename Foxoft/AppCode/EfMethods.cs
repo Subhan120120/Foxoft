@@ -86,19 +86,19 @@ namespace Foxoft
         }
 
 
-        public List<DcFeature> SelectFeatures()
+        public List<DcFeatureType> SelectFeatures()
         {
             using subContext db = new();
 
-            List<DcFeature> features = db.DcFeatures.ToList();
+            List<DcFeatureType> features = db.DcFeatures.ToList();
             return features;
         }
 
-        public DcProductDcFeature SelectFeature(int featureId, string productCode)
+        public TrProductFeature SelectFeature(int featureId, string productCode)
         {
             using subContext db = new();
 
-            DcProductDcFeature dc = db.DcProductDcFeatures
+            TrProductFeature dc = db.TrProductFeatures
                      .Where(x => x.FeatureId == featureId)
                      .FirstOrDefault(x => x.ProductCode == productCode);
             return dc;
@@ -400,7 +400,7 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int DeleteFeature(DcFeature dcFeature)
+        public int DeleteFeature(DcFeatureType dcFeature)
         {
             using subContext db = new();
 
@@ -1088,7 +1088,7 @@ namespace Foxoft
         public int UpdateDcFeature_Value(int FeatureId, string productCode, string value)
         {
             using subContext db = new();
-            DcProductDcFeature pf = db.DcProductDcFeatures.Where(x => x.ProductCode == productCode)
+            TrProductFeature pf = db.TrProductFeatures.Where(x => x.ProductCode == productCode)
                                                         .FirstOrDefault(x => x.FeatureId == FeatureId);
 
             if (pf is not null)
@@ -1098,14 +1098,14 @@ namespace Foxoft
             }
             else
             {
-                pf = new DcProductDcFeature()
+                pf = new TrProductFeature()
                 {
                     FeatureId = FeatureId,
                     ProductCode = productCode,
                     FeatureDesc = value
                 };
 
-                db.DcProductDcFeatures.Add(pf);
+                db.TrProductFeatures.Add(pf);
             }
 
             return db.SaveChanges();

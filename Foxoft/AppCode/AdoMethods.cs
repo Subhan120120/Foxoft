@@ -64,7 +64,6 @@ namespace Foxoft
 
             return dt;
 
-
             //using (SqlDataAdapter da = new SqlDataAdapter(query, con))
             //{
             //   DataTable dt = new DataTable();

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-   public partial class DcProductDcFeature
+   public partial class TrProductFeature
    {
       [Key, Column(Order = 0)]
       [ForeignKey("DcProduct")]
@@ -22,6 +22,6 @@ namespace Foxoft.Models
       public string FeatureDesc { get; set; }
 
       public virtual DcProduct DcProduct { get; set; }
-      public virtual DcFeature DcFeature { get; set; }
+      public virtual DcFeatureType DcFeature { get; set; }
    }
 }

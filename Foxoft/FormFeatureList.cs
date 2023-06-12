@@ -20,7 +20,7 @@ namespace Foxoft
     public partial class FormFeatureList : RibbonForm
     {
         EfMethods efMethods = new();
-        public DcFeature dcFeature { get; set; }
+        public DcFeatureType dcFeature { get; set; }
 
         public FormFeatureList()
         {
@@ -40,7 +40,7 @@ namespace Foxoft
             GridView view = sender as GridView;
 
             if (view.FocusedRowHandle >= 0)
-                dcFeature = view.GetFocusedRow() as DcFeature;
+                dcFeature = view.GetFocusedRow() as DcFeatureType;
             else
                 dcFeature = null;
         }
@@ -70,7 +70,7 @@ namespace Foxoft
 
         private void bBI_FeatureNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            dcFeature = new DcFeature();
+            dcFeature = new DcFeatureType();
             FormCurrAcc form = new();
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -104,7 +104,7 @@ namespace Foxoft
                 gV_FeatureList.MoveLast();
 
             if (gV_FeatureList.FocusedRowHandle >= 0)
-                dcFeature = gV_FeatureList.GetFocusedRow() as DcFeature;
+                dcFeature = gV_FeatureList.GetFocusedRow() as DcFeatureType;
             else
                 dcFeature = null;
         }
@@ -176,7 +176,7 @@ namespace Foxoft
 
 
             if (view.FocusedRowHandle >= 0)
-                dcFeature = view.GetFocusedRow() as DcFeature;
+                dcFeature = view.GetFocusedRow() as DcFeatureType;
             else
                 dcFeature = null;
         }
