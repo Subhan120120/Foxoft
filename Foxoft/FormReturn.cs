@@ -16,13 +16,12 @@ namespace Foxoft
         public FormReturn()
         {
             InitializeComponent();
-            UcReturn ucReturn = new UcReturn();
-            Controls.Add(ucReturn);
         }
         public FormReturn(string processCode)
            : this()
         {
-            UcReturn ucReturn = new UcReturn(processCode);
+            UcReturn ucReturn = new(processCode);
+            ucReturn.Dock = DockStyle.Fill;
             Controls.Add(ucReturn);
         }
 

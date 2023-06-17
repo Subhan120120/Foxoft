@@ -7,18 +7,18 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormFeature : XtraForm
+    public partial class FormProductFeature : XtraForm
     {
         EfMethods efMethods = new();
         string productCode;
 
-        public FormFeature()
+        public FormProductFeature()
         {
             InitializeComponent();
             //AcceptButton = simpleButtonOk;
         }
 
-        public FormFeature(string productCode)
+        public FormProductFeature(string productCode)
            : this()
         {
             this.productCode = productCode;
@@ -26,14 +26,14 @@ namespace Foxoft
 
         private void FormFeatureTest_Load(object sender, EventArgs e)
         {
-            List<DcFeatureType> dcFeatures = efMethods.SelectFeatures();
+            List<DcFeatureType> dcFeatures = efMethods.SelectFeatureTypes();
 
             foreach (DcFeatureType feature in dcFeatures)
             {
-                TrProductFeature proFea = efMethods.SelectFeature(feature.Id, productCode);
+                TrProductFeature proFea = efMethods.SelectFeatureType(feature.FeatureTypeId, productCode);
 
                 ButtonEdit btn = new();
-                btn.Name = feature.Id.ToString();
+                btn.Name = feature.FeatureTypeId.ToString();
                 btn.StyleController = this.layoutControl1;
                 if (proFea is not null)
                     btn.EditValue = proFea.FeatureDesc;
@@ -41,7 +41,7 @@ namespace Foxoft
 
                 LayoutControlItem lCI = new();
                 lCI.Control = btn;
-                lCI.Name = feature.FeatureName;
+                lCI.Name = feature.FeatureTypeName;
 
                 Root.Items.AddRange(new BaseLayoutItem[] { lCI });
             }
@@ -53,7 +53,7 @@ namespace Foxoft
             FormFeatureList formFeatureList = new();
             if (DialogResult.OK == formFeatureList.ShowDialog())
             {
-                editor.EditValue = formFeatureList.dcFeature.FeatureName;
+                editor.EditValue = formFeatureList.dcFeatureType.FeatureTypeName;
             }
             //ButtonEdit textEdit = sender as ButtonEdit;
             //efMethods.UpdateDcFeature_Value(Convert.ToInt32(textEdit.Name), productCode, textEdit.EditValue.ToString());

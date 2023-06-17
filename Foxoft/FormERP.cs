@@ -167,10 +167,7 @@ namespace Foxoft
 
         private void FormERP_MdiChildActivate(object sender, EventArgs e)
         {
-            try
-            {
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
+            try { parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0]; }
             catch (Exception) { }
         }
 
@@ -613,7 +610,6 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)

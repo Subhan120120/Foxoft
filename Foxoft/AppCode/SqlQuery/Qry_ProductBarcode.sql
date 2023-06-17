@@ -6,7 +6,7 @@ select DcProducts.ProductCode
 				, Barcode
 				, RetailPrice
 	from DcProducts
-	left join DcProductDcFeatures fea on fea.ProductCode = DcProducts.ProductCode
+	left join TrProductFeatures fea on fea.ProductCode = DcProducts.ProductCode
 					and fea.FeatureId = 3
 	
 	where ProductTypeCode = 1

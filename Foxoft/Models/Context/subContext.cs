@@ -48,12 +48,12 @@ namespace Foxoft.Models
         public DbSet<DcReportFilter> DcReportFilters { get; set; }
         public DbSet<DcReportQuery> DcReportQueries { get; set; }
         public DbSet<DcQueryParam> DcQueryParams { get; set; }
-        public DbSet<DcFeatureType> DcFeatures { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<SettingStore> SettingStores { get; set; }
         public DbSet<DcVariable> DcVariables { get; set; }
         public DbSet<TrPrice> TrPrices { get; set; }
         public DbSet<DcCurrency> DcCurrencies { get; set; }
+        public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
 
@@ -195,7 +195,7 @@ namespace Foxoft.Models
             );
 
             modelBuilder.Entity<TrProductFeature>()
-                        .HasKey(bc => new { bc.ProductCode, bc.FeatureId });
+                        .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId });
 
             modelBuilder.Entity<DcProductType>().HasData(
                 new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },
@@ -226,7 +226,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrProductFeature>(entity =>
             {
                 entity.HasOne(x => x.DcProduct)
-                   .WithMany()
+                   .WithMany(x=>x.TrProductFeatures)
                    .OnDelete(DeleteBehavior.Cascade);
             });
 

@@ -482,10 +482,35 @@
         MjYsMjIgIiBjbGFzcz0iWWVsbG93IiAvPg0KPC9zdmc+Cw==
 </value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="barButtonItem4.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAMdEVYdFRpdGxlAEFib3V0O1VEZxsAAADVSURBVDhPpdPNCcJAEIbhnBTFUhSEgNiETdmAnvwB
+        ISkjB/GmLQgqYhWKosb3C0Z2lzUh5PAcnJn9THQnGI0TV4glTnjhhiNWGMCaNz80oYNvpAUitGAFNLCB
+        74DPFm38AubwDRaJkQV0oXf1DeVf4OvJUM2pU6wiVsDeKZrKnuCs5t0pmsoCHnUDUjXrvMJFzYlTNJUF
+        RGrqb3waRVNRgG5smA/MvsUqtBvWVV7DN+izg3WVRQuywL9bKeppmTrIzpkBuR60G1ph/TZXHKBH7sOY
+        TYIP2fNBkIMCKs8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="barButtonItem4.ImageOptions.LargeImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAMdEVYdFRpdGxlAEFib3V0O1VEZxsAAAHFSURBVFhHxda9SkNBEIbh3ERUECxEUMErESwtxM5K
+        hICVIFZGvAbBwlIQhAiiWNkoeAla2FgKBv8QFH+O74STcHZm2GSDORZPsZOZ+ZYTTVLJsuxfucUyucUy
+        ucUymcJc/SxmDGs4wR2e8YhbHKGGYXizLTrPFLwhSPA+vpB18YFdDMHs0nmm4Awt4hVeWMwDZhHs03mm
+        oAbW4S3vlTyxJXR26jxTKDTLoLc0lVyi8yR0ninkjRN4g7ewH/J2VGHyTEGa0IC3SGv3e69pOzB5pkDT
+        JH7yoW5SLiD/HVWdFxwETZuFob+2rPOCg6DpUg3FpDwBcajzgoOgST7dvGFP6gWudV5wEM5QTOoFmjov
+        OAhnKGYgFxjkW3Cj84KDoOlKDcWkXqCh84KDoGlbDcWkXqCm84KDoGlGDcWkXOATIzovOAiaxGk+1E3K
+        BfZg8kxBmjAN+ej0FvXjCaMweaYgTTn5eeUtSyXfK/No7dV5ptBuzG3BW9orCV9FZ6fOM4Vic24F7/AC
+        Yl6wgGCfzjMFPZCbwjF6+Zr+xgHkh6zZpfNMwRsqkD/OOi7QRDv0HufYwDi82RadZwplc4tlcotlcovl
+        ySq/BghXOy4DehcAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="adorneruıManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1, 7</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>49</value>
+    <value>25</value>
   </metadata>
 </root>

@@ -5,23 +5,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-   public partial class TrProductFeature
-   {
-      [Key, Column(Order = 0)]
-      [ForeignKey("DcProduct")]
-      [Display(Name = "Məhsul Kodu")]
-      public string ProductCode { get; set; }
+    public partial class TrProductFeature
+    {
+        [Key, Column(Order = 0)]
+        [ForeignKey("DcProduct")]
+        [Display(Name = "Məhsul Kodu")]
+        public string ProductCode { get; set; }
 
-      [Key, Column(Order = 1)]
-      [ForeignKey("DcFeature")]
-      [Display(Name = "Özəllik Kodu")]
-      public int FeatureId { get; set; }
+        [Key, Column(Order = 1)]
+        [ForeignKey("DcFeatureType")]
+        [Display(Name = "Özəllik Tipi Kodu")]
+        public int FeatureTypeId { get; set; }
 
-      [Display(Name = "Özəllik Dəyəri")]
-      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-      public string FeatureDesc { get; set; }
+        [Display(Name = "Özəllik Tipi Açıqlaması")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public string FeatureDesc { get; set; }
 
-      public virtual DcProduct DcProduct { get; set; }
-      public virtual DcFeatureType DcFeature { get; set; }
-   }
+
+        [ForeignKey("ProductCode")]
+        public virtual DcProduct DcProduct { get; set; }
+
+        [ForeignKey("FeatureTypeId")]
+        public virtual DcFeatureType DcFeatureType { get; set; }
+    }
 }

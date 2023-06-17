@@ -1810,5 +1810,17 @@ namespace Foxoft
                 }
             }
         }
+
+        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
+            string UserName = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
+            XtraMessageBox.Show(UserName, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

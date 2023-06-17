@@ -4,20 +4,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
 {
-    public partial class DcFeatureType
+    public partial class DcFeature
     {
-        public DcFeatureType()
+        public DcFeature()
         {
             TrProductFeatures = new HashSet<TrProductFeature>();
         }
 
         [Key]
-        [Display(Name = "Özəllik Tipi Kodu")]
-        public int FeatureTypeId { get; set; }
+        [Display(Name = "Özəllik Kodu")]
+        public string FeatureCode { get; set; }
 
         [Display(Name = "Özəllik Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public string FeatureTypeName { get; set; }
+        public string FeatureName { get; set; }
 
 
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }

@@ -70,7 +70,6 @@ namespace Foxoft
             decimal sumNetAmount = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                                     .Sum(x => x.NetAmount);
             return sumNetAmount;
-
         }
 
         public List<DcProductType> SelectProductTypes()
@@ -85,21 +84,20 @@ namespace Foxoft
             return db.DcCurrAccTypes.ToList();
         }
 
-
-        public List<DcFeatureType> SelectFeatures()
+        public List<DcFeatureType> SelectFeatureTypes()
         {
             using subContext db = new();
 
-            List<DcFeatureType> features = db.DcFeatures.ToList();
-            return features;
+            List<DcFeatureType> featureTypes = db.DcFeatureTypes.ToList();
+            return featureTypes;
         }
 
-        public TrProductFeature SelectFeature(int featureId, string productCode)
+        public TrProductFeature SelectFeatureType(int featureTypeId, string productCode)
         {
             using subContext db = new();
 
             TrProductFeature dc = db.TrProductFeatures
-                     .Where(x => x.FeatureId == featureId)
+                     .Where(x => x.FeatureTypeId == featureTypeId)
                      .FirstOrDefault(x => x.ProductCode == productCode);
             return dc;
         }
@@ -165,7 +163,6 @@ namespace Foxoft
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                     .Where(x => x.ProductCode == productCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
                                     .Sum(x => x.QtyIn - x.QtyOut);
-
         }
 
         public List<DcProduct> SelectProductsByType(byte[] productTypeArr, CriteriaOperator filterCriteria)
@@ -216,7 +213,6 @@ namespace Foxoft
                                       .Include(x => x.TrPaymentLines)
                                       .Where(x => x.PaymentHeaderId == paymentHeaderId)
                                       .FirstOrDefault();
-
         }
 
         public TrPaymentHeader SelectPaymentHeaderByDocNum(string documentNumber)
@@ -236,7 +232,6 @@ namespace Foxoft
             return db.TrInvoiceHeaders.Where(x => x.ProcessCode == processCode)
                                       .OrderBy(x => x.CreatedDate)
                                       .ToList();
-
         }
 
         public TrInvoiceLine SelectInvoiceLine(Guid invoiceLineId)
@@ -290,7 +285,6 @@ namespace Foxoft
             }
             else
                 return -1;
-
         }
 
         public int InsertInvoiceLine(TrInvoiceLine TrInvoiceLine)
@@ -350,7 +344,6 @@ namespace Foxoft
                 db.TrPaymentHeaders.Remove(trPaymentHeader);
 
             return db.SaveChanges();
-
         }
 
         public int DeleteMoneyTransfer(Guid paymentHeaderId)
@@ -387,7 +380,6 @@ namespace Foxoft
                 db.DcCurrAccs.Remove(dcCurrAcc);
 
             return db.SaveChanges();
-
         }
 
         public int DeleteWarehouse(DcWarehouse dcWarehouse)
@@ -400,12 +392,12 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int DeleteFeature(DcFeatureType dcFeature)
+        public int DeleteFeatureType(DcFeatureType dcFeatureType)
         {
             using subContext db = new();
 
-            if (dcFeature is not null)
-                db.DcFeatures.Remove(dcFeature);
+            if (dcFeatureType is not null)
+                db.DcFeatureTypes.Remove(dcFeatureType);
 
             return db.SaveChanges();
         }
@@ -492,7 +484,6 @@ namespace Foxoft
             }
             else
                 return 0;
-
         }
 
         public int UpdateInvoiceLineQtyOut(object invoiceLineId, int qtyOut)
@@ -528,7 +519,6 @@ namespace Foxoft
 
             db.TrInvoiceLines.Update(trInvoiceLine);
             return db.SaveChanges();
-
         }
 
         public int UpdateInvoicePosDiscount(TrInvoiceLine trInvoiceLine)
@@ -538,7 +528,6 @@ namespace Foxoft
             db.Entry(trInvoiceLine).Property(x => x.PosDiscount).IsModified = true;
             db.Entry(trInvoiceLine).Property(x => x.NetAmount).IsModified = true;
             return db.SaveChanges();
-
         }
 
         public int UpdateInvoiceCurrAccCode(Guid invoiceHeaderId, string currAccCode)
@@ -571,7 +560,6 @@ namespace Foxoft
             TrInvoiceLine trInvoiceLine = new() { InvoiceLineId = invoiceLineId, SalesPersonCode = currAccCode };
             db.Entry(trInvoiceLine).Property(x => x.SalesPersonCode).IsModified = true;
             return db.SaveChanges();
-
         }
 
         public int InsertCustomer(DcCurrAcc dcCurrAcc)
@@ -637,7 +625,6 @@ namespace Foxoft
             using subContext db = new();
             return db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                     .ToList();
-
         }
 
         public decimal SelectPaymentLinesSum(Guid invoiceHeaderId)
@@ -744,7 +731,6 @@ namespace Foxoft
                                        .Sum(x => x.PaymentLoc);
 
             return invoiceSum + paymentSum;
-
         }
 
         public decimal SelectPaymentSum(string currAccCode, string docNum)
@@ -787,7 +773,6 @@ namespace Foxoft
             using subContext db = new();
 
             return db.DcCurrencies.ToList(); // burdaki kolonlari dizaynda da elave et
-
         }
 
         public DcCurrency SelectCurrency(string currencyCode)
@@ -936,10 +921,10 @@ namespace Foxoft
             return db.AppSettings.Any(x => x.License == id);
         }
 
-        public bool FeatureExist(int Id)
+        public bool FeatureTypeExist(int featureTypeId)
         {
             using subContext db = new();
-            return db.DcFeatures.Any(x => x.Id == Id);
+            return db.DcFeatureTypes.Any(x => x.FeatureTypeId == featureTypeId);
         }
 
         public bool ReportExist(int Id)
@@ -953,7 +938,6 @@ namespace Foxoft
             using subContext db = new();
             return db.DcProducts.Where(x => x.IsDisabled == false)
                        .Any(x => x.ProductCode == productCode);
-
         }
 
         public void InsertCurrAcc(DcCurrAcc dcCurrAcc)
@@ -961,7 +945,6 @@ namespace Foxoft
             using subContext db = new();
             db.DcCurrAccs.Add(dcCurrAcc);
             db.SaveChanges();
-
         }
 
         public void InsertProduct(DcProduct dcProduct)
@@ -969,7 +952,6 @@ namespace Foxoft
             using subContext db = new();
             db.DcProducts.Add(dcProduct);
             db.SaveChanges();
-
         }
 
         public List<DcRole> SelectRoles(string CurrAccCode)
@@ -1085,11 +1067,11 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateDcFeature_Value(int FeatureId, string productCode, string value)
+        public int UpdateDcFeature_Value(int featureTypeId, string productCode, string value)
         {
             using subContext db = new();
             TrProductFeature pf = db.TrProductFeatures.Where(x => x.ProductCode == productCode)
-                                                        .FirstOrDefault(x => x.FeatureId == FeatureId);
+                                                        .FirstOrDefault(x => x.FeatureTypeId == featureTypeId);
 
             if (pf is not null)
             {
@@ -1100,7 +1082,7 @@ namespace Foxoft
             {
                 pf = new TrProductFeature()
                 {
-                    FeatureId = FeatureId,
+                    FeatureTypeId = featureTypeId,
                     ProductCode = productCode,
                     FeatureDesc = value
                 };

@@ -1,7 +1,7 @@
 ﻿
 namespace Foxoft
 {
-   partial class FormFeature
+   partial class FormProductFeature
    {
       /// <summary>
       /// Required designer variable.
@@ -29,7 +29,7 @@ namespace Foxoft
       /// </summary>
       private void InitializeComponent()
       {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFeature));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductFeature));
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.simpleButtonOk = new DevExpress.XtraEditors.SimpleButton();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();

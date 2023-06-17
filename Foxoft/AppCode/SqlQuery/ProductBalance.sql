@@ -33,7 +33,7 @@ from ( select DcProducts.ProductCode
 	
 	left join TrInvoiceLines il on il.ProductCode = DcProducts.ProductCode
 	left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId
-	left join DcProductDcFeatures fea on fea.ProductCode = DcProducts.ProductCode
+	left join TrProductFeatures fea on fea.ProductCode = DcProducts.ProductCode
 					and fea.FeatureId = 3
 	
 	--where ProductTypeCode = 1

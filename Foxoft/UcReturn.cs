@@ -1,13 +1,9 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
-using Microsoft.EntityFrameworkCore;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -35,13 +31,13 @@ namespace Foxoft
 
         private void UcReturn_Load(object sender, EventArgs e)
         {
-            //ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
+            ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
         }
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
         {
-            //if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
-            //   efMethods.DeleteInvoice(returnInvoiceHeaderId); 
+            if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
+                efMethods.DeleteInvoice(returnInvoiceHeaderId);
         }
 
         private void btnEdit_InvoiceHeader_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -169,7 +165,6 @@ namespace Foxoft
             }
             else
                 XtraMessageBox.Show("Geri qaytarıla bilecek miqdar yoxdur");
-
         }
 
         private void btn_Payment_Click(object sender, EventArgs e)
