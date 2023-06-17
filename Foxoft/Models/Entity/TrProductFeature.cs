@@ -17,9 +17,10 @@ namespace Foxoft.Models
         [Display(Name = "Özəllik Tipi Kodu")]
         public int FeatureTypeId { get; set; }
 
+        [ForeignKey("DcFeature")]
         [Display(Name = "Özəllik Tipi Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public string FeatureDesc { get; set; }
+        public string FeatureCode { get; set; }
 
 
         [ForeignKey("ProductCode")]
@@ -27,5 +28,8 @@ namespace Foxoft.Models
 
         [ForeignKey("FeatureTypeId")]
         public virtual DcFeatureType DcFeatureType { get; set; }
+
+        [ForeignKey("FeatureCode")]
+        public virtual DcFeature DcFeature { get; set; }
     }
 }

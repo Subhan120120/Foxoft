@@ -55,6 +55,7 @@ namespace Foxoft.Models
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
+        public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -226,7 +227,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrProductFeature>(entity =>
             {
                 entity.HasOne(x => x.DcProduct)
-                   .WithMany(x=>x.TrProductFeatures)
+                   .WithMany(x => x.TrProductFeatures)
                    .OnDelete(DeleteBehavior.Cascade);
             });
 
