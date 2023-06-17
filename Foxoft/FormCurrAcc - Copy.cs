@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-   public partial class FormCurrAcc : XtraForm
+   public partial class FormFeature : XtraForm
    {
       subContext dbContext;
       EfMethods efMethods = new EfMethods();
       public DcCurrAcc dcCurrAcc = new DcCurrAcc();
 
-      public FormCurrAcc()
+      public FormFeature()
       {
          InitializeComponent();
 
@@ -29,19 +29,19 @@ namespace Foxoft
          CancelButton = btn_Cancel;
       }
 
-      public FormCurrAcc(string currAccCode)
+      public FormFeature(string currAccCode)
           : this()
       {
          dcCurrAcc.CurrAccCode = currAccCode;
       }
 
-      public FormCurrAcc(byte currAccTypeCode)
+      public FormFeature(byte currAccTypeCode)
           : this()
       {
          dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
       }
 
-      private void FormCurrAcc_Load(object sender, EventArgs e)
+      private void FormFeature_Load(object sender, EventArgs e)
       {
          LoadCurrAcc();
          dataLayoutControl1.IsValid(out List<string> errorList);

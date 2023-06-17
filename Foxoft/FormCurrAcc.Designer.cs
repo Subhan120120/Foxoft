@@ -1,7 +1,7 @@
 ﻿
 namespace Foxoft
 {
-    partial class FormCurrAcc
+    partial class FormFeature
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
          this.components = new System.ComponentModel.Container();
-         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAcc));
+         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFeature));
          this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
          this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
          this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
@@ -752,15 +752,15 @@ namespace Foxoft
          // 
          this.bindingSource1.DataSource = typeof(Foxoft.Models.DcCurrAcc);
          // 
-         // FormCurrAcc
+         // FormFeature
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(604, 420);
          this.Controls.Add(this.dataLayoutControl1);
-         this.Name = "FormCurrAcc";
+         this.Name = "FormFeature";
          this.Text = "Cari Hesab";
-         this.Load += new System.EventHandler(this.FormCurrAcc_Load);
+         this.Load += new System.EventHandler(this.FormFeature_Load);
          ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
          this.dataLayoutControl1.ResumeLayout(false);
          ((System.ComponentModel.ISupportInitialize)(this.CurrAccCodeTextEdit.Properties)).EndInit();
