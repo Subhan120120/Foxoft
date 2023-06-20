@@ -2,7 +2,7 @@
 select DcProducts.ProductCode
 				, DcProducts.ProductDesc
 				, WholesalePrice 
-				, Marka = FeatureDesc		
+				, Marka = FeatureCode		
 				, Barcode
 				, RetailPrice
 	from DcProducts
@@ -14,7 +14,7 @@ select DcProducts.ProductCode
 	--group by DcProducts.ProductCode
 	--		 , DcProducts.ProductDesc
 	--		 , WholesalePrice 
-	--		 , FeatureDesc
+	--		 , FeatureCode
 
 
 

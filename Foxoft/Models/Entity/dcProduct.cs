@@ -27,6 +27,10 @@ namespace Foxoft.Models
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProductCode { get; set; }
 
+        [Display(Name = "Umico Kodu")]
+        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string ProductCode2 { get; set; }
+
         [Display(Name = "Məhsul Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -73,7 +77,6 @@ namespace Foxoft.Models
         const string qiymetler = "Qiymətlər";
         [DefaultValue("0")]
         [Display(Name = "Alış Qiyməti", GroupName = qiymetler, Order = 0)]
-        //[DisplayName("Alış Qiyməti")]
         public decimal PurchasePrice { get; set; }
 
         [DefaultValue("0")]

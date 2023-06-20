@@ -110,11 +110,13 @@ namespace Foxoft
             BEI_PrinterName = new DevExpress.XtraBars.BarEditItem();
             repoCBE_PrinterName = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            btn_info = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -144,8 +146,6 @@ namespace Foxoft
             lCI_IsSent = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
-            ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            btn_info = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -557,7 +557,7 @@ namespace Foxoft
             checkEdit_IsReturn.Name = "checkEdit_IsReturn";
             checkEdit_IsReturn.Properties.Caption = "Qaytarılmadır";
             checkEdit_IsReturn.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            checkEdit_IsReturn.Size = new System.Drawing.Size(128, 20);
+            checkEdit_IsReturn.Size = new System.Drawing.Size(110, 20);
             checkEdit_IsReturn.StyleController = dataLayoutControl1;
             checkEdit_IsReturn.TabIndex = 3;
             // 
@@ -901,6 +901,15 @@ namespace Foxoft
             barButtonItem3.Name = "barButtonItem3";
             barButtonItem3.ItemClick += barButtonItem3_ItemClick;
             // 
+            // btn_info
+            // 
+            btn_info.Caption = "info";
+            btn_info.Id = 39;
+            btn_info.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btn_info.ImageOptions.Image");
+            btn_info.ImageOptions.LargeImage = (System.Drawing.Image)resources.GetObject("btn_info.ImageOptions.LargeImage");
+            btn_info.Name = "btn_info";
+            btn_info.ItemClick += Btn_info_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, ribbonPageGroup3, ribbonPageGroup2, ribbonPageGroup1, ribbonPageGroup8 });
@@ -940,6 +949,13 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Nəzarət";
+            // 
+            // ribbonPageGroup8
+            // 
+            ribbonPageGroup8.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
+            ribbonPageGroup8.ItemLinks.Add(btn_info);
+            ribbonPageGroup8.Name = "ribbonPageGroup8";
+            ribbonPageGroup8.Text = "Məlumat";
             // 
             // ribbonPage2
             // 
@@ -1032,7 +1048,7 @@ namespace Foxoft
             ItemForIsReturn.Control = checkEdit_IsReturn;
             ItemForIsReturn.Location = new System.Drawing.Point(0, 24);
             ItemForIsReturn.Name = "ItemForIsReturn";
-            ItemForIsReturn.Size = new System.Drawing.Size(132, 24);
+            ItemForIsReturn.Size = new System.Drawing.Size(114, 24);
             ItemForIsReturn.Text = "Qaytarılmadır";
             ItemForIsReturn.TextSize = new System.Drawing.Size(0, 0);
             ItemForIsReturn.TextVisible = false;
@@ -1152,9 +1168,9 @@ namespace Foxoft
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new System.Drawing.Point(132, 24);
+            emptySpaceItem1.Location = new System.Drawing.Point(114, 24);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new System.Drawing.Size(354, 24);
+            emptySpaceItem1.Size = new System.Drawing.Size(372, 24);
             emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // lCI_printCount
@@ -1188,22 +1204,6 @@ namespace Foxoft
             // adorneruıManager1
             // 
             adorneruıManager1.Owner = this;
-            // 
-            // ribbonPageGroup8
-            // 
-            ribbonPageGroup8.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
-            ribbonPageGroup8.ItemLinks.Add(btn_info);
-            ribbonPageGroup8.Name = "ribbonPageGroup8";
-            ribbonPageGroup8.Text = "Məlumat";
-            // 
-            // btn_info
-            // 
-            btn_info.Caption = "info";
-            btn_info.Id = 39;
-            btn_info.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("barButtonItem4.ImageOptions.Image");
-            btn_info.ImageOptions.LargeImage = (System.Drawing.Image)resources.GetObject("barButtonItem4.ImageOptions.LargeImage");
-            btn_info.Name = "btn_info";
-            btn_info.ItemClick += Btn_info_ItemClick;
             // 
             // FormInvoice
             // 

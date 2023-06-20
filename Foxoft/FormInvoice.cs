@@ -1789,7 +1789,7 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MetaWhatsapp metaWhatsapp = new MetaWhatsapp();
+            MetaWhatsapp metaWhatsapp = new();
             //MetaResponce metaResponce = metaWhatsapp.SendWhatsapp("", "");
         }
 
@@ -1813,7 +1813,6 @@ namespace Foxoft
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
-
         }
 
         private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)

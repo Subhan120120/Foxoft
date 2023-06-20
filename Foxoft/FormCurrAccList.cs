@@ -471,7 +471,7 @@ namespace Foxoft
                 if (currAccTypeCode == 5)
                 {
                     columnName = "[CashRegisterCode]";
-                    dateFilter = $" AND [OperationDate] Between(#{DateTime.Now.ToString("yyyy-MM-dd")}#, #{DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")}#) ";
+                    dateFilter = $" AND [OperationDate] Between(#{DateTime.Now.ToString("yyyy-MM-dd")}#, #{DateTime.Now.ToString("yyyy-MM-dd")}#) ";
                 }
 
                 string activeFilterStr = $"{columnName} = \'{currAccCode}\'" + dateFilter;

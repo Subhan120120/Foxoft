@@ -77,7 +77,6 @@ namespace Foxoft
             //   }
             //   return dt;
             //}
-
         }
 
         public DataTable SqlGetDt(string query, SqlParameter[] sqlParameters)

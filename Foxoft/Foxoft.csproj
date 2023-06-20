@@ -78,9 +78,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="FormCurrAcc - Copy.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="FormPaymentHeaderList.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>

@@ -92,6 +92,14 @@ namespace Foxoft
             return featureTypes;
         }
 
+        public List<DcFeature> SelectFeatures(int featureTypeId)
+        {
+            using subContext db = new();
+
+            List<DcFeature> features = db.DcFeatures.Where(x=>x.FeatureTypeId == featureTypeId).ToList();
+            return features;
+        }
+
         public TrProductFeature SelectFeatureType(int featureTypeId, string productCode)
         {
             using subContext db = new();
@@ -398,6 +406,16 @@ namespace Foxoft
 
             if (dcFeatureType is not null)
                 db.DcFeatureTypes.Remove(dcFeatureType);
+
+            return db.SaveChanges();
+        }
+
+        public int DeleteFeature(DcFeature dcFeature)
+        {
+            using subContext db = new();
+
+            if (dcFeature is not null)
+                db.DcFeatures.Remove(dcFeature);
 
             return db.SaveChanges();
         }
@@ -926,6 +944,11 @@ namespace Foxoft
             using subContext db = new();
             return db.DcFeatureTypes.Any(x => x.FeatureTypeId == featureTypeId);
         }
+        public bool FeatureExist(string featureCode)
+        {
+            using subContext db = new();
+            return db.DcFeatures.Any(x => x.FeatureCode == featureCode);
+        }
 
         public bool ReportExist(int Id)
         {
@@ -951,6 +974,13 @@ namespace Foxoft
         {
             using subContext db = new();
             db.DcProducts.Add(dcProduct);
+            db.SaveChanges();
+        }
+
+        public void InsertFeature(DcFeature dcFeature)
+        {
+            using subContext db = new();
+            db.DcFeatures.Add(dcFeature);
             db.SaveChanges();
         }
 
@@ -1067,7 +1097,7 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateDcFeature_Value(int featureTypeId, string productCode, string value)
+        public int UpdateDcFeature_Value(byte featureTypeId, string productCode, string value)
         {
             using subContext db = new();
             TrProductFeature pf = db.TrProductFeatures.Where(x => x.ProductCode == productCode)
@@ -1075,8 +1105,8 @@ namespace Foxoft
 
             if (pf is not null)
             {
-                pf.FeatureDesc = value;
-                db.Entry(pf).Property(x => x.FeatureDesc).IsModified = true;
+                pf.FeatureCode = value;
+                db.Entry(pf).Property(x => x.FeatureCode).IsModified = true;
             }
             else
             {
@@ -1084,7 +1114,7 @@ namespace Foxoft
                 {
                     FeatureTypeId = featureTypeId,
                     ProductCode = productCode,
-                    FeatureDesc = value
+                    FeatureCode = value
                 };
 
                 db.TrProductFeatures.Add(pf);

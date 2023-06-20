@@ -1,5 +1,6 @@
 ﻿
 using DevExpress.Utils;
+using Foxoft.Models;
 
 namespace Foxoft
 {
@@ -33,7 +34,7 @@ namespace Foxoft
         {
             this.components = new System.ComponentModel.Container();
             this.gC_FeatureList = new DevExpress.XtraGrid.GridControl();
-            this.dcFeatureTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dcFeaturesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gV_FeatureList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -55,14 +56,14 @@ namespace Foxoft
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ((System.ComponentModel.ISupportInitialize)(this.gC_FeatureList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dcFeatureTypesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dcFeaturesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_FeatureList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // gC_FeatureList
             // 
-            this.gC_FeatureList.DataSource = this.dcFeatureTypesBindingSource;
+            this.gC_FeatureList.DataSource = this.dcFeaturesBindingSource;
             this.gC_FeatureList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gC_FeatureList.Location = new System.Drawing.Point(0, 158);
             this.gC_FeatureList.MainView = this.gV_FeatureList;
@@ -73,6 +74,7 @@ namespace Foxoft
             this.gV_FeatureList});
             this.gC_FeatureList.Paint += new System.Windows.Forms.PaintEventHandler(this.gC_FeatureList_Paint);
             this.gC_FeatureList.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gC_FeatureList_ProcessGridKey);
+            dcFeaturesBindingSource.DataSource = typeof(DcFeature);
             // 
             // gV_FeatureList
             // 
@@ -247,7 +249,7 @@ namespace Foxoft
             this.StatusBar = this.ribbonStatusBar1;
             this.Text = "Özəlliklər Siyahısı";
             ((System.ComponentModel.ISupportInitialize)(this.gC_FeatureList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dcFeatureTypesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dcFeaturesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gV_FeatureList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             this.ResumeLayout(false);
@@ -270,7 +272,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_Report1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
-        private System.Windows.Forms.BindingSource dcFeatureTypesBindingSource;
+        private System.Windows.Forms.BindingSource dcFeaturesBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;

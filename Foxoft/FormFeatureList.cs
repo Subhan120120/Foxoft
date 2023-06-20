@@ -20,7 +20,10 @@ namespace Foxoft
     public partial class FormFeatureList : RibbonForm
     {
         EfMethods efMethods = new();
-        public DcFeatureType dcFeatureType { get; set; }
+        public DcFeature dcFeature { get; set; }
+
+        public int featureTypeId;
+
 
         public FormFeatureList()
         {
@@ -31,18 +34,24 @@ namespace Foxoft
             MemoryStream stream = new(byteArray);
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             gV_FeatureList.RestoreLayoutFromStream(stream, option);
+        }
 
+        public FormFeatureList(int featureTypeId)
+            : this()
+        {
+            this.featureTypeId = featureTypeId;
             UpdateGridViewData();
         }
+
 
         private void gV_FeatureList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             GridView view = sender as GridView;
 
             if (view.FocusedRowHandle >= 0)
-                dcFeatureType = view.GetFocusedRow() as DcFeatureType;
+                dcFeature = view.GetFocusedRow() as DcFeature;
             else
-                dcFeatureType = null;
+                dcFeature = null;
         }
 
         private void gV_FeatureList_DoubleClick(object sender, EventArgs e)
@@ -64,32 +73,26 @@ namespace Foxoft
             #endregion
 
             GridView view = sender as GridView;
-            if (dcFeatureType is not null)
+            if (dcFeature is not null)
                 DialogResult = DialogResult.OK;
         }
 
         private void bBI_FeatureNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            dcFeatureType = new DcFeatureType();
-            //FormCurrAcc form = new();
-            //if (form.ShowDialog(this) == DialogResult.OK)
-            //{
-            //    UpdateGridViewData();
-            //}
+            dcFeature = new DcFeature();
+            FormFeature form = new(featureTypeId, true);
+            if (form.ShowDialog(this) == DialogResult.OK)
+                UpdateGridViewData();
         }
 
         private void bBI_FeatureEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //ApplySelectedCurrAcc();
-
-            //if (dcFeature is not null)
-            //{
-            //    FormCurrAcc form = new(dcFeature.FeatureCode);
-            //    if (form.ShowDialog(this) == DialogResult.OK)
-            //    {
-            //        UpdateGridViewData();
-            //    }
-            //}
+            if (dcFeature is not null)
+            {
+                FormFeature form = new(featureTypeId, dcFeature.FeatureCode);
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    UpdateGridViewData();
+            }
         }
 
         private void UpdateGridViewData()
@@ -104,14 +107,14 @@ namespace Foxoft
                 gV_FeatureList.MoveLast();
 
             if (gV_FeatureList.FocusedRowHandle >= 0)
-                dcFeatureType = gV_FeatureList.GetFocusedRow() as DcFeatureType;
+                dcFeature = gV_FeatureList.GetFocusedRow() as DcFeature;
             else
-                dcFeatureType = null;
+                dcFeature = null;
         }
 
         private void LoadFeatures()
         {
-            dcFeatureTypesBindingSource.DataSource = efMethods.SelectFeatureTypes();
+            dcFeaturesBindingSource.DataSource = efMethods.SelectFeatures(featureTypeId);
         }
 
         private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -124,7 +127,7 @@ namespace Foxoft
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
             if (view == null) return;
 
-            if (dcFeatureType is not null)
+            if (dcFeature is not null)
             {
                 if (e.KeyCode == Keys.Enter)
                 {
@@ -159,7 +162,7 @@ namespace Foxoft
                     gV.ShowFindPanel();
                 gV.ShowFindPanel();
 
-                gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
+                //gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
                 gV.OptionsFind.FindNullPrompt = "Axtarın...";
             }
             isFirstPaint = false;
@@ -176,9 +179,9 @@ namespace Foxoft
 
 
             if (view.FocusedRowHandle >= 0)
-                dcFeatureType = view.GetFocusedRow() as DcFeatureType;
+                dcFeature = view.GetFocusedRow() as DcFeature;
             else
-                dcFeatureType = null;
+                dcFeature = null;
         }
 
         private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
@@ -217,11 +220,11 @@ namespace Foxoft
 
         private void bBI_FeatureDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.FeatureTypeExist(dcFeatureType.FeatureTypeId))
+            if (efMethods.FeatureExist(dcFeature.FeatureCode))
             {
-                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcFeatureType.FeatureTypeName, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcFeature.FeatureDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeleteFeatureType(dcFeatureType);
+                    efMethods.DeleteFeature(dcFeature);
 
                     LoadFeatures();
                 }

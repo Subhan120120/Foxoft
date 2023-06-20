@@ -198,6 +198,9 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrProductFeature>()
                         .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId });
 
+            //modelBuilder.Entity<DcFeature>()
+            //            .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
+
             modelBuilder.Entity<DcProductType>().HasData(
                 new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },
                 new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" },

@@ -16,7 +16,7 @@ from ( select DcProducts.ProductCode
 				, DcProducts.ProductDesc
 				, WarehouseCode
 				, WholesalePrice 
-				, Marka = FeatureDesc
+				, Marka = FeatureCode
 				, ProductTypeCode
 				, LastPurchasePrice = (select top 1 toplam = TrInvoiceLines.PriceLoc * (1 - (TrInvoiceLines.PosDiscount / 100))  
 												from TrInvoiceLines 
@@ -45,7 +45,7 @@ from ( select DcProducts.ProductCode
 			 , DcProducts.ProductDesc
 			 , WholesalePrice 
 			 , WarehouseCode
-			 , FeatureDesc				
+			 , FeatureCode				
 			 , ProductTypeCode
 ) AS SourceTable  
 PIVOT  

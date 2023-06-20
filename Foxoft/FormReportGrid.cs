@@ -21,7 +21,6 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using DevExpress.XtraReports.UserDesigner.Native;
 using Foxoft.Models;
-using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -544,6 +543,11 @@ namespace Foxoft
                 this.Column = column;
             }
             public GridColumn Column;
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Foxoft
                 btn.Name = feature.FeatureTypeId.ToString();
                 btn.StyleController = this.layoutControl1;
                 if (proFea is not null)
-                    btn.EditValue = proFea.FeatureDesc;
+                    btn.EditValue = proFea.FeatureCode;
                 btn.ButtonPressed += new(this.btnEdit_DocNum_ButtonPressed);
 
                 LayoutControlItem lCI = new();
@@ -50,11 +50,10 @@ namespace Foxoft
         private void btnEdit_DocNum_ButtonPressed(object sender, EventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            FormFeatureList formFeatureList = new();
+            FormFeatureList formFeatureList = new(Convert.ToByte(editor.Name));
             if (DialogResult.OK == formFeatureList.ShowDialog())
-            {
-                editor.EditValue = formFeatureList.dcFeatureType.FeatureTypeName;
-            }
+                editor.EditValue = formFeatureList.dcFeature.FeatureCode;
+
             //ButtonEdit textEdit = sender as ButtonEdit;
             //efMethods.UpdateDcFeature_Value(Convert.ToInt32(textEdit.Name), productCode, textEdit.EditValue.ToString());
         }
@@ -68,7 +67,7 @@ namespace Foxoft
                     if (edit is not null)
                         if (edit.EditValue is not null)
                         {
-                            efMethods.UpdateDcFeature_Value(Convert.ToInt32(edit.Name), productCode, edit.EditValue.ToString());
+                            efMethods.UpdateDcFeature_Value(Convert.ToByte(edit.Name), productCode, edit.EditValue.ToString());
                             DialogResult = DialogResult.OK;
                         }
             }

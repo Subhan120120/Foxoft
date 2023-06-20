@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230618114014_DcFeature.ColumnOrder2")]
+    partial class DcFeatureColumnOrder2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -742,10 +744,6 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
                         .HasDefaultValueSql("0");
-
-                    b.Property<string>("ProductCode2")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ProductDesc")
                         .IsRequired()
@@ -2102,14 +2100,13 @@ namespace Foxoft.Migrations
                     b.Property<string>("ProductCode")
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("FeatureCode")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("FeatureTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FeatureCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProductCode", "FeatureTypeId");
+                    b.HasKey("ProductCode", "FeatureCode", "FeatureTypeId");
 
                     b.HasIndex("FeatureCode");
 

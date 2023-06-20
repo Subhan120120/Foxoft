@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230618080544_asdsdfgdh")]
+    partial class asdsdfgdh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -478,9 +480,6 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FeatureTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("FeatureCode");
 
                     b.ToTable("DcFeatures");
@@ -742,10 +741,6 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
                         .HasDefaultValueSql("0");
-
-                    b.Property<string>("ProductCode2")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ProductDesc")
                         .IsRequired()
@@ -2107,11 +2102,9 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("FeatureCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductCode", "FeatureTypeId");
-
-                    b.HasIndex("FeatureCode");
 
                     b.HasIndex("FeatureTypeId");
 
@@ -2670,12 +2663,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrProductFeature", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcFeature", "DcFeature")
-                        .WithMany("TrProductFeatures")
-                        .HasForeignKey("FeatureCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Foxoft.Models.DcFeatureType", "DcFeatureType")
                         .WithMany("TrProductFeatures")
                         .HasForeignKey("FeatureTypeId")
@@ -2687,8 +2674,6 @@ namespace Foxoft.Migrations
                         .HasForeignKey("ProductCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DcFeature");
 
                     b.Navigation("DcFeatureType");
 
@@ -2761,11 +2746,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrPaymentLines");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcFeature", b =>
-                {
-                    b.Navigation("TrProductFeatures");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcFeatureType", b =>
