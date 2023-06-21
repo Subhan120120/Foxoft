@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
@@ -15,6 +16,7 @@ namespace Foxoft.Models
         public string FeatureCode { get; set; }
 
         //[Key, Column(Order = 1)]
+        [ForeignKey("DcFeatureType")]
         [Display(Name = "Özəllik Tipi Kodu")]
         public int FeatureTypeId { get; set; }
 
@@ -23,6 +25,8 @@ namespace Foxoft.Models
         public string FeatureDesc { get; set; }
 
 
+        [ForeignKey("FeatureTypeId")]
+        public virtual DcFeatureType DcFeatureType { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
     }
 }
