@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230622095334_asddfgdfhghj")]
+    partial class asddfgdfhghj
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -502,43 +504,6 @@ namespace Foxoft.Migrations
                     b.HasKey("FeatureTypeId");
 
                     b.ToTable("DcFeatureTypes");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcHierarchy", b =>
-                {
-                    b.Property<int>("HierarchyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("HierarchyLevelCode01")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<int>("HierarchyLevelCode02")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<int>("HierarchyLevelCode03")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<int>("HierarchyLevelCode04")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
-
-                    b.Property<int>("HierarchyLevelCode05")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
-
-                    b.HasKey("HierarchyId");
-
-                    b.ToTable("DcHierarchies");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcOffice", b =>

@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230622124434_DcHierarchies")]
+    partial class DcHierarchies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -511,30 +513,35 @@ namespace Foxoft.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("HierarchyLevelCode01")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
+                    b.Property<int>("HierarchyCode01")
+                        .HasColumnType("int");
 
-                    b.Property<int>("HierarchyLevelCode02")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
+                    b.Property<int>("HierarchyCode02")
+                        .HasColumnType("int");
 
-                    b.Property<int>("HierarchyLevelCode03")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
+                    b.Property<int>("HierarchyCode03")
+                        .HasColumnType("int");
 
-                    b.Property<int>("HierarchyLevelCode04")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
+                    b.Property<int>("HierarchyCode04")
+                        .HasColumnType("int");
 
-                    b.Property<int>("HierarchyLevelCode05")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("0");
+                    b.Property<int>("HierarchyCode05")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HierarchyDesc01")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HierarchyDesc02")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HierarchyDesc03")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HierarchyDesc04")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HierarchyDesc05")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("HierarchyId");
 
