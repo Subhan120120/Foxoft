@@ -20,6 +20,7 @@ namespace Foxoft.Models
             TrInvoiceLines = new HashSet<TrInvoiceLine>();
             TrPrices = new HashSet<TrPrice>();
             TrProductFeatures = new HashSet<TrProductFeature>();
+            TrProductHierarchies = new HashSet<TrProductHierarchy>();
         }
 
         [Key]
@@ -48,6 +49,10 @@ namespace Foxoft.Models
         [ForeignKey("DcProductType")]
         [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]
         public byte ProductTypeCode { get; set; }
+
+        [Display(Name = "İyerarxiya Kodu")]
+        [ForeignKey("DcHierarchy")]
+        public string HierarchyCode { get; set; }
 
         [DefaultValue("1")]
         [Display(Name = "POSda İstifadə Et")]
@@ -96,6 +101,7 @@ namespace Foxoft.Models
         [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ImagePath { get; set; }
 
+
         [NotMapped]
         [Display(Name = "Qalıq")]
         public int Balance { get; set; }
@@ -123,8 +129,10 @@ namespace Foxoft.Models
         public decimal? LastSalePrice { get; set; }
 
         public virtual DcProductType DcProductType { get; set; }
+        public virtual DcHierarchy DcHierarchy { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
+        public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
     }
 }

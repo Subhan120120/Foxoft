@@ -54,6 +54,7 @@
             pictureEdit = new DevExpress.XtraEditors.PictureEdit();
             Btn_BarcodeGenerate = new DevExpress.XtraEditors.SimpleButton();
             textEdit_ProductCode2 = new DevExpress.XtraEditors.TextEdit();
+            btnEdit_Hierarchy = new DevExpress.XtraEditors.ButtonEdit();
             ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPromotionCode2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -80,6 +81,7 @@
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             ProductCode2 = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_hierarchyCode = new DevExpress.XtraLayout.LayoutControlItem();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -102,6 +104,7 @@
             ((System.ComponentModel.ISupportInitialize)BalanceTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)textEdit_ProductCode2.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_Hierarchy.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).BeginInit();
@@ -128,6 +131,7 @@
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProductCode2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
             SuspendLayout();
@@ -156,6 +160,7 @@
             dataLayoutControl1.Controls.Add(pictureEdit);
             dataLayoutControl1.Controls.Add(Btn_BarcodeGenerate);
             dataLayoutControl1.Controls.Add(textEdit_ProductCode2);
+            dataLayoutControl1.Controls.Add(btnEdit_Hierarchy);
             dataLayoutControl1.DataSource = dcProductsBindingSource;
             dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForUsePos, ItemForPromotionCode, ItemForPromotionCode2, ItemForTaxRate });
@@ -163,7 +168,7 @@
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(493, 158, 514, 400);
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new System.Drawing.Size(411, 323);
+            dataLayoutControl1.Size = new System.Drawing.Size(411, 352);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
@@ -234,13 +239,13 @@
             // IsDisabledCheckEdit
             // 
             IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "IsDisabled", true));
-            IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 275);
+            IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 299);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
             IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             IsDisabledCheckEdit.Size = new System.Drawing.Size(75, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
-            IsDisabledCheckEdit.TabIndex = 13;
+            IsDisabledCheckEdit.TabIndex = 14;
             // 
             // ProductDescTextEdit
             // 
@@ -256,11 +261,11 @@
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new System.Drawing.Point(301, 275);
+            btn_Ok.Location = new System.Drawing.Point(301, 299);
             btn_Ok.Name = "btn_Ok";
             btn_Ok.Size = new System.Drawing.Size(90, 60);
             btn_Ok.StyleController = dataLayoutControl1;
-            btn_Ok.TabIndex = 16;
+            btn_Ok.TabIndex = 17;
             btn_Ok.Text = "simpleButton1";
             btn_Ok.Click += btn_Ok_Click;
             // 
@@ -268,11 +273,11 @@
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new System.Drawing.Point(223, 275);
+            btn_Cancel.Location = new System.Drawing.Point(223, 299);
             btn_Cancel.Name = "btn_Cancel";
             btn_Cancel.Size = new System.Drawing.Size(74, 60);
             btn_Cancel.StyleController = dataLayoutControl1;
-            btn_Cancel.TabIndex = 15;
+            btn_Cancel.TabIndex = 16;
             btn_Cancel.Text = "simpleButton2";
             // 
             // ProductTypeCodeLookUpEdit
@@ -356,13 +361,13 @@
             // UseInternetCheckEdit
             // 
             UseInternetCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "UseInternet", true));
-            UseInternetCheckEdit.Location = new System.Drawing.Point(91, 275);
+            UseInternetCheckEdit.Location = new System.Drawing.Point(91, 299);
             UseInternetCheckEdit.Name = "UseInternetCheckEdit";
             UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
             UseInternetCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             UseInternetCheckEdit.Size = new System.Drawing.Size(128, 20);
             UseInternetCheckEdit.StyleController = dataLayoutControl1;
-            UseInternetCheckEdit.TabIndex = 14;
+            UseInternetCheckEdit.TabIndex = 15;
             // 
             // BalanceTextEdit
             // 
@@ -381,11 +386,11 @@
             // btn_ProductFeature
             // 
             btn_ProductFeature.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductFeature.ImageOptions.SvgImage");
-            btn_ProductFeature.Location = new System.Drawing.Point(12, 299);
+            btn_ProductFeature.Location = new System.Drawing.Point(12, 323);
             btn_ProductFeature.Name = "btn_ProductFeature";
             btn_ProductFeature.Size = new System.Drawing.Size(207, 36);
             btn_ProductFeature.StyleController = dataLayoutControl1;
-            btn_ProductFeature.TabIndex = 17;
+            btn_ProductFeature.TabIndex = 18;
             btn_ProductFeature.Text = "Ozellik";
             btn_ProductFeature.Click += btn_ProductFeature_Click;
             // 
@@ -419,6 +424,17 @@
             textEdit_ProductCode2.Size = new System.Drawing.Size(110, 20);
             textEdit_ProductCode2.StyleController = dataLayoutControl1;
             textEdit_ProductCode2.TabIndex = 6;
+            // 
+            // btnEdit_Hierarchy
+            // 
+            btnEdit_Hierarchy.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "HierarchyCode", true));
+            btnEdit_Hierarchy.Location = new System.Drawing.Point(109, 275);
+            btnEdit_Hierarchy.Name = "btnEdit_Hierarchy";
+            btnEdit_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_Hierarchy.Size = new System.Drawing.Size(110, 20);
+            btnEdit_Hierarchy.StyleController = dataLayoutControl1;
+            btnEdit_Hierarchy.TabIndex = 13;
+            btnEdit_Hierarchy.ButtonPressed += btnEdit_Hierarchy_ButtonPressed;
             // 
             // ItemForUsePos
             // 
@@ -463,22 +479,22 @@
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new System.Drawing.Size(403, 347);
+            Root.Size = new System.Drawing.Size(403, 371);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1, ItemForPosDiscount, layoutControlGroup2, ItemForBalance, layoutControlItem3, layoutControlItem4, ItemForUseInternet, ItemForIsDisabled, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ItemForBarcode, lCI_BarcodeGenerate, emptySpaceItem1, layoutControlItem5, ProductCode2 });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1, ItemForPosDiscount, layoutControlGroup2, ItemForBalance, layoutControlItem3, layoutControlItem4, ItemForUseInternet, ItemForIsDisabled, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ItemForBarcode, lCI_BarcodeGenerate, emptySpaceItem1, layoutControlItem5, ProductCode2, lCI_hierarchyCode });
             layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new System.Drawing.Size(383, 327);
+            layoutControlGroup1.Size = new System.Drawing.Size(383, 351);
             // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_Cancel;
-            layoutControlItem2.Location = new System.Drawing.Point(211, 263);
+            layoutControlItem2.Location = new System.Drawing.Point(211, 287);
             layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new System.Drawing.Size(78, 64);
@@ -489,7 +505,7 @@
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Ok;
-            layoutControlItem1.Location = new System.Drawing.Point(289, 263);
+            layoutControlItem1.Location = new System.Drawing.Point(289, 287);
             layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new System.Drawing.Size(94, 64);
@@ -551,7 +567,7 @@
             // layoutControlItem3
             // 
             layoutControlItem3.Control = btn_ProductFeature;
-            layoutControlItem3.Location = new System.Drawing.Point(0, 287);
+            layoutControlItem3.Location = new System.Drawing.Point(0, 311);
             layoutControlItem3.Name = "layoutControlItem3";
             layoutControlItem3.Size = new System.Drawing.Size(211, 40);
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
@@ -561,15 +577,17 @@
             // 
             layoutControlItem4.Control = pictureEdit;
             layoutControlItem4.Location = new System.Drawing.Point(211, 48);
+            layoutControlItem4.MinSize = new System.Drawing.Size(24, 24);
             layoutControlItem4.Name = "layoutControlItem4";
             layoutControlItem4.Size = new System.Drawing.Size(172, 189);
+            layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem4.TextVisible = false;
             // 
             // ItemForUseInternet
             // 
             ItemForUseInternet.Control = UseInternetCheckEdit;
-            ItemForUseInternet.Location = new System.Drawing.Point(79, 263);
+            ItemForUseInternet.Location = new System.Drawing.Point(79, 287);
             ItemForUseInternet.Name = "ItemForUseInternet";
             ItemForUseInternet.Size = new System.Drawing.Size(132, 24);
             ItemForUseInternet.Text = "İnternetdə İstifadə Et";
@@ -579,7 +597,7 @@
             // ItemForIsDisabled
             // 
             ItemForIsDisabled.Control = IsDisabledCheckEdit;
-            ItemForIsDisabled.Location = new System.Drawing.Point(0, 263);
+            ItemForIsDisabled.Location = new System.Drawing.Point(0, 287);
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new System.Drawing.Size(79, 24);
             ItemForIsDisabled.Text = "Is Disabled";
@@ -638,7 +656,7 @@
             emptySpaceItem1.AllowHotTrack = false;
             emptySpaceItem1.Location = new System.Drawing.Point(211, 237);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new System.Drawing.Size(78, 26);
+            emptySpaceItem1.Size = new System.Drawing.Size(78, 50);
             emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItem5
@@ -646,7 +664,7 @@
             layoutControlItem5.Control = btn_SaveImage;
             layoutControlItem5.Location = new System.Drawing.Point(289, 237);
             layoutControlItem5.Name = "layoutControlItem5";
-            layoutControlItem5.Size = new System.Drawing.Size(94, 26);
+            layoutControlItem5.Size = new System.Drawing.Size(94, 50);
             layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem5.TextVisible = false;
             // 
@@ -657,6 +675,14 @@
             ProductCode2.Name = "ProductCode2";
             ProductCode2.Size = new System.Drawing.Size(211, 24);
             ProductCode2.TextSize = new System.Drawing.Size(85, 13);
+            // 
+            // lCI_hierarchyCode
+            // 
+            lCI_hierarchyCode.Control = btnEdit_Hierarchy;
+            lCI_hierarchyCode.Location = new System.Drawing.Point(0, 263);
+            lCI_hierarchyCode.Name = "lCI_hierarchyCode";
+            lCI_hierarchyCode.Size = new System.Drawing.Size(211, 24);
+            lCI_hierarchyCode.TextSize = new System.Drawing.Size(85, 13);
             // 
             // gridControl1
             // 
@@ -676,7 +702,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(411, 323);
+            ClientSize = new System.Drawing.Size(411, 352);
             Controls.Add(dataLayoutControl1);
             Name = "FormProduct";
             Text = "Məhsul";
@@ -701,6 +727,7 @@
             ((System.ComponentModel.ISupportInitialize)BalanceTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)textEdit_ProductCode2.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_Hierarchy.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePos).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).EndInit();
@@ -727,6 +754,7 @@
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
             ((System.ComponentModel.ISupportInitialize)ProductCode2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
             ResumeLayout(false);
@@ -788,5 +816,7 @@
         private DevExpress.XtraLayout.LayoutControlItem ProductCode2;
         private DevExpress.XtraEditors.TextEdit textEdit_ProductCode;
         private DevExpress.XtraEditors.TextEdit textEdit_ProductCode2;
+        private DevExpress.XtraEditors.ButtonEdit btnEdit_Hierarchy;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_hierarchyCode;
     }
 }

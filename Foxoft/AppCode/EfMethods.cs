@@ -96,7 +96,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            List<DcFeature> features = db.DcFeatures.Where(x=>x.FeatureTypeId == featureTypeId).ToList();
+            List<DcFeature> features = db.DcFeatures.Where(x => x.FeatureTypeId == featureTypeId).ToList();
             return features;
         }
 
@@ -200,6 +200,20 @@ namespace Foxoft
                                       .Include(x => x.TrInvoiceLines)
                                       .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                       .FirstOrDefault();
+        }
+
+        public List<TrProductHierarchy> SelectProductHierarchies()
+        {
+            using subContext db = new();
+
+            return db.TrProductHierarchies.Include(x => x.DcHierarchy).ToList();
+        }
+
+        public List<DcHierarchy> SelectHierarchies()
+        {
+            using subContext db = new();
+
+            return db.DcHierarchies.ToList();
         }
 
         public TrInvoiceHeader SelectInvoiceHeaderByDocNum(string documentNumber)

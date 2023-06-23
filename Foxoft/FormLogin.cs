@@ -161,8 +161,8 @@ namespace Foxoft
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DefaultControls defaultControls = new();
-            defaultControls.Show();
+            FormTreeView frm = new();
+            frm.Show();
         }
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
@@ -7,29 +8,25 @@ namespace Foxoft.Models
     {
         public DcHierarchy()
         {
+            TrProductHierarchies = new HashSet<TrProductHierarchy>();
+            DcProducts = new HashSet<DcProduct>();
         }
 
         [Key]
-        [Display(Name = "Hierarchy Id")]
-        public int HierarchyId { get; set; }
+        [Display(Name = "İyerarxiya Kodu")]
+        public string HierarchyCode { get; set; }
 
-        [DefaultValue("0")]
-        public int HierarchyLevelCode01 { get; set; }
+        [Display(Name = "İyerarxiya Açıqlaması")]
+        public string HierarchyDesc { get; set; }
 
-        [DefaultValue("0")]
-        public int HierarchyLevelCode02 { get; set; }
+        [Display(Name = "İyerarxiya Səviyyəsi")]
+        public int HierarchyLevel { get; set; }
 
-        [DefaultValue("0")]
-        public int HierarchyLevelCode03 { get; set; }
+        [Display(Name = "Üst İyerarxiya Kodu")]
+        public string HierarchyParentCode { get; set; }
 
-        [DefaultValue("0")]
-        public int HierarchyLevelCode04 { get; set; }
 
-        [DefaultValue("0")]
-        public int HierarchyLevelCode05 { get; set; }
-
-        //[ForeignKey("FeatureTypeId")]
-        //public virtual DcFeatureType DcFeatureType { get; set; }
-        //public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
+        public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
+        public virtual ICollection<DcProduct> DcProducts { get; set; }
     }
 }

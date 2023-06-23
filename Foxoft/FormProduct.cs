@@ -275,5 +275,18 @@ namespace Foxoft
         {
             SaveImage();
         }
+
+        private void btnEdit_Hierarchy_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            ButtonEdit buttonEdit = (ButtonEdit)sender;
+
+            using (FormTreeView form = new())
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    buttonEdit.EditValue = "";
+                }
+            }
+        }
     }
 }

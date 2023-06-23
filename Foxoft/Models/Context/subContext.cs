@@ -54,7 +54,7 @@ namespace Foxoft.Models
         public DbSet<TrPrice> TrPrices { get; set; }
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<DcHierarchy> DcHierarchies { get; set; }
-
+        public DbSet<TrProductHierarchy> TrProductHierarchies { get; set; }
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
@@ -203,8 +203,8 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrProductFeature>()
                         .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId });
 
-            //modelBuilder.Entity<DcFeature>()
-            //            .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
+            modelBuilder.Entity<TrProductHierarchy>()
+                        .HasKey(bc => new { bc.ProductCode, bc.HierarchyCode });
 
             modelBuilder.Entity<DcProductType>().HasData(
                 new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },

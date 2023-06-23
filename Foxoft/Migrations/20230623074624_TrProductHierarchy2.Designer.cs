@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230623074624_TrProductHierarchy2")]
+    partial class TrProductHierarchy2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -515,9 +517,6 @@ namespace Foxoft.Migrations
                     b.Property<int>("HierarchyLevel")
                         .HasColumnType("int");
 
-                    b.Property<string>("HierarchyParentCode")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("HierarchyCode");
 
                     b.ToTable("DcHierarchies");
@@ -739,9 +738,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
-                    b.Property<string>("HierarchyCode")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ImagePath")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
@@ -822,8 +818,6 @@ namespace Foxoft.Migrations
                         .HasDefaultValueSql("0");
 
                     b.HasKey("ProductCode");
-
-                    b.HasIndex("HierarchyCode");
 
                     b.HasIndex("ProductTypeCode");
 
@@ -2501,18 +2495,11 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcProduct", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
-                        .WithMany("DcProducts")
-                        .HasForeignKey("HierarchyCode")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Foxoft.Models.DcProductType", "DcProductType")
                         .WithMany("DcProducts")
                         .HasForeignKey("ProductTypeCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DcHierarchy");
 
                     b.Navigation("DcProductType");
                 });
@@ -2763,7 +2750,7 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                        .WithMany("TrProductHierarchies")
+                        .WithMany()
                         .HasForeignKey("ProductCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2853,8 +2840,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcHierarchy", b =>
                 {
-                    b.Navigation("DcProducts");
-
                     b.Navigation("TrProductHierarchies");
                 });
 
@@ -2877,8 +2862,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrPrices");
 
                     b.Navigation("TrProductFeatures");
-
-                    b.Navigation("TrProductHierarchies");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductType", b =>
