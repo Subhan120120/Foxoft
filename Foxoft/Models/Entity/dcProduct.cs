@@ -30,7 +30,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Umico Kodu")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ProductCode2 { get; set; }
+        public string? ProductCode2 { get; set; }
 
         [Display(Name = "Məhsul Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
@@ -39,11 +39,11 @@ namespace Foxoft.Models
 
         [Display(Name = "Məhsul Özəlliyi")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ProductFeature { get; set; }
+        public string? ProductFeature { get; set; }
 
         [Display(Name = "Barkod")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string Barcode { get; set; }
+        public string? Barcode { get; set; }
 
         [Display(Name = "Məhsul Tipi")]
         [ForeignKey("DcProductType")]
@@ -52,7 +52,7 @@ namespace Foxoft.Models
 
         [Display(Name = "İyerarxiya Kodu")]
         [ForeignKey("DcHierarchy")]
-        public string HierarchyCode { get; set; }
+        public string? HierarchyCode { get; set; }
 
         [DefaultValue("1")]
         [Display(Name = "POSda İstifadə Et")]
@@ -60,11 +60,11 @@ namespace Foxoft.Models
 
         [Display(Name = "Tanıtım")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string PromotionCode { get; set; }
+        public string? PromotionCode { get; set; }
 
         [Display(Name = "Tanıtım2")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string PromotionCode2 { get; set; }
+        public string? PromotionCode2 { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = "Vergi Dərəcəsi")]
@@ -99,7 +99,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Şəkil")]
         [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
 
         [NotMapped]

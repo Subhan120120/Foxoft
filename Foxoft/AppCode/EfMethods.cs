@@ -92,6 +92,19 @@ namespace Foxoft
             return featureTypes;
         }
 
+        public List<DcFeatureType> SelectFeatureTypesByHierarchy(string hierarchyCode)
+        {
+            using subContext db = new();
+
+            List<DcFeatureType> featureTypes = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatures).Where(x => x.TrHierarchyFeatures.Where(x => x.HierarchyCode == hierarchyCode).Any()).ToList();
+
+            List<DcFeatureType> featureTypes2 = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatures).Where(x => !x.TrHierarchyFeatures.Any()).ToList();
+
+            featureTypes2.AddRange(featureTypes);
+
+            return featureTypes2;
+        }
+
         public List<DcFeature> SelectFeatures(int featureTypeId)
         {
             using subContext db = new();
@@ -160,6 +173,7 @@ namespace Foxoft
                                     LastUpdatedDate = x.LastUpdatedDate,
                                     LastUpdatedUserName = x.LastUpdatedUserName,
                                     Barcode = x.Barcode,
+                                    HierarchyCode = x.HierarchyCode,
                                 })
                                 .OrderBy(x => x.ProductDesc);
         }
@@ -173,7 +187,16 @@ namespace Foxoft
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 
-        public List<DcProduct> SelectProductsByType(byte[] productTypeArr, CriteriaOperator filterCriteria)
+        public List<DcProduct> SelectProductsByType(byte[] productTypeArr)
+        {
+            using subContext db = new();
+
+            IQueryable<DcProduct> DcProducts = QueryableSelectProducts(db).Where(x => productTypeArr.Contains(x.ProductTypeCode));
+
+            return DcProducts.ToList();
+        }
+
+        public List<DcProduct> SelectProductsByTypeByFilter(byte[] productTypeArr, CriteriaOperator filterCriteria)
         {
             using subContext db = new();
 
@@ -213,7 +236,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.DcHierarchies.ToList();
+            return db.DcHierarchies.OrderBy(x => x.Order).ToList();
         }
 
         public TrInvoiceHeader SelectInvoiceHeaderByDocNum(string documentNumber)
@@ -811,6 +834,12 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcCurrencies.FirstOrDefault(x => x.CurrencyCode == currencyCode); // burdaki kolonlari dizaynda da elave et
+        }
+
+        public DcHierarchy SelectHierarchy(string hierarchyCode)
+        {
+            using subContext db = new();
+            return db.DcHierarchies.FirstOrDefault(x => x.HierarchyCode == hierarchyCode); // burdaki kolonlari dizaynda da elave et
         }
 
         public DcCurrency SelectCurrencyByName(string currencyDesc)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Foxoft.Migrations;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +10,7 @@ namespace Foxoft.Models
         public DcFeatureType()
         {
             TrProductFeatures = new HashSet<TrProductFeature>();
+            TrHierarchyFeatures = new HashSet<TrHierarchyFeature>();
         }
 
         [Key]
@@ -21,5 +23,6 @@ namespace Foxoft.Models
 
 
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
+        public virtual ICollection<TrHierarchyFeature> TrHierarchyFeatures { get; set; }
     }
 }

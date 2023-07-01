@@ -9,6 +9,7 @@ namespace Foxoft.Models
         public DcHierarchy()
         {
             TrProductHierarchies = new HashSet<TrProductHierarchy>();
+            TrHierarchyFeatures = new HashSet<TrHierarchyFeature>();
             DcProducts = new HashSet<DcProduct>();
         }
 
@@ -25,8 +26,12 @@ namespace Foxoft.Models
         [Display(Name = "Üst İyerarxiya Kodu")]
         public string HierarchyParentCode { get; set; }
 
+        [Display(Name = "Sıra")]
+        public byte Order { get; set; }
+
 
         public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
+        public virtual ICollection<TrHierarchyFeature> TrHierarchyFeatures { get; set; }
         public virtual ICollection<DcProduct> DcProducts { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Foxoft
     public partial class FormProductFeature : XtraForm
     {
         EfMethods efMethods = new();
-        string productCode;
+        DcProduct dcProduct = new();
 
         public FormProductFeature()
         {
@@ -21,16 +21,16 @@ namespace Foxoft
         public FormProductFeature(string productCode)
            : this()
         {
-            this.productCode = productCode;
+            dcProduct = efMethods.SelectProduct(productCode);
         }
 
         private void FormFeatureTest_Load(object sender, EventArgs e)
         {
-            List<DcFeatureType> dcFeatures = efMethods.SelectFeatureTypes();
+            List<DcFeatureType> dcFeatures = efMethods.SelectFeatureTypesByHierarchy(dcProduct.HierarchyCode);
 
             foreach (DcFeatureType feature in dcFeatures)
             {
-                TrProductFeature proFea = efMethods.SelectFeatureType(feature.FeatureTypeId, productCode);
+                TrProductFeature proFea = efMethods.SelectFeatureType(feature.FeatureTypeId, dcProduct.ProductCode);
 
                 ButtonEdit btn = new();
                 btn.Name = feature.FeatureTypeId.ToString();
@@ -55,7 +55,7 @@ namespace Foxoft
                 editor.EditValue = formFeatureList.dcFeature.FeatureCode;
 
             //ButtonEdit textEdit = sender as ButtonEdit;
-            //efMethods.UpdateDcFeature_Value(Convert.ToInt32(textEdit.Name), productCode, textEdit.EditValue.ToString());
+            //efMethods.UpdateDcFeature_Value(Convert.ToInt32(textEdit.Name), dcProduct.ProductCode, textEdit.EditValue.ToString());
         }
 
         private void simpleButtonOk_Click(object sender, EventArgs e)
@@ -67,7 +67,7 @@ namespace Foxoft
                     if (edit is not null)
                         if (edit.EditValue is not null)
                         {
-                            efMethods.UpdateDcFeature_Value(Convert.ToByte(edit.Name), productCode, edit.EditValue.ToString());
+                            efMethods.UpdateDcFeature_Value(Convert.ToByte(edit.Name), dcProduct.ProductCode, edit.EditValue.ToString());
                             DialogResult = DialogResult.OK;
                         }
             }

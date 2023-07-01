@@ -206,6 +206,9 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrProductHierarchy>()
                         .HasKey(bc => new { bc.ProductCode, bc.HierarchyCode });
 
+            modelBuilder.Entity<TrHierarchyFeature>()
+                        .HasKey(bc => new { bc.HierarchyCode, bc.FeatureTypeId });
+
             modelBuilder.Entity<DcProductType>().HasData(
                 new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },
                 new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" },

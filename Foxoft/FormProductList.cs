@@ -126,7 +126,7 @@ namespace Foxoft
                 gV_ProductList.RestoreLayoutFromStream(stream, option);
             }
 
-            gV_ProductList.OptionsFind.FindFilterColumns = nameof(dcProduct.ProductDesc);
+            gV_ProductList.OptionsFind.FindFilterColumns = nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             // Kolonlarin Yetkisi 
@@ -199,7 +199,7 @@ namespace Foxoft
             if (dataSource is null)
             {
                 if (productTypeArr != null && productTypeArr.Length > 0)
-                    dataSource = efMethods.SelectProductsByType(productTypeArr, gV_ProductList.ActiveFilterCriteria);
+                    dataSource = efMethods.SelectProductsByTypeByFilter(productTypeArr, gV_ProductList.ActiveFilterCriteria);
                 else if (productTypeArr == null)
                     dataSource = efMethods.SelectProducts();
             }

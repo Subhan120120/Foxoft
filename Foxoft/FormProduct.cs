@@ -284,7 +284,7 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    buttonEdit.EditValue = "";
+                    buttonEdit.EditValue = form.DcHierarchy.HierarchyCode;
                 }
             }
         }
