@@ -62,6 +62,7 @@ namespace Foxoft
             repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, 4); };
             return repoBtnEdit;
         }
+
         private static RepositoryItem MyCashRegisterCode()
         {
             RepositoryItemButtonEdit repoBtnEdit = new();

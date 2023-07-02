@@ -34,7 +34,7 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductList));
             gC_ProductList = new MyGridControl();
-            gV_ProductList = new MyGridView(gC_ProductList);
+            gV_ProductList = new MyGridView(this);
             dcProductsBindingSource = new System.Windows.Forms.BindingSource(components);
             colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();

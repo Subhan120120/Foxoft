@@ -41,8 +41,6 @@ namespace Foxoft.Models
         public DbSet<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public DbSet<TrPaymentLine> TrPaymentLines { get; set; }
         public DbSet<TrRoleClaim> TrRoleClaims { get; set; }
-        public DbSet<TrShipmentHeader> TrShipmentHeaders { get; set; }
-        public DbSet<TrShipmentLine> TrShipmentLines { get; set; }
         public DbSet<DcReport> DcReports { get; set; }
         public DbSet<DcReportType> DcReportTypes { get; set; }
         public DbSet<DcReportFilter> DcReportFilters { get; set; }
