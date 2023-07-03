@@ -265,9 +265,9 @@ namespace Foxoft
                                         LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
 
                                         lV_invoiceLine.ForEach(x =>
-                                     {
-                                         x.ProductDesc = x.DcProduct.ProductDesc;
-                                     });
+                                        {
+                                            x.ProductDesc = x.DcProduct.HierarchyCode + " " + x.DcProduct.ProductDesc;
+                                        });
 
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
 

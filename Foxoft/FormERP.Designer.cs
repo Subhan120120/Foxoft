@@ -42,9 +42,11 @@ namespace Foxoft
             barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             BSI_StoreDesc = new DevExpress.XtraBars.BarStaticItem();
+            BBI_ChangeUser = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
             aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -73,8 +75,6 @@ namespace Foxoft
             aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            BBI_ChangeUser = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
             SuspendLayout();
@@ -167,6 +167,13 @@ namespace Foxoft
             BSI_StoreDesc.Id = 18;
             BSI_StoreDesc.Name = "BSI_StoreDesc";
             // 
+            // BBI_ChangeUser
+            // 
+            BBI_ChangeUser.Caption = "İstifadəçini Dəyiş";
+            BBI_ChangeUser.Id = 19;
+            BBI_ChangeUser.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ChangeUser.ImageOptions.SvgImage");
+            BBI_ChangeUser.Name = "BBI_ChangeUser";
+            // 
             // ribbonPage_Home
             // 
             ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroup1, ribbonPageGroup2 });
@@ -188,6 +195,11 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(barButtonItem4);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Nəzarət";
+            // 
+            // ribbonPageGroup2
+            // 
+            ribbonPageGroup2.Name = "ribbonPageGroup2";
+            ribbonPageGroup2.Text = "Manager";
             // 
             // ribbonStatusBar
             // 
@@ -399,18 +411,6 @@ namespace Foxoft
             aCE_CurrAccAll.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             aCE_CurrAccAll.Text = "İstifadəçilər";
             aCE_CurrAccAll.Click += aCE_CurrAccAll_Click;
-            // 
-            // ribbonPageGroup2
-            // 
-            ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Manager";
-            // 
-            // BBI_ChangeUser
-            // 
-            BBI_ChangeUser.Caption = "ChangeUser";
-            BBI_ChangeUser.Id = 19;
-            BBI_ChangeUser.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ChangeUser.ImageOptions.SvgImage");
-            BBI_ChangeUser.Name = "BBI_ChangeUser";
             // 
             // FormERP
             // 

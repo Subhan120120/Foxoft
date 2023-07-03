@@ -12,6 +12,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using System;
@@ -204,14 +205,14 @@ namespace Foxoft
                 //ReportPrintTool printTool = new(xtraReport);
                 //printTool.ShowRibbonPreview();
 
-                var xrDesignRibbonForm = new DevExpress.XtraReports.UserDesigner.XRDesignRibbonForm();
+                XRDesignRibbonForm FormDesignRibbon = new();
 
-                RibbonPageGroup pageGroup = xrDesignRibbonForm.RibbonControl.Pages[0].GetGroupByName("Report");
+                RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
                 BarButtonItem item = CreateItem();
                 pageGroup.ItemLinks.Add(item);
 
-                xrDesignRibbonForm.OpenReport(xtraReport);
-                xrDesignRibbonForm.Show();
+                FormDesignRibbon.OpenReport(xtraReport);
+                FormDesignRibbon.Show();
             }
             catch (Exception ex)
             {
@@ -228,7 +229,7 @@ namespace Foxoft
         private XtraReport GetInvoiceReport(DcReport dcReport, string qry)
         {
             List<DcReportQuery> dcReportQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
-            List<CustomSqlQuery> sqlQueries = null;
+            List<CustomSqlQuery> sqlQueries = new();
 
             foreach (DcReportQuery reportQuery in dcReportQueries)
             {
@@ -265,7 +266,7 @@ namespace Foxoft
 
         private BarButtonItem CreateItem()
         {
-            BarButtonItem item = new BarButtonItem();
+            BarButtonItem item = new();
             item.ItemClick += item_ItemClick;
             item.Caption = "Get Help";
             return item;
