@@ -199,25 +199,18 @@ namespace Foxoft
 
         private void OpenDetailReport(string qry)
         {
-            try
-            {
-                XtraReport xtraReport = GetInvoiceReport(dcReport, qry);
-                //ReportPrintTool printTool = new(xtraReport);
-                //printTool.ShowRibbonPreview();
+            XtraReport xtraReport = GetInvoiceReport(dcReport, qry);
+            //ReportPrintTool printTool = new(xtraReport);
+            //printTool.ShowRibbonPreview();
 
-                XRDesignRibbonForm FormDesignRibbon = new();
+            FormReportPreview frm = new(xtraReport);
 
-                RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
-                BarButtonItem item = CreateItem();
-                pageGroup.ItemLinks.Add(item);
+            frm.Show();
 
-                FormDesignRibbon.OpenReport(xtraReport);
-                FormDesignRibbon.Show();
-            }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show(ex.ToString());
-            }
+            frm.MdiParent = this.ParentForm;
+            frm.Show();
+            frm.WindowState = FormWindowState.Maximized;
+            //this.ParentForm.parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
         }
 
         private string subConnString = ConfigurationManager
