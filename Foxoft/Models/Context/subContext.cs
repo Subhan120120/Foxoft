@@ -159,7 +159,7 @@ namespace Foxoft.Models
                new TrCurrAccRole { CurrAccRoleId = 1, CurrAccCode = "CA-1", RoleCode = "Admin" });
 
             modelBuilder.Entity<DcClaim>().HasData(
-                new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi" });
+                new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1 });
 
 
             modelBuilder.Entity<TrRoleClaim>().HasData(
@@ -248,7 +248,7 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcReport>().HasData(
-                new DcReport { ReportName = "Satis", ReportQuery = "select * from TrInvoiceLines", ReportId = 1 });
+                new DcReport { ReportId = 1, ReportName = "Satis", ReportQuery = "select * from TrInvoiceLines", ReportTypeId = 1 });
 
             modelBuilder.Entity<DcReportType>().HasData(
                 new DcReportType { ReportTypeId = 1, ReportTypeDesc = "Grid" },

@@ -33,9 +33,13 @@ namespace Foxoft
 
             using subContext db = new();
 
+            if (!db.Database.CanConnect())
+                if (MessageBoxResult.OK == MessageBox.Show("Databasa ilə əlaqə qurula bilmir. \n connection string: \n" + db.Database.GetConnectionString() + "\n" +
+                "Yeni Database Yaratmaq isteyirsiz?", "Diqqət", MessageBoxButton.OKCancel))
+                    db.Database.EnsureCreated();
+
             if (db.Database.CanConnect())
             {
-                db.Database.EnsureCreated();
                 //db.Database.Migrate();
 
                 //string sql = db.Database.GenerateCreateScript();
@@ -53,7 +57,6 @@ namespace Foxoft
                 Settings.Default.AppSetting = appSetting;
                 Settings.Default.Save();
             }
-            else MessageBox.Show("Databasa ilə əlaqə qurula bilmir. \n connection string: \n" + db.Database.GetConnectionString());
 
             AcceptButton = btn_ERP;
 
@@ -71,6 +74,7 @@ namespace Foxoft
             if (Settings.Default.AppSetting.LocalCurrencyCode is null)
                 MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
         }
+
 
         private static void CreateViews(DatabaseFacade db)
         {
@@ -220,6 +224,18 @@ namespace Foxoft
                         return true;
             }
             return false;
+        }
+
+        private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                var pInterfaceProperties = nic.GetPhysicalAddress();
+
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                    if (nic.Name == "Ethernet")
+                        Clipboard.SetText(nic.Id + pInterfaceProperties);
+            }
         }
     }
 }

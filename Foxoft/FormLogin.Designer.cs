@@ -1,389 +1,390 @@
 ﻿
 namespace Foxoft
 {
-   partial class FormLogin
-   {
-      /// <summary>
-      /// Required designer variable.
-      /// </summary>
-      private System.ComponentModel.IContainer components = null;
+    partial class FormLogin
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-      /// <summary>
-      /// Clean up any resources being used.
-      /// </summary>
-      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-      protected override void Dispose(bool disposing)
-      {
-         if (disposing && (components != null))
-         {
-            components.Dispose();
-         }
-         base.Dispose(disposing);
-      }
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-      #region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-      /// <summary>
-      /// Required method for Designer support - do not modify
-      /// the contents of this method with the code editor.
-      /// </summary>
-      private void InitializeComponent()
-      {
-            this.components = new System.ComponentModel.Container();
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
-            this.btn_ERP = new DevExpress.XtraEditors.SimpleButton();
-            this.lC_Root = new DevExpress.XtraLayout.LayoutControl();
-            this.btn_POS = new DevExpress.XtraEditors.SimpleButton();
-            this.txtEdit_UserName = new DevExpress.XtraEditors.TextEdit();
-            this.txtEdit_Password = new DevExpress.XtraEditors.TextEdit();
-            this.checkEdit_RemindMe = new DevExpress.XtraEditors.CheckEdit();
-            this.txtEdit_conString = new DevExpress.XtraEditors.TextEdit();
-            this.toolbarFormManager1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormManager(this.components);
-            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-            this.btn_SaveConn = new DevExpress.XtraEditors.SimpleButton();
-            this.lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.lCI_ERP = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lCI_POS = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lCI_UserName = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lCI_Password = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lCI_RemindMe = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lCI_ConString = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
-            ((System.ComponentModel.ISupportInitialize)(this.lC_Root)).BeginInit();
-            this.lC_Root.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_UserName.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Password.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit_RemindMe.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_conString.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCG_Root)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_ERP)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_POS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_UserName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_Password)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_RemindMe)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_ConString)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).BeginInit();
-            this.SuspendLayout();
+            btn_ERP = new DevExpress.XtraEditors.SimpleButton();
+            lC_Root = new DevExpress.XtraLayout.LayoutControl();
+            btn_POS = new DevExpress.XtraEditors.SimpleButton();
+            txtEdit_UserName = new DevExpress.XtraEditors.TextEdit();
+            txtEdit_Password = new DevExpress.XtraEditors.TextEdit();
+            checkEdit_RemindMe = new DevExpress.XtraEditors.CheckEdit();
+            txtEdit_conString = new DevExpress.XtraEditors.TextEdit();
+            toolbarFormManager1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormManager(components);
+            barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+            barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+            barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+            barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            btn_SaveConn = new DevExpress.XtraEditors.SimpleButton();
+            lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            lCI_ERP = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_POS = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_UserName = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_Password = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_RemindMe = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_ConString = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
+            BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
+            ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
+            lC_Root.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_UserName.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Password.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)checkEdit_RemindMe.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_conString.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormManager1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCG_Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_ERP).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_POS).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_UserName).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_Password).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_RemindMe).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_ConString).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).BeginInit();
+            SuspendLayout();
             // 
             // btn_ERP
             // 
-            this.btn_ERP.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_ERP.Appearance.Options.UseFont = true;
-            this.btn_ERP.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_ERP.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_ERP.ImageOptions.SvgImage")));
-            this.btn_ERP.Location = new System.Drawing.Point(192, 110);
-            this.btn_ERP.Name = "btn_ERP";
-            this.btn_ERP.Size = new System.Drawing.Size(177, 139);
-            this.btn_ERP.StyleController = this.lC_Root;
-            this.btn_ERP.TabIndex = 7;
-            this.btn_ERP.Text = "Arxa Ofis";
-            this.btn_ERP.Click += new System.EventHandler(this.btn_ERP_Click);
+            btn_ERP.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            btn_ERP.Appearance.Options.UseFont = true;
+            btn_ERP.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_ERP.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ERP.ImageOptions.SvgImage");
+            btn_ERP.Location = new System.Drawing.Point(238, 110);
+            btn_ERP.Name = "btn_ERP";
+            btn_ERP.Size = new System.Drawing.Size(223, 139);
+            btn_ERP.StyleController = lC_Root;
+            btn_ERP.TabIndex = 7;
+            btn_ERP.Text = "Arxa Ofis";
+            btn_ERP.Click += btn_ERP_Click;
             // 
             // lC_Root
             // 
-            this.lC_Root.Controls.Add(this.btn_POS);
-            this.lC_Root.Controls.Add(this.btn_ERP);
-            this.lC_Root.Controls.Add(this.txtEdit_UserName);
-            this.lC_Root.Controls.Add(this.txtEdit_Password);
-            this.lC_Root.Controls.Add(this.checkEdit_RemindMe);
-            this.lC_Root.Controls.Add(this.txtEdit_conString);
-            this.lC_Root.Controls.Add(this.btn_SaveConn);
-            this.lC_Root.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lC_Root.Location = new System.Drawing.Point(0, 31);
-            this.lC_Root.Name = "lC_Root";
-            this.lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(374, 7, 650, 400);
-            this.lC_Root.Root = this.lCG_Root;
-            this.lC_Root.Size = new System.Drawing.Size(381, 261);
-            this.lC_Root.TabIndex = 2;
+            lC_Root.Controls.Add(btn_POS);
+            lC_Root.Controls.Add(btn_ERP);
+            lC_Root.Controls.Add(txtEdit_UserName);
+            lC_Root.Controls.Add(txtEdit_Password);
+            lC_Root.Controls.Add(checkEdit_RemindMe);
+            lC_Root.Controls.Add(txtEdit_conString);
+            lC_Root.Controls.Add(btn_SaveConn);
+            lC_Root.Dock = System.Windows.Forms.DockStyle.Fill;
+            lC_Root.Location = new System.Drawing.Point(0, 31);
+            lC_Root.Name = "lC_Root";
+            lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(374, 7, 650, 400);
+            lC_Root.Root = lCG_Root;
+            lC_Root.Size = new System.Drawing.Size(473, 261);
+            lC_Root.TabIndex = 2;
             // 
             // btn_POS
             // 
-            this.btn_POS.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_POS.Appearance.Options.UseFont = true;
-            this.btn_POS.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_POS.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_POS.ImageOptions.SvgImage")));
-            this.btn_POS.Location = new System.Drawing.Point(12, 110);
-            this.btn_POS.Name = "btn_POS";
-            this.btn_POS.Size = new System.Drawing.Size(176, 139);
-            this.btn_POS.StyleController = this.lC_Root;
-            this.btn_POS.TabIndex = 6;
-            this.btn_POS.Text = "Satış";
-            this.btn_POS.Click += new System.EventHandler(this.btn_POS_Click);
+            btn_POS.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            btn_POS.Appearance.Options.UseFont = true;
+            btn_POS.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_POS.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_POS.ImageOptions.SvgImage");
+            btn_POS.Location = new System.Drawing.Point(12, 110);
+            btn_POS.Name = "btn_POS";
+            btn_POS.Size = new System.Drawing.Size(222, 139);
+            btn_POS.StyleController = lC_Root;
+            btn_POS.TabIndex = 6;
+            btn_POS.Text = "Satış";
+            btn_POS.Click += btn_POS_Click;
             // 
             // txtEdit_UserName
             // 
-            this.txtEdit_UserName.Location = new System.Drawing.Point(101, 38);
-            this.txtEdit_UserName.Name = "txtEdit_UserName";
-            this.txtEdit_UserName.Size = new System.Drawing.Size(268, 20);
-            this.txtEdit_UserName.StyleController = this.lC_Root;
-            this.txtEdit_UserName.TabIndex = 3;
+            txtEdit_UserName.Location = new System.Drawing.Point(101, 38);
+            txtEdit_UserName.Name = "txtEdit_UserName";
+            txtEdit_UserName.Size = new System.Drawing.Size(360, 20);
+            txtEdit_UserName.StyleController = lC_Root;
+            txtEdit_UserName.TabIndex = 3;
             // 
             // txtEdit_Password
             // 
-            this.txtEdit_Password.Location = new System.Drawing.Point(101, 62);
-            this.txtEdit_Password.Name = "txtEdit_Password";
-            this.txtEdit_Password.Properties.UseSystemPasswordChar = true;
-            this.txtEdit_Password.Size = new System.Drawing.Size(268, 20);
-            this.txtEdit_Password.StyleController = this.lC_Root;
-            this.txtEdit_Password.TabIndex = 4;
+            txtEdit_Password.Location = new System.Drawing.Point(101, 62);
+            txtEdit_Password.Name = "txtEdit_Password";
+            txtEdit_Password.Properties.UseSystemPasswordChar = true;
+            txtEdit_Password.Size = new System.Drawing.Size(360, 20);
+            txtEdit_Password.StyleController = lC_Root;
+            txtEdit_Password.TabIndex = 4;
             // 
             // checkEdit_RemindMe
             // 
-            this.checkEdit_RemindMe.Location = new System.Drawing.Point(12, 86);
-            this.checkEdit_RemindMe.Name = "checkEdit_RemindMe";
-            this.checkEdit_RemindMe.Properties.Caption = "meni xatırla";
-            this.checkEdit_RemindMe.Size = new System.Drawing.Size(357, 20);
-            this.checkEdit_RemindMe.StyleController = this.lC_Root;
-            this.checkEdit_RemindMe.TabIndex = 5;
+            checkEdit_RemindMe.Location = new System.Drawing.Point(12, 86);
+            checkEdit_RemindMe.Name = "checkEdit_RemindMe";
+            checkEdit_RemindMe.Properties.Caption = "meni xatırla";
+            checkEdit_RemindMe.Size = new System.Drawing.Size(449, 20);
+            checkEdit_RemindMe.StyleController = lC_Root;
+            checkEdit_RemindMe.TabIndex = 5;
             // 
             // txtEdit_conString
             // 
-            this.txtEdit_conString.Location = new System.Drawing.Point(101, 12);
-            this.txtEdit_conString.MenuManager = this.toolbarFormManager1;
-            this.txtEdit_conString.Name = "txtEdit_conString";
-            this.txtEdit_conString.Size = new System.Drawing.Size(171, 20);
-            this.txtEdit_conString.StyleController = this.lC_Root;
-            this.txtEdit_conString.TabIndex = 0;
+            txtEdit_conString.Location = new System.Drawing.Point(101, 12);
+            txtEdit_conString.MenuManager = toolbarFormManager1;
+            txtEdit_conString.Name = "txtEdit_conString";
+            txtEdit_conString.Size = new System.Drawing.Size(238, 20);
+            txtEdit_conString.StyleController = lC_Root;
+            txtEdit_conString.TabIndex = 0;
             // 
             // toolbarFormManager1
             // 
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlTop);
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlBottom);
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlLeft);
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlRight);
-            this.toolbarFormManager1.Form = this;
-            this.toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.barButtonItem1,
-            this.barButtonItem2});
-            this.toolbarFormManager1.MaxItemId = 2;
+            toolbarFormManager1.DockControls.Add(barDockControlTop);
+            toolbarFormManager1.DockControls.Add(barDockControlBottom);
+            toolbarFormManager1.DockControls.Add(barDockControlLeft);
+            toolbarFormManager1.DockControls.Add(barDockControlRight);
+            toolbarFormManager1.Form = this;
+            toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barButtonItem1, barButtonItem2, BBI_GetKey });
+            toolbarFormManager1.MaxItemId = 3;
             // 
             // barDockControlTop
             // 
-            this.barDockControlTop.CausesValidation = false;
-            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barDockControlTop.Location = new System.Drawing.Point(0, 31);
-            this.barDockControlTop.Manager = this.toolbarFormManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(381, 0);
+            barDockControlTop.CausesValidation = false;
+            barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            barDockControlTop.Location = new System.Drawing.Point(0, 31);
+            barDockControlTop.Manager = toolbarFormManager1;
+            barDockControlTop.Size = new System.Drawing.Size(473, 0);
             // 
             // barDockControlBottom
             // 
-            this.barDockControlBottom.CausesValidation = false;
-            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 292);
-            this.barDockControlBottom.Manager = this.toolbarFormManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(381, 0);
+            barDockControlBottom.CausesValidation = false;
+            barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            barDockControlBottom.Location = new System.Drawing.Point(0, 292);
+            barDockControlBottom.Manager = toolbarFormManager1;
+            barDockControlBottom.Size = new System.Drawing.Size(473, 0);
             // 
             // barDockControlLeft
             // 
-            this.barDockControlLeft.CausesValidation = false;
-            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
-            this.barDockControlLeft.Manager = this.toolbarFormManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 261);
+            barDockControlLeft.CausesValidation = false;
+            barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            barDockControlLeft.Location = new System.Drawing.Point(0, 31);
+            barDockControlLeft.Manager = toolbarFormManager1;
+            barDockControlLeft.Size = new System.Drawing.Size(0, 261);
             // 
             // barDockControlRight
             // 
-            this.barDockControlRight.CausesValidation = false;
-            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(381, 31);
-            this.barDockControlRight.Manager = this.toolbarFormManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 261);
+            barDockControlRight.CausesValidation = false;
+            barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+            barDockControlRight.Location = new System.Drawing.Point(473, 31);
+            barDockControlRight.Manager = toolbarFormManager1;
+            barDockControlRight.Size = new System.Drawing.Size(0, 261);
             // 
             // barButtonItem1
             // 
-            this.barButtonItem1.Caption = "Default";
-            this.barButtonItem1.Id = 0;
-            this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-            this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            barButtonItem1.Caption = "Default";
+            barButtonItem1.Id = 0;
+            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            barButtonItem1.Name = "barButtonItem1";
+            barButtonItem1.ItemClick += barButtonItem1_ItemClick;
             // 
             // barButtonItem2
             // 
-            this.barButtonItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.barButtonItem2.Caption = "cap";
-            this.barButtonItem2.Id = 1;
-            this.barButtonItem2.Name = "barButtonItem2";
-            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            barButtonItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            barButtonItem2.Caption = "cap";
+            barButtonItem2.Id = 1;
+            barButtonItem2.Name = "barButtonItem2";
+            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
             // 
             // btn_SaveConn
             // 
-            this.btn_SaveConn.Location = new System.Drawing.Point(276, 12);
-            this.btn_SaveConn.Name = "btn_SaveConn";
-            this.btn_SaveConn.Size = new System.Drawing.Size(93, 22);
-            this.btn_SaveConn.StyleController = this.lC_Root;
-            this.btn_SaveConn.TabIndex = 8;
-            this.btn_SaveConn.Text = "Yadda Saxla";
-            this.btn_SaveConn.Click += new System.EventHandler(this.btn_SaveConn_Click);
+            btn_SaveConn.Location = new System.Drawing.Point(343, 12);
+            btn_SaveConn.Name = "btn_SaveConn";
+            btn_SaveConn.Size = new System.Drawing.Size(118, 22);
+            btn_SaveConn.StyleController = lC_Root;
+            btn_SaveConn.TabIndex = 8;
+            btn_SaveConn.Text = "Yadda Saxla";
+            btn_SaveConn.Click += btn_SaveConn_Click;
             // 
             // lCG_Root
             // 
-            this.lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.lCG_Root.GroupBordersVisible = false;
-            this.lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lCI_ERP,
-            this.lCI_POS,
-            this.lCI_UserName,
-            this.lCI_Password,
-            this.lCI_RemindMe,
-            this.lCI_ConString,
-            this.layoutControlItem2});
-            this.lCG_Root.Name = "Root";
-            this.lCG_Root.Size = new System.Drawing.Size(381, 261);
-            this.lCG_Root.TextVisible = false;
+            lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            lCG_Root.GroupBordersVisible = false;
+            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_ERP, lCI_POS, lCI_UserName, lCI_Password, lCI_RemindMe, lCI_ConString, layoutControlItem2 });
+            lCG_Root.Name = "Root";
+            lCG_Root.Size = new System.Drawing.Size(473, 261);
+            lCG_Root.TextVisible = false;
             // 
             // lCI_ERP
             // 
-            this.lCI_ERP.Control = this.btn_ERP;
-            this.lCI_ERP.Location = new System.Drawing.Point(180, 98);
-            this.lCI_ERP.MinSize = new System.Drawing.Size(78, 26);
-            this.lCI_ERP.Name = "lCI_ERP";
-            this.lCI_ERP.Size = new System.Drawing.Size(181, 143);
-            this.lCI_ERP.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.lCI_ERP.TextSize = new System.Drawing.Size(0, 0);
-            this.lCI_ERP.TextVisible = false;
+            lCI_ERP.Control = btn_ERP;
+            lCI_ERP.Location = new System.Drawing.Point(226, 98);
+            lCI_ERP.MinSize = new System.Drawing.Size(78, 26);
+            lCI_ERP.Name = "lCI_ERP";
+            lCI_ERP.Size = new System.Drawing.Size(227, 143);
+            lCI_ERP.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            lCI_ERP.TextSize = new System.Drawing.Size(0, 0);
+            lCI_ERP.TextVisible = false;
             // 
             // lCI_POS
             // 
-            this.lCI_POS.Control = this.btn_POS;
-            this.lCI_POS.Location = new System.Drawing.Point(0, 98);
-            this.lCI_POS.MinSize = new System.Drawing.Size(78, 26);
-            this.lCI_POS.Name = "lCI_POS";
-            this.lCI_POS.Size = new System.Drawing.Size(180, 143);
-            this.lCI_POS.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.lCI_POS.TextSize = new System.Drawing.Size(0, 0);
-            this.lCI_POS.TextVisible = false;
+            lCI_POS.Control = btn_POS;
+            lCI_POS.Location = new System.Drawing.Point(0, 98);
+            lCI_POS.MinSize = new System.Drawing.Size(78, 26);
+            lCI_POS.Name = "lCI_POS";
+            lCI_POS.Size = new System.Drawing.Size(226, 143);
+            lCI_POS.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            lCI_POS.TextSize = new System.Drawing.Size(0, 0);
+            lCI_POS.TextVisible = false;
             // 
             // lCI_UserName
             // 
-            this.lCI_UserName.Control = this.txtEdit_UserName;
-            this.lCI_UserName.Location = new System.Drawing.Point(0, 26);
-            this.lCI_UserName.Name = "lCI_UserName";
-            this.lCI_UserName.Size = new System.Drawing.Size(361, 24);
-            this.lCI_UserName.Text = "İstifadəçi";
-            this.lCI_UserName.TextSize = new System.Drawing.Size(77, 13);
+            lCI_UserName.Control = txtEdit_UserName;
+            lCI_UserName.Location = new System.Drawing.Point(0, 26);
+            lCI_UserName.Name = "lCI_UserName";
+            lCI_UserName.Size = new System.Drawing.Size(453, 24);
+            lCI_UserName.Text = "İstifadəçi";
+            lCI_UserName.TextSize = new System.Drawing.Size(77, 13);
             // 
             // lCI_Password
             // 
-            this.lCI_Password.Control = this.txtEdit_Password;
-            this.lCI_Password.Location = new System.Drawing.Point(0, 50);
-            this.lCI_Password.Name = "lCI_Password";
-            this.lCI_Password.Size = new System.Drawing.Size(361, 24);
-            this.lCI_Password.Text = "Şifrə";
-            this.lCI_Password.TextSize = new System.Drawing.Size(77, 13);
+            lCI_Password.Control = txtEdit_Password;
+            lCI_Password.Location = new System.Drawing.Point(0, 50);
+            lCI_Password.Name = "lCI_Password";
+            lCI_Password.Size = new System.Drawing.Size(453, 24);
+            lCI_Password.Text = "Şifrə";
+            lCI_Password.TextSize = new System.Drawing.Size(77, 13);
             // 
             // lCI_RemindMe
             // 
-            this.lCI_RemindMe.Control = this.checkEdit_RemindMe;
-            this.lCI_RemindMe.Location = new System.Drawing.Point(0, 74);
-            this.lCI_RemindMe.Name = "lCI_RemindMe";
-            this.lCI_RemindMe.Size = new System.Drawing.Size(361, 24);
-            this.lCI_RemindMe.TextSize = new System.Drawing.Size(0, 0);
-            this.lCI_RemindMe.TextVisible = false;
+            lCI_RemindMe.Control = checkEdit_RemindMe;
+            lCI_RemindMe.Location = new System.Drawing.Point(0, 74);
+            lCI_RemindMe.Name = "lCI_RemindMe";
+            lCI_RemindMe.Size = new System.Drawing.Size(453, 24);
+            lCI_RemindMe.TextSize = new System.Drawing.Size(0, 0);
+            lCI_RemindMe.TextVisible = false;
             // 
             // lCI_ConString
             // 
-            this.lCI_ConString.Control = this.txtEdit_conString;
-            this.lCI_ConString.Location = new System.Drawing.Point(0, 0);
-            this.lCI_ConString.Name = "lCI_ConString";
-            this.lCI_ConString.Size = new System.Drawing.Size(264, 26);
-            this.lCI_ConString.Text = "Database Əlaqə";
-            this.lCI_ConString.TextSize = new System.Drawing.Size(77, 13);
+            lCI_ConString.Control = txtEdit_conString;
+            lCI_ConString.Location = new System.Drawing.Point(0, 0);
+            lCI_ConString.Name = "lCI_ConString";
+            lCI_ConString.Size = new System.Drawing.Size(331, 26);
+            lCI_ConString.Text = "Database Əlaqə";
+            lCI_ConString.TextSize = new System.Drawing.Size(77, 13);
             // 
             // layoutControlItem2
             // 
-            this.layoutControlItem2.Control = this.btn_SaveConn;
-            this.layoutControlItem2.Location = new System.Drawing.Point(264, 0);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(97, 26);
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem2.TextVisible = false;
+            layoutControlItem2.Control = btn_SaveConn;
+            layoutControlItem2.Location = new System.Drawing.Point(331, 0);
+            layoutControlItem2.Name = "layoutControlItem2";
+            layoutControlItem2.Size = new System.Drawing.Size(122, 26);
+            layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem2.TextVisible = false;
             // 
             // toolbarFormControl1
             // 
-            this.toolbarFormControl1.Location = new System.Drawing.Point(0, 0);
-            this.toolbarFormControl1.Manager = this.toolbarFormManager1;
-            this.toolbarFormControl1.Name = "toolbarFormControl1";
-            this.toolbarFormControl1.Size = new System.Drawing.Size(381, 31);
-            this.toolbarFormControl1.TabIndex = 3;
-            this.toolbarFormControl1.TabStop = false;
-            this.toolbarFormControl1.TitleItemLinks.Add(this.barButtonItem1);
-            this.toolbarFormControl1.TitleItemLinks.Add(this.barButtonItem2);
-            this.toolbarFormControl1.ToolbarForm = this;
+            toolbarFormControl1.Location = new System.Drawing.Point(0, 0);
+            toolbarFormControl1.Manager = toolbarFormManager1;
+            toolbarFormControl1.Name = "toolbarFormControl1";
+            toolbarFormControl1.Size = new System.Drawing.Size(473, 31);
+            toolbarFormControl1.TabIndex = 3;
+            toolbarFormControl1.TabStop = false;
+            toolbarFormControl1.TitleItemLinks.Add(barButtonItem1);
+            toolbarFormControl1.TitleItemLinks.Add(barButtonItem2);
+            toolbarFormControl1.TitleItemLinks.Add(BBI_GetKey);
+            toolbarFormControl1.ToolbarForm = this;
+            // 
+            // BBI_GetKey
+            // 
+            BBI_GetKey.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            BBI_GetKey.Caption = "bbi";
+            BBI_GetKey.Id = 2;
+            BBI_GetKey.Name = "BBI_GetKey";
+            BBI_GetKey.ItemClick += BBI_GetKey_ItemClick;
             // 
             // FormLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 292);
-            this.Controls.Add(this.lC_Root);
-            this.Controls.Add(this.barDockControlLeft);
-            this.Controls.Add(this.barDockControlRight);
-            this.Controls.Add(this.barDockControlBottom);
-            this.Controls.Add(this.barDockControlTop);
-            this.Controls.Add(this.toolbarFormControl1);
-            this.Name = "FormLogin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Giriş";
-            this.ToolbarFormControl = this.toolbarFormControl1;
-            this.Load += new System.EventHandler(this.FormLogin_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.lC_Root)).EndInit();
-            this.lC_Root.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_UserName.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Password.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.checkEdit_RemindMe.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_conString.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCG_Root)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_ERP)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_POS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_UserName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_Password)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_RemindMe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_ConString)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(473, 292);
+            Controls.Add(lC_Root);
+            Controls.Add(barDockControlLeft);
+            Controls.Add(barDockControlRight);
+            Controls.Add(barDockControlBottom);
+            Controls.Add(barDockControlTop);
+            Controls.Add(toolbarFormControl1);
+            Name = "FormLogin";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Giriş";
+            ToolbarFormControl = toolbarFormControl1;
+            Load += FormLogin_Load;
+            ((System.ComponentModel.ISupportInitialize)lC_Root).EndInit();
+            lC_Root.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)txtEdit_UserName.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Password.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)checkEdit_RemindMe.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_conString.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormManager1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCG_Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_ERP).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_POS).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_UserName).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_Password).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_RemindMe).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_ConString).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+        }
 
-      }
+        #endregion
 
-      #endregion
-
-      private DevExpress.XtraEditors.SimpleButton btn_ERP;
-      private DevExpress.XtraLayout.LayoutControl lC_Root;
-      private DevExpress.XtraEditors.SimpleButton btn_POS;
-      private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_POS;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_ERP;
-      private DevExpress.XtraEditors.TextEdit txtEdit_UserName;
-      private DevExpress.XtraEditors.TextEdit txtEdit_Password;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_UserName;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_Password;
-      private DevExpress.XtraEditors.CheckEdit checkEdit_RemindMe;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_RemindMe;
-      private DevExpress.XtraBars.ToolbarForm.ToolbarFormControl toolbarFormControl1;
-      private DevExpress.XtraBars.ToolbarForm.ToolbarFormManager toolbarFormManager1;
-      private DevExpress.XtraBars.BarDockControl barDockControlTop;
-      private DevExpress.XtraBars.BarDockControl barDockControlBottom;
-      private DevExpress.XtraBars.BarDockControl barDockControlLeft;
-      private DevExpress.XtraBars.BarDockControl barDockControlRight;
-      private DevExpress.XtraBars.BarButtonItem barButtonItem1;
-      private DevExpress.XtraEditors.TextEdit textEdit1;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-      private DevExpress.XtraEditors.TextEdit txtEdit_conString;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_ConString;
-      private DevExpress.XtraEditors.SimpleButton simpleButton1;
-      private DevExpress.XtraEditors.SimpleButton btn_ConStringSave;
-      private DevExpress.XtraEditors.SimpleButton btn_SaveConn;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraEditors.SimpleButton btn_ERP;
+        private DevExpress.XtraLayout.LayoutControl lC_Root;
+        private DevExpress.XtraEditors.SimpleButton btn_POS;
+        private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_POS;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_ERP;
+        private DevExpress.XtraEditors.TextEdit txtEdit_UserName;
+        private DevExpress.XtraEditors.TextEdit txtEdit_Password;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_UserName;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_Password;
+        private DevExpress.XtraEditors.CheckEdit checkEdit_RemindMe;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_RemindMe;
+        private DevExpress.XtraBars.ToolbarForm.ToolbarFormControl toolbarFormControl1;
+        private DevExpress.XtraBars.ToolbarForm.ToolbarFormManager toolbarFormManager1;
+        private DevExpress.XtraBars.BarDockControl barDockControlTop;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraEditors.TextEdit textEdit1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraEditors.TextEdit txtEdit_conString;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_ConString;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btn_ConStringSave;
+        private DevExpress.XtraEditors.SimpleButton btn_SaveConn;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarButtonItem BBI_GetKey;
     }
 }
