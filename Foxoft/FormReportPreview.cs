@@ -22,10 +22,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            //ribbonControl1.Pages[0].Groups.Add(new RibbonPageGroup() { Name = "Design", Text = "Dizayn"});
-            //RibbonPageGroup pageGroup = ribbonControl1.Pages[0].GetGroupByName("printPreviewRibbonPageGroup3");
-            //BarButtonItem item = CreateItem();
-            //printPreviewRibbonPageGroup3.ItemLinks.Add(item);
+
         }
 
         public FormReportPreview(XtraReport report)
@@ -53,6 +50,12 @@ namespace Foxoft
         private void BBI_EditDesign_ItemClick(object sender, ItemClickEventArgs e)
         {
             XRDesignRibbonForm FormDesignRibbon = new();
+
+            //FormDesignRibbon.RibbonControl.Pages[0].Groups.Add(new RibbonPageGroup() { Name = "Design", Text = "Dizayn"});
+            RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
+            BarButtonItem item = CreateItem();
+            pageGroup.ItemLinks.Add(item);
+
             FormDesignRibbon.OpenReport(reportE);
             FormDesignRibbon.Show();
         }

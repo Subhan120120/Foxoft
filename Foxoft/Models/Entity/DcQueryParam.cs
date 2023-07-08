@@ -28,19 +28,19 @@ namespace Foxoft.Models
         [Display(Name = "Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ParameterName { get; set; }
+        public string ColumnName { get; set; }
 
-        [Display(Name = "Tipi")]
+        [Display(Name = "Ana Kolon Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ParameterType { get; set; }
+        public string ParentColumnName { get; set; }
 
-        [Display(Name = "Dəyəri")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ParameterValue { get; set; }
+        //[Display(Name = "Dəyəri")]
+        //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        //[StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        //public string ParameterValue { get; set; }
 
-        public virtual DcReportQuery DcReportQuery { get; set; }
+        public virtual DcReportSubQuery DcReportSubQuery { get; set; }
 
     }
 }

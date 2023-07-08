@@ -5,16 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    public partial class DcReportQuery
+    public partial class DcReportSubQuery
     {
-        public DcReportQuery()
+        public DcReportSubQuery()
         {
 
         }
 
         [Key]
         [Display(Name = "Sorğu Kodu")]
-        public int QueryId { get; set; }
+        public int SubQueryId { get; set; }
 
         [ForeignKey("DcReport")]
         [Display(Name = "Hesabat Id")]
@@ -22,11 +22,11 @@ namespace Foxoft.Models
 
         [Display(Name = "Sorğu Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public string QueryName { get; set; }
+        public string SubQueryName { get; set; }
 
         [Display(Name = "Sorğu Mətni")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public string QueryText { get; set; }
+        public string SubQueryText { get; set; }
 
         public virtual DcReport DcReport { get; set; }
         public virtual ICollection<DcQueryParam> DcQueryParams { get; set; }

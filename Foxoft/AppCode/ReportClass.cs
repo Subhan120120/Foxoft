@@ -1,8 +1,11 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.DataAccess.DataFederation;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Mvvm.POCO;
 using DevExpress.XtraEditors;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -77,7 +80,6 @@ namespace Foxoft
         {
             SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
             dataSource.Name = dataSourceName;
-
             dataSource.Queries.AddRange(sqlQueries);
             dataSource.Fill();
 

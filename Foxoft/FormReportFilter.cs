@@ -200,17 +200,18 @@ namespace Foxoft
         private void OpenDetailReport(string qry)
         {
             XtraReport xtraReport = GetInvoiceReport(dcReport, qry);
-            //ReportPrintTool printTool = new(xtraReport);
-            //printTool.ShowRibbonPreview();
 
-            FormReportPreview frm = new(xtraReport);
+            if (xtraReport is not null)
+            {
+                FormReportPreview frm = new(xtraReport);
 
-            frm.Show();
+                frm.Show();
 
-            frm.MdiParent = this.ParentForm;
-            frm.Show();
-            frm.WindowState = FormWindowState.Maximized;
-            //this.ParentForm.parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+                frm.MdiParent = this.ParentForm;
+                frm.Show();
+                frm.WindowState = FormWindowState.Maximized;
+                //this.ParentForm.parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
         }
 
         private string subConnString = ConfigurationManager
@@ -219,14 +220,16 @@ namespace Foxoft
                  .ConnectionStrings["subConnString"]
                  .ConnectionString;
 
-        private XtraReport GetInvoiceReport(DcReport dcReport, string qry)
+        private XtraReport GetInvoiceReport(DcReport dcReport, string reportQry)
         {
-            List<DcReportQuery> dcReportQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
+            List<DcReportSubQuery> ReportSubQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
             List<CustomSqlQuery> sqlQueries = new();
 
-            foreach (DcReportQuery reportQuery in dcReportQueries)
+            sqlQueries.Add(new CustomSqlQuery(dcReport.ReportName, reportQry));
+
+            foreach (DcReportSubQuery reportSubQuery in ReportSubQueries)
             {
-                CustomSqlQuery sqlQuery = SelectQry(reportQuery);
+                CustomSqlQuery sqlQuery = SelectQry(reportSubQuery);
                 sqlQueries.Add(sqlQuery);
             }
 
@@ -234,19 +237,19 @@ namespace Foxoft
             return reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
         }
 
-        public CustomSqlQuery SelectQry(DcReportQuery dcReportQuery)
+        public CustomSqlQuery SelectQry(DcReportSubQuery reportSubQuery)
         {
-            List<DcQueryParam> dcQueryParams = efMethods.SelectQueryParamsByQuery(dcReportQuery.QueryId);
+            List<DcQueryParam> dcQueryParams = efMethods.SelectQueryParamsByQuery(reportSubQuery.SubQueryId);
 
-            CustomSqlQuery sqlQuery = new(dcReportQuery.QueryName, dcReportQuery.QueryText);
+            CustomSqlQuery sqlQuery = new(reportSubQuery.SubQueryName, reportSubQuery.SubQueryText);
 
             foreach (DcQueryParam queryParam in dcQueryParams)
             {
                 //string typeName = typeof(DateTime).FullName;
 
-                object value = Convert.ChangeType(queryParam.ParameterValue, Type.GetType(queryParam.ParameterType));
-                QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), value);
-                sqlQuery.Parameters.Add(queryParameter);
+                //object value = Convert.ChangeType(queryParam.ParameterValue, Type.GetType(queryParam.ParameterType));
+                //QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), value);
+                //sqlQuery.Parameters.Add(queryParameter);
 
                 //QueryParameter queryParameter2 = new();
                 //queryParameter2.Name = "EndDate";

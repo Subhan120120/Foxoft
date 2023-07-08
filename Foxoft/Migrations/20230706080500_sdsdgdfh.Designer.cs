@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230706080500_sdsdgdfh")]
+    partial class sdsdgdfh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2147,6 +2149,7 @@ namespace Foxoft.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FeatureCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProductCode", "FeatureTypeId");
@@ -2565,7 +2568,8 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcFeature", "DcFeature")
                         .WithMany("TrProductFeatures")
                         .HasForeignKey("FeatureCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcFeatureType", "DcFeatureType")
                         .WithMany("TrProductFeatures")

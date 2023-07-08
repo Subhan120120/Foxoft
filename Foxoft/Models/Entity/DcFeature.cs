@@ -21,8 +21,8 @@ namespace Foxoft.Models
         public int FeatureTypeId { get; set; }
 
         [Display(Name = "Özəllik Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public string FeatureDesc { get; set; }
+        //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public string? FeatureDesc { get; set; }
 
 
         [ForeignKey("FeatureTypeId")]

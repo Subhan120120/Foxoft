@@ -1098,10 +1098,10 @@ namespace Foxoft
             return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportId == id);
         }
 
-        public List<DcReportQuery> SelectReportQueriesByReport(int reportId)
+        public List<DcReportSubQuery> SelectReportQueriesByReport(int reportId)
         {
             using subContext db = new();
-            return db.DcReportQueries.Where(x => x.ReportId == reportId).ToList();
+            return db.DcReportSubQueries.Where(x => x.ReportId == reportId).ToList();
         }
 
         public List<DcQueryParam> SelectQueryParamsByQuery(int queryId)

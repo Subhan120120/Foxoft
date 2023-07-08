@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230705075047_DcReportSubQuery2")]
+    partial class DcReportSubQuery2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -475,6 +477,7 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FeatureDesc")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FeatureTypeId")
@@ -941,15 +944,17 @@ namespace Foxoft.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ColumnName")
+                    b.Property<string>("ParameterName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("DcReportSubQuerySubQueryId")
-                        .HasColumnType("int");
+                    b.Property<string>("ParameterType")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("ParentColumnName")
+                    b.Property<string>("ParameterValue")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -959,7 +964,7 @@ namespace Foxoft.Migrations
 
                     b.HasKey("ParameterId");
 
-                    b.HasIndex("DcReportSubQuerySubQueryId");
+                    b.HasIndex("QueryId");
 
                     b.ToTable("DcQueryParams");
                 });
@@ -2147,6 +2152,7 @@ namespace Foxoft.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FeatureCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProductCode", "FeatureTypeId");
@@ -2334,12 +2340,13 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcQueryParam", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcReportSubQuery", "DcReportSubQuery")
+                    b.HasOne("Foxoft.Models.DcReportSubQuery", "DcReportQuery")
                         .WithMany("DcQueryParams")
-                        .HasForeignKey("DcReportSubQuerySubQueryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("QueryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("DcReportSubQuery");
+                    b.Navigation("DcReportQuery");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
@@ -2565,7 +2572,8 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcFeature", "DcFeature")
                         .WithMany("TrProductFeatures")
                         .HasForeignKey("FeatureCode")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcFeatureType", "DcFeatureType")
                         .WithMany("TrProductFeatures")

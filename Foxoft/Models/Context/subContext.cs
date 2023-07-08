@@ -44,7 +44,7 @@ namespace Foxoft.Models
         public DbSet<DcReport> DcReports { get; set; }
         public DbSet<DcReportType> DcReportTypes { get; set; }
         public DbSet<DcReportFilter> DcReportFilters { get; set; }
-        public DbSet<DcReportQuery> DcReportQueries { get; set; }
+        public DbSet<DcReportSubQuery> DcReportSubQueries { get; set; }
         public DbSet<DcQueryParam> DcQueryParams { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<SettingStore> SettingStores { get; set; }
@@ -197,6 +197,21 @@ namespace Foxoft.Models
 
             //modelBuilder.Entity<TrProductFeature>() 
             //.HasNoKey();
+
+            //modelBuilder.Entity<DcFeature>(e =>
+            //{
+            //    e.HasMany(field => field.TrProductFeatures)
+            //     .WithOne(fk => fk.DcFeature)
+            //     .HasForeignKey(tr => new { tr.FeatureCode, tr.DcFeatureType });
+            //
+            //    //e.HasOne(field => field.FromCashReg)
+            //    //.WithMany(fk => fk.TrPaymentHeaderFromCashes)
+            //    //.HasForeignKey(fk => fk.FromCashRegCode);
+            //});
+
+
+            //modelBuilder.Entity<DcFeature>()
+            //            .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
 
             modelBuilder.Entity<TrProductFeature>()
                         .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId });
