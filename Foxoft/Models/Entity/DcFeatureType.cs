@@ -21,6 +21,9 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string FeatureTypeName { get; set; }
 
+        [Display(Name = "Sıra")]
+        public int Order { get; set; }
+
 
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
         public virtual ICollection<TrHierarchyFeature> TrHierarchyFeatures { get; set; }

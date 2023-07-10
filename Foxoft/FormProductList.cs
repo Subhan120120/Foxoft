@@ -700,7 +700,7 @@ namespace Foxoft
 
                             if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
                             {
-                                Process p = new Process();
+                                Process p = new();
                                 p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
                                 p.Start();
                             }

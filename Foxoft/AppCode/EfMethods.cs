@@ -7,6 +7,7 @@ using System.Linq;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq.Helpers;
+using DevExpress.Data.ODataLinq.Helpers;
 
 namespace Foxoft
 {
@@ -96,13 +97,12 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            List<DcFeatureType> featureTypes = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatures).Where(x => x.TrHierarchyFeatures.Where(x => x.HierarchyCode == hierarchyCode).Any()).ToList();
+            List<DcFeatureType> featureTypes = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatures)
+                                                                .Where(x => x.TrHierarchyFeatures.Where(x => x.HierarchyCode == hierarchyCode).Any() || !x.TrHierarchyFeatures.Any())
+                                                                .OrderByDescending(x => x.Order)
+                                                                .ToList();
 
-            List<DcFeatureType> featureTypes2 = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatures).Where(x => !x.TrHierarchyFeatures.Any()).ToList();
-
-            featureTypes2.AddRange(featureTypes);
-
-            return featureTypes2;
+            return featureTypes;
         }
 
         public List<DcFeature> SelectFeatures(int featureTypeId)

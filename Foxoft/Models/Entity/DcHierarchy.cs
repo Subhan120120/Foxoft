@@ -27,7 +27,7 @@ namespace Foxoft.Models
         public string HierarchyParentCode { get; set; }
 
         [Display(Name = "Sıra")]
-        public byte Order { get; set; }
+        public int Order { get; set; }
 
 
         public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
