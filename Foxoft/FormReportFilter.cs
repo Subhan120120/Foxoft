@@ -41,6 +41,11 @@ namespace Foxoft
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
+
+            if (settingStore is not null)
+                if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                    AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
+
             ComponentResourceManager resources = new(typeof(FormReportFilter));
 
             SvgImage ımage = ((SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
@@ -199,11 +204,9 @@ namespace Foxoft
 
         private void OpenDetailReport(string qry)
         {
-            XtraReport xtraReport = GetInvoiceReport(dcReport, qry);
-
-            if (xtraReport is not null)
+            if (!string.IsNullOrEmpty(qry))
             {
-                FormReportPreview frm = new(xtraReport);
+                FormReportPreview frm = new(qry, dcReport);
 
                 frm.Show();
 
@@ -219,46 +222,6 @@ namespace Foxoft
                  .ConnectionStrings
                  .ConnectionStrings["subConnString"]
                  .ConnectionString;
-
-        private XtraReport GetInvoiceReport(DcReport dcReport, string reportQry)
-        {
-            List<DcReportSubQuery> ReportSubQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
-            List<CustomSqlQuery> sqlQueries = new();
-
-            sqlQueries.Add(new CustomSqlQuery(dcReport.ReportName, reportQry));
-
-            foreach (DcReportSubQuery reportSubQuery in ReportSubQueries)
-            {
-                CustomSqlQuery sqlQuery = SelectQry(reportSubQuery);
-                sqlQueries.Add(sqlQuery);
-            }
-
-            ReportClass reportClass = new();
-            return reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
-        }
-
-        public CustomSqlQuery SelectQry(DcReportSubQuery reportSubQuery)
-        {
-            List<DcQueryParam> dcQueryParams = efMethods.SelectQueryParamsByQuery(reportSubQuery.SubQueryId);
-
-            CustomSqlQuery sqlQuery = new(reportSubQuery.SubQueryName, reportSubQuery.SubQueryText);
-
-            foreach (DcQueryParam queryParam in dcQueryParams)
-            {
-                //string typeName = typeof(DateTime).FullName;
-
-                //object value = Convert.ChangeType(queryParam.ParameterValue, Type.GetType(queryParam.ParameterType));
-                //QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), value);
-                //sqlQuery.Parameters.Add(queryParameter);
-
-                //QueryParameter queryParameter2 = new();
-                //queryParameter2.Name = "EndDate";
-                //queryParameter2.Type = typeof(DateTime);
-                //queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
-            }
-
-            return sqlQuery;
-        }
 
         private BarButtonItem CreateItem()
         {

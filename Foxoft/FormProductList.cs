@@ -15,8 +15,10 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using Foxoft.Migrations;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -127,6 +129,7 @@ namespace Foxoft
             }
 
             gV_ProductList.OptionsFind.FindFilterColumns = nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
+            gV_ProductList.OptionsFind.FindFilterColumns = "Məhsulun Geniş Adı";
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             // Kolonlarin Yetkisi 
@@ -567,8 +570,18 @@ namespace Foxoft
                 string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
                 string filter = " where [ProductCode] = '" + productCode + "' ";
                 string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
-                formGrid.Show();
+
+                if (dcReport.ReportTypeId == 1)
+                {
+                    FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+                    formGrid.Show();
+                }
+                else if (dcReport.ReportTypeId == 2)
+                {
+                    FormReportPreview form = new(qryMaster + filter, dcReport);
+                    form.WindowState = FormWindowState.Maximized;
+                    form.Show();
+                }
             }
         }
 
@@ -605,8 +618,8 @@ namespace Foxoft
         {
             ReportClass reportClass = new();
             DsMethods dsMethods = new();
-            SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
-            return reportClass.GetReport("Barcode", barcodeDesignFile, new SqlQuery[] { sqlQuerySale });
+            DevExpress.DataAccess.Sql.SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
+            return reportClass.GetReport("Barcode", barcodeDesignFile, new DevExpress.DataAccess.Sql.SqlQuery[] { sqlQuerySale });
         }
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
@@ -709,7 +722,6 @@ namespace Foxoft
                         }
                         else
                             return "Fail";
-
                     }
                     else
                         return "Fail";
@@ -743,6 +755,72 @@ namespace Foxoft
             {
                 ReportDesignTool printTool = new(xtraReport);
                 printTool.ShowRibbonDesigner();
+            }
+        }
+
+        private void BBI_Sticker_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DcReport dcReport = efMethods.SelectReport(1031);
+            List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
+            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+            string filter = "";
+            if (dcProduct is not null)
+                filter = " where [ProductCode] = '" + dcProduct.ProductCode + "' ";
+            else
+            {
+                var combined = "";
+                foreach (DataRowView rowView in mydata)
+                    combined += "'" + rowView["ProductCode"].ToString() + "',";
+
+                combined = combined.Substring(0, combined.Length - 1);
+                filter = " where [ProductCode] in ( " + combined + ")";
+            }
+
+            if (dcReport.ReportTypeId == 1)
+            {
+                FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                formGrid.Show();
+            }
+            else if (dcReport.ReportTypeId == 2)
+            {
+                FormReportPreview form = new(qryMaster + filter, dcReport);
+                form.WindowState = FormWindowState.Maximized;
+                form.Show();
+            }
+        }
+
+        private void BBI_ProductCart_Click(object sender, ItemClickEventArgs e)
+        {
+            DcReport dcReport = efMethods.SelectReport(1032);
+
+            List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
+
+            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+            string filter = "";
+            if (dcProduct is not null)
+                filter = " where [ProductCode] = '" + dcProduct.ProductCode + "' ";
+            else
+            {
+                var combined = "";
+                foreach (DataRowView rowView in mydata)
+                    combined += "'" + rowView["ProductCode"].ToString() + "',";
+
+                combined = combined.Substring(0, combined.Length - 1);
+                filter = " where [ProductCode] in ( " + combined + ")";
+            }
+
+            if (dcReport.ReportTypeId == 1)
+            {
+                FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                formGrid.Show();
+            }
+            else if (dcReport.ReportTypeId == 2)
+            {
+                FormReportPreview form = new(qryMaster + filter, dcReport);
+                form.WindowState = FormWindowState.Maximized;
+                form.Show();
             }
         }
     }

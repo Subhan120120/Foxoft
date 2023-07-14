@@ -81,6 +81,7 @@ namespace Foxoft
             InjectView(db, "View_RetailSales.sql", "RetailSales");
             InjectView(db, "View_AllPayments.sql", "AllPayments");
             InjectView(db, "View_Transactions.sql", "Transactions");
+            InjectView(db, "View_ProductFeatures.sql", "ProductFeatures");
         }
 
         private static void InjectView(DatabaseFacade db, string sqlFileName, string viewName)
@@ -91,8 +92,11 @@ namespace Foxoft
             Stream stream = assembly.GetManifestResourceStream(path);
             string sqlQuery = new StreamReader(stream).ReadToEnd();
 
-            db.ExecuteSqlRaw($"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END");
-            db.ExecuteSqlRaw($"CREATE VIEW {viewName} AS {sqlQuery}");
+            string a1 = $"IF OBJECT_ID('{viewName}') IS NOT NULL BEGIN DROP VIEW {viewName} END";
+            string a2 = $"CREATE VIEW {viewName} AS {sqlQuery}";
+
+            db.ExecuteSqlRaw(a1);
+            db.ExecuteSqlRaw(a2);
         }
 
         private void btn_POS_Click(object sender, EventArgs e)
