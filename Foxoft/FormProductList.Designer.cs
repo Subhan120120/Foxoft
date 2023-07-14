@@ -36,6 +36,7 @@ namespace Foxoft
             gC_ProductList = new MyGridControl();
             gV_ProductList = new MyGridView(this);
             dcProductsBindingSource = new System.Windows.Forms.BindingSource(components);
+            gV_ProductList = new DevExpress.XtraGrid.Views.Grid.GridView();
             colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
