@@ -99,7 +99,6 @@ namespace Foxoft
             BBI_ReportPriceList = new DevExpress.XtraBars.BarButtonItem();
             BBI_exportXLSX = new DevExpress.XtraBars.BarButtonItem();
             BBI_ImportExcel = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_TwilioSave = new DevExpress.XtraBars.BarButtonItem();
             BEI_TwilioInstance = new DevExpress.XtraBars.BarEditItem();
             repoTxtEdit_TwilioInstance = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -690,7 +689,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, barButtonItem2, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
             ribbonControl1.MaxItemId = 40;
             ribbonControl1.Name = "ribbonControl1";
@@ -828,13 +827,6 @@ namespace Foxoft
             BBI_ImportExcel.Name = "BBI_ImportExcel";
             BBI_ImportExcel.ItemClick += BBI_ImportExcel_ItemClick;
             // 
-            // barButtonItem2
-            // 
-            barButtonItem2.Caption = "Wp";
-            barButtonItem2.Id = 24;
-            barButtonItem2.Name = "barButtonItem2";
-            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
-            // 
             // BBI_TwilioSave
             // 
             BBI_TwilioSave.Caption = "Save Twilio Setting";
@@ -883,7 +875,7 @@ namespace Foxoft
             // 
             // BEI_PrinterName
             // 
-            BEI_PrinterName.Caption = "barEditItem1";
+            BEI_PrinterName.Caption = "Printer";
             BEI_PrinterName.Edit = repoCBE_PrinterName;
             BEI_PrinterName.Id = 35;
             BEI_PrinterName.Name = "BEI_PrinterName";
@@ -935,7 +927,6 @@ namespace Foxoft
             // 
             // ribbonPageGroup2
             // 
-            ribbonPageGroup2.ItemLinks.Add(bBI_reportDesign);
             ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
             ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
@@ -946,7 +937,6 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_CopyInvoice);
             ribbonPageGroup1.ItemLinks.Add(bBI_Whatsapp);
             ribbonPageGroup1.ItemLinks.Add(BBI_ModifyInvoice, true);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Nəzarət";
             // 
@@ -965,6 +955,7 @@ namespace Foxoft
             // 
             // RibbonPageGroup5
             // 
+            RibbonPageGroup5.ItemLinks.Add(bBI_reportDesign);
             RibbonPageGroup5.ItemLinks.Add(BBI_ReportPriceList);
             RibbonPageGroup5.ItemLinks.Add(barButtonItem1);
             RibbonPageGroup5.ItemLinks.Add(BBI_exportXLSX);
@@ -1369,7 +1360,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RibbonPageGroup5;
         private DevExpress.XtraBars.BarButtonItem BBI_exportXLSX;
         private DevExpress.XtraBars.BarButtonItem BBI_ImportExcel;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
         private DevExpress.XtraBars.BarButtonItem BBI_TwilioSave;
         private DevExpress.XtraBars.BarEditItem BEI_TwilioInstance;

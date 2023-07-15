@@ -31,6 +31,8 @@ namespace Foxoft.Models
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
         public DbSet<DcRole> DcRoles { get; set; }
+        public DbSet<DcForm> DcForms { get; set; }
+        public DbSet<TrFormReport> TrFormReports { get; set; }
         public DbSet<DcTerminal> DcTerminals { get; set; }
         public DbSet<DcWarehouse> DcWarehouses { get; set; }
         public DbSet<MigrationHistory> MigrationHistory { get; set; }
@@ -210,8 +212,8 @@ namespace Foxoft.Models
             //});
 
 
-            //modelBuilder.Entity<DcFeature>()
-            //            .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
+           modelBuilder.Entity<TrFormReport>()
+                       .HasKey(bc => new { bc.FormCode, bc.ReportId });
 
             modelBuilder.Entity<TrProductFeature>()
                         .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId });

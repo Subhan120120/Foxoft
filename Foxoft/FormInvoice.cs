@@ -5,6 +5,7 @@ using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Diagram.Core.Shapes;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
@@ -142,7 +143,7 @@ namespace Foxoft
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
-                                    .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+                              .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
@@ -255,7 +256,7 @@ namespace Foxoft
 
             dcProcess = efMethods.SelectProcess(trInvoiceHeader.ProcessCode);
 
-            dbContext.TrInvoiceLines.Include(o => o.DcProduct)
+            dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
                                     .OrderBy(x => x.CreatedDate)
@@ -266,7 +267,7 @@ namespace Foxoft
 
                                         lV_invoiceLine.ForEach(x =>
                                         {
-                                            x.ProductDesc = x.DcProduct.HierarchyCode + " " + x.DcProduct.ProductDesc;
+                                            x.ProductDesc = GetProductDescWide(x.DcProduct);
                                         });
 
                                         trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
@@ -1652,8 +1653,10 @@ namespace Foxoft
 
         private void FillRow(int rowHandle, DcProduct product)
         {
+            string productDescWide = GetProductDescWide(product);
+
             gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductCode, product.ProductCode);
-            gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductDesc, product.ProductDesc);
+            gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductDesc, productDescWide);
             gV_InvoiceLine.SetRowCellValue(rowHandle, colBalance, product.Balance);
             gV_InvoiceLine.SetRowCellValue(rowHandle, colLastPurchasePrice, product.LastPurchasePrice);
 
@@ -1661,6 +1664,16 @@ namespace Foxoft
             decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
             if (priceInvoice == 0)
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
+        }
+
+        private static string GetProductDescWide(DcProduct product)
+        {
+            var idList = new[] { 4, 5 };
+            string arr = "";
+            foreach (var item in product.TrProductFeatures.Where(f => idList.Contains(f.FeatureTypeId)))
+                arr += " " + item.FeatureCode;
+            string productDescWide = product.HierarchyCode + " " + product.ProductDesc + arr;
+            return productDescWide;
         }
 
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)

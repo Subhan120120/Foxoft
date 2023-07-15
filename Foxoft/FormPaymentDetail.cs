@@ -508,5 +508,12 @@ namespace Foxoft
             TwilioClass twilio = new TwilioClass();
             twilio.AlmaDolmasi();
         }
+
+        private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.CreatedUserName);
+            string UserName = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
+            XtraMessageBox.Show(UserName, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

@@ -64,6 +64,7 @@ namespace Foxoft
             colBalanceF = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalanceM = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalanceS = new DevExpress.XtraGrid.Columns.GridColumn();
+            colHierarchyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_ProductNew = new DevExpress.XtraBars.BarButtonItem();
             btn_ProductEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -77,12 +78,10 @@ namespace Foxoft
             BarcodePrint = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ReportPriceList = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ReportDesignProduct = new DevExpress.XtraBars.BarButtonItem();
             BBI_Report = new DevExpress.XtraBars.BarSubItem();
-            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             BBI_Sticker = new DevExpress.XtraBars.BarButtonItem();
             BBI_ProductCart = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -92,7 +91,6 @@ namespace Foxoft
             ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_ProductList).BeginInit();
@@ -115,7 +113,7 @@ namespace Foxoft
             // 
             // gV_ProductList
             // 
-            gV_ProductList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colProductCode, colProductDesc, colBarcode, colProductTypeCode, colUsePos, colPromotionCode, colPromotionCode2, colTaxRate, colPosDiscount, colIsDisabled, colRetailPrice, colPurchasePrice, colWholesalePrice, colUseInternet, colBalance, colLastPurchasePrice, colLastSalePrice, colDcProductType, colTrPrices, colTrInvoiceLines, colTrFeature, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colBalanceF, colBalanceM, colBalanceS });
+            gV_ProductList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colProductCode, colProductDesc, colBarcode, colProductTypeCode, colUsePos, colPromotionCode, colPromotionCode2, colTaxRate, colPosDiscount, colIsDisabled, colRetailPrice, colPurchasePrice, colWholesalePrice, colUseInternet, colBalance, colLastPurchasePrice, colLastSalePrice, colDcProductType, colTrPrices, colTrInvoiceLines, colTrFeature, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colBalanceF, colBalanceM, colBalanceS, colHierarchyCode });
             gV_ProductList.CustomizationFormBounds = new System.Drawing.Rectangle(624, 401, 264, 272);
             gV_ProductList.GridControl = gC_ProductList;
             gV_ProductList.Name = "gV_ProductList";
@@ -293,10 +291,16 @@ namespace Foxoft
             colBalanceS.Visible = true;
             colBalanceS.VisibleIndex = 4;
             // 
+            // colHierarchyCode
+            // 
+            colHierarchyCode.Caption = "gridColumn1";
+            colHierarchyCode.FieldName = "HierarchyCode";
+            colHierarchyCode.Name = "colHierarchyCode";
+            // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_quit, barButtonItem1, bBI_ProductDelete, bBI_ProductRefresh, BBI_Feature, BBI_reportProductMove, BarcodePrint, barButtonItem2, BBI_query, BBI_ReportPriceList, BBI_ReportDesignProduct, BBI_Report, barButtonItem4, BBI_Sticker, BBI_ProductCart, barButtonItem3 });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_quit, barButtonItem1, bBI_ProductDelete, bBI_ProductRefresh, BBI_Feature, BBI_reportProductMove, BarcodePrint, barButtonItem2, BBI_query, BBI_Report, barButtonItem4, BBI_Sticker, BBI_ProductCart });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
             ribbonControl1.MaxItemId = 31;
             ribbonControl1.Name = "ribbonControl1";
@@ -402,35 +406,13 @@ namespace Foxoft
             BBI_query.Name = "BBI_query";
             BBI_query.ItemClick += BBI_Query_ItemClick;
             // 
-            // BBI_ReportPriceList
-            // 
-            BBI_ReportPriceList.Caption = "Qiymət Siyahısı";
-            BBI_ReportPriceList.Id = 24;
-            BBI_ReportPriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportPriceList.ImageOptions.SvgImage");
-            BBI_ReportPriceList.Name = "BBI_ReportPriceList";
-            BBI_ReportPriceList.ItemClick += BBI_ReportPriceList_ItemClick;
-            // 
-            // BBI_ReportDesignProduct
-            // 
-            BBI_ReportDesignProduct.Caption = "Məhsul Siyahısı Dizaynı";
-            BBI_ReportDesignProduct.Id = 25;
-            BBI_ReportDesignProduct.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportDesignProduct.ImageOptions.SvgImage");
-            BBI_ReportDesignProduct.Name = "BBI_ReportDesignProduct";
-            BBI_ReportDesignProduct.ItemClick += BBI_ReportDesignProduct_ItemClick;
-            // 
             // BBI_Report
             // 
             BBI_Report.Caption = "Hesabat";
             BBI_Report.Id = 27;
             BBI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Report.ImageOptions.SvgImage");
-            BBI_Report.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_reportProductMove), new DevExpress.XtraBars.LinkPersistInfo(barButtonItem3), new DevExpress.XtraBars.LinkPersistInfo(BBI_Sticker), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductCart) });
+            BBI_Report.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_reportProductMove), new DevExpress.XtraBars.LinkPersistInfo(BBI_Sticker), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductCart) });
             BBI_Report.Name = "BBI_Report";
-            // 
-            // barButtonItem4
-            // 
-            barButtonItem4.Caption = "test";
-            barButtonItem4.Id = 28;
-            barButtonItem4.Name = "barButtonItem4";
             // 
             // BBI_Sticker
             // 
@@ -447,6 +429,12 @@ namespace Foxoft
             BBI_ProductCart.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductCart.ImageOptions.SvgImage");
             BBI_ProductCart.Name = "BBI_ProductCart";
             BBI_ProductCart.ItemClick += BBI_ProductCart_Click;
+            // 
+            // barButtonItem4
+            // 
+            barButtonItem4.Caption = "test";
+            barButtonItem4.Id = 28;
+            barButtonItem4.Name = "barButtonItem4";
             // 
             // ribbonPage1
             // 
@@ -473,7 +461,6 @@ namespace Foxoft
             // 
             // ribbonPageGroup3
             // 
-            ribbonPageGroup3.ItemLinks.Add(BBI_ReportPriceList);
             ribbonPageGroup3.ItemLinks.Add(BBI_Report);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = "Hesabat";
@@ -493,7 +480,6 @@ namespace Foxoft
             // ribbonPageGroup5
             // 
             ribbonPageGroup5.ItemLinks.Add(BBI_query);
-            ribbonPageGroup5.ItemLinks.Add(BBI_ReportDesignProduct);
             ribbonPageGroup5.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup5.Name = "ribbonPageGroup5";
             ribbonPageGroup5.Text = "Data";
@@ -509,12 +495,6 @@ namespace Foxoft
             // 
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "ribbonPage2";
-            // 
-            // barButtonItem3
-            // 
-            barButtonItem3.Caption = "test";
-            barButtonItem3.Id = 30;
-            barButtonItem3.Name = "barButtonItem3";
             // 
             // FormProductList
             // 
@@ -594,13 +574,11 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_query;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportProduct;
-        private DevExpress.XtraBars.BarButtonItem BBI_ReportDesignProduct;
-        private DevExpress.XtraBars.BarButtonItem BBI_ReportPriceList;
         private DevExpress.XtraBars.BarSubItem BBI_Report;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
         private DevExpress.XtraBars.BarButtonItem BBI_Sticker;
         private DevExpress.XtraBars.BarButtonItem barButtonItem5;
         private DevExpress.XtraBars.BarButtonItem BBI_ProductCart;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private DevExpress.XtraGrid.Columns.GridColumn colHierarchyCode;
     }
 }

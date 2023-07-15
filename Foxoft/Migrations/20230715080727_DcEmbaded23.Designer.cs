@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230715080727_DcEmbaded23")]
+    partial class DcEmbaded23
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1635,21 +1637,6 @@ namespace Foxoft.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrFormReport", b =>
-                {
-                    b.Property<string>("FormCode")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ReportId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FormCode", "ReportId");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("TrFormReports");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrHierarchyFeature", b =>
                 {
                     b.Property<string>("HierarchyCode")
@@ -2453,25 +2440,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcRole");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrFormReport", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcForm", "DcForm")
-                        .WithMany("TrFormReports")
-                        .HasForeignKey("FormCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Foxoft.Models.DcReport", "DcReport")
-                        .WithMany("TrFormReports")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcForm");
-
-                    b.Navigation("DcReport");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrHierarchyFeature", b =>
                 {
                     b.HasOne("Foxoft.Models.DcFeatureType", "DcFeatureType")
@@ -2726,11 +2694,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrProductFeatures");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcForm", b =>
-                {
-                    b.Navigation("TrFormReports");
-                });
-
             modelBuilder.Entity("Foxoft.Models.DcHierarchy", b =>
                 {
                     b.Navigation("DcProducts");
@@ -2773,8 +2736,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcReportFilters");
 
                     b.Navigation("TrClaimReports");
-
-                    b.Navigation("TrFormReports");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReportSubQuery", b =>

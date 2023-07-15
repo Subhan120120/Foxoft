@@ -1,6 +1,4 @@
 ﻿using DevExpress.Data;
-using DevExpress.DataAccess.ConnectionParameters;
-using DevExpress.DataAccess.Sql;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -15,12 +13,11 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
-using Foxoft.Migrations;
 using Foxoft.Models;
 using Foxoft.Properties;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -45,9 +42,75 @@ namespace Foxoft
         public DcProduct dcProduct { get; set; }
         public string productCode { get; set; }
 
+
         public FormProductList()
         {
             InitializeComponent();
+
+            ComponentResourceManager resources = new(typeof(FormProductList));
+
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
+
+            foreach (TrFormReport report in trFormReports)
+            {
+                BarButtonItem BBI = new();
+                ribbonControl1.Items.Add(BBI);
+
+                BBI.Caption = report.DcReport.ReportName;
+                //BBI_ProductCart.Id = 29;
+                BBI.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductCart.ImageOptions.SvgImage");
+                BBI.Name = report.DcReport.ReportId.ToString();
+                BBI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+                BBI.ItemClick += BBI_ProductCart_Click;
+
+                BBI.ItemClick += (sender, e) =>
+                {
+                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+
+                    List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
+
+                    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                    string filter = "";
+                    if (dcProduct is not null)
+                        filter = " where [ProductCode] = '" + dcProduct.ProductCode + "' ";
+                    else
+                    {
+                        var combined = "";
+                        foreach (DataRowView rowView in mydata)
+                            combined += "'" + rowView["ProductCode"].ToString() + "',";
+
+                        combined = combined.Substring(0, combined.Length - 1);
+                        filter = " where [ProductCode] in ( " + combined + ")";
+                    }
+
+                    if (dcReport.ReportTypeId == 1)
+                    {
+                        FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                        formGrid.Show();
+                    }
+                    else if (dcReport.ReportTypeId == 2)
+                    {
+                        FormReportPreview form = new(qryMaster + filter, dcReport);
+                        form.WindowState = FormWindowState.Maximized;
+                        form.Show();
+                    }
+
+
+                    //bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportName);
+                    //if (!currAccHasClaims)
+                    //{
+                    //    MessageBox.Show("Yetkiniz yoxdur! ");
+                    //    return;
+                    //}
+                    //FormReportFilter formReport = new(dcReport);
+                    //formReport.MdiParent = this;
+                    //formReport.Show();
+                    //parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+                };
+
+            }
+
 
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
@@ -772,9 +835,11 @@ namespace Foxoft
                 var combined = "";
                 foreach (DataRowView rowView in mydata)
                     combined += "'" + rowView["ProductCode"].ToString() + "',";
-
-                combined = combined.Substring(0, combined.Length - 1);
-                filter = " where [ProductCode] in ( " + combined + ")";
+                if (combined.Length > 0)
+                {
+                    combined = combined.Substring(0, combined.Length - 1);
+                    filter = " where [ProductCode] in ( " + combined + ")";
+                }
             }
 
             if (dcReport.ReportTypeId == 1)

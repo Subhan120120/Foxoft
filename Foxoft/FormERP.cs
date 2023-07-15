@@ -68,8 +68,6 @@ namespace Foxoft
             this.aCE_CountOut.Name = "CountOut";
             this.aCE_HumanResource.Name = "HumanResource";
             this.aCE_Reports.Name = "Reports";
-            this.ACE_ReportFinally.Name = "ReportFinally";
-            this.aCE_ReportZet.Name = "ReportZet";
             this.aCE_Setting.Name = "Setting";
             this.aCE_CurrAccAll.Name = "CurrAccAll";
         }

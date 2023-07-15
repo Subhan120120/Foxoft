@@ -71,8 +71,6 @@ namespace Foxoft
             aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_ReportFinally = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_ReportZet = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
@@ -373,28 +371,11 @@ namespace Foxoft
             // 
             // aCE_Reports
             // 
-            aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_ReportFinally, aCE_ReportZet });
+            aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {});
             aCE_Reports.Expanded = true;
             aCE_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Reports.ImageOptions.SvgImage");
             aCE_Reports.Name = "aCE_Reports";
             aCE_Reports.Text = "Hesabat";
-            // 
-            // ACE_ReportFinally
-            // 
-            ACE_ReportFinally.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ReportFinally.ImageOptions.SvgImage");
-            ACE_ReportFinally.Name = "ACE_ReportFinally";
-            ACE_ReportFinally.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_ReportFinally.Text = "Element1";
-            ACE_ReportFinally.Click += ACE_ReportFinally_Click;
-            // 
-            // aCE_ReportZet
-            // 
-            aCE_ReportZet.HeaderTemplate.AddRange(new DevExpress.XtraBars.Navigation.HeaderElementInfo[] { new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.Image), new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.Text), new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.ContextButtons), new DevExpress.XtraBars.Navigation.HeaderElementInfo(DevExpress.XtraBars.Navigation.HeaderElementType.HeaderControl) });
-            aCE_ReportZet.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage");
-            aCE_ReportZet.Name = "aCE_ReportZet";
-            aCE_ReportZet.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            aCE_ReportZet.Text = "Gün Sonu";
-            aCE_ReportZet.Click += aCE_ReportZet_Click;
             // 
             // aCE_Setting
             // 
@@ -457,7 +438,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_POS;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Expense;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_ReportZet;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator1;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator2;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Products;
@@ -474,7 +454,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PurchaseIsReturn;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_SaleIsReturn;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator6;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ReportFinally;
         private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashRegs;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator7;

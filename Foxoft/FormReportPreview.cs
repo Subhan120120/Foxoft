@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Foxoft.Models;
 using DevExpress.DataAccess.Sql;
+using DevExpress.XtraPrinting;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace Foxoft
 {
@@ -104,11 +107,31 @@ namespace Foxoft
 
             //FormDesignRibbon.RibbonControl.Pages[0].Groups.Add(new RibbonPageGroup() { Name = "Design", Text = "Dizayn"});
             RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
-            BarButtonItem item = CreateItem();
-            pageGroup.ItemLinks.Add(item);
+            BarButtonItem bbi_Design = CreateItem();
+            pageGroup.ItemLinks.Add(bbi_Design);
 
             FormDesignRibbon.OpenReport(reportE);
             FormDesignRibbon.Show();
+        }
+
+        private void BBI_CopyToClipboard_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Image image = Image.FromStream(GetInvoiceReportImg());
+            Clipboard.SetImage(image);
+        }
+
+        private MemoryStream GetInvoiceReportImg()
+        {
+            if (reportE is not null)
+            {
+                MemoryStream ms = new();
+
+                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+
+                return ms;
+            }
+            else
+                return null;
         }
     }
 }

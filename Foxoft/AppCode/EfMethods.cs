@@ -134,7 +134,8 @@ namespace Foxoft
         public DcProduct SelectProduct(string productCode)
         {
             using subContext db = new();
-            return QueryableSelectProducts(db).FirstOrDefault(x => x.ProductCode == productCode);
+            var product = QueryableSelectProducts(db).FirstOrDefault(x => x.ProductCode == productCode);
+            return product;
         }
 
         public List<DcProduct> SelectProducts()
@@ -145,8 +146,10 @@ namespace Foxoft
 
         public IQueryable<DcProduct> QueryableSelectProducts(subContext db)
         {
-            return db.DcProducts.Include(x => x.TrInvoiceLines)
-                                    .ThenInclude(x => x.TrInvoiceHeader)
+
+            var products = db.DcProducts
+                                .Include(x => x.TrProductFeatures)
+                                .Include(x => x.TrInvoiceLines).ThenInclude(x => x.TrInvoiceHeader)
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
@@ -174,8 +177,10 @@ namespace Foxoft
                                     LastUpdatedUserName = x.LastUpdatedUserName,
                                     Barcode = x.Barcode,
                                     HierarchyCode = x.HierarchyCode,
+                                    TrProductFeatures = x.TrProductFeatures,
                                 })
                                 .OrderBy(x => x.ProductDesc);
+            return products;
         }
 
         public int SelectProductBalance(string productCode, string warehouseCode)
@@ -195,7 +200,6 @@ namespace Foxoft
 
             return DcProducts.ToList();
         }
-
         public List<DcProduct> SelectProductsByTypeByFilter(byte[] productTypeArr, CriteriaOperator filterCriteria)
         {
             using subContext db = new();
@@ -230,6 +234,15 @@ namespace Foxoft
             using subContext db = new();
 
             return db.TrProductHierarchies.Include(x => x.DcHierarchy).ToList();
+        }
+
+        public List<TrFormReport> SelectFormReports(string formCode)
+        {
+            using subContext db = new();
+
+            return db.TrFormReports.Include(x => x.DcReport)
+                                   .Where(x => x.FormCode == formCode)
+                                   .ToList();
         }
 
         public List<DcHierarchy> SelectHierarchies()
