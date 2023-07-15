@@ -1,22 +1,16 @@
-﻿using DevExpress.XtraBars.Ribbon;
+﻿using DevExpress.DataAccess.Sql;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Foxoft.Models;
-using DevExpress.DataAccess.Sql;
-using DevExpress.XtraPrinting;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -31,10 +25,6 @@ namespace Foxoft
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
             InitializeComponent();
-
-            //if (settingStore is not null)
-            //    if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-            //        AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
         }
 
         public FormReportPreview(string qry, DcReport dcReport)
@@ -53,7 +43,7 @@ namespace Foxoft
             List<DcReportSubQuery> ReportSubQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
             List<CustomSqlQuery> sqlQueries = new();
 
-            sqlQueries.Add(new CustomSqlQuery(dcReport.ReportName, reportQry));
+            sqlQueries.Add(new CustomSqlQuery("Data", reportQry));
 
             foreach (DcReportSubQuery reportSubQuery in ReportSubQueries)
             {

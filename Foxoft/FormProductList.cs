@@ -47,21 +47,49 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            AddReports();
+
+            WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
+
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+
+            AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
+
+            LoadLayout();
+
+            colImage.FieldName = "Image";
+            colImage.Caption = "Şəkil";
+            colImage.UnboundType = UnboundColumnType.Object;
+            colImage.OptionsColumn.AllowEdit = false;
+            colImage.Visible = true;
+            colImage.OptionsColumn.FixedWidth = true;
+            colImage.ColumnEdit = riPictureEdit;
+            riPictureEdit.SizeMode = PictureSizeMode.Zoom;
+            riPictureEdit.NullText = " ";
+            gC_ProductList.RepositoryItems.Add(riPictureEdit);
+
+            ribbonControl1.Minimized = true;
+        }
+
+        private void AddReports()
+        {
             ComponentResourceManager resources = new(typeof(FormProductList));
 
             List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
 
             foreach (TrFormReport report in trFormReports)
             {
-                BarButtonItem BBI = new();
-                ribbonControl1.Items.Add(BBI);
 
+                BarButtonItem BBI = new();
                 BBI.Caption = report.DcReport.ReportName;
-                //BBI_ProductCart.Id = 29;
+                BBI.Id = 57;
                 BBI.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductCart.ImageOptions.SvgImage");
                 BBI.Name = report.DcReport.ReportId.ToString();
-                BBI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
-                BBI.ItemClick += BBI_ProductCart_Click;
+                BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+
+                ((ISupportInitialize)ribbonControl1).BeginInit();
+                ribbonControl1.Items.Add(BBI);
+                ((ISupportInitialize)ribbonControl1).EndInit();
 
                 BBI.ItemClick += (sender, e) =>
                 {
@@ -95,43 +123,8 @@ namespace Foxoft
                         form.WindowState = FormWindowState.Maximized;
                         form.Show();
                     }
-
-
-                    //bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportName);
-                    //if (!currAccHasClaims)
-                    //{
-                    //    MessageBox.Show("Yetkiniz yoxdur! ");
-                    //    return;
-                    //}
-                    //FormReportFilter formReport = new(dcReport);
-                    //formReport.MdiParent = this;
-                    //formReport.Show();
-                    //parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
                 };
-
             }
-
-
-            WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
-
-            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-
-            AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
-
-            LoadLayout();
-
-            colImage.FieldName = "Image";
-            colImage.Caption = "Şəkil";
-            colImage.UnboundType = UnboundColumnType.Object;
-            colImage.OptionsColumn.AllowEdit = false;
-            colImage.Visible = true;
-            colImage.OptionsColumn.FixedWidth = true;
-            colImage.ColumnEdit = riPictureEdit;
-            riPictureEdit.SizeMode = PictureSizeMode.Zoom;
-            riPictureEdit.NullText = " ";
-            gC_ProductList.RepositoryItems.Add(riPictureEdit);
-
-            ribbonControl1.Minimized = true;
         }
 
         public FormProductList(byte[] productTypeArr)
