@@ -50,7 +50,7 @@ namespace Foxoft
 
             SvgImage ımage = ((SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
 
-            SvgBitmap bm = new SvgBitmap(ımage);
+            SvgBitmap bm = new(ımage);
             Image img = bm.Render(null, 0.5);
             filterControl_Outer.MyIcon = img;
             filterControl_Outer.ExcelButtonClick += new ExcelButtonFilterControl.ExcelButtonEventHandler(this.ExcelButtonFilterControl_ExcelButtonClick);
@@ -104,7 +104,7 @@ namespace Foxoft
 
         private GroupOperator GetFiltersFromDatabase(ICollection<DcReportFilter> dcReportFilters)
         {
-            GroupOperator groupOperand = new GroupOperator();
+            GroupOperator groupOperand = new();
 
             foreach (DcReportFilter rf in dcReportFilters)
             {
@@ -171,9 +171,6 @@ namespace Foxoft
                 case 2: OpenDetailReport(qry); break;
                 default: OpenGridReport(qry); break;
             }
-
-
-
 
             SaveFilterToDB();
         }
@@ -279,7 +276,7 @@ namespace Foxoft
 
         Dictionary<string, object> Extract(CriteriaOperator op)
         {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
+            Dictionary<string, object> dict = new();
             GroupOperator opGroup = op as GroupOperator;
             if (ReferenceEquals(opGroup, null))
             {
@@ -312,14 +309,14 @@ namespace Foxoft
             string qry = dcReport.ReportQuery;
             int id = dcReport.ReportId;
 
-            FormReportEditor formQueryEditor = new FormReportEditor(id);
+            FormReportEditor formQueryEditor = new(id);
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
                 dcReport.ReportQuery = formQueryEditor.dcReport.ReportQuery;
         }
 
         private void bBI_ReportNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormReportEditor formQueryEditor = new FormReportEditor(0);
+            FormReportEditor formQueryEditor = new(0);
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
             {
             }

@@ -116,7 +116,7 @@ namespace Foxoft
             {
                 MemoryStream ms = new();
 
-                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480});
 
                 return ms;
             }
