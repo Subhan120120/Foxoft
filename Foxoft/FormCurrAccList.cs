@@ -13,9 +13,12 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
@@ -34,6 +37,8 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            AddReports();
+
             bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             LoadLayout();
@@ -51,10 +56,75 @@ namespace Foxoft
             UpdateGridViewData();
         }
 
-        public FormCurrAccList(byte productTypeCode, string currAccCode)
-      : this(productTypeCode)
+        public FormCurrAccList(byte currAccTypeCode, string currAccCode)
+      : this(currAccTypeCode)
         {
             this.currAccCode = currAccCode;
+        }
+
+        private void AddReports()
+        {
+            ComponentResourceManager resources = new(typeof(FormCurrAccList));
+
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports("CurrAccs");
+
+            foreach (TrFormReport report in trFormReports)
+            {
+
+                BarButtonItem BBI = new();
+                BBI.Caption = report.DcReport.ReportName;
+                BBI.Id = 57;
+                BBI.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barSubItem1.ImageOptions.SvgImage");
+                BBI.Name = report.DcReport.ReportId.ToString();
+                BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+
+                ((ISupportInitialize)ribbonControl1).BeginInit();
+                ribbonControl1.Items.Add(BBI);
+                ((ISupportInitialize)ribbonControl1).EndInit();
+
+                BBI.ItemClick += (sender, e) =>
+                {
+                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+
+                    List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_CurrAccList).ToList();
+
+                    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                    string filter = "";
+                    if (dcCurrAcc is not null)
+                        filter = " where [CurrAccCode] = '" + dcCurrAcc.CurrAccCode + "' ";
+                    else
+                    {
+                        var combined = "";
+                        foreach (DataRowView rowView in mydata)
+                            combined += "'" + rowView["CurrAccCode"].ToString() + "',";
+
+                        combined = combined.Substring(0, combined.Length - 1);
+                        filter = " where [CurrAccCode] in ( " + combined + ")";
+                    }
+
+                    if (dcReport.ReportTypeId == 1)
+                    {
+                        FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                        formGrid.Show();
+                    }
+                    else if (dcReport.ReportTypeId == 2)
+                    {
+                        FormReportPreview form = new(qryMaster + filter, dcReport);
+                        form.WindowState = FormWindowState.Maximized;
+                        form.Show();
+                    }
+                };
+            }
+        }
+
+        public static List<T> GetFilteredData<T>(ColumnView view)
+        {
+            List<T> resp = new List<T>();
+            for (int i = 0; i < view.DataRowCount; i++)
+                resp.Add((T)view.GetRow(i));
+
+            return resp;
         }
 
         private void SaveLayout()
@@ -85,16 +155,9 @@ namespace Foxoft
 
         public void AddUsersAndPermissions(string DirectoryName, string UserAccount, FileSystemRights UserRights, AccessControlType AccessType)
         {
-            // Create a DirectoryInfo object.
             DirectoryInfo directoryInfo = new DirectoryInfo(DirectoryName);
-
-            // Get security settings.
             DirectorySecurity dirSecurity = directoryInfo.GetAccessControl();
-
-            // Add the FileSystemAccessRule to the security settings.
             dirSecurity.AddAccessRule(new FileSystemAccessRule(UserAccount, UserRights, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessType));
-
-            // Set the access settings.
             directoryInfo.SetAccessControl(dirSecurity);
         }
 
