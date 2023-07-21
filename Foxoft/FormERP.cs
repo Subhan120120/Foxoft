@@ -214,7 +214,7 @@ namespace Foxoft
             try
             {
                 FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
-                form = new(0);
+                form = new(new byte[] { 1, 2, 3 });
                 form.MdiParent = this;
                 form.WindowState = FormWindowState.Maximized;
                 form.Show();
@@ -593,7 +593,7 @@ namespace Foxoft
 
             try
             {
-                form = new(5);
+                form = new(new byte[] { 5 });
                 form.MdiParent = this;
                 form.Show();
                 form.WindowState = FormWindowState.Maximized;

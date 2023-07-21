@@ -312,10 +312,10 @@ namespace Foxoft
         {
             if (btnEdit_CurrAccCode.Enabled)
             {
-                FormCurrAccList form = new(0, trInvoiceHeader.CurrAccCode);
+                FormCurrAccList form = new(new byte[] { 1, 2, 3 }, trInvoiceHeader.CurrAccCode);
 
                 if (trInvoiceHeader.ProcessCode == "IT")
-                    form = new FormCurrAccList(4, trInvoiceHeader.CurrAccCode);
+                    form = new FormCurrAccList(new byte[] { 4 }, trInvoiceHeader.CurrAccCode);
 
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -739,7 +739,7 @@ namespace Foxoft
         private void SelectSalesPerson(object sender)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            using FormCurrAccList form = new(0, editor.EditValue.ToString());
+            using FormCurrAccList form = new(new byte[] { 3 }, editor.EditValue.ToString());
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {

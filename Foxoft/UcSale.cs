@@ -332,7 +332,7 @@ namespace Foxoft
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
-            using (FormCurrAccList form = new (1))
+            using (FormCurrAccList form = new (new byte[] { 1 }))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -431,7 +431,7 @@ namespace Foxoft
         {
             if (rowIndx >= 0)
             {
-                using (FormCurrAccList form = new (1))
+                using (FormCurrAccList form = new (new byte[] { 3 }))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {

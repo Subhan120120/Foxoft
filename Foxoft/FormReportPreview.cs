@@ -1,4 +1,5 @@
 ﻿using DevExpress.DataAccess.Sql;
+using DevExpress.Mvvm.Native;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -116,7 +117,7 @@ namespace Foxoft
             {
                 MemoryStream ms = new();
 
-                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480});
+                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1-30", ExportMode = ImageExportMode.SingleFilePageByPage, Resolution = 480});
 
                 return ms;
             }

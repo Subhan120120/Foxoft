@@ -110,7 +110,7 @@ namespace Foxoft
             if (editor.EditValue is not null)
                 value = editor.EditValue.ToString();
 
-            using (FormCurrAccList form = new(currAccTypeCode, value))
+            using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, value))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;

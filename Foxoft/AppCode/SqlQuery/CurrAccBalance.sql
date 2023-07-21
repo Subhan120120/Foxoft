@@ -1,12 +1,13 @@
 
-declare @EndDate date = dateadd(DAY, 1, getdate())
-declare @EndTime time =  '00:00:00.000'
+--declare @EndDate date = dateadd(DAY, 1, getdate())
+--declare @EndTime time =  '00:00:00.000'
 
 select DcCurrAccs.CurrAccCode
 , CurrAccDesc
 , Amount = sum(Amount)
 , PhoneNum
 , IsVIP
+, CurrAccTypeCode
 from 
 DcCurrAccs 
 left join 
@@ -17,8 +18,8 @@ left join
 	from TrInvoiceLines il
 	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId
 	where 1=1
-	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=
-	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
+	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=
+	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
 
 	UNION ALL 
 	
@@ -27,8 +28,8 @@ left join
 	from TrPaymentLines pl
 	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	
 	where 1=1 
-	and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=
-	(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
+	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=
+	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
 ) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode
 where 1 = 1 
 	--and DcCurrAccs.IsVIP = 1 
@@ -37,5 +38,6 @@ group by DcCurrAccs.CurrAccCode
 , CurrAccDesc
 , PhoneNum
 , IsVIP
+, CurrAccTypeCode
 
 

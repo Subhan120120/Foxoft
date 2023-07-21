@@ -71,6 +71,37 @@ namespace Foxoft
             ribbonControl1.Minimized = true;
         }
 
+        public FormProductList(byte[] productTypeArr)
+            : this()
+        {
+            this.productTypeArr = productTypeArr;
+            LoadProducts(productTypeArr);
+            gV_ProductList.PopulateColumns();
+            LoadLayout();
+            gV_ProductList.Columns.Add(colImage);
+            gV_ProductList.BestFitColumns();
+        }
+
+        public FormProductList(byte[] productTypeArr, string productCode)
+            : this(productTypeArr)
+        {
+            this.productCode = productCode;
+        }
+
+        private void FormProductList_Load(object sender, EventArgs e)
+        {
+            int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
+            if (rowHandle != GridControl.InvalidRowHandle)
+            {
+                gV_ProductList.FocusedRowHandle = rowHandle;
+                gV_ProductList.MakeRowVisible(rowHandle);
+            }
+
+            //gV_ProductList.ShowFindPanel();
+            //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+            //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+        }
+
         private void AddReports()
         {
             ComponentResourceManager resources = new(typeof(FormProductList));
@@ -125,37 +156,6 @@ namespace Foxoft
                     }
                 };
             }
-        }
-
-        public FormProductList(byte[] productTypeArr)
-            : this()
-        {
-            this.productTypeArr = productTypeArr;
-            LoadProducts(productTypeArr);
-            gV_ProductList.PopulateColumns();
-            LoadLayout();
-            gV_ProductList.Columns.Add(colImage);
-            gV_ProductList.BestFitColumns();
-        }
-
-        public FormProductList(byte[] productTypeArr, string productCode)
-            : this(productTypeArr)
-        {
-            this.productCode = productCode;
-        }
-
-        private void FormProductList_Load(object sender, EventArgs e)
-        {
-            int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
-            if (rowHandle != GridControl.InvalidRowHandle)
-            {
-                gV_ProductList.FocusedRowHandle = rowHandle;
-                gV_ProductList.MakeRowVisible(rowHandle);
-            }
-
-            //gV_ProductList.ShowFindPanel();
-            //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
-            //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
         }
 
         private void SaveLayout()
