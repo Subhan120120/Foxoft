@@ -361,8 +361,9 @@ namespace Foxoft
                             FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                             frm.MdiParent = formERP;
                             frm.WindowState = FormWindowState.Maximized;
-                            frm.Show();
-                            formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                            //frm.Show();
+                            if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
                         }
                         else if (trPaymentHeader.ProcessCode == "CT")
                         {

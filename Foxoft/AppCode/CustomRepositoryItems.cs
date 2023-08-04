@@ -51,7 +51,7 @@ namespace Foxoft
         {
             RepositoryItemButtonEdit repoBtnEdit = new();
             repoBtnEdit.AutoHeight = false;
-            repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, 0); };
+            repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, new byte[] { 1, 2, 3 }); };
             return repoBtnEdit;
         }
 
@@ -59,7 +59,7 @@ namespace Foxoft
         {
             RepositoryItemButtonEdit repoBtnEdit = new();
             repoBtnEdit.AutoHeight = false;
-            repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, 4); };
+            repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, new byte[] { 4 }); };
             return repoBtnEdit;
         }
 
@@ -67,7 +67,7 @@ namespace Foxoft
         {
             RepositoryItemButtonEdit repoBtnEdit = new();
             repoBtnEdit.AutoHeight = false;
-            repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, 5); };
+            repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, new byte[] { 5 }); };
             return repoBtnEdit;
         }
 
@@ -102,7 +102,7 @@ namespace Foxoft
             }
         }
 
-        private static void SelectCurrAcc(object sender, byte currAccTypeCode)
+        private static void SelectCurrAcc(object sender, byte[] currAccTypeCode)
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
@@ -110,7 +110,7 @@ namespace Foxoft
             if (editor.EditValue is not null)
                 value = editor.EditValue.ToString();
 
-            using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, value))
+            using (FormCurrAccList form = new(currAccTypeCode, value))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;

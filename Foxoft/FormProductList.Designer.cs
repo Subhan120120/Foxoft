@@ -79,7 +79,6 @@ namespace Foxoft
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
             BSI_Report = new DevExpress.XtraBars.BarSubItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
-            popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -88,6 +87,7 @@ namespace Foxoft
             ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).BeginInit();
@@ -107,7 +107,6 @@ namespace Foxoft
             gC_ProductList.TabIndex = 0;
             gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ProductList });
             gC_ProductList.Paint += gC_ProductList_Paint;
-            gC_ProductList.Load += gC_ProductList_Load;
             gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
             // 
             // gV_ProductList
@@ -410,11 +409,6 @@ namespace Foxoft
             barButtonItem4.Id = 28;
             barButtonItem4.Name = "barButtonItem4";
             // 
-            // popupMenu1
-            // 
-            popupMenu1.Name = "popupMenu1";
-            popupMenu1.Ribbon = ribbonControl1;
-            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3, ribbonPageGroup4 });
@@ -470,6 +464,11 @@ namespace Foxoft
             ribbonStatusBar1.Ribbon = ribbonControl1;
             ribbonStatusBar1.Size = new System.Drawing.Size(865, 24);
             // 
+            // popupMenu1
+            // 
+            popupMenu1.Name = "popupMenu1";
+            popupMenu1.Ribbon = ribbonControl1;
+            // 
             // ribbonPage2
             // 
             ribbonPage2.Name = "ribbonPage2";
@@ -488,6 +487,7 @@ namespace Foxoft
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             StatusBar = ribbonStatusBar1;
             Text = "Məhsul Siyahısı";
+            Activated += FormProductList_Activated;
             Load += FormProductList_Load;
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).EndInit();

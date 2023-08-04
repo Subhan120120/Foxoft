@@ -234,8 +234,9 @@ namespace Foxoft
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                 formaPayment.MdiParent = formERP;
                 formaPayment.WindowState = FormWindowState.Maximized;
-                formaPayment.Show();
-                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                //formaPayment.Show();
+                if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
             }
         }
 
@@ -249,10 +250,19 @@ namespace Foxoft
 
                     using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
                     {
-                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
+                        if (!currAccHasClaims)
                         {
-                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                            LoadPaymentHeaders();
+                            MessageBox.Show("Yetkiniz yoxdur! ");
+                            return;
+                        }
+                        else
+                        {
+                            if (formPayment.ShowDialog(this) == DialogResult.OK)
+                            {
+                                //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                                LoadPaymentHeaders();
+                            }
                         }
                     }
                 }
@@ -261,18 +271,27 @@ namespace Foxoft
 
         private void bBI_MakePayment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            using (FormCurrAccList formCurrAcc = new FormCurrAccList(new byte[] { 0 }))
+            using (FormCurrAccList formCurrAcc = new(new byte[] { 0 }))
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
-                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+                    TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-                    using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
+                    using (FormPayment formPayment = new(1, -1, trInvoiceHeader))
                     {
-                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
+                        if (!currAccHasClaims)
                         {
-                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                            LoadPaymentHeaders();
+                            MessageBox.Show("Yetkiniz yoxdur! ");
+                            return;
+                        }
+                        else
+                        {
+                            if (formPayment.ShowDialog(this) == DialogResult.OK)
+                            {
+                                //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                                LoadPaymentHeaders();
+                            }
                         }
                     }
                 }

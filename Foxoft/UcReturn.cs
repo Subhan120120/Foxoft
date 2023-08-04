@@ -207,9 +207,15 @@ namespace Foxoft
         {
             using FormPayment formPayment = new(1, summaryInvoice, returnInvoHeader, autoPayment);
 
-            if (formPayment.ShowDialog(this) == DialogResult.OK)
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
+            if (!currAccHasClaims)
             {
-
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+            else
+            {
+                if (formPayment.ShowDialog(this) == DialogResult.OK) { }
             }
         }
 

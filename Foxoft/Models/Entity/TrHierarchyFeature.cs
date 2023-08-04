@@ -18,6 +18,7 @@ namespace Foxoft.Models
         public int FeatureTypeId { get; set; }
 
 
+
         [ForeignKey("HierarchyCode")]
         public virtual DcHierarchy DcHierarchy { get; set; }
 

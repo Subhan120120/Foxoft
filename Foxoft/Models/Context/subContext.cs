@@ -211,12 +211,19 @@ namespace Foxoft.Models
             //    //.HasForeignKey(fk => fk.FromCashRegCode);
             //});
 
-
-           modelBuilder.Entity<TrFormReport>()
-                       .HasKey(bc => new { bc.FormCode, bc.ReportId });
+            modelBuilder.Entity<DcFeature>()
+                        .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
 
             modelBuilder.Entity<TrProductFeature>()
-                        .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId });
+                        .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId, bc.FeatureCode });
+
+            modelBuilder.Entity<DcFeature>()
+                        .HasMany(e => e.TrProductFeatures)
+                        .WithOne(e => e.DcFeature)
+                        .HasForeignKey(e => new { e.FeatureCode, e.FeatureTypeId });
+
+            modelBuilder.Entity<TrFormReport>()
+                       .HasKey(bc => new { bc.FormCode, bc.ReportId });
 
             modelBuilder.Entity<TrProductHierarchy>()
                         .HasKey(bc => new { bc.ProductCode, bc.HierarchyCode });

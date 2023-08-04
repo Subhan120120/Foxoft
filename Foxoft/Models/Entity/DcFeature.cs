@@ -11,11 +11,11 @@ namespace Foxoft.Models
             TrProductFeatures = new HashSet<TrProductFeature>();
         }
 
-        [Key]
+        [Key, Column(Order = 0)]
         [Display(Name = "Özəllik Kodu")]
         public string FeatureCode { get; set; }
 
-        //[Key, Column(Order = 1)]
+        [Key, Column(Order = 1)]
         [ForeignKey("DcFeatureType")]
         [Display(Name = "Özəllik Tipi Kodu")]
         public int FeatureTypeId { get; set; }

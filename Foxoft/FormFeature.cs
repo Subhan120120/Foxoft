@@ -77,7 +77,7 @@ namespace Foxoft
             {
                 DcFeature = bindingSource_feature.Current as DcFeature;
                 if (isNew) //if invoiceHeader doesnt exist
-                    if (!efMethods.FeatureExist(DcFeature.FeatureCode))
+                    if (!efMethods.FeatureExist(DcFeature.FeatureCode, DcFeature.FeatureTypeId))
                         efMethods.InsertFeature(DcFeature);
                     else
                         MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");

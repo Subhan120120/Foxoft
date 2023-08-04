@@ -585,7 +585,7 @@ namespace Foxoft
                 string eValue = (e.Value ??= String.Empty).ToString();
                 DcProduct product = efMethods.SelectProductByBarcode(eValue);
 
-                if (product is null)
+                if (product is not null)
                 {
                     FillRow(gV_InvoiceLine.FocusedRowHandle, product);
                     gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
@@ -1030,11 +1030,19 @@ namespace Foxoft
         private void MakePayment(decimal summaryInvoice, bool autoPayment)
         {
             using FormPayment formPayment = new(1, summaryInvoice, trInvoiceHeader, autoPayment);
-
-            if (formPayment.ShowDialog(this) == DialogResult.OK)
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
+            if (!currAccHasClaims)
             {
-                CalcPaidAmount();
-                //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+            else
+            {
+                if (formPayment.ShowDialog(this) == DialogResult.OK)
+                {
+                    CalcPaidAmount();
+                    //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                }
             }
         }
 

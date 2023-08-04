@@ -17,6 +17,7 @@ namespace Foxoft.Models
         [Display(Name = "Özəllik Tipi Kodu")]
         public int FeatureTypeId { get; set; }
 
+        [Key, Column(Order = 2)]
         [ForeignKey("DcFeature")]
         [Display(Name = "Özəllik Kodu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]

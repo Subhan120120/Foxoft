@@ -326,7 +326,7 @@ namespace Foxoft
             BSI_Report.Caption = "Hesabat";
             BSI_Report.Id = 24;
             BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
-            BSI_Report.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ReportCurrAcc)});
+            BSI_Report.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ReportCurrAcc) });
             BSI_Report.Name = "BSI_Report";
             // 
             // barButtonItem3
@@ -418,6 +418,8 @@ namespace Foxoft
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
             Text = "Cari Hesablar";
+            Activated += FormCurrAccList_Activated;
+            Load += FormCurrAccList_Load;
             VisibleChanged += FormCurrAccList_VisibleChanged;
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).EndInit();

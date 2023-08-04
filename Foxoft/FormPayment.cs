@@ -23,6 +23,9 @@ namespace Foxoft
         public FormPayment()
         {
             InitializeComponent();
+
+            Name = "PaymentDetail";
+
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
 

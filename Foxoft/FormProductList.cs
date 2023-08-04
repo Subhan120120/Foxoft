@@ -90,6 +90,7 @@ namespace Foxoft
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
+            //Focus Special Row
             int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
             if (rowHandle != GridControl.InvalidRowHandle)
             {
@@ -100,6 +101,17 @@ namespace Foxoft
             //gV_ProductList.ShowFindPanel();
             //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
             //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+        }
+
+        private void FormProductList_Activated(object sender, EventArgs e)
+        {
+            //AutoFocus FindPanel
+            if (gV_ProductList is not null)
+            {
+                gV_ProductList.FindPanelVisible = false;
+                if (!gV_ProductList.FindPanelVisible)
+                    gC_ProductList.BeginInvoke(new Action(gV_ProductList.ShowFindPanel));
+            }
         }
 
         private void AddReports()
@@ -601,20 +613,21 @@ namespace Foxoft
 
         }
 
-        //AutoFocus FindPanel
-        private void gC_ProductList_Load(object sender, EventArgs e)
-        {
-            GridControl gC = sender as GridControl;
-            GridView gV = gC.MainView as GridView;
-            if (gV is not null)
-            {
-                //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
-                //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+        ////AutoFocus FindPanel
+        //private void gC_ProductList_Load(object sender, EventArgs e)
+        //{
+        //    GridControl gC = sender as GridControl;
+        //    GridView gV = gC.MainView as GridView;
+        //    if (gV is not null)
+        //    {
+        //        //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
+        //        //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
-                if (!gV.FindPanelVisible)
-                    gC.BeginInvoke(new Action(gV.ShowFindPanel));
-            }
-        }
+        //        if (!gV.FindPanelVisible)
+        //            gC.BeginInvoke(new Action(gV.ShowFindPanel));
+        //    }
+
+        //}
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {

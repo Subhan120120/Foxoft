@@ -203,8 +203,9 @@ namespace Foxoft
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                 formPayment.MdiParent = formERP;
                 formPayment.WindowState = FormWindowState.Maximized;
-                formPayment.Show();
-                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                //formaPayment.Show();
+                if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
             }
         }
 
@@ -218,10 +219,19 @@ namespace Foxoft
 
                     using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
                     {
-                        if (formPayment.ShowDialog(this) == DialogResult.OK)
+                        bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
+                        if (!currAccHasClaims)
                         {
-                            //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
-                            LoadPaymentLines();
+                            MessageBox.Show("Yetkiniz yoxdur! ");
+                            return;
+                        }
+                        else
+                        {
+                            if (formPayment.ShowDialog(this) == DialogResult.OK)
+                            {
+                                //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
+                                LoadPaymentLines();
+                            }
                         }
                     }
                 }

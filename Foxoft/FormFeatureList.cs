@@ -220,7 +220,7 @@ namespace Foxoft
 
         private void bBI_FeatureDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.FeatureExist(dcFeature.FeatureCode))
+            if (efMethods.FeatureExist(dcFeature.FeatureCode, dcFeature.FeatureTypeId))
             {
                 if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcFeature.FeatureDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {

@@ -150,6 +150,7 @@ namespace Foxoft
             var products = db.DcProducts
                                 .Include(x => x.TrProductFeatures)
                                 .Include(x => x.TrInvoiceLines).ThenInclude(x => x.TrInvoiceHeader)
+                                .Include(x => x.DcHierarchy)
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
@@ -855,6 +856,12 @@ namespace Foxoft
             return db.DcHierarchies.FirstOrDefault(x => x.HierarchyCode == hierarchyCode); // burdaki kolonlari dizaynda da elave et
         }
 
+        public DcHierarchy SelectHierarchyBySlug(string slug)
+        {
+            using subContext db = new();
+            return db.DcHierarchies.FirstOrDefault(x => x.Slug == slug); // burdaki kolonlari dizaynda da elave et
+        }
+
         public DcCurrency SelectCurrencyByName(string currencyDesc)
         {
             using subContext db = new();
@@ -1000,10 +1007,11 @@ namespace Foxoft
             using subContext db = new();
             return db.DcFeatureTypes.Any(x => x.FeatureTypeId == featureTypeId);
         }
-        public bool FeatureExist(string featureCode)
+
+        public bool FeatureExist(string featureCode, int featureTypeId)
         {
             using subContext db = new();
-            return db.DcFeatures.Any(x => x.FeatureCode == featureCode);
+            return db.DcFeatures.Any(x => x.FeatureCode == featureCode && x.FeatureTypeId == featureTypeId);
         }
 
         public bool ReportExist(int Id)
@@ -1156,13 +1164,13 @@ namespace Foxoft
         public int UpdateDcFeature_Value(byte featureTypeId, string productCode, string value)
         {
             using subContext db = new();
-            TrProductFeature pf = db.TrProductFeatures.Where(x => x.ProductCode == productCode)
-                                                        .FirstOrDefault(x => x.FeatureTypeId == featureTypeId);
+            TrProductFeature pf = db.TrProductFeatures.FirstOrDefault(x => x.FeatureTypeId == featureTypeId && x.ProductCode == productCode);
 
             if (pf is not null)
             {
                 pf.FeatureCode = value;
-                db.Entry(pf).Property(x => x.FeatureCode).IsModified = true;
+                //db.Entry(pf).Property(x => x.FeatureCode).IsModified = true; composite key gore alinmadi
+                db.Update(pf);
             }
             else
             {

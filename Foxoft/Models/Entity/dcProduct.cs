@@ -101,6 +101,11 @@ namespace Foxoft.Models
         [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? ImagePath { get; set; }
 
+        [Display(Name = "İlbiz")]
+        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string? Slug { get; set; }
+
+
 
         [NotMapped]
         [Display(Name = "Qalıq")]
@@ -118,7 +123,6 @@ namespace Foxoft.Models
         [NotMapped]
         [Display(Name = "Qalıq SIRA 5")]
         public int BalanceS { get; set; }
-
 
         [NotMapped]
         [Display(Name = "Son Alış Qiy.")]

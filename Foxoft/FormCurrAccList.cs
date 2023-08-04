@@ -39,17 +39,11 @@ namespace Foxoft
         public FormCurrAccList()
         {
             InitializeComponent();
+            colCurrAccCode = gV_CurrAccList.Columns["CurrAccCode"];
 
             AddReports();
 
             bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
-
-            //LoadLayout();
-
-            //colPhoneNum.Properties.Mask.EditMask = "(00) 000 00 00";
-            //colPhoneNum.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
-            //colPhoneNum.Properties.Mask.SaveLiteral = false;
-            //colPhoneNum.Properties.Mask.UseMaskAsDisplayFormat = true;
         }
 
         public FormCurrAccList(byte[] currAccTypeArr)
@@ -65,6 +59,28 @@ namespace Foxoft
       : this(currAccTypeArr)
         {
             this.currAccCode = currAccCode;
+        }
+
+        private void FormCurrAccList_Load(object sender, EventArgs e)
+        {
+            //Focus Special Row
+            int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
+            if (rowHandle != GridControl.InvalidRowHandle)
+            {
+                gV_CurrAccList.FocusedRowHandle = rowHandle;
+                gV_CurrAccList.MakeRowVisible(rowHandle);
+            }
+        }
+
+        private void FormCurrAccList_Activated(object sender, EventArgs e)
+        {
+            //AutoFocus FindPanel
+            if (gV_CurrAccList is not null)
+            {
+                gV_CurrAccList.FindPanelVisible = false;
+                if (!gV_CurrAccList.FindPanelVisible)
+                    gC_CurrAccList.BeginInvoke(new Action(gV_CurrAccList.ShowFindPanel));
+            }
         }
 
         private void LoadCurrAccs(byte[] currAccTypeArr)
@@ -254,7 +270,6 @@ namespace Foxoft
             repoMoney.UseMaskAsDisplayFormat = true;
             gC_CurrAccList.RepositoryItems.AddRange(new RepositoryItem[] { repoMoney });
             colBalance.ColumnEdit = repoMoney;
-
         }
 
         private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)

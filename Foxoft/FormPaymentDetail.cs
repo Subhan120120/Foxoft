@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -41,6 +42,15 @@ namespace Foxoft
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
 
             ClearControlsAddNew();
+
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
+            if (!currAccHasClaims)
+            {
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+            else
+                this.Show();
         }
 
         public FormPaymentDetail(Guid paymentHeaderId)
@@ -66,7 +76,6 @@ namespace Foxoft
 
             trPaymentHeader = trPaymentHeadersBindingSource.AddNew() as TrPaymentHeader;
 
-
             dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == trPaymentHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trPaymentLinesBindingSource.DataSource = dbContext.TrPaymentLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
@@ -74,11 +83,13 @@ namespace Foxoft
             lbl_CurrAccDesc.Text = trPaymentHeader.CurrAccDesc;
 
             dataLayoutControl1.IsValid(out List<string> errorList);
+
+            gV_PaymentLine.Focus();
         }
 
         private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
-            TrPaymentHeader paymentHeader = new TrPaymentHeader();
+            TrPaymentHeader paymentHeader = new();
             paymentHeader.PaymentHeaderId = paymentHeaderId;
             string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
             paymentHeader.DocumentNumber = NewDocNum;
@@ -505,8 +516,8 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-            TwilioClass twilio = new TwilioClass();
-            twilio.AlmaDolmasi();
+            //TwilioClass twilio = new TwilioClass();
+            //twilio.AlmaDolmasi();
         }
 
         private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)

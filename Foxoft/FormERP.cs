@@ -418,18 +418,18 @@ namespace Foxoft
 
         private void aCE_PaymentDetail_Click(object sender, EventArgs e)
         {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
+            //bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+            //if (!currAccHasClaims)
+            //{
+            //    MessageBox.Show("Yetkiniz yoxdur! ");
+            //    return;
+            //}
 
             FormPaymentDetail formPaymentDetail = new();
             formPaymentDetail.MdiParent = this;
             formPaymentDetail.WindowState = FormWindowState.Maximized;
-            formPaymentDetail.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            if (parentRibbonControl.MergedPages.Count > 0)
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
         }
 
         private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
