@@ -101,9 +101,9 @@ namespace Foxoft.Models
         [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? ImagePath { get; set; }
 
-        [Display(Name = "İlbiz")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string? Slug { get; set; }
+        [Display(Name = "Sayt Məhsul İd")]
+        [ForeignKey("SiteProduct")]
+        public int? SiteProductId { get; set; }
 
 
 
@@ -133,6 +133,9 @@ namespace Foxoft.Models
         public decimal? LastSalePrice { get; set; }
 
         public virtual DcProductType DcProductType { get; set; }
+
+        [ForeignKey("SiteProductId")]
+        public virtual SiteProduct SiteProduct { get; set; }
         public virtual DcHierarchy DcHierarchy { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }

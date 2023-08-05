@@ -8,6 +8,7 @@ using DevExpress.Data.Linq;
 using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Foxoft
 {
@@ -1037,7 +1038,11 @@ namespace Foxoft
         public void InsertProduct(DcProduct dcProduct)
         {
             using subContext db = new();
-            db.DcProducts.Add(dcProduct);
+            EntityEntry<DcProduct> result = db.DcProducts.Add(dcProduct);
+
+            if (result is not null)
+                db.SiteProducts.Add(new SiteProduct() { ProductCode = dcProduct.ProductCode };
+
             db.SaveChanges();
         }
 
