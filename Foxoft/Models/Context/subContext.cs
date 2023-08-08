@@ -6,7 +6,6 @@ using System.Reflection;
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
-using Foxoft.Properties;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -27,9 +26,11 @@ namespace Foxoft.Models
         public DbSet<DcCurrAccType> DcCurrAccTypes { get; set; }
         public DbSet<DcOffice> DcOffices { get; set; }
         public DbSet<DcPaymentType> DcPaymentTypes { get; set; }
+        public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
         public DbSet<DcProcess> DcProcesses { get; set; }
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<SiteProduct> SiteProducts { get; set; }
+        public DbSet<DcDiscount> DcDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
         public DbSet<DcRole> DcRoles { get; set; }
         public DbSet<DcForm> DcForms { get; set; }
@@ -56,6 +57,7 @@ namespace Foxoft.Models
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<DcHierarchy> DcHierarchies { get; set; }
         public DbSet<TrProductHierarchy> TrProductHierarchies { get; set; }
+        public DbSet<TrPaymentMethodDiscount> trPaymentMethodDiscounts { get; set; }
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
@@ -67,13 +69,13 @@ namespace Foxoft.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string def = Settings.Default.subConnString;
+                string subConnString = Properties.Settings.Default.subConnString;
                 //string conf = config
                 //                    .ConnectionStrings
                 //                    .ConnectionStrings["subConnString"]
                 //                    .ConnectionString;
 
-                optionsBuilder.UseSqlServer(def);
+                optionsBuilder.UseSqlServer(subConnString);
             }
         }
 
@@ -174,7 +176,10 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcPaymentType>().HasData(
                 new DcPaymentType { PaymentTypeCode = 1, PaymentTypeDesc = "Nağd" },
-                new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Visa" });
+                new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" });
+
+            modelBuilder.Entity<DcPaymentMethod>().HasData(
+                new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" });
 
             modelBuilder.Entity<DcProcess>().HasData(
                 new DcProcess { ProcessCode = "RP", ProcessDesc = "Alış", ProcessDir = 1 },
@@ -214,6 +219,12 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcFeature>()
                         .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
+
+            modelBuilder.Entity<TrProductDiscount>()
+                        .HasKey(bc => new { bc.ProductCode, bc.DiscountId });
+
+            modelBuilder.Entity<TrPaymentMethodDiscount>()
+                        .HasKey(bc => new { bc.DiscountId, bc.PaymentMethodId });
 
             modelBuilder.Entity<TrProductFeature>()
                         .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId, bc.FeatureCode });

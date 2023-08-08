@@ -817,6 +817,7 @@ namespace Foxoft
             // 
             BBI_exportXLSX.Caption = "Excel'ə Göndər";
             BBI_exportXLSX.Id = 22;
+            BBI_exportXLSX.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_exportXLSX.ImageOptions.SvgImage");
             BBI_exportXLSX.Name = "BBI_exportXLSX";
             BBI_exportXLSX.ItemClick += BBI_exportXLSX_ItemClick;
             // 
@@ -824,6 +825,7 @@ namespace Foxoft
             // 
             BBI_ImportExcel.Caption = "Excel'dən Al";
             BBI_ImportExcel.Id = 23;
+            BBI_ImportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ImportExcel.ImageOptions.SvgImage");
             BBI_ImportExcel.Name = "BBI_ImportExcel";
             BBI_ImportExcel.ItemClick += BBI_ImportExcel_ItemClick;
             // 
@@ -958,8 +960,8 @@ namespace Foxoft
             RibbonPageGroup5.ItemLinks.Add(bBI_reportDesign);
             RibbonPageGroup5.ItemLinks.Add(BBI_ReportPriceList);
             RibbonPageGroup5.ItemLinks.Add(barButtonItem1);
-            RibbonPageGroup5.ItemLinks.Add(BBI_exportXLSX);
             RibbonPageGroup5.ItemLinks.Add(BBI_ImportExcel);
+            RibbonPageGroup5.ItemLinks.Add(BBI_exportXLSX);
             RibbonPageGroup5.Name = "RibbonPageGroup5";
             RibbonPageGroup5.Text = "Hesabat";
             // 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
@@ -27,6 +28,8 @@ namespace Foxoft.Models
 
         [ForeignKey("FeatureTypeId")]
         public virtual DcFeatureType DcFeatureType { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
     }
 }

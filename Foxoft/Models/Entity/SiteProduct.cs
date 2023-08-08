@@ -18,14 +18,26 @@ namespace Foxoft.Models
         {
         }
 
-        [Key]
         [Display(Name = "Məhsul Kodu")]
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
+
+        [Key]
         [Display(Name = "Umico Kodu")]
         [ForeignKey("DcProduct")]
         public string ProductCode { get; set; }
+
+        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string? Description { get; set; }
+
+        public decimal Price { get; set; }
+        public int? Rating { get; set; }
+        public int CategoryId { get; set; }
+
+        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string? Slug { get; set; }
+        public int ViewCount { get; set; }
 
 
         [ForeignKey("ProductCode")]

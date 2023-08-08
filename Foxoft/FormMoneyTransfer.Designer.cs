@@ -1,851 +1,796 @@
 ﻿
 namespace Foxoft
 {
-   partial class FormMoneyTransfer
-   {
-      /// <summary>
-      /// Required designer variable.
-      /// </summary>
-      private System.ComponentModel.IContainer components = null;
+    partial class FormMoneyTransfer
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-      /// <summary>
-      /// Clean up any resources being used.
-      /// </summary>
-      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-      protected override void Dispose(bool disposing)
-      {
-         if (disposing && (components != null))
-         {
-            components.Dispose();
-         }
-         base.Dispose(disposing);
-      }
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-      #region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-      /// <summary>
-      /// Required method for Designer support - do not modify
-      /// the contents of this method with the code editor.
-      /// </summary>
-      private void InitializeComponent()
-      {
-         this.components = new System.ComponentModel.Container();
-         this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
-         this.bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_SendWhatsapp = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
-         this.bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
-         this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-         this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-         this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-         this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-         this.lbl_CurrAccBalansBefore = new DevExpress.XtraEditors.LabelControl();
-         this.lbl_CurrAccBalansAfter = new DevExpress.XtraEditors.LabelControl();
-         this.lbl_FromCashRegDesc = new DevExpress.XtraEditors.LabelControl();
-         this.lbl_ToCashRegDesc = new DevExpress.XtraEditors.LabelControl();
-         this.gC_PaymentLine = new DevExpress.XtraGrid.GridControl();
-         this.trPaymentLinesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-         this.gV_PaymentLine = new DevExpress.XtraGrid.Views.Grid.GridView();
-         this.colPaymentLineId = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colPaymentTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.repoLUE_PaymentTypeCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-         this.colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.repoCalcEdit_ReceivePayment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
-         this.colPaymentLoc = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.repoCalcEdit_MakePayment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
-         this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-         this.colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.repoBtnEdit_CashregisterCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-         this.colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.colReceivePayment = new DevExpress.XtraGrid.Columns.GridColumn();
-         this.OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
-         this.trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-         this.OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
-         this.DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
-         this.CurrAccCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
-         this.btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
-         this.ToCashRegCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
-         this.FromCashRegCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
-         this.ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
-         this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-         this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForToCashRegCode = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForOperationTime = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForFromCashRegCode = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-         ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
-         this.dataLayoutControl1.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLine)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoLUE_PaymentTypeCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_ReceivePayment)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_MakePayment)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.OperationTimeTimeSpanEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.CurrAccCodeButtonEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ToCashRegCodeButtonEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.FromCashRegCodeButtonEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForToCashRegCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationTime)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForFromCashRegCode)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationDate)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-         this.SuspendLayout();
-         // 
-         // ribbon
-         // 
-         this.ribbon.ExpandCollapseItem.Id = 0;
-         this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbon.ExpandCollapseItem,
-            this.ribbon.SearchEditItem,
-            this.bBI_DeletePayment,
-            this.bBI_SaveAndClose,
-            this.bBI_SendWhatsapp,
-            this.bBI_NewPayment,
-            this.bBI_CopyPayment});
-         this.ribbon.Location = new System.Drawing.Point(0, 0);
-         this.ribbon.MaxItemId = 7;
-         this.ribbon.Name = "ribbon";
-         this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1});
-         this.ribbon.Size = new System.Drawing.Size(899, 158);
-         this.ribbon.StatusBar = this.ribbonStatusBar;
-         // 
-         // bBI_DeletePayment
-         // 
-         this.bBI_DeletePayment.Caption = "Ödənişi Sil";
-         this.bBI_DeletePayment.Id = 1;
-         this.bBI_DeletePayment.Name = "bBI_DeletePayment";
-         this.bBI_DeletePayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeletePayment_ItemClick);
-         // 
-         // bBI_SaveAndClose
-         // 
-         this.bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
-         this.bBI_SaveAndClose.Id = 2;
-         this.bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
-         this.bBI_SaveAndClose.Name = "bBI_SaveAndClose";
-         this.bBI_SaveAndClose.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndClose_ItemClick);
-         // 
-         // bBI_SendWhatsapp
-         // 
-         this.bBI_SendWhatsapp.Caption = "Whatsapa Göndər";
-         this.bBI_SendWhatsapp.Id = 3;
-         this.bBI_SendWhatsapp.Name = "bBI_SendWhatsapp";
-         this.bBI_SendWhatsapp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SendWhatsapp_ItemClick);
-         // 
-         // bBI_NewPayment
-         // 
-         this.bBI_NewPayment.Caption = "Yeni Ödəniş";
-         this.bBI_NewPayment.Id = 5;
-         this.bBI_NewPayment.Name = "bBI_NewPayment";
-         this.bBI_NewPayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_NewPayment_ItemClick);
-         // 
-         // bBI_CopyPayment
-         // 
-         this.bBI_CopyPayment.Caption = "Kopyala";
-         this.bBI_CopyPayment.Id = 6;
-         this.bBI_CopyPayment.Name = "bBI_CopyPayment";
-         this.bBI_CopyPayment.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CopyPayment_ItemClick);
-         // 
-         // ribbonPage1
-         // 
-         this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup2});
-         this.ribbonPage1.Name = "ribbonPage1";
-         this.ribbonPage1.Text = "Ödəmə";
-         // 
-         // ribbonPageGroup1
-         // 
-         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_SaveAndClose);
-         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_NewPayment);
-         this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DeletePayment);
-         this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-         this.ribbonPageGroup1.Text = "Ödəmə";
-         // 
-         // ribbonPageGroup2
-         // 
-         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_SendWhatsapp);
-         this.ribbonPageGroup2.ItemLinks.Add(this.bBI_CopyPayment);
-         this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-         this.ribbonPageGroup2.Text = "Alət";
-         // 
-         // ribbonStatusBar
-         // 
-         this.ribbonStatusBar.Location = new System.Drawing.Point(0, 554);
-         this.ribbonStatusBar.Name = "ribbonStatusBar";
-         this.ribbonStatusBar.Ribbon = this.ribbon;
-         this.ribbonStatusBar.Size = new System.Drawing.Size(899, 24);
-         // 
-         // dataLayoutControl1
-         // 
-         this.dataLayoutControl1.Controls.Add(this.lbl_CurrAccBalansBefore);
-         this.dataLayoutControl1.Controls.Add(this.lbl_CurrAccBalansAfter);
-         this.dataLayoutControl1.Controls.Add(this.lbl_FromCashRegDesc);
-         this.dataLayoutControl1.Controls.Add(this.lbl_ToCashRegDesc);
-         this.dataLayoutControl1.Controls.Add(this.gC_PaymentLine);
-         this.dataLayoutControl1.Controls.Add(this.OperationDateDateEdit);
-         this.dataLayoutControl1.Controls.Add(this.OperationTimeTimeSpanEdit);
-         this.dataLayoutControl1.Controls.Add(this.DescriptionTextEdit);
-         this.dataLayoutControl1.Controls.Add(this.CurrAccCodeButtonEdit);
-         this.dataLayoutControl1.Controls.Add(this.btnEdit_DocNum);
-         this.dataLayoutControl1.Controls.Add(this.ToCashRegCodeButtonEdit);
-         this.dataLayoutControl1.Controls.Add(this.FromCashRegCodeButtonEdit);
-         this.dataLayoutControl1.DataSource = this.trPaymentHeadersBindingSource;
-         this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.ItemForCurrAccCode});
-         this.dataLayoutControl1.Location = new System.Drawing.Point(0, 158);
-         this.dataLayoutControl1.Name = "dataLayoutControl1";
-         this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1249, 262, 650, 400);
-         this.dataLayoutControl1.Root = this.Root;
-         this.dataLayoutControl1.Size = new System.Drawing.Size(899, 396);
-         this.dataLayoutControl1.TabIndex = 2;
-         this.dataLayoutControl1.Text = "Kassadan";
-         // 
-         // lbl_CurrAccBalansBefore
-         // 
-         this.lbl_CurrAccBalansBefore.Location = new System.Drawing.Point(12, 369);
-         this.lbl_CurrAccBalansBefore.Name = "lbl_CurrAccBalansBefore";
-         this.lbl_CurrAccBalansBefore.Size = new System.Drawing.Size(435, 15);
-         this.lbl_CurrAccBalansBefore.StyleController = this.dataLayoutControl1;
-         this.lbl_CurrAccBalansBefore.TabIndex = 1;
-         this.lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: ";
-         // 
-         // lbl_CurrAccBalansAfter
-         // 
-         this.lbl_CurrAccBalansAfter.Location = new System.Drawing.Point(451, 369);
-         this.lbl_CurrAccBalansAfter.Name = "lbl_CurrAccBalansAfter";
-         this.lbl_CurrAccBalansAfter.Size = new System.Drawing.Size(436, 15);
-         this.lbl_CurrAccBalansAfter.StyleController = this.dataLayoutControl1;
-         this.lbl_CurrAccBalansAfter.TabIndex = 1;
-         this.lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: ";
-         // 
-         // lbl_FromCashRegDesc
-         // 
-         this.lbl_FromCashRegDesc.Location = new System.Drawing.Point(623, 12);
-         this.lbl_FromCashRegDesc.Name = "lbl_FromCashRegDesc";
-         this.lbl_FromCashRegDesc.Size = new System.Drawing.Size(264, 20);
-         this.lbl_FromCashRegDesc.StyleController = this.dataLayoutControl1;
-         this.lbl_FromCashRegDesc.TabIndex = 1;
-         // 
-         // lbl_ToCashRegDesc
-         // 
-         this.lbl_ToCashRegDesc.Location = new System.Drawing.Point(623, 36);
-         this.lbl_ToCashRegDesc.Name = "lbl_ToCashRegDesc";
-         this.lbl_ToCashRegDesc.Size = new System.Drawing.Size(264, 20);
-         this.lbl_ToCashRegDesc.StyleController = this.dataLayoutControl1;
-         this.lbl_ToCashRegDesc.TabIndex = 1;
-         // 
-         // gC_PaymentLine
-         // 
-         this.gC_PaymentLine.DataSource = this.trPaymentLinesBindingSource;
-         this.gC_PaymentLine.Location = new System.Drawing.Point(12, 84);
-         this.gC_PaymentLine.MainView = this.gV_PaymentLine;
-         this.gC_PaymentLine.MenuManager = this.ribbon;
-         this.gC_PaymentLine.Name = "gC_PaymentLine";
-         this.gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repoLUE_CurrencyCode,
-            this.repoCalcEdit_ReceivePayment,
-            this.repoCalcEdit_MakePayment,
-            this.repoBtnEdit_CashregisterCode,
-            this.repoLUE_PaymentTypeCode});
-         this.gC_PaymentLine.Size = new System.Drawing.Size(875, 281);
-         this.gC_PaymentLine.TabIndex = 7;
-         this.gC_PaymentLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gV_PaymentLine});
-         this.gC_PaymentLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_PaymentLine_KeyDown);
-         // 
-         // trPaymentLinesBindingSource
-         // 
-         this.trPaymentLinesBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentLine);
-         // 
-         // gV_PaymentLine
-         // 
-         this.gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colPaymentLineId,
-            this.colPaymentHeaderId,
-            this.colPaymentTypeCode,
-            this.colPayment,
-            this.colPaymentLoc,
-            this.colCurrencyCode,
-            this.colLineDescription,
-            this.colExchangeRate,
-            this.colCreatedUserName,
-            this.colCreatedDate,
-            this.colLastUpdatedUserName,
-            this.colLastUpdatedDate,
-            this.colCashRegisterCode,
-            this.colBalanceBefor,
-            this.colBalanceAfter,
-            this.colReceivePayment});
-         this.gV_PaymentLine.CustomizationFormBounds = new System.Drawing.Rectangle(953, 390, 264, 272);
-         this.gV_PaymentLine.GridControl = this.gC_PaymentLine;
-         this.gV_PaymentLine.Name = "gV_PaymentLine";
-         this.gV_PaymentLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-         this.gV_PaymentLine.OptionsNavigation.AutoFocusNewRow = true;
-         this.gV_PaymentLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-         this.gV_PaymentLine.OptionsView.ShowGroupPanel = false;
-         this.gV_PaymentLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_PaymentLine_InitNewRow);
-         this.gV_PaymentLine.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_PaymentLine_CellValueChanging);
-         this.gV_PaymentLine.RowDeleted += new DevExpress.Data.RowDeletedEventHandler(this.gV_PaymentLine_RowDeleted);
-         this.gV_PaymentLine.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gV_PaymentLine_RowUpdated);
-         // 
-         // colPaymentLineId
-         // 
-         this.colPaymentLineId.FieldName = "PaymentLineId";
-         this.colPaymentLineId.Name = "colPaymentLineId";
-         // 
-         // colPaymentHeaderId
-         // 
-         this.colPaymentHeaderId.FieldName = "PaymentHeaderId";
-         this.colPaymentHeaderId.Name = "colPaymentHeaderId";
-         // 
-         // colPaymentTypeCode
-         // 
-         this.colPaymentTypeCode.ColumnEdit = this.repoLUE_PaymentTypeCode;
-         this.colPaymentTypeCode.FieldName = "PaymentTypeCode";
-         this.colPaymentTypeCode.Name = "colPaymentTypeCode";
-         this.colPaymentTypeCode.Visible = true;
-         this.colPaymentTypeCode.VisibleIndex = 0;
-         this.colPaymentTypeCode.Width = 136;
-         // 
-         // repoLUE_PaymentTypeCode
-         // 
-         this.repoLUE_PaymentTypeCode.AutoHeight = false;
-         this.repoLUE_PaymentTypeCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
-         this.repoLUE_PaymentTypeCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.repoLUE_PaymentTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeCode", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeDesc", "")});
-         this.repoLUE_PaymentTypeCode.DisplayMember = "PaymentTypeDesc";
-         this.repoLUE_PaymentTypeCode.Name = "repoLUE_PaymentTypeCode";
-         this.repoLUE_PaymentTypeCode.NullText = "";
-         this.repoLUE_PaymentTypeCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
-         this.repoLUE_PaymentTypeCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
-         this.repoLUE_PaymentTypeCode.ValueMember = "PaymentTypeCode";
-         // 
-         // colPayment
-         // 
-         this.colPayment.ColumnEdit = this.repoCalcEdit_ReceivePayment;
-         this.colPayment.FieldName = "Payment";
-         this.colPayment.Name = "colPayment";
-         this.colPayment.Visible = true;
-         this.colPayment.VisibleIndex = 1;
-         this.colPayment.Width = 136;
-         // 
-         // repoCalcEdit_ReceivePayment
-         // 
-         this.repoCalcEdit_ReceivePayment.AutoHeight = false;
-         this.repoCalcEdit_ReceivePayment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.repoCalcEdit_ReceivePayment.Name = "repoCalcEdit_ReceivePayment";
-         // 
-         // colPaymentLoc
-         // 
-         this.colPaymentLoc.ColumnEdit = this.repoCalcEdit_MakePayment;
-         this.colPaymentLoc.FieldName = "PaymentLoc";
-         this.colPaymentLoc.Name = "colPaymentLoc";
-         // 
-         // repoCalcEdit_MakePayment
-         // 
-         this.repoCalcEdit_MakePayment.AutoHeight = false;
-         this.repoCalcEdit_MakePayment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.repoCalcEdit_MakePayment.Name = "repoCalcEdit_MakePayment";
-         // 
-         // colCurrencyCode
-         // 
-         this.colCurrencyCode.ColumnEdit = this.repoLUE_CurrencyCode;
-         this.colCurrencyCode.FieldName = "CurrencyCode";
-         this.colCurrencyCode.Name = "colCurrencyCode";
-         this.colCurrencyCode.Visible = true;
-         this.colCurrencyCode.VisibleIndex = 2;
-         this.colCurrencyCode.Width = 155;
-         // 
-         // repoLUE_CurrencyCode
-         // 
-         this.repoLUE_CurrencyCode.AutoHeight = false;
-         this.repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
-         this.repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "")});
-         this.repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
-         this.repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
-         this.repoLUE_CurrencyCode.NullText = "";
-         this.repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
-         this.repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
-         this.repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
-         this.repoLUE_CurrencyCode.EditValueChanged += new System.EventHandler(this.repoLUE_CurrencyCode_EditValueChanged);
-         // 
-         // colLineDescription
-         // 
-         this.colLineDescription.FieldName = "LineDescription";
-         this.colLineDescription.Name = "colLineDescription";
-         this.colLineDescription.Visible = true;
-         this.colLineDescription.VisibleIndex = 4;
-         this.colLineDescription.Width = 97;
-         // 
-         // colExchangeRate
-         // 
-         this.colExchangeRate.FieldName = "ExchangeRate";
-         this.colExchangeRate.Name = "colExchangeRate";
-         this.colExchangeRate.Visible = true;
-         this.colExchangeRate.VisibleIndex = 3;
-         this.colExchangeRate.Width = 157;
-         // 
-         // colCreatedUserName
-         // 
-         this.colCreatedUserName.FieldName = "CreatedUserName";
-         this.colCreatedUserName.Name = "colCreatedUserName";
-         // 
-         // colCreatedDate
-         // 
-         this.colCreatedDate.FieldName = "CreatedDate";
-         this.colCreatedDate.Name = "colCreatedDate";
-         // 
-         // colLastUpdatedUserName
-         // 
-         this.colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
-         this.colLastUpdatedUserName.Name = "colLastUpdatedUserName";
-         // 
-         // colLastUpdatedDate
-         // 
-         this.colLastUpdatedDate.FieldName = "LastUpdatedDate";
-         this.colLastUpdatedDate.Name = "colLastUpdatedDate";
-         // 
-         // colCashRegisterCode
-         // 
-         this.colCashRegisterCode.ColumnEdit = this.repoBtnEdit_CashregisterCode;
-         this.colCashRegisterCode.FieldName = "CashRegisterCode";
-         this.colCashRegisterCode.Name = "colCashRegisterCode";
-         // 
-         // repoBtnEdit_CashregisterCode
-         // 
-         this.repoBtnEdit_CashregisterCode.AutoHeight = false;
-         this.repoBtnEdit_CashregisterCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.repoBtnEdit_CashregisterCode.Name = "repoBtnEdit_CashregisterCode";
-         // 
-         // colBalanceBefor
-         // 
-         this.colBalanceBefor.FieldName = "BalanceBefor";
-         this.colBalanceBefor.Name = "colBalanceBefor";
-         this.colBalanceBefor.Visible = true;
-         this.colBalanceBefor.VisibleIndex = 5;
-         // 
-         // colBalanceAfter
-         // 
-         this.colBalanceAfter.FieldName = "BalanceAfter";
-         this.colBalanceAfter.Name = "colBalanceAfter";
-         this.colBalanceAfter.Visible = true;
-         this.colBalanceAfter.VisibleIndex = 6;
-         // 
-         // colReceivePayment
-         // 
-         this.colReceivePayment.FieldName = "ReceivePayment";
-         this.colReceivePayment.Name = "colReceivePayment";
-         // 
-         // OperationDateDateEdit
-         // 
-         this.OperationDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "OperationDate", true));
-         this.OperationDateDateEdit.EditValue = null;
-         this.OperationDateDateEdit.Location = new System.Drawing.Point(98, 36);
-         this.OperationDateDateEdit.MenuManager = this.ribbon;
-         this.OperationDateDateEdit.Name = "OperationDateDateEdit";
-         this.OperationDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.OperationDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.OperationDateDateEdit.Size = new System.Drawing.Size(349, 20);
-         this.OperationDateDateEdit.StyleController = this.dataLayoutControl1;
-         this.OperationDateDateEdit.TabIndex = 5;
-         this.OperationDateDateEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
-         // 
-         // trPaymentHeadersBindingSource
-         // 
-         this.trPaymentHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrPaymentHeader);
-         this.trPaymentHeadersBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trPaymentHeadersBindingSource_AddingNew);
-         this.trPaymentHeadersBindingSource.CurrentItemChanged += new System.EventHandler(this.trPaymentHeadersBindingSource_CurrentItemChanged);
-         // 
-         // OperationTimeTimeSpanEdit
-         // 
-         this.OperationTimeTimeSpanEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "OperationTime", true));
-         this.OperationTimeTimeSpanEdit.EditValue = System.TimeSpan.Parse("00:00:00");
-         this.OperationTimeTimeSpanEdit.Location = new System.Drawing.Point(98, 60);
-         this.OperationTimeTimeSpanEdit.MenuManager = this.ribbon;
-         this.OperationTimeTimeSpanEdit.Name = "OperationTimeTimeSpanEdit";
-         this.OperationTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-         this.OperationTimeTimeSpanEdit.Size = new System.Drawing.Size(349, 20);
-         this.OperationTimeTimeSpanEdit.StyleController = this.dataLayoutControl1;
-         this.OperationTimeTimeSpanEdit.TabIndex = 4;
-         this.OperationTimeTimeSpanEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
-         // 
-         // DescriptionTextEdit
-         // 
-         this.DescriptionTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "Description", true));
-         this.DescriptionTextEdit.Location = new System.Drawing.Point(537, 60);
-         this.DescriptionTextEdit.MenuManager = this.ribbon;
-         this.DescriptionTextEdit.Name = "DescriptionTextEdit";
-         this.DescriptionTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-         this.DescriptionTextEdit.Size = new System.Drawing.Size(350, 20);
-         this.DescriptionTextEdit.StyleController = this.dataLayoutControl1;
-         this.DescriptionTextEdit.TabIndex = 6;
-         this.DescriptionTextEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
-         // 
-         // CurrAccCodeButtonEdit
-         // 
-         this.CurrAccCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "CurrAccCode", true));
-         this.CurrAccCodeButtonEdit.Location = new System.Drawing.Point(537, 36);
-         this.CurrAccCodeButtonEdit.MenuManager = this.ribbon;
-         this.CurrAccCodeButtonEdit.Name = "CurrAccCodeButtonEdit";
-         this.CurrAccCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.CurrAccCodeButtonEdit.Size = new System.Drawing.Size(67, 20);
-         this.CurrAccCodeButtonEdit.StyleController = this.dataLayoutControl1;
-         this.CurrAccCodeButtonEdit.TabIndex = 1;
-         this.CurrAccCodeButtonEdit.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.CurrAccCodeButtonEdit_ButtonClick);
-         this.CurrAccCodeButtonEdit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
-         // 
-         // btnEdit_DocNum
-         // 
-         this.btnEdit_DocNum.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "DocumentNumber", true));
-         this.btnEdit_DocNum.Location = new System.Drawing.Point(98, 12);
-         this.btnEdit_DocNum.MenuManager = this.ribbon;
-         this.btnEdit_DocNum.Name = "btnEdit_DocNum";
-         this.btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-         this.btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.btnEdit_DocNum.Size = new System.Drawing.Size(349, 20);
-         this.btnEdit_DocNum.StyleController = this.dataLayoutControl1;
-         this.btnEdit_DocNum.TabIndex = 0;
-         this.btnEdit_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_DocNum_ButtonPressed);
-         this.btnEdit_DocNum.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataLayout_KeyDown);
-         // 
-         // ToCashRegCodeButtonEdit
-         // 
-         this.ToCashRegCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "ToCashRegCode", true));
-         this.ToCashRegCodeButtonEdit.Location = new System.Drawing.Point(537, 36);
-         this.ToCashRegCodeButtonEdit.MenuManager = this.ribbon;
-         this.ToCashRegCodeButtonEdit.Name = "ToCashRegCodeButtonEdit";
-         this.ToCashRegCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.ToCashRegCodeButtonEdit.Size = new System.Drawing.Size(82, 20);
-         this.ToCashRegCodeButtonEdit.StyleController = this.dataLayoutControl1;
-         this.ToCashRegCodeButtonEdit.TabIndex = 3;
-         this.ToCashRegCodeButtonEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.ToCashRegCodeButtonEdit_ButtonPressed);
-         // 
-         // FromCashRegCodeButtonEdit
-         // 
-         this.FromCashRegCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPaymentHeadersBindingSource, "FromCashRegCode", true));
-         this.FromCashRegCodeButtonEdit.Location = new System.Drawing.Point(537, 12);
-         this.FromCashRegCodeButtonEdit.MenuManager = this.ribbon;
-         this.FromCashRegCodeButtonEdit.Name = "FromCashRegCodeButtonEdit";
-         this.FromCashRegCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-         this.FromCashRegCodeButtonEdit.Size = new System.Drawing.Size(82, 20);
-         this.FromCashRegCodeButtonEdit.StyleController = this.dataLayoutControl1;
-         this.FromCashRegCodeButtonEdit.TabIndex = 2;
-         this.FromCashRegCodeButtonEdit.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.FromCashRegCodeButtonEdit_ButtonPressed);
-         // 
-         // ItemForCurrAccCode
-         // 
-         this.ItemForCurrAccCode.Control = this.CurrAccCodeButtonEdit;
-         this.ItemForCurrAccCode.Location = new System.Drawing.Point(439, 24);
-         this.ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-         this.ItemForCurrAccCode.Size = new System.Drawing.Size(157, 24);
-         this.ItemForCurrAccCode.Text = "Cari Hesab";
-         this.ItemForCurrAccCode.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // Root
-         // 
-         this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-         this.Root.GroupBordersVisible = false;
-         this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlGroup1});
-         this.Root.Name = "Root";
-         this.Root.Size = new System.Drawing.Size(899, 396);
-         this.Root.TextVisible = false;
-         // 
-         // layoutControlGroup1
-         // 
-         this.layoutControlGroup1.AllowDrawBackground = false;
-         this.layoutControlGroup1.GroupBordersVisible = false;
-         this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.ItemForDocumentNumber,
-            this.layoutControlItem4,
-            this.layoutControlItem5,
-            this.ItemForToCashRegCode,
-            this.ItemForOperationTime,
-            this.ItemForDescription,
-            this.ItemForFromCashRegCode,
-            this.ItemForOperationDate,
-            this.layoutControlItem2,
-            this.layoutControlItem3});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-         this.layoutControlGroup1.Name = "autoGeneratedGroup0";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(879, 376);
-         // 
-         // layoutControlItem1
-         // 
-         this.layoutControlItem1.Control = this.gC_PaymentLine;
-         this.layoutControlItem1.Location = new System.Drawing.Point(0, 72);
-         this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(879, 285);
-         this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem1.TextVisible = false;
-         // 
-         // ItemForDocumentNumber
-         // 
-         this.ItemForDocumentNumber.Control = this.btnEdit_DocNum;
-         this.ItemForDocumentNumber.Location = new System.Drawing.Point(0, 0);
-         this.ItemForDocumentNumber.Name = "ItemForDocumentNumber";
-         this.ItemForDocumentNumber.Size = new System.Drawing.Size(439, 24);
-         this.ItemForDocumentNumber.Text = "Ödəniş Nömrəsi";
-         this.ItemForDocumentNumber.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // layoutControlItem4
-         // 
-         this.layoutControlItem4.Control = this.lbl_CurrAccBalansAfter;
-         this.layoutControlItem4.Location = new System.Drawing.Point(439, 357);
-         this.layoutControlItem4.MinSize = new System.Drawing.Size(125, 17);
-         this.layoutControlItem4.Name = "layoutControlItem4";
-         this.layoutControlItem4.Size = new System.Drawing.Size(440, 19);
-         this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem4.TextVisible = false;
-         // 
-         // layoutControlItem5
-         // 
-         this.layoutControlItem5.Control = this.lbl_CurrAccBalansBefore;
-         this.layoutControlItem5.Location = new System.Drawing.Point(0, 357);
-         this.layoutControlItem5.MinSize = new System.Drawing.Size(125, 17);
-         this.layoutControlItem5.Name = "layoutControlItem5";
-         this.layoutControlItem5.Size = new System.Drawing.Size(439, 19);
-         this.layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem5.TextVisible = false;
-         // 
-         // ItemForToCashRegCode
-         // 
-         this.ItemForToCashRegCode.Control = this.ToCashRegCodeButtonEdit;
-         this.ItemForToCashRegCode.Location = new System.Drawing.Point(439, 24);
-         this.ItemForToCashRegCode.Name = "ItemForToCashRegCode";
-         this.ItemForToCashRegCode.Size = new System.Drawing.Size(172, 24);
-         this.ItemForToCashRegCode.Text = "Kassaya";
-         this.ItemForToCashRegCode.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // ItemForOperationTime
-         // 
-         this.ItemForOperationTime.Control = this.OperationTimeTimeSpanEdit;
-         this.ItemForOperationTime.Location = new System.Drawing.Point(0, 48);
-         this.ItemForOperationTime.Name = "ItemForOperationTime";
-         this.ItemForOperationTime.Size = new System.Drawing.Size(439, 24);
-         this.ItemForOperationTime.Text = "Sənəd Vaxtı";
-         this.ItemForOperationTime.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // ItemForDescription
-         // 
-         this.ItemForDescription.Control = this.DescriptionTextEdit;
-         this.ItemForDescription.Location = new System.Drawing.Point(439, 48);
-         this.ItemForDescription.Name = "ItemForDescription";
-         this.ItemForDescription.Size = new System.Drawing.Size(440, 24);
-         this.ItemForDescription.Text = "Açıqlama";
-         this.ItemForDescription.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // ItemForFromCashRegCode
-         // 
-         this.ItemForFromCashRegCode.Control = this.FromCashRegCodeButtonEdit;
-         this.ItemForFromCashRegCode.Location = new System.Drawing.Point(439, 0);
-         this.ItemForFromCashRegCode.Name = "ItemForFromCashRegCode";
-         this.ItemForFromCashRegCode.Size = new System.Drawing.Size(172, 24);
-         this.ItemForFromCashRegCode.Text = "Kassadan";
-         this.ItemForFromCashRegCode.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // ItemForOperationDate
-         // 
-         this.ItemForOperationDate.Control = this.OperationDateDateEdit;
-         this.ItemForOperationDate.Location = new System.Drawing.Point(0, 24);
-         this.ItemForOperationDate.Name = "ItemForOperationDate";
-         this.ItemForOperationDate.Size = new System.Drawing.Size(439, 24);
-         this.ItemForOperationDate.Text = "Sənəd Tarixi";
-         this.ItemForOperationDate.TextSize = new System.Drawing.Size(74, 13);
-         // 
-         // layoutControlItem2
-         // 
-         this.layoutControlItem2.Control = this.lbl_FromCashRegDesc;
-         this.layoutControlItem2.Location = new System.Drawing.Point(611, 0);
-         this.layoutControlItem2.MinSize = new System.Drawing.Size(4, 17);
-         this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(268, 24);
-         this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem2.TextVisible = false;
-         // 
-         // layoutControlItem3
-         // 
-         this.layoutControlItem3.Control = this.lbl_ToCashRegDesc;
-         this.layoutControlItem3.Location = new System.Drawing.Point(611, 24);
-         this.layoutControlItem3.MinSize = new System.Drawing.Size(67, 17);
-         this.layoutControlItem3.Name = "layoutControlItem3";
-         this.layoutControlItem3.Size = new System.Drawing.Size(268, 24);
-         this.layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem3.TextVisible = false;
-         // 
-         // FormMoneyTransfer
-         // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(899, 578);
-         this.Controls.Add(this.dataLayoutControl1);
-         this.Controls.Add(this.ribbonStatusBar);
-         this.Controls.Add(this.ribbon);
-         this.Name = "FormMoneyTransfer";
-         this.Ribbon = this.ribbon;
-         this.StatusBar = this.ribbonStatusBar;
-         this.Text = "Kassalar Arası Transfer";
-         ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
-         this.dataLayoutControl1.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.gC_PaymentLine)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.trPaymentLinesBindingSource)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gV_PaymentLine)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoLUE_PaymentTypeCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_ReceivePayment)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_MakePayment)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_CashregisterCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.OperationDateDateEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.trPaymentHeadersBindingSource)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.OperationTimeTimeSpanEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.CurrAccCodeButtonEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ToCashRegCodeButtonEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.FromCashRegCodeButtonEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForToCashRegCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationTime)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForFromCashRegCode)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForOperationDate)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-         this.ResumeLayout(false);
-         this.PerformLayout();
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
+            bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
+            bBI_SendWhatsapp = new DevExpress.XtraBars.BarButtonItem();
+            bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
+            bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
+            ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            lbl_CurrAccBalansBefore = new DevExpress.XtraEditors.LabelControl();
+            lbl_CurrAccBalansAfter = new DevExpress.XtraEditors.LabelControl();
+            lbl_FromCashRegDesc = new DevExpress.XtraEditors.LabelControl();
+            lbl_ToCashRegDesc = new DevExpress.XtraEditors.LabelControl();
+            gC_PaymentLine = new DevExpress.XtraGrid.GridControl();
+            trPaymentLinesBindingSource = new System.Windows.Forms.BindingSource(components);
+            gV_PaymentLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            colPaymentLineId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPaymentTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLUE_PaymentTypeCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            colPayment = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoCalcEdit_ReceivePayment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            colPaymentLoc = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoCalcEdit_MakePayment = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
+            colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCashRegisterCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoBtnEdit_CashregisterCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
+            colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
+            colReceivePayment = new DevExpress.XtraGrid.Columns.GridColumn();
+            OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
+            trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
+            OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
+            DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
+            CurrAccCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
+            btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
+            ToCashRegCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
+            FromCashRegCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
+            ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForToCashRegCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForOperationTime = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForFromCashRegCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
+            ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
+            dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gC_PaymentLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trPaymentLinesBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gV_PaymentLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_PaymentTypeCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePayment).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePayment).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_CashregisterCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trPaymentHeadersBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)OperationTimeTimeSpanEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)CurrAccCodeButtonEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ToCashRegCodeButtonEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)FromCashRegCodeButtonEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForToCashRegCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForOperationTime).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForFromCashRegCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForOperationDate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
+            SuspendLayout();
+            // 
+            // ribbon
+            // 
+            ribbon.ExpandCollapseItem.Id = 0;
+            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, ribbon.SearchEditItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment });
+            ribbon.Location = new System.Drawing.Point(0, 0);
+            ribbon.MaxItemId = 7;
+            ribbon.Name = "ribbon";
+            ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
+            ribbon.Size = new System.Drawing.Size(899, 158);
+            ribbon.StatusBar = ribbonStatusBar;
+            // 
+            // bBI_DeletePayment
+            // 
+            bBI_DeletePayment.Caption = "Ödənişi Sil";
+            bBI_DeletePayment.Id = 1;
+            bBI_DeletePayment.Name = "bBI_DeletePayment";
+            bBI_DeletePayment.ItemClick += bBI_DeletePayment_ItemClick;
+            // 
+            // bBI_SaveAndClose
+            // 
+            bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
+            bBI_SaveAndClose.Id = 2;
+            bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
+            bBI_SaveAndClose.Name = "bBI_SaveAndClose";
+            bBI_SaveAndClose.ItemClick += bBI_SaveAndClose_ItemClick;
+            // 
+            // bBI_SendWhatsapp
+            // 
+            bBI_SendWhatsapp.Caption = "Whatsapa Göndər";
+            bBI_SendWhatsapp.Id = 3;
+            bBI_SendWhatsapp.Name = "bBI_SendWhatsapp";
+            bBI_SendWhatsapp.ItemClick += bBI_SendWhatsapp_ItemClick;
+            // 
+            // bBI_NewPayment
+            // 
+            bBI_NewPayment.Caption = "Yeni Ödəniş";
+            bBI_NewPayment.Id = 5;
+            bBI_NewPayment.Name = "bBI_NewPayment";
+            bBI_NewPayment.ItemClick += bBI_NewPayment_ItemClick;
+            // 
+            // bBI_CopyPayment
+            // 
+            bBI_CopyPayment.Caption = "Kopyala";
+            bBI_CopyPayment.Id = 6;
+            bBI_CopyPayment.Name = "bBI_CopyPayment";
+            bBI_CopyPayment.ItemClick += bBI_CopyPayment_ItemClick;
+            // 
+            // ribbonPage1
+            // 
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2 });
+            ribbonPage1.Name = "ribbonPage1";
+            ribbonPage1.Text = "Ödəmə";
+            // 
+            // ribbonPageGroup1
+            // 
+            ribbonPageGroup1.ItemLinks.Add(bBI_SaveAndClose);
+            ribbonPageGroup1.ItemLinks.Add(bBI_NewPayment);
+            ribbonPageGroup1.ItemLinks.Add(bBI_DeletePayment);
+            ribbonPageGroup1.Name = "ribbonPageGroup1";
+            ribbonPageGroup1.Text = "Ödəmə";
+            // 
+            // ribbonPageGroup2
+            // 
+            ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
+            ribbonPageGroup2.ItemLinks.Add(bBI_CopyPayment);
+            ribbonPageGroup2.Name = "ribbonPageGroup2";
+            ribbonPageGroup2.Text = "Alət";
+            // 
+            // ribbonStatusBar
+            // 
+            ribbonStatusBar.Location = new System.Drawing.Point(0, 554);
+            ribbonStatusBar.Name = "ribbonStatusBar";
+            ribbonStatusBar.Ribbon = ribbon;
+            ribbonStatusBar.Size = new System.Drawing.Size(899, 24);
+            // 
+            // dataLayoutControl1
+            // 
+            dataLayoutControl1.Controls.Add(lbl_CurrAccBalansBefore);
+            dataLayoutControl1.Controls.Add(lbl_CurrAccBalansAfter);
+            dataLayoutControl1.Controls.Add(lbl_FromCashRegDesc);
+            dataLayoutControl1.Controls.Add(lbl_ToCashRegDesc);
+            dataLayoutControl1.Controls.Add(gC_PaymentLine);
+            dataLayoutControl1.Controls.Add(OperationDateDateEdit);
+            dataLayoutControl1.Controls.Add(OperationTimeTimeSpanEdit);
+            dataLayoutControl1.Controls.Add(DescriptionTextEdit);
+            dataLayoutControl1.Controls.Add(CurrAccCodeButtonEdit);
+            dataLayoutControl1.Controls.Add(btnEdit_DocNum);
+            dataLayoutControl1.Controls.Add(ToCashRegCodeButtonEdit);
+            dataLayoutControl1.Controls.Add(FromCashRegCodeButtonEdit);
+            dataLayoutControl1.DataSource = trPaymentHeadersBindingSource;
+            dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForCurrAccCode });
+            dataLayoutControl1.Location = new System.Drawing.Point(0, 158);
+            dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1249, 262, 650, 400);
+            dataLayoutControl1.Root = Root;
+            dataLayoutControl1.Size = new System.Drawing.Size(899, 396);
+            dataLayoutControl1.TabIndex = 2;
+            dataLayoutControl1.Text = "Kassadan";
+            // 
+            // lbl_CurrAccBalansBefore
+            // 
+            lbl_CurrAccBalansBefore.Location = new System.Drawing.Point(12, 369);
+            lbl_CurrAccBalansBefore.Name = "lbl_CurrAccBalansBefore";
+            lbl_CurrAccBalansBefore.Size = new System.Drawing.Size(435, 15);
+            lbl_CurrAccBalansBefore.StyleController = dataLayoutControl1;
+            lbl_CurrAccBalansBefore.TabIndex = 1;
+            lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: ";
+            // 
+            // lbl_CurrAccBalansAfter
+            // 
+            lbl_CurrAccBalansAfter.Location = new System.Drawing.Point(451, 369);
+            lbl_CurrAccBalansAfter.Name = "lbl_CurrAccBalansAfter";
+            lbl_CurrAccBalansAfter.Size = new System.Drawing.Size(436, 15);
+            lbl_CurrAccBalansAfter.StyleController = dataLayoutControl1;
+            lbl_CurrAccBalansAfter.TabIndex = 1;
+            lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: ";
+            // 
+            // lbl_FromCashRegDesc
+            // 
+            lbl_FromCashRegDesc.Location = new System.Drawing.Point(623, 12);
+            lbl_FromCashRegDesc.Name = "lbl_FromCashRegDesc";
+            lbl_FromCashRegDesc.Size = new System.Drawing.Size(264, 20);
+            lbl_FromCashRegDesc.StyleController = dataLayoutControl1;
+            lbl_FromCashRegDesc.TabIndex = 1;
+            // 
+            // lbl_ToCashRegDesc
+            // 
+            lbl_ToCashRegDesc.Location = new System.Drawing.Point(623, 36);
+            lbl_ToCashRegDesc.Name = "lbl_ToCashRegDesc";
+            lbl_ToCashRegDesc.Size = new System.Drawing.Size(264, 20);
+            lbl_ToCashRegDesc.StyleController = dataLayoutControl1;
+            lbl_ToCashRegDesc.TabIndex = 1;
+            // 
+            // gC_PaymentLine
+            // 
+            gC_PaymentLine.DataSource = trPaymentLinesBindingSource;
+            gC_PaymentLine.Location = new System.Drawing.Point(12, 84);
+            gC_PaymentLine.MainView = gV_PaymentLine;
+            gC_PaymentLine.MenuManager = ribbon;
+            gC_PaymentLine.Name = "gC_PaymentLine";
+            gC_PaymentLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_CurrencyCode, repoCalcEdit_ReceivePayment, repoCalcEdit_MakePayment, repoBtnEdit_CashregisterCode, repoLUE_PaymentTypeCode });
+            gC_PaymentLine.Size = new System.Drawing.Size(875, 281);
+            gC_PaymentLine.TabIndex = 7;
+            gC_PaymentLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PaymentLine });
+            gC_PaymentLine.KeyDown += gC_PaymentLine_KeyDown;
+            // 
+            // trPaymentLinesBindingSource
+            // 
+            trPaymentLinesBindingSource.DataSource = typeof(Models.TrPaymentLine);
+            // 
+            // gV_PaymentLine
+            // 
+            gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentLineId, colPaymentHeaderId, colPaymentTypeCode, colPayment, colPaymentLoc, colCurrencyCode, colLineDescription, colExchangeRate, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colCashRegisterCode, colBalanceBefor, colBalanceAfter, colReceivePayment, colPaymentMethodId });
+            gV_PaymentLine.CustomizationFormBounds = new System.Drawing.Rectangle(953, 390, 264, 272);
+            gV_PaymentLine.GridControl = gC_PaymentLine;
+            gV_PaymentLine.Name = "gV_PaymentLine";
+            gV_PaymentLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            gV_PaymentLine.OptionsNavigation.AutoFocusNewRow = true;
+            gV_PaymentLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            gV_PaymentLine.OptionsView.ShowGroupPanel = false;
+            gV_PaymentLine.InitNewRow += gV_PaymentLine_InitNewRow;
+            gV_PaymentLine.CellValueChanging += gV_PaymentLine_CellValueChanging;
+            gV_PaymentLine.RowDeleted += gV_PaymentLine_RowDeleted;
+            gV_PaymentLine.RowUpdated += gV_PaymentLine_RowUpdated;
+            // 
+            // colPaymentLineId
+            // 
+            colPaymentLineId.FieldName = "PaymentLineId";
+            colPaymentLineId.Name = "colPaymentLineId";
+            // 
+            // colPaymentHeaderId
+            // 
+            colPaymentHeaderId.FieldName = "PaymentHeaderId";
+            colPaymentHeaderId.Name = "colPaymentHeaderId";
+            // 
+            // colPaymentTypeCode
+            // 
+            colPaymentTypeCode.ColumnEdit = repoLUE_PaymentTypeCode;
+            colPaymentTypeCode.FieldName = "PaymentTypeCode";
+            colPaymentTypeCode.Name = "colPaymentTypeCode";
+            colPaymentTypeCode.Visible = true;
+            colPaymentTypeCode.VisibleIndex = 0;
+            colPaymentTypeCode.Width = 136;
+            // 
+            // repoLUE_PaymentTypeCode
+            // 
+            repoLUE_PaymentTypeCode.AutoHeight = false;
+            repoLUE_PaymentTypeCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            repoLUE_PaymentTypeCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_PaymentTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentTypeDesc", "") });
+            repoLUE_PaymentTypeCode.DisplayMember = "PaymentTypeDesc";
+            repoLUE_PaymentTypeCode.Name = "repoLUE_PaymentTypeCode";
+            repoLUE_PaymentTypeCode.NullText = "";
+            repoLUE_PaymentTypeCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+            repoLUE_PaymentTypeCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+            repoLUE_PaymentTypeCode.ValueMember = "PaymentTypeCode";
+            // 
+            // colPayment
+            // 
+            colPayment.ColumnEdit = repoCalcEdit_ReceivePayment;
+            colPayment.FieldName = "Payment";
+            colPayment.Name = "colPayment";
+            colPayment.Visible = true;
+            colPayment.VisibleIndex = 1;
+            colPayment.Width = 136;
+            // 
+            // repoCalcEdit_ReceivePayment
+            // 
+            repoCalcEdit_ReceivePayment.AutoHeight = false;
+            repoCalcEdit_ReceivePayment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoCalcEdit_ReceivePayment.Name = "repoCalcEdit_ReceivePayment";
+            // 
+            // colPaymentLoc
+            // 
+            colPaymentLoc.ColumnEdit = repoCalcEdit_MakePayment;
+            colPaymentLoc.FieldName = "PaymentLoc";
+            colPaymentLoc.Name = "colPaymentLoc";
+            // 
+            // repoCalcEdit_MakePayment
+            // 
+            repoCalcEdit_MakePayment.AutoHeight = false;
+            repoCalcEdit_MakePayment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoCalcEdit_MakePayment.Name = "repoCalcEdit_MakePayment";
+            // 
+            // colCurrencyCode
+            // 
+            colCurrencyCode.ColumnEdit = repoLUE_CurrencyCode;
+            colCurrencyCode.FieldName = "CurrencyCode";
+            colCurrencyCode.Name = "colCurrencyCode";
+            colCurrencyCode.Visible = true;
+            colCurrencyCode.VisibleIndex = 2;
+            colCurrencyCode.Width = 155;
+            // 
+            // repoLUE_CurrencyCode
+            // 
+            repoLUE_CurrencyCode.AutoHeight = false;
+            repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "") });
+            repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
+            repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
+            repoLUE_CurrencyCode.NullText = "";
+            repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+            repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+            repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
+            repoLUE_CurrencyCode.EditValueChanged += repoLUE_CurrencyCode_EditValueChanged;
+            // 
+            // colLineDescription
+            // 
+            colLineDescription.FieldName = "LineDescription";
+            colLineDescription.Name = "colLineDescription";
+            colLineDescription.Visible = true;
+            colLineDescription.VisibleIndex = 4;
+            colLineDescription.Width = 97;
+            // 
+            // colExchangeRate
+            // 
+            colExchangeRate.FieldName = "ExchangeRate";
+            colExchangeRate.Name = "colExchangeRate";
+            colExchangeRate.Visible = true;
+            colExchangeRate.VisibleIndex = 3;
+            colExchangeRate.Width = 157;
+            // 
+            // colCreatedUserName
+            // 
+            colCreatedUserName.FieldName = "CreatedUserName";
+            colCreatedUserName.Name = "colCreatedUserName";
+            // 
+            // colCreatedDate
+            // 
+            colCreatedDate.FieldName = "CreatedDate";
+            colCreatedDate.Name = "colCreatedDate";
+            // 
+            // colLastUpdatedUserName
+            // 
+            colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
+            colLastUpdatedUserName.Name = "colLastUpdatedUserName";
+            // 
+            // colLastUpdatedDate
+            // 
+            colLastUpdatedDate.FieldName = "LastUpdatedDate";
+            colLastUpdatedDate.Name = "colLastUpdatedDate";
+            // 
+            // colCashRegisterCode
+            // 
+            colCashRegisterCode.ColumnEdit = repoBtnEdit_CashregisterCode;
+            colCashRegisterCode.FieldName = "CashRegisterCode";
+            colCashRegisterCode.Name = "colCashRegisterCode";
+            // 
+            // repoBtnEdit_CashregisterCode
+            // 
+            repoBtnEdit_CashregisterCode.AutoHeight = false;
+            repoBtnEdit_CashregisterCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_CashregisterCode.Name = "repoBtnEdit_CashregisterCode";
+            // 
+            // colBalanceBefor
+            // 
+            colBalanceBefor.FieldName = "BalanceBefor";
+            colBalanceBefor.Name = "colBalanceBefor";
+            colBalanceBefor.Visible = true;
+            colBalanceBefor.VisibleIndex = 5;
+            // 
+            // colBalanceAfter
+            // 
+            colBalanceAfter.FieldName = "BalanceAfter";
+            colBalanceAfter.Name = "colBalanceAfter";
+            colBalanceAfter.Visible = true;
+            colBalanceAfter.VisibleIndex = 6;
+            // 
+            // colReceivePayment
+            // 
+            colReceivePayment.FieldName = "ReceivePayment";
+            colReceivePayment.Name = "colReceivePayment";
+            // 
+            // OperationDateDateEdit
+            // 
+            OperationDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "OperationDate", true));
+            OperationDateDateEdit.EditValue = null;
+            OperationDateDateEdit.Location = new System.Drawing.Point(98, 36);
+            OperationDateDateEdit.MenuManager = ribbon;
+            OperationDateDateEdit.Name = "OperationDateDateEdit";
+            OperationDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            OperationDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            OperationDateDateEdit.Size = new System.Drawing.Size(349, 20);
+            OperationDateDateEdit.StyleController = dataLayoutControl1;
+            OperationDateDateEdit.TabIndex = 5;
+            OperationDateDateEdit.KeyDown += dataLayout_KeyDown;
+            // 
+            // trPaymentHeadersBindingSource
+            // 
+            trPaymentHeadersBindingSource.DataSource = typeof(Models.TrPaymentHeader);
+            trPaymentHeadersBindingSource.AddingNew += trPaymentHeadersBindingSource_AddingNew;
+            trPaymentHeadersBindingSource.CurrentItemChanged += trPaymentHeadersBindingSource_CurrentItemChanged;
+            // 
+            // OperationTimeTimeSpanEdit
+            // 
+            OperationTimeTimeSpanEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "OperationTime", true));
+            OperationTimeTimeSpanEdit.EditValue = System.TimeSpan.Parse("00:00:00");
+            OperationTimeTimeSpanEdit.Location = new System.Drawing.Point(98, 60);
+            OperationTimeTimeSpanEdit.MenuManager = ribbon;
+            OperationTimeTimeSpanEdit.Name = "OperationTimeTimeSpanEdit";
+            OperationTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            OperationTimeTimeSpanEdit.Size = new System.Drawing.Size(349, 20);
+            OperationTimeTimeSpanEdit.StyleController = dataLayoutControl1;
+            OperationTimeTimeSpanEdit.TabIndex = 4;
+            OperationTimeTimeSpanEdit.KeyDown += dataLayout_KeyDown;
+            // 
+            // DescriptionTextEdit
+            // 
+            DescriptionTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "Description", true));
+            DescriptionTextEdit.Location = new System.Drawing.Point(537, 60);
+            DescriptionTextEdit.MenuManager = ribbon;
+            DescriptionTextEdit.Name = "DescriptionTextEdit";
+            DescriptionTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            DescriptionTextEdit.Size = new System.Drawing.Size(350, 20);
+            DescriptionTextEdit.StyleController = dataLayoutControl1;
+            DescriptionTextEdit.TabIndex = 6;
+            DescriptionTextEdit.KeyDown += dataLayout_KeyDown;
+            // 
+            // CurrAccCodeButtonEdit
+            // 
+            CurrAccCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "CurrAccCode", true));
+            CurrAccCodeButtonEdit.Location = new System.Drawing.Point(537, 36);
+            CurrAccCodeButtonEdit.MenuManager = ribbon;
+            CurrAccCodeButtonEdit.Name = "CurrAccCodeButtonEdit";
+            CurrAccCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            CurrAccCodeButtonEdit.Size = new System.Drawing.Size(67, 20);
+            CurrAccCodeButtonEdit.StyleController = dataLayoutControl1;
+            CurrAccCodeButtonEdit.TabIndex = 1;
+            CurrAccCodeButtonEdit.ButtonClick += CurrAccCodeButtonEdit_ButtonClick;
+            CurrAccCodeButtonEdit.KeyDown += dataLayout_KeyDown;
+            // 
+            // btnEdit_DocNum
+            // 
+            btnEdit_DocNum.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "DocumentNumber", true));
+            btnEdit_DocNum.Location = new System.Drawing.Point(98, 12);
+            btnEdit_DocNum.MenuManager = ribbon;
+            btnEdit_DocNum.Name = "btnEdit_DocNum";
+            btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_DocNum.Size = new System.Drawing.Size(349, 20);
+            btnEdit_DocNum.StyleController = dataLayoutControl1;
+            btnEdit_DocNum.TabIndex = 0;
+            btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
+            btnEdit_DocNum.KeyDown += dataLayout_KeyDown;
+            // 
+            // ToCashRegCodeButtonEdit
+            // 
+            ToCashRegCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "ToCashRegCode", true));
+            ToCashRegCodeButtonEdit.Location = new System.Drawing.Point(537, 36);
+            ToCashRegCodeButtonEdit.MenuManager = ribbon;
+            ToCashRegCodeButtonEdit.Name = "ToCashRegCodeButtonEdit";
+            ToCashRegCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            ToCashRegCodeButtonEdit.Size = new System.Drawing.Size(82, 20);
+            ToCashRegCodeButtonEdit.StyleController = dataLayoutControl1;
+            ToCashRegCodeButtonEdit.TabIndex = 3;
+            ToCashRegCodeButtonEdit.ButtonPressed += ToCashRegCodeButtonEdit_ButtonPressed;
+            // 
+            // FromCashRegCodeButtonEdit
+            // 
+            FromCashRegCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "FromCashRegCode", true));
+            FromCashRegCodeButtonEdit.Location = new System.Drawing.Point(537, 12);
+            FromCashRegCodeButtonEdit.MenuManager = ribbon;
+            FromCashRegCodeButtonEdit.Name = "FromCashRegCodeButtonEdit";
+            FromCashRegCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            FromCashRegCodeButtonEdit.Size = new System.Drawing.Size(82, 20);
+            FromCashRegCodeButtonEdit.StyleController = dataLayoutControl1;
+            FromCashRegCodeButtonEdit.TabIndex = 2;
+            FromCashRegCodeButtonEdit.ButtonPressed += FromCashRegCodeButtonEdit_ButtonPressed;
+            // 
+            // ItemForCurrAccCode
+            // 
+            ItemForCurrAccCode.Control = CurrAccCodeButtonEdit;
+            ItemForCurrAccCode.Location = new System.Drawing.Point(439, 24);
+            ItemForCurrAccCode.Name = "ItemForCurrAccCode";
+            ItemForCurrAccCode.Size = new System.Drawing.Size(157, 24);
+            ItemForCurrAccCode.Text = "Cari Hesab";
+            ItemForCurrAccCode.TextSize = new System.Drawing.Size(74, 13);
+            // 
+            // Root
+            // 
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Name = "Root";
+            Root.Size = new System.Drawing.Size(899, 396);
+            Root.TextVisible = false;
+            // 
+            // layoutControlGroup1
+            // 
+            layoutControlGroup1.AllowDrawBackground = false;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, ItemForDocumentNumber, layoutControlItem4, layoutControlItem5, ItemForToCashRegCode, ItemForOperationTime, ItemForDescription, ItemForFromCashRegCode, ItemForOperationDate, layoutControlItem2, layoutControlItem3 });
+            layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            layoutControlGroup1.Name = "autoGeneratedGroup0";
+            layoutControlGroup1.Size = new System.Drawing.Size(879, 376);
+            // 
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = gC_PaymentLine;
+            layoutControlItem1.Location = new System.Drawing.Point(0, 72);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new System.Drawing.Size(879, 285);
+            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem1.TextVisible = false;
+            // 
+            // ItemForDocumentNumber
+            // 
+            ItemForDocumentNumber.Control = btnEdit_DocNum;
+            ItemForDocumentNumber.Location = new System.Drawing.Point(0, 0);
+            ItemForDocumentNumber.Name = "ItemForDocumentNumber";
+            ItemForDocumentNumber.Size = new System.Drawing.Size(439, 24);
+            ItemForDocumentNumber.Text = "Ödəniş Nömrəsi";
+            ItemForDocumentNumber.TextSize = new System.Drawing.Size(74, 13);
+            // 
+            // layoutControlItem4
+            // 
+            layoutControlItem4.Control = lbl_CurrAccBalansAfter;
+            layoutControlItem4.Location = new System.Drawing.Point(439, 357);
+            layoutControlItem4.MinSize = new System.Drawing.Size(125, 17);
+            layoutControlItem4.Name = "layoutControlItem4";
+            layoutControlItem4.Size = new System.Drawing.Size(440, 19);
+            layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem4.TextVisible = false;
+            // 
+            // layoutControlItem5
+            // 
+            layoutControlItem5.Control = lbl_CurrAccBalansBefore;
+            layoutControlItem5.Location = new System.Drawing.Point(0, 357);
+            layoutControlItem5.MinSize = new System.Drawing.Size(125, 17);
+            layoutControlItem5.Name = "layoutControlItem5";
+            layoutControlItem5.Size = new System.Drawing.Size(439, 19);
+            layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem5.TextVisible = false;
+            // 
+            // ItemForToCashRegCode
+            // 
+            ItemForToCashRegCode.Control = ToCashRegCodeButtonEdit;
+            ItemForToCashRegCode.Location = new System.Drawing.Point(439, 24);
+            ItemForToCashRegCode.Name = "ItemForToCashRegCode";
+            ItemForToCashRegCode.Size = new System.Drawing.Size(172, 24);
+            ItemForToCashRegCode.Text = "Kassaya";
+            ItemForToCashRegCode.TextSize = new System.Drawing.Size(74, 13);
+            // 
+            // ItemForOperationTime
+            // 
+            ItemForOperationTime.Control = OperationTimeTimeSpanEdit;
+            ItemForOperationTime.Location = new System.Drawing.Point(0, 48);
+            ItemForOperationTime.Name = "ItemForOperationTime";
+            ItemForOperationTime.Size = new System.Drawing.Size(439, 24);
+            ItemForOperationTime.Text = "Sənəd Vaxtı";
+            ItemForOperationTime.TextSize = new System.Drawing.Size(74, 13);
+            // 
+            // ItemForDescription
+            // 
+            ItemForDescription.Control = DescriptionTextEdit;
+            ItemForDescription.Location = new System.Drawing.Point(439, 48);
+            ItemForDescription.Name = "ItemForDescription";
+            ItemForDescription.Size = new System.Drawing.Size(440, 24);
+            ItemForDescription.Text = "Açıqlama";
+            ItemForDescription.TextSize = new System.Drawing.Size(74, 13);
+            // 
+            // ItemForFromCashRegCode
+            // 
+            ItemForFromCashRegCode.Control = FromCashRegCodeButtonEdit;
+            ItemForFromCashRegCode.Location = new System.Drawing.Point(439, 0);
+            ItemForFromCashRegCode.Name = "ItemForFromCashRegCode";
+            ItemForFromCashRegCode.Size = new System.Drawing.Size(172, 24);
+            ItemForFromCashRegCode.Text = "Kassadan";
+            ItemForFromCashRegCode.TextSize = new System.Drawing.Size(74, 13);
+            // 
+            // ItemForOperationDate
+            // 
+            ItemForOperationDate.Control = OperationDateDateEdit;
+            ItemForOperationDate.Location = new System.Drawing.Point(0, 24);
+            ItemForOperationDate.Name = "ItemForOperationDate";
+            ItemForOperationDate.Size = new System.Drawing.Size(439, 24);
+            ItemForOperationDate.Text = "Sənəd Tarixi";
+            ItemForOperationDate.TextSize = new System.Drawing.Size(74, 13);
+            // 
+            // layoutControlItem2
+            // 
+            layoutControlItem2.Control = lbl_FromCashRegDesc;
+            layoutControlItem2.Location = new System.Drawing.Point(611, 0);
+            layoutControlItem2.MinSize = new System.Drawing.Size(4, 17);
+            layoutControlItem2.Name = "layoutControlItem2";
+            layoutControlItem2.Size = new System.Drawing.Size(268, 24);
+            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem2.TextVisible = false;
+            // 
+            // layoutControlItem3
+            // 
+            layoutControlItem3.Control = lbl_ToCashRegDesc;
+            layoutControlItem3.Location = new System.Drawing.Point(611, 24);
+            layoutControlItem3.MinSize = new System.Drawing.Size(67, 17);
+            layoutControlItem3.Name = "layoutControlItem3";
+            layoutControlItem3.Size = new System.Drawing.Size(268, 24);
+            layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem3.TextVisible = false;
+            // 
+            // colPaymentMethodId
+            // 
+            colPaymentMethodId.FieldName = "PaymentMethodId";
+            colPaymentMethodId.Name = "colPaymentMethodId";
+            // 
+            // FormMoneyTransfer
+            // 
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(899, 578);
+            Controls.Add(dataLayoutControl1);
+            Controls.Add(ribbonStatusBar);
+            Controls.Add(ribbon);
+            Name = "FormMoneyTransfer";
+            Ribbon = ribbon;
+            StatusBar = ribbonStatusBar;
+            Text = "Kassalar Arası Transfer";
+            ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
+            dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)gC_PaymentLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trPaymentLinesBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gV_PaymentLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_PaymentTypeCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePayment).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePayment).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_CashregisterCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trPaymentHeadersBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)OperationTimeTimeSpanEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)CurrAccCodeButtonEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ToCashRegCodeButtonEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)FromCashRegCodeButtonEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForToCashRegCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForOperationTime).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForFromCashRegCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForOperationDate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+        }
 
-      }
+        #endregion
 
-      #endregion
-
-      private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
-      private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
-      private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
-      private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
-      private System.Windows.Forms.BindingSource trPaymentHeadersBindingSource;
-      private DevExpress.XtraLayout.LayoutControlGroup Root;
-      private DevExpress.XtraEditors.DateEdit OperationDateDateEdit;
-      private DevExpress.XtraEditors.TimeSpanEdit OperationTimeTimeSpanEdit;
-      private DevExpress.XtraEditors.TextEdit DescriptionTextEdit;
-      private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForOperationTime;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForOperationDate;
-      private DevExpress.XtraGrid.GridControl gC_PaymentLine;
-      private System.Windows.Forms.BindingSource trPaymentLinesBindingSource;
-      private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentLine;
-      private DevExpress.XtraGrid.Columns.GridColumn colPaymentLineId;
-      private DevExpress.XtraGrid.Columns.GridColumn colPaymentHeaderId;
-      private DevExpress.XtraGrid.Columns.GridColumn colPaymentTypeCode;
-      private DevExpress.XtraGrid.Columns.GridColumn colPayment;
-      private DevExpress.XtraGrid.Columns.GridColumn colLineDescription;
-      private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
-      private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
-      private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
-      private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
-      private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
-      private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-      private DevExpress.XtraBars.BarButtonItem bBI_DeletePayment;
-      private DevExpress.XtraEditors.ButtonEdit CurrAccCodeButtonEdit;
-      private DevExpress.XtraGrid.Columns.GridColumn colPaymentLoc;
-      private DevExpress.XtraGrid.Columns.GridColumn colCashRegisterCode;
-      private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_PaymentTypeCode;
-      private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_CurrencyCode;
-      private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_CashregisterCode;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
-      private DevExpress.XtraBars.BarButtonItem bBI_SaveAndClose;
-      private DevExpress.XtraEditors.ButtonEdit btnEdit_DocNum;
-      private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_ReceivePayment;
-      private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_MakePayment;
-      private DevExpress.XtraEditors.LabelControl lbl_ToCashRegDesc;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-      private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansBefore;
-      private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansAfter;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-      private DevExpress.XtraBars.BarButtonItem bBI_SendWhatsapp;
-      private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
-      private DevExpress.XtraGrid.Columns.GridColumn colBalanceBefor;
-      private DevExpress.XtraGrid.Columns.GridColumn colBalanceAfter;
-      private DevExpress.XtraBars.BarButtonItem bBI_NewPayment;
-      private DevExpress.XtraBars.BarButtonItem bBI_CopyPayment;
-      private DevExpress.XtraEditors.LabelControl lbl_FromCashRegDesc;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForToCashRegCode;
-      private DevExpress.XtraLayout.LayoutControlItem ItemForFromCashRegCode;
-      private DevExpress.XtraEditors.ButtonEdit ToCashRegCodeButtonEdit;
-      private DevExpress.XtraEditors.ButtonEdit FromCashRegCodeButtonEdit;
-      private DevExpress.XtraGrid.Columns.GridColumn colReceivePayment;
-   }
+        private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
+        private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
+        private System.Windows.Forms.BindingSource trPaymentHeadersBindingSource;
+        private DevExpress.XtraLayout.LayoutControlGroup Root;
+        private DevExpress.XtraEditors.DateEdit OperationDateDateEdit;
+        private DevExpress.XtraEditors.TimeSpanEdit OperationTimeTimeSpanEdit;
+        private DevExpress.XtraEditors.TextEdit DescriptionTextEdit;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForOperationTime;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForOperationDate;
+        private DevExpress.XtraGrid.GridControl gC_PaymentLine;
+        private System.Windows.Forms.BindingSource trPaymentLinesBindingSource;
+        private DevExpress.XtraGrid.Views.Grid.GridView gV_PaymentLine;
+        private DevExpress.XtraGrid.Columns.GridColumn colPaymentLineId;
+        private DevExpress.XtraGrid.Columns.GridColumn colPaymentHeaderId;
+        private DevExpress.XtraGrid.Columns.GridColumn colPaymentTypeCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colPayment;
+        private DevExpress.XtraGrid.Columns.GridColumn colLineDescription;
+        private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colExchangeRate;
+        private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
+        private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraBars.BarButtonItem bBI_DeletePayment;
+        private DevExpress.XtraEditors.ButtonEdit CurrAccCodeButtonEdit;
+        private DevExpress.XtraGrid.Columns.GridColumn colPaymentLoc;
+        private DevExpress.XtraGrid.Columns.GridColumn colCashRegisterCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_PaymentTypeCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_CurrencyCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_CashregisterCode;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
+        private DevExpress.XtraBars.BarButtonItem bBI_SaveAndClose;
+        private DevExpress.XtraEditors.ButtonEdit btnEdit_DocNum;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_ReceivePayment;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_MakePayment;
+        private DevExpress.XtraEditors.LabelControl lbl_ToCashRegDesc;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansBefore;
+        private DevExpress.XtraEditors.LabelControl lbl_CurrAccBalansAfter;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraBars.BarButtonItem bBI_SendWhatsapp;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraGrid.Columns.GridColumn colBalanceBefor;
+        private DevExpress.XtraGrid.Columns.GridColumn colBalanceAfter;
+        private DevExpress.XtraBars.BarButtonItem bBI_NewPayment;
+        private DevExpress.XtraBars.BarButtonItem bBI_CopyPayment;
+        private DevExpress.XtraEditors.LabelControl lbl_FromCashRegDesc;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForToCashRegCode;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForFromCashRegCode;
+        private DevExpress.XtraEditors.ButtonEdit ToCashRegCodeButtonEdit;
+        private DevExpress.XtraEditors.ButtonEdit FromCashRegCodeButtonEdit;
+        private DevExpress.XtraGrid.Columns.GridColumn colReceivePayment;
+        private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodId;
+    }
 }

@@ -1,7 +1,7 @@
-﻿using Foxoft.Migrations;
+﻿
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
@@ -25,6 +25,7 @@ namespace Foxoft.Models
         public int Order { get; set; }
 
 
+        [JsonIgnore]
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
         public virtual ICollection<TrHierarchyFeature> TrHierarchyFeatures { get; set; }
     }

@@ -5,6 +5,7 @@ using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -31,6 +32,7 @@ namespace Foxoft
 
             lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
             lUE_CashlessCurrency.Properties.DataSource = efMethods.SelectCurrencies();
+            lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethods();
         }
 
         public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader)
@@ -88,6 +90,7 @@ namespace Foxoft
 
             trPaymentLine.PaymentHeaderId = PaymentHeaderId;
             trPaymentLine.PaymentTypeCode = paymentType;
+            trPaymentLine.PaymentMethodId = 1;
             trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLine.ExchangeRate = 1;
 
@@ -143,7 +146,7 @@ namespace Foxoft
 
         private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            SelectCashRegister(sender);
+            SelectCashRegister(sender, 1);
         }
 
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
@@ -154,11 +157,11 @@ namespace Foxoft
             FillControls();
         }
 
-        private void SelectCashRegister(object sender)
+        private void SelectCashRegister(object sender, byte paymentTypeCode)
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCurrAccList form = new(new byte[] { 5 }, trInvoiceHeader.CurrAccCode))
+            using (FormCurrAccList form = new(new byte[] { 5 }, trInvoiceHeader.CurrAccCode, paymentTypeCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -166,10 +169,6 @@ namespace Foxoft
                     trPaymentLine.CashRegisterCode = form.dcCurrAcc.CurrAccCode;
                 }
             }
-        }
-
-        private void btnEdit_BankAccout_ButtonClick(object sender, ButtonPressedEventArgs e)
-        {
         }
 
         private void simpleButtonUpdateCash_Click(object sender, EventArgs e)
@@ -293,6 +292,23 @@ namespace Foxoft
         {
             e.ErrorText = "Belə bir kassa yoxdur";
             e.ExceptionMode = ExceptionMode.DisplayError;
+        }
+
+        private void btnEdit_BankAccout_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
+            if (row is not null)
+            {
+                byte paymentTypeCode = ((DcPaymentMethod)row).PaymentTypeCode;
+                SelectCashRegister(sender, paymentTypeCode);
+            }
+        }
+
+        private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
+        {
+            LookUpEdit editor = sender as LookUpEdit;
+            object value = editor.GetColumnValue("DefaultCashRegCode");
+            btnEdit_BankAccout.EditValue = value;
         }
     }
 }

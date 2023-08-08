@@ -21,7 +21,8 @@ namespace Foxoft.Models
             TrPrices = new HashSet<TrPrice>();
             TrProductFeatures = new HashSet<TrProductFeature>();
             TrProductHierarchies = new HashSet<TrProductHierarchy>();
-        }
+            TrProductDiscounts = new HashSet<TrProductDiscount>();
+    }
 
         [Key]
         [Display(Name = "Məhsul Kodu")]
@@ -101,9 +102,9 @@ namespace Foxoft.Models
         [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? ImagePath { get; set; }
 
-        [Display(Name = "Sayt Məhsul İd")]
-        [ForeignKey("SiteProduct")]
-        public int? SiteProductId { get; set; }
+        //[Display(Name = "Sayt Məhsul İd")]
+        //[ForeignKey("SiteProduct")]
+        //public int? SiteProductId { get; set; }
 
 
 
@@ -134,12 +135,13 @@ namespace Foxoft.Models
 
         public virtual DcProductType DcProductType { get; set; }
 
-        [ForeignKey("SiteProductId")]
+        //[ForeignKey("SiteProductId")]
         public virtual SiteProduct SiteProduct { get; set; }
         public virtual DcHierarchy DcHierarchy { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
         public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
+        public virtual ICollection<TrProductDiscount> TrProductDiscounts { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Foxoft.Models
         [Display(Name = "Yaradan İstifadəçi")]
         [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         [DefaultValue(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
-        public string CreatedUserName { get; set; }
+        public string? CreatedUserName { get; set; }
 
         [DefaultValue("getdate()")]
         [Column(TypeName = "datetime")]
@@ -24,7 +24,7 @@ namespace Foxoft.Models
         [Display(Name = "Son Dəyişən İstifadəçi")]
         [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         [DefaultValue(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
-        public string LastUpdatedUserName { get; set; }
+        public string? LastUpdatedUserName { get; set; }
 
         [DefaultValue("getdate()")]
         [Column(TypeName = "datetime")]

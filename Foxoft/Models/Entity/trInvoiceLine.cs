@@ -1,4 +1,4 @@
-﻿using Foxoft.Properties;
+﻿
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -88,7 +88,7 @@ namespace Foxoft.Models
 
       [Display(Name = "Valyuta")]
       [ForeignKey("DcCurrency")]
-      public string CurrencyCode { get; set; } = Settings.Default.AppSetting.LocalCurrencyCode;
+      public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting.LocalCurrencyCode;
 
       [DefaultValue("1")]
       [Display(Name = "Valyuta Kursu")]

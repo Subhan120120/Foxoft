@@ -34,6 +34,7 @@ namespace Foxoft
         AdoMethods adoMethods = new();
         public DcCurrAcc dcCurrAcc { get; set; }
         public byte[] currAccTypeArr;
+        public byte cashRegPaymentTypeCode;
         public string currAccCode;
 
         public FormCurrAccList()
@@ -56,9 +57,15 @@ namespace Foxoft
         }
 
         public FormCurrAccList(byte[] currAccTypeArr, string currAccCode)
-      : this(currAccTypeArr)
+            : this(currAccTypeArr)
         {
             this.currAccCode = currAccCode;
+        }
+
+        public FormCurrAccList(byte[] currAccTypeArr, string currAccCode, byte cashRegPaymentTypeCode)
+            : this(currAccTypeArr, currAccCode)
+        {
+            this.cashRegPaymentTypeCode = cashRegPaymentTypeCode;
         }
 
         private void FormCurrAccList_Load(object sender, EventArgs e)
@@ -90,7 +97,9 @@ namespace Foxoft
             DcReport dcReport = null;
 
             if (currAccTypeArr.Contains((byte)5))
+            {
                 dcReport = efMethods.SelectReportByName("FormCashRegList");
+            }
             else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3) || currAccTypeArr.Contains((byte)4))
                 dcReport = efMethods.SelectReportByName("FormCurrAccList");
 
@@ -100,20 +109,13 @@ namespace Foxoft
                 {
                     string ts = String.Join(",", currAccTypeArr);
                     string where = " Where CurrAccTypeCode in (" + ts + ") ";
+
                     string qryMaster = "select * from (" + dcReport.ReportQuery + ") as Master " + where;
                     //+ " order by CurrAccDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)
                         dataSource = dt;
                 }
-            }
-
-            if (dataSource is null)
-            {
-                if (currAccTypeArr != null && currAccTypeArr.Length > 0)
-                    dataSource = efMethods.SelectProductsByTypeByFilter(currAccTypeArr, gV_CurrAccList.ActiveFilterCriteria);
-                else if (currAccTypeArr == null)
-                    dataSource = efMethods.SelectCurrAccs(new byte[] { 1, 2, 3, 4, 5 });
             }
 
             dcCurrAccsBindingSource.DataSource = dataSource;

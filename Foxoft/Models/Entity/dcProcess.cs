@@ -35,7 +35,7 @@ namespace Foxoft.Models
 
       [Display(Name = "Xüsusi Valyuta")]
       [ForeignKey("DcCurrency")]
-      public string CustomCurrencyCode { get; set; }
+      public string? CustomCurrencyCode { get; set; }
 
 
       public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }

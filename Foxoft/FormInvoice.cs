@@ -953,6 +953,7 @@ namespace Foxoft
         {
             TrPaymentLine trPaymentLine = new();
             trPaymentLine.PaymentTypeCode = 1;
+            trPaymentLine.PaymentMethodId = 1;
             trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLine.ExchangeRate = 1f;
             string storeCode = lUE_StoreCode.EditValue.ToString();

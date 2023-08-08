@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230807054149_sdfgjjksdf2")]
+    partial class sdfgjjksdf2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2335,21 +2337,6 @@ namespace Foxoft.Migrations
                     b.ToTable("TrPrices");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrProductDiscount", b =>
-                {
-                    b.Property<string>("ProductCode")
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("DiscountId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductCode", "DiscountId");
-
-                    b.HasIndex("DiscountId");
-
-                    b.ToTable("TrProductDiscount");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrProductFeature", b =>
                 {
                     b.Property<string>("ProductCode")
@@ -2854,25 +2841,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrProductDiscount", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcDiscount", "DcDiscount")
-                        .WithMany("TrProductDiscounts")
-                        .HasForeignKey("DiscountId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                        .WithMany("TrProductDiscounts")
-                        .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcDiscount");
-
-                    b.Navigation("DcProduct");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrProductFeature", b =>
                 {
                     b.HasOne("Foxoft.Models.DcFeatureType", "DcFeatureType")
@@ -2981,8 +2949,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcDiscount", b =>
                 {
                     b.Navigation("TrPaymentMethodDiscounts");
-
-                    b.Navigation("TrProductDiscounts");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcFeature", b =>
@@ -3041,8 +3007,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrPrices");
-
-                    b.Navigation("TrProductDiscounts");
 
                     b.Navigation("TrProductFeatures");
 

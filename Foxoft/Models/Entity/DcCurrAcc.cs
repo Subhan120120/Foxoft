@@ -20,6 +20,7 @@ namespace Foxoft.Models
             TrPaymentHeaders = new HashSet<TrPaymentHeader>();
             TrPaymentHeaderToCashes = new HashSet<TrPaymentHeader>();
             TrPaymentLines = new HashSet<TrPaymentLine>();
+            DcPaymentMethods = new HashSet<DcPaymentMethod>();
         }
 
         [Key]
@@ -29,7 +30,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Cari Hesab Adı")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string CurrAccDesc { get; set; }
+        public string? CurrAccDesc { get; set; }
 
         [ForeignKey("DcCurrAccType")]
         [Display(Name = "Cari Hesab Tipi")]
@@ -52,34 +53,34 @@ namespace Foxoft.Models
 
         [Display(Name = "Adı")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Display(Name = "Soyadı")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Display(Name = "Ata Adı")]
         [StringLength(60, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string FatherName { get; set; }
+        public string? FatherName { get; set; }
 
         [DataType(DataType.Password), Display(Name = "Yeni Şifrə")]
-        public string NewPassword { get; set; }
+        public string? NewPassword { get; set; }
 
         [DataType(DataType.Password), Compare("NewPassword", ErrorMessage = "Şifrələr biri birinə uyğun deyil"), Display(Name = "Şifrəni Təsdiqlə")]
-        public string ConfirmPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
 
 
         [Display(Name = "Ş.V.Nömrəsi")]
         [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string IdentityNum { get; set; }
+        public string? IdentityNum { get; set; }
 
         [Display(Name = "Vergi Nömrəsi")]
         [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string TaxNum { get; set; }
+        public string? TaxNum { get; set; }
 
         [Display(Name = "İstifadəçi Dili")]
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string DataLanguageCode { get; set; }
+        public string? DataLanguageCode { get; set; }
 
         [DefaultValue("0")]
         [Column(TypeName = "money")]
@@ -110,17 +111,17 @@ namespace Foxoft.Models
 
         [Display(Name = "Bonus Kartı")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string BonusCardNum { get; set; }
+        public string? BonusCardNum { get; set; }
 
         [Display(Name = "Adres")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [Display(Name = "Telefon")]
         [DataType(DataType.PhoneNumber)]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         //[RegularExpression(@"\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2}", ErrorMessage = "Duzgun Format Daxil Edin.")]
-        public string PhoneNum { get; set; }
+        public string? PhoneNum { get; set; }
 
         [Display(Name = "Doğum Günü")]
         [Column(TypeName = "date")]
@@ -130,15 +131,23 @@ namespace Foxoft.Models
         [Display(Name = "Varsayılan Müstəri")]
         public bool IsDefault { get; set; }
 
+        [Display(Name = "Tema")]
+        public string? Theme { get; set; }
+
+        [Display(Name = "Kassanın Ödəmə Tipi")]
+        public byte? CashRegPaymentTypeCode { get; set; }
+
+
         [NotMapped]
         [Display(Name = "Qalıq")]
         public decimal Balance { get; set; }
 
-        [Display(Name = "Tema")]
-        public string Theme { get; set; }
+
 
 
         public virtual DcCurrAccType DcCurrAccType { get; set; }
+        [ForeignKey("CashRegPaymentTypeCode")]
+        public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual ICollection<SettingStore> SettingStores { get; set; }
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
@@ -148,5 +157,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaderToCashes { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
         public virtual ICollection<TrCurrAccRole> TrCurrAccRole { get; set; }
+        public virtual ICollection<DcPaymentMethod> DcPaymentMethods { get; set; }
     }
 }

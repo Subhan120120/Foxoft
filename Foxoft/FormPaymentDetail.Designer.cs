@@ -40,10 +40,12 @@ namespace Foxoft
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
@@ -76,6 +78,7 @@ namespace Foxoft
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
             OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -95,8 +98,6 @@ namespace Foxoft
             layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
@@ -207,6 +208,14 @@ namespace Foxoft
             barButtonItem3.Name = "barButtonItem3";
             barButtonItem3.ItemClick += barButtonItem3_ItemClick;
             // 
+            // BBI_Info
+            // 
+            BBI_Info.Caption = "İnfo";
+            BBI_Info.Id = 10;
+            BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Info.ImageOptions.SvgImage");
+            BBI_Info.Name = "BBI_Info";
+            BBI_Info.ItemClick += BBI_Info_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
@@ -235,6 +244,13 @@ namespace Foxoft
             RPG_Report.ItemLinks.Add(barButtonItem3);
             RPG_Report.Name = "RPG_Report";
             RPG_Report.Text = "Hesabat";
+            // 
+            // ribbonPageGroup3
+            // 
+            ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
+            ribbonPageGroup3.ItemLinks.Add(BBI_Info);
+            ribbonPageGroup3.Name = "ribbonPageGroup3";
+            ribbonPageGroup3.Text = "Məlumat";
             // 
             // ribbonStatusBar
             // 
@@ -323,7 +339,7 @@ namespace Foxoft
             // 
             // gV_PaymentLine
             // 
-            gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentLineId, colPaymentHeaderId, colPaymentTypeCode, colReceivePayment, colMakePayment, colPayment, colPaymentLoc, colCurrencyCode, colLineDescription, colExchangeRate, colCashRegisterCode, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colBalanceBefor, colBalanceAfter });
+            gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentLineId, colPaymentHeaderId, colPaymentTypeCode, colReceivePayment, colMakePayment, colPayment, colPaymentLoc, colCurrencyCode, colLineDescription, colExchangeRate, colCashRegisterCode, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colBalanceBefor, colBalanceAfter, colPaymentMethodId });
             gV_PaymentLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 390, 264, 272);
             gV_PaymentLine.GridControl = gC_PaymentLine;
             gV_PaymentLine.Name = "gV_PaymentLine";
@@ -375,6 +391,7 @@ namespace Foxoft
             colReceivePayment.Name = "colReceivePayment";
             colReceivePayment.Visible = true;
             colReceivePayment.VisibleIndex = 1;
+            colReceivePayment.Width = 106;
             // 
             // repoCalcEdit_ReceivePayment
             // 
@@ -389,6 +406,7 @@ namespace Foxoft
             colMakePayment.Name = "colMakePayment";
             colMakePayment.Visible = true;
             colMakePayment.VisibleIndex = 2;
+            colMakePayment.Width = 93;
             // 
             // repoCalcEdit_MakePayment
             // 
@@ -438,7 +456,7 @@ namespace Foxoft
             colLineDescription.Name = "colLineDescription";
             colLineDescription.Visible = true;
             colLineDescription.VisibleIndex = 6;
-            colLineDescription.Width = 97;
+            colLineDescription.Width = 98;
             // 
             // colExchangeRate
             // 
@@ -455,6 +473,7 @@ namespace Foxoft
             colCashRegisterCode.Name = "colCashRegisterCode";
             colCashRegisterCode.Visible = true;
             colCashRegisterCode.VisibleIndex = 5;
+            colCashRegisterCode.Width = 118;
             // 
             // repoBtnEdit_CashregisterCode
             // 
@@ -489,6 +508,7 @@ namespace Foxoft
             colBalanceBefor.Name = "colBalanceBefor";
             colBalanceBefor.Visible = true;
             colBalanceBefor.VisibleIndex = 7;
+            colBalanceBefor.Width = 89;
             // 
             // colBalanceAfter
             // 
@@ -496,6 +516,13 @@ namespace Foxoft
             colBalanceAfter.Name = "colBalanceAfter";
             colBalanceAfter.Visible = true;
             colBalanceAfter.VisibleIndex = 8;
+            colBalanceAfter.Width = 88;
+            // 
+            // colPaymentMethodId
+            // 
+            colPaymentMethodId.Caption = "PaymentMethodCode";
+            colPaymentMethodId.FieldName = "PaymentMethodId";
+            colPaymentMethodId.Name = "colPaymentMethodId";
             // 
             // OperationDateDateEdit
             // 
@@ -703,21 +730,6 @@ namespace Foxoft
             layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem6.TextVisible = false;
             // 
-            // ribbonPageGroup3
-            // 
-            ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
-            ribbonPageGroup3.ItemLinks.Add(BBI_Info);
-            ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Məlumat";
-            // 
-            // BBI_Info
-            // 
-            BBI_Info.Caption = "İnfo";
-            BBI_Info.Id = 10;
-            BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Info.ImageOptions.SvgImage");
-            BBI_Info.Name = "BBI_Info";
-            BBI_Info.ItemClick += BBI_Info_ItemClick;
-            // 
             // FormPaymentDetail
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -835,5 +847,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem BBI_Info;
+        private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodId;
     }
 }

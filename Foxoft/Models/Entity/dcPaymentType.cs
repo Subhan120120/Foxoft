@@ -12,6 +12,12 @@ namespace Foxoft.Models
 {
     public partial class DcPaymentType
     {
+        public DcPaymentType()
+        {
+            DcPaymentMethods = new HashSet<DcPaymentMethod>();
+            TrPaymentLines = new HashSet<TrPaymentLine>();
+            DcCurrAccs = new HashSet<DcCurrAcc>();
+        }
         [Key]
         [Display(Name = "Ödəmə Tipi Kodu")]
         public byte PaymentTypeCode { get; set; }
@@ -22,5 +28,7 @@ namespace Foxoft.Models
         public string PaymentTypeDesc { get; set; }
 
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
+        public virtual ICollection<DcCurrAcc> DcCurrAccs { get; set; }
+        public virtual ICollection<DcPaymentMethod> DcPaymentMethods { get; set; }
     }
 }

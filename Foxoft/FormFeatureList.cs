@@ -114,7 +114,7 @@ namespace Foxoft
 
         private void LoadFeatures()
         {
-            dcFeaturesBindingSource.DataSource = efMethods.SelectFeatures(featureTypeId);
+            dcFeaturesBindingSource.DataSource = efMethods.SelectFeaturesByType(featureTypeId);
         }
 
         private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)

@@ -852,7 +852,7 @@ namespace Foxoft
             btn_Cashless.Size = new Size(83, 89);
             btn_Cashless.StyleController = lC_InvoiceLine;
             btn_Cashless.TabIndex = 26;
-            btn_Cashless.Text = "Visa";
+            btn_Cashless.Text = "Nağdsız";
             btn_Cashless.Click += btn_Payment_Click;
             // 
             // btn_CustomerBonus

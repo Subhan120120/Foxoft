@@ -72,11 +72,11 @@ namespace Foxoft.Models
 
         [Display(Name = "Açıqlama")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Display(Name = "Əməliyat tipi")]
         [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string OperationType { get; set; }
+        public string? OperationType { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = "Şirkət")]

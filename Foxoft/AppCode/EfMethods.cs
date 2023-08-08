@@ -106,11 +106,19 @@ namespace Foxoft
             return featureTypes;
         }
 
-        public List<DcFeature> SelectFeatures(int featureTypeId)
+        public List<DcFeature> SelectFeaturesByType(int featureTypeId)
         {
             using subContext db = new();
 
             List<DcFeature> features = db.DcFeatures.Where(x => x.FeatureTypeId == featureTypeId).ToList();
+            return features;
+        }
+
+        public List<DcFeature> SelectFeatures()
+        {
+            using subContext db = new();
+
+            List<DcFeature> features = db.DcFeatures.Include(x => x.DcFeatureType).ToList();
             return features;
         }
 
@@ -124,12 +132,39 @@ namespace Foxoft
             return dc;
         }
 
+        public List<TrProductFeature> SelectProductFeaturesByProductCode(string productCode)
+        {
+            using subContext db = new();
+
+            List<TrProductFeature> productFeatures = db.TrProductFeatures
+                                            .Include(x => x.DcFeature)
+                                            .Where(x => x.ProductCode == productCode)
+                                            .ToList();
+            return productFeatures;
+        }
+
         public DcProduct SelectProductByBarcode(string barCode)
         {
             if (string.IsNullOrEmpty(barCode))
                 return null;
             using subContext db = new();
             return QueryableSelectProducts(db).FirstOrDefault(x => x.Barcode == barCode);
+        }
+
+        public DcProduct SelectProductBySlug(string slug)
+        {
+            if (string.IsNullOrEmpty(slug))
+                return null;
+            using subContext db = new();
+            return QueryableSelectProducts(db).FirstOrDefault(x => x.SiteProduct.Slug == slug);
+        }
+
+
+        public DcProduct SelectProductBySiteId(int productId)
+        {
+            using subContext db = new();
+            var product = QueryableSelectProducts(db).FirstOrDefault(x => x.SiteProduct.ProductId == productId);
+            return product;
         }
 
         public DcProduct SelectProduct(string productCode)
@@ -147,11 +182,12 @@ namespace Foxoft
 
         public IQueryable<DcProduct> QueryableSelectProducts(subContext db)
         {
-
             var products = db.DcProducts
-                                .Include(x => x.TrProductFeatures)
+                                .Include(x => x.TrProductFeatures).ThenInclude(x => x.DcFeature).ThenInclude(x => x.DcFeatureType)
                                 .Include(x => x.TrInvoiceLines).ThenInclude(x => x.TrInvoiceHeader)
+                                .Include(x => x.TrProductDiscounts).ThenInclude(x=>x.DcDiscount).ThenInclude(x=>x.TrPaymentMethodDiscounts).ThenInclude(x=>x.DcPaymentMethod)
                                 .Include(x => x.DcHierarchy)
+                                .Include(x => x.SiteProduct)
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
@@ -180,6 +216,8 @@ namespace Foxoft
                                     Barcode = x.Barcode,
                                     HierarchyCode = x.HierarchyCode,
                                     TrProductFeatures = x.TrProductFeatures,
+                                    SiteProduct = x.SiteProduct,
+                                    DcHierarchy = x.DcHierarchy,
                                 })
                                 .OrderBy(x => x.ProductDesc);
             return products;
@@ -426,8 +464,15 @@ namespace Foxoft
         public int DeleteProduct(DcProduct dcProduct)
         {
             using subContext db = new();
+
+            EntityEntry<DcProduct> product = null;
+
             if (dcProduct is not null)
-                db.DcProducts.Remove(dcProduct);
+            {
+                var asddfgfg = db.SiteProducts.Where(x => x.ProductCode == dcProduct.ProductCode);
+                db.SiteProducts.RemoveRange(asddfgfg);
+                product = db.DcProducts.Remove(dcProduct);
+            }
 
             return db.SaveChanges();
         }
@@ -875,6 +920,20 @@ namespace Foxoft
             return db.DcPaymentTypes.ToList(); // burdaki kolonlari dizaynda da elave et
         }
 
+        public List<DcPaymentMethod> SelectPaymentMethods()
+        {
+            using subContext db = new();
+            return db.DcPaymentMethods.ToList(); // burdaki kolonlari dizaynda da elave et
+        }
+
+        public List<TrPaymentMethodDiscount> SelectPaymentDiscounts()
+        {
+            using subContext db = new();
+            return db.trPaymentMethodDiscounts.Include(x => x.DcDiscount)
+                                              .Include(x => x.DcPaymentMethod)
+                                              .ToList(); // burdaki kolonlari dizaynda da elave et
+        }
+
         public float SelectExRate(string currancyCode)
         {
             using subContext db = new();
@@ -1041,7 +1100,7 @@ namespace Foxoft
             EntityEntry<DcProduct> result = db.DcProducts.Add(dcProduct);
 
             if (result is not null)
-                db.SiteProducts.Add(new SiteProduct() { ProductCode = dcProduct.ProductCode };
+                db.SiteProducts.Add(new SiteProduct() { ProductCode = dcProduct.ProductCode });
 
             db.SaveChanges();
         }

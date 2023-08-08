@@ -19,7 +19,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Dəyişən Kodu")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string VariableDesc { get; set; }
+        public string? VariableDesc { get; set; }
 
         [Display(Name = "Sonuncu Nömrə")]
         public int? LastNumber { get; set; }
