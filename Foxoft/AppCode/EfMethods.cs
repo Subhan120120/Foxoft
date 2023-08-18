@@ -9,6 +9,7 @@ using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Foxoft
 {
@@ -122,13 +123,23 @@ namespace Foxoft
             return features;
         }
 
-        public TrProductFeature SelectFeatureType(int featureTypeId, string productCode)
+        public TrProductFeature SelectProductFeature(int featureTypeId, string productCode)
         {
             using subContext db = new();
 
             TrProductFeature dc = db.TrProductFeatures
                      .Where(x => x.FeatureTypeId == featureTypeId)
                      .FirstOrDefault(x => x.ProductCode == productCode);
+            return dc;
+        }
+
+
+        public DcFeatureType SelectFeatureType(int featureTypeId)
+        {
+            using subContext db = new();
+
+            DcFeatureType dc = db.DcFeatureTypes
+                     .FirstOrDefault(x => x.FeatureTypeId == featureTypeId);
             return dc;
         }
 
@@ -159,6 +170,31 @@ namespace Foxoft
             return QueryableSelectProducts(db).FirstOrDefault(x => x.SiteProduct.Slug == slug);
         }
 
+        public List<DcProduct> SelectProductByName(string productName, int Skip, int Take)
+        {
+            if (string.IsNullOrEmpty(productName))
+                return null;
+            using subContext db = new();
+
+            char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
+
+            string[] words = productName.Split(delimiterChars);
+
+            IQueryable<DcProduct> products = QueryableSelectProductsForSite(db);
+
+            foreach (var word in words)
+            {
+                products = products.Where(p => p.TrProductFeatures.Where(f => EF.Functions.Like(f.DcFeature.FeatureDesc, $"%{word}%")).Any());
+            }
+
+            var asd = products.Skip(Skip);
+
+
+            var dolma = asd.Take(Take);
+
+            return dolma.ToList();
+        }
+
 
         public DcProduct SelectProductBySiteId(int productId)
         {
@@ -185,7 +221,7 @@ namespace Foxoft
             var products = db.DcProducts
                                 .Include(x => x.TrProductFeatures).ThenInclude(x => x.DcFeature).ThenInclude(x => x.DcFeatureType)
                                 .Include(x => x.TrInvoiceLines).ThenInclude(x => x.TrInvoiceHeader)
-                                .Include(x => x.TrProductDiscounts).ThenInclude(x=>x.DcDiscount).ThenInclude(x=>x.TrPaymentMethodDiscounts).ThenInclude(x=>x.DcPaymentMethod)
+                                .Include(x => x.TrProductDiscounts).ThenInclude(x => x.DcDiscount).ThenInclude(x => x.TrPaymentMethodDiscounts).ThenInclude(x => x.DcPaymentMethod)
                                 .Include(x => x.DcHierarchy)
                                 .Include(x => x.SiteProduct)
                                 .Select(x => new DcProduct
@@ -218,6 +254,95 @@ namespace Foxoft
                                     TrProductFeatures = x.TrProductFeatures,
                                     SiteProduct = x.SiteProduct,
                                     DcHierarchy = x.DcHierarchy,
+                                    TrProductDiscounts = x.TrProductDiscounts,
+                                })
+                                .OrderBy(x => x.ProductDesc);
+            return products;
+        }
+
+        public List<DcProduct> SelectProductsForSite()
+        {
+            using subContext db = new();
+
+            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db);
+
+            return DcProducts.ToList();
+        }
+
+        public List<DcProduct> SelectProductsByFilterForSite(int CategoryId, int minPrice, int maxPrice)
+        {
+            using subContext db = new();
+
+            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
+                                                    .Where(x => CategoryId > 0 ? x.DcHierarchy.Id == CategoryId : true)
+                                                    .Where(x => x.SiteProduct.Price >= minPrice)
+                                                    .Where(x => x.SiteProduct.Price <= maxPrice);
+
+            return DcProducts.ToList();
+        }
+
+        public List<DcProduct> SelectProductsForSite(int CategoryId, int skip, int take)
+        {
+            using subContext db = new();
+
+            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
+                                                    .Where(x => CategoryId > 0 ? x.DcHierarchy.Id == CategoryId : true)
+                                                    .Skip(skip)
+                                                    .Take(take);
+
+            return DcProducts.ToList();
+        }
+
+        public List<DcProduct> SelectPopularProductsForSite(int take)
+        {
+            using subContext db = new();
+
+            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
+                                                    .OrderBy(x => x.SiteProduct.ViewCount)
+                                                    .Take(take);
+
+            return DcProducts.ToList();
+        }
+
+        public List<DcProduct> SelectProductsForSite(List<int> ProductsIds)
+        {
+            using subContext db = new();
+
+            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
+                                                    .Where(x => ProductsIds.Contains(x.SiteProduct.ProductId));
+
+            return DcProducts.ToList();
+        }
+
+
+        public IQueryable<DcProduct> QueryableSelectProductsForSite(subContext db)
+        {
+            var products = db.DcProducts
+                                .Include(x => x.TrProductFeatures).ThenInclude(x => x.DcFeature).ThenInclude(x => x.DcFeatureType)
+                                .Include(x => x.TrProductDiscounts)
+                                .Include(x => x.DcHierarchy)
+                                .Include(x => x.SiteProduct)
+                                .Where(x => x.HierarchyCode != null)
+                                .Where(x => x.UseInternet == true)
+                                .Where(x => x.ProductTypeCode == 1)
+                                .Select(x => new DcProduct
+                                {
+                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                    BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
+                                    BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
+                                    BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
+                                    ProductCode = x.ProductCode,
+                                    ProductDesc = x.ProductDesc,
+                                    RetailPrice = x.RetailPrice,
+                                    PurchasePrice = x.PurchasePrice,
+                                    ProductTypeCode = x.ProductTypeCode,
+                                    WholesalePrice = x.WholesalePrice,
+                                    UseInternet = x.UseInternet,
+                                    HierarchyCode = x.HierarchyCode,
+                                    TrProductFeatures = x.TrProductFeatures,
+                                    SiteProduct = x.SiteProduct,
+                                    DcHierarchy = x.DcHierarchy,
+                                    TrProductDiscounts = x.TrProductDiscounts,
                                 })
                                 .OrderBy(x => x.ProductDesc);
             return products;
@@ -784,7 +909,7 @@ namespace Foxoft
                                                      .Where(l => l.TrPaymentHeader.CurrAccCode == x.CurrAccCode)
                                                      .Sum(s => s.PaymentLoc),
                        })
-                       .ToList(); // burdaki kolonlari dizaynda da elave et
+                       .ToList();
 
             List<DcCurrAcc> asdasd2 = db.DcCurrAccs.Where(x => x.IsDisabled == false
                                                 && x.CurrAccTypeCode == 5 // kassanin balansi ayri hesablanir , ona gore yazilib
@@ -810,7 +935,7 @@ namespace Foxoft
                                                      .Where(l => l.CashRegisterCode == x.CurrAccCode)
                                                      .Sum(s => s.PaymentLoc),
                        })
-                       .ToList(); // burdaki kolonlari dizaynda da elave et
+                       .ToList();
 
             asdasd.AddRange(asdasd2);
 
@@ -823,7 +948,7 @@ namespace Foxoft
 
             return db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == currAccTypeCode)
                                 .OrderBy(x => x.CreatedDate)
-                                .ToList(); // burdaki kolonlari dizaynda da elave et
+                                .ToList();
         }
 
         public DcCurrAcc SelectCurrAcc(string currAccCode)
@@ -872,7 +997,7 @@ namespace Foxoft
 
             return db.DcOffices.Where(x => x.IsDisabled == false)
                                .OrderBy(x => x.CreatedDate)
-                               .ToList(); // burdaki kolonlari dizaynda da elave et
+                               .ToList();
         }
 
         public DcProcess SelectProcess(string processCode)
@@ -887,43 +1012,55 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.DcCurrencies.ToList(); // burdaki kolonlari dizaynda da elave et
+            return db.DcCurrencies.ToList();
         }
 
         public DcCurrency SelectCurrency(string currencyCode)
         {
             using subContext db = new();
-            return db.DcCurrencies.FirstOrDefault(x => x.CurrencyCode == currencyCode); // burdaki kolonlari dizaynda da elave et
+            return db.DcCurrencies.FirstOrDefault(x => x.CurrencyCode == currencyCode);
         }
 
         public DcHierarchy SelectHierarchy(string hierarchyCode)
         {
             using subContext db = new();
-            return db.DcHierarchies.FirstOrDefault(x => x.HierarchyCode == hierarchyCode); // burdaki kolonlari dizaynda da elave et
+            return db.DcHierarchies.FirstOrDefault(x => x.HierarchyCode == hierarchyCode);
         }
 
         public DcHierarchy SelectHierarchyBySlug(string slug)
         {
             using subContext db = new();
-            return db.DcHierarchies.FirstOrDefault(x => x.Slug == slug); // burdaki kolonlari dizaynda da elave et
+            return db.DcHierarchies.FirstOrDefault(x => x.Slug == slug);
         }
 
         public DcCurrency SelectCurrencyByName(string currencyDesc)
         {
             using subContext db = new();
-            return db.DcCurrencies.FirstOrDefault(x => x.CurrencyDesc == currencyDesc); // burdaki kolonlari dizaynda da elave et
+            return db.DcCurrencies.FirstOrDefault(x => x.CurrencyDesc == currencyDesc);
         }
 
         public List<DcPaymentType> SelectPaymentTypes()
         {
             using subContext db = new();
-            return db.DcPaymentTypes.ToList(); // burdaki kolonlari dizaynda da elave et
+            return db.DcPaymentTypes.ToList();
+        }
+
+        public DcPaymentType SelectPaymentType(byte paymentTypeId)
+        {
+            using subContext db = new();
+            return db.DcPaymentTypes.FirstOrDefault(x => x.PaymentTypeCode == paymentTypeId);
         }
 
         public List<DcPaymentMethod> SelectPaymentMethods()
         {
             using subContext db = new();
-            return db.DcPaymentMethods.ToList(); // burdaki kolonlari dizaynda da elave et
+            return db.DcPaymentMethods.ToList();
+        }
+
+        public DcPaymentMethod SelectPaymentMethod(int paymentMethodId)
+        {
+            using subContext db = new();
+            return db.DcPaymentMethods.FirstOrDefault(x => x.PaymentMethodId == paymentMethodId);
         }
 
         public List<TrPaymentMethodDiscount> SelectPaymentDiscounts()
@@ -931,7 +1068,56 @@ namespace Foxoft
             using subContext db = new();
             return db.trPaymentMethodDiscounts.Include(x => x.DcDiscount)
                                               .Include(x => x.DcPaymentMethod)
-                                              .ToList(); // burdaki kolonlari dizaynda da elave et
+                                              .ToList();
+        }
+
+        public List<DcDiscount> SelectDiscounts()
+        {
+            using subContext db = new();
+            var discounts = db.DcDiscounts.Include(x => x.TrPaymentMethodDiscounts)
+                                 .Include(x => x.TrProductDiscounts).ThenInclude(x => x.DcProduct).ThenInclude(x => x.SiteProduct)
+                                 .ToList();
+
+            return discounts;
+        }
+
+        public DcDiscount SelectDiscount(int discountId)
+        {
+            using subContext db = new();
+            var discount = db.DcDiscounts.Include(x => x.TrPaymentMethodDiscounts)
+                                 .Include(x => x.TrProductDiscounts).ThenInclude(x => x.DcProduct).ThenInclude(x => x.SiteProduct)
+                                 .FirstOrDefault(x => x.DiscountId == discountId);
+
+            return discount;
+        }
+
+        public DcHierarchy SelectHierarchyById(int hierarchyId)
+        {
+            using subContext db = new();
+
+            var asd = db.DcHierarchies
+                     .Include(x => x.TrHierarchyFeatures).ThenInclude(x => x.DcFeatureType)
+                     .FirstOrDefault(x => x.Id == hierarchyId);
+
+            return asd;
+        }
+
+        public List<TrPaymentMethodDiscount> SelectPaymentMethodsByDiscount(int discountId)
+        {
+            using subContext db = new();
+            return db.trPaymentMethodDiscounts
+                        .Include(x => x.DcDiscount)
+                        .Include(x => x.DcPaymentMethod)
+                        .ToList();
+        }
+
+        public List<TrPaymentMethodDiscount> SelectPaymentMethodByDiscounts()
+        {
+            using subContext db = new();
+            return db.trPaymentMethodDiscounts
+                        .Include(x => x.DcDiscount)
+                        .Include(x => x.DcPaymentMethod)
+                        .ToList();
         }
 
         public float SelectExRate(string currancyCode)
@@ -959,7 +1145,7 @@ namespace Foxoft
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                        .Where(x => x.CurrAccTypeCode == 4)
                        .OrderBy(x => x.CreatedDate)
-                       .ToList(); // burdaki kolonlari dizaynda da elave et
+                       .ToList();
         }
 
         public List<DcWarehouse> SelectWarehouses()
@@ -967,7 +1153,7 @@ namespace Foxoft
             using subContext db = new();
             return db.DcWarehouses.Where(x => x.IsDisabled == false)
                          .OrderBy(x => x.CreatedDate)
-                         .ToList(); // burdaki kolonlari dizaynda da elave et
+                         .ToList();
         }
 
         public List<DcWarehouse> SelectWarehousesByStore(string storeCode)
@@ -976,7 +1162,7 @@ namespace Foxoft
             return db.DcWarehouses.Where(x => x.IsDisabled == false)
                                   .Where(x => x.StoreCode == storeCode)
                                   .OrderBy(x => x.CreatedDate)
-                                  .ToList(); // burdaki kolonlari dizaynda da elave et
+                                  .ToList();
         }
 
         public string SelectWarehouseByStore(string storeCode)

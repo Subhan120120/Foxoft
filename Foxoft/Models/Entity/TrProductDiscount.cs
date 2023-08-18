@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
@@ -17,10 +18,11 @@ namespace Foxoft.Models
         [Display(Name = "Endirim Id")]
         public int DiscountId { get; set; }
 
-
+        [JsonIgnore]
         [ForeignKey("ProductCode")]
         public virtual DcProduct DcProduct { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("DiscountId")]
         public virtual DcDiscount DcDiscount { get; set; }
 

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
@@ -18,7 +19,7 @@ namespace Foxoft.Models
         public int FeatureTypeId { get; set; }
 
 
-
+        [JsonIgnore]
         [ForeignKey("HierarchyCode")]
         public virtual DcHierarchy DcHierarchy { get; set; }
 

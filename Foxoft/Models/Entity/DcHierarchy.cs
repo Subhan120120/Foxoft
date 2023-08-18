@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
@@ -34,7 +35,8 @@ namespace Foxoft.Models
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? Slug { get; set; }
 
-        [Display(Name = "GroupId")]
+        [Display(Name = "Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
 

@@ -18,7 +18,7 @@ namespace Foxoft.Models
         {
         }
 
-        [Display(Name = "Məhsul Kodu")]
+        [Display(Name = "Məhsul Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 

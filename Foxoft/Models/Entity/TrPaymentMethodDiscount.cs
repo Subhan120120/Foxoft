@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
@@ -18,7 +19,7 @@ namespace Foxoft.Models
         public int PaymentMethodId { get; set; }
 
 
-
+        [JsonIgnore]
         [ForeignKey("DiscountId")]
         public virtual DcDiscount DcDiscount { get; set; }
 

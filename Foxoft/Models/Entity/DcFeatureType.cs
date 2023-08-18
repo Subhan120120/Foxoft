@@ -24,9 +24,13 @@ namespace Foxoft.Models
         [Display(Name = "Sıra")]
         public int Order { get; set; }
 
+        [Display(Name = "Filtirlənir")]
+        public bool Filterable { get; set; }
+
 
         [JsonIgnore]
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TrHierarchyFeature> TrHierarchyFeatures { get; set; }
     }
 }

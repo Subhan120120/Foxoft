@@ -54,7 +54,7 @@
 //    query.Name = "customQuery1";
 //    query.Sql = "select TrInvoiceLine.*, ProductDescription, Barcode from TrInvoiceLine " +
 //        "left join DcProduct on TrInvoiceLine.ProductCode = DcProduct.ProductCode " +
-//        "where InvoiceHeaderId = '" + invoiceHeaderId + "' order by CreatedDate"; // burdaki kolonlari dizaynda da elave et
+//        "where InvoiceHeaderId = '" + invoiceHeaderId + "' order by CreatedDate"; 
 
 //    ds.Queries.Add(query);
 //    ds.Fill();

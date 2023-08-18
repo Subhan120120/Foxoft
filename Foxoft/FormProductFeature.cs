@@ -30,7 +30,7 @@ namespace Foxoft
 
             foreach (DcFeatureType feature in dcFeatures)
             {
-                TrProductFeature proFea = efMethods.SelectFeatureType(feature.FeatureTypeId, dcProduct.ProductCode);
+                TrProductFeature proFea = efMethods.SelectProductFeature(feature.FeatureTypeId, dcProduct.ProductCode);
 
                 ButtonEdit btn = new();
                 btn.Name = feature.FeatureTypeId.ToString();

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
@@ -25,6 +26,7 @@ namespace Foxoft.Models
         [Display(Name = "Faiz")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal DiscountPercent { get; set; }
+
 
         public virtual ICollection<TrPaymentMethodDiscount> TrPaymentMethodDiscounts { get; set; }
         public virtual ICollection<TrProductDiscount> TrProductDiscounts { get; set; }
