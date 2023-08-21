@@ -1827,7 +1827,7 @@ namespace Foxoft
                 {
                     decimal value = (decimal)isReturn;
 
-                    if (value <= 0 && dcProcess.ProcessCode == "RS")
+                    if (value <= 0 && dcProcess.ProcessCode == "RS" && trInvoiceHeader.IsReturn == false)
                         e.Appearance.ForeColor = Color.Red;
                 }
             }
@@ -1839,9 +1839,10 @@ namespace Foxoft
 
         private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
-            string UserName = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
-            XtraMessageBox.Show(UserName, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DcCurrAcc dcCurrAcc =  efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
+            string userName =ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x=>x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
+            string createDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
+            XtraMessageBox.Show(userName + '\n' + '\n' + createDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

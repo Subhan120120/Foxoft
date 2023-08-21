@@ -1418,16 +1418,17 @@ namespace Foxoft
 
             if (pf is not null) // update
             {
-                if (string.IsNullOrEmpty(value))
-                    db.Remove(pf);
-                else
+                if (pf.FeatureCode != value)
                 {
-                    pf.FeatureCode = value;
-                    //db.Entry(pf).Property(x => x.FeatureCode).IsModified = true; composite key gore alinmadi
-                    db.Update(pf);
+                    //3u de composite key olduguna gore update alinmadi
+                    db.TrProductFeatures.Remove(pf);
+                    db.SaveChanges();
                 }
             }
-            else // create
+
+            bool ASD = pf?.FeatureCode != value;
+
+            if (!string.IsNullOrEmpty(value) && pf?.FeatureCode != value)
             {
                 pf = new TrProductFeature()
                 {
@@ -1435,7 +1436,6 @@ namespace Foxoft
                     ProductCode = productCode,
                     FeatureCode = value
                 };
-
                 db.TrProductFeatures.Add(pf);
             }
 
