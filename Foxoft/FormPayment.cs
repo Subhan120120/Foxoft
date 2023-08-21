@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraRichEdit.Import.Html;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
@@ -16,7 +17,8 @@ namespace Foxoft
         //private bool autoMakePayment;
         private TrPaymentHeader trPaymentHeader = new();
         private TrInvoiceHeader trInvoiceHeader { get; set; }
-        private TrPaymentLine trPaymentLine = new();
+        private TrPaymentLine trPaymentLineCash = new();
+        private TrPaymentLine trPaymentLineCashless = new();
         private EfMethods efMethods = new();
 
         private bool isNegativ = false;
@@ -53,13 +55,13 @@ namespace Foxoft
 
             decimal mustPaidABS = Math.Abs(mustPaid);
 
-            trPaymentLine.Payment = mustPaidABS;
+            trPaymentLineCash.Payment = mustPaidABS;
         }
 
         public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader, bool autoMakePayment)
            : this(paymentType, invoiceSumLoc, trInvoiceHeader)
         {
-            if (trPaymentLine.Payment > 0)
+            if (trPaymentLineCash.Payment > 0)
                 if (autoMakePayment)
                     SavePayment(true);
         }
@@ -88,16 +90,26 @@ namespace Foxoft
             trPaymentHeader.OperationDate = DateTime.Now;
             trPaymentHeader.IsMainTF = true;
 
-            trPaymentLine.PaymentHeaderId = PaymentHeaderId;
-            trPaymentLine.PaymentTypeCode = paymentType;
-            trPaymentLine.PaymentMethodId = 1;
-            trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-            trPaymentLine.ExchangeRate = 1;
+            trPaymentLineCash.PaymentHeaderId = PaymentHeaderId;
+            trPaymentLineCash.PaymentTypeCode = 1;
+            trPaymentLineCash.PaymentMethodId = 1;
+            trPaymentLineCash.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            trPaymentLineCash.ExchangeRate = 1;
+            trPaymentLineCash.CreatedUserName = Authorization.CurrAccCode;
+
+            trPaymentLineCashless.PaymentHeaderId = PaymentHeaderId;
+            trPaymentLineCashless.PaymentTypeCode = 2;
+            trPaymentLineCashless.PaymentMethodId = 3;
+            trPaymentLineCashless.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            trPaymentLineCashless.ExchangeRate = 1;
+            trPaymentLineCashless.CreatedUserName = Authorization.CurrAccCode;
 
             string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
             if (!String.IsNullOrEmpty(cashReg))
-                trPaymentLine.CashRegisterCode = cashReg;
-            trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
+            {
+                trPaymentLineCash.CashRegisterCode = cashReg;
+                trPaymentLineCashless.CashRegisterCode = cashReg;
+            }
         }
 
         private void FormPayment_Load(object sender, EventArgs e)
@@ -107,15 +119,14 @@ namespace Foxoft
 
         private void FillControls()
         {
-            switch (trPaymentLine.PaymentTypeCode)
-            {
-                case 1: txtEdit_Cash.EditValue = trPaymentLine.Payment; break;
-                default: txtEdit_Cash.EditValue = trPaymentLine.Payment; break;
-            }
+            txtEdit_Cash.EditValue = trPaymentLineCash.Payment;
+            txtEdit_Cashless.EditValue = trPaymentLineCashless.Payment;
 
             dateEdit_Date.EditValue = DateTime.Now.ToString("yyyy-MM-dd");
-            btnEdit_CashRegister.EditValue = trPaymentLine.CashRegisterCode;
-            lUE_cashCurrency.EditValue = trPaymentLine.CurrencyCode;
+            btnEdit_CashRegister.EditValue = trPaymentLineCash.CashRegisterCode;
+            btnEdit_BankAccout.EditValue = trPaymentLineCashless.CashRegisterCode;
+            lUE_cashCurrency.EditValue = trPaymentLineCash.CurrencyCode;
+            lUE_CashlessCurrency.EditValue = trPaymentLineCashless.CurrencyCode;
         }
 
         private void dateEdit_Date_EditValueChanged(object sender, EventArgs e)
@@ -127,13 +138,13 @@ namespace Foxoft
         private void textEditCash_EditValueChanged(object sender, EventArgs e)
         {
             decimal txtCash = Convert.ToDecimal(txtEdit_Cash.EditValue);
-            trPaymentLine.Payment = txtCash;
+            trPaymentLineCash.Payment = txtCash;
             txtEdit_Cash.DoValidate();
         }
 
         private void txtEdit_Cash_Validating(object sender, CancelEventArgs e)
         {
-            if (!(trPaymentLine.Payment > 0))
+            if (trPaymentLineCash.Payment < 0)
                 e.Cancel = true;
         }
 
@@ -152,8 +163,8 @@ namespace Foxoft
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit editor = sender as LookUpEdit;
-            trPaymentLine.CurrencyCode = lUE_cashCurrency.EditValue.ToString();
-            trPaymentLine.ExchangeRate = (float)editor.GetColumnValue("ExchangeRate");
+            trPaymentLineCash.CurrencyCode = lUE_cashCurrency.EditValue.ToString();
+            trPaymentLineCash.ExchangeRate = (float)editor.GetColumnValue("ExchangeRate");
             FillControls();
         }
 
@@ -166,7 +177,6 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
-                    trPaymentLine.CashRegisterCode = form.dcCurrAcc.CurrAccCode;
                 }
             }
         }
@@ -177,10 +187,15 @@ namespace Foxoft
 
         private void textEditCashless_EditValueChanged(object sender, EventArgs e)
         {
+            decimal txtCashless = Convert.ToDecimal(txtEdit_Cashless.EditValue);
+            trPaymentLineCashless.Payment = txtCashless;
+            txtEdit_Cashless.DoValidate();
         }
 
         private void textEditCashless_Validating(object sender, CancelEventArgs e)
         {
+            if (trPaymentLineCashless.Payment < 0)
+                e.Cancel = true;
         }
 
         private void textEditCashless_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
@@ -209,6 +224,10 @@ namespace Foxoft
 
         private void lUE_CashlessCurrency_EditValueChanged(object sender, EventArgs e)
         {
+            LookUpEdit editor = sender as LookUpEdit;
+            trPaymentLineCashless.CurrencyCode = lUE_CashlessCurrency.EditValue.ToString();
+            trPaymentLineCashless.ExchangeRate = (float)editor.GetColumnValue("ExchangeRate");
+            FillControls();
         }
 
         private void btn_Num_Click(object sender, EventArgs e)
@@ -231,7 +250,7 @@ namespace Foxoft
 
         private void SavePayment(bool autoPayment)
         {
-            if (trPaymentLine.PaymentLoc > 0)
+            if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
                 EfMethods efMethods = new();
                 string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
@@ -246,23 +265,32 @@ namespace Foxoft
                     List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
                     foreach (TrInvoiceLine il in trInvoiceLines)
                     {
-                        trPaymentLine.PaymentLineId = Guid.NewGuid();
-                        trPaymentLine.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
-                        trPaymentLine.CurrencyCode = il.CurrencyCode;
-                        trPaymentLine.ExchangeRate = il.ExchangeRate;
-                        trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
+                        trPaymentLineCash.PaymentLineId = Guid.NewGuid();
+                        trPaymentLineCash.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
+                        trPaymentLineCash.CurrencyCode = il.CurrencyCode;
+                        trPaymentLineCash.ExchangeRate = il.ExchangeRate;
+                        trPaymentLineCash.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
 
-                        efMethods.InsertPaymentLine(trPaymentLine);
+                        efMethods.InsertPaymentLine(trPaymentLineCash);
                     }
                 }
                 else
                 {
                     efMethods.InsertPaymentHeader(trPaymentHeader);
 
-                    trPaymentLine.PaymentLineId = Guid.NewGuid();
-                    trPaymentLine.Payment = isNegativ ? trPaymentLine.Payment * (-1) : trPaymentLine.Payment;
+                    if (trPaymentLineCash.PaymentLoc > 0)
+                    {
+                        trPaymentLineCash.PaymentLineId = Guid.NewGuid();
+                        trPaymentLineCash.Payment = isNegativ ? trPaymentLineCash.Payment * (-1) : trPaymentLineCash.Payment;
+                        efMethods.InsertPaymentLine(trPaymentLineCash);
+                    }
 
-                    efMethods.InsertPaymentLine(trPaymentLine);
+                    if (trPaymentLineCashless.PaymentLoc > 0)
+                    {
+                        trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
+                        trPaymentLineCashless.Payment = isNegativ ? trPaymentLineCashless.Payment * (-1) : trPaymentLineCashless.Payment;
+                        efMethods.InsertPaymentLine(trPaymentLineCashless);
+                    }
                 }
 
                 DialogResult = DialogResult.OK;
@@ -283,7 +311,7 @@ namespace Foxoft
                 }
                 else
                 {
-                    trPaymentLine.CashRegisterCode = eValue.ToString();
+                    trPaymentLineCash.CashRegisterCode = eValue.ToString();
                 }
             }
         }
@@ -309,6 +337,18 @@ namespace Foxoft
             LookUpEdit editor = sender as LookUpEdit;
             object value = editor.GetColumnValue("DefaultCashRegCode");
             btnEdit_BankAccout.EditValue = value;
+        }
+
+        private void btnEdit_CashRegister_EditValueChanged(object sender, EventArgs e)
+        {
+            ButtonEdit buttonEdit = sender as ButtonEdit;
+            trPaymentLineCash.CashRegisterCode = buttonEdit.EditValue.ToString();
+        }
+
+        private void btnEdit_BankAccout_EditValueChanged(object sender, EventArgs e)
+        {
+            ButtonEdit buttonEdit = sender as ButtonEdit;
+            trPaymentLineCashless.CashRegisterCode = buttonEdit.EditValue.ToString();
         }
     }
 }

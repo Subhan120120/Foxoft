@@ -1416,13 +1416,18 @@ namespace Foxoft
             using subContext db = new();
             TrProductFeature pf = db.TrProductFeatures.FirstOrDefault(x => x.FeatureTypeId == featureTypeId && x.ProductCode == productCode);
 
-            if (pf is not null)
+            if (pf is not null) // update
             {
-                pf.FeatureCode = value;
-                //db.Entry(pf).Property(x => x.FeatureCode).IsModified = true; composite key gore alinmadi
-                db.Update(pf);
+                if (string.IsNullOrEmpty(value))
+                    db.Remove(pf);
+                else
+                {
+                    pf.FeatureCode = value;
+                    //db.Entry(pf).Property(x => x.FeatureCode).IsModified = true; composite key gore alinmadi
+                    db.Update(pf);
+                }
             }
-            else
+            else // create
             {
                 pf = new TrProductFeature()
                 {

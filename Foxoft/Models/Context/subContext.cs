@@ -180,7 +180,11 @@ namespace Foxoft.Models
                 new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" });
 
             modelBuilder.Entity<DcPaymentMethod>().HasData(
-                new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" });
+                new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" },
+                new DcPaymentMethod { PaymentMethodId = 2, PaymentTypeCode = 1, PaymentMethodDesc = "Çatdırılma zamanı nağd ödə" },
+                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" },                
+                new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart" }                
+                );
 
             modelBuilder.Entity<DcProcess>().HasData(
                 new DcProcess { ProcessCode = "RP", ProcessDesc = "Alış", ProcessDir = 1 },
