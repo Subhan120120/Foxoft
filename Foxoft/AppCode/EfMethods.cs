@@ -1426,8 +1426,6 @@ namespace Foxoft
                 }
             }
 
-            bool ASD = pf?.FeatureCode != value;
-
             if (!string.IsNullOrEmpty(value) && pf?.FeatureCode != value)
             {
                 pf = new TrProductFeature()
