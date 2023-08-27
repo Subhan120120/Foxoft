@@ -29,6 +29,7 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportGrid));
             gC_Report = new MyGridControl();
             gV_Report = new MyGridView(this);
@@ -41,16 +42,18 @@ namespace Foxoft
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
             bBI_Quit = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)gC_Report).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Report).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             SuspendLayout();
             // 
             // gC_Report
@@ -68,14 +71,6 @@ namespace Foxoft
             // 
             gV_Report.GridControl = gC_Report;
             gV_Report.Name = "gV_Report";
-            gV_Report.OptionsBehavior.Editable = false;
-            gV_Report.OptionsLayout.Columns.StoreAllOptions = true;
-            gV_Report.OptionsLayout.Columns.StoreAppearance = true;
-            gV_Report.OptionsLayout.StoreAllOptions = true;
-            gV_Report.OptionsLayout.StoreAppearance = true;
-            gV_Report.OptionsLayout.StoreFormatRules = true;
-            gV_Report.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.VisibleAlways;
-            gV_Report.OptionsView.ShowFooter = true;
             gV_Report.RowStyle += gV_Report_RowStyle;
             gV_Report.PopupMenuShowing += gV_Report_PopupMenuShowing;
             gV_Report.CalcRowHeight += gV_Report_CalcRowHeight;
@@ -160,6 +155,13 @@ namespace Foxoft
             barButtonItem1.Name = "barButtonItem1";
             barButtonItem1.ItemClick += barButtonItem1_ItemClick;
             // 
+            // barButtonItem2
+            // 
+            barButtonItem2.Caption = "Test";
+            barButtonItem2.Id = 10;
+            barButtonItem2.Name = "barButtonItem2";
+            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup3, ribbonPageGroup1, ribbonPageGroup2 });
@@ -201,12 +203,10 @@ namespace Foxoft
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "ribbonPage2";
             // 
-            // barButtonItem2
+            // svgImageCollection1
             // 
-            barButtonItem2.Caption = "Test";
-            barButtonItem2.Id = 10;
-            barButtonItem2.Name = "barButtonItem2";
-            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
+            svgImageCollection1.Add("bo_report", "image://svgimages/business objects/bo_report.svg");
+            svgImageCollection1.Add("actions_edit", "image://svgimages/icon builder/actions_edit.svg");
             // 
             // FormReportGrid
             // 
@@ -224,6 +224,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_Report).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Report).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -248,5 +249,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_Quit;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.Utils.SvgImageCollection svgImageCollection1;
     }
 }

@@ -122,7 +122,6 @@ namespace Foxoft
 
             foreach (TrFormReport report in trFormReports)
             {
-
                 BarButtonItem BBI = new();
                 BBI.Caption = report.DcReport.ReportName;
                 BBI.Id = 57;
@@ -629,31 +628,6 @@ namespace Foxoft
 
         //}
 
-        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            DcReport dcReport = efMethods.SelectReport(3);
-            object productCode = gV_ProductList.GetFocusedRowCellValue(colProductCode);
-
-            if (productCode is not null && dcReport is not null)
-            {
-                string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                string filter = " where [ProductCode] = '" + productCode + "' ";
-                string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
-                if (dcReport.ReportTypeId == 1)
-                {
-                    FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
-                    formGrid.Show();
-                }
-                else if (dcReport.ReportTypeId == 2)
-                {
-                    FormReportPreview form = new(qryMaster + filter, dcReport);
-                    form.WindowState = FormWindowState.Maximized;
-                    form.Show();
-                }
-            }
-        }
-
         private void gV_ProductList_CalcRowHeight(object sender, RowHeightEventArgs e)
         {
             GridView gV = sender as GridView;
@@ -702,7 +676,7 @@ namespace Foxoft
             }
         }
 
-        private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        private void gV_ProductList_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.MenuType == GridMenuType.Column)
             {
@@ -755,54 +729,6 @@ namespace Foxoft
             }
         }
 
-        private void BBI_ReportPriceList_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            try
-            {
-                XtraSaveFileDialog sFD = new();
-                sFD.Filter = "PDF Faylı|*.pdf";
-                sFD.Title = "PDF Faylı Yadda Saxla";
-                sFD.FileName = "Qiymət Siyahısı";
-                sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                sFD.DefaultExt = "*.pdf";
-
-                var fileName = Invoke((Func<string>)(() =>
-                {
-                    if (sFD.ShowDialog() == DialogResult.OK)
-                    {
-                        ColumnView View = gC_ProductList.MainView as ColumnView;
-                        List<DataRowView> mydata = GetFilteredData<DataRowView>(View).ToList();
-
-                        ReportClass reportClass = new();
-                        XtraReport xtraReport = reportClass.CreateReport(mydata, "PriceList_OneProduct.repx");
-
-                        if (xtraReport is not null)
-                        {
-                            xtraReport.ExportToPdf(sFD.FileName, new PdfExportOptions() { });
-
-                            if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                            {
-                                Process p = new();
-                                p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                                p.Start();
-                            }
-
-                            return "Ok";
-                        }
-                        else
-                            return "Fail";
-                    }
-                    else
-                        return "Fail";
-                }));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-        }
-
         public static List<T> GetFilteredData<T>(ColumnView view)
         {
             List<T> resp = new List<T>();
@@ -810,89 +736,6 @@ namespace Foxoft
                 resp.Add((T)view.GetRow(i));
 
             return resp;
-        }
-
-        private void BBI_ReportDesignProduct_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ColumnView View = gC_ProductList.MainView as ColumnView;
-            List<DataRowView> mydata = GetFilteredData<DataRowView>(View).ToList();
-
-            ReportClass reportClass = new();
-            XtraReport xtraReport = reportClass.CreateReport(mydata, "");
-
-            if (xtraReport is not null)
-            {
-                ReportDesignTool printTool = new(xtraReport);
-                printTool.ShowRibbonDesigner();
-            }
-        }
-
-        private void BBI_Sticker_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            DcReport dcReport = efMethods.SelectReport(1031);
-            List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
-            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
-            string filter = "";
-            if (dcProduct is not null)
-                filter = " where [ProductCode] = '" + dcProduct.ProductCode + "' ";
-            else
-            {
-                var combined = "";
-                foreach (DataRowView rowView in mydata)
-                    combined += "'" + rowView["ProductCode"].ToString() + "',";
-                if (combined.Length > 0)
-                {
-                    combined = combined.Substring(0, combined.Length - 1);
-                    filter = " where [ProductCode] in ( " + combined + ")";
-                }
-            }
-
-            if (dcReport.ReportTypeId == 1)
-            {
-                FormReportGrid formGrid = new(qryMaster + filter, dcReport);
-                formGrid.Show();
-            }
-            else if (dcReport.ReportTypeId == 2)
-            {
-                FormReportPreview form = new(qryMaster + filter, dcReport);
-                form.WindowState = FormWindowState.Maximized;
-                form.Show();
-            }
-        }
-
-        private void BBI_ProductCart_Click(object sender, ItemClickEventArgs e)
-        {
-            DcReport dcReport = efMethods.SelectReport(1032);
-
-            List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
-
-            string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
-            string filter = "";
-            if (dcProduct is not null)
-                filter = " where [ProductCode] = '" + dcProduct.ProductCode + "' ";
-            else
-            {
-                var combined = "";
-                foreach (DataRowView rowView in mydata)
-                    combined += "'" + rowView["ProductCode"].ToString() + "',";
-
-                combined = combined.Substring(0, combined.Length - 1);
-                filter = " where [ProductCode] in ( " + combined + ")";
-            }
-
-            if (dcReport.ReportTypeId == 1)
-            {
-                FormReportGrid formGrid = new(qryMaster + filter, dcReport);
-                formGrid.Show();
-            }
-            else if (dcReport.ReportTypeId == 2)
-            {
-                FormReportPreview form = new(qryMaster + filter, dcReport);
-                form.WindowState = FormWindowState.Maximized;
-                form.Show();
-            }
         }
     }
 }

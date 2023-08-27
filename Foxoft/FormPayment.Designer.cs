@@ -29,6 +29,7 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPayment));
             DevExpress.XtraLayout.ColumnDefinition columnDefinition1 = new DevExpress.XtraLayout.ColumnDefinition();
             DevExpress.XtraLayout.ColumnDefinition columnDefinition2 = new DevExpress.XtraLayout.ColumnDefinition();
@@ -105,6 +106,7 @@ namespace Foxoft
             lCI_Ok = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             lCI_Date = new DevExpress.XtraLayout.LayoutControlItem();
+            dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)lUE_CashlessCurrency.Properties).BeginInit();
@@ -154,6 +156,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_Ok).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Date).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             SuspendLayout();
             // 
             // lC_Root
@@ -1061,6 +1064,10 @@ namespace Foxoft
             lCI_Date.Text = "Tarix";
             lCI_Date.TextSize = new System.Drawing.Size(74, 13);
             // 
+            // dxErrorProvider1
+            // 
+            dxErrorProvider1.ContainerControl = this;
+            // 
             // FormPayment
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1120,6 +1127,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_Ok).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Date).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
             ResumeLayout(false);
         }
 
@@ -1192,5 +1200,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem lCI_CashlessCurrency;
         private DevExpress.XtraEditors.LookUpEdit lUE_PaymentMethod;
         private DevExpress.XtraLayout.LayoutControlItem lCI_PaymentMethod;
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
     }
 }

@@ -499,23 +499,153 @@ namespace Foxoft
                 //menu.Items.Clear();
                 if (menu.Column != null)
                 {
-                    menu.Items.Add(CreateItem("Expression", menu.Column, null));
+                    menu.Items.Add(CreateItemExpression("Expression", e.HitInfo.RowHandle, menu.Column, null));
                 }
+            }
+            else if (e.MenuType == GridMenuType.Row)
+            {
+                e.Menu.Items.Clear();
+
+                DXMenuItem menuItem = CreateMenuItemEdit(gV_Report, e.HitInfo.RowHandle, e.HitInfo.Column);
+                e.Menu.Items.Add(menuItem);
+
+                var menuSubItem = CreateSubMenuReports(gV_Report, e.HitInfo.RowHandle, e.HitInfo.Column);
+                menuSubItem.BeginGroup = true;
+                e.Menu.Items.Add(menuSubItem);
             }
         }
 
-        DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+        DXMenuItem CreateMenuItemEdit(GridView view, int rowHandle, GridColumn gridColumn)
         {
-            DXMenuItem item = new DXMenuItem(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);
-            item.Tag = new MenuColumnInfo(column);
+            DXMenuItem menuItem = new("Dəyiş");
+            //menuItem.Tag = new RowInfo(view, rowHandle);
+            menuItem.ImageOptions.SvgImage = svgImageCollection1[1];
+
+            menuItem.Click += (sender, e) =>
+            {
+                object objCellValue = gV_Report.GetRowCellValue(rowHandle, gridColumn);
+                if (objCellValue is not null)
+                {
+                    string cellValue = objCellValue.ToString();
+                    if (!String.IsNullOrEmpty(cellValue))
+                    {
+                        if (gridColumn.FieldName == "ProductCode")
+                        {
+                            FormProduct formProduct = new(0, cellValue);
+                            if (formProduct.ShowDialog(this) == DialogResult.OK)
+                            {
+                                string path = imageFolder + @"\" + cellValue + ".jpg";
+                                imageCache.Remove(path);
+
+                                LoadData();
+                            }
+                        }
+                        else if (gridColumn.FieldName == "CurrAccCode")
+                        {
+                            FormCurrAcc formCurrAcc = new(cellValue);
+                            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+                            {
+                                LoadData();
+                            }
+                        }
+                    }
+                }
+            };
+
+            return menuItem;
+        }
+
+        DXMenuItem CreateSubMenuReports(GridView view, int rowHandle, GridColumn gridColumn)
+        {
+            DXSubMenuItem subMenu = new DXSubMenuItem("Hesabat");
+
+            subMenu.ImageOptions.SvgImage = svgImageCollection1[0];
+
+            if (gridColumn.FieldName == "ProductCode")
+            {
+                List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
+
+                foreach (TrFormReport report in trFormReports)
+                {
+                    DXMenuItem dXMenuItemreport = new DXMenuItem(report.DcReport.ReportName);
+                    dXMenuItemreport.Tag = new CellInfo(rowHandle, gridColumn);
+                    dXMenuItemreport.Enabled = view.IsDataRow(rowHandle) || view.IsGroupRow(rowHandle);
+                    dXMenuItemreport.ImageOptions.SvgImage = svgImageCollection1[0];
+                    subMenu.Items.Add(dXMenuItemreport);
+
+                    dXMenuItemreport.Click += (sender, e) =>
+                    {
+                        DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+
+                        string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
+
+                        string filter = " where [ProductCode] = '" + view.GetRowCellValue(rowHandle, gridColumn) + "' ";
+
+                        if (dcReport.ReportTypeId == 1)
+                        {
+                            FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                            formGrid.Show();
+                        }
+                        else if (dcReport.ReportTypeId == 2)
+                        {
+                            FormReportPreview form = new(qryMaster + filter, dcReport);
+                            form.WindowState = FormWindowState.Maximized;
+                            form.Show();
+                        }
+                    };
+                }
+            }
+            else if (gridColumn.FieldName == "CurrAccCode")
+            {
+                List<TrFormReport> trFormReports = efMethods.SelectFormReports("CurrAccs");
+
+                foreach (TrFormReport report in trFormReports)
+                {
+                    DXMenuItem dXMenuItemreport = new DXMenuItem(report.DcReport.ReportName);
+                    dXMenuItemreport.Tag = new CellInfo(rowHandle, gridColumn);
+                    dXMenuItemreport.Enabled = view.IsDataRow(rowHandle) || view.IsGroupRow(rowHandle);
+                    dXMenuItemreport.ImageOptions.SvgImage = svgImageCollection1[0];
+
+                    dXMenuItemreport.Click += (sender, e) =>
+                    {
+                        DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+
+                        string filter = gridColumn.FieldName + " = '" + view.GetRowCellValue(rowHandle, gridColumn) + "' ";
+
+                        string activeFilterStr = filter;
+
+                        if (dcReport.ReportTypeId == 1)
+                        {
+                            FormReportGrid formGrid = new(dcReport.ReportQuery, dcReport, activeFilterStr);
+                            formGrid.Show();
+                        }
+                        else if (dcReport.ReportTypeId == 2)
+                        {
+                            FormReportPreview form = new(dcReport.ReportQuery + filter, dcReport);
+                            form.WindowState = FormWindowState.Maximized;
+                            form.Show();
+                        }
+                    };
+
+                    subMenu.Items.Add(dXMenuItemreport);
+                }
+            }
+
+            return subMenu;
+        }
+
+        DXMenuItem CreateItemExpression(string caption, int rowHandle, GridColumn column, Image image)
+        {
+            DXMenuItem item = new DXMenuItem(caption, new EventHandler(DXMenuItemExpression_ItemClick), image);
+            item.Tag = new CellInfo(rowHandle, column);
             return item;
         }
 
         // Menu item click handler.
-        void DXMenuCheckItem_ItemClick(object sender, EventArgs e)
+        void DXMenuItemExpression_ItemClick(object sender, EventArgs e)
         {
             DXMenuItem item = sender as DXMenuItem;
-            MenuColumnInfo info = item.Tag as MenuColumnInfo;
+            CellInfo info = item.Tag as CellInfo;
             if (info == null) return;
             //info.Column.OptionsColumn.AllowMove = !item.Checked;
 
@@ -537,12 +667,15 @@ namespace Foxoft
             }
         }
 
-        class MenuColumnInfo
+        class CellInfo
         {
-            public MenuColumnInfo(GridColumn column)
+            public CellInfo(int rowHandle, GridColumn column)
             {
+                this.RowHandle = rowHandle;
                 this.Column = column;
             }
+
+            public int RowHandle;
             public GridColumn Column;
         }
 

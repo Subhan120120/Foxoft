@@ -250,6 +250,13 @@ namespace Foxoft
 
         private void SavePayment(bool autoPayment)
         {
+            if (trPaymentLineCashless.PaymentLoc > 0) // lUE_PaymentMethod Validation
+                if (lUE_PaymentMethod.EditValue == null)
+                {
+                    dxErrorProvider1.SetError(this.lUE_PaymentMethod, "Boş buraxıla bilməz!");
+                    return;
+                }
+
             if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
                 EfMethods efMethods = new();
@@ -335,6 +342,7 @@ namespace Foxoft
         private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit editor = sender as LookUpEdit;
+            trPaymentLineCashless.PaymentMethodId = Convert.ToInt32(editor.EditValue);
             object value = editor.GetColumnValue("DefaultCashRegCode");
             btnEdit_BankAccout.EditValue = value;
         }

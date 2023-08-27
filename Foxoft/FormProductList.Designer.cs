@@ -120,7 +120,7 @@ namespace Foxoft
             gV_ProductList.OptionsView.ShowGroupPanel = false;
             gV_ProductList.RowCellStyle += gV_ProductList_RowCellStyle;
             gV_ProductList.RowStyle += gV_ProductList_RowStyle;
-            gV_ProductList.PopupMenuShowing += gV_Report_PopupMenuShowing;
+            gV_ProductList.PopupMenuShowing += gV_ProductList_PopupMenuShowing;
             gV_ProductList.CalcRowHeight += gV_ProductList_CalcRowHeight;
             gV_ProductList.FocusedRowChanged += gV_ProductList_FocusedRowChanged;
             gV_ProductList.ColumnFilterChanged += gV_ProductList_ColumnFilterChanged;
