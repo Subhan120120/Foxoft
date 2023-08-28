@@ -139,11 +139,9 @@ namespace Foxoft
 
                     List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
 
-                    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
                     string filter = "";
                     if (dcProduct is not null)
-                        filter = " where [ProductCode] = '" + dcProduct.ProductCode + "' ";
+                        filter = "[ProductCode] = '" + dcProduct.ProductCode + "' ";
                     else
                     {
                         var combined = "";
@@ -151,17 +149,17 @@ namespace Foxoft
                             combined += "'" + rowView["ProductCode"].ToString() + "',";
 
                         combined = combined.Substring(0, combined.Length - 1);
-                        filter = " where [ProductCode] in ( " + combined + ")";
+                        filter = "[ProductCode] in ( " + combined + ")";
                     }
 
                     if (dcReport.ReportTypeId == 1)
                     {
-                        FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport);
                         formGrid.Show();
                     }
                     else if (dcReport.ReportTypeId == 2)
                     {
-                        FormReportPreview form = new(qryMaster + filter, dcReport);
+                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
                         form.WindowState = FormWindowState.Maximized;
                         form.Show();
                     }
@@ -392,10 +390,9 @@ namespace Foxoft
                     DcReport dcReport = efMethods.SelectReport(1005);
                     if (productCode is not null && dcReport is not null)
                     {
-                        string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                        string filter = " where [ProductCode] = '" + productCode + "' ";
+                        string filter = "[ProductCode] = '" + productCode + "' ";
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
                         formGrid.Show();
                     }
                 }
@@ -440,10 +437,9 @@ namespace Foxoft
                     DcReport dcReport = efMethods.SelectReport(1004);
                     if (productCode is not null && dcReport is not null)
                     {
-                        string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                        string filter = " where [ProductCode] = '" + productCode + "' ";
+                        string filter = "[ProductCode] = '" + productCode + "' ";
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
 
                         formGrid.Show();
                     }

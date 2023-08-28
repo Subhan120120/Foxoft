@@ -1,6 +1,7 @@
 ﻿
 #region usings
 using DevExpress.Data;
+using DevExpress.Mvvm.Native;
 using DevExpress.Utils;
 using DevExpress.Utils.Design;
 using DevExpress.Utils.Menu;
@@ -16,6 +17,7 @@ using DevExpress.XtraGrid.Localization;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
@@ -30,6 +32,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 #endregion
 
@@ -71,10 +74,17 @@ namespace Foxoft
             badge2.TargetElement = ribbonPage1;
         }
 
-        public FormReportGrid(string qry, DcReport report)
-           : this()
+        public FormReportGrid(string query, string filter, DcReport report)
+        : this()
         {
-            this.qry = qry;
+            query = AddTop(query);
+
+            string qryMaster = "Select * from ( " + query + ") as master";
+
+            if (!string.IsNullOrEmpty(filter))
+                qryMaster = qryMaster + " where " + filter;
+
+            this.qry = qryMaster;
             this.report = report;
             Text = report.ReportName;
 
@@ -83,10 +93,25 @@ namespace Foxoft
             LoadLayout();
         }
 
-        public FormReportGrid(string qry, DcReport report, string activeFilterStr)
-           : this(qry, report)
+        public FormReportGrid(string qry, string filter, DcReport report, string activeFilterStr)
+           : this(qry, filter, report)
         {
             gV_Report.ActiveFilterString = activeFilterStr;
+        }
+
+        private static string AddTop(string query)
+        {
+            query = query.Trim();
+
+            int selectIndx = query.IndexOf("Select", StringComparison.OrdinalIgnoreCase);
+
+            string top = query.Substring(selectIndx + 7, 3);
+
+            bool topExist = top.Contains("Top");
+
+            if (!topExist)
+                query = query.Replace("Select", "Select Top " + int.MaxValue.ToString(), StringComparison.OrdinalIgnoreCase);
+            return query;
         }
 
         Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
@@ -577,18 +602,16 @@ namespace Foxoft
                     {
                         DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
 
-                        string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-
-                        string filter = " where [ProductCode] = '" + view.GetRowCellValue(rowHandle, gridColumn) + "' ";
+                        string filter = "[ProductCode] = '" + view.GetRowCellValue(rowHandle, gridColumn) + "' ";
 
                         if (dcReport.ReportTypeId == 1)
                         {
-                            FormReportGrid formGrid = new(qryMaster + filter, dcReport);
+                            FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport);
                             formGrid.Show();
                         }
                         else if (dcReport.ReportTypeId == 2)
                         {
-                            FormReportPreview form = new(qryMaster + filter, dcReport);
+                            FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
                             form.WindowState = FormWindowState.Maximized;
                             form.Show();
                         }
@@ -616,12 +639,12 @@ namespace Foxoft
 
                         if (dcReport.ReportTypeId == 1)
                         {
-                            FormReportGrid formGrid = new(dcReport.ReportQuery, dcReport, activeFilterStr);
+                            FormReportGrid formGrid = new(dcReport.ReportQuery, "", dcReport, activeFilterStr);
                             formGrid.Show();
                         }
                         else if (dcReport.ReportTypeId == 2)
                         {
-                            FormReportPreview form = new(dcReport.ReportQuery + filter, dcReport);
+                            FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
                             form.WindowState = FormWindowState.Maximized;
                             form.Show();
                         }

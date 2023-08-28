@@ -28,7 +28,7 @@ namespace Foxoft
             InitializeComponent();
         }
 
-        public FormReportPreview(string qry, DcReport dcReport)
+        public FormReportPreview(string qry, string filter, DcReport dcReport)
             : this()
         {
             XtraReport xtraReport = GetInvoiceReport(dcReport, qry);
@@ -117,7 +117,7 @@ namespace Foxoft
             {
                 MemoryStream ms = new();
 
-                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1-30", ExportMode = ImageExportMode.SingleFilePageByPage, Resolution = 480});
+                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1-30", ExportMode = ImageExportMode.SingleFilePageByPage, Resolution = 480 });
 
                 return ms;
             }

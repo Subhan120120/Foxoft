@@ -184,12 +184,12 @@ namespace Foxoft
 
                     if (dcReport.ReportTypeId == 1)
                     {
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, dcReport, activeFilterStr);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, "", dcReport, activeFilterStr);
                         formGrid.Show();
                     }
                     else if (dcReport.ReportTypeId == 2)
                     {
-                        FormReportPreview form = new(dcReport.ReportQuery + filter, dcReport);
+                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
                         form.WindowState = FormWindowState.Maximized;
                         form.Show();
                     }
@@ -459,11 +459,10 @@ namespace Foxoft
                     index++;
                 }
                 //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
-                string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
                 string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-                FormReportGrid formGrid = new(qryMaster, dcReport, activeFilterStr);
+                FormReportGrid formGrid = new(reportQuery, "", dcReport, activeFilterStr);
                 formGrid.Show();
             }
         }

@@ -157,19 +157,14 @@ namespace Foxoft
             ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
             reportQuery = AddFilterToQuery(reportQuery, dcReportFilters);
             //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
-            string qryMaster = "Select * from ( " + reportQuery + ") as master";
 
-            string queryFilter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
-            if (!string.IsNullOrEmpty(queryFilter))
-                queryFilter = " where " + queryFilter;
-
-            string qry = qryMaster + queryFilter;
+            string filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
 
             switch (dcReport.ReportTypeId)
             {
-                case 1: OpenGridReport(qry); break;
-                case 2: OpenDetailReport(qry); break;
-                default: OpenGridReport(qry); break;
+                case 1: OpenGridReport(reportQuery, filter); break;
+                case 2: OpenDetailReport(reportQuery, filter); break;
+                default: OpenGridReport(reportQuery, filter); break;
             }
 
             SaveFilterToDB();
@@ -184,11 +179,11 @@ namespace Foxoft
             efMethods.UpdateDcReport_Filter(dcReport.ReportId, filterCriteria); //save filter to database
         }
 
-        private void OpenGridReport(string qry)
+        private void OpenGridReport(string qry, string filter)
         {
             try
             {
-                FormReportGrid myform = new(qry, dcReport);
+                FormReportGrid myform = new(qry, filter, dcReport);
 
                 myform.MdiParent = this.MdiParent;
                 myform.Show();
@@ -199,11 +194,11 @@ namespace Foxoft
             }
         }
 
-        private void OpenDetailReport(string qry)
+        private void OpenDetailReport(string qry, string filter)
         {
             if (!string.IsNullOrEmpty(qry))
             {
-                FormReportPreview frm = new(qry, dcReport);
+                FormReportPreview frm = new(qry, filter, dcReport);
 
                 frm.Show();
 

@@ -382,10 +382,9 @@ namespace Foxoft
                     {
                         DcReport dcReport = efMethods.SelectReport(1005);
 
-                        string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                        string filter = " where [ProductCode] = '" + productCode + "' ";
+                        string filter = " [ProductCode] = '" + productCode + "' ";
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
                         formGrid.Show();
                     }
                 }
@@ -397,10 +396,9 @@ namespace Foxoft
                     {
                         DcReport dcReport = efMethods.SelectReport(1004);
 
-                        string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                        string filter = " where [ProductCode] = '" + productCode + "' ";
+                        string filter = "[ProductCode] = '" + productCode + "' ";
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
                         formGrid.Show();
                     }
                 }
@@ -412,10 +410,9 @@ namespace Foxoft
                     {
                         DcReport dcReport = efMethods.SelectReport(1004);
 
-                        string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-                        string filter = " where [ProductCode] = '" + productCode + "' and [CurrAccCode] = '" + trInvoiceHeader.CurrAccCode + "'";
+                        string filter = "[ProductCode] = '" + productCode + "' and [CurrAccCode] = '" + trInvoiceHeader.CurrAccCode + "'";
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(qryMaster + filter, dcReport, activeFilterStr);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
                         formGrid.Show();
                     }
                 }
@@ -1839,8 +1836,8 @@ namespace Foxoft
 
         private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcCurrAcc dcCurrAcc =  efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
-            string userName =ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x=>x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
+            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
+            string userName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
             string createDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
             XtraMessageBox.Show(userName + '\n' + '\n' + createDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
