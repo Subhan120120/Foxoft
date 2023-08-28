@@ -255,7 +255,8 @@ namespace Foxoft
                 {
                     string ts = String.Join(",", productTypeArr);
                     string where = " Where ProductTypeCode in (" + ts + ") ";
-                    string qryMaster = dcReport.ReportQuery + where + " order by ProductDesc";
+                    string query = CustomExtensions.AddTop(dcReport.ReportQuery);
+                    string qryMaster = query + where + " order by ProductDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)
                     {

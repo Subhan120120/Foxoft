@@ -77,7 +77,7 @@ namespace Foxoft
         public FormReportGrid(string query, string filter, DcReport report)
         : this()
         {
-            query = AddTop(query);
+            query = CustomExtensions.AddTop(query);
 
             string qryMaster = "Select * from ( " + query + ") as master";
 
@@ -99,20 +99,20 @@ namespace Foxoft
             gV_Report.ActiveFilterString = activeFilterStr;
         }
 
-        private static string AddTop(string query)
-        {
-            query = query.Trim();
+        //private static string AddTop(string query)
+        //{
+        //    query = query.Trim();
 
-            int selectIndx = query.IndexOf("Select", StringComparison.OrdinalIgnoreCase);
+        //    int selectIndx = query.IndexOf("Select", StringComparison.OrdinalIgnoreCase);
 
-            string top = query.Substring(selectIndx + 7, 3);
+        //    string top = query.Substring(selectIndx + 7, 3);
 
-            bool topExist = top.Contains("Top");
+        //    bool topExist = top.Contains("Top");
 
-            if (!topExist)
-                query = query.Replace("Select", "Select Top " + int.MaxValue.ToString(), StringComparison.OrdinalIgnoreCase);
-            return query;
-        }
+        //    if (!topExist)
+        //        query = query.Replace("Select", "Select Top " + int.MaxValue.ToString(), StringComparison.OrdinalIgnoreCase);
+        //    return query;
+        //}
 
         Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
         private void gV_Report_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
