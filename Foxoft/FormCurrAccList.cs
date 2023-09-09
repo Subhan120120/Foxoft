@@ -88,6 +88,8 @@ namespace Foxoft
                 if (!gV_CurrAccList.FindPanelVisible)
                     gC_CurrAccList.BeginInvoke(new Action(gV_CurrAccList.ShowFindPanel));
             }
+
+            LoadCurrAccs(currAccTypeArr);
         }
 
         private void LoadCurrAccs(byte[] currAccTypeArr)

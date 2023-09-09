@@ -74,18 +74,13 @@ namespace Foxoft
 
         private void InitializeReports()
         {
-            ComponentResourceManager resources = new(typeof(FormERP));
             List<DcReport> dcReports = efMethods.SelectReports();
 
             foreach (DcReport dcReport in dcReports)
             {
                 AccordionControlElement aCE = new();
 
-                aCE.ImageOptions.SvgImage = ((SvgImage)(resources.GetObject("aCE_ReportZet.ImageOptions.SvgImage")));
-
-                //SvgImageCollection collection = SvgImageCollection.FromResources(typeof(FormERP).Assembly);
-                //aCE.ImageOptions.SvgImage = collection["bo_report"];
-
+                aCE.ImageOptions.SvgImage = svgImageCollection1[0];
                 aCE.Name = dcReport.ReportName;
                 aCE.Style = ElementStyle.Item;
                 aCE.Text = dcReport.ReportName;
@@ -103,7 +98,7 @@ namespace Foxoft
                     parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
                 };
 
-                this.aCE_Reports.Elements.Add(aCE);
+                aCE_Reports.Elements.Add(aCE);
             }
         }
 
@@ -166,7 +161,7 @@ namespace Foxoft
         private void FormERP_MdiChildActivate(object sender, EventArgs e)
         {
             try { parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0]; }
-            catch (Exception) { }
+            catch (Exception ex) { /*xetani nezere alma*/ }
         }
 
         private void aCE_Products_Click(object sender, EventArgs e)
@@ -211,18 +206,27 @@ namespace Foxoft
                 return;
             }
 
-            try
+            FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
+
+            if (form != null)
             {
-                FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
-                form = new(new byte[] { 1, 2, 3 });
-                form.MdiParent = this;
-                form.WindowState = FormWindowState.Maximized;
-                form.Show();
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+                form.BringToFront();
+                form.Activate();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Cari Hesablar açıla bilmir: \n" + ex.ToString());
+                try
+                {
+                    form = new(new byte[] { 1, 2, 3 });
+                    form.MdiParent = this;
+                    form.Show();
+                    form.WindowState = FormWindowState.Maximized;
+                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
 

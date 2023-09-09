@@ -736,7 +736,10 @@ namespace Foxoft
         private void SelectSalesPerson(object sender)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            using FormCurrAccList form = new(new byte[] { 3 }, editor.EditValue.ToString());
+
+            string value = editor.EditValue?.ToString();
+
+            using FormCurrAccList form = new(new byte[] { 3 }, value);
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {

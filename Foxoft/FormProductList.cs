@@ -112,6 +112,8 @@ namespace Foxoft
                 if (!gV_ProductList.FindPanelVisible)
                     gC_ProductList.BeginInvoke(new Action(gV_ProductList.ShowFindPanel));
             }
+
+            LoadProducts(productTypeArr);
         }
 
         private void AddReports()

@@ -30,6 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -73,8 +74,10 @@ namespace Foxoft
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             SuspendLayout();
             // 
             // parentRibbonControl
@@ -203,7 +206,7 @@ namespace Foxoft
             // 
             ribbonStatusBar.ItemLinks.Add(BSI_StoreDesc);
             ribbonStatusBar.ItemLinks.Add(bSI_UserName);
-            ribbonStatusBar.Location = new System.Drawing.Point(0, 608);
+            ribbonStatusBar.Location = new System.Drawing.Point(0, 612);
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = parentRibbonControl;
             ribbonStatusBar.Size = new System.Drawing.Size(1023, 24);
@@ -219,7 +222,7 @@ namespace Foxoft
             aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
             aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
             aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-            aC_Root.Size = new System.Drawing.Size(216, 450);
+            aC_Root.Size = new System.Drawing.Size(216, 454);
             aC_Root.TabIndex = 2;
             // 
             // aCE_Invoices
@@ -371,7 +374,6 @@ namespace Foxoft
             // 
             // aCE_Reports
             // 
-            aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {});
             aCE_Reports.Expanded = true;
             aCE_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Reports.ImageOptions.SvgImage");
             aCE_Reports.Name = "aCE_Reports";
@@ -393,11 +395,15 @@ namespace Foxoft
             aCE_CurrAccAll.Text = "İstifadəçilər";
             aCE_CurrAccAll.Click += aCE_CurrAccAll_Click;
             // 
+            // svgImageCollection1
+            // 
+            svgImageCollection1.Add("bo_report", "image://svgimages/business objects/bo_report.svg");
+            // 
             // FormERP
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1023, 632);
+            ClientSize = new System.Drawing.Size(1023, 636);
             Controls.Add(aC_Root);
             Controls.Add(ribbonStatusBar);
             Controls.Add(parentRibbonControl);
@@ -411,6 +417,7 @@ namespace Foxoft
             MdiChildActivate += FormERP_MdiChildActivate;
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -463,5 +470,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarStaticItem BSI_StoreDesc;
         private DevExpress.XtraBars.BarButtonItem BBI_ChangeUser;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.Utils.SvgImageCollection svgImageCollection1;
     }
 }

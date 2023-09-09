@@ -28,10 +28,17 @@ namespace Foxoft
             InitializeComponent();
         }
 
-        public FormReportPreview(string qry, string filter, DcReport dcReport)
+        public FormReportPreview(string query, string filter, DcReport dcReport)
             : this()
         {
-            XtraReport xtraReport = GetInvoiceReport(dcReport, qry);
+            query = CustomExtensions.AddTop(query);
+
+            string qryMaster = "Select * from ( " + query + ") as master";
+
+            if (!string.IsNullOrEmpty(filter))
+                qryMaster = qryMaster + " where " + filter;
+
+            XtraReport xtraReport = GetInvoiceReport(dcReport, qryMaster);
 
             this.reportE = xtraReport;
             documentViewer1.DocumentSource = xtraReport;

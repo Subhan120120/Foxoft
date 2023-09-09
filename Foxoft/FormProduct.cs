@@ -27,6 +27,11 @@ namespace Foxoft
         public FormProduct(byte productTypeCode, bool isNew)
         {
             InitializeComponent();
+
+            tabbedControlGroup1.SelectedTabPage = autoGroupForQiymətlər;
+
+            InitializeControlText();
+
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;
 
@@ -40,6 +45,14 @@ namespace Foxoft
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+        }
+
+        private void InitializeControlText()
+        {
+            layoutControlItem6.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Price);
+            layoutControlItem7.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Desc);
+            layoutControlItem8.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Slug);
+            layoutControlItem9.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Rating);
         }
 
         public FormProduct(byte productTypeCode, string productCode)
@@ -70,6 +83,7 @@ namespace Foxoft
                 dbContext.DcProducts.Where(x => x.ProductCode == dcProduct.ProductCode)
                                     .Include(x => x.DcProductType)
                                     .Include(x => x.TrInvoiceLines)
+                                    .Include(x => x.SiteProduct)
                                     .Load();
 
                 dbContext.DcProducts.Local.ForEach(x => x.Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut));

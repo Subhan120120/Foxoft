@@ -48,7 +48,7 @@ namespace Foxoft
                 invoiceSumLoc *= (-1);
 
             decimal prePaid = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId);
-            decimal mustPaid = Math.Round(invoiceSumLoc - prePaid, 2);
+            decimal mustPaid = Math.Round(invoiceSumLoc - prePaid, 4);
 
             if (mustPaid < 0)
                 isNegativ = true;

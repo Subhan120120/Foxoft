@@ -97,7 +97,7 @@ namespace Foxoft.Models
 
       [Display(Name = "Qiymət (YPV)")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-      public decimal PriceLoc { get { return Math.Round(Price / (decimal)ExchangeRate, 2); } set { } }
+      public decimal PriceLoc { get { return Math.Round(Price / (decimal)ExchangeRate, 4); } set { } }
 
       [Column(TypeName = "money")]
       [Display(Name = "Tutar")]

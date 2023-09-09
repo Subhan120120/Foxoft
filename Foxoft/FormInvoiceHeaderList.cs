@@ -33,8 +33,10 @@ namespace Foxoft
 
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new(byteArray);
-            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true};
             this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
+
+            gV_InvoiceHeaderList.OptionsFind.FindMode = FindMode.Always;
         }
 
         public FormInvoiceHeaderList(string processCode)
@@ -195,25 +197,25 @@ namespace Foxoft
                     //e.Appearance.ForeColor = Color.Red;
                     e.Appearance.Font = new Font(e.Appearance.Font, FontStyle.Bold);
                 }
-
-
             }
         }
 
         // AutoFocus FindPanel
-        bool isFirstPaint = true;
+        //bool isFirstPaint = true;
         private void gC_InvoiceHeaderList_Paint(object sender, PaintEventArgs e)
         {
-            GridControl gC = sender as GridControl;
-            GridView gV = gC.MainView as GridView;
+            //GridControl gC = sender as GridControl;
+            //GridView gV = gC.MainView as GridView;
 
-            if (isFirstPaint)
-            {
-                if (!gV.FindPanelVisible)
-                    gV.ShowFindPanel();
-                gV.ShowFindPanel();
-            }
-            isFirstPaint = false;
+            //if (isFirstPaint)
+            //{
+            //    if (!gV.FindPanelVisible)
+            //        gV.ShowFindPanel();
+            //    gV.ShowFindPanel();
+
+            //    gV_InvoiceHeaderList.OptionsFind.FindMode = FindMode.Always;
+            //}
+            //isFirstPaint = false;
         }
 
         private void gV_InvoiceHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -223,6 +225,17 @@ namespace Foxoft
                 trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
             else
                 trInvoiceHeader = null;
+        }
+
+        private void FormInvoiceHeaderList_Activated(object sender, EventArgs e)
+        {
+            //AutoFocus FindPanel
+            if (gV_InvoiceHeaderList is not null)
+            {
+                gV_InvoiceHeaderList.FindPanelVisible = false;
+                if (!gV_InvoiceHeaderList.FindPanelVisible)
+                    gC_InvoiceHeaderList.BeginInvoke(new Action(gV_InvoiceHeaderList.ShowFindPanel));
+            }
         }
     }
 }

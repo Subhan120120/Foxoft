@@ -42,7 +42,7 @@ namespace Foxoft
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             gV_PaymentHeaderList.RestoreLayoutFromStream(stream, option);
 
-
+            gV_PaymentHeaderList.OptionsFind.FindMode = FindMode.Always;
         }
 
         public FormPaymentHeaderList(string processCode)

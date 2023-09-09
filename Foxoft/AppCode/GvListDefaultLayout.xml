@@ -28,6 +28,10 @@
 		<property name="ShowGroupPanel">false</property>
 		<property name="ShowIndicator">false</property>
 	</property>
+	<property name="OptionsFind" isnull="true" iskey="true">
+		<property name="FindMode">Always</property>
+		<property name="FindDelay">100</property>
+	</property>
 	<property name="FixedLineWidth">2</property>
 	<property name="IndicatorWidth">-1</property>
 	<property name="ColumnPanelRowHeight">-1</property>

@@ -182,8 +182,8 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcPaymentMethod>().HasData(
                 new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" },
                 new DcPaymentMethod { PaymentMethodId = 2, PaymentTypeCode = 1, PaymentMethodDesc = "Çatdırılma zamanı nağd ödə" },
-                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" },                
-                new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart" }                
+                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" },
+                new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart" }
                 );
 
             modelBuilder.Entity<DcProcess>().HasData(
@@ -285,6 +285,13 @@ namespace Foxoft.Models
             {
                 entity.HasOne(x => x.TrPaymentHeader)
                     .WithMany(x => x.TrPaymentLines)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<SiteProduct>(entity =>
+            {
+                entity.HasOne(x => x.DcProduct)
+                    .WithOne(x => x.SiteProduct)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

@@ -42,6 +42,9 @@ namespace Foxoft
             MemoryStream stream = new MemoryStream(byteArray);
             OptionsLayoutGrid option = new OptionsLayoutGrid() { StoreAllOptions = true, StoreAppearance = true };
             gV_PaymentLineList.RestoreLayoutFromStream(stream, option);
+
+            gV_PaymentLineList.OptionsFind.FindMode = FindMode.Always;
+
             //this.gV_PaymentLineList.ActiveFilterString = $"[DocumentDate] = #{DateTime.Now.ToString("yyyy-MM-dd")}#";
 
             LoadPaymentLines();

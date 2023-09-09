@@ -217,6 +217,7 @@ namespace Foxoft
             Name = "FormInvoiceHeaderList";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "FormInvoiceHeaderList";
+            Activated += FormInvoiceHeaderList_Activated;
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceHeaderList).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceHeaderList).EndInit();

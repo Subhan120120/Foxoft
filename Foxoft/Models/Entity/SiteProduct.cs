@@ -24,12 +24,12 @@ namespace Foxoft.Models
 
 
         [Key]
-        [Display(Name = "Umico Kodu")]
+        [Display(Name = "Məhsul Kodu")]
         [ForeignKey("DcProduct")]
         public string ProductCode { get; set; }
 
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string? Description { get; set; }
+        public string? Desc { get; set; }
 
         public decimal Price { get; set; }
         public int? Rating { get; set; }

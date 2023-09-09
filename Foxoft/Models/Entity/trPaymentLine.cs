@@ -30,7 +30,7 @@ namespace Foxoft.Models
         [Display(Name = "Ödəmə (YPV)")]
         [Column(TypeName = "money")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public decimal PaymentLoc { get { return Math.Round(Payment / (decimal)ExchangeRate, 2); } set { } }
+        public decimal PaymentLoc { get { return Math.Round(Payment / (decimal)ExchangeRate, 4); } set { } }
 
         [Display(Name = "Sətir Açıqlaması")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
