@@ -67,7 +67,7 @@ namespace Foxoft
             gC_InvoiceHeaderList.Location = new System.Drawing.Point(0, 0);
             gC_InvoiceHeaderList.MainView = gV_InvoiceHeaderList;
             gC_InvoiceHeaderList.Name = "gC_InvoiceHeaderList";
-            gC_InvoiceHeaderList.Size = new System.Drawing.Size(872, 475);
+            gC_InvoiceHeaderList.Size = new System.Drawing.Size(972, 475);
             gC_InvoiceHeaderList.TabIndex = 0;
             gC_InvoiceHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceHeaderList });
             gC_InvoiceHeaderList.Paint += gC_InvoiceHeaderList_Paint;
@@ -212,7 +212,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(872, 475);
+            ClientSize = new System.Drawing.Size(972, 475);
             Controls.Add(gC_InvoiceHeaderList);
             Name = "FormInvoiceHeaderList";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

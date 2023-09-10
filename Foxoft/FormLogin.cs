@@ -199,22 +199,9 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            using (var client = new WebClient())
-            using (var completedSignal = new AutoResetEvent(false))
-            {
-                client.DownloadFileCompleted += (s, e) =>
-                {
-                    completedSignal.Set();
-                    //Process p = new Process();
-                    //p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                    //p.Start();
-                };
+            FormPriceListHeaderList formPriceListHeaderList = new FormPriceListHeaderList();
+            formPriceListHeaderList.Show();
 
-                //client.DownloadProgressChanged += (s, e) => Console.WriteLine($"Downloading {e.ProgressPercentage}%");
-                client.DownloadFileAsync(new Uri("https://via.placeholder.com/300.png"), AppContext.BaseDirectory + "/100.png");
-
-                completedSignal.WaitOne();
-            }
         }
 
         private bool CheckHasLicense()
