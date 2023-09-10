@@ -49,10 +49,10 @@ namespace Foxoft
 
         private void InitializeControlText()
         {
-            layoutControlItem6.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Price);
-            layoutControlItem7.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Desc);
-            layoutControlItem8.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Slug);
-            layoutControlItem9.Name = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.SiteProduct.Rating);
+            layoutControlItem6.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Price);
+            layoutControlItem7.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Desc);
+            layoutControlItem8.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Slug);
+            layoutControlItem9.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Rating);
         }
 
         public FormProduct(byte productTypeCode, string productCode)
@@ -102,7 +102,6 @@ namespace Foxoft
                     {
                         pictureEdit.Image = Image.FromStream(alma);
                     }
-
                 }
             }
         }

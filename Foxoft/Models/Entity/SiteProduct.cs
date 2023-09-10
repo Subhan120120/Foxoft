@@ -28,15 +28,23 @@ namespace Foxoft.Models
         [ForeignKey("DcProduct")]
         public string ProductCode { get; set; }
 
+        [Display(Name = "Məhsul Açıqlaması")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? Desc { get; set; }
 
+        [Display(Name = "Qiymət")]
         public decimal Price { get; set; }
+
+        [Display(Name = "Reytinq")]
         public int? Rating { get; set; }
+
         public int CategoryId { get; set; }
 
+        [Display(Name = "Slug")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? Slug { get; set; }
+
+        [Display(Name = "Baxış Sayı")]
         public int ViewCount { get; set; }
 
 

@@ -34,7 +34,7 @@ namespace Foxoft
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new(byteArray);
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true};
-            this.gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
+            gV_InvoiceHeaderList.RestoreLayoutFromStream(stream, option);
 
             gV_InvoiceHeaderList.OptionsFind.FindMode = FindMode.Always;
         }

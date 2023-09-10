@@ -62,6 +62,9 @@ namespace Foxoft.Models
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
+        public DbSet<DcPriceListType> DcPriceListTypes { get; set; }
+        public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
+        public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);

@@ -22,6 +22,7 @@ namespace Foxoft.Models
             TrProductFeatures = new HashSet<TrProductFeature>();
             TrProductHierarchies = new HashSet<TrProductHierarchy>();
             TrProductDiscounts = new HashSet<TrProductDiscount>();
+            TrPriceListLines = new HashSet<TrPriceListLine>();
     }
 
         [Key]
@@ -143,5 +144,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
         public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
         public virtual ICollection<TrProductDiscount> TrProductDiscounts { get; set; }
+        public virtual ICollection<TrPriceListLine> TrPriceListLines { get; set; }
     }
 }

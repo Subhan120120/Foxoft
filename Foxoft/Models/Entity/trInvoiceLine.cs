@@ -129,7 +129,7 @@ namespace Foxoft.Models
       [Display(Name = "ƏDV")]
       public float VatRate { get; set; }
 
-      [Display(Name = "Açıqlama")]
+      [Display(Name = "Sətir Açıqlaması")]
       [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
       public string LineDescription { get; set; }
 
