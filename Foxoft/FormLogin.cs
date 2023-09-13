@@ -199,7 +199,7 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormPriceListHeaderList formPriceListHeaderList = new FormPriceListHeaderList();
+            Form1 formPriceListHeaderList = new Form1("PL");
             formPriceListHeaderList.Show();
 
         }

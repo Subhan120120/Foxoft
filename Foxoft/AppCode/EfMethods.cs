@@ -66,6 +66,20 @@ namespace Foxoft
             }
         }
 
+        public List<TrPriceListLine> SelectPriceListLines(Guid priceListHeaderId)
+        {
+            using subContext db = new();
+            {
+                List<TrPriceListLine> PriceListLines = db.TrPriceListLines.Include(x => x.DcProduct)
+                                                                  .Include(x => x.TrPriceListHeader)
+                                                                  .Where(x => x.PriceListHeaderId == priceListHeaderId)
+                                                                  .OrderBy(x => x.CreatedDate)
+                                                                  .ToList();
+
+                return PriceListLines;
+            }
+        }
+
         public decimal SelectInvoiceNetAmount(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -390,8 +404,14 @@ namespace Foxoft
 
             return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Include(x => x.TrInvoiceLines)
-                                      .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                      .FirstOrDefault();
+                                      .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
+        }
+
+        public TrPriceListHeader SelectPriceListHeader(Guid priceListHeaderId)
+        {
+            using subContext db = new();
+
+            return db.TrPriceListHeaders.FirstOrDefault(x => x.PriceListHeaderId == priceListHeaderId);
         }
 
         public List<TrProductHierarchy> SelectProductHierarchies()

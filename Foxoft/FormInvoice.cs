@@ -61,11 +61,11 @@ namespace Foxoft
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
         private TrInvoiceHeader trInvoiceHeader;
+        private EfMethods efMethods = new();
+        Guid invoiceHeaderId;
+        private subContext dbContext;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
-        private EfMethods efMethods = new();
-        private subContext dbContext;
-        Guid invoiceHeaderId;
 
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
         public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode)
@@ -86,9 +86,7 @@ namespace Foxoft
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
-            {
                 repoCBE_PrinterName.Items.Add(printer);
-            }
 
             LoadLayout();
 

@@ -201,7 +201,8 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "TF", ProcessDesc = "Transfer", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "IT", ProcessDesc = "Mal Transferi", ProcessDir = 2 },
-                new DcProcess { ProcessCode = "CT", ProcessDesc = "Pul Transferi", ProcessDir = 2 }
+                new DcProcess { ProcessCode = "CT", ProcessDesc = "Pul Transferi", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "PL", ProcessDesc = "Qiymət Cədvəli", ProcessDir = 0 }
                 );
 
             modelBuilder.Entity<DcProduct>().HasData(
