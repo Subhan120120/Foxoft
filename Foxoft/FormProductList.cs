@@ -53,7 +53,7 @@ namespace Foxoft
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
-            AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
+            AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore?.ImageFolder);
 
             LoadLayout();
 
@@ -221,7 +221,7 @@ namespace Foxoft
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
                 fileName += ".jpg";
-                if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                if (CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
                 {
                     string path = settingStore.ImageFolder + @"\" + fileName;
                     if (!imageCache.ContainsKey(path))
@@ -360,7 +360,7 @@ namespace Foxoft
                 {
                     int fr = gV_ProductList.FocusedRowHandle;
 
-                    if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                    if (CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
                     {
                         string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + ".jpg";
                         imageCache.Remove(path);

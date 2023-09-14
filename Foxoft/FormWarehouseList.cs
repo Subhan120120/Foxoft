@@ -35,6 +35,28 @@ namespace Foxoft
             UpdateGridViewData();
         }
 
+        private void UpdateGridViewData()
+        {
+            int fr = gV_WarehouseList.FocusedRowHandle;
+
+            LoadWarehouses();
+
+            if (fr > 0)
+                gV_WarehouseList.FocusedRowHandle = fr;
+            else
+                gV_WarehouseList.MoveLast();
+
+            if (gV_WarehouseList.FocusedRowHandle >= 0)
+                dcWarehouse = gV_WarehouseList.GetFocusedRow() as DcWarehouse;
+            else
+                dcWarehouse = null;
+        }
+
+        private void LoadWarehouses()
+        {
+            dcWarehousesBindingSource.DataSource = efMethods.SelectWarehouses();
+        }
+
         private void gV_WarehouseList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             GridView view = sender as GridView;
@@ -90,28 +112,6 @@ namespace Foxoft
                     UpdateGridViewData();
                 }
             }
-        }
-
-        private void UpdateGridViewData()
-        {
-            int fr = gV_WarehouseList.FocusedRowHandle;
-
-            LoadWarehouses();
-
-            if (fr > 0)
-                gV_WarehouseList.FocusedRowHandle = fr;
-            else
-                gV_WarehouseList.MoveLast();
-
-            if (gV_WarehouseList.FocusedRowHandle >= 0)
-                dcWarehouse = gV_WarehouseList.GetFocusedRow() as DcWarehouse;
-            else
-                dcWarehouse = null;
-        }
-
-        private void LoadWarehouses()
-        {
-            dcWarehousesBindingSource.DataSource = efMethods.SelectWarehouses();
         }
 
         private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)

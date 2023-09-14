@@ -32,21 +32,21 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             myGridControl1 = new MyGridControl();
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             trPriceListBindingSource = new System.Windows.Forms.BindingSource(components);
+            gV_priceListHeader = new DevExpress.XtraGrid.Views.Grid.GridView();
+            colPriceListHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPriceListTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colDocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
             colDueDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colDueTime = new DevExpress.XtraGrid.Columns.GridColumn();
             colIsConfirmed = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPriceListHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPriceListTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)myGridControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trPriceListBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gV_priceListHeader).BeginInit();
             SuspendLayout();
             // 
             // myGridControl1
@@ -54,23 +54,32 @@ namespace Foxoft
             myGridControl1.DataSource = trPriceListBindingSource;
             myGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             myGridControl1.Location = new System.Drawing.Point(0, 0);
-            myGridControl1.MainView = gridView1;
+            myGridControl1.MainView = gV_priceListHeader;
             myGridControl1.Name = "myGridControl1";
             myGridControl1.Size = new System.Drawing.Size(1123, 470);
             myGridControl1.TabIndex = 0;
-            myGridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
-            // 
-            // gridView1
-            // 
-            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListHeaderId, colDocumentNumber, colDescription, colPriceListTypeCode, colDocumentDate, colDocumentTime, colDueDate, colDueTime, colIsConfirmed, colIsDisabled });
-            gridView1.DetailHeight = 303;
-            gridView1.GridControl = myGridControl1;
-            gridView1.Name = "gridView1";
-            gridView1.OptionsView.ShowGroupPanel = false;
+            myGridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_priceListHeader });
+            myGridControl1.ProcessGridKey += myGridControl1_ProcessGridKey;
             // 
             // trPriceListBindingSource
             // 
             trPriceListBindingSource.DataSource = typeof(TrPriceListHeader);
+            // 
+            // gV_priceListHeader
+            // 
+            gV_priceListHeader.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListHeaderId, colDocumentNumber, colDescription, colPriceListTypeCode, colDocumentDate, colDocumentTime, colDueDate, colDueTime, colIsConfirmed, colIsDisabled });
+            gV_priceListHeader.DetailHeight = 303;
+            gV_priceListHeader.GridControl = myGridControl1;
+            gV_priceListHeader.Name = "gV_priceListHeader";
+            gV_priceListHeader.OptionsView.ShowGroupPanel = false;
+            gV_priceListHeader.FocusedRowChanged += gV_priceListHeader_FocusedRowChanged;
+            gV_priceListHeader.ColumnFilterChanged += gV_priceListHeader_ColumnFilterChanged;
+            gV_priceListHeader.DoubleClick += gV_priceListHeader_DoubleClick;
+            // 
+            // colPriceListHeaderId
+            // 
+            colPriceListHeaderId.FieldName = "PriceListHeaderId";
+            colPriceListHeaderId.Name = "colPriceListHeaderId";
             // 
             // colDocumentNumber
             // 
@@ -85,6 +94,13 @@ namespace Foxoft
             colDescription.Name = "colDescription";
             colDescription.Visible = true;
             colDescription.VisibleIndex = 1;
+            // 
+            // colPriceListTypeCode
+            // 
+            colPriceListTypeCode.FieldName = "PriceListTypeCode";
+            colPriceListTypeCode.Name = "colPriceListTypeCode";
+            colPriceListTypeCode.Visible = true;
+            colPriceListTypeCode.VisibleIndex = 7;
             // 
             // colDocumentDate
             // 
@@ -121,18 +137,6 @@ namespace Foxoft
             colIsConfirmed.Visible = true;
             colIsConfirmed.VisibleIndex = 6;
             // 
-            // colPriceListHeaderId
-            // 
-            colPriceListHeaderId.FieldName = "PriceListHeaderId";
-            colPriceListHeaderId.Name = "colPriceListHeaderId";
-            // 
-            // colPriceListTypeCode
-            // 
-            colPriceListTypeCode.FieldName = "PriceListTypeCode";
-            colPriceListTypeCode.Name = "colPriceListTypeCode";
-            colPriceListTypeCode.Visible = true;
-            colPriceListTypeCode.VisibleIndex = 7;
-            // 
             // colIsDisabled
             // 
             colIsDisabled.FieldName = "IsDisabled";
@@ -149,15 +153,15 @@ namespace Foxoft
             Name = "FormPriceListHeaderList";
             Text = "PriceListHeaderList";
             ((System.ComponentModel.ISupportInitialize)myGridControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trPriceListBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gV_priceListHeader).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private MyGridControl myGridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gV_priceListHeader;
         private System.Windows.Forms.BindingSource trPriceListBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colDocumentNumber;
         private DevExpress.XtraGrid.Columns.GridColumn colPriceListHeaderId;
