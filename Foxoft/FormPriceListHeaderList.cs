@@ -22,7 +22,6 @@ namespace Foxoft
 {
     public partial class FormPriceListHeaderList : XtraForm
     {
-        EfMethods efMethods = new();
         public TrPriceListHeader trPriceListHeader { get; set; }
         subContext dbContext;
 
@@ -117,7 +116,6 @@ namespace Foxoft
         private void gV_priceListHeader_ColumnFilterChanged(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
-
 
             if (view.FocusedRowHandle >= 0)
                 trPriceListHeader = view.GetFocusedRow() as TrPriceListHeader;

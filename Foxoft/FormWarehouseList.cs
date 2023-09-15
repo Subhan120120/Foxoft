@@ -32,6 +32,8 @@ namespace Foxoft
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             gV_WarehouseList.RestoreLayoutFromStream(stream, option);
 
+            Text = "Depolar";
+
             UpdateGridViewData();
         }
 
@@ -191,7 +193,7 @@ namespace Foxoft
             XtraSaveFileDialog sFD = new();
             sFD.Filter = "Excel Faylı|*.xlsx";
             sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = $@"\CariHesablar.xlsx";
+            sFD.FileName = $@"\{Text}.xlsx";
             sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             sFD.DefaultExt = "*.xlsx";
 
