@@ -151,7 +151,7 @@ namespace Foxoft
             ClientSize = new System.Drawing.Size(1123, 470);
             Controls.Add(myGridControl1);
             Name = "FormPriceListHeaderList";
-            Text = "PriceListHeaderList";
+            Text = "Qiymət Siyahısı";
             ((System.ComponentModel.ISupportInitialize)myGridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trPriceListBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_priceListHeader).EndInit();

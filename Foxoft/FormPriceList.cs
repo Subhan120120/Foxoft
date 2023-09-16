@@ -1,4 +1,6 @@
 ﻿using DevExpress.Data;
+using DevExpress.DataAccess.Excel;
+using DevExpress.DataAccess.Native.Excel;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
@@ -6,8 +8,10 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -16,10 +20,12 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,7 +45,6 @@ namespace Foxoft
 
             //StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
-            //repoLUE_PriceListTypeCode.DataSource = efMethods.SelectPriceListTypes();
 
             ClearControlsAddNew();
 
@@ -184,17 +189,17 @@ namespace Foxoft
 
         private void bBI_DeletePriceList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //if (efMethods.PriceListHeaderExist(trPriceListHeader.PriceListHeaderId))
-            //{
-            //    if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //    {
-            //        efMethods.DeletePriceList(trPriceListHeader.PriceListHeaderId);
+            if (efMethods.PriceListHeaderExist(trPriceListHeader.PriceListHeaderId))
+            {
+                if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    efMethods.DeletePriceList(trPriceListHeader.PriceListHeaderId);
 
-            //        ClearControlsAddNew();
-            //    }
-            //}
-            //else
-            //    XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+                    ClearControlsAddNew();
+                }
+            }
+            else
+                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
         }
 
         //private void SelectCurrAcc()
@@ -360,7 +365,7 @@ namespace Foxoft
 
         private void gV_PriceListLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            if (e.Column.FieldName == "ProductDesc" && e.IsGetData)
+            if (e.Column.FieldName == "DcProduct.ProductDesc" && e.IsGetData)
             {
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
@@ -369,6 +374,216 @@ namespace Foxoft
                 DcProduct dcProduct = efMethods.SelectProduct(productCode);
 
                 e.Value = dcProduct?.ProductDesc;
+            }
+
+            if (e.Column.FieldName == "DcProduct.LastPurchasePrice" && e.IsGetData)
+            {
+                GridView view = sender as GridView;
+                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+                string productCode = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
+
+                DcProduct dcProduct = efMethods.SelectProduct(productCode);
+
+                e.Value = dcProduct?.LastPurchasePrice;
+            }
+        }
+
+        private void btnEdit_PriceTypeCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            string priceTypeCode = PriceTypeCodeButtonEdit.EditValue?.ToString();
+
+            ButtonEdit editor = (ButtonEdit)sender;
+
+            using FormPriceTypeList form = new(priceTypeCode);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    editor.EditValue = form.dcPriceType.PriceTypeCode;
+                    gV_PriceListLine.CloseEditor();
+                    gV_PriceListLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+                    gV_PriceListLine.BestFitColumns();
+                    gV_PriceListLine.FocusedColumn = colPrice;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (dataLayoutControl1.IsValid(out List<string> errorList))
+            {
+                OpenFileDialog dialog = new();
+                dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
+                                "All files (*.*)|*.*";
+                dialog.Title = "Excel faylı seçin.";
+
+                DialogResult dr = dialog.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    ImportFromExcel(dialog.FileName);
+                }
+            }
+            else
+            {
+                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(combinedString);
+            }
+
+        }
+
+        private void ImportFromExcel(string fileName)
+        {
+            ExcelDataSource excelDataSource = new();
+            excelDataSource.FileName = fileName;
+
+            ExcelWorksheetSettings excelWorksheetSettings = new(0);
+            //ExcelWorksheetSettings excelWorksheetSettings = new(0, "A1:A10000");
+            //excelWorksheetSettings.WorksheetName = "10QK";
+
+            ExcelSourceOptions excelOptions = new();
+            excelOptions.ImportSettings = excelWorksheetSettings;
+            excelOptions.SkipHiddenRows = false;
+            excelOptions.SkipHiddenColumns = false;
+            excelOptions.UseFirstRowAsHeader = true;
+            excelDataSource.SourceOptions = excelOptions;
+
+            excelDataSource.Fill();
+
+            DataTable dt = new();
+            dt = ToDataTableFromExcelDataSource(excelDataSource);
+
+            string errorCodes = "";
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string captionProductCode = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.ProductCode);
+                string productCode = row[captionProductCode].ToString();
+
+                if (!string.IsNullOrEmpty(productCode))
+                {
+                    DcProduct product = efMethods.SelectProduct(productCode);
+                    if (product is not null)
+                    {
+                        object objInvoiceHeadId = gV_PriceListLine.GetRowCellValue(GridControl.NewItemRowHandle, colPriceListHeaderId);
+                        if (objInvoiceHeadId is null) // Check InitNewRow
+                            gV_PriceListLine.AddNewRow();
+
+                        gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colProductCode, product.ProductCode);
+
+                        foreach (DataColumn column in dt.Columns)
+                        {
+                            try
+                            {
+                                //string captionLineDesc = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.LineDescription);
+                                //if (column.ColumnName == captionLineDesc)
+                                //    gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
+
+                                string captionPrice = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.Price);
+                                if (column.ColumnName == captionPrice)
+                                    gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colPrice, row[captionPrice].ToString());
+
+                                string captionCurrency = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
+                                if (column.ColumnName == captionCurrency)
+                                {
+                                    if (!string.IsNullOrEmpty(row[captionCurrency].ToString()))
+                                    {
+                                        DcCurrency currency = efMethods.SelectCurrency(row[captionCurrency].ToString());
+                                        if (currency is null)
+                                            currency = efMethods.SelectCurrencyByName(row[captionCurrency].ToString());
+
+                                        if (currency is not null)
+                                            gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colCurrencyCode, currency.CurrencyCode);
+                                        else
+                                            errorCodes += captionCurrency + ": " + row[captionCurrency].ToString() + "\n";
+                                    }
+                                }
+                            }
+                            catch (ArgumentException ae)
+                            {
+                                //throw new Exception();
+                            }
+                        }
+
+                        gV_PriceListLine.UpdateCurrentRow();
+                    }
+                    else
+                        errorCodes += captionProductCode + ": " + row[captionProductCode].ToString() + "\n";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(errorCodes))
+                MessageBox.Show("Aşağıdakı kodlar üzrə Dəyər tapılmadı \n" + errorCodes, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
+        {
+            IList list = ((IListSource)excelDataSource).GetList();
+            DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
+            List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
+
+            DataTable dt = new();
+            for (int i = 0; i < props.Count; i++)
+            {
+                PropertyDescriptor prop = props[i];
+                dt.Columns.Add(prop.Name, prop.PropertyType);
+            }
+            object[] values = new object[props.Count];
+            foreach (ViewRow item in list)
+            {
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = props[i].GetValue(item);
+                }
+                dt.Rows.Add(values);
+            }
+            return dt;
+        }
+
+        private void gV_PriceListLine_RowCellStyle(object sender, RowCellStyleEventArgs e)
+        {
+            GridView gridView = sender as GridView;
+
+            Color readOnlyBackColor = Color.LightGray;
+            try
+            {
+                if (e.RowHandle >= 0 && (!gridView.OptionsBehavior.Editable || !e.Column.OptionsColumn.AllowEdit || e.Column.ReadOnly))
+                {
+                    GridViewInfo viewInfo = gridView.GetViewInfo() as GridViewInfo;
+                    GridDataRowInfo rowInfo = viewInfo.RowsInfo.GetInfoByHandle(e.RowHandle) as GridDataRowInfo;
+
+                    if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
+                    {
+                        bool hasrules = false;
+                        foreach (GridFormatRule rule in gridView.FormatRules)
+                        {
+                            if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
+                            {
+                                hasrules = true;
+                                break;
+                            }
+                        }
+                        if (!hasrules)
+                            e.Appearance.BackColor = readOnlyBackColor;
+                    }
+                }
+                // This is to fix the selection color when a color is set for the column  
+                if (e.Column.AppearanceCell.Options.UseBackColor && gridView.IsCellSelected(e.RowHandle, e.Column))
+                    e.Appearance.BackColor = gridView.PaintAppearance.SelectedRow.BackColor;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
             }
         }
     }

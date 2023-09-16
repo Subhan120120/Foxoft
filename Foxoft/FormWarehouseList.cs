@@ -32,8 +32,6 @@ namespace Foxoft
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             gV_WarehouseList.RestoreLayoutFromStream(stream, option);
 
-            Text = "Depolar";
-
             UpdateGridViewData();
         }
 

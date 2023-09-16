@@ -36,18 +36,15 @@ namespace Foxoft
             ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_DeletePriceList = new DevExpress.XtraBars.BarButtonItem();
             bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
-            bBI_SendWhatsapp = new DevExpress.XtraBars.BarButtonItem();
             bBI_NewPriceList = new DevExpress.XtraBars.BarButtonItem();
-            bBI_CopyPriceList = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             BBI_Info = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ImportExcel = new DevExpress.XtraBars.BarButtonItem();
+            BBI_exportXLSX = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             gC_PriceListLine = new DevExpress.XtraGrid.GridControl();
@@ -62,9 +59,9 @@ namespace Foxoft
             repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCalcEdit_ReceivePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             repoCalcEdit_MakePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
-            repoLUE_PriceListTypeCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             trPriceListHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
             DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -74,7 +71,7 @@ namespace Foxoft
             IsDisabledCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             IsConfirmedCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
-            PriceListTypeCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
+            PriceTypeCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -98,7 +95,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePriceList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePriceList).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_PriceListTypeCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trPriceListHeadersBindingSource).BeginInit();
@@ -110,7 +106,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IsConfirmedCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PriceListTypeCodeButtonEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PriceTypeCodeButtonEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
@@ -129,18 +125,19 @@ namespace Foxoft
             // ribbon
             // 
             ribbon.ExpandCollapseItem.Id = 0;
-            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, ribbon.SearchEditItem, bBI_DeletePriceList, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPriceList, bBI_CopyPriceList, barButtonItem1, barButtonItem2, barButtonItem3, BBI_Info });
+            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, ribbon.SearchEditItem, bBI_DeletePriceList, bBI_SaveAndClose, bBI_NewPriceList, BBI_Info, BBI_ImportExcel, BBI_exportXLSX });
             ribbon.Location = new System.Drawing.Point(0, 0);
-            ribbon.MaxItemId = 11;
+            ribbon.MaxItemId = 12;
             ribbon.Name = "ribbon";
-            ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
+            ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
             ribbon.Size = new System.Drawing.Size(948, 158);
             ribbon.StatusBar = ribbonStatusBar;
             // 
             // bBI_DeletePriceList
             // 
-            bBI_DeletePriceList.Caption = "Ödənişi Sil";
+            bBI_DeletePriceList.Caption = "Qiymət Siyahısını Sil";
             bBI_DeletePriceList.Id = 1;
+            bBI_DeletePriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_DeletePriceList.ImageOptions.SvgImage");
             bBI_DeletePriceList.Name = "bBI_DeletePriceList";
             bBI_DeletePriceList.ItemClick += bBI_DeletePriceList_ItemClick;
             // 
@@ -153,50 +150,14 @@ namespace Foxoft
             bBI_SaveAndClose.Name = "bBI_SaveAndClose";
             bBI_SaveAndClose.ItemClick += bBI_SaveAndClose_ItemClick;
             // 
-            // bBI_SendWhatsapp
-            // 
-            bBI_SendWhatsapp.Caption = "Whatsapa Göndər";
-            bBI_SendWhatsapp.Id = 3;
-            bBI_SendWhatsapp.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SendWhatsapp.ImageOptions.SvgImage");
-            bBI_SendWhatsapp.Name = "bBI_SendWhatsapp";
-            bBI_SendWhatsapp.ItemClick += bBI_SendWhatsapp_ItemClick;
-            // 
             // bBI_NewPriceList
             // 
-            bBI_NewPriceList.Caption = "Yeni Ödəniş";
+            bBI_NewPriceList.Caption = "Yeni Qiymət Siyahısı";
             bBI_NewPriceList.Id = 5;
+            bBI_NewPriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_NewPriceList.ImageOptions.SvgImage");
             bBI_NewPriceList.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N);
             bBI_NewPriceList.Name = "bBI_NewPriceList";
             bBI_NewPriceList.ItemClick += bBI_NewPriceList_ItemClick;
-            // 
-            // bBI_CopyPriceList
-            // 
-            bBI_CopyPriceList.Caption = "Kopyala";
-            bBI_CopyPriceList.Id = 6;
-            bBI_CopyPriceList.Name = "bBI_CopyPriceList";
-            bBI_CopyPriceList.ItemClick += bBI_CopyPriceList_ItemClick;
-            // 
-            // barButtonItem1
-            // 
-            barButtonItem1.Caption = "Pulun Bütün Hərəkətləri";
-            barButtonItem1.Id = 7;
-            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            barButtonItem1.Name = "barButtonItem1";
-            barButtonItem1.ItemClick += barButtonItem1_ItemClick;
-            // 
-            // barButtonItem2
-            // 
-            barButtonItem2.Caption = "Wp";
-            barButtonItem2.Id = 8;
-            barButtonItem2.Name = "barButtonItem2";
-            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
-            // 
-            // barButtonItem3
-            // 
-            barButtonItem3.Caption = "test";
-            barButtonItem3.Id = 9;
-            barButtonItem3.Name = "barButtonItem3";
-            barButtonItem3.ItemClick += barButtonItem3_ItemClick;
             // 
             // BBI_Info
             // 
@@ -206,9 +167,25 @@ namespace Foxoft
             BBI_Info.Name = "BBI_Info";
             BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
+            // BBI_ImportExcel
+            // 
+            BBI_ImportExcel.Caption = "Excel'dən Al";
+            BBI_ImportExcel.Id = 11;
+            BBI_ImportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ImportExcel.ImageOptions.SvgImage");
+            BBI_ImportExcel.Name = "BBI_ImportExcel";
+            BBI_ImportExcel.ItemClick += BBI_ImportExcel_ItemClick;
+            // 
+            // BBI_exportXLSX
+            // 
+            BBI_exportXLSX.Caption = "Excel'ə Göndər";
+            BBI_exportXLSX.Id = 22;
+            BBI_exportXLSX.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_exportXLSX.ImageOptions.SvgImage");
+            BBI_exportXLSX.Name = "BBI_exportXLSX";
+            BBI_exportXLSX.ItemClick += BBI_exportXLSX_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "Ödəmə";
             // 
@@ -220,27 +197,25 @@ namespace Foxoft
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Ödəmə";
             // 
-            // ribbonPageGroup2
-            // 
-            ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
-            ribbonPageGroup2.ItemLinks.Add(bBI_CopyPriceList);
-            ribbonPageGroup2.ItemLinks.Add(barButtonItem2);
-            ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Alət";
-            // 
-            // RPG_Report
-            // 
-            RPG_Report.ItemLinks.Add(barButtonItem1);
-            RPG_Report.ItemLinks.Add(barButtonItem3);
-            RPG_Report.Name = "RPG_Report";
-            RPG_Report.Text = "Hesabat";
-            // 
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
             ribbonPageGroup3.ItemLinks.Add(BBI_Info);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = "Məlumat";
+            // 
+            // ribbonPage2
+            // 
+            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
+            ribbonPage2.Name = "ribbonPage2";
+            ribbonPage2.Text = "Ayarlar";
+            // 
+            // ribbonPageGroup2
+            // 
+            ribbonPageGroup2.ItemLinks.Add(BBI_ImportExcel);
+            ribbonPageGroup2.ItemLinks.Add(BBI_exportXLSX);
+            ribbonPageGroup2.Name = "ribbonPageGroup2";
+            ribbonPageGroup2.Text = "Excel";
             // 
             // ribbonStatusBar
             // 
@@ -260,7 +235,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(IsDisabledCheckEdit);
             dataLayoutControl1.Controls.Add(IsConfirmedCheckEdit);
             dataLayoutControl1.Controls.Add(btnEdit_DocNum);
-            dataLayoutControl1.Controls.Add(PriceListTypeCodeButtonEdit);
+            dataLayoutControl1.Controls.Add(PriceTypeCodeButtonEdit);
             dataLayoutControl1.DataSource = trPriceListHeadersBindingSource;
             dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             dataLayoutControl1.Location = new System.Drawing.Point(0, 158);
@@ -278,7 +253,7 @@ namespace Foxoft
             gC_PriceListLine.MainView = gV_PriceListLine;
             gC_PriceListLine.MenuManager = ribbon;
             gC_PriceListLine.Name = "gC_PriceListLine";
-            gC_PriceListLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_CurrencyCode, repoCalcEdit_ReceivePriceList, repoCalcEdit_MakePriceList, repoBtnEdit_ProductCode, repoLUE_PriceListTypeCode });
+            gC_PriceListLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_CurrencyCode, repoCalcEdit_ReceivePriceList, repoCalcEdit_MakePriceList, repoBtnEdit_ProductCode });
             gC_PriceListLine.Size = new System.Drawing.Size(924, 345);
             gC_PriceListLine.TabIndex = 9;
             gC_PriceListLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PriceListLine });
@@ -290,7 +265,7 @@ namespace Foxoft
             // 
             // gV_PriceListLine
             // 
-            gV_PriceListLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListLineId, colPriceListHeaderId, colProductCode, colPrice, colCurrencyCode, colLineDescription, colProductDesc });
+            gV_PriceListLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListLineId, colPriceListHeaderId, colProductCode, colPrice, colCurrencyCode, colLineDescription, colProductDesc, colLastPurchasePrice });
             gV_PriceListLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 390, 264, 272);
             gV_PriceListLine.GridControl = gC_PriceListLine;
             gV_PriceListLine.Name = "gV_PriceListLine";
@@ -298,6 +273,7 @@ namespace Foxoft
             gV_PriceListLine.OptionsNavigation.AutoFocusNewRow = true;
             gV_PriceListLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
             gV_PriceListLine.OptionsView.ShowGroupPanel = false;
+            gV_PriceListLine.RowCellStyle += gV_PriceListLine_RowCellStyle;
             gV_PriceListLine.InitNewRow += gV_PriceListLine_InitNewRow;
             gV_PriceListLine.CellValueChanging += gV_PriceListLine_CellValueChanging;
             gV_PriceListLine.RowDeleted += gV_PriceListLine_RowDeleted;
@@ -308,11 +284,15 @@ namespace Foxoft
             // 
             colPriceListLineId.FieldName = "PriceListLineId";
             colPriceListLineId.Name = "colPriceListLineId";
+            colPriceListLineId.OptionsColumn.AllowEdit = false;
+            colPriceListLineId.OptionsColumn.ReadOnly = true;
             // 
             // colPriceListHeaderId
             // 
             colPriceListHeaderId.FieldName = "PriceListHeaderId";
             colPriceListHeaderId.Name = "colPriceListHeaderId";
+            colPriceListHeaderId.OptionsColumn.AllowEdit = false;
+            colPriceListHeaderId.OptionsColumn.ReadOnly = true;
             // 
             // colProductCode
             // 
@@ -371,12 +351,24 @@ namespace Foxoft
             // 
             // colProductDesc
             // 
-            colProductDesc.FieldName = "ProductDesc";
+            colProductDesc.FieldName = "DcProduct.ProductDesc";
             colProductDesc.Name = "colProductDesc";
+            colProductDesc.OptionsColumn.AllowEdit = false;
+            colProductDesc.OptionsColumn.ReadOnly = true;
             colProductDesc.UnboundDataType = typeof(string);
             colProductDesc.Visible = true;
             colProductDesc.VisibleIndex = 1;
             colProductDesc.Width = 421;
+            // 
+            // colLastPurchasePrice
+            // 
+            colLastPurchasePrice.FieldName = "DcProduct.LastPurchasePrice";
+            colLastPurchasePrice.Name = "colLastPurchasePrice";
+            colLastPurchasePrice.OptionsColumn.AllowEdit = false;
+            colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+            colLastPurchasePrice.UnboundDataType = typeof(decimal);
+            colLastPurchasePrice.Visible = true;
+            colLastPurchasePrice.VisibleIndex = 5;
             // 
             // repoCalcEdit_ReceivePriceList
             // 
@@ -389,19 +381,6 @@ namespace Foxoft
             repoCalcEdit_MakePriceList.AutoHeight = false;
             repoCalcEdit_MakePriceList.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             repoCalcEdit_MakePriceList.Name = "repoCalcEdit_MakePriceList";
-            // 
-            // repoLUE_PriceListTypeCode
-            // 
-            repoLUE_PriceListTypeCode.AutoHeight = false;
-            repoLUE_PriceListTypeCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
-            repoLUE_PriceListTypeCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_PriceListTypeCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PriceListTypeCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PriceListTypeDesc", "") });
-            repoLUE_PriceListTypeCode.DisplayMember = "PriceListTypeDesc";
-            repoLUE_PriceListTypeCode.Name = "repoLUE_PriceListTypeCode";
-            repoLUE_PriceListTypeCode.NullText = "";
-            repoLUE_PriceListTypeCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
-            repoLUE_PriceListTypeCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
-            repoLUE_PriceListTypeCode.ValueMember = "PriceListTypeCode";
             // 
             // DocumentDateDateEdit
             // 
@@ -506,17 +485,18 @@ namespace Foxoft
             btnEdit_DocNum.TabIndex = 0;
             btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
             // 
-            // PriceListTypeCodeButtonEdit
+            // PriceTypeCodeButtonEdit
             // 
-            PriceListTypeCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "PriceListTypeCode", true));
-            PriceListTypeCodeButtonEdit.Location = new System.Drawing.Point(599, 12);
-            PriceListTypeCodeButtonEdit.MenuManager = ribbon;
-            PriceListTypeCodeButtonEdit.Name = "PriceListTypeCodeButtonEdit";
-            PriceListTypeCodeButtonEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            PriceListTypeCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            PriceListTypeCodeButtonEdit.Size = new System.Drawing.Size(337, 20);
-            PriceListTypeCodeButtonEdit.StyleController = dataLayoutControl1;
-            PriceListTypeCodeButtonEdit.TabIndex = 10;
+            PriceTypeCodeButtonEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "PriceTypeCode", true));
+            PriceTypeCodeButtonEdit.Location = new System.Drawing.Point(599, 12);
+            PriceTypeCodeButtonEdit.MenuManager = ribbon;
+            PriceTypeCodeButtonEdit.Name = "PriceTypeCodeButtonEdit";
+            PriceTypeCodeButtonEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            PriceTypeCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            PriceTypeCodeButtonEdit.Size = new System.Drawing.Size(337, 20);
+            PriceTypeCodeButtonEdit.StyleController = dataLayoutControl1;
+            PriceTypeCodeButtonEdit.TabIndex = 10;
+            PriceTypeCodeButtonEdit.ButtonPressed += btnEdit_PriceTypeCode_ButtonPressed;
             // 
             // Root
             // 
@@ -621,7 +601,7 @@ namespace Foxoft
             // 
             // layoutControlItem3
             // 
-            layoutControlItem3.Control = PriceListTypeCodeButtonEdit;
+            layoutControlItem3.Control = PriceTypeCodeButtonEdit;
             layoutControlItem3.Location = new System.Drawing.Point(464, 0);
             layoutControlItem3.Name = "Qiymət Siyahı Tipi Kodu";
             layoutControlItem3.Size = new System.Drawing.Size(464, 24);
@@ -649,7 +629,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePriceList).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePriceList).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_PriceListTypeCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties.CalendarTimeProperties).EndInit();
             ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)trPriceListHeadersBindingSource).EndInit();
@@ -661,7 +640,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)IsConfirmedCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PriceListTypeCodeButtonEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PriceTypeCodeButtonEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
@@ -698,20 +677,12 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCurrencyCode;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraBars.BarButtonItem bBI_DeletePriceList;
-        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_PriceListTypeCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_CurrencyCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_CashregisterCode;
         private DevExpress.XtraBars.BarButtonItem bBI_SaveAndClose;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_ReceivePriceList;
         private DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit repoCalcEdit_MakePriceList;
-        private DevExpress.XtraBars.BarButtonItem bBI_SendWhatsapp;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem bBI_NewPriceList;
-        private DevExpress.XtraBars.BarButtonItem bBI_CopyPriceList;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Report;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem BBI_Info;
         private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
@@ -733,10 +704,15 @@ namespace Foxoft
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraEditors.ButtonEdit DocumentNumberButtonEdit;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_DocNum;
-        private DevExpress.XtraEditors.ButtonEdit PriceListTypeCodeButtonEdit;
+        private DevExpress.XtraEditors.ButtonEdit PriceTypeCodeButtonEdit;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_ProductCode;
         private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
+        private DevExpress.XtraBars.BarButtonItem BBI_ImportExcel;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraBars.BarButtonItem BBI_exportXLSX;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
     }
 }

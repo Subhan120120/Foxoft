@@ -550,6 +550,12 @@ namespace Foxoft
             return db.TrInvoiceHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
         }
 
+        public bool PriceListHeaderExist(Guid priceListHeaderId)
+        {
+            using subContext db = new();
+            return db.TrPriceListHeaders.Any(x => x.PriceListHeaderId == priceListHeaderId);
+        }
+
         public void InsertInvoiceHeader(TrInvoiceHeader TrInvoiceHeader)
         {
             using subContext db = new();
@@ -585,6 +591,27 @@ namespace Foxoft
                                                         .FirstOrDefault();
             if (trPaymentHeader is not null)
                 db.TrPaymentHeaders.Remove(trPaymentHeader);
+
+            return db.SaveChanges();
+        }
+
+        public int DeletePriceList(Guid priceListHeaderId)
+        {
+            using subContext db = new();
+            TrPriceListHeader trPriceListHeader = db.TrPriceListHeaders.Where(x => x.PriceListHeaderId == priceListHeaderId)
+                                                        .FirstOrDefault();
+            if (trPriceListHeader is not null)
+                db.TrPriceListHeaders.Remove(trPriceListHeader);
+
+            return db.SaveChanges();
+        }
+
+        public int DeletePriceType(DcPriceType dcPriceType)
+        {
+            using subContext db = new();
+
+            if (dcPriceType is not null)
+                db.DcPriceTypes.Remove(dcPriceType);
 
             return db.SaveChanges();
         }
@@ -1274,6 +1301,12 @@ namespace Foxoft
             return db.DcFeatureTypes.Any(x => x.FeatureTypeId == featureTypeId);
         }
 
+        public bool PriceTypeExist(string priceTypeCode)
+        {
+            using subContext db = new();
+            return db.DcPriceTypes.Any(x => x.PriceTypeCode == priceTypeCode);
+        }
+
         public bool FeatureExist(string featureCode, int featureTypeId)
         {
             using subContext db = new();
@@ -1315,6 +1348,13 @@ namespace Foxoft
         {
             using subContext db = new();
             db.DcFeatures.Add(dcFeature);
+            db.SaveChanges();
+        }
+
+        public void InsertFeature(DcPriceType DcPriceType)
+        {
+            using subContext db = new();
+            db.DcPriceTypes.Add(DcPriceType);
             db.SaveChanges();
         }
 

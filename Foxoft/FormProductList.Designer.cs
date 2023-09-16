@@ -106,7 +106,6 @@ namespace Foxoft
             gC_ProductList.Size = new System.Drawing.Size(865, 481);
             gC_ProductList.TabIndex = 0;
             gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ProductList });
-            gC_ProductList.Paint += gC_ProductList_Paint;
             gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
             // 
             // gV_ProductList

@@ -10,21 +10,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    public partial class DcPriceListType
+    public partial class DcPriceType
     {
-        public DcPriceListType()
+        public DcPriceType()
         {
             TrPriceListHeaders = new HashSet<TrPriceListHeader>();
         }
 
         [Key]
-        [Display(Name = "Qiymət Siyahı Tipi Kodu")]
-        public string PriceListTypeCode { get; set; }
+        [Display(Name = "Qiymət Tipi Kodu")]
+        public string PriceTypeCode { get; set; }
 
-        [Display(Name = "Qiymət Siyahı Tipi Açıqlaması")]
+        [Display(Name = "Qiymət Tipi Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxıla bilmez \n")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string PriceListTypeDesc { get; set; }
+        public string PriceTypeDesc { get; set; }
 
         public virtual ICollection<TrPriceListHeader> TrPriceListHeaders { get; set; }
 

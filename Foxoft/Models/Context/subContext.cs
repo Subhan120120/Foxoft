@@ -62,7 +62,7 @@ namespace Foxoft.Models
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
-        public DbSet<DcPriceListType> DcPriceListTypes { get; set; }
+        public DbSet<DcPriceType> DcPriceTypes { get; set; }
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
         public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
@@ -289,6 +289,13 @@ namespace Foxoft.Models
             {
                 entity.HasOne(x => x.TrPaymentHeader)
                     .WithMany(x => x.TrPaymentLines)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrPriceListLine>(entity =>
+            {
+                entity.HasOne(x => x.TrPriceListHeader)
+                    .WithMany(x => x.TrPriceListLines)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

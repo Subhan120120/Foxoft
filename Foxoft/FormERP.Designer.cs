@@ -70,11 +70,13 @@ namespace Foxoft
             aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_HumanResource = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aCE_Operation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_PriceList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            accordionControlSeparator8 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
@@ -214,7 +216,7 @@ namespace Foxoft
             // aC_Root
             // 
             aC_Root.Dock = System.Windows.Forms.DockStyle.Left;
-            aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Invoices, aCE_Acounting, aCE_HumanResource, aCE_Reports, aCE_Setting });
+            aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Invoices, aCE_Acounting, aCE_Operation, aCE_Reports, aCE_Setting });
             aC_Root.Location = new System.Drawing.Point(0, 158);
             aC_Root.Name = "aC_Root";
             aC_Root.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.True;
@@ -365,12 +367,21 @@ namespace Foxoft
             aCE_CountOut.Text = "Sayım Azaltma";
             aCE_CountOut.Click += aCE_CountOut_Click;
             // 
-            // aCE_HumanResource
+            // aCE_Operation
             // 
-            aCE_HumanResource.Expanded = true;
-            aCE_HumanResource.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_HumanResource.ImageOptions.SvgImage");
-            aCE_HumanResource.Name = "aCE_HumanResource";
-            aCE_HumanResource.Text = "İnsan Resursları";
+            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, accordionControlSeparator8 });
+            aCE_Operation.Expanded = true;
+            aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
+            aCE_Operation.Name = "aCE_Operation";
+            aCE_Operation.Text = "Əməliyatlar";
+            // 
+            // accordionControlElement2
+            // 
+            ACE_PriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement2.ImageOptions.SvgImage");
+            ACE_PriceList.Name = "accordionControlElement2";
+            ACE_PriceList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PriceList.Text = "Qiymət Siyahısı";
+            ACE_PriceList.Click += ACE_PricList_Click;
             // 
             // aCE_Reports
             // 
@@ -398,6 +409,10 @@ namespace Foxoft
             // svgImageCollection1
             // 
             svgImageCollection1.Add("bo_report", "image://svgimages/business objects/bo_report.svg");
+            // 
+            // accordionControlSeparator8
+            // 
+            accordionControlSeparator8.Name = "accordionControlSeparator8";
             // 
             // FormERP
             // 
@@ -471,5 +486,8 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_ChangeUser;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Operation;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PriceList;
+        private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator8;
     }
 }

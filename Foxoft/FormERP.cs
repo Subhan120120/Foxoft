@@ -66,10 +66,10 @@ namespace Foxoft
             this.aCE_Acounting.Name = "Acounting";
             this.aCE_CountIn.Name = "CountIn";
             this.aCE_CountOut.Name = "CountOut";
-            this.aCE_HumanResource.Name = "HumanResource";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
             this.aCE_CurrAccAll.Name = "CurrAccAll";
+            this.ACE_PriceList.Name = "PriceList";
         }
 
         private void InitializeReports()
@@ -616,6 +616,31 @@ namespace Foxoft
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
+        }
+
+        private void ACE_PricList_Click(object sender, EventArgs e)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+            if (!currAccHasClaims)
+            {
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+
+            FormPriceListDetail form = Application.OpenForms[nameof(FormPriceListDetail)] as FormPriceListDetail;
+
+            try
+            {
+                form = new();
+                form.MdiParent = this;
+                form.Show();
+                form.WindowState = FormWindowState.Maximized;
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex.ToString());
+            }
         }
     }
 }

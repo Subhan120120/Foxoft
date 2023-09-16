@@ -245,7 +245,7 @@ namespace Foxoft
          this.Ribbon = this.ribbonControl1;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
          this.StatusBar = this.ribbonStatusBar1;
-         this.Text = "Cari Hesablar";
+         this.Text = "Depolar";
          ((System.ComponentModel.ISupportInitialize)(this.gC_WarehouseList)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.dcWarehousesBindingSource)).EndInit();
          ((System.ComponentModel.ISupportInitialize)(this.gV_WarehouseList)).EndInit();

@@ -90,15 +90,10 @@ namespace Foxoft
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
-            //Focus Special Row
             int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
             if (rowHandle != GridControl.InvalidRowHandle)
-            {
                 gV_ProductList.FocusedRowHandle = rowHandle;
-                gV_ProductList.MakeRowVisible(rowHandle);
-            }
 
-            //gV_ProductList.ShowFindPanel();
             //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
             //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
         }
@@ -261,9 +256,7 @@ namespace Foxoft
                     string qryMaster = query + where + " order by ProductDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)
-                    {
                         dataSource = dt;
-                    }
                 }
             }
 
@@ -450,25 +443,6 @@ namespace Foxoft
             }
         }
 
-        // AutoFocus FindPanel
-        bool isFirstPaint = true;
-        private void gC_ProductList_Paint(object sender, PaintEventArgs e)
-        {
-            //GridControl gC = sender as GridControl;
-            //GridView gV = gC.MainView as GridView;
-
-            //if (isFirstPaint)
-            //{
-            //   if (!gV.FindPanelVisible)
-            //      gV.ShowFindPanel();
-            //   gV.ShowFindPanel();
-
-            //   gV.OptionsFind.FindFilterColumns = "ProductDesc";
-            //   //gV.OptionsFind.FindNullPrompt = "Axtarın...";
-            //}
-            //isFirstPaint = false;
-        }
-
         private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
             Trace.Write("\n Before 'SaveFileDialog saveFileDialog1 = new();' ");
@@ -598,7 +572,7 @@ namespace Foxoft
                 }
             }
             else
-                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+                XtraMessageBox.Show("Silinmeli olan mal yoxdur");
         }
 
         private void bBI_ProductRefresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -610,22 +584,6 @@ namespace Foxoft
         {
 
         }
-
-        ////AutoFocus FindPanel
-        //private void gC_ProductList_Load(object sender, EventArgs e)
-        //{
-        //    GridControl gC = sender as GridControl;
-        //    GridView gV = gC.MainView as GridView;
-        //    if (gV is not null)
-        //    {
-        //        //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
-        //        //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
-
-        //        if (!gV.FindPanelVisible)
-        //            gC.BeginInvoke(new Action(gV.ShowFindPanel));
-        //    }
-
-        //}
 
         private void gV_ProductList_CalcRowHeight(object sender, RowHeightEventArgs e)
         {

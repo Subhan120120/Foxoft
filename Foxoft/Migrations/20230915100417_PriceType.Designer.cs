@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20230915100417_PriceType")]
+    partial class PriceType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -761,7 +763,7 @@ namespace Foxoft.Migrations
 
                     b.HasKey("PriceTypeCode");
 
-                    b.ToTable("DcPriceTypes");
+                    b.ToTable("DcPriceListTypes");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProcess", b =>
@@ -3074,7 +3076,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.TrPriceListHeader", "TrPriceListHeader")
                         .WithMany("TrPriceListLines")
                         .HasForeignKey("PriceListHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")

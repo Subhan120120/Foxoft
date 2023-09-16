@@ -31,7 +31,7 @@ namespace Foxoft.Models
         [ForeignKey("DcPriceListType")]
         [Display(Name = "Qiymət Siyahı Tipi Kodu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public string PriceListTypeCode { get; set; }
+        public string PriceTypeCode { get; set; }
 
         [Column(TypeName = "date")]
         [DefaultValue("getdate()")]
@@ -87,6 +87,6 @@ namespace Foxoft.Models
 
 
         public virtual ICollection<TrPriceListLine> TrPriceListLines { get; set; }
-        public virtual DcPriceListType DcPriceListType { get; set; }
+        public virtual DcPriceType DcPriceListType { get; set; }
     }
 }
