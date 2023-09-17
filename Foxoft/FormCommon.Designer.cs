@@ -1,6 +1,11 @@
-﻿namespace Foxoft
+﻿using DevExpress.Utils.Svg;
+using DevExpress.XtraEditors;
+using DevExpress.XtraLayout;
+using System.Windows.Forms;
+
+namespace Foxoft
 {
-    partial class FormCommon
+    partial class FormCommon<T>
     {
         /// <summary>
         /// Required designer variable.
@@ -28,123 +33,108 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCommon));
-            dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            bindingSource1 = new System.Windows.Forms.BindingSource(components);
-            Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
-            dataLayoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(this.components);
+            this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
+            this.LCI_Ok = new DevExpress.XtraLayout.LayoutControlItem();
+            this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
+            this.LCI_Cancel = new DevExpress.XtraLayout.LayoutControlItem();
+            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.svgImageCollection1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LCI_Ok)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LCI_Cancel)).BeginInit();
+            this.SuspendLayout();
             // 
             // dataLayoutControl1
             // 
-            dataLayoutControl1.Controls.Add(simpleButton1);
-            dataLayoutControl1.Controls.Add(simpleButton2);
-            dataLayoutControl1.DataSource = bindingSource1;
-            dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
-            dataLayoutControl1.Name = "dataLayoutControl1";
-            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(848, 189, 650, 400);
-            dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new System.Drawing.Size(452, 100);
-            dataLayoutControl1.TabIndex = 0;
-            dataLayoutControl1.Text = "dataLayoutControl1";
-            // 
-            // simpleButton1
-            // 
-            simpleButton1.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            simpleButton1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("simpleButton1.ImageOptions.SvgImage");
-            simpleButton1.Location = new System.Drawing.Point(288, 12);
-            simpleButton1.Name = "simpleButton1";
-            simpleButton1.Size = new System.Drawing.Size(74, 76);
-            simpleButton1.StyleController = dataLayoutControl1;
-            simpleButton1.TabIndex = 0;
-            simpleButton1.Text = "simpleButton1";
-            // 
-            // simpleButton2
-            // 
-            simpleButton2.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            simpleButton2.Location = new System.Drawing.Point(366, 12);
-            simpleButton2.Name = "simpleButton2";
-            simpleButton2.Size = new System.Drawing.Size(74, 76);
-            simpleButton2.StyleController = dataLayoutControl1;
-            simpleButton2.TabIndex = 2;
-            simpleButton2.Text = "simpleButton2";
+            this.dataLayoutControl1.AutoSize = true;
+            this.dataLayoutControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
+            this.dataLayoutControl1.DataSource = this.bindingSource1;
+            this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
+            this.dataLayoutControl1.Name = "dataLayoutControl1";
+            this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(848, 189, 650, 400);
+            this.dataLayoutControl1.Root = this.Root;
+            this.dataLayoutControl1.Size = new System.Drawing.Size(452, 78);
+            this.dataLayoutControl1.TabIndex = 0;
+            this.dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // Root
             // 
-            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, emptySpaceItem1, layoutControlItem1 });
-            Root.Name = "Root";
-            Root.Size = new System.Drawing.Size(452, 100);
-            Root.TextVisible = false;
-            // 
-            // layoutControlItem2
-            // 
-            layoutControlItem2.Control = simpleButton2;
-            layoutControlItem2.Location = new System.Drawing.Point(354, 0);
-            layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
-            layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(78, 80);
-            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            layoutControlItem2.TextVisible = false;
-            // 
-            // emptySpaceItem1
-            // 
-            emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
-            emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new System.Drawing.Size(276, 80);
-            emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
-            // 
-            // layoutControlItem1
-            // 
-            layoutControlItem1.Control = simpleButton1;
-            layoutControlItem1.Location = new System.Drawing.Point(276, 0);
-            layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
-            layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new System.Drawing.Size(78, 80);
-            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-            layoutControlItem1.TextVisible = false;
+            this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            this.Root.GroupBordersVisible = false;
+            this.Root.Name = "Root";
+            this.Root.Size = new System.Drawing.Size(452, 78);
+            this.Root.TextVisible = false;
             // 
             // svgImageCollection1
             // 
-            svgImageCollection1.Add("actions_check", "image://svgimages/icon builder/actions_check.svg");
-            svgImageCollection1.Add("actions_delete", "image://svgimages/icon builder/actions_delete.svg");
+            this.svgImageCollection1.Add("actions_Ok", "image://svgimages/icon builder/actions_check.svg");
+            this.svgImageCollection1.Add("actions_Cancel", "image://svgimages/icon builder/actions_delete.svg");
+            // 
+            // btn_Ok
+            // 
+            this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_Ok.Location = new System.Drawing.Point(12, 12);
+            this.btn_Ok.Name = "btn_Ok";
+            this.btn_Ok.Size = new System.Drawing.Size(428, 22);
+            this.btn_Ok.StyleController = this.dataLayoutControl1;
+            this.btn_Ok.TabIndex = 4;
+            this.btn_Ok.Text = "simpleButton1";
+            this.btn_Ok.Click += btn_Ok_Click;
+            // 
+            // LCI_Ok
+            // 
+            this.LCI_Ok.Control = this.btn_Ok;
+            this.LCI_Ok.Location = new System.Drawing.Point(0, 0);
+            this.LCI_Ok.Name = "layoutControlItem1";
+            this.LCI_Ok.Size = new System.Drawing.Size(432, 26);
+            this.LCI_Ok.TextSize = new System.Drawing.Size(0, 0);
+            this.LCI_Ok.TextVisible = false;
+            // 
+            // btn_Cancel
+            // 
+            this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_Cancel.Location = new System.Drawing.Point(12, 38);
+            this.btn_Cancel.Name = "btn_Cancel";
+            this.btn_Cancel.Size = new System.Drawing.Size(428, 22);
+            this.btn_Cancel.StyleController = this.dataLayoutControl1;
+            this.btn_Cancel.TabIndex = 5;
+            this.btn_Cancel.Text = "simpleButton2";
+            // 
+            // LCI_Cancel
+            // 
+            this.LCI_Cancel.Control = this.btn_Cancel;
+            this.LCI_Cancel.Location = new System.Drawing.Point(0, 26);
+            this.LCI_Cancel.Name = "layoutControlItem2";
+            this.LCI_Cancel.Size = new System.Drawing.Size(432, 186);
+            this.LCI_Cancel.TextSize = new System.Drawing.Size(0, 0);
+            this.LCI_Cancel.TextVisible = false;
             // 
             // FormCommon
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(452, 100);
-            Controls.Add(dataLayoutControl1);
-            Name = "FormCommon";
-            Text = "FormCommon";
-            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
-            dataLayoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(452, 78);
+            this.Controls.Add(this.dataLayoutControl1);
+            this.Name = "FormCommon";
+            this.Text = "FormCommon";
+            this.Load += new System.EventHandler(this.FormCommon_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.svgImageCollection1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LCI_Ok)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LCI_Cancel)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -152,11 +142,10 @@
         private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraEditors.SimpleButton btn_Ok;
+        private DevExpress.XtraEditors.SimpleButton btn_Cancel;
+        private LayoutControlItem LCI_Ok;
+        private LayoutControlItem LCI_Cancel;
     }
 }

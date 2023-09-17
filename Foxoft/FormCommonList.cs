@@ -3,9 +3,10 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
-using Foxoft.Migrations;
+using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,12 +25,13 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        public T entity { get; set; }
+         T entity { get; set; }
         subContext dbContext;
-        public string id_Value;
+         string id_Value;
+         string processCode;
         GridColumn col_Id = new();
 
-        public FormCommonList(string idFieldName)
+        public FormCommonList(string idFieldName, string processCode)
         {
             InitializeComponent();
 
@@ -38,10 +40,11 @@ namespace Foxoft
             col_Id.FieldName = idFieldName;
         }
 
-        public FormCommonList(string idFieldName, string id_Value)
-            : this(idFieldName)
+        public FormCommonList(string idFieldName, string processCode, string id_Value)
+            : this(idFieldName, processCode)
         {
             this.id_Value = id_Value;
+            this.processCode = processCode;
         }
 
         private void FormCommonList_Load(object sender, EventArgs e)
@@ -81,7 +84,7 @@ namespace Foxoft
                 entity = default(T);
         }
 
-        private void LoadData()
+        private void LoadDataByQuery()
         {
             object dataSource = null;
 
@@ -112,9 +115,35 @@ namespace Foxoft
             gridView1.MakeRowVisible(gridView1.FocusedRowHandle);
         }
 
+
+        private void LoadData()
+        {
+            dbContext = new subContext();
+
+            DbSet<T> allEntities = dbContext.Set<T>();
+
+            IList<T> dcPriceTypes = allEntities
+                        .ToList();
+
+            bindingSource1.DataSource = dcPriceTypes;
+
+            gridView1.BestFitColumns();
+        }
+
         private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
+            GridView view = sender as GridView;
 
+            if (view.FocusedRowHandle >= 0)
+            {
+                id_Value = view.GetFocusedRowCellValue(col_Id)?.ToString();
+                if (id_Value is not null)
+                {
+                    entity = view.GetFocusedRow() as T;
+                }
+            }
+            else
+                entity = null;
         }
 
         private void gridView1_DoubleClick(object sender, EventArgs e)
@@ -134,7 +163,7 @@ namespace Foxoft
 
         private void BBI_New_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            FormCommon<T> formProduct = new(col_Id.FieldName, true);
+            FormCommon<T> formProduct = new(col_Id.FieldName, true, processCode);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
                 LoadData();
@@ -143,7 +172,21 @@ namespace Foxoft
 
         private void BBI_Edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            if (entity is not null)
+            {
+                FormCommon<T> formProduct = new(col_Id.FieldName, id_Value);
 
+                if (formProduct.ShowDialog(this) == DialogResult.OK)
+                {
+                    int fr = gridView1.FocusedRowHandle;
+
+                    LoadData();
+
+                    gridView1.FocusedRowHandle = fr;
+                }
+            }
+            else
+                MessageBox.Show("Sətir Seçilməyib");
         }
 
         private void BBI_Delete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
