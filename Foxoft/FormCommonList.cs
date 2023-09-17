@@ -205,7 +205,7 @@ namespace Foxoft
 
         private void BBI_Edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (entity is not null)
+            if (id_Value is not null)
             {
                 FormCommon<T> formProduct = new(col_Id.FieldName, id_Value);
 

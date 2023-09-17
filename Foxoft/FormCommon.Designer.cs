@@ -74,12 +74,13 @@ namespace Foxoft
             // 
             // svgImageCollection1
             // 
-            this.svgImageCollection1.Add("Ok", "image://svgimages/icon builder/actions_check.svg");
-            this.svgImageCollection1.Add("Cancel", "image://svgimages/icon builder/actions_delete.svg");
+            this.svgImageCollection1.Add("ok", "image://svgimages/icon builder/actions_check.svg");
+            this.svgImageCollection1.Add("cancel", "image://svgimages/icon builder/actions_delete.svg");
             // 
             // btn_Ok
             // 
             this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_Ok.ImageOptions.SvgImage = svgImageCollection1["ok"];
             this.btn_Ok.Location = new System.Drawing.Point(12, 12);
             this.btn_Ok.Name = "btn_Ok";
             this.btn_Ok.Size = new System.Drawing.Size(428, 22);
@@ -100,6 +101,7 @@ namespace Foxoft
             // btn_Cancel
             // 
             this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            this.btn_Cancel.ImageOptions.SvgImage = svgImageCollection1["cancel"];
             this.btn_Cancel.Location = new System.Drawing.Point(12, 38);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(428, 22);
