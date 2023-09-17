@@ -30,142 +30,144 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPriceTypeList));
-            myGridControl1 = new MyGridControl();
-            trPriceTypeBindingSource = new System.Windows.Forms.BindingSource(components);
-            gV_priceType = new DevExpress.XtraGrid.Views.Grid.GridView();
-            colPriceTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPriceTypeDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            BBI_New = new DevExpress.XtraBars.BarButtonItem();
-            BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
-            BBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
-            BBI_Edit = new DevExpress.XtraBars.BarButtonItem();
-            Əməliyat = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ((System.ComponentModel.ISupportInitialize)myGridControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)trPriceTypeBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gV_priceType).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
-            SuspendLayout();
+            this.myGridControl1 = new Foxoft.MyGridControl();
+            this.trPriceTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gV_priceType = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colPriceTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colPriceTypeDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.BBI_New = new DevExpress.XtraBars.BarButtonItem();
+            this.BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
+            this.BBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
+            this.BBI_Edit = new DevExpress.XtraBars.BarButtonItem();
+            this.Əməliyat = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ((System.ComponentModel.ISupportInitialize)(this.myGridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trPriceTypeBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gV_priceType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
+            this.SuspendLayout();
             // 
             // myGridControl1
             // 
-            myGridControl1.DataSource = trPriceTypeBindingSource;
-            myGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            myGridControl1.Location = new System.Drawing.Point(0, 158);
-            myGridControl1.MainView = gV_priceType;
-            myGridControl1.Name = "myGridControl1";
-            myGridControl1.Size = new System.Drawing.Size(509, 312);
-            myGridControl1.TabIndex = 0;
-            myGridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_priceType });
-            myGridControl1.ProcessGridKey += myGridControl1_ProcessGridKey;
+            this.myGridControl1.DataSource = this.trPriceTypeBindingSource;
+            this.myGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.myGridControl1.Location = new System.Drawing.Point(0, 158);
+            this.myGridControl1.MainView = this.gV_priceType;
+            this.myGridControl1.Name = "myGridControl1";
+            this.myGridControl1.Size = new System.Drawing.Size(509, 312);
+            this.myGridControl1.TabIndex = 0;
+            this.myGridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gV_priceType});
             // 
             // trPriceTypeBindingSource
             // 
-            trPriceTypeBindingSource.DataSource = typeof(DcPriceType);
+            this.trPriceTypeBindingSource.DataSource = typeof(Foxoft.Models.DcPriceType);
             // 
             // gV_priceType
             // 
-            gV_priceType.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceTypeCode, colPriceTypeDesc });
-            gV_priceType.DetailHeight = 303;
-            gV_priceType.GridControl = myGridControl1;
-            gV_priceType.Name = "gV_priceType";
-            gV_priceType.OptionsView.ShowGroupPanel = false;
-            gV_priceType.FocusedRowChanged += gV_priceType_FocusedRowChanged;
-            gV_priceType.ColumnFilterChanged += gV_priceType_ColumnFilterChanged;
-            gV_priceType.DoubleClick += gV_priceType_DoubleClick;
+            this.gV_priceType.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colPriceTypeCode,
+            this.colPriceTypeDesc});
+            this.gV_priceType.DetailHeight = 303;
+            this.gV_priceType.GridControl = this.myGridControl1;
+            this.gV_priceType.Name = "gV_priceType";
+            this.gV_priceType.OptionsView.ShowGroupPanel = false;
             // 
             // colPriceTypeCode
             // 
-            colPriceTypeCode.FieldName = "PriceTypeCode";
-            colPriceTypeCode.Name = "colPriceTypeCode";
-            colPriceTypeCode.Visible = true;
-            colPriceTypeCode.VisibleIndex = 0;
+            this.colPriceTypeCode.FieldName = "PriceTypeCode";
+            this.colPriceTypeCode.Name = "colPriceTypeCode";
+            this.colPriceTypeCode.Visible = true;
+            this.colPriceTypeCode.VisibleIndex = 0;
             // 
             // colPriceTypeDesc
             // 
-            colPriceTypeDesc.FieldName = "PriceTypeDesc";
-            colPriceTypeDesc.Name = "colPriceTypeDesc";
-            colPriceTypeDesc.Visible = true;
-            colPriceTypeDesc.VisibleIndex = 1;
+            this.colPriceTypeDesc.FieldName = "PriceTypeDesc";
+            this.colPriceTypeDesc.Name = "colPriceTypeDesc";
+            this.colPriceTypeDesc.Visible = true;
+            this.colPriceTypeDesc.VisibleIndex = 1;
             // 
             // ribbonControl1
             // 
-            ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, BBI_New, BBI_Delete, BBI_Refresh, BBI_Edit });
-            ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 5;
-            ribbonControl1.Name = "ribbonControl1";
-            ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { Əməliyat });
-            ribbonControl1.Size = new System.Drawing.Size(509, 158);
+            this.ribbonControl1.ExpandCollapseItem.Id = 0;
+            this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.BBI_New,
+            this.BBI_Delete,
+            this.BBI_Refresh,
+            this.BBI_Edit});
+            this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            this.ribbonControl1.MaxItemId = 5;
+            this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.Əməliyat});
+            this.ribbonControl1.Size = new System.Drawing.Size(509, 158);
+            this.ribbonControl1.Click += new System.EventHandler(this.ribbonControl1_Click);
             // 
             // BBI_New
             // 
-            BBI_New.Caption = "Yeni";
-            BBI_New.Id = 1;
-            BBI_New.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_New.ImageOptions.SvgImage");
-            BBI_New.Name = "BBI_New";
-            BBI_New.ItemClick += BBI_New_ItemClick;
+            this.BBI_New.Caption = "Yeni";
+            this.BBI_New.Id = 1;
+            this.BBI_New.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_New.ImageOptions.SvgImage")));
+            this.BBI_New.Name = "BBI_New";
             // 
             // BBI_Delete
             // 
-            BBI_Delete.Caption = "Sil";
-            BBI_Delete.Id = 2;
-            BBI_Delete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Delete.ImageOptions.SvgImage");
-            BBI_Delete.Name = "BBI_Delete";
-            BBI_Delete.ItemClick += BBI_Delete_ItemClick;
+            this.BBI_Delete.Caption = "Sil";
+            this.BBI_Delete.Id = 2;
+            this.BBI_Delete.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_Delete.ImageOptions.SvgImage")));
+            this.BBI_Delete.Name = "BBI_Delete";
             // 
             // BBI_Refresh
             // 
-            BBI_Refresh.Caption = "Yenilə";
-            BBI_Refresh.Id = 3;
-            BBI_Refresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Refresh.ImageOptions.SvgImage");
-            BBI_Refresh.Name = "BBI_Refresh";
-            BBI_Refresh.ItemClick += BBI_Refresh_ItemClick;
+            this.BBI_Refresh.Caption = "Yenilə";
+            this.BBI_Refresh.Id = 3;
+            this.BBI_Refresh.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_Refresh.ImageOptions.SvgImage")));
+            this.BBI_Refresh.Name = "BBI_Refresh";
             // 
             // BBI_Edit
             // 
-            BBI_Edit.Caption = "Dəyiş";
-            BBI_Edit.Id = 4;
-            BBI_Edit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Edit.ImageOptions.SvgImage");
-            BBI_Edit.Name = "BBI_Edit";
-            BBI_Edit.ItemClick += BBI_Edit_ItemClick;
+            this.BBI_Edit.Caption = "Dəyiş";
+            this.BBI_Edit.Id = 4;
+            this.BBI_Edit.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_Edit.ImageOptions.SvgImage")));
+            this.BBI_Edit.Name = "BBI_Edit";
             // 
             // Əməliyat
             // 
-            Əməliyat.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
-            Əməliyat.Name = "Əməliyat";
-            Əməliyat.Text = "Qiymət Tipi";
+            this.Əməliyat.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+            this.Əməliyat.Name = "Əməliyat";
+            this.Əməliyat.Text = "Qiymət Tipi";
             // 
             // ribbonPageGroup1
             // 
-            ribbonPageGroup1.ItemLinks.Add(BBI_New);
-            ribbonPageGroup1.ItemLinks.Add(BBI_Edit);
-            ribbonPageGroup1.ItemLinks.Add(BBI_Delete);
-            ribbonPageGroup1.ItemLinks.Add(BBI_Refresh);
-            ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Əməliyat";
+            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_New);
+            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_Edit);
+            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_Delete);
+            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_Refresh);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "Əməliyat";
             // 
             // FormPriceTypeList
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(509, 470);
-            Controls.Add(myGridControl1);
-            Controls.Add(ribbonControl1);
-            Name = "FormPriceTypeList";
-            Ribbon = ribbonControl1;
-            Text = "1 c";
-            Activated += FormPriceTypeList_Activated;
-            Load += FormPriceTypeList_Load;
-            ((System.ComponentModel.ISupportInitialize)myGridControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)trPriceTypeBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gV_priceType).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(509, 470);
+            this.Controls.Add(this.myGridControl1);
+            this.Controls.Add(this.ribbonControl1);
+            this.Name = "FormPriceTypeList";
+            this.Ribbon = this.ribbonControl1;
+            this.Text = "1 c";
+            ((System.ComponentModel.ISupportInitialize)(this.myGridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trPriceTypeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gV_priceType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

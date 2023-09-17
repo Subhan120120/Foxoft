@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using DevExpress.XtraEditors;
+
+namespace Foxoft
 {
     partial class FormCommonList<T>
     {
@@ -28,146 +30,166 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCommonList<T>));
-            ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            BBI_query = new DevExpress.XtraBars.BarButtonItem();
-            bBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
-            ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            BBI_New = new DevExpress.XtraBars.BarButtonItem();
-            BBI_Edit = new DevExpress.XtraBars.BarButtonItem();
-            bBI_Delete = new DevExpress.XtraBars.BarButtonItem();
-            bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
-            ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
-            bindingSource1 = new System.Windows.Forms.BindingSource(components);
-            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.BBI_query = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
+            this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.BBI_New = new DevExpress.XtraBars.BarButtonItem();
+            this.BBI_Edit = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_Delete = new DevExpress.XtraBars.BarButtonItem();
+            this.bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
+            this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(this.components);
+            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.svgImageCollection1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            this.SuspendLayout();
             // 
             // ribbonControl1
             // 
-            ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, BBI_query, bBI_ExportExcel });
-            ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 2;
-            ribbonControl1.Name = "ribbonControl1";
-            ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
-            ribbonControl1.Size = new System.Drawing.Size(800, 158);
+            this.ribbonControl1.ExpandCollapseItem.Id = 0;
+            this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.ribbonControl1.ExpandCollapseItem,
+            this.BBI_query,
+            this.bBI_ExportExcel});
+            this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            this.ribbonControl1.MaxItemId = 2;
+            this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
+            this.ribbonPage1,
+            this.ribbonPage2});
+            this.ribbonControl1.Size = new System.Drawing.Size(800, 158);
             // 
             // BBI_query
             // 
-            BBI_query.Caption = "Sorğu";
-            BBI_query.Id = 23;
-            BBI_query.Name = "BBI_query";
+            this.BBI_query.Caption = "Sorğu";
+            this.BBI_query.Id = 23;
+            this.BBI_query.Name = "BBI_query";
             // 
             // bBI_ExportExcel
             // 
-            bBI_ExportExcel.Caption = "Excele At";
-            bBI_ExportExcel.Id = 5;
-            bBI_ExportExcel.Name = "bBI_ExportExcel";
+            this.bBI_ExportExcel.Caption = "Excele At";
+            this.bBI_ExportExcel.Id = 5;
+            this.bBI_ExportExcel.Name = "bBI_ExportExcel";
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
-            ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Ümumi";
+            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+            this.ribbonPage1.Name = "ribbonPage1";
+            this.ribbonPage1.Text = "Ümumi";
             // 
             // ribbonPageGroup1
             // 
-            ribbonPageGroup1.ItemLinks.Add(BBI_New);
-            ribbonPageGroup1.ItemLinks.Add(BBI_Edit);
-            ribbonPageGroup1.ItemLinks.Add(bBI_Delete);
-            ribbonPageGroup1.ItemLinks.Add(bBI_Refresh);
-            ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Əməliyatlar";
+            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_New);
+            this.ribbonPageGroup1.ItemLinks.Add(this.BBI_Edit);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Delete);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Refresh);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "Əməliyatlar";
             // 
             // BBI_New
             // 
-            BBI_New.Caption = "Yeni";
-            BBI_New.Id = 1;
-            BBI_New.Name = "BBI_New";
-            BBI_New.ItemClick += BBI_New_ItemClick;
+            this.BBI_New.Caption = "Yeni";
+            this.BBI_New.Id = 1;
+            this.BBI_New.Name = "BBI_New";
+            this.BBI_New.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_New_ItemClick);
             // 
             // BBI_Edit
             // 
-            BBI_Edit.Caption = "Dəyiş";
-            BBI_Edit.Id = 2;
-            BBI_Edit.Name = "BBI_Edit";
-            BBI_Edit.ItemClick += BBI_Edit_ItemClick;
+            this.BBI_Edit.Caption = "Dəyiş";
+            this.BBI_Edit.Id = 2;
+            this.BBI_Edit.Name = "BBI_Edit";
+            this.BBI_Edit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Edit_ItemClick);
             // 
             // bBI_Delete
             // 
-            bBI_Delete.Caption = "Sil";
-            bBI_Delete.Id = 8;
-            bBI_Delete.Name = "bBI_Delete";
-            bBI_Delete.ItemClick += BBI_Delete_ItemClick;
+            this.bBI_Delete.Caption = "Sil";
+            this.bBI_Delete.Id = 8;
+            this.bBI_Delete.Name = "bBI_Delete";
+            this.bBI_Delete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Delete_ItemClick);
             // 
             // bBI_Refresh
             // 
-            bBI_Refresh.Caption = "Yenilə";
-            bBI_Refresh.Id = 9;
-            bBI_Refresh.Name = "bBI_Refresh";
-            bBI_Refresh.ItemClick += BBI_Refresh_ItemClick;
+            this.bBI_Refresh.Caption = "Yenilə";
+            this.bBI_Refresh.Id = 9;
+            this.bBI_Refresh.Name = "bBI_Refresh";
+            this.bBI_Refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Refresh_ItemClick);
             // 
             // ribbonPage2
             // 
-            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
-            ribbonPage2.Name = "ribbonPage2";
-            ribbonPage2.Text = "Ayarlar";
+            this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup2});
+            this.ribbonPage2.Name = "ribbonPage2";
+            this.ribbonPage2.Text = "Ayarlar";
             // 
             // ribbonPageGroup2
             // 
-            ribbonPageGroup2.ItemLinks.Add(BBI_query);
-            ribbonPageGroup2.ItemLinks.Add(bBI_ExportExcel);
-            ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Data";
+            this.ribbonPageGroup2.ItemLinks.Add(this.BBI_query);
+            this.ribbonPageGroup2.ItemLinks.Add(this.bBI_ExportExcel);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Data";
+            // 
+            // svgImageCollection1
+            // 
+            this.svgImageCollection1.Add("sendxlsx", "image://svgimages/send/sendxlsx.svg");
+            this.svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
+            this.svgImageCollection1.Add("edit", "image://svgimages/icon builder/actions_edit.svg");
+            this.svgImageCollection1.Add("delete", "image://svgimages/scheduling/delete.svg");
+            this.svgImageCollection1.Add("refresh", "image://svgimages/icon builder/actions_refresh.svg");
+            this.svgImageCollection1.Add("queryedit", "image://svgimages/dashboards/editdatasource.svg");
             // 
             // gridControl1
             // 
-            gridControl1.DataSource = bindingSource1;
-            gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridControl1.Location = new System.Drawing.Point(0, 158);
-            gridControl1.MainView = gridView1;
-            gridControl1.MenuManager = ribbonControl1;
-            gridControl1.Name = "gridControl1";
-            gridControl1.Size = new System.Drawing.Size(800, 292);
-            gridControl1.TabIndex = 1;
-            gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
-            gridControl1.ProcessGridKey += gridControl1_ProcessGridKey;
+            this.gridControl1.DataSource = this.bindingSource1;
+            this.gridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl1.Location = new System.Drawing.Point(0, 158);
+            this.gridControl1.MainView = this.gridView1;
+            this.gridControl1.MenuManager = this.ribbonControl1;
+            this.gridControl1.Name = "gridControl1";
+            this.gridControl1.Size = new System.Drawing.Size(800, 292);
+            this.gridControl1.TabIndex = 1;
+            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView1});
+            this.gridControl1.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridControl1_ProcessGridKey);
             // 
             // gridView1
             // 
-            gridView1.GridControl = gridControl1;
-            gridView1.Name = "gridView1";
-            gridView1.OptionsView.ShowGroupPanel = false;
-            gridView1.FocusedRowChanged += gridView1_FocusedRowChanged;
-            gridView1.ColumnFilterChanged += gridView1_ColumnFilterChanged;
-            gridView1.DoubleClick += gridView1_DoubleClick;
+            this.gridView1.GridControl = this.gridControl1;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
+            this.gridView1.ColumnFilterChanged += new System.EventHandler(this.gridView1_ColumnFilterChanged);
+            this.gridView1.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
             // 
             // FormCommonList
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
-            Controls.Add(gridControl1);
-            Controls.Add(ribbonControl1);
-            Name = "FormCommonList";
-            Ribbon = ribbonControl1;
-            Text = "FormCommonList";
-            Activated += FormCommonList_Activated;
-            Load += FormCommonList_Load;
-            ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.gridControl1);
+            this.Controls.Add(this.ribbonControl1);
+            this.Name = "FormCommonList";
+            this.Ribbon = this.ribbonControl1;
+            this.Text = "FormCommonList";
+            this.Activated += new System.EventHandler(this.FormCommonList_Activated);
+            this.Load += new System.EventHandler(this.FormCommonList_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.svgImageCollection1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -186,5 +208,6 @@
         private DevExpress.XtraBars.BarButtonItem BBI_Edit;
         private DevExpress.XtraBars.BarButtonItem bBI_Delete;
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
+        private DevExpress.Utils.SvgImageCollection svgImageCollection1;
     }
 }

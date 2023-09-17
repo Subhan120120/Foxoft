@@ -137,6 +137,7 @@ namespace Foxoft
                 bindingSource1.DataSource = data;
             }
         }
+
         public static string AsString(object obj)
         {
             return obj?.ToString();
@@ -146,7 +147,7 @@ namespace Foxoft
         {
             var param = Expression.Parameter(typeof(T));
             MemberExpression member = Expression.Property(param, propName);
-            var asString = typeof(FormCommon<T>).GetMethod("AsString");
+            var asString = this.GetType().GetMethod("AsString");
             var stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
             ConstantExpression constant = Expression.Constant(value);
             var expression = Expression.Equal(stringMember, constant);

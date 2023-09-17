@@ -42,6 +42,7 @@ namespace Foxoft
             //gridView1.OptionsFind.FindMode = FindMode.Always;
 
         }
+
         public FormPriceTypeList(string priceTypeCode)
             : this()
         {
@@ -178,6 +179,11 @@ namespace Foxoft
         private void BBI_Refresh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             UpdateGridViewData();
+        }
+
+        private void ribbonControl1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

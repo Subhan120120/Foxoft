@@ -74,8 +74,8 @@ namespace Foxoft
             // 
             // svgImageCollection1
             // 
-            this.svgImageCollection1.Add("actions_Ok", "image://svgimages/icon builder/actions_check.svg");
-            this.svgImageCollection1.Add("actions_Cancel", "image://svgimages/icon builder/actions_delete.svg");
+            this.svgImageCollection1.Add("Ok", "image://svgimages/icon builder/actions_check.svg");
+            this.svgImageCollection1.Add("Cancel", "image://svgimages/icon builder/actions_delete.svg");
             // 
             // btn_Ok
             // 

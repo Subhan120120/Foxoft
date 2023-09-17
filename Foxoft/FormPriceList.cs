@@ -394,13 +394,14 @@ namespace Foxoft
 
             ButtonEdit editor = (ButtonEdit)sender;
 
-            using FormPriceTypeList form = new(priceTypeCode);
+            //using FormPriceTypeList form = new(priceTypeCode);
+            using FormCommonList<DcPriceType> form = new FormCommonList<DcPriceType>("PriceTypeCode", priceTypeCode);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    editor.EditValue = form.dcPriceType.PriceTypeCode;
+                    editor.EditValue = form.id_Value;
                     gV_PriceListLine.CloseEditor();
                     gV_PriceListLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
 
