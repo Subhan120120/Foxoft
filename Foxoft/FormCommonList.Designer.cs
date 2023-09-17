@@ -79,6 +79,7 @@ namespace Foxoft
             this.bBI_ExportExcel.Caption = "Excele At";
             this.bBI_ExportExcel.Id = 5;
             this.bBI_ExportExcel.Name = "bBI_ExportExcel";
+            this.bBI_ExportExcel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportExcel_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -166,6 +167,7 @@ namespace Foxoft
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.MasterRowExpanded += new DevExpress.XtraGrid.Views.Grid.CustomMasterRowEventHandler(this.gridView1_MasterRowExpanded);
             this.gridView1.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView1_FocusedRowChanged);
             this.gridView1.ColumnFilterChanged += new System.EventHandler(this.gridView1_ColumnFilterChanged);
             this.gridView1.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);

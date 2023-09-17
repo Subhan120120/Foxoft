@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,10 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            dbContext = new subContext();
+            var mapping = dbContext.Model.FindEntityType(typeof(T));
+            Text = mapping.GetTableName();
+
             BBI_New.ImageOptions.SvgImage = svgImageCollection1["add"];
             BBI_Edit.ImageOptions.SvgImage = svgImageCollection1["edit"];
             bBI_Delete.ImageOptions.SvgImage = svgImageCollection1["delete"];
@@ -44,7 +49,7 @@ namespace Foxoft
             BBI_query.ImageOptions.SvgImage = svgImageCollection1["queryedit"];
             bBI_ExportExcel.ImageOptions.SvgImage = svgImageCollection1["sendxlsx"];
 
-            LoadLayout();
+            //LoadLayout();
 
             col_Id.FieldName = idFieldName;
         }
@@ -129,15 +134,14 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            IList<T> allEntities = dbContext.Set<T>()
-                        .ToList();
+            dbContext.Set<T>().Load();
 
-            bindingSource1.DataSource = allEntities;
+            bindingSource1.DataSource = dbContext.Set<T>().Local.ToBindingList(); 
 
             gridView1.BestFitColumns();
         }
 
-        private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        private void gridView1_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             GridView view = sender as GridView;
 
@@ -255,6 +259,41 @@ namespace Foxoft
             var lambda = Expression.Lambda(expression, param);
             var predicate = (Func<T, bool>)lambda.Compile();
             return predicate;
+        }
+
+        private void bBI_ExportExcel_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            XtraSaveFileDialog sFD = new();
+            sFD.Filter = "Excel Faylı|*.xlsx";
+            sFD.Title = "Excel Faylı Yadda Saxla";
+            sFD.FileName = $@"\{Text}.xlsx";
+            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            sFD.DefaultExt = "*.xlsx";
+
+            var fileName = Invoke((Func<string>)(() =>
+            {
+                if (sFD.ShowDialog() == DialogResult.OK)
+                {
+                    gridView1.ExportToXlsx(sFD.FileName);
+
+                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        Process p = new Process();
+                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                        p.Start();
+                    }
+
+                    return "Ok";
+                }
+                else
+                    return "Fail";
+            }));
+        }
+
+        private void gridView1_MasterRowExpanded(object sender, CustomMasterRowEventArgs e)
+        {
+            var a = e.RelationIndex;
+            var b = e.RowHandle;
         }
     }
 }

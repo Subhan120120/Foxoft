@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Qiymət Tipləri")]
     public partial class DcPriceType
     {
         public DcPriceType()

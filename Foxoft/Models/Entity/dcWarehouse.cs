@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Depolar")]
     public partial class DcWarehouse : BaseEntity
     {
         [Key]
