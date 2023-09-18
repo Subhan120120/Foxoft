@@ -34,6 +34,7 @@ namespace Foxoft
             this.ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.BBI_query = new DevExpress.XtraBars.BarButtonItem();
             this.bBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
+            this.BBI_Quit = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.BBI_New = new DevExpress.XtraBars.BarButtonItem();
@@ -59,10 +60,12 @@ namespace Foxoft
             this.ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl1.ExpandCollapseItem,
             this.BBI_query,
-            this.bBI_ExportExcel});
+            this.bBI_ExportExcel,
+            this.BBI_Quit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 2;
+            this.ribbonControl1.MaxItemId = 3;
             this.ribbonControl1.Name = "ribbonControl1";
+            this.ribbonControl1.PageHeaderItemLinks.Add(this.BBI_Quit);
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1,
             this.ribbonPage2});
@@ -80,6 +83,14 @@ namespace Foxoft
             this.bBI_ExportExcel.Id = 5;
             this.bBI_ExportExcel.Name = "bBI_ExportExcel";
             this.bBI_ExportExcel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_ExportExcel_ItemClick);
+            // 
+            // BBI_Quit
+            // 
+            this.BBI_Quit.Caption = "barButtonItem1";
+            this.BBI_Quit.Id = 2;
+            this.BBI_Quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
+            this.BBI_Quit.Name = "BBI_Quit";
+            this.BBI_Quit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Quit_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -211,5 +222,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_Delete;
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraBars.BarButtonItem BBI_Quit;
     }
 }

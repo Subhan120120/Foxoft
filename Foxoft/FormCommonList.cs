@@ -48,8 +48,9 @@ namespace Foxoft
             bBI_Refresh.ImageOptions.SvgImage = svgImageCollection1["refresh"];
             BBI_query.ImageOptions.SvgImage = svgImageCollection1["queryedit"];
             bBI_ExportExcel.ImageOptions.SvgImage = svgImageCollection1["sendxlsx"];
+            BBI_Quit.ImageOptions.SvgImage = svgImageCollection1["delete"];
 
-            //LoadLayout();
+            LoadLayout();
 
             col_Id.FieldName = idFieldName;
         }
@@ -301,6 +302,11 @@ namespace Foxoft
         {
             var a = e.RelationIndex;
             var b = e.RowHandle;
+        }
+
+        private void BBI_Quit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            this.Close();
         }
     }
 }
