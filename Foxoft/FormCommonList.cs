@@ -98,6 +98,23 @@ namespace Foxoft
                 entity = null;
         }
 
+        private void LoadData()
+        {
+            dbContext = new subContext();
+
+            dbContext.Set<T>().Load();
+
+            bindingSource1.DataSource = dbContext.Set<T>().Local.ToBindingList();
+
+            gridView1.Columns.ToList().ForEach(column =>
+            {
+                if (column.FieldName.StartsWith("Tr") || column.FieldName.StartsWith("Dc"))
+                    gridView1.Columns.Remove(column);
+            });
+
+            gridView1.BestFitColumns();
+        }
+
         //private void LoadDataByQuery()
         //{
         //    object dataSource = null;
@@ -129,17 +146,6 @@ namespace Foxoft
         //    gridView1.MakeRowVisible(gridView1.FocusedRowHandle);
         //}
 
-
-        private void LoadData()
-        {
-            dbContext = new subContext();
-
-            dbContext.Set<T>().Load();
-
-            bindingSource1.DataSource = dbContext.Set<T>().Local.ToBindingList(); 
-
-            gridView1.BestFitColumns();
-        }
 
         private void gridView1_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
