@@ -108,7 +108,8 @@ namespace Foxoft
 
             gridView1.Columns.ToList().ForEach(column =>
             {
-                if (column.FieldName.StartsWith("Tr") || column.FieldName.StartsWith("Dc"))
+                if ((column.FieldName.StartsWith("Tr") && column.FieldName.EndsWith("s"))
+                || column.FieldName.StartsWith("Dc"))
                     gridView1.Columns.Remove(column);
             });
 
