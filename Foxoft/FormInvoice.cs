@@ -1642,7 +1642,7 @@ namespace Foxoft
                                 }
                                 catch (ArgumentException ae)
                                 {
-                                    //throw new Exception();
+                                    MessageBox.Show("Xəta No: 256545 \n" + ae.Message ,"Import xetası");
                                 }
                             }
 

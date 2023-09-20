@@ -63,6 +63,8 @@ namespace Foxoft
             this.dataLayoutControl1.Size = new System.Drawing.Size(452, 78);
             this.dataLayoutControl1.TabIndex = 0;
             this.dataLayoutControl1.Text = "dataLayoutControl1";
+            this.dataLayoutControl1.FieldRetrieved += new System.EventHandler<DevExpress.XtraDataLayout.FieldRetrievedEventArgs>(this.dataLayoutControl1_FieldRetrieved);
+            this.dataLayoutControl1.FieldRetrieving += new System.EventHandler<DevExpress.XtraDataLayout.FieldRetrievingEventArgs>(this.dataLayoutControl1_FieldRetrieving);
             // 
             // Root
             // 
@@ -80,14 +82,12 @@ namespace Foxoft
             // btn_Ok
             // 
             this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_Ok.ImageOptions.SvgImage = svgImageCollection1["ok"];
             this.btn_Ok.Location = new System.Drawing.Point(12, 12);
             this.btn_Ok.Name = "btn_Ok";
             this.btn_Ok.Size = new System.Drawing.Size(428, 22);
             this.btn_Ok.StyleController = this.dataLayoutControl1;
             this.btn_Ok.TabIndex = 4;
             this.btn_Ok.Text = "simpleButton1";
-            this.btn_Ok.Click += btn_Ok_Click;
             // 
             // LCI_Ok
             // 
@@ -101,7 +101,6 @@ namespace Foxoft
             // btn_Cancel
             // 
             this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_Cancel.ImageOptions.SvgImage = svgImageCollection1["cancel"];
             this.btn_Cancel.Location = new System.Drawing.Point(12, 38);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(428, 22);

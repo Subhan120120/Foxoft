@@ -1,64 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <!--
-    Microsoft ResX Schema 
-
-    Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
-    associated with the data types.
-
-    Example:
-
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing"">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-
-    There are any number of "resheader" rows that contain simple
-    name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
-    mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
-    extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
-    read any of the formats listed below.
-
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
+﻿<root>
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -117,10 +57,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="DevExpress.Data.v21.2" name="DevExpress.Data.v21.2, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="bBI_DeletePriceList.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <assembly alias="DevExpress.Data.v23.1" name="DevExpress.Data.v23.1, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="bBI_DeletePriceList.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v23.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAD0DAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -139,9 +79,9 @@
         LDE2eiIgY2xhc3M9IlJlZCIgLz4NCiAgICA8L2c+DQogIDwvZz4NCjwvc3ZnPgs=
 </value>
   </data>
-  <data name="bBI_SaveAndClose.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="bBI_SaveAndClose.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v23.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAEgEAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -165,9 +105,9 @@
         ZCIgLz4NCjwvc3ZnPgs=
 </value>
   </data>
-  <data name="bBI_NewPriceList.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="bBI_NewPriceList.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v23.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAJsCAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -184,9 +124,9 @@
         c3ZnPgs=
 </value>
   </data>
-  <data name="BBI_Info.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="BBI_Info.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v23.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAABsDAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -205,9 +145,9 @@
         PC9nPg0KPC9zdmc+Cw==
 </value>
   </data>
-  <data name="BBI_ImportExcel.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="BBI_ImportExcel.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v23.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
         dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAHYNAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
@@ -270,11 +210,11 @@
         bHVlIiAvPg0KICA8L2c+DQo8L3N2Zz4L
 </value>
   </data>
-  <data name="BBI_exportXLSX.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="BBI_exportXLSX.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v23.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIxLjIsIFZlcnNpb249MjEuMi41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAPkJAAAC77u/
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAOsJAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
         IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
         MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
@@ -287,37 +227,37 @@
         TDE4LDI2eiIgY2xhc3M9IkJsdWUiIC8+DQogICAgPHBhdGggZD0iTTYsMThINHYxMWMwLDAuNiwwLjQs
         MSwxLDFoMTF2LTJINlYxOHoiIGNsYXNzPSJCbGFjayIgLz4NCiAgICA8cGF0aCBkPSJNNiwxMFY0aDE4
         djZoMlYzYzAtMC42LTAuNC0xLTEtMUg1QzQuNCwyLDQsMi40LDQsM3Y3SDZ6IiBjbGFzcz0iQmxhY2si
-        IC8+DQogICAgPHJlY3QgeD0iMjQiIHk9IjE4IiB3aWR0aD0iMiIgaGVpZ2h0PSI0IiByeD0iMCIgcnk9
-        IjAiIGNsYXNzPSJCbGFjayIgLz4NCiAgICA8cGF0aCBkPSJNMjksOEgxQzAuNCw4LDAsOC40LDAsOXYx
-        MGMwLDAuNiwwLjQsMSwxLDFoMjhjMC42LDAsMS0wLjQsMS0xVjlDMzAsOC40LDI5LjYsOCwyOSw4eiBN
-        Ny4xLDE3LjlWMTggICBsLTEuMy0yLjVjLTAuMS0wLjEtMC4xLTAuMy0wLjItMC41YzAsMC4xLTAuMSww
-        LjMtMC4yLDAuNUw0LjEsMThIMmwyLjUtMy45bC0yLjItMy45aDIuMWwxLjEsMi4zYzAuMSwwLjIsMC4y
-        LDAuNCwwLjIsMC43ICAgYzAtMC4yLDAuMS0wLjQsMC4yLTAuN2wxLjItMi4zSDlMNi43LDE0bDIuNCwz
-        LjlINy4xeiBNMTQuNywxOGgtNC42di03LjdoMS43djYuM2gyLjlWMTh6IE0xNy42LDE4Yy0wLjQsMC0w
-        LjgsMC0xLjEtMC4xICAgYy0wLjQtMC4xLTAuNy0wLjItMC45LTAuM1YxNmMwLjMsMC4zLDAuNiwwLjUs
-        MC45LDAuNmMxLjEsMC40LDIuMiwwLDIuMi0wLjZjMC0xLjUtMi45LTEuOC0yLjktMy42YzAtMC44LDAu
-        NS0yLjEsMi42LTIuMSAgIGMwLjQsMCwxLjYsMC4yLDEuOCwwLjN2MS42Yy0wLjEtMC4xLTAuNC0wLjMt
-        MC42LTAuNGMtMC42LTAuMy0xLjItMC4zLTEuNy0wLjJjLTAuNiwwLjItMC43LDAuOS0wLjMsMS4zYzAu
-        NiwwLjYsMS41LDEuMSwyLDEuNSAgIEMyMSwxNS41LDIwLjcsMTgsMTcuNiwxOHogTTI2LjEsMTcuOVYx
-        OGwtMS4zLTIuNWMtMC4xLTAuMS0wLjEtMC4zLTAuMi0wLjVjMCwwLjEtMC4xLDAuMy0wLjIsMC41TDIz
-        LjEsMThIMjFsMi41LTMuOWwtMi4yLTMuOSAgIGgyLjFsMS4xLDIuM2MwLjEsMC4yLDAuMiwwLjQsMC4y
-        LDAuN2MwLTAuMiwwLjEtMC40LDAuMi0wLjdsMS4yLTIuM0gyOEwyNS43LDE0bDIuNCwzLjlIMjYuMXoi
-        IGNsYXNzPSJHcmVlbiIgLz4NCiAgICA8ZyBjbGFzcz0ic3QwIj4NCiAgICAgIDxwYXRoIGQ9Ik0yOSw4
-        SDFDMC40LDgsMCw4LjQsMCw5djEwYzAsMC42LDAuNCwxLDEsMWgyOGMwLjYsMCwxLTAuNCwxLTFWOUMz
-        MCw4LjQsMjkuNiw4LDI5LDh6IE03LjEsMTcuOVYxOCAgICBsLTEuMy0yLjVjLTAuMS0wLjEtMC4xLTAu
-        My0wLjItMC41YzAsMC4xLTAuMSwwLjMtMC4yLDAuNUw0LjEsMThIMmwyLjUtMy45bC0yLjItMy45aDIu
-        MWwxLjEsMi4zYzAuMSwwLjIsMC4yLDAuNCwwLjIsMC43ICAgIGMwLTAuMiwwLjEtMC40LDAuMi0wLjds
-        MS4yLTIuM0g5TDYuNywxNGwyLjQsMy45SDcuMXogTTE0LjcsMThoLTQuNnYtNy43aDEuN3Y2LjNoMi45
-        VjE4eiBNMTcuNiwxOGMtMC40LDAtMC44LDAtMS4xLTAuMSAgICBjLTAuNC0wLjEtMC43LTAuMi0wLjkt
-        MC4zVjE2YzAuMywwLjMsMC42LDAuNSwwLjksMC42YzEuMSwwLjQsMi4yLDAsMi4yLTAuNmMwLTEuNS0y
-        LjktMS44LTIuOS0zLjZjMC0wLjgsMC41LTIuMSwyLjYtMi4xICAgIGMwLjQsMCwxLjYsMC4yLDEuOCww
-        LjN2MS42Yy0wLjEtMC4xLTAuNC0wLjMtMC42LTAuNGMtMC42LTAuMy0xLjItMC4zLTEuNy0wLjJjLTAu
-        NiwwLjItMC43LDAuOS0wLjMsMS4zYzAuNiwwLjYsMS41LDEuMSwyLDEuNSAgICBDMjEsMTUuNSwyMC43
-        LDE4LDE3LjYsMTh6IE0yNi4xLDE3LjlWMThsLTEuMy0yLjVjLTAuMS0wLjEtMC4xLTAuMy0wLjItMC41
-        YzAsMC4xLTAuMSwwLjMtMC4yLDAuNUwyMy4xLDE4SDIxbDIuNS0zLjlsLTIuMi0zLjkgICAgaDIuMWwx
-        LjEsMi4zYzAuMSwwLjIsMC4yLDAuNCwwLjIsMC43YzAtMC4yLDAuMS0wLjQsMC4yLTAuN2wxLjItMi4z
-        SDI4TDI1LjcsMTRsMi40LDMuOUgyNi4xeiIgY2xhc3M9IkJsdWUiIC8+DQogICAgPC9nPg0KICA8L2c+
-        DQogIDxnIGlkPSJMYXllcl8yIiAvPg0KPC9zdmc+Cw==
+        IC8+DQogICAgPHJlY3QgeD0iMjQiIHk9IjE4IiB3aWR0aD0iMiIgaGVpZ2h0PSI0IiBjbGFzcz0iQmxh
+        Y2siIC8+DQogICAgPHBhdGggZD0iTTI5LDhIMUMwLjQsOCwwLDguNCwwLDl2MTBjMCwwLjYsMC40LDEs
+        MSwxaDI4YzAuNiwwLDEtMC40LDEtMVY5QzMwLDguNCwyOS42LDgsMjksOHogTTcuMSwxNy45VjE4ICAg
+        bC0xLjMtMi41Yy0wLjEtMC4xLTAuMS0wLjMtMC4yLTAuNWMwLDAuMS0wLjEsMC4zLTAuMiwwLjVMNC4x
+        LDE4SDJsMi41LTMuOWwtMi4yLTMuOWgyLjFsMS4xLDIuM2MwLjEsMC4yLDAuMiwwLjQsMC4yLDAuNyAg
+        IGMwLTAuMiwwLjEtMC40LDAuMi0wLjdsMS4yLTIuM0g5TDYuNywxNGwyLjQsMy45SDcuMXogTTE0Ljcs
+        MThoLTQuNnYtNy43aDEuN3Y2LjNoMi45VjE4eiBNMTcuNiwxOGMtMC40LDAtMC44LDAtMS4xLTAuMSAg
+        IGMtMC40LTAuMS0wLjctMC4yLTAuOS0wLjNWMTZjMC4zLDAuMywwLjYsMC41LDAuOSwwLjZjMS4xLDAu
+        NCwyLjIsMCwyLjItMC42YzAtMS41LTIuOS0xLjgtMi45LTMuNmMwLTAuOCwwLjUtMi4xLDIuNi0yLjEg
+        ICBjMC40LDAsMS42LDAuMiwxLjgsMC4zdjEuNmMtMC4xLTAuMS0wLjQtMC4zLTAuNi0wLjRjLTAuNi0w
+        LjMtMS4yLTAuMy0xLjctMC4yYy0wLjYsMC4yLTAuNywwLjktMC4zLDEuM2MwLjYsMC42LDEuNSwxLjEs
+        MiwxLjUgICBDMjEsMTUuNSwyMC43LDE4LDE3LjYsMTh6IE0yNi4xLDE3LjlWMThsLTEuMy0yLjVjLTAu
+        MS0wLjEtMC4xLTAuMy0wLjItMC41YzAsMC4xLTAuMSwwLjMtMC4yLDAuNUwyMy4xLDE4SDIxbDIuNS0z
+        LjlsLTIuMi0zLjkgICBoMi4xbDEuMSwyLjNjMC4xLDAuMiwwLjIsMC40LDAuMiwwLjdjMC0wLjIsMC4x
+        LTAuNCwwLjItMC43bDEuMi0yLjNIMjhMMjUuNywxNGwyLjQsMy45SDI2LjF6IiBjbGFzcz0iR3JlZW4i
+        IC8+DQogICAgPGcgY2xhc3M9InN0MCI+DQogICAgICA8cGF0aCBkPSJNMjksOEgxQzAuNCw4LDAsOC40
+        LDAsOXYxMGMwLDAuNiwwLjQsMSwxLDFoMjhjMC42LDAsMS0wLjQsMS0xVjlDMzAsOC40LDI5LjYsOCwy
+        OSw4eiBNNy4xLDE3LjlWMTggICAgbC0xLjMtMi41Yy0wLjEtMC4xLTAuMS0wLjMtMC4yLTAuNWMwLDAu
+        MS0wLjEsMC4zLTAuMiwwLjVMNC4xLDE4SDJsMi41LTMuOWwtMi4yLTMuOWgyLjFsMS4xLDIuM2MwLjEs
+        MC4yLDAuMiwwLjQsMC4yLDAuNyAgICBjMC0wLjIsMC4xLTAuNCwwLjItMC43bDEuMi0yLjNIOUw2Ljcs
+        MTRsMi40LDMuOUg3LjF6IE0xNC43LDE4aC00LjZ2LTcuN2gxLjd2Ni4zaDIuOVYxOHogTTE3LjYsMThj
+        LTAuNCwwLTAuOCwwLTEuMS0wLjEgICAgYy0wLjQtMC4xLTAuNy0wLjItMC45LTAuM1YxNmMwLjMsMC4z
+        LDAuNiwwLjUsMC45LDAuNmMxLjEsMC40LDIuMiwwLDIuMi0wLjZjMC0xLjUtMi45LTEuOC0yLjktMy42
+        YzAtMC44LDAuNS0yLjEsMi42LTIuMSAgICBjMC40LDAsMS42LDAuMiwxLjgsMC4zdjEuNmMtMC4xLTAu
+        MS0wLjQtMC4zLTAuNi0wLjRjLTAuNi0wLjMtMS4yLTAuMy0xLjctMC4yYy0wLjYsMC4yLTAuNywwLjkt
+        MC4zLDEuM2MwLjYsMC42LDEuNSwxLjEsMiwxLjUgICAgQzIxLDE1LjUsMjAuNywxOCwxNy42LDE4eiBN
+        MjYuMSwxNy45VjE4bC0xLjMtMi41Yy0wLjEtMC4xLTAuMS0wLjMtMC4yLTAuNWMwLDAuMS0wLjEsMC4z
+        LTAuMiwwLjVMMjMuMSwxOEgyMWwyLjUtMy45bC0yLjItMy45ICAgIGgyLjFsMS4xLDIuM2MwLjEsMC4y
+        LDAuMiwwLjQsMC4yLDAuN2MwLTAuMiwwLjEtMC40LDAuMi0wLjdsMS4yLTIuM0gyOEwyNS43LDE0bDIu
+        NCwzLjlIMjYuMXoiIGNsYXNzPSJCbHVlIiAvPg0KICAgIDwvZz4NCiAgPC9nPg0KICA8ZyBpZD0iTGF5
+        ZXJfMiIgLz4NCjwvc3ZnPgs=
 </value>
   </data>
   <metadata name="trPriceListLinesBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

@@ -97,7 +97,7 @@ namespace Foxoft
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "Ümumi";
+            this.ribbonPage1.Text = "Əməliyatlar";
             // 
             // ribbonPageGroup1
             // 
@@ -106,7 +106,7 @@ namespace Foxoft
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Delete);
             this.ribbonPageGroup1.ItemLinks.Add(this.bBI_Refresh);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "Əməliyatlar";
+            this.ribbonPageGroup1.Text = "Alətlər";
             // 
             // BBI_New
             // 
@@ -171,6 +171,7 @@ namespace Foxoft
             this.gridControl1.TabIndex = 1;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
+            this.gridControl1.Load += new System.EventHandler(this.gridControl1_Load);
             this.gridControl1.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridControl1_ProcessGridKey);
             // 
             // gridView1

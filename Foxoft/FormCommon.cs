@@ -5,6 +5,7 @@ using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraLayout;
+using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
@@ -67,15 +68,17 @@ namespace Foxoft
                 if (item != null)
                 {
                     if (item.Control is GridControl)
-                    {
                         dataLayoutControl1.Controls.Remove(item.Control);
-                    }
                     else
                     {
                         if (item.Control.DataBindings.Count > 0)
-                            if (item.Control.DataBindings[0].BindingMemberInfo.BindingField == idFieldName)
+                        {
+                            string itemFieldName = item.Control.DataBindings[0].BindingMemberInfo.BindingField;
+                            if (itemFieldName == idFieldName)
                                 idControl = item;
-
+                            else if (new string[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" }.Contains(itemFieldName))
+                                item.Visibility = LayoutVisibility.OnlyInCustomization;
+                        }
 
                         int loc = item.Location.Y + item.Size.Height;
 
@@ -196,6 +199,15 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
+        }
+
+        private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
+        {
+        }
+
+        private void dataLayoutControl1_FieldRetrieved(object sender, FieldRetrievedEventArgs e)
+        {
+
         }
     }
 }

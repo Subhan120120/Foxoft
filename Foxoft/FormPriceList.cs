@@ -3,22 +3,17 @@ using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Newtonsoft.Json;
-using RestSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +37,8 @@ namespace Foxoft
         public FormPriceListDetail()
         {
             InitializeComponent();
+            colProductDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
+            colLastPurchasePrice.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.LastPurchasePrice);
 
             //StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
@@ -390,7 +387,7 @@ namespace Foxoft
 
         private void btnEdit_PriceTypeCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            string priceTypeCode = PriceTypeCodeButtonEdit.EditValue?.ToString();
+            string priceTypeCode = btnEdit_PriceTypeCode.EditValue?.ToString();
 
             ButtonEdit editor = (ButtonEdit)sender;
 
@@ -512,7 +509,7 @@ namespace Foxoft
                             }
                             catch (ArgumentException ae)
                             {
-                                //throw new Exception();
+                                MessageBox.Show("Xəta No: 256543 \n" + ae.Message, "Import xetası");
                             }
                         }
 

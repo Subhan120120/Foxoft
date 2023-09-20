@@ -70,6 +70,7 @@ namespace Foxoft
             this.aCE_Setting.Name = "Setting";
             this.aCE_CurrAccAll.Name = "CurrAccAll";
             this.ACE_PriceList.Name = "PriceList";
+            this.ACE_Discounts.Name = "DiscountList";
         }
 
         private void InitializeReports()
@@ -228,11 +229,6 @@ namespace Foxoft
                     MessageBox.Show(ex.ToString());
                 }
             }
-        }
-
-        private void aCE_CurrAccAll_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
@@ -636,6 +632,42 @@ namespace Foxoft
                 form.Show();
                 form.WindowState = FormWindowState.Maximized;
                 parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex.ToString());
+            }
+        }
+
+        private void ACE_Discounts_Click(object sender, EventArgs e)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+            if (!currAccHasClaims)
+            {
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+
+            FormCommonList<DcDiscount> form = Application.OpenForms[nameof(FormCommonList<DcDiscount>)] as FormCommonList<DcDiscount>;
+
+            try
+            {
+                if (form == null)
+                {
+                    form = new("DiscountId", "");
+                    form.MdiParent = this;
+                    form.Show();
+                    form.WindowState = FormWindowState.Maximized;
+                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+                }
+                else
+                {
+                    if (form != null)
+                    {
+                        form.BringToFront();
+                        form.Activate();
+                    }
+                }
             }
             catch (Exception ex)
             {

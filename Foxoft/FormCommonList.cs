@@ -106,15 +106,6 @@ namespace Foxoft
             dbContext.Set<T>().Load();
 
             bindingSource1.DataSource = dbContext.Set<T>().Local.ToBindingList();
-
-            gridView1.Columns.ToList().ForEach(column =>
-            {
-                if ((column.FieldName.StartsWith("Tr") && column.FieldName.EndsWith("s"))
-                || column.FieldName.StartsWith("Dc"))
-                    gridView1.Columns.Remove(column);
-            });
-
-            gridView1.BestFitColumns();
         }
 
         //private void LoadDataByQuery()
@@ -307,6 +298,23 @@ namespace Foxoft
         private void BBI_Quit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             this.Close();
+        }
+
+        private void gridControl1_Load(object sender, EventArgs e)
+        {
+            gridView1.Columns.ToList().ForEach(column =>
+            {
+                if ((column.FieldName.StartsWith("Tr") && column.FieldName.EndsWith("s"))
+                || column.FieldName.StartsWith("Dc"))
+                    gridView1.Columns.Remove(column);
+
+                string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
+
+                if (hiddenColumns.Contains(column.FieldName))
+                    column.Visible = false;
+            });
+
+            gridView1.BestFitColumns();
         }
     }
 }
