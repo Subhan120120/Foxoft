@@ -173,6 +173,7 @@ namespace Foxoft
             this.gridView1});
             this.gridControl1.Load += new System.EventHandler(this.gridControl1_Load);
             this.gridControl1.ProcessGridKey += new System.Windows.Forms.KeyEventHandler(this.gridControl1_ProcessGridKey);
+            this.gridControl1.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.gridControl1_ControlAdded);
             // 
             // gridView1
             // 

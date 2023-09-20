@@ -20,7 +20,6 @@ namespace Foxoft
 
             List<string> list = new List<string>();
 
-
             foreach (Control ctrl in dataLayoutControl.Controls)
             {
                 BaseEdit edit = ctrl as BaseEdit;

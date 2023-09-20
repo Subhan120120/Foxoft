@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm.Native;
+using DevExpress.Mvvm.POCO;
 using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraDataLayout;
@@ -7,6 +8,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +20,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -27,33 +30,50 @@ namespace Foxoft
     {
         subContext dbContext = new();
         EfMethods efMethods = new();
-        public T entity { get; set; }
-        private bool isNew;
-        string processCode;
-        string idValue;
-        string idFieldName;
-        LayoutControlItem idControl;
+        public T Entity { get; set; }
+        private bool IsNew;
+        string ProcessCode = "0";
+        string Value_Id;
+        string FieldName_Id;
+        string Value_2;
+        string FieldName_2;
+        LayoutControlItem Control_Id = new LayoutControlItem();
+        LayoutControlItem Control_2 = new LayoutControlItem();
 
-        public FormCommon(string idFieldName, bool isNew, string processCode)
+        public FormCommon(string processCode, bool isNew, string fieldName_Id)
         {
             InitializeComponent();
             bindingSource1.DataSource = typeof(T);
 
-            this.isNew = isNew;
-            this.processCode = processCode;
-            this.idFieldName = idFieldName;
+            this.IsNew = isNew;
+            this.ProcessCode = processCode;
+            this.FieldName_Id = fieldName_Id;
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
 
-            RetrieveFields();
         }
 
-        public FormCommon(string idFieldName, string idValue)
-            : this(idFieldName, false, "")
+        public FormCommon(string processCode, bool isNew, string fieldName_Id, string falue_Id)
+            : this(processCode, isNew, fieldName_Id)
         {
-            this.idValue = idValue;
-            idControl.Enabled = false;
+            this.Value_Id = falue_Id;
+            Control_Id.Enabled = false;
+        }
+
+        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string fieldName_2, string value_2)
+            : this(processCode, isNew, fieldName_Id, value_Id)
+        {
+            this.FieldName_2 = fieldName_2;
+            this.Value_2 = value_2;
+        }
+
+        private void FormCommon_Load(object sender, EventArgs e)
+        {
+
+            RetrieveFields();
+
+            FillDataLayout();
         }
 
         private void RetrieveFields()
@@ -74,10 +94,18 @@ namespace Foxoft
                         if (item.Control.DataBindings.Count > 0)
                         {
                             string itemFieldName = item.Control.DataBindings[0].BindingMemberInfo.BindingField;
-                            if (itemFieldName == idFieldName)
-                                idControl = item;
+                            if (itemFieldName == FieldName_Id)
+                                Control_Id = item;
+                            else if (itemFieldName == FieldName_2)
+                            {
+
+                                Control_2 = item;
+                            }
                             else if (new string[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" }.Contains(itemFieldName))
                                 item.Visibility = LayoutVisibility.OnlyInCustomization;
+                            else if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(itemFieldName)
+                                || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(itemFieldName)) // relation table adlari silinsin
+                                dataLayoutControl1.Remove(item);
                         }
 
                         int loc = item.Location.Y + item.Size.Height;
@@ -118,24 +146,20 @@ namespace Foxoft
             Root.Items.AddRange(new BaseLayoutItem[] { LCI_Ok, LCI_Cancel });
         }
 
-        private void FormCommon_Load(object sender, EventArgs e)
-        {
-            FillDataLayout();
-            dataLayoutControl1.IsValid(out List<string> errorList);
-        }
-
         private void FillDataLayout()
         {
             dbContext = new subContext();
 
-            if (string.IsNullOrEmpty(idValue))
+            if (string.IsNullOrEmpty(Value_Id))
                 ClearControlsAddNew();
             else
             {
-                Func<T, bool> predicate = ConvertToPredicate(idFieldName, idValue);
+                Func<T, bool> predicate_id = ConvertToPredicate(FieldName_Id, Value_Id);
+                Func<T, bool> predicate_2 = string.IsNullOrEmpty(FieldName_2) ? _ => true : ConvertToPredicate(FieldName_2, Value_2);
 
-                IList<T> data = dbContext.Set<T>().Where(predicate)
-                    .ToList();
+                IList<T> data = dbContext.Set<T>().Where(predicate_id)
+                                                  .Where(predicate_2)
+                                                  .ToList();
 
                 bindingSource1.DataSource = data;
             }
@@ -161,13 +185,18 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
-            entity = bindingSource1.AddNew() as T;
+            Entity = bindingSource1.AddNew() as T;
 
-            string NewDocNum = efMethods.GetNextDocNum(false, "0", idFieldName, typeof(T).Name + "s", 4);
+            var tableName = dbContext.Model.FindEntityType(typeof(T)).GetTableName();
 
-            bindingSource1.DataSource = entity;
+            string NewDocNum = efMethods.GetNextDocNum(false, ProcessCode, FieldName_Id, tableName, 4);
 
-            idControl.Control.Text = NewDocNum;
+            bindingSource1.DataSource = Entity;
+
+            Control_Id.Control.Text = NewDocNum;
+
+            Control_2.Control.Text = Value_2;
+            dataLayoutControl1.SetCurrentRecordFieldValue(FieldName_2, Value_2);
         }
 
 
@@ -175,16 +204,16 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                entity = bindingSource1.Current as T;
+                Entity = bindingSource1.Current as T;
 
-                string id = idControl.Control.Text;
+                string id = Control_Id.Control.Text;
 
-                Func<T, bool> predicate = ConvertToPredicate(idFieldName, id);
+                Func<T, bool> predicate = ConvertToPredicate(FieldName_Id, id);
 
-                if (isNew) //if invoiceHeader doesnt exist
+                if (IsNew) //if invoiceHeader doesnt exist
                     if (!dbContext.Set<T>().Any(predicate))
                     {
-                        dbContext.Set<T>().Add(entity);
+                        dbContext.Set<T>().Add(Entity);
                         dbContext.SaveChanges();
                     }
                     else
@@ -206,6 +235,10 @@ namespace Foxoft
         }
 
         private void dataLayoutControl1_FieldRetrieved(object sender, FieldRetrievedEventArgs e)
+        {
+        }
+
+        private void LCI_Cancel_Click(object sender, EventArgs e)
         {
 
         }

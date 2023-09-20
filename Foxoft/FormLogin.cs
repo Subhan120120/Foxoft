@@ -199,7 +199,8 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormCommonList<DcPriceType> form = new FormCommonList<DcPriceType>("PriceTypeCode", "");
+            FormCommonList<DcFeature> form = new FormCommonList<DcFeature>(string.Empty, "FeatureCode","", "FeatureTypeId", "4");
+            //FormCommonList<DcFeature> form = new FormCommonList<DcFeature>("", "FeatureCode","4");
             form.Show();
 
         }

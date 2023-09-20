@@ -24,7 +24,7 @@ namespace Foxoft
         public string GetNextDocNum(bool DefisExist, string processCode, string columnName, string tableName, int ReplicateNum)
         {
             using subContext db = new();
-            string qry = $"exec [dbo].[GetNextDocNum] {DefisExist}, {processCode}, {columnName}, {tableName}, {ReplicateNum}";
+            string qry = $"exec [dbo].[GetNextDocNum] {DefisExist}, '{processCode}', '{columnName}', '{tableName}', {ReplicateNum}";
 
             return db.Set<GetNextDocNum>()
                 .FromSqlRaw(qry)

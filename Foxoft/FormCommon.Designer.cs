@@ -88,6 +88,7 @@ namespace Foxoft
             this.btn_Ok.StyleController = this.dataLayoutControl1;
             this.btn_Ok.TabIndex = 4;
             this.btn_Ok.Text = "simpleButton1";
+            this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
             // 
             // LCI_Ok
             // 
@@ -116,6 +117,7 @@ namespace Foxoft
             this.LCI_Cancel.Size = new System.Drawing.Size(432, 186);
             this.LCI_Cancel.TextSize = new System.Drawing.Size(0, 0);
             this.LCI_Cancel.TextVisible = false;
+            this.LCI_Cancel.Click += new System.EventHandler(this.LCI_Cancel_Click);
             // 
             // FormCommon
             // 

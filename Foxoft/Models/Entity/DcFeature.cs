@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Özəlliklər")]
     public partial class DcFeature
     {
         public DcFeature()

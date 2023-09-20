@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils;
+﻿using DevExpress.ClipboardSource.SpreadsheetML;
+using DevExpress.Utils;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -28,13 +30,15 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        T entity { get; set; }
+        T Entity { get; set; }
         subContext dbContext;
-        public string id_Value;
-        string processCode;
-        GridColumn col_Id = new();
+        public string Value_Id;
+        public string Value_2;
+        string ProcessCode;
+        GridColumn Col_Id = new();
+        GridColumn Col_2 = new();
 
-        public FormCommonList(string idFieldName, string processCode)
+        public FormCommonList(string processCode, string fieldName_Id)
         {
             InitializeComponent();
 
@@ -52,19 +56,28 @@ namespace Foxoft
 
             LoadLayout();
 
-            col_Id.FieldName = idFieldName;
+            Col_Id.FieldName = fieldName_Id;
+            this.ProcessCode = processCode;
         }
 
-        public FormCommonList(string idFieldName, string processCode, string id_Value)
-            : this(idFieldName, processCode)
+        public FormCommonList(string processCode, string fieldName_Id, string value_Id)
+            : this(processCode, fieldName_Id)
         {
-            this.id_Value = id_Value;
-            this.processCode = processCode;
+            this.Value_Id = value_Id;
+        }
+
+        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string fieldName_2, string value_2)
+            : this(processCode, fieldName_Id, value_Id)
+        {
+            this.Col_2.FieldName = fieldName_2;
+            this.Value_2 = value_2;
         }
 
         private void FormCommonList_Load(object sender, EventArgs e)
         {
-            int rowHandle = gridView1.LocateByValue(0, col_Id, id_Value);
+            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.Name;
+
+            int rowHandle = gridView1.LocateByValue(0, Col_Id, Value_Id);
             if (rowHandle != GridControl.InvalidRowHandle)
                 gridView1.FocusedRowHandle = rowHandle;
         }
@@ -72,6 +85,8 @@ namespace Foxoft
         private void FormCommonList_Activated(object sender, EventArgs e)
         {
             UpdateGridViewData();
+
+
         }
 
         private void LoadLayout()
@@ -94,18 +109,41 @@ namespace Foxoft
             //    gridView1.MoveLast();
 
             if (gridView1.FocusedRowHandle >= 0)
-                entity = gridView1.GetFocusedRow() as T;
+                Entity = gridView1.GetFocusedRow() as T;
             else
-                entity = null;
+                Entity = null;
         }
 
         private void LoadData()
         {
             dbContext = new subContext();
 
-            dbContext.Set<T>().Load();
+            Func<T, bool> pred = String.IsNullOrEmpty(Col_2.FieldName) ? _ => true : ConvertToPredicate(Col_2.FieldName, Value_2);
 
-            bindingSource1.DataSource = dbContext.Set<T>().Local.ToBindingList();
+            //dbContext.Set<T>().Where(pred).AsQueryable().Load();
+            //bindingSource1.DataSource = dbContext.Set<T>().Local.ToBindingList();
+
+            IList<T> data = dbContext.Set<T>().Where(pred).ToList();
+            bindingSource1.DataSource = data;
+
+            RemoveSomeColumns();
+        }
+
+        private void RemoveSomeColumns()
+        {
+            gridView1.Columns.ToList().ForEach(column =>
+            {
+                dbContext = new subContext();
+
+                if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
+                                || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
+                    gridView1.Columns.Remove(column);
+
+                string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
+
+                if (hiddenColumns.Contains(column.FieldName))
+                    column.Visible = false;
+            });
         }
 
         //private void LoadDataByQuery()
@@ -146,19 +184,19 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                id_Value = view.GetFocusedRowCellValue(col_Id)?.ToString();
-                if (id_Value is not null)
+                Value_Id = view.GetFocusedRowCellValue(Col_Id)?.ToString();
+                if (Value_Id is not null)
                 {
-                    entity = view.GetFocusedRow() as T;
+                    Entity = view.GetFocusedRow() as T;
                 }
             }
             else
-                entity = null;
+                Entity = null;
         }
 
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {
-            if (entity is not null)
+            if (Entity is not null)
                 DialogResult = DialogResult.OK;
         }
 
@@ -167,7 +205,7 @@ namespace Foxoft
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
             if (view == null) return;
 
-            if (entity is not null)
+            if (Entity is not null)
             {
                 if (e.KeyCode == Keys.Enter)
                 {
@@ -194,23 +232,23 @@ namespace Foxoft
             GridView view = sender as GridView;
 
             if (view.FocusedRowHandle >= 0)
-                entity = view.GetFocusedRow() as T;
+                Entity = view.GetFocusedRow() as T;
             else
-                entity = null;
+                Entity = null;
         }
 
         private void BBI_New_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            FormCommon<T> formProduct = new(col_Id.FieldName, true, processCode);
+            FormCommon<T> formProduct = new(ProcessCode, true, Col_Id.FieldName, "", Col_2.FieldName, Value_2);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
                 UpdateGridViewData();
         }
 
         private void BBI_Edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (id_Value is not null)
+            if (Value_Id is not null)
             {
-                FormCommon<T> formProduct = new(col_Id.FieldName, id_Value);
+                FormCommon<T> formProduct = new(ProcessCode, false, Col_Id.FieldName, Value_Id, Col_2.FieldName, Value_2);
 
                 if (formProduct.ShowDialog(this) == DialogResult.OK)
                     UpdateGridViewData();
@@ -221,13 +259,13 @@ namespace Foxoft
 
         private void BBI_Delete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            var redicate = ConvertToPredicate(col_Id.FieldName, id_Value);
+            var redicate = ConvertToPredicate(Col_Id.FieldName, Value_Id);
 
             if (dbContext.Set<T>().Any(redicate))
             {
-                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + id_Value, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + Value_Id, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    dbContext.Set<T>().Remove(entity);
+                    dbContext.Set<T>().Remove(Entity);
                     dbContext.SaveChanges();
 
                     UpdateGridViewData();
@@ -304,8 +342,10 @@ namespace Foxoft
         {
             gridView1.Columns.ToList().ForEach(column =>
             {
-                if ((column.FieldName.StartsWith("Tr") && column.FieldName.EndsWith("s"))
-                || column.FieldName.StartsWith("Dc"))
+                dbContext = new subContext();
+
+                if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
+                                || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
                     gridView1.Columns.Remove(column);
 
                 string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
@@ -315,6 +355,23 @@ namespace Foxoft
             });
 
             gridView1.BestFitColumns();
+        }
+
+        private void gridControl1_ControlAdded(object sender, ControlEventArgs e)
+        {
+            gridView1.Columns.ToList().ForEach(column =>
+            {
+                dbContext = new subContext();
+
+                if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
+                                || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
+                    gridView1.Columns.Remove(column);
+
+                string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
+
+                if (hiddenColumns.Contains(column.FieldName))
+                    column.Visible = false;
+            });
         }
     }
 }

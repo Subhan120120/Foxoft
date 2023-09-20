@@ -654,7 +654,7 @@ namespace Foxoft
             {
                 if (form == null)
                 {
-                    form = new("DiscountId", "");
+                    form = new("", "DiscountId");
                     form.MdiParent = this;
                     form.Show();
                     form.WindowState = FormWindowState.Maximized;
