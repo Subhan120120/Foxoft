@@ -301,5 +301,11 @@ namespace Foxoft
                 }
             }
         }
+
+        private void btn_ProductDiscount_Click(object sender, EventArgs e)
+        {
+            //FormProductDiscount formFeature = new(dcProduct.ProductCode);
+            //formFeature.ShowDialog();
+        }
     }
 }
