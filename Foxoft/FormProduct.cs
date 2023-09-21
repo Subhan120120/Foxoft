@@ -304,8 +304,8 @@ namespace Foxoft
 
         private void btn_ProductDiscount_Click(object sender, EventArgs e)
         {
-            //FormProductDiscount formFeature = new(dcProduct.ProductCode);
-            //formFeature.ShowDialog();
+            FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId", "", "ProductCode", dcProduct.ProductCode);
+            formFeature.ShowDialog();
         }
     }
 }

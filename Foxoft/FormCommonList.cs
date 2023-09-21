@@ -80,13 +80,13 @@ namespace Foxoft
             int rowHandle = gridView1.LocateByValue(0, Col_Id, Value_Id);
             if (rowHandle != GridControl.InvalidRowHandle)
                 gridView1.FocusedRowHandle = rowHandle;
+
+
         }
 
         private void FormCommonList_Activated(object sender, EventArgs e)
         {
             UpdateGridViewData();
-
-
         }
 
         private void LoadLayout()
@@ -126,24 +126,66 @@ namespace Foxoft
             IList<T> data = dbContext.Set<T>().Where(pred).ToList();
             bindingSource1.DataSource = data;
 
-            RemoveSomeColumns();
-        }
-
-        private void RemoveSomeColumns()
-        {
             gridView1.Columns.ToList().ForEach(column =>
             {
-                dbContext = new subContext();
-
-                if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
-                                || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
-                    gridView1.Columns.Remove(column);
-
-                string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
-
-                if (hiddenColumns.Contains(column.FieldName))
-                    column.Visible = false;
+                RemoveSomeColumns(column);
+                InvisibleSomeColumns(column);
+                AddUnboundColumns(column);
             });
+
+            gridView1.BestFitColumns();
+        }
+
+        private static void InvisibleSomeColumns(GridColumn column)
+        {
+            string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
+
+            if (hiddenColumns.Contains(column.FieldName))
+                column.Visible = false;
+        }
+
+        private void AddUnboundColumns(GridColumn column)
+        {
+            if (column.FieldName == "ProductCode")
+            {
+                if (gridView1.Columns["ProductDesc"] is null)
+                {
+                    GridColumn colProductDesc = new GridColumn();
+                    colProductDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
+                    colProductDesc.FieldName = "ProductDesc";
+                    colProductDesc.Name = "ProductDesc";
+                    colProductDesc.OptionsColumn.AllowEdit = false;
+                    colProductDesc.OptionsColumn.ReadOnly = true;
+                    colProductDesc.UnboundDataType = typeof(string);
+                    gridView1.Columns.Add(colProductDesc);
+                    colProductDesc.VisibleIndex = column.VisibleIndex + 1;
+                }
+            }
+
+            else if (column.FieldName == "DiscountId")
+            {
+                if (gridView1.Columns["DiscountName"] is null)
+                {
+                    GridColumn colDiscountDesc = new GridColumn();
+                    colDiscountDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcDiscount>(x => x.DiscountDesc);
+                    colDiscountDesc.FieldName = "DiscountName";
+                    colDiscountDesc.Name = "DiscountName";
+                    colDiscountDesc.OptionsColumn.AllowEdit = false;
+                    colDiscountDesc.OptionsColumn.ReadOnly = true;
+                    colDiscountDesc.UnboundDataType = typeof(string)
+                    gridView1.Columns.Add(colDiscountDesc);
+                    colDiscountDesc.VisibleIndex = column.VisibleIndex + 1;
+                }
+            }
+        }
+
+        private void RemoveSomeColumns(GridColumn column)
+        {
+            dbContext = new subContext();
+
+            if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
+                            || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
+                gridView1.Columns.Remove(column);
         }
 
         //private void LoadDataByQuery()
@@ -333,45 +375,32 @@ namespace Foxoft
             var b = e.RowHandle;
         }
 
-        private void BBI_Quit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void gridView1_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            this.Close();
-        }
-
-        private void gridControl1_Load(object sender, EventArgs e)
-        {
-            gridView1.Columns.ToList().ForEach(column =>
+            if (e.Column.FieldName == "DiscountName" && e.IsGetData)
             {
-                dbContext = new subContext();
+                GridView view = sender as GridView;
+                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+                object value = view.GetRowCellValue(rowInd, "DiscountId");
 
-                if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
-                                || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
-                    gridView1.Columns.Remove(column);
-
-                string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
-
-                if (hiddenColumns.Contains(column.FieldName))
-                    column.Visible = false;
-            });
-
-            gridView1.BestFitColumns();
-        }
-
-        private void gridControl1_ControlAdded(object sender, ControlEventArgs e)
-        {
-            gridView1.Columns.ToList().ForEach(column =>
+                if (value is not null)
+                {
+                    DcDiscount dcDiscount = efMethods.SelectDiscount(Convert.ToInt32(value));
+                    e.Value = dcDiscount?.DiscountDesc;
+                }
+            }
+            else if (e.Column.FieldName == "ProductDesc" && e.IsGetData)
             {
-                dbContext = new subContext();
+                GridView view = sender as GridView;
+                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+                object value = view.GetRowCellValue(rowInd, "ProductCode");
 
-                if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
-                                || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
-                    gridView1.Columns.Remove(column);
-
-                string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
-
-                if (hiddenColumns.Contains(column.FieldName))
-                    column.Visible = false;
-            });
+                if (value is not null)
+                {
+                    DcProduct dcProduct = efMethods.SelectProduct(value.ToString());
+                    e.Value = dcProduct?.ProductDesc;
+                }
+            }
         }
     }
 }

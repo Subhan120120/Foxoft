@@ -97,10 +97,7 @@ namespace Foxoft
                             if (itemFieldName == FieldName_Id)
                                 Control_Id = item;
                             else if (itemFieldName == FieldName_2)
-                            {
-
                                 Control_2 = item;
-                            }
                             else if (new string[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" }.Contains(itemFieldName))
                                 item.Visibility = LayoutVisibility.OnlyInCustomization;
                             else if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(itemFieldName)
