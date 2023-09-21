@@ -172,7 +172,7 @@ namespace Foxoft
                     colDiscountDesc.Name = "DiscountName";
                     colDiscountDesc.OptionsColumn.AllowEdit = false;
                     colDiscountDesc.OptionsColumn.ReadOnly = true;
-                    colDiscountDesc.UnboundDataType = typeof(string)
+                    colDiscountDesc.UnboundDataType = typeof(string);
                     gridView1.Columns.Add(colDiscountDesc);
                     colDiscountDesc.VisibleIndex = column.VisibleIndex + 1;
                 }

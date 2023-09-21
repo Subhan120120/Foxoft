@@ -70,7 +70,6 @@ namespace Foxoft
 
         private void FormCommon_Load(object sender, EventArgs e)
         {
-
             RetrieveFields();
 
             FillDataLayout();
