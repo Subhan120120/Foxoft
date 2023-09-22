@@ -31,6 +31,7 @@ namespace Foxoft.Models
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<SiteProduct> SiteProducts { get; set; }
         public DbSet<DcDiscount> DcDiscounts { get; set; }
+        public DbSet<TrProductDiscount> TrProductDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
         public DbSet<DcRole> DcRoles { get; set; }
         public DbSet<DcForm> DcForms { get; set; }

@@ -54,7 +54,7 @@ namespace Foxoft
             this.aCE_Invoices.Name = "Invoices";
             this.aCE_Products.Name = "Products";
             this.aCE_CurrAccs.Name = "CurrAccs";
-            this.ACE_CashRegs.Name = "CashRegs";
+            this.ACE_CashRegs.Name = "CashRegs"; 
             this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
             this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
             this.ACE_PurchaseIsReturn.Name = "PurchaseIsReturn";
