@@ -1113,7 +1113,7 @@ namespace Foxoft
         public List<TrPaymentMethodDiscount> SelectPaymentDiscounts()
         {
             using subContext db = new();
-            return db.trPaymentMethodDiscounts.Include(x => x.DcDiscount)
+            return db.TrPaymentMethodDiscounts.Include(x => x.DcDiscount)
                                               .Include(x => x.DcPaymentMethod)
                                               .ToList();
         }
@@ -1152,7 +1152,7 @@ namespace Foxoft
         public List<TrPaymentMethodDiscount> SelectPaymentMethodsByDiscount(int discountId)
         {
             using subContext db = new();
-            return db.trPaymentMethodDiscounts
+            return db.TrPaymentMethodDiscounts
                         .Include(x => x.DcDiscount)
                         .Include(x => x.DcPaymentMethod)
                         .ToList();
@@ -1161,7 +1161,7 @@ namespace Foxoft
         public List<TrPaymentMethodDiscount> SelectPaymentMethodByDiscounts()
         {
             using subContext db = new();
-            return db.trPaymentMethodDiscounts
+            return db.TrPaymentMethodDiscounts
                         .Include(x => x.DcDiscount)
                         .Include(x => x.DcPaymentMethod)
                         .ToList();

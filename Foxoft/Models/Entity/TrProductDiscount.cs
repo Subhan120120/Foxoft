@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Məhsul Endirimi")]
     public partial class TrProductDiscount
     {
         [Key, Column(Order = 0)]

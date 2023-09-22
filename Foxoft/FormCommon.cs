@@ -4,14 +4,18 @@ using DevExpress.Utils;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
+using Foxoft.Migrations;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -44,21 +48,20 @@ namespace Foxoft
         {
             InitializeComponent();
             bindingSource1.DataSource = typeof(T);
+            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.Name;
 
-            this.IsNew = isNew;
-            this.ProcessCode = processCode;
-            this.FieldName_Id = fieldName_Id;
+            IsNew = isNew;
+            ProcessCode = processCode;
+            FieldName_Id = fieldName_Id;
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
-
         }
 
         public FormCommon(string processCode, bool isNew, string fieldName_Id, string falue_Id)
             : this(processCode, isNew, fieldName_Id)
         {
             this.Value_Id = falue_Id;
-            Control_Id.Enabled = false;
         }
 
         public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string fieldName_2, string value_2)
@@ -71,6 +74,7 @@ namespace Foxoft
         private void FormCommon_Load(object sender, EventArgs e)
         {
             RetrieveFields();
+
 
             FillDataLayout();
         }
@@ -94,9 +98,21 @@ namespace Foxoft
                         {
                             string itemFieldName = item.Control.DataBindings[0].BindingMemberInfo.BindingField;
                             if (itemFieldName == FieldName_Id)
+                            {
                                 Control_Id = item;
+
+                                if (dbContext.Model.FindEntityType(typeof(T)).GetProperty(FieldName_Id).IsPrimaryKey())
+                                    if (!IsNew)
+                                        Control_Id.Enabled = false;
+                            }
                             else if (itemFieldName == FieldName_2)
+                            {
                                 Control_2 = item;
+
+                                if (dbContext.Model.FindEntityType(typeof(T)).GetProperty(FieldName_2).IsPrimaryKey())
+                                    if (!IsNew)
+                                        Control_2.Enabled = false;
+                            }
                             else if (new string[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" }.Contains(itemFieldName))
                                 item.Visibility = LayoutVisibility.OnlyInCustomization;
                             else if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(itemFieldName)
@@ -228,10 +244,36 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
+            if (e.FieldName == "ProductCode")
+                e.EditorType = typeof(ButtonEdit);
+            e.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
+            e.Handled = true;
         }
 
         private void dataLayoutControl1_FieldRetrieved(object sender, FieldRetrievedEventArgs e)
         {
+            if (e.FieldName == "ProductCode")
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdit_ProductCode_ButtonPressed);
+            }
+        }
+        private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string productCode = editor.EditValue?.ToString();
+
+            using FormProductList form = new(new byte[] { 1, 3 }, productCode);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.dcProduct.ProductCode;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void LCI_Cancel_Click(object sender, EventArgs e)

@@ -58,7 +58,7 @@ namespace Foxoft.Models
         public DbSet<DcHierarchy> DcHierarchies { get; set; }
         public DbSet<TrProductHierarchy> TrProductHierarchies { get; set; }
         public DbSet<TrHierarchyFeature> TrHierarchyFeatures { get; set; }
-        public DbSet<TrPaymentMethodDiscount> trPaymentMethodDiscounts { get; set; }
+        public DbSet<TrPaymentMethodDiscount> TrPaymentMethodDiscounts { get; set; }
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }

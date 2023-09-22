@@ -41,10 +41,7 @@ namespace Foxoft
         public FormCommonList(string processCode, string fieldName_Id)
         {
             InitializeComponent();
-
-            dbContext = new subContext();
-            var mapping = dbContext.Model.FindEntityType(typeof(T));
-            Text = mapping.GetTableName();
+            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.Name;
 
             BBI_New.ImageOptions.SvgImage = svgImageCollection1["add"];
             BBI_Edit.ImageOptions.SvgImage = svgImageCollection1["edit"];
@@ -75,18 +72,15 @@ namespace Foxoft
 
         private void FormCommonList_Load(object sender, EventArgs e)
         {
-            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.Name;
-
             int rowHandle = gridView1.LocateByValue(0, Col_Id, Value_Id);
             if (rowHandle != GridControl.InvalidRowHandle)
                 gridView1.FocusedRowHandle = rowHandle;
-
-
         }
 
         private void FormCommonList_Activated(object sender, EventArgs e)
         {
             UpdateGridViewData();
+
         }
 
         private void LoadLayout()
@@ -112,6 +106,14 @@ namespace Foxoft
                 Entity = gridView1.GetFocusedRow() as T;
             else
                 Entity = null;
+
+
+            gridView1.Columns.ToList().ForEach(column =>
+            {
+                RemoveSomeColumns(column);
+                InvisibleSomeColumns(column);
+                AddUnboundColumns(column);
+            });
         }
 
         private void LoadData()
@@ -125,13 +127,6 @@ namespace Foxoft
 
             IList<T> data = dbContext.Set<T>().Where(pred).ToList();
             bindingSource1.DataSource = data;
-
-            gridView1.Columns.ToList().ForEach(column =>
-            {
-                RemoveSomeColumns(column);
-                InvisibleSomeColumns(column);
-                AddUnboundColumns(column);
-            });
 
             gridView1.BestFitColumns();
         }
@@ -164,12 +159,12 @@ namespace Foxoft
 
             else if (column.FieldName == "DiscountId")
             {
-                if (gridView1.Columns["DiscountName"] is null)
+                if (gridView1.Columns["DiscountDesc"] is null)
                 {
                     GridColumn colDiscountDesc = new GridColumn();
                     colDiscountDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcDiscount>(x => x.DiscountDesc);
-                    colDiscountDesc.FieldName = "DiscountName";
-                    colDiscountDesc.Name = "DiscountName";
+                    colDiscountDesc.FieldName = "DiscountDesc";
+                    colDiscountDesc.Name = "DiscountDesc";
                     colDiscountDesc.OptionsColumn.AllowEdit = false;
                     colDiscountDesc.OptionsColumn.ReadOnly = true;
                     colDiscountDesc.UnboundDataType = typeof(string);
@@ -183,8 +178,10 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(column.FieldName)
-                            || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(column.FieldName)) // relation table adlari silinsin
+            var tableNames = dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList();
+            var typeNames = dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList();
+
+            if (tableNames.Contains(column.FieldName) || typeNames.Contains(column.FieldName)) // relation table adlari silinsin
                 gridView1.Columns.Remove(column);
         }
 
@@ -377,7 +374,7 @@ namespace Foxoft
 
         private void gridView1_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            if (e.Column.FieldName == "DiscountName" && e.IsGetData)
+            if (e.Column.FieldName == "DiscountDesc" && e.IsGetData)
             {
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
@@ -401,6 +398,29 @@ namespace Foxoft
                     e.Value = dcProduct?.ProductDesc;
                 }
             }
+        }
+
+        private void gridView1_AsyncCompleted(object sender, EventArgs e)
+        {
+
+
+            gridView1.Columns.ToList().ForEach(column =>
+            {
+                RemoveSomeColumns(column);
+                InvisibleSomeColumns(column);
+                AddUnboundColumns(column);
+            });
+        }
+
+        private void gridView1_RowLoaded(object sender, RowEventArgs e)
+        {
+
+            gridView1.Columns.ToList().ForEach(column =>
+            {
+                RemoveSomeColumns(column);
+                InvisibleSomeColumns(column);
+                AddUnboundColumns(column);
+            });
         }
     }
 }
