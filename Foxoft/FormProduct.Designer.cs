@@ -469,6 +469,7 @@ namespace Foxoft
             this.btnEdit_Hierarchy.Size = new System.Drawing.Size(161, 20);
             this.btnEdit_Hierarchy.StyleController = this.dataLayoutControl1;
             this.btnEdit_Hierarchy.TabIndex = 9;
+            this.btnEdit_Hierarchy.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_Hierarchy_ButtonPressed);
             // 
             // txtEdit_Price
             // 
@@ -506,11 +507,11 @@ namespace Foxoft
             this.txtEdit_Rating.StyleController = this.dataLayoutControl1;
             this.txtEdit_Rating.TabIndex = 20;
             // 
-            // btn_Discount
+            // btn_ProductDiscount
             // 
-            this.btn_ProductDiscount.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Discount.ImageOptions.SvgImage")));
+            this.btn_ProductDiscount.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_ProductDiscount.ImageOptions.SvgImage")));
             this.btn_ProductDiscount.Location = new System.Drawing.Point(146, 349);
-            this.btn_ProductDiscount.Name = "btn_Discount";
+            this.btn_ProductDiscount.Name = "btn_ProductDiscount";
             this.btn_ProductDiscount.Size = new System.Drawing.Size(132, 36);
             this.btn_ProductDiscount.StyleController = this.dataLayoutControl1;
             this.btn_ProductDiscount.TabIndex = 21;

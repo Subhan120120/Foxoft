@@ -137,6 +137,7 @@ namespace Foxoft
             this.bBI_CloseWindows.Id = 9;
             this.bBI_CloseWindows.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_CloseWindows.ImageOptions.SvgImage")));
             this.bBI_CloseWindows.Name = "bBI_CloseWindows";
+            this.bBI_CloseWindows.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_CloseWindows_ItemClick_1);
             // 
             // bBI_POS
             // 

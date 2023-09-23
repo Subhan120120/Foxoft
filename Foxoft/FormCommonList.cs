@@ -81,7 +81,6 @@ namespace Foxoft
         private void FormCommonList_Activated(object sender, EventArgs e)
         {
             UpdateGridViewData();
-
         }
 
         private void LoadLayout()
@@ -148,19 +147,18 @@ namespace Foxoft
 
         private void AddUnboundColumns(GridColumn column)
         {
+            GridColumn gridColumn = new GridColumn();
+            gridColumn.OptionsColumn.AllowEdit = false;
+            gridColumn.OptionsColumn.ReadOnly = true;
+
             if (column.FieldName == "ProductCode")
             {
                 if (gridView1.Columns["ProductDesc"] is null)
                 {
-                    GridColumn colProductDesc = new GridColumn();
-                    colProductDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
-                    colProductDesc.FieldName = "ProductDesc";
-                    colProductDesc.Name = "ProductDesc";
-                    colProductDesc.OptionsColumn.AllowEdit = false;
-                    colProductDesc.OptionsColumn.ReadOnly = true;
-                    colProductDesc.UnboundDataType = typeof(string);
-                    gridView1.Columns.Add(colProductDesc);
-                    colProductDesc.VisibleIndex = column.VisibleIndex + 1;
+                    gridColumn.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
+                    gridColumn.FieldName = "ProductDesc";
+                    gridColumn.UnboundDataType = typeof(string);
+                    gridView1.Columns.Add(gridColumn);
                 }
             }
 
@@ -168,17 +166,14 @@ namespace Foxoft
             {
                 if (gridView1.Columns["DiscountDesc"] is null)
                 {
-                    GridColumn colDiscountDesc = new GridColumn();
-                    colDiscountDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcDiscount>(x => x.DiscountDesc);
-                    colDiscountDesc.FieldName = "DiscountDesc";
-                    colDiscountDesc.Name = "DiscountDesc";
-                    colDiscountDesc.OptionsColumn.AllowEdit = false;
-                    colDiscountDesc.OptionsColumn.ReadOnly = true;
-                    colDiscountDesc.UnboundDataType = typeof(string);
-                    gridView1.Columns.Add(colDiscountDesc);
-                    colDiscountDesc.VisibleIndex = column.VisibleIndex + 1;
+                    gridColumn.Caption = ReflectionExtensions.GetPropertyDisplayName<DcDiscount>(x => x.DiscountDesc);
+                    gridColumn.FieldName = "DiscountDesc";
+                    gridColumn.UnboundDataType = typeof(string);
+                    gridView1.Columns.Add(gridColumn);
                 }
             }
+
+            gridColumn.VisibleIndex = column.VisibleIndex + 1;
         }
 
         private void RemoveSomeColumns(GridColumn column)
@@ -261,13 +256,9 @@ namespace Foxoft
 
                 if (e.KeyCode == Keys.C && e.Control)
                 {
-                    //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
-                    //   Clipboard.SetText(view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString());
-                    //else
-                    //   MessageBox.Show("The value in the selected cell is null or empty!");
-
-                    string cellValue = view.GetFocusedValue().ToString();
-                    Clipboard.SetText(cellValue);
+                    string cellValue = view.GetFocusedValue()?.ToString();
+                    if (!String.IsNullOrEmpty(cellValue))
+                        Clipboard.SetText(cellValue);
                     e.Handled = true;
                 }
 
@@ -384,18 +375,13 @@ namespace Foxoft
             }));
         }
 
-        private void gridView1_MasterRowExpanded(object sender, CustomMasterRowEventArgs e)
-        {
-            var a = e.RelationIndex;
-            var b = e.RowHandle;
-        }
-
         private void gridView1_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
+            GridView view = sender as GridView;
+            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+
             if (e.Column.FieldName == "DiscountDesc" && e.IsGetData)
             {
-                GridView view = sender as GridView;
-                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 object value = view.GetRowCellValue(rowInd, "DiscountId");
 
                 if (value is not null)
@@ -406,8 +392,6 @@ namespace Foxoft
             }
             else if (e.Column.FieldName == "ProductDesc" && e.IsGetData)
             {
-                GridView view = sender as GridView;
-                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 object value = view.GetRowCellValue(rowInd, "ProductCode");
 
                 if (value is not null)
@@ -418,24 +402,8 @@ namespace Foxoft
             }
         }
 
-        private void gridView1_AsyncCompleted(object sender, EventArgs e)
-        {
-            gridView1.Columns.ToList().ForEach(column =>
-            {
-                RemoveSomeColumns(column);
-                InvisibleSomeColumns(column);
-                AddUnboundColumns(column);
-            });
-        }
-
         private void gridView1_RowLoaded(object sender, RowEventArgs e)
         {
-            gridView1.Columns.ToList().ForEach(column =>
-            {
-                RemoveSomeColumns(column);
-                InvisibleSomeColumns(column);
-                AddUnboundColumns(column);
-            });
         }
     }
 }

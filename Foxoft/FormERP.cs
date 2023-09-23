@@ -9,6 +9,7 @@ using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -54,7 +55,7 @@ namespace Foxoft
             this.aCE_Invoices.Name = "Invoices";
             this.aCE_Products.Name = "Products";
             this.aCE_CurrAccs.Name = "CurrAccs";
-            this.ACE_CashRegs.Name = "CashRegs"; 
+            this.ACE_CashRegs.Name = "CashRegs";
             this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
             this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
             this.ACE_PurchaseIsReturn.Name = "PurchaseIsReturn";
@@ -673,6 +674,13 @@ namespace Foxoft
             {
                 MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex.ToString());
             }
+        }
+
+        private void bBI_CloseWindows_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
+            ArrayList list = new ArrayList(MdiChildren);
+            foreach (Form f in list)
+                f.Close();
         }
     }
 }
