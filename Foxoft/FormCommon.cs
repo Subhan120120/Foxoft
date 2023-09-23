@@ -220,10 +220,12 @@ namespace Foxoft
 
                 string id = Control_Id.Control.Text;
 
-                Func<T, bool> predicate = ConvertToPredicate(FieldName_Id, id);
+                Func<T, bool> predicate_id = ConvertToPredicate(FieldName_Id, id);
+                Func<T, bool> predicate_2 = string.IsNullOrEmpty(FieldName_2) ? _ => true : ConvertToPredicate(FieldName_2, Value_2);
 
                 if (IsNew) //if invoiceHeader doesnt exist
-                    if (!dbContext.Set<T>().Any(predicate))
+                    if (!dbContext.Set<T>().Where(predicate_id)
+                                           .Any(predicate_2))
                     {
                         dbContext.Set<T>().Add(Entity);
                         dbContext.SaveChanges();
@@ -246,6 +248,9 @@ namespace Foxoft
         {
             if (e.FieldName == "ProductCode")
                 e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == "DiscountId")
+                e.EditorType = typeof(ButtonEdit);
+
             e.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             e.Handled = true;
         }
@@ -255,9 +260,15 @@ namespace Foxoft
             if (e.FieldName == "ProductCode")
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(this.repoBtnEdit_ProductCode_ButtonPressed);
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ProductCode_ButtonPressed);
+            }
+            if (e.FieldName == "DiscountId")
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_DiscountId_ButtonPressed);
             }
         }
+
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
@@ -269,6 +280,24 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     editor.EditValue = form.dcProduct.ProductCode;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_DiscountId_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string value = editor.EditValue?.ToString();
+
+            using FormCommonList<DcDiscount> form = new("", "DiscountId", value);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {

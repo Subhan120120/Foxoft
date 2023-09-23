@@ -9,6 +9,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -103,17 +104,23 @@ namespace Foxoft
             //    gridView1.MoveLast();
 
             if (gridView1.FocusedRowHandle >= 0)
-                Entity = gridView1.GetFocusedRow() as T;
+            {
+                Value_Id = gridView1.GetFocusedRowCellValue(Col_Id)?.ToString();
+                if (Value_Id is not null)
+                    Entity = gridView1.GetFocusedRow() as T;
+            }
             else
+            {
+                Value_Id = null;
                 Entity = null;
-
+            }
 
             gridView1.Columns.ToList().ForEach(column =>
-            {
-                RemoveSomeColumns(column);
-                InvisibleSomeColumns(column);
-                AddUnboundColumns(column);
-            });
+           {
+               RemoveSomeColumns(column);
+               InvisibleSomeColumns(column);
+               AddUnboundColumns(column);
+           });
         }
 
         private void LoadData()
@@ -225,17 +232,18 @@ namespace Foxoft
             {
                 Value_Id = view.GetFocusedRowCellValue(Col_Id)?.ToString();
                 if (Value_Id is not null)
-                {
                     Entity = view.GetFocusedRow() as T;
-                }
             }
             else
+            {
+                Value_Id = null;
                 Entity = null;
+            }
         }
 
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {
-            if (Entity is not null)
+            if (Value_Id is not null)
                 DialogResult = DialogResult.OK;
         }
 
@@ -244,7 +252,7 @@ namespace Foxoft
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
             if (view == null) return;
 
-            if (Entity is not null)
+            if (Value_Id is not null)
             {
                 if (e.KeyCode == Keys.Enter)
                 {
@@ -271,13 +279,23 @@ namespace Foxoft
             GridView view = sender as GridView;
 
             if (view.FocusedRowHandle >= 0)
-                Entity = view.GetFocusedRow() as T;
+            {
+                Value_Id = view.GetFocusedRowCellValue(Col_Id)?.ToString();
+                if (Value_Id is not null)
+                    Entity = view.GetFocusedRow() as T;
+            }
             else
+            {
+                Value_Id = null;
                 Entity = null;
+            }
         }
 
         private void BBI_New_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            Value_Id = null;
+            Entity = null;
+
             FormCommon<T> formProduct = new(ProcessCode, true, Col_Id.FieldName, "", Col_2.FieldName, Value_2);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
                 UpdateGridViewData();
@@ -402,8 +420,6 @@ namespace Foxoft
 
         private void gridView1_AsyncCompleted(object sender, EventArgs e)
         {
-
-
             gridView1.Columns.ToList().ForEach(column =>
             {
                 RemoveSomeColumns(column);
@@ -414,7 +430,6 @@ namespace Foxoft
 
         private void gridView1_RowLoaded(object sender, RowEventArgs e)
         {
-
             gridView1.Columns.ToList().ForEach(column =>
             {
                 RemoveSomeColumns(column);
