@@ -954,7 +954,7 @@ namespace Foxoft
             trPaymentLine.PaymentMethodId = 1;
             trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLine.ExchangeRate = 1f;
-            string storeCode = lUE_StoreCode.EditValue.ToString();
+            string storeCode = lUE_StoreCode.EditValue?.ToString();
             trPaymentLine.CashRegisterCode = efMethods.SelectCashRegByStore(storeCode);
             trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
@@ -1642,7 +1642,7 @@ namespace Foxoft
                                 }
                                 catch (ArgumentException ae)
                                 {
-                                    MessageBox.Show("Xəta No: 256545 \n" + ae.Message ,"Import xetası");
+                                    MessageBox.Show("Xəta No: 256545 \n" + ae.Message, "Import xetası");
                                 }
                             }
 
@@ -1841,6 +1841,12 @@ namespace Foxoft
             string userName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
             string createDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
             XtraMessageBox.Show(userName + '\n' + '\n' + createDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void BBI_picture_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormImage formPictures = new FormImage(btnEdit_DocNum.EditValue?.ToString());
+            formPictures.ShowDialog();
         }
     }
 }
