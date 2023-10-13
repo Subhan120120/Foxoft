@@ -1,32 +1,19 @@
-﻿using System;
+﻿using DevExpress.XtraBars.Ribbon;
+using Foxoft.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.Dialogs.Core;
-using DevExpress.Mvvm.Native;
-using DevExpress.Utils;
-using DevExpress.Utils.Drawing;
-using DevExpress.XtraBars.Ribbon;
-using DevExpress.XtraBars.Ribbon.Gallery;
-using DevExpress.XtraBars.Ribbon.ViewInfo;
-using DevExpress.XtraEditors;
-using Foxoft.Models;
 
 namespace Foxoft
 {
-    public partial class FormImage : XtraForm
+    public partial class FormImage : RibbonForm
     {
         EfMethods efMethods = new();
         string imageFolder;
         string code;
-
 
         GalleryItemGroup galleryItemGroup1 = new();
 
@@ -37,21 +24,20 @@ namespace Foxoft
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                 imageFolder = settingStore.ImageFolder;
+
+            galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
         }
 
         public FormImage(string code)
             : this()
         {
             this.code = code;
-            string folderPath = imageFolder + @"\" + code;
 
-            var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
-            List<Image> images = GetFilesFrom(folderPath, filters, SearchOption.TopDirectoryOnly);
+            LoadGallaryImages();
 
-            galleryControl1.Gallery.ItemImageLayout = ImageLayoutMode.ZoomInside;
-            galleryControl1.Gallery.ImageSize = new Size(120, 90);
-            galleryControl1.Gallery.ItemCheckMode = ItemCheckMode.SingleCheck;
-            galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
+            //galleryControl1.Gallery.ItemImageLayout = ImageLayoutMode.ZoomInside;
+            //galleryControl1.Gallery.ImageSize = new Size(120, 90);
+            //galleryControl1.Gallery.ItemCheckMode = ItemCheckMode.SingleCheck;
 
             //var cb = new ContextButton
             //{
@@ -73,11 +59,19 @@ namespace Foxoft
 
             //var options = galleryControl1.Gallery.ContextButtonOptions;
             //options.DisplayArea = ContextItemDisplayArea.Image;
+        }
+
+        private void LoadGallaryImages()
+        {
+            string folderPath = Path.Combine(imageFolder, code);
+
+            var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
+            List<Image> images = GetFilesFrom(folderPath, filters, SearchOption.TopDirectoryOnly);
+
+            galleryItemGroup1.Items.Clear();
 
             foreach (var img in images)
-            {
                 AddImageToGallary(img);
-            }
         }
 
         public static List<Image> GetFilesFrom(String folderPath, String[] filters, SearchOption searchOption)
@@ -120,7 +114,7 @@ namespace Foxoft
                         "Images (*.BMP;*.JPG;*.GIF,*.PNG,*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|" +
                         "All files (*.*)|*.*";
 
-            //dialog.Multiselect = true;
+            dialog.Multiselect = true;
             dialog.Title = "Foxoft üçün şəkil seçin.";
 
             DialogResult result = dialog.ShowDialog();
@@ -129,7 +123,6 @@ namespace Foxoft
                 foreach (string fullPath in dialog.FileNames)
                 {
                     Image.GetThumbnailImageAbort myCallback = new(ThumbnailCallback);
-                    //Image myThumbnail = myBitmap.GetThumbnailImage(300, 300, myCallback, IntPtr.Zero);
 
                     using FileStream fs = new(fullPath, FileMode.Open, FileAccess.Read);
 
@@ -137,9 +130,7 @@ namespace Foxoft
 
                     if (img is not null)
                     {
-                        string ext = Path.GetExtension(fullPath);
                         string name = Path.GetFileName(fullPath);
-
                         string folderPath = Path.Combine(imageFolder, code);
                         string filePath = Path.Combine(imageFolder, code, name);
 
@@ -149,7 +140,6 @@ namespace Foxoft
                         img.Save(filePath);
                         GC.Collect();
                         img.Tag = filePath;
-                        AddImageToGallary(img);
                     }
                 }
             }
@@ -175,15 +165,19 @@ namespace Foxoft
             return false;
         }
 
-        private void btn_Delete_Click(object sender, EventArgs e)
+        private void btn_Add_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            openFileDialog();
+            LoadGallaryImages();
+        }
+
+        private void btn_Delete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             var item = galleryControl1.Gallery.GetCheckedItem();
             if (item != null)
             {
-                galleryItemGroup1.Items.Remove(item);
-                string fullPath = Path.Combine(imageFolder, code);
                 File.Delete(item.Image.Tag?.ToString());
-
+                LoadGallaryImages();
             }
         }
     }
