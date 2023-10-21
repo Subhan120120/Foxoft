@@ -2,6 +2,7 @@
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ namespace Foxoft
     public partial class FormLogin : ToolbarForm
     {
         EfMethods efMethods = new();
+        CustomMethods cM = new();
+
         public FormLogin()
         {
             // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
@@ -49,9 +52,10 @@ namespace Foxoft
 
                 CreateViews(db.Database);
 
+                UpdateReportsLayout();
+
                 Trace.Write("\n db.Database.CanConnect() = " + db.Database.CanConnect().ToString() + " \n InitializeComponent starting... ");
 
-                EfMethods efMethods = new();
                 AppSetting appSetting = efMethods.SelectAppSetting();
                 Trace.Write("\n AppSetting appSetting = " + appSetting.Id.ToString() + " \n InitializeComponent starting... ");
                 Settings.Default.AppSetting = appSetting;
@@ -75,6 +79,22 @@ namespace Foxoft
                 MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
         }
 
+        private void UpdateReportsLayout()
+        {
+            UpdateReportLayout(4, "Report_Grid_Expenses.xml");
+            UpdateReportLayout(5, "Report_Grid_MoneyMovements.xml");
+            UpdateReportLayout(6, "Report_Grid_MovementsWithAccounts.xml");
+            UpdateReportLayout(7, "Report_Grid_ProductMovements.xml");
+            UpdateReportLayout(8, "Report_Grid_Profit.xml");
+            UpdateReportLayout(9, "Report_Grid_RecentGoods.xml");
+            UpdateReportLayout(10, "Report_Grid_WarehouseBalance.xml");
+        }
+
+        private void UpdateReportLayout(int reportId, string fileName)
+        {
+            string layout = cM.GetDataFromFile("Foxoft.AppCode.Report." + fileName);
+            efMethods.UpdateReportLayout(reportId, layout);
+        }
 
         private static void CreateViews(DatabaseFacade db)
         {
@@ -199,7 +219,7 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormCommonList<DcFeature> form = new FormCommonList<DcFeature>(string.Empty, "FeatureCode","", "FeatureTypeId", "4");
+            FormCommonList<DcFeature> form = new FormCommonList<DcFeature>(string.Empty, "FeatureCode", "", "FeatureTypeId", "4");
             //FormCommonList<DcFeature> form = new FormCommonList<DcFeature>("", "FeatureCode","4");
             form.Show();
 
@@ -222,11 +242,12 @@ namespace Foxoft
         {
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
-                var pInterfaceProperties = nic.GetPhysicalAddress();
-
                 if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                     if (nic.Name == "Ethernet")
+                    {
+                        var pInterfaceProperties = nic.GetPhysicalAddress();
                         Clipboard.SetText(nic.Id + pInterfaceProperties);
+                    }
             }
         }
     }

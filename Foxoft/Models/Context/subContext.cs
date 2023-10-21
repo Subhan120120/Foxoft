@@ -6,6 +6,7 @@ using System.Reflection;
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
+using System.IO;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -144,6 +145,28 @@ namespace Foxoft.Models
                 new DcCurrAccType { CurrAccTypeCode = 5, CurrAccTypeDesc = "Kassa" }
                 );
 
+            modelBuilder.Entity<DcClaim>().HasData(
+                new DcClaim { ClaimCode = "ButunHesabatlar", ClaimDesc = "Butun Hesabatlar", ClaimTypeId = 2 },
+                new DcClaim { ClaimCode = "CashRegs", ClaimDesc = "Kassalar", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "CashTransfer", ClaimDesc = "Pul Transferi", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "Column_LastPurchasePrice", ClaimDesc = "Son Alış Qiyməti", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "CountIn", ClaimDesc = "Sayım Artırma", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "CountOut", ClaimDesc = "Sayım Azaltma", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "CurrAccs", ClaimDesc = "Cari Hesablar", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DiscountList", ClaimDesc = "Endirim Siyahısı", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "Expense", ClaimDesc = "Xərc", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "InventoryTransfer", ClaimDesc = "Mal Transferi", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "PaymentDetail", ClaimDesc = "Ödəmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "Products", ClaimDesc = "Məhsullar", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "PurchaseIsReturn", ClaimDesc = "Alışın Qaytarılması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "ReportZet", ClaimDesc = "Gün Sonu Hesabatı", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "RetailPurchaseInvoice", ClaimDesc = "Alış Fakturası", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "RetailSaleInvoice", ClaimDesc = "Satış Fakturası", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "SaleIsReturn", ClaimDesc = "Satışın Qaytarılması", ClaimTypeId = 1 }
+                );
+
             modelBuilder.Entity<dcClaimType>().HasData(
                 new dcClaimType { ClaimTypeId = 1, ClaimTypeDesc = "Embaded" },
                 new dcClaimType { ClaimTypeId = 2, ClaimTypeDesc = "Report" },
@@ -168,20 +191,80 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrCurrAccRole>().HasData(
                new TrCurrAccRole { CurrAccRoleId = 1, CurrAccCode = "CA-1", RoleCode = "Admin" });
 
-            modelBuilder.Entity<DcClaim>().HasData(
-                new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1 });
-
-
             modelBuilder.Entity<TrRoleClaim>().HasData(
-               new TrRoleClaim { RoleClaimId = 1, RoleCode = "Admin", ClaimCode = "PosDiscount" });
+                new TrRoleClaim { RoleClaimId = 1, RoleCode = "Admin", ClaimCode = "ButunHesabatlar" },
+                new TrRoleClaim { RoleClaimId = 2, RoleCode = "Admin", ClaimCode = "CashRegs" },
+                new TrRoleClaim { RoleClaimId = 3, RoleCode = "Admin", ClaimCode = "CashTransfer" },
+                new TrRoleClaim { RoleClaimId = 4, RoleCode = "Admin", ClaimCode = "Column_LastPurchasePrice" },
+                new TrRoleClaim { RoleClaimId = 5, RoleCode = "Admin", ClaimCode = "CountIn" },
+                new TrRoleClaim { RoleClaimId = 6, RoleCode = "Admin", ClaimCode = "CountOut" },
+                new TrRoleClaim { RoleClaimId = 7, RoleCode = "Admin", ClaimCode = "CurrAccs" },
+                new TrRoleClaim { RoleClaimId = 8, RoleCode = "Admin", ClaimCode = "DiscountList" },
+                new TrRoleClaim { RoleClaimId = 9, RoleCode = "Admin", ClaimCode = "Expense" },
+                new TrRoleClaim { RoleClaimId = 10, RoleCode = "Admin", ClaimCode = "InventoryTransfer" },
+                new TrRoleClaim { RoleClaimId = 11, RoleCode = "Admin", ClaimCode = "PaymentDetail" },
+                new TrRoleClaim { RoleClaimId = 12, RoleCode = "Admin", ClaimCode = "PosDiscount" },
+                new TrRoleClaim { RoleClaimId = 13, RoleCode = "Admin", ClaimCode = "PriceList" },
+                new TrRoleClaim { RoleClaimId = 14, RoleCode = "Admin", ClaimCode = "Products" },
+                new TrRoleClaim { RoleClaimId = 15, RoleCode = "Admin", ClaimCode = "PurchaseIsReturn" },
+                new TrRoleClaim { RoleClaimId = 16, RoleCode = "Admin", ClaimCode = "ReportZet" },
+                new TrRoleClaim { RoleClaimId = 17, RoleCode = "Admin", ClaimCode = "RetailPurchaseInvoice" },
+                new TrRoleClaim { RoleClaimId = 18, RoleCode = "Admin", ClaimCode = "RetailSaleInvoice" },
+                new TrRoleClaim { RoleClaimId = 19, RoleCode = "Admin", ClaimCode = "SaleIsReturn" }
+               );
+
+            modelBuilder.Entity<TrClaimReport>().HasData(
+                new TrClaimReport { ClaimReportId = 1, ClaimCode = "ButunHesabatlar", ReportId = 1 },
+                new TrClaimReport { ClaimReportId = 2, ClaimCode = "ButunHesabatlar", ReportId = 2 },
+                new TrClaimReport { ClaimReportId = 3, ClaimCode = "ButunHesabatlar", ReportId = 3 },
+                new TrClaimReport { ClaimReportId = 4, ClaimCode = "ButunHesabatlar", ReportId = 4 },
+                new TrClaimReport { ClaimReportId = 5, ClaimCode = "ButunHesabatlar", ReportId = 5 },
+                new TrClaimReport { ClaimReportId = 6, ClaimCode = "ButunHesabatlar", ReportId = 6 },
+                new TrClaimReport { ClaimReportId = 7, ClaimCode = "ButunHesabatlar", ReportId = 7 },
+                new TrClaimReport { ClaimReportId = 8, ClaimCode = "ButunHesabatlar", ReportId = 8 },
+                new TrClaimReport { ClaimReportId = 9, ClaimCode = "ButunHesabatlar", ReportId = 9 },
+                new TrClaimReport { ClaimReportId = 10, ClaimCode = "ButunHesabatlar", ReportId = 10 },
+                new TrClaimReport { ClaimReportId = 11, ClaimCode = "ButunHesabatlar", ReportId = 11 }
+               );
+
+            static string GetReportFile(string fileName)
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string qry = "";
+                string path = "Foxoft.AppCode.Report." + fileName;
+                Stream stream = assembly.GetManifestResourceStream(path);
+                StreamReader reader = new(stream);
+                qry = reader.ReadToEnd();
+
+                return qry;
+            }
+
+            CustomMethods cM = new();
+
+            modelBuilder.Entity<DcReport>().HasData(
+                new DcReport { ReportId = 1, ReportTypeId = 0, ReportName = "Report_Embedded_ProductList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_ProductList.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 2, ReportTypeId = 0, ReportName = "Report_Embedded_CurrAccList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_CurrAccList.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 3, ReportTypeId = 0, ReportName = "Report_Embedded_CashRegList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_CashRegList.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 4, ReportTypeId = 1, ReportName = "Report_Grid_Expenses", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 5, ReportTypeId = 1, ReportName = "Report_Grid_MoneyMovements", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 6, ReportTypeId = 1, ReportName = "Report_Grid_MovementsWithAccounts", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 7, ReportTypeId = 1, ReportName = "Report_Grid_ProductMovements", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductMovements.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 8, ReportTypeId = 1, ReportName = "Report_Grid_Profit", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Profit.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 9, ReportTypeId = 1, ReportName = "Report_Grid_RecentGoods", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_RecentGoods.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 10, ReportTypeId = 1, ReportName = "Report_Grid_WarehouseBalance", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 11, ReportTypeId = 1, ReportName = "Report_Detail_ProductCard", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" }
+                // reportlarin layoutlarin FormLogin de duzelt
+               );
 
             modelBuilder.Entity<DcOffice>().HasData(
                new DcOffice { OfficeCode = "ofs01", OfficeDesc = "Bakıxanov Ofisi" },
-               new DcOffice { OfficeCode = "ofs02", OfficeDesc = "Elmlər Ofisi" });
+               new DcOffice { OfficeCode = "ofs02", OfficeDesc = "Elmlər Ofisi" }
+               );
 
             modelBuilder.Entity<DcPaymentType>().HasData(
                 new DcPaymentType { PaymentTypeCode = 1, PaymentTypeDesc = "Nağd" },
-                new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" });
+                new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" }
+                );
 
             modelBuilder.Entity<DcPaymentMethod>().HasData(
                 new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" },
@@ -307,12 +390,11 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<DcReport>().HasData(
-                new DcReport { ReportId = 1, ReportName = "Satis", ReportQuery = "select * from TrInvoiceLines", ReportTypeId = 1 });
-
             modelBuilder.Entity<DcReportType>().HasData(
+                new DcReportType { ReportTypeId = 0, ReportTypeDesc = "Embedded" },
                 new DcReportType { ReportTypeId = 1, ReportTypeDesc = "Grid" },
-                new DcReportType { ReportTypeId = 2, ReportTypeDesc = "Detail" });
+                new DcReportType { ReportTypeId = 2, ReportTypeDesc = "Detail" }
+                );
 
             CustomMethods customMethods = new();
             string gvListDefault = customMethods.GetDataFromFile("Foxoft.AppCode.GvListDefaultLayout.xml");
@@ -382,6 +464,8 @@ namespace Foxoft.Models
             });
 
             OnModelCreatingPartial(modelBuilder);
+
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

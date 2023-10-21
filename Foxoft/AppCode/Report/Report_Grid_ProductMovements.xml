@@ -1,0 +1,592 @@
+﻿<XtraSerializer version="1.0" application="View">
+  <property name="#LayoutVersion" />
+  <property name="#LayoutScaleFactor">@9,Width=1.1666666@9,Height=1.2307693</property>
+  <property name="OptionsView" isnull="true" iskey="true">
+    <property name="GroupFooterShowMode">VisibleAlways</property>
+    <property name="ShowAutoFilterRow">true</property>
+    <property name="ShowFooter">true</property>
+  </property>
+  <property name="ActiveFilterEnabled">true</property>
+  <property name="Columns" iskey="true" value="58">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="Name">colInvoiceLineId</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="Name">colInvoiceHeaderId</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="Name">colProductCode</property>
+      <property name="Width">64</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="Name">colProductDesc</property>
+      <property name="Width">210</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="Name">colQtyIn</property>
+      <property name="VisibleIndex">6</property>
+      <property name="Visible">true</property>
+      <property name="Width">30</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item6" isnull="true" iskey="true">
+      <property name="Name">colQtyOut</property>
+      <property name="VisibleIndex">7</property>
+      <property name="Visible">true</property>
+      <property name="Width">31</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item7" isnull="true" iskey="true">
+      <property name="Name">colPrice</property>
+      <property name="Width">63</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item8" isnull="true" iskey="true">
+      <property name="Name">colAmount</property>
+      <property name="Width">95</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item9" isnull="true" iskey="true">
+      <property name="Name">colPosDiscount</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item10" isnull="true" iskey="true">
+      <property name="Name">colNetAmountLoc</property>
+      <property name="VisibleIndex">10</property>
+      <property name="Visible">true</property>
+      <property name="Width">38</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+      <property name="Summary" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Tag" isnull="true" />
+          <property name="FieldName">NetAmountLoc</property>
+          <property name="SummaryType">Sum</property>
+          <property name="Mode">AllRows</property>
+          <property name="DisplayFormat">{0:0.00}</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item11" isnull="true" iskey="true">
+      <property name="Name">colLineDescription</property>
+      <property name="Width">335</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item12" isnull="true" iskey="true">
+      <property name="Name">colSalesPersonCode</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item13" isnull="true" iskey="true">
+      <property name="Name">colCurrencyCode</property>
+      <property name="VisibleIndex">8</property>
+      <property name="Visible">true</property>
+      <property name="Width">21</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item14" isnull="true" iskey="true">
+      <property name="Name">colExchangeRate</property>
+      <property name="Width">103</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item15" isnull="true" iskey="true">
+      <property name="Name">colProcessCode</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item16" isnull="true" iskey="true">
+      <property name="Name">colProcessDesc</property>
+      <property name="VisibleIndex">0</property>
+      <property name="Visible">true</property>
+      <property name="Width">58</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item17" isnull="true" iskey="true">
+      <property name="Name">colLastPurchasePrice</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item18" isnull="true" iskey="true">
+      <property name="Name">colIsReturn</property>
+      <property name="Width">44</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item19" isnull="true" iskey="true">
+      <property name="Name">colDocumentDate</property>
+      <property name="VisibleIndex">2</property>
+      <property name="Visible">true</property>
+      <property name="Width">48</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item20" isnull="true" iskey="true">
+      <property name="Name">colDocumentTime</property>
+      <property name="Width">109</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item21" isnull="true" iskey="true">
+      <property name="Name">colOperationDate</property>
+      <property name="Width">105</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item22" isnull="true" iskey="true">
+      <property name="Name">colOperationTime</property>
+      <property name="Width">81</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item23" isnull="true" iskey="true">
+      <property name="Name">colDescription</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item24" isnull="true" iskey="true">
+      <property name="Name">colCurrAccCode</property>
+      <property name="Width">97</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item25" isnull="true" iskey="true">
+      <property name="Name">colCurrAccTypeDesc</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item26" isnull="true" iskey="true">
+      <property name="Name">colCurrAccTypeCode</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item27" isnull="true" iskey="true">
+      <property name="Name">colOfficeCode</property>
+      <property name="Width">63</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item28" isnull="true" iskey="true">
+      <property name="Name">colStoreCode</property>
+      <property name="Width">42</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item29" isnull="true" iskey="true">
+      <property name="Name">colWarehouseCode</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item30" isnull="true" iskey="true">
+      <property name="Name">colCustomsDocumentNumber</property>
+      <property name="VisibleIndex">3</property>
+      <property name="Visible">true</property>
+      <property name="Width">88</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item31" isnull="true" iskey="true">
+      <property name="Name">colPosTerminalId</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item32" isnull="true" iskey="true">
+      <property name="Name">colIsSuspended</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item33" isnull="true" iskey="true">
+      <property name="Name">colIsCompleted</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item34" isnull="true" iskey="true">
+      <property name="Name">colIsSalesViaInternet</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item35" isnull="true" iskey="true">
+      <property name="Name">colIsLocked</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item36" isnull="true" iskey="true">
+      <property name="Name">colBarcode</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item37" isnull="true" iskey="true">
+      <property name="Name">colProductTypeCode</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item38" isnull="true" iskey="true">
+      <property name="Name">colProductTypeDesc</property>
+      <property name="Width">95</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item39" isnull="true" iskey="true">
+      <property name="Name">colUsePos</property>
+      <property name="Width">35</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item40" isnull="true" iskey="true">
+      <property name="Name">colPromotionCode</property>
+      <property name="Width">104</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item41" isnull="true" iskey="true">
+      <property name="Name">colTaxRate</property>
+      <property name="Width">20</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item42" isnull="true" iskey="true">
+      <property name="Name">colRetailPrice</property>
+      <property name="Width">20</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item43" isnull="true" iskey="true">
+      <property name="Name">colPurchasePrice</property>
+      <property name="Width">20</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item44" isnull="true" iskey="true">
+      <property name="Name">colWholesalePrice</property>
+      <property name="Width">53</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item45" isnull="true" iskey="true">
+      <property name="Name">colCurrAccDesc</property>
+      <property name="VisibleIndex">4</property>
+      <property name="Visible">true</property>
+      <property name="Width">156</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item46" isnull="true" iskey="true">
+      <property name="Name">colCreatedDate</property>
+      <property name="Width">79</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item47" isnull="true" iskey="true">
+      <property name="Name">colPrintCount</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item48" isnull="true" iskey="true">
+      <property name="Name">colBenefit</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item49" isnull="true" iskey="true">
+      <property name="Name">colBalance</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item50" isnull="true" iskey="true">
+      <property name="Name">colNet</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item51" isnull="true" iskey="true">
+      <property name="Name">colDocumentNumber</property>
+      <property name="VisibleIndex">1</property>
+      <property name="Visible">true</property>
+      <property name="Width">46</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item52" isnull="true" iskey="true">
+      <property name="Name">colPriceLoc</property>
+      <property name="Width">91</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item53" isnull="true" iskey="true">
+      <property name="Name">colQaimeÜzrəÖdəniş</property>
+      <property name="Width">45</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item54" isnull="true" iskey="true">
+      <property name="Name">colImagePath</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item55" isnull="true" iskey="true">
+      <property name="Name">colImage</property>
+      <property name="Width">20</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item56" isnull="true" iskey="true">
+      <property name="Name">colCreatedUserName</property>
+      <property name="Width">129</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item57" isnull="true" iskey="true">
+      <property name="Name">colQiymətEnd.li</property>
+      <property name="VisibleIndex">9</property>
+      <property name="Visible">true</property>
+      <property name="Width">87</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item58" isnull="true" iskey="true">
+      <property name="Name">colMəhsulunGenişAdı</property>
+      <property name="VisibleIndex">5</property>
+      <property name="Visible">true</property>
+      <property name="Width">259</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+  </property>
+  <property name="GroupSummary" iskey="true" value="1">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="Mode">AllRows</property>
+      <property name="ShowInGroupColumnFooterName">colNetAmountLoc</property>
+      <property name="Tag" isnull="true" />
+      <property name="FieldName">NetAmountLoc</property>
+      <property name="SummaryType">Sum</property>
+      <property name="DisplayFormat">{0:0.00}</property>
+    </property>
+  </property>
+  <property name="ActiveFilterString" />
+  <property name="MRUFiltersInfo" iskey="true" value="10">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CurrAccCode] = 'C-0233'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCurrAccCode</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CurrAccCode] = 'C-0588'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCurrAccCode</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[StoreCode] = 'mgz01'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colStoreCode</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="1">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CurrAccDesc] = 'UMICO SIRKETI'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCurrAccDesc</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="2">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CreatedDate] &gt;= #2022-11-26# And [CreatedDate] &lt; #2023-01-01#</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCreatedDate</property>
+        </property>
+        <property name="Item2" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[ProcessDesc] = 'Alış'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProcessDesc</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item6" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="3">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CreatedDate] &gt;= #2022-11-26# And [CreatedDate] &lt; #2023-01-01#</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCreatedDate</property>
+        </property>
+        <property name="Item2" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[ProcessDesc] = 'Alış'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProcessDesc</property>
+        </property>
+        <property name="Item3" isnull="true" iskey="true">
+          <property name="Type">AutoFilter</property>
+          <property name="FilterString">Contains([ProductDesc], '48bb')</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProductDesc</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item7" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="3">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CreatedDate] &gt;= #2022-11-26# And [CreatedDate] &lt; #2023-01-01#</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCreatedDate</property>
+        </property>
+        <property name="Item2" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[ProcessDesc] = 'Alış'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProcessDesc</property>
+        </property>
+        <property name="Item3" isnull="true" iskey="true">
+          <property name="Type">AutoFilter</property>
+          <property name="FilterString">Contains([ProductDesc], '2021')</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProductDesc</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item8" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="3">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CreatedDate] &gt;= #2022-11-26# And [CreatedDate] &lt; #2023-01-01#</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCreatedDate</property>
+        </property>
+        <property name="Item2" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[ProcessDesc] = 'Alış'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProcessDesc</property>
+        </property>
+        <property name="Item3" isnull="true" iskey="true">
+          <property name="Type">AutoFilter</property>
+          <property name="FilterString">Contains([ProductDesc], '610')</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProductDesc</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item9" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="3">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CreatedDate] &gt;= #2022-11-26# And [CreatedDate] &lt; #2023-01-01#</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCreatedDate</property>
+        </property>
+        <property name="Item2" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[ProcessDesc] = 'Alış'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProcessDesc</property>
+        </property>
+        <property name="Item3" isnull="true" iskey="true">
+          <property name="Type">AutoFilter</property>
+          <property name="FilterString">Contains([ProductDesc], '2018')</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProductDesc</property>
+        </property>
+      </property>
+    </property>
+    <property name="Item10" isnull="true" iskey="true">
+      <property name="NonColumnFilter" />
+      <property name="ColumnsFilter" iskey="true" value="3">
+        <property name="Item1" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[CreatedDate] &gt;= #2022-11-26# And [CreatedDate] &lt; #2023-01-01#</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colCreatedDate</property>
+        </property>
+        <property name="Item2" isnull="true" iskey="true">
+          <property name="Type">Custom</property>
+          <property name="FilterString">[ProcessDesc] = 'Alış'</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProcessDesc</property>
+        </property>
+        <property name="Item3" isnull="true" iskey="true">
+          <property name="Type">AutoFilter</property>
+          <property name="FilterString">Contains([ProductDesc], '2017')</property>
+          <property name="DisplayText" />
+          <property name="ColumnName">colProductDesc</property>
+        </property>
+      </property>
+    </property>
+  </property>
+  <property name="SortInfoState" iskey="true" value="1">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="Orders">Ascending</property>
+      <property name="Columns">colDocumentDate</property>
+    </property>
+    <property name="Content" isnull="true" iskey="true">
+      <property name="GroupCount">0</property>
+    </property>
+  </property>
+  <property name="GroupSummarySortInfoState" />
+  <property name="FindFilterText" />
+  <property name="FindPanelVisible">false</property>
+</XtraSerializer>

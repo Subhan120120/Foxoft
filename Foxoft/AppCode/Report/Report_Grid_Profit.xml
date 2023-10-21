@@ -1,0 +1,1011 @@
+﻿<XtraSerializer version="1.0" application="View">
+	<property name="#LayoutVersion" />
+	<property name="#LayoutScaleFactor">@9,Width=1.1666666@9,Height=1.2307693</property>
+	<property name="OptionsBehavior" isnull="true" iskey="true">
+		<property name="ReadOnly">true</property>
+	</property>
+	<property name="OptionsCustomization" isnull="true" iskey="true">
+		<property name="AllowRowSizing">true</property>
+	</property>
+	<property name="OptionsView" isnull="true" iskey="true">
+		<property name="GroupFooterShowMode">VisibleAlways</property>
+		<property name="ShowAutoFilterRow">true</property>
+		<property name="ShowFooter">true</property>
+	</property>
+	<property name="OptionsFind" isnull="true" iskey="true">
+		<property name="FindNullPrompt">aramak için metni girin</property>
+	</property>
+	<property name="FixedLineWidth">2</property>
+	<property name="IndicatorWidth">-1</property>
+	<property name="ColumnPanelRowHeight">-1</property>
+	<property name="RowSeparatorHeight">0</property>
+	<property name="FooterPanelHeight">-1</property>
+	<property name="HorzScrollVisibility">Auto</property>
+	<property name="VertScrollVisibility">Auto</property>
+	<property name="RowHeight">-1</property>
+	<property name="GroupRowHeight">-1</property>
+	<property name="GroupFormat">{0}: [#image]{1} {2}</property>
+	<property name="ChildGridLevelName" />
+	<property name="VertScrollTipFieldName" />
+	<property name="PreviewFieldName" />
+	<property name="GroupPanelText" />
+	<property name="NewItemRowText" />
+	<property name="LevelIndent">-1</property>
+	<property name="PreviewIndent">-1</property>
+	<property name="PreviewLineCount">-1</property>
+	<property name="ScrollStyle">LiveVertScroll, LiveHorzScroll</property>
+	<property name="FocusRectStyle">CellFocus</property>
+	<property name="HorzScrollStep">0</property>
+	<property name="ActiveFilterEnabled">true</property>
+	<property name="ViewCaptionHeight">-1</property>
+	<property name="Columns" iskey="true" value="58">
+		<property name="Item1" isnull="true" iskey="true">
+			<property name="Name">colMaya</property>
+			<property name="OptionsFilter" isnull="true" iskey="true">
+				<property name="AutoFilterCondition">Equals</property>
+			</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Maya</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">2</property>
+			<property name="Visible">true</property>
+			<property name="Width">106</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+			<property name="Summary" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Tag" isnull="true" />
+					<property name="FieldName">Maya</property>
+					<property name="SummaryType">Sum</property>
+					<property name="Mode">AllRows</property>
+					<property name="DisplayFormat">{0:0.00}</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item2" isnull="true" iskey="true">
+			<property name="Name">colMenfeet</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Menfeet</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">3</property>
+			<property name="Visible">true</property>
+			<property name="Width">78</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+			<property name="Summary" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Tag" isnull="true" />
+					<property name="FieldName">Menfeet</property>
+					<property name="SummaryType">Sum</property>
+					<property name="Mode">AllRows</property>
+					<property name="DisplayFormat">{0:0.00}</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item3" isnull="true" iskey="true">
+			<property name="Name">colInvoiceLineId</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">InvoiceLineId</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item4" isnull="true" iskey="true">
+			<property name="Name">colInvoiceHeaderId</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">InvoiceHeaderId</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item5" isnull="true" iskey="true">
+			<property name="Name">colProductCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">ProductCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item6" isnull="true" iskey="true">
+			<property name="Name">colProductDesc</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">ProductDesc</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item7" isnull="true" iskey="true">
+			<property name="Name">colQty</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Qty</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item8" isnull="true" iskey="true">
+			<property name="Name">colPrice</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Price</property>
+			<property name="ColumnEditName" />
+			<property name="Width">39</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item9" isnull="true" iskey="true">
+			<property name="Name">colPriceLoc</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">PriceLoc</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item10" isnull="true" iskey="true">
+			<property name="Name">colAmount</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Amount</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item11" isnull="true" iskey="true">
+			<property name="Name">colPosDiscount</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">PosDiscount</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item12" isnull="true" iskey="true">
+			<property name="Name">colQtyIn</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">QtyIn</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item13" isnull="true" iskey="true">
+			<property name="Name">colQtyOut</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">QtyOut</property>
+			<property name="ColumnEditName" />
+			<property name="Width">51</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item14" isnull="true" iskey="true">
+			<property name="Name">colXərc</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Xərc</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">4</property>
+			<property name="Visible">true</property>
+			<property name="Width">83</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+			<property name="Summary" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Tag" isnull="true" />
+					<property name="FieldName">Xərc</property>
+					<property name="SummaryType">Sum</property>
+					<property name="Mode">AllRows</property>
+					<property name="DisplayFormat">{0:0.00}</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item15" isnull="true" iskey="true">
+			<property name="Name">colSatis</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Satis</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">1</property>
+			<property name="Visible">true</property>
+			<property name="Width">106</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+			<property name="Summary" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Tag" isnull="true" />
+					<property name="FieldName">Satis</property>
+					<property name="SummaryType">Sum</property>
+					<property name="Mode">AllRows</property>
+					<property name="DisplayFormat">{0:0.00}</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item16" isnull="true" iskey="true">
+			<property name="Name">colArtirma</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Artirma</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">6</property>
+			<property name="Visible">true</property>
+			<property name="Width">96</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+			<property name="Summary" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Tag" isnull="true" />
+					<property name="FieldName">Artirma</property>
+					<property name="SummaryType">Sum</property>
+					<property name="Mode">AllRows</property>
+					<property name="DisplayFormat">{0:0.00}</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item17" isnull="true" iskey="true">
+			<property name="Name">colSilinme</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Silinme</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">7</property>
+			<property name="Visible">true</property>
+			<property name="Width">78</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+			<property name="Summary" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Tag" isnull="true" />
+					<property name="FieldName">Silinme</property>
+					<property name="SummaryType">Sum</property>
+					<property name="Mode">AllRows</property>
+					<property name="DisplayFormat">{0:0.00}</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item18" isnull="true" iskey="true">
+			<property name="Name">colLastPurchasePrice</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">LastPurchasePrice</property>
+			<property name="ColumnEditName" />
+			<property name="Width">68</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item19" isnull="true" iskey="true">
+			<property name="Name">colSonQiymet</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">SonQiymet</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item20" isnull="true" iskey="true">
+			<property name="Name">colLineDescription</property>
+			<property name="OptionsFilter" isnull="true" iskey="true">
+				<property name="AutoFilterCondition">DoesNotEqual</property>
+			</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">LineDescription</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">8</property>
+			<property name="Visible">true</property>
+			<property name="Width">36</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item21" isnull="true" iskey="true">
+			<property name="Name">colSalesPersonCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">SalesPersonCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item22" isnull="true" iskey="true">
+			<property name="Name">colCurrencyCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">CurrencyCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item23" isnull="true" iskey="true">
+			<property name="Name">colExchangeRate</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">ExchangeRate</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item24" isnull="true" iskey="true">
+			<property name="Name">colProcessCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">ProcessCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item25" isnull="true" iskey="true">
+			<property name="Name">colProcessDesc</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">ProcessDesc</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item26" isnull="true" iskey="true">
+			<property name="Name">colInvoiceNumber</property>
+			<property name="OptionsFilter" isnull="true" iskey="true">
+				<property name="AutoFilterCondition">Contains</property>
+			</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">InvoiceNumber</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">0</property>
+			<property name="Visible">true</property>
+			<property name="Width">96</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item27" isnull="true" iskey="true">
+			<property name="Name">colFaiz</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Faiz</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item28" isnull="true" iskey="true">
+			<property name="Name">colDocumentDate</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">DocumentDate</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item29" isnull="true" iskey="true">
+			<property name="Name">colDocumentTime</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">DocumentTime</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item30" isnull="true" iskey="true">
+			<property name="Name">colOperationDate</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">OperationDate</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">1</property>
+			<property name="Visible">true</property>
+			<property name="GroupInterval">DateMonth</property>
+			<property name="Width">109</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item31" isnull="true" iskey="true">
+			<property name="Name">colOperationTime</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">OperationTime</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item32" isnull="true" iskey="true">
+			<property name="Name">colDescription</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Description</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item33" isnull="true" iskey="true">
+			<property name="Name">colCurrAccCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">CurrAccCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item34" isnull="true" iskey="true">
+			<property name="Name">colCurrAccDesc</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">CurrAccDesc</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item35" isnull="true" iskey="true">
+			<property name="Name">colCurrAccTypeDesc</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">CurrAccTypeDesc</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item36" isnull="true" iskey="true">
+			<property name="Name">colCurrAccTypeCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">CurrAccTypeCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item37" isnull="true" iskey="true">
+			<property name="Name">colOfficeCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">OfficeCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item38" isnull="true" iskey="true">
+			<property name="Name">colStoreCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">StoreCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item39" isnull="true" iskey="true">
+			<property name="Name">colWarehouseCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">WarehouseCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item40" isnull="true" iskey="true">
+			<property name="Name">colCustomsDocumentNumber</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">CustomsDocumentNumber</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item41" isnull="true" iskey="true">
+			<property name="Name">colPosTerminalId</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">PosTerminalId</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item42" isnull="true" iskey="true">
+			<property name="Name">colIsSuspended</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">IsSuspended</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item43" isnull="true" iskey="true">
+			<property name="Name">colIsCompleted</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">IsCompleted</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item44" isnull="true" iskey="true">
+			<property name="Name">colIsSalesViaInternet</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">IsSalesViaInternet</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item45" isnull="true" iskey="true">
+			<property name="Name">colIsLocked</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">IsLocked</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item46" isnull="true" iskey="true">
+			<property name="Name">colBarcode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Barcode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item47" isnull="true" iskey="true">
+			<property name="Name">colProductTypeCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">ProductTypeCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item48" isnull="true" iskey="true">
+			<property name="Name">colProductTypeDesc</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">ProductTypeDesc</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item49" isnull="true" iskey="true">
+			<property name="Name">colUsePos</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">UsePos</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item50" isnull="true" iskey="true">
+			<property name="Name">colPromotionCode</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">PromotionCode</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item51" isnull="true" iskey="true">
+			<property name="Name">colTaxRate</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">TaxRate</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item52" isnull="true" iskey="true">
+			<property name="Name">colRetailPrice</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">RetailPrice</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item53" isnull="true" iskey="true">
+			<property name="Name">colPurchasePrice</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">PurchasePrice</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item54" isnull="true" iskey="true">
+			<property name="Name">colWholesalePrice</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">WholesalePrice</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item55" isnull="true" iskey="true">
+			<property name="Name">colCreatedDate</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">CreatedDate</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item56" isnull="true" iskey="true">
+			<property name="Name">colImage</property>
+			<property name="OptionsColumn" isnull="true" iskey="true">
+				<property name="AllowEdit">false</property>
+			</property>
+			<property name="Caption">Şəkil</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Image</property>
+			<property name="ColumnEditName" />
+			<property name="Width">20</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundType">Object</property>
+			<property name="UnboundDataTypeName" />
+		</property>
+		<property name="Item57" isnull="true" iskey="true">
+			<property name="Name">colNetMenfeet</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Net Menfeet</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">5</property>
+			<property name="Visible">true</property>
+			<property name="Width">78</property>
+			<property name="DisplayFormat" isnull="true" iskey="true">
+				<property name="FormatString">0.00</property>
+				<property name="FormatType">Numeric</property>
+			</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundDataTypeName" />
+			<property name="Summary" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Tag" isnull="true" />
+					<property name="FieldName">Net Menfeet</property>
+					<property name="SummaryType">Sum</property>
+					<property name="Mode">AllRows</property>
+					<property name="DisplayFormat">{0:0.00}</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item58" isnull="true" iskey="true">
+			<property name="Name">colUnbound57</property>
+			<property name="ImageAlignment">Near</property>
+			<property name="ImageIndex">-1</property>
+			<property name="FieldName">Unbound57</property>
+			<property name="ColumnEditName" />
+			<property name="VisibleIndex">9</property>
+			<property name="Visible">true</property>
+			<property name="Width">87</property>
+			<property name="MinWidth">20</property>
+			<property name="MaxWidth">0</property>
+			<property name="UnboundType">Object</property>
+			<property name="UnboundDataTypeName" />
+			<property name="UnboundExpression">Round([Menfeet] / [Maya] * 100, 0)</property>
+		</property>
+	</property>
+	<property name="ViewCaption" />
+	<property name="BorderStyle">Default</property>
+	<property name="SynchronizeClones">true</property>
+	<property name="DetailTabHeaderLocation">Top</property>
+	<property name="Name">gV_Report</property>
+	<property name="DetailHeight">431</property>
+	<property name="Tag" isnull="true" />
+	<property name="GroupSummary" iskey="true" value="9">
+		<property name="Item1" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colSatis</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Satis</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+		<property name="Item2" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colMaya</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Maya</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+		<property name="Item3" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName" />
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Benefit</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+		<property name="Item4" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colXərc</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Xərc</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+		<property name="Item5" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colArtirma</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Artirma</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+		<property name="Item6" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colSilinme</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Silinme</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+		<property name="Item7" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colInvoiceNumber</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">InvoiceNumber</property>
+			<property name="SummaryType">None</property>
+			<property name="DisplayFormat" />
+		</property>
+		<property name="Item8" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colNetMenfeet</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Net Menfeet</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+		<property name="Item9" isnull="true" iskey="true">
+			<property name="Mode">AllRows</property>
+			<property name="ShowInGroupColumnFooterName">colMenfeet</property>
+			<property name="Tag" isnull="true" />
+			<property name="FieldName">Menfeet</property>
+			<property name="SummaryType">Sum</property>
+			<property name="DisplayFormat">{0:0.00}</property>
+		</property>
+	</property>
+	<property name="ActiveFilterString">Not [LineDescription] = 'Dovr'</property>
+	<property name="MRUFiltersInfo" iskey="true" value="4">
+		<property name="Item1" isnull="true" iskey="true">
+			<property name="NonColumnFilter" />
+			<property name="ColumnsFilter" iskey="true" value="3">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Type">AutoFilter</property>
+					<property name="FilterString">Not [LineDescription] = 'Dovr'</property>
+					<property name="DisplayText" />
+					<property name="ColumnName">colLineDescription</property>
+				</property>
+				<property name="Item2" isnull="true" iskey="true">
+					<property name="Type">AutoFilter</property>
+					<property name="FilterString">[Maya] = 0.0m</property>
+					<property name="DisplayText" />
+					<property name="ColumnName">colMaya</property>
+				</property>
+				<property name="Item3" isnull="true" iskey="true">
+					<property name="Type">AutoFilter</property>
+					<property name="FilterString">Contains([InvoiceNumber], 'rs')</property>
+					<property name="DisplayText" />
+					<property name="ColumnName">colInvoiceNumber</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item2" isnull="true" iskey="true">
+			<property name="NonColumnFilter" />
+			<property name="ColumnsFilter" iskey="true" value="2">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Type">AutoFilter</property>
+					<property name="FilterString">Not [LineDescription] = 'Dovr'</property>
+					<property name="DisplayText" />
+					<property name="ColumnName">colLineDescription</property>
+				</property>
+				<property name="Item2" isnull="true" iskey="true">
+					<property name="Type">AutoFilter</property>
+					<property name="FilterString">[Maya] = 0.0m</property>
+					<property name="DisplayText" />
+					<property name="ColumnName">colMaya</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item3" isnull="true" iskey="true">
+			<property name="NonColumnFilter" />
+			<property name="ColumnsFilter" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Type">AutoFilter</property>
+					<property name="FilterString">Not [LineDescription] = 'Dovr'</property>
+					<property name="DisplayText" />
+					<property name="ColumnName">colLineDescription</property>
+				</property>
+			</property>
+		</property>
+		<property name="Item4" isnull="true" iskey="true">
+			<property name="NonColumnFilter" />
+			<property name="ColumnsFilter" iskey="true" value="1">
+				<property name="Item1" isnull="true" iskey="true">
+					<property name="Type">Custom</property>
+					<property name="FilterString">[LineDescription] = 'Dovr'</property>
+					<property name="DisplayText" />
+					<property name="ColumnName">colLineDescription</property>
+				</property>
+			</property>
+		</property>
+	</property>
+	<property name="FormatRules" iskey="true" value="0" />
+	<property name="SortInfoState" iskey="true" value="1">
+		<property name="Item1" isnull="true" iskey="true">
+			<property name="Orders">Ascending</property>
+			<property name="Columns">colOperationDate</property>
+		</property>
+		<property name="Content" isnull="true" iskey="true">
+			<property name="GroupCount">1</property>
+		</property>
+	</property>
+	<property name="FormatConditions" iskey="true" value="0" />
+	<property name="GroupSummarySortInfoState" />
+	<property name="FindFilterText" />
+	<property name="FindPanelVisible">false</property>
+</XtraSerializer>

@@ -954,7 +954,7 @@ namespace Foxoft
             trPaymentLine.PaymentMethodId = 1;
             trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLine.ExchangeRate = 1f;
-            string storeCode = lUE_StoreCode.EditValue?.ToString();
+            string storeCode = trInvoiceHeader.StoreCode.ToString();
             trPaymentLine.CashRegisterCode = efMethods.SelectCashRegByStore(storeCode);
             trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
