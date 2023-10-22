@@ -100,10 +100,10 @@ namespace Foxoft
 
             if (currAccTypeArr.Contains((byte)5))
             {
-                dcReport = efMethods.SelectReportByName("FormCashRegList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
             }
             else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3) || currAccTypeArr.Contains((byte)4))
-                dcReport = efMethods.SelectReportByName("FormCurrAccList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)
             {
@@ -682,9 +682,9 @@ namespace Foxoft
             DcReport dcReport = null;
 
             if (currAccTypeArr.Contains((byte)5))
-                dcReport = efMethods.SelectReportByName("FormCashRegList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
             else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3))
-                dcReport = efMethods.SelectReportByName("FormCurrAccList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)
             {

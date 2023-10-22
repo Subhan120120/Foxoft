@@ -190,8 +190,7 @@ namespace Foxoft
                 gV_ProductList.RestoreLayoutFromStream(stream, option);
             }
 
-            gV_ProductList.OptionsFind.FindFilterColumns = nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
-            gV_ProductList.OptionsFind.FindFilterColumns = "Məhsulun Geniş Adı";
+            gV_ProductList.OptionsFind.FindFilterColumns = "Məhsulun Geniş Adı ; " + nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             // Kolonlarin Yetkisi 
@@ -245,7 +244,7 @@ namespace Foxoft
         {
             object dataSource = null;
 
-            DcReport dcReport = efMethods.SelectReportByName("FormProductList");
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_ProductList");
             if (dcReport is not null)
             {
                 if (!String.IsNullOrEmpty(dcReport.ReportQuery))
@@ -253,7 +252,7 @@ namespace Foxoft
                     string ts = String.Join(",", productTypeArr);
                     string where = " Where ProductTypeCode in (" + ts + ") ";
                     string query = CustomExtensions.AddTop(dcReport.ReportQuery);
-                    string qryMaster = query + where + " order by ProductDesc";
+                    string qryMaster = "select * from (" + query + ") as Master " + where + " order by ProductDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)
                         dataSource = dt;
@@ -676,7 +675,7 @@ namespace Foxoft
 
         private void BBI_Query_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcReport dcReport = efMethods.SelectReportByName("FormProductList");
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_ProductList");
             if (dcReport is not null)
             {
                 int id = dcReport.ReportId;
