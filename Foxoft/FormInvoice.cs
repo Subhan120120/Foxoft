@@ -42,6 +42,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Twilio;
@@ -954,7 +955,7 @@ namespace Foxoft
             trPaymentLine.PaymentMethodId = 1;
             trPaymentLine.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trPaymentLine.ExchangeRate = 1f;
-            string storeCode = trInvoiceHeader.StoreCode.ToString();
+            string storeCode = lUE_StoreCode.EditValue?.ToString();
             trPaymentLine.CashRegisterCode = efMethods.SelectCashRegByStore(storeCode);
             trPaymentLine.CreatedUserName = Authorization.CurrAccCode;
 
@@ -973,7 +974,8 @@ namespace Foxoft
 
                     //MakePayment(summaryInvoice);
 
-                    GetPrintToWarehouse();
+                    //GetPrintDialogToWarehouse();
+
 
                     ClearControlsAddNew();
                 }
@@ -997,7 +999,7 @@ namespace Foxoft
             }
         }
 
-        private void GetPrintToWarehouse()
+        private void GetPrintDialogToWarehouse()
         {
             XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
 
@@ -1015,6 +1017,20 @@ namespace Foxoft
                         efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
                     }
                 }
+            }
+        }
+
+        private void GetPrintToWarehouse(Guid invoiceHeader)
+        {
+            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
+            report.PrinterName = settingStore.PrinterName;
+
+            if (report is not null)
+            {
+                ReportPrintTool printTool = new(report);
+
+                printTool.Print();
+                efMethods.UpdateInvoicePrintCount(invoiceHeader);
             }
         }
 
@@ -1176,7 +1192,7 @@ namespace Foxoft
 
                     //MakePayment(summInvoice, false);
 
-                    GetPrintToWarehouse();
+                    //GetPrintDialogToWarehouse();
 
                     Close();
                 }
@@ -1527,7 +1543,7 @@ namespace Foxoft
 
                         if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
                         {
-                            Process p = new Process();
+                            Process p = new();
                             p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
                             p.Start();
                         }
@@ -1797,6 +1813,7 @@ namespace Foxoft
         private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
         {
             efMethods.UpdateStoreSettingPrinterName(BEI_PrinterName.EditValue.ToString());
+            settingStore.PrinterName = BEI_PrinterName.EditValue.ToString();
         }
 
         private void Btn_EditInvoice_Click(object sender, EventArgs e)
@@ -1845,8 +1862,17 @@ namespace Foxoft
 
         private void BBI_picture_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormImage formPictures = new FormImage(btnEdit_DocNum.EditValue?.ToString());
+            FormImage formPictures = new(btnEdit_DocNum.EditValue?.ToString());
             formPictures.ShowDialog();
+        }
+
+        private async void BBI_Print_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (trInvoiceHeader is not null)
+                await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId));
+            else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
+
+            Task task = Task.Run((Action)ShowPrintCount);
         }
     }
 }

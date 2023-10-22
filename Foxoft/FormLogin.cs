@@ -92,8 +92,8 @@ namespace Foxoft
 
         private void UpdateReportLayout(int reportId, string fileName)
         {
-            string layout = cM.GetDataFromFile("Foxoft.AppCode.Report." + fileName);
-            efMethods.UpdateReportLayout(reportId, layout);
+            //string layout = cM.GetDataFromFile("Foxoft.AppCode.Report." + fileName);
+            //efMethods.UpdateReportLayout(reportId, layout);
         }
 
         private static void CreateViews(DatabaseFacade db)
