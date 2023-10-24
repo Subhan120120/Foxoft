@@ -100,10 +100,10 @@ namespace Foxoft
 
             if (currAccTypeArr.Contains((byte)5))
             {
-                dcReport = efMethods.SelectReportByName("FormCashRegList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
             }
             else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3) || currAccTypeArr.Contains((byte)4))
-                dcReport = efMethods.SelectReportByName("FormCurrAccList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)
             {
@@ -114,7 +114,7 @@ namespace Foxoft
 
                     string query = CustomExtensions.AddTop(dcReport.ReportQuery);
 
-                    string qryMaster = "select * from (" + query + ") as Master " + where;
+                    string qryMaster = "select * from (" + query + " \n) as Master " + where;
                     //+ " order by CurrAccDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)
@@ -682,9 +682,9 @@ namespace Foxoft
             DcReport dcReport = null;
 
             if (currAccTypeArr.Contains((byte)5))
-                dcReport = efMethods.SelectReportByName("FormCashRegList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
             else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3))
-                dcReport = efMethods.SelectReportByName("FormCurrAccList");
+                dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)
             {
