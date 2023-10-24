@@ -33,7 +33,7 @@ namespace Foxoft
         {
             query = CustomExtensions.AddTop(query);
 
-            string qryMaster = "Select * from ( " + query + ") as master";
+            string qryMaster = "Select * from ( " + query + " \n) as master";
 
             if (!string.IsNullOrEmpty(filter))
                 qryMaster = qryMaster + " where " + filter;

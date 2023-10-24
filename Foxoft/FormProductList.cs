@@ -47,6 +47,8 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            Events();
+
             AddReports();
 
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
@@ -69,6 +71,35 @@ namespace Foxoft
             gC_ProductList.RepositoryItems.Add(riPictureEdit);
 
             ribbonControl1.Minimized = true;
+        }
+
+        private void Events()
+        {
+            Load += FormProductList_Load;
+            Activated += FormProductList_Activated;
+            BBI_Save.ItemClick += BBI_Save_ItemClick;
+            BBI_Show.ItemClick += BBI_Show_ItemClick;
+            BBI_ProductNew.ItemClick += BBI_ProductNew_ItemClick;
+            bBI_ExportExcel.ItemClick += bBI_ExportExcel_ItemClick;
+            bBI_quit.ItemClick += bBI_quit_ItemClick;
+            barButtonItem1.ItemClick += barButtonItem1_ItemClick_1;
+            bBI_ProductDelete.ItemClick += bBI_ProductDelete_ItemClick;
+            bBI_ProductRefresh.ItemClick += bBI_ProductRefresh_ItemClick;
+            BBI_Feature.ItemClick += BBI_Feature_ItemClick;
+            BarcodePrint.ItemClick += BarcodePrint_ItemClick;
+            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
+            BBI_query.ItemClick += BBI_Query_ItemClick;
+            btn_ProductEdit.ItemClick += btn_productEdit_ItemClick;
+            gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
+            gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
+            gV_ProductList.RowCellStyle += gV_ProductList_RowCellStyle;
+            gV_ProductList.RowStyle += gV_ProductList_RowStyle;
+            gV_ProductList.PopupMenuShowing += gV_ProductList_PopupMenuShowing;
+            gV_ProductList.CalcRowHeight += gV_ProductList_CalcRowHeight;
+            gV_ProductList.FocusedRowChanged += gV_ProductList_FocusedRowChanged;
+            gV_ProductList.ColumnFilterChanged += gV_ProductList_ColumnFilterChanged;
+            gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
+            gV_ProductList.DoubleClick += gridView1_DoubleClick;
         }
 
         public FormProductList(byte[] productTypeArr)
@@ -177,6 +208,10 @@ namespace Foxoft
 
         private void LoadLayout()
         {
+            gV_ProductList.OptionsFind.FindFilterColumns = ";Məhsulun Geniş Adı;" + nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
+            //gV_ProductList.OptionsFind.FindFilterColumns = "Məhsulun Geniş Adı";
+            gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+
             string fileName = "FormProductList.xml";
             string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
@@ -190,20 +225,22 @@ namespace Foxoft
                 gV_ProductList.RestoreLayoutFromStream(stream, option);
             }
 
-            gV_ProductList.OptionsFind.FindFilterColumns = "Məhsulun Geniş Adı ; " + nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
-            gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
-
             // Kolonlarin Yetkisi 
             colLastPurchasePrice = gV_ProductList.Columns[nameof(dcProduct.LastPurchasePrice)];
-            colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = false;
-            colLastPurchasePrice.Visible = false;
-
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_LastPurchasePrice");
-            if (currAccHasClaims)
+            if (colLastPurchasePrice != null)
             {
-                colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = true;
-                colLastPurchasePrice.Visible = true;
+                colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = false;
+                colLastPurchasePrice.Visible = false;
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_LastPurchasePrice");
+                if (currAccHasClaims)
+                {
+                    colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = true;
+                    colLastPurchasePrice.Visible = true;
+                }
             }
+
+            txtEdit_filtercolumns.EditValue = gV_ProductList.OptionsFind.FindFilterColumns;
         }
 
         public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
@@ -252,7 +289,7 @@ namespace Foxoft
                     string ts = String.Join(",", productTypeArr);
                     string where = " Where ProductTypeCode in (" + ts + ") ";
                     string query = CustomExtensions.AddTop(dcReport.ReportQuery);
-                    string qryMaster = "select * from (" + query + ") as Master " + where + " order by ProductDesc";
+                    string qryMaster = "select * from (" + query + " \n) as Master " + where + " order by ProductDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)
                         dataSource = dt;
@@ -640,20 +677,42 @@ namespace Foxoft
                 //menu.Items.Clear();
                 if (menu.Column != null)
                 {
-                    menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateMenuItem("Save Layout", menu.Column, null));
+                    menu.Items.Add(CreateCheckItem("Filter Column", menu.Column, null));
                 }
             }
         }
 
-        DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+        DXMenuCheckItem CreateCheckItem(string caption, GridColumn column, Image image)
         {
-            DXMenuItem item = new(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);
+            DXMenuCheckItem item = new DXMenuCheckItem(caption, gV_ProductList.OptionsFind.FindFilterColumns.Contains(column.FieldName), image, new EventHandler(OnCanMoveItemClick));
             item.Tag = new MenuColumnInfo(column);
             return item;
         }
 
+        DXMenuItem CreateMenuItem(string caption, GridColumn column, Image image)
+        {
+            DXMenuItem item = new(caption, new EventHandler(DXMenuItem_ItemClick), image);
+            item.Tag = new MenuColumnInfo(column);
+            return item;
+        }
+
+        void OnCanMoveItemClick(object sender, EventArgs e)
+        {
+            DXMenuCheckItem item = sender as DXMenuCheckItem;
+            MenuColumnInfo info = item.Tag as MenuColumnInfo;
+            if (info == null) return;
+
+            string fieldName = ";" + info.Column.FieldName;
+            if (item.Checked)
+                gV_ProductList.OptionsFind.FindFilterColumns += fieldName;
+
+            else
+                gV_ProductList.OptionsFind.FindFilterColumns = gV_ProductList.OptionsFind.FindFilterColumns.Replace(fieldName, "");
+        }
+
         // Menu item click handler.
-        void DXMenuCheckItem_ItemClick(object sender, EventArgs e)
+        void DXMenuItem_ItemClick(object sender, EventArgs e)
         {
             DXMenuItem item = sender as DXMenuItem;
             MenuColumnInfo info = item.Tag as MenuColumnInfo;
@@ -692,6 +751,16 @@ namespace Foxoft
                 resp.Add((T)view.GetRow(i));
 
             return resp;
+        }
+
+        private void BBI_Save_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gV_ProductList.OptionsFind.FindFilterColumns = txtEdit_filtercolumns.EditValue.ToString();
+        }
+
+        private void BBI_Show_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MessageBox.Show(gV_ProductList.OptionsFind.FindFilterColumns);
         }
     }
 }

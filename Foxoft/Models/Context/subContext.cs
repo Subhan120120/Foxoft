@@ -129,11 +129,11 @@ namespace Foxoft.Models
             });
 
             modelBuilder.Entity<DcCurrAcc>().HasData(
-                new DcCurrAcc { CurrAccCode = "CA-1", FirstName = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "CA-2", FirstName = "Mudir", LastName = "Mudir", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "CA-3", FirstName = "Operator", LastName = "Operator", NewPassword = "123", PhoneNum = "0773628800", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "CA-4", FirstName = "Satici", LastName = "Satici", NewPassword = "123", PhoneNum = "0553628804", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
-                new DcCurrAcc { CurrAccCode = "CA-5", FirstName = "Ümumi Müştəri", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000001", CurrAccDesc = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000002", CurrAccDesc = "Mudir", LastName = "Mudir", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000003", CurrAccDesc = "Operator", LastName = "Operator", NewPassword = "123", PhoneNum = "0773628800", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000004", CurrAccDesc = "Satici", LastName = "Satici", NewPassword = "123", PhoneNum = "0553628804", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000005", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "0773628800", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" });
 
@@ -245,14 +245,14 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 1, ReportTypeId = 0, ReportName = "Report_Embedded_ProductList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_ProductList.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 2, ReportTypeId = 0, ReportName = "Report_Embedded_CurrAccList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_CurrAccList.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 3, ReportTypeId = 0, ReportName = "Report_Embedded_CashRegList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_CashRegList.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 4, ReportTypeId = 1, ReportName = "Report_Grid_Expenses", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 5, ReportTypeId = 1, ReportName = "Report_Grid_MoneyMovements", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 6, ReportTypeId = 1, ReportName = "Report_Grid_MovementsWithAccounts", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 7, ReportTypeId = 1, ReportName = "Report_Grid_ProductMovements", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductMovements.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 8, ReportTypeId = 1, ReportName = "Report_Grid_Profit", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Profit.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 9, ReportTypeId = 1, ReportName = "Report_Grid_RecentGoods", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_RecentGoods.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 10, ReportTypeId = 1, ReportName = "Report_Grid_WarehouseBalance", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 11, ReportTypeId = 1, ReportName = "Report_Detail_ProductCard", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" }
+                new DcReport { ReportId = 4, ReportTypeId = 1, ReportName = "Xərclər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 5, ReportTypeId = 1, ReportName = "Pulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 6, ReportTypeId = 1, ReportName = "Cari Hesab ilə Əməliyatlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 7, ReportTypeId = 1, ReportName = "Məhsulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductMovements.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 8, ReportTypeId = 1, ReportName = "Gəlir", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Profit.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 9, ReportTypeId = 1, ReportName = "Son Gələn Mallar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_RecentGoods.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 10, ReportTypeId = 1, ReportName = "Depoların Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 11, ReportTypeId = 1, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" }
                 // reportlarin layoutlarin FormLogin de duzelt
                );
 

@@ -114,7 +114,7 @@ namespace Foxoft
 
                     string query = CustomExtensions.AddTop(dcReport.ReportQuery);
 
-                    string qryMaster = "select * from (" + query + ") as Master " + where;
+                    string qryMaster = "select * from (" + query + " \n) as Master " + where;
                     //+ " order by CurrAccDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)
