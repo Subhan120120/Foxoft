@@ -179,8 +179,8 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcCurrency>().HasData(
                 new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "₼ AZN", ExchangeRate = 1 },
-                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$ DOLLAR", ExchangeRate = 1.703f },
-                new DcCurrency { CurrencyCode = "EUR", CurrencyDesc = "€ EURO", ExchangeRate = 1.798f }
+                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$ DOLLAR", ExchangeRate = 1.7f },
+                new DcCurrency { CurrencyCode = "EUR", CurrencyDesc = "€ EURO", ExchangeRate = 1.67f }
                 );
 
             modelBuilder.Entity<DcRole>().HasData(
@@ -189,7 +189,7 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<TrCurrAccRole>().HasData(
-               new TrCurrAccRole { CurrAccRoleId = 1, CurrAccCode = "CA-1", RoleCode = "Admin" });
+               new TrCurrAccRole { CurrAccRoleId = 1, CurrAccCode = "C-000001", RoleCode = "Admin" });
 
             modelBuilder.Entity<TrRoleClaim>().HasData(
                 new TrRoleClaim { RoleClaimId = 1, RoleCode = "Admin", ClaimCode = "ButunHesabatlar" },
@@ -252,13 +252,12 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 8, ReportTypeId = 1, ReportName = "Gəlir", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Profit.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 9, ReportTypeId = 1, ReportName = "Son Gələn Mallar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_RecentGoods.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 10, ReportTypeId = 1, ReportName = "Depoların Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 11, ReportTypeId = 1, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" }
+                new DcReport { ReportId = 11, ReportTypeId = 2, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" }
                 // reportlarin layoutlarin FormLogin de duzelt
                );
 
             modelBuilder.Entity<DcOffice>().HasData(
-               new DcOffice { OfficeCode = "ofs01", OfficeDesc = "Bakıxanov Ofisi" },
-               new DcOffice { OfficeCode = "ofs02", OfficeDesc = "Elmlər Ofisi" }
+               new DcOffice { OfficeCode = "ofs01", OfficeDesc = "Mərkəz Ofisi" }
                );
 
             modelBuilder.Entity<DcPaymentType>().HasData(
@@ -290,10 +289,10 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcProduct>().HasData(
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDesc = "Papaq", Barcode = "123456", RetailPrice = 4.5m, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDesc = "Salvar", Barcode = "2000000000013", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xerci", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "Isiq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) }
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDesc = "Test Məhsul 01", Barcode = "123456", RetailPrice = 4.5m, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDesc = "Test Məhsul 01", Barcode = "2000000000013", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xərci", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "İşıq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) }
             );
 
             //modelBuilder.Entity<TrProductFeature>() 
@@ -343,8 +342,7 @@ namespace Foxoft.Models
             );
 
             modelBuilder.Entity<DcWarehouse>().HasData(
-                new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Mərkəz deposu", OfficeCode = "ofs01", StoreCode = "mgz01", IsDefault = true },
-                new DcWarehouse { WarehouseCode = "depo-02", WarehouseDesc = "Elmlər deposu", OfficeCode = "ofs01", StoreCode = "mgz01" });
+                new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Mərkəz deposu", OfficeCode = "ofs01", StoreCode = "mgz01", IsDefault = true });
 
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
             {

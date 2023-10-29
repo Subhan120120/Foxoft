@@ -76,7 +76,7 @@ namespace Foxoft
 
         private void InitializeReports()
         {
-            List<DcReport> dcReports = efMethods.SelectReports();
+            List<DcReport> dcReports = efMethods.SelectReportsByType(new byte[] { 1, 2 });
 
             foreach (DcReport dcReport in dcReports)
             {

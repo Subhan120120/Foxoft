@@ -208,8 +208,7 @@ namespace Foxoft
 
         private void LoadLayout()
         {
-            gV_ProductList.OptionsFind.FindFilterColumns = ";Məhsulun Geniş Adı;" + nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
-            //gV_ProductList.OptionsFind.FindFilterColumns = "Məhsulun Geniş Adı";
+            gV_ProductList.OptionsFind.FindFilterColumns = "*;Məhsulun Geniş Adı;" + nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             string fileName = "FormProductList.xml";

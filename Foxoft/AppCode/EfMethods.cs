@@ -1453,6 +1453,12 @@ namespace Foxoft
             return db.DcReports.ToList();
         }
 
+        public List<DcReport> SelectReportsByType(byte[] reportType)
+        {
+            using subContext db = new();
+            return db.DcReports.Where(x => reportType.Contains(x.ReportTypeId)).ToList();
+        }
+
         public int UpdateDcReport_Filter(int id, string reportFilter)
         {
             using subContext db = new();
