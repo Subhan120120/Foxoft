@@ -31,6 +31,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -311,37 +312,20 @@ namespace Foxoft
         private void repoHLE_ProductCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
             object objProductCode = gV_Report.GetFocusedRowCellValue("ProductCode");
-            if (objProductCode is not null)
+            string productCode = objProductCode?.ToString();
+            if (!String.IsNullOrEmpty(productCode))
             {
-                string productCode = objProductCode.ToString();
-                if (!String.IsNullOrEmpty(productCode))
-                {
-                    FormProduct formProduct = new(0, productCode);
-                    if (formProduct.ShowDialog(this) == DialogResult.OK)
-                    {
-                        string path = imageFolder + @"\" + productCode + ".jpg";
-                        imageCache.Remove(path);
-
-                        LoadData();
-                    }
-                }
+                OpenFormProduct(productCode);
             }
         }
 
         private void repoHLE_CurrAccCode_OpenLink(object sender, OpenLinkEventArgs e)
         {
             object objCurrAccCode = gV_Report.GetFocusedRowCellValue("CurrAccCode");
-            if (objCurrAccCode is not null)
+            string currAccCode = objCurrAccCode?.ToString();
+            if (!String.IsNullOrEmpty(currAccCode))
             {
-                string currAccCode = objCurrAccCode.ToString();
-                if (!String.IsNullOrEmpty(currAccCode))
-                {
-                    FormCurrAcc formCurrAcc = new(currAccCode);
-                    if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
-                    {
-                        LoadData();
-                    }
-                }
+                OpenFormCurrAcc(currAccCode);
             }
         }
 
@@ -521,7 +505,7 @@ namespace Foxoft
             if (e.MenuType == GridMenuType.Column)
             {
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
-                //menu.Items.Clear();
+
                 if (menu.Column != null)
                 {
                     menu.Items.Add(CreateItemExpression("Expression", e.HitInfo.RowHandle, menu.Column, null));
@@ -531,58 +515,73 @@ namespace Foxoft
             {
                 e.Menu.Items.Clear();
 
-                DXMenuItem menuItem = CreateMenuItemEdit(gV_Report, e.HitInfo.RowHandle, e.HitInfo.Column);
-                e.Menu.Items.Add(menuItem);
+                CreateMenuItemEdit(e);
 
-                var menuSubItem = CreateSubMenuReports(gV_Report, e.HitInfo.RowHandle, e.HitInfo.Column);
+                var menuSubItem = CreateSubMenuReports(e.HitInfo.RowHandle, e.HitInfo.Column);
                 menuSubItem.BeginGroup = true;
                 e.Menu.Items.Add(menuSubItem);
             }
         }
 
-        DXMenuItem CreateMenuItemEdit(GridView view, int rowHandle, GridColumn gridColumn)
+        DXMenuItem CreateMenuItemEdit(PopupMenuShowingEventArgs eMenu)
         {
+            int rowHandle = eMenu.HitInfo.RowHandle;
+            GridColumn gridColumn = eMenu.HitInfo.Column;
+
             DXMenuItem menuItem = new("Dəyiş");
             //menuItem.Tag = new RowInfo(view, rowHandle);
             menuItem.ImageOptions.SvgImage = svgImageCollection1[1];
 
-            menuItem.Click += (sender, e) =>
-            {
-                object objCellValue = gV_Report.GetRowCellValue(rowHandle, gridColumn);
-                if (objCellValue is not null)
-                {
-                    string cellValue = objCellValue.ToString();
-                    if (!String.IsNullOrEmpty(cellValue))
-                    {
-                        if (gridColumn.FieldName == "ProductCode")
-                        {
-                            FormProduct formProduct = new(0, cellValue);
-                            if (formProduct.ShowDialog(this) == DialogResult.OK)
-                            {
-                                string path = imageFolder + @"\" + cellValue + ".jpg";
-                                imageCache.Remove(path);
+            object objCellValue = gV_Report.GetRowCellValue(rowHandle, gridColumn);
+            string cellValue = objCellValue?.ToString();
 
-                                LoadData();
-                            }
-                        }
-                        else if (gridColumn.FieldName == "CurrAccCode")
-                        {
-                            FormCurrAcc formCurrAcc = new(cellValue);
-                            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
-                            {
-                                LoadData();
-                            }
-                        }
-                    }
+            if (!String.IsNullOrEmpty(cellValue))
+            {
+                if (gridColumn.FieldName == "ProductCode")
+                {
+                    menuItem.Click += (sender, e) =>
+                    {
+                        OpenFormProduct(cellValue);
+                    };
+                    eMenu.Menu.Items.Add(menuItem);
                 }
-            };
+                else if (gridColumn.FieldName == "CurrAccCode")
+                {
+                    menuItem.Click += (sender, e) =>
+                    {
+                        OpenFormCurrAcc(cellValue);
+                    };
+                    eMenu.Menu.Items.Add(menuItem);
+                }
+            }
 
             return menuItem;
         }
 
-        DXMenuItem CreateSubMenuReports(GridView view, int rowHandle, GridColumn gridColumn)
+        private void OpenFormCurrAcc(string currAccCode)
         {
-            DXSubMenuItem subMenu = new DXSubMenuItem("Hesabat");
+            FormCurrAcc formCurrAcc = new(currAccCode);
+            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+            {
+                LoadData();
+            }
+        }
+
+        private void OpenFormProduct(string productCode)
+        {
+            FormProduct formProduct = new(0, productCode);
+            if (formProduct.ShowDialog(this) == DialogResult.OK)
+            {
+                string path = imageFolder + @"\" + productCode + ".jpg";
+                imageCache.Remove(path);
+
+                LoadData();
+            }
+        }
+
+        DXMenuItem CreateSubMenuReports(int rowHandle, GridColumn gridColumn)
+        {
+            DXSubMenuItem subMenu = new("Hesabat");
 
             subMenu.ImageOptions.SvgImage = svgImageCollection1[0];
 
@@ -592,17 +591,17 @@ namespace Foxoft
 
                 foreach (TrFormReport report in trFormReports)
                 {
-                    DXMenuItem dXMenuItemreport = new DXMenuItem(report.DcReport.ReportName);
-                    dXMenuItemreport.Tag = new CellInfo(rowHandle, gridColumn);
-                    dXMenuItemreport.Enabled = view.IsDataRow(rowHandle) || view.IsGroupRow(rowHandle);
-                    dXMenuItemreport.ImageOptions.SvgImage = svgImageCollection1[0];
-                    subMenu.Items.Add(dXMenuItemreport);
+                    DXMenuItem dxItem = new(report.DcReport.ReportName);
+                    dxItem.Tag = new CellInfo(rowHandle, gridColumn);
+                    dxItem.Enabled = gV_Report.IsDataRow(rowHandle) || gV_Report.IsGroupRow(rowHandle);
+                    dxItem.ImageOptions.SvgImage = svgImageCollection1[0];
+                    subMenu.Items.Add(dxItem);
 
-                    dXMenuItemreport.Click += (sender, e) =>
+                    dxItem.Click += (sender, e) =>
                     {
                         DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
 
-                        string filter = "[ProductCode] = '" + view.GetRowCellValue(rowHandle, gridColumn) + "' ";
+                        string filter = gridColumn.FieldName + " = '" + gV_Report.GetRowCellValue(rowHandle, gridColumn) + "' ";
 
                         if (dcReport.ReportTypeId == 1)
                         {
@@ -624,16 +623,16 @@ namespace Foxoft
 
                 foreach (TrFormReport report in trFormReports)
                 {
-                    DXMenuItem dXMenuItemreport = new DXMenuItem(report.DcReport.ReportName);
-                    dXMenuItemreport.Tag = new CellInfo(rowHandle, gridColumn);
-                    dXMenuItemreport.Enabled = view.IsDataRow(rowHandle) || view.IsGroupRow(rowHandle);
-                    dXMenuItemreport.ImageOptions.SvgImage = svgImageCollection1[0];
+                    DXMenuItem dxItem = new(report.DcReport.ReportName);
+                    dxItem.Tag = new CellInfo(rowHandle, gridColumn);
+                    dxItem.Enabled = gV_Report.IsDataRow(rowHandle) || gV_Report.IsGroupRow(rowHandle);
+                    dxItem.ImageOptions.SvgImage = svgImageCollection1[0];
 
-                    dXMenuItemreport.Click += (sender, e) =>
+                    dxItem.Click += (sender, e) =>
                     {
                         DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
 
-                        string filter = gridColumn.FieldName + " = '" + view.GetRowCellValue(rowHandle, gridColumn) + "' ";
+                        string filter = gridColumn.FieldName + " = '" + gV_Report.GetRowCellValue(rowHandle, gridColumn) + "' ";
 
                         string activeFilterStr = filter;
 
@@ -650,7 +649,7 @@ namespace Foxoft
                         }
                     };
 
-                    subMenu.Items.Add(dXMenuItemreport);
+                    subMenu.Items.Add(dxItem);
                 }
             }
 
@@ -659,20 +658,17 @@ namespace Foxoft
 
         DXMenuItem CreateItemExpression(string caption, int rowHandle, GridColumn column, Image image)
         {
-            DXMenuItem item = new DXMenuItem(caption, new EventHandler(DXMenuItemExpression_ItemClick), image);
+            DXMenuItem item = new(caption, new EventHandler(DXMenuItemExpression_ItemClick), image);
             item.Tag = new CellInfo(rowHandle, column);
             return item;
         }
 
-        // Menu item click handler.
         void DXMenuItemExpression_ItemClick(object sender, EventArgs e)
         {
             DXMenuItem item = sender as DXMenuItem;
             CellInfo info = item.Tag as CellInfo;
             if (info == null) return;
-            //info.Column.OptionsColumn.AllowMove = !item.Checked;
 
-            //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
             GridColumn col = info.Column;
             col.UnboundType = UnboundColumnType.Object;
             using (XRDesignFormEx designForm = new())

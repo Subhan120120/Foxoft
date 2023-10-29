@@ -261,21 +261,26 @@ namespace Foxoft
                 gV_CurrAccList.RestoreLayoutFromStream(stream, option);
             }
 
-            colPhoneNum = gV_CurrAccList.Columns["PhoneNum"];
-            RepositoryItemTextEdit repoPhoneNum = new();
-            repoPhoneNum.MaskSettings.Set("MaskManagerType", typeof(RegularMaskManager));
-            repoPhoneNum.MaskSettings.Set("mask", "(\\d?\\d?) \\d\\d\\d-\\d\\d-\\d\\d");
-            repoPhoneNum.UseMaskAsDisplayFormat = true;
-            gC_CurrAccList.RepositoryItems.AddRange(new RepositoryItem[] { repoPhoneNum });
-            colPhoneNum.ColumnEdit = repoPhoneNum;
+            if (colPhoneNum is not null)
+            {
+                RepositoryItemTextEdit repoPhoneNum = new();
+                repoPhoneNum.MaskSettings.Set("MaskManagerType", typeof(RegularMaskManager));
+                repoPhoneNum.MaskSettings.Set("mask", "(\\d?\\d?) \\d\\d\\d-\\d\\d-\\d\\d");
+                repoPhoneNum.UseMaskAsDisplayFormat = true;
+                gC_CurrAccList.RepositoryItems.AddRange(new RepositoryItem[] { repoPhoneNum });
+                colPhoneNum.ColumnEdit = repoPhoneNum;
+            }
 
             colBalance = gV_CurrAccList.Columns["Balance"];
-            RepositoryItemTextEdit repoMoney = new();
-            repoMoney.MaskSettings.Set("MaskManagerType", typeof(NumericMaskManager));
-            repoMoney.MaskSettings.Set("mask", "f2");
-            repoMoney.UseMaskAsDisplayFormat = true;
-            gC_CurrAccList.RepositoryItems.AddRange(new RepositoryItem[] { repoMoney });
-            colBalance.ColumnEdit = repoMoney;
+            if (colBalance is not null)
+            {
+                RepositoryItemTextEdit repoMoney = new();
+                repoMoney.MaskSettings.Set("MaskManagerType", typeof(NumericMaskManager));
+                repoMoney.MaskSettings.Set("mask", "f2");
+                repoMoney.UseMaskAsDisplayFormat = true;
+                gC_CurrAccList.RepositoryItems.AddRange(new RepositoryItem[] { repoMoney });
+                colBalance.ColumnEdit = repoMoney;
+            }
         }
 
         private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
