@@ -112,7 +112,7 @@ namespace Foxoft
                     string ts = String.Join(",", currAccTypeArr);
                     string where = " Where CurrAccTypeCode in (" + ts + ") ";
 
-                    string query = CustomExtensions.AddTop(dcReport.ReportQuery);
+                    string query = CustomExtensions.AddTop(dcReport.ReportQuery, int.MaxValue);
 
                     string qryMaster = "select * from (" + query + " \n) as Master " + where;
                     //+ " order by CurrAccDesc";

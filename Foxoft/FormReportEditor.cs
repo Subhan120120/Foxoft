@@ -52,16 +52,32 @@ namespace Foxoft
         {
             EfMethods efMethods = new();
 
-            //dcReport = efMethods.SelectReport(dcReport.ReportId);
-            //efMethods.UpdateReport(dcReport);
+            AdoMethods adoMethods = new();
+
 
             dcReport = dcReportsBindingSource.Current as DcReport;
-            if (!efMethods.ReportExist(dcReport.ReportId)) //if invoiceHeader doesnt exist
-                efMethods.InsertReport(dcReport);
-            else
-                dbContext.SaveChanges();
 
-            DialogResult = DialogResult.OK;
+            if (!String.IsNullOrEmpty(dcReport?.ReportQuery))
+            {
+                string query = CustomExtensions.AddTop(dcReport.ReportQuery, 1);
+
+                string qryMaster = "select * from (" + query + " \n) as Master ";
+
+                try
+                {
+                    DataTable dt = adoMethods.SqlGetDt(qryMaster);
+                    if (!efMethods.ReportExist(dcReport.ReportId)) //if doesnt exist
+                        efMethods.InsertReport(dcReport);
+                    else
+                        dbContext.SaveChanges();
+
+                    DialogResult = DialogResult.OK;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Foxoft Error Code: 1215451 \n\n " + ex);
+                }
+            }
         }
     }
 }

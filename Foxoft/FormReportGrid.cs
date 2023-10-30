@@ -78,7 +78,7 @@ namespace Foxoft
         public FormReportGrid(string query, string filter, DcReport report)
         : this()
         {
-            query = CustomExtensions.AddTop(query);
+            query = CustomExtensions.AddTop(query, int.MaxValue);
 
             string qryMaster = "Select * from ( " + query + " \n) as master";
 
