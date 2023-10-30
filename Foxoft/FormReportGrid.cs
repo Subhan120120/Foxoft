@@ -314,9 +314,7 @@ namespace Foxoft
             object objProductCode = gV_Report.GetFocusedRowCellValue("ProductCode");
             string productCode = objProductCode?.ToString();
             if (!String.IsNullOrEmpty(productCode))
-            {
                 OpenFormProduct(productCode);
-            }
         }
 
         private void repoHLE_CurrAccCode_OpenLink(object sender, OpenLinkEventArgs e)
@@ -324,71 +322,72 @@ namespace Foxoft
             object objCurrAccCode = gV_Report.GetFocusedRowCellValue("CurrAccCode");
             string currAccCode = objCurrAccCode?.ToString();
             if (!String.IsNullOrEmpty(currAccCode))
-            {
                 OpenFormCurrAcc(currAccCode);
-            }
         }
 
         private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
         {
             object objDocNum = gV_Report.GetFocusedValue();
 
-            if (objDocNum is not null)
+            string strDocNum = objDocNum?.ToString();
+
+            if (!String.IsNullOrEmpty(strDocNum))
             {
-                string strDocNum = objDocNum.ToString();
-
-                if (!String.IsNullOrEmpty(strDocNum))
-                {
-                    TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
-                    TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
-
-                    if (trInvoiceHeader is not null)
-                    {
-                        byte[] bytes = trInvoiceHeader.ProcessCode switch
-                        {
-                            "IT" => new byte[] { 1 },
-                            "CI" => new byte[] { 1 },
-                            "CO" => new byte[] { 1 },
-                            "RS" => new byte[] { 1, 3 },
-                            "RP" => new byte[] { 1, 3 },
-                            "EX" => new byte[] { 2, 3 },
-                            _ => new byte[] { }
-                        };
-
-                        FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, 2, trInvoiceHeader.InvoiceHeaderId);
-                        FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                        frm.MdiParent = formERP;
-                        frm.WindowState = FormWindowState.Maximized;
-                        frm.Show();
-                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-                    }
-                    else if (trPaymentHeader is not null)
-                    {
-                        if (trPaymentHeader.ProcessCode == "PA")
-                        {
-                            FormPaymentDetail frm = new(trPaymentHeader.PaymentHeaderId);
-                            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                            frm.MdiParent = formERP;
-                            frm.WindowState = FormWindowState.Maximized;
-                            //frm.Show();
-                            if (formERP.parentRibbonControl.MergedPages.Count > 0)
-                                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-                        }
-                        else if (trPaymentHeader.ProcessCode == "CT")
-                        {
-                            FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
-                            FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
-                            frm.MdiParent = formERP;
-                            frm.WindowState = FormWindowState.Maximized;
-                            frm.Show();
-                            formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
-                        }
-
-                    }
-                    else
-                        MessageBox.Show("Belə bir sənəd yoxdur.");
-                }
+                OpenFormInvoice(strDocNum);
             }
+
+        }
+
+        private void OpenFormInvoice(string strDocNum)
+        {
+            TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
+            TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
+
+            if (trInvoiceHeader is not null)
+            {
+                byte[] bytes = trInvoiceHeader.ProcessCode switch
+                {
+                    "IT" => new byte[] { 1 },
+                    "CI" => new byte[] { 1 },
+                    "CO" => new byte[] { 1 },
+                    "RS" => new byte[] { 1, 3 },
+                    "RP" => new byte[] { 1, 3 },
+                    "EX" => new byte[] { 2, 3 },
+                    _ => new byte[] { }
+                };
+
+                FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, 2, trInvoiceHeader.InvoiceHeaderId);
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                frm.MdiParent = formERP;
+                frm.WindowState = FormWindowState.Maximized;
+                frm.Show();
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
+            else if (trPaymentHeader is not null)
+            {
+                if (trPaymentHeader.ProcessCode == "PA")
+                {
+                    FormPaymentDetail frm = new(trPaymentHeader.PaymentHeaderId);
+                    FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    //frm.Show();
+                    if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+                else if (trPaymentHeader.ProcessCode == "CT")
+                {
+                    FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
+                    FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+
+            }
+            else
+                MessageBox.Show("Belə bir sənəd yoxdur.");
         }
 
         private void gV_Report_RowStyle(object sender, RowStyleEventArgs e)
@@ -507,9 +506,8 @@ namespace Foxoft
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
 
                 if (menu.Column != null)
-                {
                     menu.Items.Add(CreateItemExpression("Expression", e.HitInfo.RowHandle, menu.Column, null));
-                }
+
             }
             else if (e.MenuType == GridMenuType.Row)
             {
@@ -517,9 +515,11 @@ namespace Foxoft
 
                 CreateMenuItemEdit(e);
 
-                var menuSubItem = CreateSubMenuReports(e.HitInfo.RowHandle, e.HitInfo.Column);
+                DXSubMenuItem menuSubItem = CreateSubMenuReports(e.HitInfo.RowHandle, e.HitInfo.Column);
                 menuSubItem.BeginGroup = true;
-                e.Menu.Items.Add(menuSubItem);
+
+                if (menuSubItem.Items.Count > 0)
+                    e.Menu.Items.Add(menuSubItem);
             }
         }
 
@@ -553,6 +553,14 @@ namespace Foxoft
                     };
                     eMenu.Menu.Items.Add(menuItem);
                 }
+                else if (new string[] { "DocumentNumber", "InvoiceNumber" }.Contains(gridColumn.FieldName))
+                {
+                    menuItem.Click += (sender, e) =>
+                    {
+                        OpenFormInvoice(cellValue);
+                    };
+                    eMenu.Menu.Items.Add(menuItem);
+                }
             }
 
             return menuItem;
@@ -579,7 +587,7 @@ namespace Foxoft
             }
         }
 
-        DXMenuItem CreateSubMenuReports(int rowHandle, GridColumn gridColumn)
+        DXSubMenuItem CreateSubMenuReports(int rowHandle, GridColumn gridColumn)
         {
             DXSubMenuItem subMenu = new("Hesabat");
 
