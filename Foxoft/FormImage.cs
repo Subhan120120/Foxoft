@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraBars.Ribbon;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
@@ -63,10 +64,12 @@ namespace Foxoft
 
         private void LoadGallaryImages()
         {
+            CustomMethods cm = new();
+
             string folderPath = Path.Combine(imageFolder, code);
 
             var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
-            List<Image> images = GetFilesFrom(folderPath, filters, SearchOption.TopDirectoryOnly);
+            List<Image> images = cm.GetImagesFrom(folderPath, filters, SearchOption.TopDirectoryOnly);
 
             galleryItemGroup1.Items.Clear();
 
@@ -74,33 +77,7 @@ namespace Foxoft
                 AddImageToGallary(img);
         }
 
-        public static List<Image> GetFilesFrom(String folderPath, String[] filters, SearchOption searchOption)
-        {
-            List<Image> filesFound = new();
 
-            foreach (var filter in filters)
-            {
-                if (CustomExtensions.DirectoryExist(folderPath))
-                {
-                    string[] fileNames = Directory.GetFiles(folderPath, String.Format("*.{0}", filter), searchOption);
-
-                    foreach (var fileName in fileNames)
-                    {
-                        string fullPath = Path.Combine(folderPath, fileName);
-
-                        if (File.Exists(fullPath))
-                            using (var file = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                            {
-                                Image img = Image.FromStream(file);
-                                img.Tag = fullPath;
-                                filesFound.Add(img);
-                            }
-                    }
-                }
-            }
-
-            return filesFound;
-        }
 
         private void btn_Add_Click(object sender, EventArgs e)
         {
