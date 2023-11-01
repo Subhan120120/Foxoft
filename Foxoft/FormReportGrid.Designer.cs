@@ -32,7 +32,6 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportGrid));
             gC_Report = new MyGridControl();
-            gV_Report = new MyGridView(this);
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
             bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
@@ -50,6 +49,7 @@ namespace Foxoft
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            BBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)gC_Report).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Report).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
@@ -80,9 +80,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, barButtonItem1, barButtonItem2 });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, barButtonItem1, barButtonItem2, BBI_ExportExcel });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 11;
+            ribbonControl1.MaxItemId = 12;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.PageHeaderItemLinks.Add(bBI_Quit);
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
@@ -186,6 +186,7 @@ namespace Foxoft
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(bBI_ExportXlsx);
+            ribbonPageGroup2.ItemLinks.Add(BBI_ExportExcel);
             ribbonPageGroup2.ItemLinks.Add(barButtonItem1);
             ribbonPageGroup2.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
@@ -207,6 +208,14 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("bo_report", "image://svgimages/business objects/bo_report.svg");
             svgImageCollection1.Add("actions_edit", "image://svgimages/icon builder/actions_edit.svg");
+            // 
+            // barButtonItem3
+            // 
+            BBI_ExportExcel.Caption = "Excel'ə Göndər";
+            BBI_ExportExcel.Id = 11;
+            BBI_ExportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem3.ImageOptions.SvgImage");
+            BBI_ExportExcel.Name = "barButtonItem3";
+            BBI_ExportExcel.ItemClick += BBI_ExportExcel_ItemClick;
             // 
             // FormReportGrid
             // 
@@ -250,5 +259,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraBars.BarButtonItem BBI_ExportExcel;
     }
 }

@@ -418,11 +418,6 @@ namespace Foxoft
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 DefaultExt = "*.xlsx",
             };
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = report.ReportName;
-            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            sFD.DefaultExt = "*.xlsx";
 
             String fileName = Invoke((Func<string>)(() =>
             {
@@ -442,6 +437,30 @@ namespace Foxoft
                 else
                     return "Fail";
             }));
+        }
+
+        private void BBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            XtraSaveFileDialog sFD = new()
+            {
+                Filter = "Excel Faylı|*.xlsx",
+                Title = "Excel Faylı Yadda Saxla",
+                FileName = report.ReportName,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                DefaultExt = "*.xlsx",
+            };
+
+            if (sFD.ShowDialog() == DialogResult.OK)
+            {
+                gC_Report.ExportToXlsx(sFD.FileName);
+
+                if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                {
+                    Process p = new();
+                    p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                    p.Start();
+                }
+            }
         }
 
         private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -711,5 +730,6 @@ namespace Foxoft
         {
             gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
         }
+
     }
 }
