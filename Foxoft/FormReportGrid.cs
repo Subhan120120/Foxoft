@@ -410,20 +410,21 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Trace.Write("\n Before 'SaveFileDialog sFD = new();' ");
-            XtraSaveFileDialog sFD = new();
-            Trace.Write("\n Before ' sFD.Filter = 'Excel Faylı | *.xlsx';' ");
+            XtraSaveFileDialog sFD = new()
+            {
+                Filter = "Excel Faylı|*.xlsx",
+                Title = "Excel Faylı Yadda Saxla",
+                FileName = report.ReportName,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                DefaultExt = "*.xlsx",
+            };
             sFD.Filter = "Excel Faylı|*.xlsx";
-            Trace.Write("\n Before 'sFD.Title = 'Excel Faylı Yadda Saxla';' ");
             sFD.Title = "Excel Faylı Yadda Saxla";
-            Trace.Write("\n Before 'sFD.FileName = report.ReportName");
             sFD.FileName = report.ReportName;
-            Trace.Write("\n Before 'sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
             sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            Trace.Write("\n Before 'sFD.DefaultExt = ' *.xlsx';' ");
             sFD.DefaultExt = "*.xlsx";
 
-            var fileName = Invoke((Func<string>)(() =>
+            String fileName = Invoke((Func<string>)(() =>
             {
                 if (sFD.ShowDialog() == DialogResult.OK)
                 {
@@ -431,7 +432,7 @@ namespace Foxoft
 
                     if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        Process p = new Process();
+                        Process p = new();
                         p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
                         p.Start();
                     }
