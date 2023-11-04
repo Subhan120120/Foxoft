@@ -120,8 +120,8 @@ namespace Foxoft
             ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             repo = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -146,6 +146,9 @@ namespace Foxoft
             lCI_IsSent = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
+            toastNotificationsManager1 = new DevExpress.XtraBars.ToastNotifications.ToastNotificationsManager(components);
+            ribbonPageGroup9 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -197,6 +200,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)toastNotificationsManager1).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -690,9 +694,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2 });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 42;
+            ribbonControl1.MaxItemId = 43;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -970,7 +974,7 @@ namespace Foxoft
             // 
             // ribbonPage2
             // 
-            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RibbonPageGroup5, ribbonPageGroup6, ribbonPageGroup4 });
+            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { RibbonPageGroup5, ribbonPageGroup6, ribbonPageGroup4, ribbonPageGroup9 });
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "Ayarlar";
             // 
@@ -984,6 +988,13 @@ namespace Foxoft
             RibbonPageGroup5.Name = "RibbonPageGroup5";
             RibbonPageGroup5.Text = "Hesabat";
             // 
+            // ribbonPageGroup6
+            // 
+            ribbonPageGroup6.ItemLinks.Add(BEI_PrinterName);
+            ribbonPageGroup6.ItemLinks.Add(BBI_PrintSettingSave);
+            ribbonPageGroup6.Name = "ribbonPageGroup6";
+            ribbonPageGroup6.Text = "Print";
+            // 
             // ribbonPageGroup4
             // 
             ribbonPageGroup4.ItemLinks.Add(BEI_TwilioInstance);
@@ -991,13 +1002,6 @@ namespace Foxoft
             ribbonPageGroup4.ItemLinks.Add(BBI_TwilioSave);
             ribbonPageGroup4.Name = "ribbonPageGroup4";
             ribbonPageGroup4.Text = "Twilio";
-            // 
-            // ribbonPageGroup6
-            // 
-            ribbonPageGroup6.ItemLinks.Add(BEI_PrinterName);
-            ribbonPageGroup6.ItemLinks.Add(BBI_PrintSettingSave);
-            ribbonPageGroup6.Name = "ribbonPageGroup6";
-            ribbonPageGroup6.Text = "Print";
             // 
             // repositoryItemTextEdit1
             // 
@@ -1211,6 +1215,23 @@ namespace Foxoft
             // 
             adorneruıManager1.Owner = this;
             // 
+            // toastNotificationsManager1
+            // 
+            toastNotificationsManager1.ApplicationId = "d7f6d6cf-3879-4116-a17e-30ce209c9766";
+            // 
+            // ribbonPageGroup9
+            // 
+            ribbonPageGroup9.ItemLinks.Add(barButtonItem2);
+            ribbonPageGroup9.Name = "ribbonPageGroup9";
+            ribbonPageGroup9.Text = "ribbonPageGroup9";
+            // 
+            // barButtonItem2
+            // 
+            barButtonItem2.Caption = "test";
+            barButtonItem2.Id = 42;
+            barButtonItem2.Name = "barButtonItem2";
+            barButtonItem2.ItemClick += barButtonItem2_ItemClick_1;
+            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1279,6 +1300,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)toastNotificationsManager1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1403,5 +1425,8 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup8;
         private DevExpress.XtraBars.BarButtonItem BBI_picture;
         private DevExpress.XtraBars.BarButtonItem BBI_Print;
+        private DevExpress.XtraBars.ToastNotifications.ToastNotificationsManager toastNotificationsManager1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup9;
     }
 }

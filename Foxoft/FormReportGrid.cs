@@ -35,6 +35,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.UI;
+using System.Windows.Forms;
+using System;
 #endregion
 
 namespace Foxoft

@@ -1794,16 +1794,16 @@ namespace Foxoft
             Settings.Default.Save();
         }
 
-        private void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
+        private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
-            xtraReport.PrinterName = settingStore.PrinterName;
+            toastNotificationsManager1.Notifications.AddRange(new DevExpress.XtraBars.ToastNotifications.IToastNotificationProperties[] { new DevExpress.XtraBars.ToastNotifications.ToastNotification("f48c1134-2e94-4013-b206-3bb034be0a1f", null, "Print Göndərilir...", "Printer adı: ", settingStore.PrinterName, DevExpress.XtraBars.ToastNotifications.ToastNotificationTemplate.Generic) });
+            toastNotificationsManager1.ShowNotification("f48c1134-2e94-4013-b206-3bb034be0a1f");
 
-            if (xtraReport is not null)
-            {
-                ReportPrintTool printTool = new(xtraReport);
-                printTool.PrintDialog();
-            }
+            if (trInvoiceHeader is not null)
+                await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId));
+            else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
+
+            Task task = Task.Run((Action)ShowPrintCount);
         }
 
         private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -1844,10 +1844,6 @@ namespace Foxoft
             }
         }
 
-        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
         private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)
         {
             DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
@@ -1862,13 +1858,20 @@ namespace Foxoft
             formPictures.ShowDialog();
         }
 
-        private async void BBI_Print_ItemClick(object sender, ItemClickEventArgs e)
+        private void BBI_Print_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (trInvoiceHeader is not null)
-                await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId));
-            else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
+            XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
+            xtraReport.PrinterName = settingStore.PrinterName;
 
-            Task task = Task.Run((Action)ShowPrintCount);
+            if (xtraReport is not null)
+            {
+                ReportPrintTool printTool = new(xtraReport);
+                printTool.PrintDialog();
+            }
+        }
+
+        private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
         }
     }
 }
