@@ -1796,14 +1796,15 @@ namespace Foxoft
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {
-            toastNotificationsManager1.Notifications.AddRange(new DevExpress.XtraBars.ToastNotifications.IToastNotificationProperties[] { new DevExpress.XtraBars.ToastNotifications.ToastNotification("f48c1134-2e94-4013-b206-3bb034be0a1f", null, "Print Göndərilir...", "Printer adı: ", settingStore.PrinterName, DevExpress.XtraBars.ToastNotifications.ToastNotificationTemplate.Generic) });
-            toastNotificationsManager1.ShowNotification("f48c1134-2e94-4013-b206-3bb034be0a1f");
+            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + settingStore.PrinterName, "", null, null);
 
             if (trInvoiceHeader is not null)
                 await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId));
             else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
 
             Task task = Task.Run((Action)ShowPrintCount);
+
+            alertControl1.Show(this, "Print Göndərildi.", "Printer: " + settingStore.PrinterName, "", null, null);
         }
 
         private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
@@ -1872,6 +1873,13 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
+            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + settingStore.PrinterName, "", null, null);
+        }
+
+        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            toastNotificationsManager1.Notifications.AddRange(new DevExpress.XtraBars.ToastNotifications.IToastNotificationProperties[] { new DevExpress.XtraBars.ToastNotifications.ToastNotification("f48c1134-2e94-4013-b206-3bb034be0a1f", null, "Print Göndərilir...", "Printer adı: ", settingStore.PrinterName, DevExpress.XtraBars.ToastNotifications.ToastNotificationTemplate.Generic) });
+            toastNotificationsManager1.ShowNotification("f48c1134-2e94-4013-b206-3bb034be0a1f");
         }
     }
 }
