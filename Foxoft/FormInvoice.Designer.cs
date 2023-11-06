@@ -149,7 +149,6 @@ namespace Foxoft
             lCI_IsSent = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
-            toastNotificationsManager1 = new DevExpress.XtraBars.ToastNotifications.ToastNotificationsManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
@@ -202,7 +201,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)toastNotificationsManager1).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -894,6 +892,7 @@ namespace Foxoft
             repoCBE_PrinterName.AutoHeight = false;
             repoCBE_PrinterName.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             repoCBE_PrinterName.Name = "repoCBE_PrinterName";
+            repoCBE_PrinterName.EditValueChanged += repoCBE_PrinterName_EditValueChanged;
             // 
             // barButtonItem3
             // 
@@ -1238,10 +1237,6 @@ namespace Foxoft
             // 
             adorneruıManager1.Owner = this;
             // 
-            // toastNotificationsManager1
-            // 
-            toastNotificationsManager1.ApplicationId = "d7f6d6cf-3879-4116-a17e-30ce209c9766";
-            // 
             // alertControl1
             // 
             alertControl1.AutoFormDelay = 3000;
@@ -1315,7 +1310,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)toastNotificationsManager1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1440,10 +1434,9 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup8;
         private DevExpress.XtraBars.BarButtonItem BBI_picture;
         private DevExpress.XtraBars.BarButtonItem BBI_Print;
-        private DevExpress.XtraBars.ToastNotifications.ToastNotificationsManager toastNotificationsManager1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup9;
-        private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
+        private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
     }
 }

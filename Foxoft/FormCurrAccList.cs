@@ -70,13 +70,6 @@ namespace Foxoft
 
         private void FormCurrAccList_Load(object sender, EventArgs e)
         {
-            //Focus Special Row
-            int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
-            if (rowHandle != GridControl.InvalidRowHandle)
-            {
-                gV_CurrAccList.FocusedRowHandle = rowHandle;
-                gV_CurrAccList.MakeRowVisible(rowHandle);
-            }
         }
 
         private void FormCurrAccList_Activated(object sender, EventArgs e)
@@ -90,6 +83,14 @@ namespace Foxoft
             }
 
             LoadCurrAccs(currAccTypeArr);
+
+            //Focus Special Row
+            int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
+            if (rowHandle != GridControl.InvalidRowHandle)
+            {
+                gV_CurrAccList.FocusedRowHandle = rowHandle;
+                gV_CurrAccList.MakeRowVisible(rowHandle);
+            }
         }
 
         private void LoadCurrAccs(byte[] currAccTypeArr)

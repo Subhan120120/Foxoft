@@ -28,12 +28,7 @@ namespace Foxoft
         {
             // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
 
-            Trace.Write("\n FormLogin Started. \n SplashScreenStartup Starting... ");
-
             SplashScreenManager.ShowForm(this, typeof(SplashScreenStartup), true, true, true);
-
-            Trace.Write("\n SplashScreenStartup Started. \n tring db.CanConnect... ");
-
             using subContext db = new();
 
             if (!db.Database.CanConnect())
@@ -54,10 +49,7 @@ namespace Foxoft
 
                 UpdateReportsLayout();
 
-                Trace.Write("\n db.Database.CanConnect() = " + db.Database.CanConnect().ToString() + " \n InitializeComponent starting... ");
-
                 AppSetting appSetting = efMethods.SelectAppSetting();
-                Trace.Write("\n AppSetting appSetting = " + appSetting.Id.ToString() + " \n InitializeComponent starting... ");
                 Settings.Default.AppSetting = appSetting;
                 Settings.Default.Save();
             }
@@ -92,6 +84,7 @@ namespace Foxoft
 
         private void UpdateReportLayout(int reportId, string fileName)
         {
+            //bunu caliwdirmaq olmaz !!!
             //string layout = cM.GetDataFromFile("Foxoft.AppCode.Report." + fileName);
             //efMethods.UpdateReportLayout(reportId, layout);
         }
@@ -189,8 +182,6 @@ namespace Foxoft
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormTreeView frm = new();
-            frm.Show();
         }
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -222,14 +213,13 @@ namespace Foxoft
             FormCommonList<DcFeature> form = new FormCommonList<DcFeature>(string.Empty, "FeatureCode", "", "FeatureTypeId", "4");
             //FormCommonList<DcFeature> form = new FormCommonList<DcFeature>("", "FeatureCode","4");
             form.Show();
-
         }
 
         private bool CheckHasLicense()
         {
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
-                var pInterfaceProperties = nic.GetPhysicalAddress();
+                PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
 
                 if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                     if (nic.Name == "Ethernet" && efMethods.CheckHasLicense(nic.Id + pInterfaceProperties))
@@ -245,7 +235,7 @@ namespace Foxoft
                 if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
                     if (nic.Name == "Ethernet")
                     {
-                        var pInterfaceProperties = nic.GetPhysicalAddress();
+                        PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
                         Clipboard.SetText(nic.Id + pInterfaceProperties);
                     }
             }

@@ -1807,10 +1807,15 @@ namespace Foxoft
             alertControl1.Show(this, "Print Göndərildi.", "Printer: " + settingStore.PrinterName, "", null, null);
         }
 
+        private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)
+        {
+            ComboBoxEdit comboBox = (ComboBoxEdit)sender;
+            settingStore.PrinterName = comboBox.EditValue.ToString();
+        }
+
         private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
         {
             efMethods.UpdateStoreSettingPrinterName(BEI_PrinterName.EditValue.ToString());
-            settingStore.PrinterName = BEI_PrinterName.EditValue.ToString();
         }
 
         private void Btn_EditInvoice_Click(object sender, EventArgs e)
@@ -1823,8 +1828,6 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MetaWhatsapp metaWhatsapp = new();
-            //MetaResponce metaResponce = metaWhatsapp.SendWhatsapp("", "");
         }
 
         private void gV_Report_RowStyle(object sender, RowStyleEventArgs e)
@@ -1873,13 +1876,13 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + settingStore.PrinterName, "", null, null);
+            MessageBox.Show(settingStore.PrinterName);
         }
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
-            toastNotificationsManager1.Notifications.AddRange(new DevExpress.XtraBars.ToastNotifications.IToastNotificationProperties[] { new DevExpress.XtraBars.ToastNotifications.ToastNotification("f48c1134-2e94-4013-b206-3bb034be0a1f", null, "Print Göndərilir...", "Printer adı: ", settingStore.PrinterName, DevExpress.XtraBars.ToastNotifications.ToastNotificationTemplate.Generic) });
-            toastNotificationsManager1.ShowNotification("f48c1134-2e94-4013-b206-3bb034be0a1f");
+
         }
+
     }
 }

@@ -30,915 +30,878 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProduct));
-            this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            this.btn_SaveImage = new DevExpress.XtraEditors.SimpleButton();
-            this.ProductCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.dcProductsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.UsePosCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            this.PromotionCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.PromotionCode2TextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.TaxRateTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.IsDisabledCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            this.ProductDescTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
-            this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
-            this.ProductTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            this.BarcodeTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.PurchasePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.WholesalePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.RetailPriceTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.PosDiscountTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.UseInternetCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            this.BalanceTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.btn_ProductFeature = new DevExpress.XtraEditors.SimpleButton();
-            this.pictureEdit = new DevExpress.XtraEditors.PictureEdit();
-            this.Btn_BarcodeGenerate = new DevExpress.XtraEditors.SimpleButton();
-            this.textEdit_ProductCode2 = new DevExpress.XtraEditors.TextEdit();
-            this.btnEdit_Hierarchy = new DevExpress.XtraEditors.ButtonEdit();
-            this.txtEdit_Price = new DevExpress.XtraEditors.TextEdit();
-            this.txtEdit_Desc = new DevExpress.XtraEditors.TextEdit();
-            this.txtEdit_Slug = new DevExpress.XtraEditors.TextEdit();
-            this.txtEdit_Rating = new DevExpress.XtraEditors.TextEdit();
-            this.btn_ProductDiscount = new DevExpress.XtraEditors.SimpleButton();
-            this.ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForPromotionCode2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForTaxRate = new DevExpress.XtraLayout.LayoutControlItem();
-            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForPosDiscount = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForBalance = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForProductCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ProductCode2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lCI_BarcodeGenerate = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lCI_hierarchyCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
-            this.autoGroupForQiymətlər = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
-            this.dataLayoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductCodeTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UsePosCheckEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PromotionCodeTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PromotionCode2TextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TaxRateTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IsDisabledCheckEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductDescTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BarcodeTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PurchasePriceTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WholesalePriceTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RetailPriceTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PosDiscountTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BalanceTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit_ProductCode2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_Hierarchy.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Price.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Desc.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Slug.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Rating.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForUsePos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForTaxRate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPosDiscount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForBalance)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductCode2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForBarcode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_BarcodeGenerate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_hierarchyCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoGroupForQiymətlər)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPurchasePrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForWholesalePrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForRetailPrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
-            this.SuspendLayout();
+            dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            btn_SaveImage = new DevExpress.XtraEditors.SimpleButton();
+            ProductCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            dcProductsBindingSource = new System.Windows.Forms.BindingSource(components);
+            UsePosCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            PromotionCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            PromotionCode2TextEdit = new DevExpress.XtraEditors.TextEdit();
+            TaxRateTextEdit = new DevExpress.XtraEditors.TextEdit();
+            IsDisabledCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            ProductDescTextEdit = new DevExpress.XtraEditors.TextEdit();
+            btn_Ok = new DevExpress.XtraEditors.SimpleButton();
+            btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
+            ProductTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            BarcodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            PurchasePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
+            WholesalePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
+            RetailPriceTextEdit = new DevExpress.XtraEditors.TextEdit();
+            PosDiscountTextEdit = new DevExpress.XtraEditors.TextEdit();
+            UseInternetCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            BalanceTextEdit = new DevExpress.XtraEditors.TextEdit();
+            btn_ProductFeature = new DevExpress.XtraEditors.SimpleButton();
+            pictureEdit = new DevExpress.XtraEditors.PictureEdit();
+            Btn_BarcodeGenerate = new DevExpress.XtraEditors.SimpleButton();
+            textEdit_ProductCode2 = new DevExpress.XtraEditors.TextEdit();
+            btnEdit_Hierarchy = new DevExpress.XtraEditors.ButtonEdit();
+            txtEdit_Price = new DevExpress.XtraEditors.TextEdit();
+            txtEdit_Desc = new DevExpress.XtraEditors.TextEdit();
+            txtEdit_Slug = new DevExpress.XtraEditors.TextEdit();
+            txtEdit_Rating = new DevExpress.XtraEditors.TextEdit();
+            btn_ProductDiscount = new DevExpress.XtraEditors.SimpleButton();
+            ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPromotionCode2 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForTaxRate = new DevExpress.XtraLayout.LayoutControlItem();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPosDiscount = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForBalance = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForProductCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
+            ProductCode2 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_BarcodeGenerate = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_hierarchyCode = new DevExpress.XtraLayout.LayoutControlItem();
+            emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+            layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
+            autoGroupForQiymətlər = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
+            dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ProductCodeTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UsePosCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PromotionCodeTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PromotionCode2TextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)TaxRateTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ProductDescTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ProductTypeCodeLookUpEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BarcodeTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PurchasePriceTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)WholesalePriceTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)RetailPriceTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PosDiscountTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UseInternetCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BalanceTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textEdit_ProductCode2.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_Hierarchy.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Price.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Desc.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Slug.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Rating.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUsePos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForTaxRate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPosDiscount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForBalance).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseInternet).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductTypeCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductDesc).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ProductCode2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForBarcode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_BarcodeGenerate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)tabbedControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)autoGroupForQiymətlər).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
+            SuspendLayout();
             // 
             // dataLayoutControl1
             // 
-            this.dataLayoutControl1.Controls.Add(this.btn_SaveImage);
-            this.dataLayoutControl1.Controls.Add(this.ProductCodeTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.UsePosCheckEdit);
-            this.dataLayoutControl1.Controls.Add(this.PromotionCodeTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.PromotionCode2TextEdit);
-            this.dataLayoutControl1.Controls.Add(this.TaxRateTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.IsDisabledCheckEdit);
-            this.dataLayoutControl1.Controls.Add(this.ProductDescTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.btn_Ok);
-            this.dataLayoutControl1.Controls.Add(this.btn_Cancel);
-            this.dataLayoutControl1.Controls.Add(this.ProductTypeCodeLookUpEdit);
-            this.dataLayoutControl1.Controls.Add(this.BarcodeTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.PurchasePriceTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.WholesalePriceTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.RetailPriceTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.PosDiscountTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.UseInternetCheckEdit);
-            this.dataLayoutControl1.Controls.Add(this.BalanceTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.btn_ProductFeature);
-            this.dataLayoutControl1.Controls.Add(this.pictureEdit);
-            this.dataLayoutControl1.Controls.Add(this.Btn_BarcodeGenerate);
-            this.dataLayoutControl1.Controls.Add(this.textEdit_ProductCode2);
-            this.dataLayoutControl1.Controls.Add(this.btnEdit_Hierarchy);
-            this.dataLayoutControl1.Controls.Add(this.txtEdit_Price);
-            this.dataLayoutControl1.Controls.Add(this.txtEdit_Desc);
-            this.dataLayoutControl1.Controls.Add(this.txtEdit_Slug);
-            this.dataLayoutControl1.Controls.Add(this.txtEdit_Rating);
-            this.dataLayoutControl1.Controls.Add(this.btn_ProductDiscount);
-            this.dataLayoutControl1.DataSource = this.dcProductsBindingSource;
-            this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.ItemForUsePos,
-            this.ItemForPromotionCode,
-            this.ItemForPromotionCode2,
-            this.ItemForTaxRate});
-            this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
-            this.dataLayoutControl1.Name = "dataLayoutControl1";
-            this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(613, 395, 514, 400);
-            this.dataLayoutControl1.Root = this.Root;
-            this.dataLayoutControl1.Size = new System.Drawing.Size(511, 422);
-            this.dataLayoutControl1.TabIndex = 0;
-            this.dataLayoutControl1.Text = "dataLayoutControl1";
+            dataLayoutControl1.Controls.Add(btn_SaveImage);
+            dataLayoutControl1.Controls.Add(ProductCodeTextEdit);
+            dataLayoutControl1.Controls.Add(UsePosCheckEdit);
+            dataLayoutControl1.Controls.Add(PromotionCodeTextEdit);
+            dataLayoutControl1.Controls.Add(PromotionCode2TextEdit);
+            dataLayoutControl1.Controls.Add(TaxRateTextEdit);
+            dataLayoutControl1.Controls.Add(IsDisabledCheckEdit);
+            dataLayoutControl1.Controls.Add(ProductDescTextEdit);
+            dataLayoutControl1.Controls.Add(btn_Ok);
+            dataLayoutControl1.Controls.Add(btn_Cancel);
+            dataLayoutControl1.Controls.Add(ProductTypeCodeLookUpEdit);
+            dataLayoutControl1.Controls.Add(BarcodeTextEdit);
+            dataLayoutControl1.Controls.Add(PurchasePriceTextEdit);
+            dataLayoutControl1.Controls.Add(WholesalePriceTextEdit);
+            dataLayoutControl1.Controls.Add(RetailPriceTextEdit);
+            dataLayoutControl1.Controls.Add(PosDiscountTextEdit);
+            dataLayoutControl1.Controls.Add(UseInternetCheckEdit);
+            dataLayoutControl1.Controls.Add(BalanceTextEdit);
+            dataLayoutControl1.Controls.Add(btn_ProductFeature);
+            dataLayoutControl1.Controls.Add(pictureEdit);
+            dataLayoutControl1.Controls.Add(Btn_BarcodeGenerate);
+            dataLayoutControl1.Controls.Add(textEdit_ProductCode2);
+            dataLayoutControl1.Controls.Add(btnEdit_Hierarchy);
+            dataLayoutControl1.Controls.Add(txtEdit_Price);
+            dataLayoutControl1.Controls.Add(txtEdit_Desc);
+            dataLayoutControl1.Controls.Add(txtEdit_Slug);
+            dataLayoutControl1.Controls.Add(txtEdit_Rating);
+            dataLayoutControl1.Controls.Add(btn_ProductDiscount);
+            dataLayoutControl1.DataSource = dcProductsBindingSource;
+            dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForUsePos, ItemForPromotionCode, ItemForPromotionCode2, ItemForTaxRate });
+            dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
+            dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(613, 395, 514, 400);
+            dataLayoutControl1.Root = Root;
+            dataLayoutControl1.Size = new System.Drawing.Size(511, 422);
+            dataLayoutControl1.TabIndex = 0;
+            dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // btn_SaveImage
             // 
-            this.btn_SaveImage.Location = new System.Drawing.Point(392, 299);
-            this.btn_SaveImage.Name = "btn_SaveImage";
-            this.btn_SaveImage.Size = new System.Drawing.Size(107, 22);
-            this.btn_SaveImage.StyleController = this.dataLayoutControl1;
-            this.btn_SaveImage.TabIndex = 13;
-            this.btn_SaveImage.Text = "Sekli Yadda Saxla";
-            this.btn_SaveImage.Click += new System.EventHandler(this.btn_SaveImage_Click);
+            btn_SaveImage.Location = new System.Drawing.Point(392, 299);
+            btn_SaveImage.Name = "btn_SaveImage";
+            btn_SaveImage.Size = new System.Drawing.Size(107, 22);
+            btn_SaveImage.StyleController = dataLayoutControl1;
+            btn_SaveImage.TabIndex = 13;
+            btn_SaveImage.Text = "Sekli Yadda Saxla";
+            btn_SaveImage.Click += btn_SaveImage_Click;
             // 
             // ProductCodeTextEdit
             // 
-            this.ProductCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductCode", true));
-            this.ProductCodeTextEdit.Location = new System.Drawing.Point(117, 12);
-            this.ProductCodeTextEdit.Name = "ProductCodeTextEdit";
-            this.ProductCodeTextEdit.Size = new System.Drawing.Size(161, 20);
-            this.ProductCodeTextEdit.StyleController = this.dataLayoutControl1;
-            this.ProductCodeTextEdit.TabIndex = 0;
+            ProductCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "ProductCode", true));
+            ProductCodeTextEdit.Location = new System.Drawing.Point(117, 12);
+            ProductCodeTextEdit.Name = "ProductCodeTextEdit";
+            ProductCodeTextEdit.Size = new System.Drawing.Size(161, 20);
+            ProductCodeTextEdit.StyleController = dataLayoutControl1;
+            ProductCodeTextEdit.TabIndex = 0;
             // 
             // dcProductsBindingSource
             // 
-            this.dcProductsBindingSource.DataSource = typeof(Foxoft.Models.DcProduct);
+            dcProductsBindingSource.DataSource = typeof(DcProduct);
             // 
             // UsePosCheckEdit
             // 
-            this.UsePosCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "UsePos", true));
-            this.UsePosCheckEdit.Location = new System.Drawing.Point(316, 153);
-            this.UsePosCheckEdit.Name = "UsePosCheckEdit";
-            this.UsePosCheckEdit.Properties.Caption = "Use Pos";
-            this.UsePosCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.UsePosCheckEdit.Size = new System.Drawing.Size(117, 20);
-            this.UsePosCheckEdit.StyleController = this.dataLayoutControl1;
-            this.UsePosCheckEdit.TabIndex = 1;
+            UsePosCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "UsePos", true));
+            UsePosCheckEdit.Location = new System.Drawing.Point(316, 153);
+            UsePosCheckEdit.Name = "UsePosCheckEdit";
+            UsePosCheckEdit.Properties.Caption = "Use Pos";
+            UsePosCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            UsePosCheckEdit.Size = new System.Drawing.Size(117, 20);
+            UsePosCheckEdit.StyleController = dataLayoutControl1;
+            UsePosCheckEdit.TabIndex = 1;
             // 
             // PromotionCodeTextEdit
             // 
-            this.PromotionCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "PromotionCode", true));
-            this.PromotionCodeTextEdit.Location = new System.Drawing.Point(117, 132);
-            this.PromotionCodeTextEdit.Name = "PromotionCodeTextEdit";
-            this.PromotionCodeTextEdit.Size = new System.Drawing.Size(195, 20);
-            this.PromotionCodeTextEdit.StyleController = this.dataLayoutControl1;
-            this.PromotionCodeTextEdit.TabIndex = 1;
+            PromotionCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "PromotionCode", true));
+            PromotionCodeTextEdit.Location = new System.Drawing.Point(117, 132);
+            PromotionCodeTextEdit.Name = "PromotionCodeTextEdit";
+            PromotionCodeTextEdit.Size = new System.Drawing.Size(195, 20);
+            PromotionCodeTextEdit.StyleController = dataLayoutControl1;
+            PromotionCodeTextEdit.TabIndex = 1;
             // 
             // PromotionCode2TextEdit
             // 
-            this.PromotionCode2TextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "PromotionCode2", true));
-            this.PromotionCode2TextEdit.Location = new System.Drawing.Point(117, 156);
-            this.PromotionCode2TextEdit.Name = "PromotionCode2TextEdit";
-            this.PromotionCode2TextEdit.Size = new System.Drawing.Size(195, 20);
-            this.PromotionCode2TextEdit.StyleController = this.dataLayoutControl1;
-            this.PromotionCode2TextEdit.TabIndex = 1;
+            PromotionCode2TextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "PromotionCode2", true));
+            PromotionCode2TextEdit.Location = new System.Drawing.Point(117, 156);
+            PromotionCode2TextEdit.Name = "PromotionCode2TextEdit";
+            PromotionCode2TextEdit.Size = new System.Drawing.Size(195, 20);
+            PromotionCode2TextEdit.StyleController = dataLayoutControl1;
+            PromotionCode2TextEdit.TabIndex = 1;
             // 
             // TaxRateTextEdit
             // 
-            this.TaxRateTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "TaxRate", true));
-            this.TaxRateTextEdit.Location = new System.Drawing.Point(117, 84);
-            this.TaxRateTextEdit.Name = "TaxRateTextEdit";
-            this.TaxRateTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.TaxRateTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.TaxRateTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.TaxRateTextEdit.Size = new System.Drawing.Size(195, 20);
-            this.TaxRateTextEdit.StyleController = this.dataLayoutControl1;
-            this.TaxRateTextEdit.TabIndex = 1;
+            TaxRateTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "TaxRate", true));
+            TaxRateTextEdit.Location = new System.Drawing.Point(117, 84);
+            TaxRateTextEdit.Name = "TaxRateTextEdit";
+            TaxRateTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            TaxRateTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            TaxRateTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            TaxRateTextEdit.Size = new System.Drawing.Size(195, 20);
+            TaxRateTextEdit.StyleController = dataLayoutControl1;
+            TaxRateTextEdit.TabIndex = 1;
             // 
             // IsDisabledCheckEdit
             // 
-            this.IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "IsDisabled", true));
-            this.IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 325);
-            this.IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
-            this.IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
-            this.IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.IsDisabledCheckEdit.Size = new System.Drawing.Size(98, 20);
-            this.IsDisabledCheckEdit.StyleController = this.dataLayoutControl1;
-            this.IsDisabledCheckEdit.TabIndex = 14;
+            IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "IsDisabled", true));
+            IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 325);
+            IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
+            IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
+            IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            IsDisabledCheckEdit.Size = new System.Drawing.Size(98, 20);
+            IsDisabledCheckEdit.StyleController = dataLayoutControl1;
+            IsDisabledCheckEdit.TabIndex = 14;
             // 
             // ProductDescTextEdit
             // 
-            this.ProductDescTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductDesc", true));
-            this.ProductDescTextEdit.Location = new System.Drawing.Point(117, 36);
-            this.ProductDescTextEdit.Name = "ProductDescTextEdit";
-            this.ProductDescTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.ProductDescTextEdit.Size = new System.Drawing.Size(382, 20);
-            this.ProductDescTextEdit.StyleController = this.dataLayoutControl1;
-            this.ProductDescTextEdit.TabIndex = 3;
+            ProductDescTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "ProductDesc", true));
+            ProductDescTextEdit.Location = new System.Drawing.Point(117, 36);
+            ProductDescTextEdit.Name = "ProductDescTextEdit";
+            ProductDescTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            ProductDescTextEdit.Size = new System.Drawing.Size(382, 20);
+            ProductDescTextEdit.StyleController = dataLayoutControl1;
+            ProductDescTextEdit.TabIndex = 3;
             // 
             // btn_Ok
             // 
-            this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_Ok.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Ok.ImageOptions.SvgImage")));
-            this.btn_Ok.Location = new System.Drawing.Point(383, 325);
-            this.btn_Ok.Name = "btn_Ok";
-            this.btn_Ok.Size = new System.Drawing.Size(116, 85);
-            this.btn_Ok.StyleController = this.dataLayoutControl1;
-            this.btn_Ok.TabIndex = 17;
-            this.btn_Ok.Text = "simpleButton1";
-            this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
+            btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
+            btn_Ok.Location = new System.Drawing.Point(383, 325);
+            btn_Ok.Name = "btn_Ok";
+            btn_Ok.Size = new System.Drawing.Size(116, 85);
+            btn_Ok.StyleController = dataLayoutControl1;
+            btn_Ok.TabIndex = 17;
+            btn_Ok.Text = "simpleButton1";
+            btn_Ok.Click += btn_Ok_Click;
             // 
             // btn_Cancel
             // 
-            this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.btn_Cancel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Cancel.ImageOptions.SvgImage")));
-            this.btn_Cancel.Location = new System.Drawing.Point(282, 325);
-            this.btn_Cancel.Name = "btn_Cancel";
-            this.btn_Cancel.Size = new System.Drawing.Size(97, 85);
-            this.btn_Cancel.StyleController = this.dataLayoutControl1;
-            this.btn_Cancel.TabIndex = 16;
-            this.btn_Cancel.Text = "simpleButton2";
+            btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
+            btn_Cancel.Location = new System.Drawing.Point(282, 325);
+            btn_Cancel.Name = "btn_Cancel";
+            btn_Cancel.Size = new System.Drawing.Size(97, 85);
+            btn_Cancel.StyleController = dataLayoutControl1;
+            btn_Cancel.TabIndex = 16;
+            btn_Cancel.Text = "simpleButton2";
             // 
             // ProductTypeCodeLookUpEdit
             // 
-            this.ProductTypeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductTypeCode", true));
-            this.ProductTypeCodeLookUpEdit.Location = new System.Drawing.Point(387, 12);
-            this.ProductTypeCodeLookUpEdit.Name = "ProductTypeCodeLookUpEdit";
-            this.ProductTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.ProductTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.ProductTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.ProductTypeCodeLookUpEdit.Properties.NullText = "";
-            this.ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(112, 20);
-            this.ProductTypeCodeLookUpEdit.StyleController = this.dataLayoutControl1;
-            this.ProductTypeCodeLookUpEdit.TabIndex = 2;
+            ProductTypeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "ProductTypeCode", true));
+            ProductTypeCodeLookUpEdit.Location = new System.Drawing.Point(387, 12);
+            ProductTypeCodeLookUpEdit.Name = "ProductTypeCodeLookUpEdit";
+            ProductTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
+            ProductTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            ProductTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            ProductTypeCodeLookUpEdit.Properties.NullText = "";
+            ProductTypeCodeLookUpEdit.Size = new System.Drawing.Size(112, 20);
+            ProductTypeCodeLookUpEdit.StyleController = dataLayoutControl1;
+            ProductTypeCodeLookUpEdit.TabIndex = 2;
             // 
             // BarcodeTextEdit
             // 
-            this.BarcodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "Barcode", true));
-            this.BarcodeTextEdit.Location = new System.Drawing.Point(117, 132);
-            this.BarcodeTextEdit.Name = "BarcodeTextEdit";
-            this.BarcodeTextEdit.Size = new System.Drawing.Size(135, 20);
-            this.BarcodeTextEdit.StyleController = this.dataLayoutControl1;
-            this.BarcodeTextEdit.TabIndex = 7;
+            BarcodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "Barcode", true));
+            BarcodeTextEdit.Location = new System.Drawing.Point(117, 132);
+            BarcodeTextEdit.Name = "BarcodeTextEdit";
+            BarcodeTextEdit.Size = new System.Drawing.Size(135, 20);
+            BarcodeTextEdit.StyleController = dataLayoutControl1;
+            BarcodeTextEdit.TabIndex = 7;
             // 
             // PurchasePriceTextEdit
             // 
-            this.PurchasePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "PurchasePrice", true));
-            this.PurchasePriceTextEdit.Location = new System.Drawing.Point(129, 217);
-            this.PurchasePriceTextEdit.Name = "PurchasePriceTextEdit";
-            this.PurchasePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.PurchasePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.PurchasePriceTextEdit.Properties.Mask.EditMask = "G";
-            this.PurchasePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.PurchasePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.PurchasePriceTextEdit.Size = new System.Drawing.Size(137, 20);
-            this.PurchasePriceTextEdit.StyleController = this.dataLayoutControl1;
-            this.PurchasePriceTextEdit.TabIndex = 1;
+            PurchasePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "PurchasePrice", true));
+            PurchasePriceTextEdit.Location = new System.Drawing.Point(129, 217);
+            PurchasePriceTextEdit.Name = "PurchasePriceTextEdit";
+            PurchasePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            PurchasePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            PurchasePriceTextEdit.Properties.Mask.EditMask = "G";
+            PurchasePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            PurchasePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            PurchasePriceTextEdit.Size = new System.Drawing.Size(137, 20);
+            PurchasePriceTextEdit.StyleController = dataLayoutControl1;
+            PurchasePriceTextEdit.TabIndex = 1;
             // 
             // WholesalePriceTextEdit
             // 
-            this.WholesalePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "WholesalePrice", true));
-            this.WholesalePriceTextEdit.Location = new System.Drawing.Point(129, 241);
-            this.WholesalePriceTextEdit.Name = "WholesalePriceTextEdit";
-            this.WholesalePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.WholesalePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.WholesalePriceTextEdit.Properties.Mask.EditMask = "G";
-            this.WholesalePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.WholesalePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.WholesalePriceTextEdit.Size = new System.Drawing.Size(137, 20);
-            this.WholesalePriceTextEdit.StyleController = this.dataLayoutControl1;
-            this.WholesalePriceTextEdit.TabIndex = 1;
+            WholesalePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "WholesalePrice", true));
+            WholesalePriceTextEdit.Location = new System.Drawing.Point(129, 241);
+            WholesalePriceTextEdit.Name = "WholesalePriceTextEdit";
+            WholesalePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            WholesalePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            WholesalePriceTextEdit.Properties.Mask.EditMask = "G";
+            WholesalePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            WholesalePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            WholesalePriceTextEdit.Size = new System.Drawing.Size(137, 20);
+            WholesalePriceTextEdit.StyleController = dataLayoutControl1;
+            WholesalePriceTextEdit.TabIndex = 1;
             // 
             // RetailPriceTextEdit
             // 
-            this.RetailPriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "RetailPrice", true));
-            this.RetailPriceTextEdit.Location = new System.Drawing.Point(129, 265);
-            this.RetailPriceTextEdit.Name = "RetailPriceTextEdit";
-            this.RetailPriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.RetailPriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.RetailPriceTextEdit.Properties.Mask.EditMask = "G";
-            this.RetailPriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.RetailPriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.RetailPriceTextEdit.Size = new System.Drawing.Size(137, 20);
-            this.RetailPriceTextEdit.StyleController = this.dataLayoutControl1;
-            this.RetailPriceTextEdit.TabIndex = 1;
+            RetailPriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "RetailPrice", true));
+            RetailPriceTextEdit.Location = new System.Drawing.Point(129, 265);
+            RetailPriceTextEdit.Name = "RetailPriceTextEdit";
+            RetailPriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            RetailPriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            RetailPriceTextEdit.Properties.Mask.EditMask = "G";
+            RetailPriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            RetailPriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            RetailPriceTextEdit.Size = new System.Drawing.Size(137, 20);
+            RetailPriceTextEdit.StyleController = dataLayoutControl1;
+            RetailPriceTextEdit.TabIndex = 1;
             // 
             // PosDiscountTextEdit
             // 
-            this.PosDiscountTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "PosDiscount", true));
-            this.PosDiscountTextEdit.Location = new System.Drawing.Point(117, 60);
-            this.PosDiscountTextEdit.Name = "PosDiscountTextEdit";
-            this.PosDiscountTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.PosDiscountTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.PosDiscountTextEdit.Properties.Mask.EditMask = "F";
-            this.PosDiscountTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.PosDiscountTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.PosDiscountTextEdit.Size = new System.Drawing.Size(161, 20);
-            this.PosDiscountTextEdit.StyleController = this.dataLayoutControl1;
-            this.PosDiscountTextEdit.TabIndex = 4;
+            PosDiscountTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "PosDiscount", true));
+            PosDiscountTextEdit.Location = new System.Drawing.Point(117, 60);
+            PosDiscountTextEdit.Name = "PosDiscountTextEdit";
+            PosDiscountTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            PosDiscountTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            PosDiscountTextEdit.Properties.Mask.EditMask = "F";
+            PosDiscountTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            PosDiscountTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            PosDiscountTextEdit.Size = new System.Drawing.Size(161, 20);
+            PosDiscountTextEdit.StyleController = dataLayoutControl1;
+            PosDiscountTextEdit.TabIndex = 4;
             // 
             // UseInternetCheckEdit
             // 
-            this.UseInternetCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "UseInternet", true));
-            this.UseInternetCheckEdit.Location = new System.Drawing.Point(114, 325);
-            this.UseInternetCheckEdit.Name = "UseInternetCheckEdit";
-            this.UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
-            this.UseInternetCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.UseInternetCheckEdit.Size = new System.Drawing.Size(164, 20);
-            this.UseInternetCheckEdit.StyleController = this.dataLayoutControl1;
-            this.UseInternetCheckEdit.TabIndex = 15;
+            UseInternetCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "UseInternet", true));
+            UseInternetCheckEdit.Location = new System.Drawing.Point(114, 325);
+            UseInternetCheckEdit.Name = "UseInternetCheckEdit";
+            UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
+            UseInternetCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            UseInternetCheckEdit.Size = new System.Drawing.Size(164, 20);
+            UseInternetCheckEdit.StyleController = dataLayoutControl1;
+            UseInternetCheckEdit.TabIndex = 15;
             // 
             // BalanceTextEdit
             // 
-            this.BalanceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "Balance", true));
-            this.BalanceTextEdit.Location = new System.Drawing.Point(117, 84);
-            this.BalanceTextEdit.Name = "BalanceTextEdit";
-            this.BalanceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            this.BalanceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.BalanceTextEdit.Properties.Mask.EditMask = "N0";
-            this.BalanceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-            this.BalanceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            this.BalanceTextEdit.Size = new System.Drawing.Size(161, 20);
-            this.BalanceTextEdit.StyleController = this.dataLayoutControl1;
-            this.BalanceTextEdit.TabIndex = 5;
+            BalanceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "Balance", true));
+            BalanceTextEdit.Location = new System.Drawing.Point(117, 84);
+            BalanceTextEdit.Name = "BalanceTextEdit";
+            BalanceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            BalanceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            BalanceTextEdit.Properties.Mask.EditMask = "N0";
+            BalanceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            BalanceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            BalanceTextEdit.Size = new System.Drawing.Size(161, 20);
+            BalanceTextEdit.StyleController = dataLayoutControl1;
+            BalanceTextEdit.TabIndex = 5;
             // 
             // btn_ProductFeature
             // 
-            this.btn_ProductFeature.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_ProductFeature.ImageOptions.SvgImage")));
-            this.btn_ProductFeature.Location = new System.Drawing.Point(12, 349);
-            this.btn_ProductFeature.Name = "btn_ProductFeature";
-            this.btn_ProductFeature.Size = new System.Drawing.Size(130, 36);
-            this.btn_ProductFeature.StyleController = this.dataLayoutControl1;
-            this.btn_ProductFeature.TabIndex = 18;
-            this.btn_ProductFeature.Text = "Ozellik";
-            this.btn_ProductFeature.Click += new System.EventHandler(this.btn_ProductFeature_Click);
+            btn_ProductFeature.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductFeature.ImageOptions.SvgImage");
+            btn_ProductFeature.Location = new System.Drawing.Point(12, 349);
+            btn_ProductFeature.Name = "btn_ProductFeature";
+            btn_ProductFeature.Size = new System.Drawing.Size(130, 36);
+            btn_ProductFeature.StyleController = dataLayoutControl1;
+            btn_ProductFeature.TabIndex = 18;
+            btn_ProductFeature.Text = "Ozellik";
+            btn_ProductFeature.Click += btn_ProductFeature_Click;
             // 
             // pictureEdit
             // 
-            this.pictureEdit.Location = new System.Drawing.Point(282, 60);
-            this.pictureEdit.Name = "pictureEdit";
-            this.pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
-            this.pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            this.pictureEdit.Size = new System.Drawing.Size(217, 235);
-            this.pictureEdit.StyleController = this.dataLayoutControl1;
-            this.pictureEdit.TabIndex = 1;
-            this.pictureEdit.DoubleClick += new System.EventHandler(this.pictureEdit_DoubleClick);
+            pictureEdit.Location = new System.Drawing.Point(282, 60);
+            pictureEdit.Name = "pictureEdit";
+            pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
+            pictureEdit.Size = new System.Drawing.Size(217, 235);
+            pictureEdit.StyleController = dataLayoutControl1;
+            pictureEdit.TabIndex = 1;
+            pictureEdit.DoubleClick += pictureEdit_DoubleClick;
             // 
             // Btn_BarcodeGenerate
             // 
-            this.Btn_BarcodeGenerate.Location = new System.Drawing.Point(256, 132);
-            this.Btn_BarcodeGenerate.Name = "Btn_BarcodeGenerate";
-            this.Btn_BarcodeGenerate.Size = new System.Drawing.Size(22, 22);
-            this.Btn_BarcodeGenerate.StyleController = this.dataLayoutControl1;
-            this.Btn_BarcodeGenerate.TabIndex = 8;
-            this.Btn_BarcodeGenerate.Text = "+";
-            this.Btn_BarcodeGenerate.Click += new System.EventHandler(this.btn_BarcodeGenerate_Click);
+            Btn_BarcodeGenerate.Location = new System.Drawing.Point(256, 132);
+            Btn_BarcodeGenerate.Name = "Btn_BarcodeGenerate";
+            Btn_BarcodeGenerate.Size = new System.Drawing.Size(22, 22);
+            Btn_BarcodeGenerate.StyleController = dataLayoutControl1;
+            Btn_BarcodeGenerate.TabIndex = 8;
+            Btn_BarcodeGenerate.Text = "+";
+            Btn_BarcodeGenerate.Click += btn_BarcodeGenerate_Click;
             // 
             // textEdit_ProductCode2
             // 
-            this.textEdit_ProductCode2.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "ProductCode2", true));
-            this.textEdit_ProductCode2.Location = new System.Drawing.Point(117, 108);
-            this.textEdit_ProductCode2.Name = "textEdit_ProductCode2";
-            this.textEdit_ProductCode2.Size = new System.Drawing.Size(161, 20);
-            this.textEdit_ProductCode2.StyleController = this.dataLayoutControl1;
-            this.textEdit_ProductCode2.TabIndex = 6;
+            textEdit_ProductCode2.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "ProductCode2", true));
+            textEdit_ProductCode2.Location = new System.Drawing.Point(117, 108);
+            textEdit_ProductCode2.Name = "textEdit_ProductCode2";
+            textEdit_ProductCode2.Size = new System.Drawing.Size(161, 20);
+            textEdit_ProductCode2.StyleController = dataLayoutControl1;
+            textEdit_ProductCode2.TabIndex = 6;
             // 
             // btnEdit_Hierarchy
             // 
-            this.btnEdit_Hierarchy.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "HierarchyCode", true));
-            this.btnEdit_Hierarchy.Location = new System.Drawing.Point(117, 158);
-            this.btnEdit_Hierarchy.Name = "btnEdit_Hierarchy";
-            this.btnEdit_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnEdit_Hierarchy.Size = new System.Drawing.Size(161, 20);
-            this.btnEdit_Hierarchy.StyleController = this.dataLayoutControl1;
-            this.btnEdit_Hierarchy.TabIndex = 9;
-            this.btnEdit_Hierarchy.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_Hierarchy_ButtonPressed);
+            btnEdit_Hierarchy.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "HierarchyCode", true));
+            btnEdit_Hierarchy.Location = new System.Drawing.Point(117, 158);
+            btnEdit_Hierarchy.Name = "btnEdit_Hierarchy";
+            btnEdit_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_Hierarchy.Size = new System.Drawing.Size(161, 20);
+            btnEdit_Hierarchy.StyleController = dataLayoutControl1;
+            btnEdit_Hierarchy.TabIndex = 9;
+            btnEdit_Hierarchy.ButtonPressed += btnEdit_Hierarchy_ButtonPressed;
             // 
             // txtEdit_Price
             // 
-            this.txtEdit_Price.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "SiteProduct.Price", true));
-            this.txtEdit_Price.Location = new System.Drawing.Point(129, 217);
-            this.txtEdit_Price.Name = "txtEdit_Price";
-            this.txtEdit_Price.Size = new System.Drawing.Size(137, 20);
-            this.txtEdit_Price.StyleController = this.dataLayoutControl1;
-            this.txtEdit_Price.TabIndex = 11;
+            txtEdit_Price.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Price", true));
+            txtEdit_Price.Location = new System.Drawing.Point(129, 217);
+            txtEdit_Price.Name = "txtEdit_Price";
+            txtEdit_Price.Size = new System.Drawing.Size(137, 20);
+            txtEdit_Price.StyleController = dataLayoutControl1;
+            txtEdit_Price.TabIndex = 11;
             // 
             // txtEdit_Desc
             // 
-            this.txtEdit_Desc.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "SiteProduct.Desc", true));
-            this.txtEdit_Desc.Location = new System.Drawing.Point(129, 241);
-            this.txtEdit_Desc.Name = "txtEdit_Desc";
-            this.txtEdit_Desc.Size = new System.Drawing.Size(137, 20);
-            this.txtEdit_Desc.StyleController = this.dataLayoutControl1;
-            this.txtEdit_Desc.TabIndex = 12;
+            txtEdit_Desc.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Desc", true));
+            txtEdit_Desc.Location = new System.Drawing.Point(129, 241);
+            txtEdit_Desc.Name = "txtEdit_Desc";
+            txtEdit_Desc.Size = new System.Drawing.Size(137, 20);
+            txtEdit_Desc.StyleController = dataLayoutControl1;
+            txtEdit_Desc.TabIndex = 12;
             // 
             // txtEdit_Slug
             // 
-            this.txtEdit_Slug.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "SiteProduct.Slug", true));
-            this.txtEdit_Slug.Location = new System.Drawing.Point(129, 265);
-            this.txtEdit_Slug.Name = "txtEdit_Slug";
-            this.txtEdit_Slug.Size = new System.Drawing.Size(137, 20);
-            this.txtEdit_Slug.StyleController = this.dataLayoutControl1;
-            this.txtEdit_Slug.TabIndex = 19;
+            txtEdit_Slug.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Slug", true));
+            txtEdit_Slug.Location = new System.Drawing.Point(129, 265);
+            txtEdit_Slug.Name = "txtEdit_Slug";
+            txtEdit_Slug.Size = new System.Drawing.Size(137, 20);
+            txtEdit_Slug.StyleController = dataLayoutControl1;
+            txtEdit_Slug.TabIndex = 19;
             // 
             // txtEdit_Rating
             // 
-            this.txtEdit_Rating.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcProductsBindingSource, "SiteProduct.Rating", true));
-            this.txtEdit_Rating.Location = new System.Drawing.Point(129, 289);
-            this.txtEdit_Rating.Name = "txtEdit_Rating";
-            this.txtEdit_Rating.Size = new System.Drawing.Size(137, 20);
-            this.txtEdit_Rating.StyleController = this.dataLayoutControl1;
-            this.txtEdit_Rating.TabIndex = 20;
+            txtEdit_Rating.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Rating", true));
+            txtEdit_Rating.Location = new System.Drawing.Point(129, 289);
+            txtEdit_Rating.Name = "txtEdit_Rating";
+            txtEdit_Rating.Size = new System.Drawing.Size(137, 20);
+            txtEdit_Rating.StyleController = dataLayoutControl1;
+            txtEdit_Rating.TabIndex = 20;
             // 
             // btn_ProductDiscount
             // 
-            this.btn_ProductDiscount.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_ProductDiscount.ImageOptions.SvgImage")));
-            this.btn_ProductDiscount.Location = new System.Drawing.Point(146, 349);
-            this.btn_ProductDiscount.Name = "btn_ProductDiscount";
-            this.btn_ProductDiscount.Size = new System.Drawing.Size(132, 36);
-            this.btn_ProductDiscount.StyleController = this.dataLayoutControl1;
-            this.btn_ProductDiscount.TabIndex = 21;
-            this.btn_ProductDiscount.Text = "Endirim";
-            this.btn_ProductDiscount.Click += new System.EventHandler(this.btn_ProductDiscount_Click);
+            btn_ProductDiscount.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductDiscount.ImageOptions.SvgImage");
+            btn_ProductDiscount.Location = new System.Drawing.Point(146, 349);
+            btn_ProductDiscount.Name = "btn_ProductDiscount";
+            btn_ProductDiscount.Size = new System.Drawing.Size(132, 36);
+            btn_ProductDiscount.StyleController = dataLayoutControl1;
+            btn_ProductDiscount.TabIndex = 21;
+            btn_ProductDiscount.Text = "Endirim";
+            btn_ProductDiscount.Click += btn_ProductDiscount_Click;
             // 
             // ItemForUsePos
             // 
-            this.ItemForUsePos.Control = this.UsePosCheckEdit;
-            this.ItemForUsePos.Location = new System.Drawing.Point(304, 141);
-            this.ItemForUsePos.Name = "ItemForUsePos";
-            this.ItemForUsePos.Size = new System.Drawing.Size(121, 27);
-            this.ItemForUsePos.Text = "Use Pos";
-            this.ItemForUsePos.TextSize = new System.Drawing.Size(0, 0);
-            this.ItemForUsePos.TextVisible = false;
+            ItemForUsePos.Control = UsePosCheckEdit;
+            ItemForUsePos.Location = new System.Drawing.Point(304, 141);
+            ItemForUsePos.Name = "ItemForUsePos";
+            ItemForUsePos.Size = new System.Drawing.Size(121, 27);
+            ItemForUsePos.Text = "Use Pos";
+            ItemForUsePos.TextSize = new System.Drawing.Size(0, 0);
+            ItemForUsePos.TextVisible = false;
             // 
             // ItemForPromotionCode
             // 
-            this.ItemForPromotionCode.Control = this.PromotionCodeTextEdit;
-            this.ItemForPromotionCode.Location = new System.Drawing.Point(0, 120);
-            this.ItemForPromotionCode.Name = "ItemForPromotionCode";
-            this.ItemForPromotionCode.Size = new System.Drawing.Size(304, 24);
-            this.ItemForPromotionCode.Text = "Promotion Code";
-            this.ItemForPromotionCode.TextSize = new System.Drawing.Size(93, 13);
+            ItemForPromotionCode.Control = PromotionCodeTextEdit;
+            ItemForPromotionCode.Location = new System.Drawing.Point(0, 120);
+            ItemForPromotionCode.Name = "ItemForPromotionCode";
+            ItemForPromotionCode.Size = new System.Drawing.Size(304, 24);
+            ItemForPromotionCode.Text = "Promotion Code";
+            ItemForPromotionCode.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForPromotionCode2
             // 
-            this.ItemForPromotionCode2.Control = this.PromotionCode2TextEdit;
-            this.ItemForPromotionCode2.Location = new System.Drawing.Point(0, 120);
-            this.ItemForPromotionCode2.Name = "ItemForPromotionCode2";
-            this.ItemForPromotionCode2.Size = new System.Drawing.Size(304, 48);
-            this.ItemForPromotionCode2.Text = "Promotion Code2";
-            this.ItemForPromotionCode2.TextSize = new System.Drawing.Size(93, 13);
+            ItemForPromotionCode2.Control = PromotionCode2TextEdit;
+            ItemForPromotionCode2.Location = new System.Drawing.Point(0, 120);
+            ItemForPromotionCode2.Name = "ItemForPromotionCode2";
+            ItemForPromotionCode2.Size = new System.Drawing.Size(304, 48);
+            ItemForPromotionCode2.Text = "Promotion Code2";
+            ItemForPromotionCode2.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForTaxRate
             // 
-            this.ItemForTaxRate.Control = this.TaxRateTextEdit;
-            this.ItemForTaxRate.Location = new System.Drawing.Point(0, 24);
-            this.ItemForTaxRate.Name = "ItemForTaxRate";
-            this.ItemForTaxRate.Size = new System.Drawing.Size(304, 72);
-            this.ItemForTaxRate.Text = "Tax Rate";
-            this.ItemForTaxRate.TextSize = new System.Drawing.Size(93, 13);
+            ItemForTaxRate.Control = TaxRateTextEdit;
+            ItemForTaxRate.Location = new System.Drawing.Point(0, 24);
+            ItemForTaxRate.Name = "ItemForTaxRate";
+            ItemForTaxRate.Size = new System.Drawing.Size(304, 72);
+            ItemForTaxRate.Text = "Tax Rate";
+            ItemForTaxRate.TextSize = new System.Drawing.Size(93, 13);
             // 
             // Root
             // 
-            this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.Root.GroupBordersVisible = false;
-            this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlGroup1});
-            this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(511, 422);
-            this.Root.TextVisible = false;
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Name = "Root";
+            Root.Size = new System.Drawing.Size(511, 422);
+            Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
-            this.layoutControlGroup1.AllowDrawBackground = false;
-            this.layoutControlGroup1.GroupBordersVisible = false;
-            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem2,
-            this.layoutControlItem1,
-            this.ItemForPosDiscount,
-            this.ItemForBalance,
-            this.layoutControlItem3,
-            this.layoutControlItem4,
-            this.ItemForUseInternet,
-            this.ItemForIsDisabled,
-            this.ItemForProductCode,
-            this.ItemForProductTypeCode,
-            this.ItemForProductDesc,
-            this.ProductCode2,
-            this.ItemForBarcode,
-            this.lCI_BarcodeGenerate,
-            this.lCI_hierarchyCode,
-            this.emptySpaceItem1,
-            this.layoutControlItem5,
-            this.tabbedControlGroup1,
-            this.layoutControlItem10});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroup1.Name = "autoGeneratedGroup0";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(491, 402);
+            layoutControlGroup1.AllowDrawBackground = false;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1, ItemForPosDiscount, ItemForBalance, layoutControlItem3, layoutControlItem4, ItemForUseInternet, ItemForIsDisabled, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ProductCode2, ItemForBarcode, lCI_BarcodeGenerate, lCI_hierarchyCode, emptySpaceItem1, layoutControlItem5, tabbedControlGroup1, layoutControlItem10 });
+            layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            layoutControlGroup1.Name = "autoGeneratedGroup0";
+            layoutControlGroup1.Size = new System.Drawing.Size(491, 402);
             // 
             // layoutControlItem2
             // 
-            this.layoutControlItem2.Control = this.btn_Cancel;
-            this.layoutControlItem2.Location = new System.Drawing.Point(270, 313);
-            this.layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(101, 89);
-            this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem2.TextVisible = false;
+            layoutControlItem2.Control = btn_Cancel;
+            layoutControlItem2.Location = new System.Drawing.Point(270, 313);
+            layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
+            layoutControlItem2.Name = "layoutControlItem2";
+            layoutControlItem2.Size = new System.Drawing.Size(101, 89);
+            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem1
             // 
-            this.layoutControlItem1.Control = this.btn_Ok;
-            this.layoutControlItem1.Location = new System.Drawing.Point(371, 313);
-            this.layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(120, 89);
-            this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem1.TextVisible = false;
+            layoutControlItem1.Control = btn_Ok;
+            layoutControlItem1.Location = new System.Drawing.Point(371, 313);
+            layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new System.Drawing.Size(120, 89);
+            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem1.TextVisible = false;
             // 
             // ItemForPosDiscount
             // 
-            this.ItemForPosDiscount.Control = this.PosDiscountTextEdit;
-            this.ItemForPosDiscount.Location = new System.Drawing.Point(0, 48);
-            this.ItemForPosDiscount.Name = "ItemForPosDiscount";
-            this.ItemForPosDiscount.Size = new System.Drawing.Size(270, 24);
-            this.ItemForPosDiscount.Text = "Pos Endirimi";
-            this.ItemForPosDiscount.TextSize = new System.Drawing.Size(93, 13);
+            ItemForPosDiscount.Control = PosDiscountTextEdit;
+            ItemForPosDiscount.Location = new System.Drawing.Point(0, 48);
+            ItemForPosDiscount.Name = "ItemForPosDiscount";
+            ItemForPosDiscount.Size = new System.Drawing.Size(270, 24);
+            ItemForPosDiscount.Text = "Pos Endirimi";
+            ItemForPosDiscount.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForBalance
             // 
-            this.ItemForBalance.Control = this.BalanceTextEdit;
-            this.ItemForBalance.Location = new System.Drawing.Point(0, 72);
-            this.ItemForBalance.Name = "ItemForBalance";
-            this.ItemForBalance.Size = new System.Drawing.Size(270, 24);
-            this.ItemForBalance.Text = "Qalıq";
-            this.ItemForBalance.TextSize = new System.Drawing.Size(93, 13);
+            ItemForBalance.Control = BalanceTextEdit;
+            ItemForBalance.Location = new System.Drawing.Point(0, 72);
+            ItemForBalance.Name = "ItemForBalance";
+            ItemForBalance.Size = new System.Drawing.Size(270, 24);
+            ItemForBalance.Text = "Qalıq";
+            ItemForBalance.TextSize = new System.Drawing.Size(93, 13);
             // 
             // layoutControlItem3
             // 
-            this.layoutControlItem3.Control = this.btn_ProductFeature;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 337);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(134, 65);
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem3.TextVisible = false;
+            layoutControlItem3.Control = btn_ProductFeature;
+            layoutControlItem3.Location = new System.Drawing.Point(0, 337);
+            layoutControlItem3.Name = "layoutControlItem3";
+            layoutControlItem3.Size = new System.Drawing.Size(134, 65);
+            layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
-            this.layoutControlItem4.Control = this.pictureEdit;
-            this.layoutControlItem4.Location = new System.Drawing.Point(270, 48);
-            this.layoutControlItem4.MinSize = new System.Drawing.Size(24, 24);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(221, 239);
-            this.layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem4.TextVisible = false;
+            layoutControlItem4.Control = pictureEdit;
+            layoutControlItem4.Location = new System.Drawing.Point(270, 48);
+            layoutControlItem4.MinSize = new System.Drawing.Size(24, 24);
+            layoutControlItem4.Name = "layoutControlItem4";
+            layoutControlItem4.Size = new System.Drawing.Size(221, 239);
+            layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem4.TextVisible = false;
             // 
             // ItemForUseInternet
             // 
-            this.ItemForUseInternet.Control = this.UseInternetCheckEdit;
-            this.ItemForUseInternet.Location = new System.Drawing.Point(102, 313);
-            this.ItemForUseInternet.Name = "ItemForUseInternet";
-            this.ItemForUseInternet.Size = new System.Drawing.Size(168, 24);
-            this.ItemForUseInternet.Text = "İnternetdə İstifadə Et";
-            this.ItemForUseInternet.TextSize = new System.Drawing.Size(0, 0);
-            this.ItemForUseInternet.TextVisible = false;
+            ItemForUseInternet.Control = UseInternetCheckEdit;
+            ItemForUseInternet.Location = new System.Drawing.Point(102, 313);
+            ItemForUseInternet.Name = "ItemForUseInternet";
+            ItemForUseInternet.Size = new System.Drawing.Size(168, 24);
+            ItemForUseInternet.Text = "İnternetdə İstifadə Et";
+            ItemForUseInternet.TextSize = new System.Drawing.Size(0, 0);
+            ItemForUseInternet.TextVisible = false;
             // 
             // ItemForIsDisabled
             // 
-            this.ItemForIsDisabled.Control = this.IsDisabledCheckEdit;
-            this.ItemForIsDisabled.Location = new System.Drawing.Point(0, 313);
-            this.ItemForIsDisabled.Name = "ItemForIsDisabled";
-            this.ItemForIsDisabled.Size = new System.Drawing.Size(102, 24);
-            this.ItemForIsDisabled.Text = "Is Disabled";
-            this.ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
-            this.ItemForIsDisabled.TextVisible = false;
+            ItemForIsDisabled.Control = IsDisabledCheckEdit;
+            ItemForIsDisabled.Location = new System.Drawing.Point(0, 313);
+            ItemForIsDisabled.Name = "ItemForIsDisabled";
+            ItemForIsDisabled.Size = new System.Drawing.Size(102, 24);
+            ItemForIsDisabled.Text = "Is Disabled";
+            ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
+            ItemForIsDisabled.TextVisible = false;
             // 
             // ItemForProductCode
             // 
-            this.ItemForProductCode.Control = this.ProductCodeTextEdit;
-            this.ItemForProductCode.Location = new System.Drawing.Point(0, 0);
-            this.ItemForProductCode.Name = "ItemForProductCode";
-            this.ItemForProductCode.Size = new System.Drawing.Size(270, 24);
-            this.ItemForProductCode.Text = "Məhsul Kodu";
-            this.ItemForProductCode.TextSize = new System.Drawing.Size(93, 13);
+            ItemForProductCode.Control = ProductCodeTextEdit;
+            ItemForProductCode.Location = new System.Drawing.Point(0, 0);
+            ItemForProductCode.Name = "ItemForProductCode";
+            ItemForProductCode.Size = new System.Drawing.Size(270, 24);
+            ItemForProductCode.Text = "Məhsul Kodu";
+            ItemForProductCode.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForProductTypeCode
             // 
-            this.ItemForProductTypeCode.Control = this.ProductTypeCodeLookUpEdit;
-            this.ItemForProductTypeCode.Location = new System.Drawing.Point(270, 0);
-            this.ItemForProductTypeCode.Name = "ItemForProductTypeCode";
-            this.ItemForProductTypeCode.Size = new System.Drawing.Size(221, 24);
-            this.ItemForProductTypeCode.Text = "Məhsul Tipi";
-            this.ItemForProductTypeCode.TextSize = new System.Drawing.Size(93, 13);
+            ItemForProductTypeCode.Control = ProductTypeCodeLookUpEdit;
+            ItemForProductTypeCode.Location = new System.Drawing.Point(270, 0);
+            ItemForProductTypeCode.Name = "ItemForProductTypeCode";
+            ItemForProductTypeCode.Size = new System.Drawing.Size(221, 24);
+            ItemForProductTypeCode.Text = "Məhsul Tipi";
+            ItemForProductTypeCode.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForProductDesc
             // 
-            this.ItemForProductDesc.Control = this.ProductDescTextEdit;
-            this.ItemForProductDesc.Location = new System.Drawing.Point(0, 24);
-            this.ItemForProductDesc.Name = "ItemForProductDesc";
-            this.ItemForProductDesc.Size = new System.Drawing.Size(491, 24);
-            this.ItemForProductDesc.Text = "Məhsul Adı";
-            this.ItemForProductDesc.TextSize = new System.Drawing.Size(93, 13);
+            ItemForProductDesc.Control = ProductDescTextEdit;
+            ItemForProductDesc.Location = new System.Drawing.Point(0, 24);
+            ItemForProductDesc.Name = "ItemForProductDesc";
+            ItemForProductDesc.Size = new System.Drawing.Size(491, 24);
+            ItemForProductDesc.Text = "Məhsul Adı";
+            ItemForProductDesc.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ProductCode2
             // 
-            this.ProductCode2.Control = this.textEdit_ProductCode2;
-            this.ProductCode2.Location = new System.Drawing.Point(0, 96);
-            this.ProductCode2.Name = "ProductCode2";
-            this.ProductCode2.Size = new System.Drawing.Size(270, 24);
-            this.ProductCode2.TextSize = new System.Drawing.Size(93, 13);
+            ProductCode2.Control = textEdit_ProductCode2;
+            ProductCode2.Location = new System.Drawing.Point(0, 96);
+            ProductCode2.Name = "ProductCode2";
+            ProductCode2.Size = new System.Drawing.Size(270, 24);
+            ProductCode2.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForBarcode
             // 
-            this.ItemForBarcode.Control = this.BarcodeTextEdit;
-            this.ItemForBarcode.Location = new System.Drawing.Point(0, 120);
-            this.ItemForBarcode.Name = "ItemForBarcode";
-            this.ItemForBarcode.Size = new System.Drawing.Size(244, 26);
-            this.ItemForBarcode.Text = "Barcode";
-            this.ItemForBarcode.TextSize = new System.Drawing.Size(93, 13);
+            ItemForBarcode.Control = BarcodeTextEdit;
+            ItemForBarcode.Location = new System.Drawing.Point(0, 120);
+            ItemForBarcode.Name = "ItemForBarcode";
+            ItemForBarcode.Size = new System.Drawing.Size(244, 26);
+            ItemForBarcode.Text = "Barcode";
+            ItemForBarcode.TextSize = new System.Drawing.Size(93, 13);
             // 
             // lCI_BarcodeGenerate
             // 
-            this.lCI_BarcodeGenerate.Control = this.Btn_BarcodeGenerate;
-            this.lCI_BarcodeGenerate.Location = new System.Drawing.Point(244, 120);
-            this.lCI_BarcodeGenerate.MinSize = new System.Drawing.Size(20, 26);
-            this.lCI_BarcodeGenerate.Name = "lCI_BarcodeGenerate";
-            this.lCI_BarcodeGenerate.Size = new System.Drawing.Size(26, 26);
-            this.lCI_BarcodeGenerate.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.lCI_BarcodeGenerate.TextSize = new System.Drawing.Size(0, 0);
-            this.lCI_BarcodeGenerate.TextVisible = false;
+            lCI_BarcodeGenerate.Control = Btn_BarcodeGenerate;
+            lCI_BarcodeGenerate.Location = new System.Drawing.Point(244, 120);
+            lCI_BarcodeGenerate.MinSize = new System.Drawing.Size(20, 26);
+            lCI_BarcodeGenerate.Name = "lCI_BarcodeGenerate";
+            lCI_BarcodeGenerate.Size = new System.Drawing.Size(26, 26);
+            lCI_BarcodeGenerate.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            lCI_BarcodeGenerate.TextSize = new System.Drawing.Size(0, 0);
+            lCI_BarcodeGenerate.TextVisible = false;
             // 
             // lCI_hierarchyCode
             // 
-            this.lCI_hierarchyCode.Control = this.btnEdit_Hierarchy;
-            this.lCI_hierarchyCode.Location = new System.Drawing.Point(0, 146);
-            this.lCI_hierarchyCode.Name = "lCI_hierarchyCode";
-            this.lCI_hierarchyCode.Size = new System.Drawing.Size(270, 24);
-            this.lCI_hierarchyCode.TextSize = new System.Drawing.Size(93, 13);
+            lCI_hierarchyCode.Control = btnEdit_Hierarchy;
+            lCI_hierarchyCode.Location = new System.Drawing.Point(0, 146);
+            lCI_hierarchyCode.Name = "lCI_hierarchyCode";
+            lCI_hierarchyCode.Size = new System.Drawing.Size(270, 24);
+            lCI_hierarchyCode.TextSize = new System.Drawing.Size(93, 13);
             // 
             // emptySpaceItem1
             // 
-            this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(270, 287);
-            this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(110, 26);
-            this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+            emptySpaceItem1.AllowHotTrack = false;
+            emptySpaceItem1.Location = new System.Drawing.Point(270, 287);
+            emptySpaceItem1.Name = "emptySpaceItem1";
+            emptySpaceItem1.Size = new System.Drawing.Size(110, 26);
+            emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItem5
             // 
-            this.layoutControlItem5.Control = this.btn_SaveImage;
-            this.layoutControlItem5.Location = new System.Drawing.Point(380, 287);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(111, 26);
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextVisible = false;
+            layoutControlItem5.Control = btn_SaveImage;
+            layoutControlItem5.Location = new System.Drawing.Point(380, 287);
+            layoutControlItem5.Name = "layoutControlItem5";
+            layoutControlItem5.Size = new System.Drawing.Size(111, 26);
+            layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem5.TextVisible = false;
             // 
             // tabbedControlGroup1
             // 
-            this.tabbedControlGroup1.Location = new System.Drawing.Point(0, 170);
-            this.tabbedControlGroup1.Name = "tabbedControlGroup1";
-            this.tabbedControlGroup1.SelectedTabPage = this.autoGroupForQiymətlər;
-            this.tabbedControlGroup1.Size = new System.Drawing.Size(270, 143);
-            this.tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.autoGroupForQiymətlər,
-            this.layoutControlGroup2});
+            tabbedControlGroup1.Location = new System.Drawing.Point(0, 170);
+            tabbedControlGroup1.Name = "tabbedControlGroup1";
+            tabbedControlGroup1.SelectedTabPage = autoGroupForQiymətlər;
+            tabbedControlGroup1.Size = new System.Drawing.Size(270, 143);
+            tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { autoGroupForQiymətlər, layoutControlGroup2 });
             // 
             // autoGroupForQiymətlər
             // 
-            this.autoGroupForQiymətlər.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.autoGroupForQiymətlər.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.ItemForPurchasePrice,
-            this.ItemForWholesalePrice,
-            this.ItemForRetailPrice});
-            this.autoGroupForQiymətlər.Location = new System.Drawing.Point(0, 0);
-            this.autoGroupForQiymətlər.Name = "autoGroupForQiymətlər";
-            this.autoGroupForQiymətlər.Size = new System.Drawing.Size(246, 96);
-            this.autoGroupForQiymətlər.Text = "Qiymətlər";
+            autoGroupForQiymətlər.GroupStyle = DevExpress.Utils.GroupStyle.Light;
+            autoGroupForQiymətlər.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPurchasePrice, ItemForWholesalePrice, ItemForRetailPrice });
+            autoGroupForQiymətlər.Location = new System.Drawing.Point(0, 0);
+            autoGroupForQiymətlər.Name = "autoGroupForQiymətlər";
+            autoGroupForQiymətlər.Size = new System.Drawing.Size(246, 96);
+            autoGroupForQiymətlər.Text = "Qiymətlər";
             // 
             // ItemForPurchasePrice
             // 
-            this.ItemForPurchasePrice.Control = this.PurchasePriceTextEdit;
-            this.ItemForPurchasePrice.Location = new System.Drawing.Point(0, 0);
-            this.ItemForPurchasePrice.Name = "ItemForPurchasePrice";
-            this.ItemForPurchasePrice.Size = new System.Drawing.Size(246, 24);
-            this.ItemForPurchasePrice.TextSize = new System.Drawing.Size(93, 13);
+            ItemForPurchasePrice.Control = PurchasePriceTextEdit;
+            ItemForPurchasePrice.Location = new System.Drawing.Point(0, 0);
+            ItemForPurchasePrice.Name = "ItemForPurchasePrice";
+            ItemForPurchasePrice.Size = new System.Drawing.Size(246, 24);
+            ItemForPurchasePrice.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForWholesalePrice
             // 
-            this.ItemForWholesalePrice.Control = this.WholesalePriceTextEdit;
-            this.ItemForWholesalePrice.Location = new System.Drawing.Point(0, 24);
-            this.ItemForWholesalePrice.Name = "ItemForWholesalePrice";
-            this.ItemForWholesalePrice.Size = new System.Drawing.Size(246, 24);
-            this.ItemForWholesalePrice.TextSize = new System.Drawing.Size(93, 13);
+            ItemForWholesalePrice.Control = WholesalePriceTextEdit;
+            ItemForWholesalePrice.Location = new System.Drawing.Point(0, 24);
+            ItemForWholesalePrice.Name = "ItemForWholesalePrice";
+            ItemForWholesalePrice.Size = new System.Drawing.Size(246, 24);
+            ItemForWholesalePrice.TextSize = new System.Drawing.Size(93, 13);
             // 
             // ItemForRetailPrice
             // 
-            this.ItemForRetailPrice.Control = this.RetailPriceTextEdit;
-            this.ItemForRetailPrice.Location = new System.Drawing.Point(0, 48);
-            this.ItemForRetailPrice.Name = "ItemForRetailPrice";
-            this.ItemForRetailPrice.Size = new System.Drawing.Size(246, 48);
-            this.ItemForRetailPrice.TextSize = new System.Drawing.Size(93, 13);
+            ItemForRetailPrice.Control = RetailPriceTextEdit;
+            ItemForRetailPrice.Location = new System.Drawing.Point(0, 48);
+            ItemForRetailPrice.Name = "ItemForRetailPrice";
+            ItemForRetailPrice.Size = new System.Drawing.Size(246, 48);
+            ItemForRetailPrice.TextSize = new System.Drawing.Size(93, 13);
             // 
             // layoutControlGroup2
             // 
-            this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem6,
-            this.layoutControlItem7,
-            this.layoutControlItem8,
-            this.layoutControlItem9});
-            this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroup2.Name = "layoutControlGroup2";
-            this.layoutControlGroup2.Size = new System.Drawing.Size(246, 96);
-            this.layoutControlGroup2.Text = "Sayt";
+            layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem6, layoutControlItem7, layoutControlItem8, layoutControlItem9 });
+            layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
+            layoutControlGroup2.Name = "layoutControlGroup2";
+            layoutControlGroup2.Size = new System.Drawing.Size(246, 96);
+            layoutControlGroup2.Text = "Sayt";
             // 
             // layoutControlItem6
             // 
-            this.layoutControlItem6.Control = this.txtEdit_Price;
-            this.layoutControlItem6.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem6.Name = "layoutControlItem6";
-            this.layoutControlItem6.Size = new System.Drawing.Size(246, 24);
-            this.layoutControlItem6.TextSize = new System.Drawing.Size(93, 13);
+            layoutControlItem6.Control = txtEdit_Price;
+            layoutControlItem6.Location = new System.Drawing.Point(0, 0);
+            layoutControlItem6.Name = "layoutControlItem6";
+            layoutControlItem6.Size = new System.Drawing.Size(246, 24);
+            layoutControlItem6.TextSize = new System.Drawing.Size(93, 13);
             // 
             // layoutControlItem7
             // 
-            this.layoutControlItem7.Control = this.txtEdit_Desc;
-            this.layoutControlItem7.Location = new System.Drawing.Point(0, 24);
-            this.layoutControlItem7.Name = "layoutControlItem7";
-            this.layoutControlItem7.Size = new System.Drawing.Size(246, 24);
-            this.layoutControlItem7.TextSize = new System.Drawing.Size(93, 13);
+            layoutControlItem7.Control = txtEdit_Desc;
+            layoutControlItem7.Location = new System.Drawing.Point(0, 24);
+            layoutControlItem7.Name = "layoutControlItem7";
+            layoutControlItem7.Size = new System.Drawing.Size(246, 24);
+            layoutControlItem7.TextSize = new System.Drawing.Size(93, 13);
             // 
             // layoutControlItem8
             // 
-            this.layoutControlItem8.Control = this.txtEdit_Slug;
-            this.layoutControlItem8.Location = new System.Drawing.Point(0, 48);
-            this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(246, 24);
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(93, 13);
+            layoutControlItem8.Control = txtEdit_Slug;
+            layoutControlItem8.Location = new System.Drawing.Point(0, 48);
+            layoutControlItem8.Name = "layoutControlItem8";
+            layoutControlItem8.Size = new System.Drawing.Size(246, 24);
+            layoutControlItem8.TextSize = new System.Drawing.Size(93, 13);
             // 
             // layoutControlItem9
             // 
-            this.layoutControlItem9.Control = this.txtEdit_Rating;
-            this.layoutControlItem9.Location = new System.Drawing.Point(0, 72);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(246, 24);
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(93, 13);
+            layoutControlItem9.Control = txtEdit_Rating;
+            layoutControlItem9.Location = new System.Drawing.Point(0, 72);
+            layoutControlItem9.Name = "layoutControlItem9";
+            layoutControlItem9.Size = new System.Drawing.Size(246, 24);
+            layoutControlItem9.TextSize = new System.Drawing.Size(93, 13);
             // 
             // layoutControlItem10
             // 
-            this.layoutControlItem10.Control = this.btn_ProductDiscount;
-            this.layoutControlItem10.Location = new System.Drawing.Point(134, 337);
-            this.layoutControlItem10.Name = "layoutControlItem10";
-            this.layoutControlItem10.Size = new System.Drawing.Size(136, 65);
-            this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem10.TextVisible = false;
+            layoutControlItem10.Control = btn_ProductDiscount;
+            layoutControlItem10.Location = new System.Drawing.Point(134, 337);
+            layoutControlItem10.Name = "layoutControlItem10";
+            layoutControlItem10.Size = new System.Drawing.Size(136, 65);
+            layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem10.TextVisible = false;
             // 
             // gridControl1
             // 
-            this.gridControl1.Location = new System.Drawing.Point(0, 0);
-            this.gridControl1.MainView = this.gridView2;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(400, 200);
-            this.gridControl1.TabIndex = 0;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView2});
+            gridControl1.Location = new System.Drawing.Point(0, 0);
+            gridControl1.MainView = gridView2;
+            gridControl1.Name = "gridControl1";
+            gridControl1.Size = new System.Drawing.Size(400, 200);
+            gridControl1.TabIndex = 0;
+            gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView2 });
             // 
             // gridView2
             // 
-            this.gridView2.GridControl = this.gridControl1;
-            this.gridView2.Name = "gridView2";
+            gridView2.GridControl = gridControl1;
+            gridView2.Name = "gridView2";
             // 
             // FormProduct
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(511, 422);
-            this.Controls.Add(this.dataLayoutControl1);
-            this.Name = "FormProduct";
-            this.Text = "Məhsul";
-            this.Load += new System.EventHandler(this.FormProduct_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
-            this.dataLayoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ProductCodeTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dcProductsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UsePosCheckEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PromotionCodeTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PromotionCode2TextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TaxRateTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IsDisabledCheckEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductDescTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductTypeCodeLookUpEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BarcodeTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PurchasePriceTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WholesalePriceTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RetailPriceTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PosDiscountTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UseInternetCheckEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BalanceTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit_ProductCode2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_Hierarchy.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Price.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Desc.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Slug.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtEdit_Rating.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForUsePos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPromotionCode2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForTaxRate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPosDiscount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForBalance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForUseInternet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductTypeCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForProductDesc)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductCode2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForBarcode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_BarcodeGenerate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lCI_hierarchyCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.autoGroupForQiymətlər)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForPurchasePrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForWholesalePrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForRetailPrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(511, 422);
+            Controls.Add(dataLayoutControl1);
+            Name = "FormProduct";
+            Text = "Məhsul";
+            Load += FormProduct_Load;
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
+            dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ProductCodeTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UsePosCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PromotionCodeTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PromotionCode2TextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)TaxRateTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ProductDescTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ProductTypeCodeLookUpEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BarcodeTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PurchasePriceTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)WholesalePriceTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)RetailPriceTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PosDiscountTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UseInternetCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BalanceTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textEdit_ProductCode2.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_Hierarchy.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Price.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Desc.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Slug.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_Rating.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUsePos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForTaxRate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPosDiscount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForBalance).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForUseInternet).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductTypeCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForProductDesc).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ProductCode2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForBarcode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_BarcodeGenerate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)tabbedControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)autoGroupForQiymətlər).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion

@@ -32,6 +32,7 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportGrid));
             gC_Report = new MyGridControl();
+            gV_Report = new MyGridView(this);
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
             bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();

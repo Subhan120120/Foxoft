@@ -35,6 +35,12 @@ namespace Foxoft
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;
 
+            if (isNew)
+            {
+                btn_ProductFeature.Enabled = false;
+                btn_ProductDiscount.Enabled = false;
+            }
+
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                 imageFolder = settingStore.ImageFolder;
@@ -185,6 +191,7 @@ namespace Foxoft
 
         private void btn_ProductFeature_Click(object sender, EventArgs e)
         {
+
             FormProductFeature formFeature = new(dcProduct.ProductCode);
             formFeature.ShowDialog();
         }
