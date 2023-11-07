@@ -7,6 +7,7 @@ using System.ComponentModel;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
 using System.IO;
+using Foxoft.Models.Entity.View_and_Procedur;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -69,6 +70,8 @@ namespace Foxoft.Models
         public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
 
+        public virtual DbSet<SlugifyResult> Slugify { get; set; }
+
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -116,17 +119,18 @@ namespace Foxoft.Models
             modelBuilder.Entity<GetNextDocNum>() //procedure
                         .HasNoKey();
 
+            modelBuilder.Entity<SlugifyResult>(e => e.HasNoKey()); // function
+
+
             // more foreign key same table configure
             modelBuilder.Entity<TrPaymentHeader>(e =>
             {
                 e.HasOne(field => field.ToCashReg)
              .WithMany(fk => fk.TrPaymentHeaderToCashes)
              .HasForeignKey(fk => fk.ToCashRegCode);
-
-                //e.HasOne(field => field.FromCashReg)
-                //.WithMany(fk => fk.TrPaymentHeaderFromCashes)
-                //.HasForeignKey(fk => fk.FromCashRegCode);
             });
+
+
 
             modelBuilder.Entity<DcCurrAcc>().HasData(
                 new DcCurrAcc { CurrAccCode = "C-000001", CurrAccDesc = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },

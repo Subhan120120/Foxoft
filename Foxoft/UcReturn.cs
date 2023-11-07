@@ -99,19 +99,17 @@ namespace Foxoft
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
-
                         if (!efMethods.InvoiceHeaderExist(returnInvoiceHeaderId)) //if invoiceHeader doesnt exist
                         {
                             string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
 
                             returnInvoHeader = new();
-
                             returnInvoHeader.InvoiceHeaderId = returnInvoiceHeaderId;
+                            returnInvoHeader.RelatedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
                             returnInvoHeader.DocumentNumber = NewDocNum;
                             returnInvoHeader.ProcessCode = trInvoiceHeader.ProcessCode;
                             returnInvoHeader.IsReturn = true;
                             returnInvoHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
-
                             returnInvoHeader.OfficeCode = Authorization.OfficeCode;
                             returnInvoHeader.StoreCode = Authorization.StoreCode;
                             returnInvoHeader.CreatedUserName = Authorization.CurrAccCode;

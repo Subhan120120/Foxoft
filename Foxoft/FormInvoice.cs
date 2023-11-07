@@ -20,6 +20,7 @@ using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
@@ -90,8 +91,18 @@ namespace Foxoft
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
-
             ClearControlsAddNew();
+
+            foreach (BaseLayoutItem item in dataLayoutControl1.Items)
+            {
+                if (item is LayoutControlItem)
+                {
+                    LayoutControlItem controlItem = item as LayoutControlItem;
+                    if (controlItem != null)
+                        if (controlItem.Control is BaseEdit)
+                            (controlItem.Control as BaseEdit).EditValueChanged += item_EditValueChanged;
+                }
+            }
         }
 
         public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode, Guid invoiceHeaderId)
@@ -109,6 +120,33 @@ namespace Foxoft
         private void FormInvoice_Shown(object sender, EventArgs e)
         {
             gC_InvoiceLine.Focus();
+        }
+
+        private void item_EditValueChanged(object sender, EventArgs e)
+        {
+            SaveInvoiceHeader();
+        }
+
+        private void SaveInvoiceHeader()
+        {
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+            if (trInvoiceHeader is not null) // if Isreturn Changed calculate Qty again
+            {
+                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                {
+                    int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut);
+                    int qtyInAbs = Math.Abs(qtyIn);
+                    gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
+                }
+            }
+
+            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
+            {
+                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
+                if (count > 0)
+                    SaveInvoice();
+            }
         }
 
         private void ClearControlsAddNew()
@@ -176,24 +214,7 @@ namespace Foxoft
 
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
-            if (trInvoiceHeader is not null) // if Isreturn Changed calculate Qty again
-            {
-                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                {
-                    int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut);
-                    int qtyInAbs = Math.Abs(qtyIn);
-                    gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
-                }
-            }
-
-            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
-            {
-                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
-                if (count > 0)
-                    SaveInvoice();
-            }
+            SaveInvoiceHeader();
 
             //if (trInvoiceHeader is not null)
             //   if (trInvoiceHeader.ToWarehouseCode is not null)

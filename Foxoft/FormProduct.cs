@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils.Extensions;
+﻿
+using DevExpress.Utils.Extensions;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using Foxoft.Models;
@@ -57,8 +58,9 @@ namespace Foxoft
         {
             layoutControlItem6.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Price);
             layoutControlItem7.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Desc);
-            layoutControlItem8.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Slug);
+            layoutControlItem11.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Slug);
             layoutControlItem9.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Rating);
+
         }
 
         public FormProduct(byte productTypeCode, string productCode)
@@ -314,6 +316,12 @@ namespace Foxoft
             //FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId");
             FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId", "", "ProductCode", dcProduct.ProductCode);
             formFeature.ShowDialog();
+        }
+
+        private void buttonEdit1_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            string slugify = dbContext.Slugify.FromSqlInterpolated($"Select dbo.Slugify ({ProductDescTextEdit.EditValue?.ToString()}) as Slugify").FirstOrDefault().Slugify;
+            btnEdit_Slug.EditValue = slugify;
         }
     }
 }
