@@ -1,19 +1,26 @@
-﻿using DevExpress.XtraBars;
+﻿using DevExpress.DirectX.Common;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
+using DevExpress.XtraSpreadsheet.Import.Xls;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Security.Policy;
+using System.Text;
 using System.Threading;
 using System.Windows;
 
@@ -208,11 +215,74 @@ namespace Foxoft
             SaveNewConStr();
         }
 
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        private async void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormCommonList<DcFeature> form = new FormCommonList<DcFeature>(string.Empty, "FeatureCode", "", "FeatureTypeId", "4");
-            //FormCommonList<DcFeature> form = new FormCommonList<DcFeature>("", "FeatureCode","4");
-            form.Show();
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("myurl");
+
+            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            //Stream resStream = response.GetResponseStream();
+            //string tempString = null;
+            //int count = 0;
+
+            //do
+            //{
+            //    // fill the buffer with data
+            //    count = resStream.Read(new byte[] { }, 0, buf.Length);
+
+            //    // make sure we read some data
+            //    if (count != 0)
+            //    {
+            //        // translate from bytes to ASCII text
+            //        tempString = Encoding.ASCII.GetString(buf, 0, count);
+
+            //        // continue building the string
+            //        sb.Append(tempString);
+            //    }
+            //}
+            //while (count > 0); // any more data to read?
+
+            //// print out page source
+            //Console.WriteLine(sb.ToString());
+
+            string asd = "";
+            string url = "https://www.tokla.az/txt.txt";
+
+            using (var client = new HttpClient())
+            using (var result = await client.GetAsync(url))
+                asd = result.IsSuccessStatusCode ? await result.Content.ReadAsStringAsync() : null;
+
+            string[] asdfghj = asd.Split(new string[] { " ", "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+
+            for (int i = 0; i < asdfghj.Length; i = i + 2)
+            {
+                DateTime dateTime;
+
+                if (asdfghj[i] == GetPhiscalAdress())
+                {
+                    string gfgfh = asdfghj[i + 1];
+                    dateTime = DateTime.ParseExact(gfgfh, "yyyyMMdd", null);
+
+                    //String path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"txt.txt");
+
+                }
+            }
+        }
+
+        private static string GetPhiscalAdress()
+        {
+            string fiscal = String.Empty;
+            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
+
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                    if (nic.Name == "Ethernet")
+                        fiscal = nic.Id + pInterfaceProperties;
+            }
+
+            return fiscal;
         }
 
         private bool CheckHasLicense()
