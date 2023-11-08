@@ -214,7 +214,7 @@ namespace Foxoft
 
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            SaveInvoiceHeader();
+            //SaveInvoiceHeader();
 
             //if (trInvoiceHeader is not null)
             //   if (trInvoiceHeader.ToWarehouseCode is not null)
@@ -222,7 +222,7 @@ namespace Foxoft
             //      gC_InvoiceLine.Enabled = true;
             //   }
 
-            gV_InvoiceLine.Focus();
+            //gV_InvoiceLine.Focus();
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
