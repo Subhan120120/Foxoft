@@ -45,6 +45,7 @@ namespace Foxoft
             barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
             btn_SaveConn = new DevExpress.XtraEditors.SimpleButton();
             lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
             lCI_ERP = new DevExpress.XtraLayout.LayoutControlItem();
@@ -55,7 +56,6 @@ namespace Foxoft
             lCI_ConString = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
-            BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtEdit_UserName.Properties).BeginInit();
@@ -80,9 +80,9 @@ namespace Foxoft
             btn_ERP.Appearance.Options.UseFont = true;
             btn_ERP.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_ERP.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ERP.ImageOptions.SvgImage");
-            btn_ERP.Location = new System.Drawing.Point(238, 110);
+            btn_ERP.Location = new System.Drawing.Point(219, 110);
             btn_ERP.Name = "btn_ERP";
-            btn_ERP.Size = new System.Drawing.Size(223, 139);
+            btn_ERP.Size = new System.Drawing.Size(203, 168);
             btn_ERP.StyleController = lC_Root;
             btn_ERP.TabIndex = 7;
             btn_ERP.Text = "Arxa Ofis";
@@ -102,7 +102,7 @@ namespace Foxoft
             lC_Root.Name = "lC_Root";
             lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(374, 7, 650, 400);
             lC_Root.Root = lCG_Root;
-            lC_Root.Size = new System.Drawing.Size(473, 261);
+            lC_Root.Size = new System.Drawing.Size(434, 290);
             lC_Root.TabIndex = 2;
             // 
             // btn_POS
@@ -113,7 +113,7 @@ namespace Foxoft
             btn_POS.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_POS.ImageOptions.SvgImage");
             btn_POS.Location = new System.Drawing.Point(12, 110);
             btn_POS.Name = "btn_POS";
-            btn_POS.Size = new System.Drawing.Size(222, 139);
+            btn_POS.Size = new System.Drawing.Size(203, 168);
             btn_POS.StyleController = lC_Root;
             btn_POS.TabIndex = 6;
             btn_POS.Text = "Satış";
@@ -123,7 +123,7 @@ namespace Foxoft
             // 
             txtEdit_UserName.Location = new System.Drawing.Point(101, 38);
             txtEdit_UserName.Name = "txtEdit_UserName";
-            txtEdit_UserName.Size = new System.Drawing.Size(360, 20);
+            txtEdit_UserName.Size = new System.Drawing.Size(321, 20);
             txtEdit_UserName.StyleController = lC_Root;
             txtEdit_UserName.TabIndex = 3;
             // 
@@ -132,7 +132,7 @@ namespace Foxoft
             txtEdit_Password.Location = new System.Drawing.Point(101, 62);
             txtEdit_Password.Name = "txtEdit_Password";
             txtEdit_Password.Properties.UseSystemPasswordChar = true;
-            txtEdit_Password.Size = new System.Drawing.Size(360, 20);
+            txtEdit_Password.Size = new System.Drawing.Size(321, 20);
             txtEdit_Password.StyleController = lC_Root;
             txtEdit_Password.TabIndex = 4;
             // 
@@ -141,7 +141,7 @@ namespace Foxoft
             checkEdit_RemindMe.Location = new System.Drawing.Point(12, 86);
             checkEdit_RemindMe.Name = "checkEdit_RemindMe";
             checkEdit_RemindMe.Properties.Caption = "meni xatırla";
-            checkEdit_RemindMe.Size = new System.Drawing.Size(449, 20);
+            checkEdit_RemindMe.Size = new System.Drawing.Size(410, 20);
             checkEdit_RemindMe.StyleController = lC_Root;
             checkEdit_RemindMe.TabIndex = 5;
             // 
@@ -150,7 +150,7 @@ namespace Foxoft
             txtEdit_conString.Location = new System.Drawing.Point(101, 12);
             txtEdit_conString.MenuManager = toolbarFormManager1;
             txtEdit_conString.Name = "txtEdit_conString";
-            txtEdit_conString.Size = new System.Drawing.Size(238, 20);
+            txtEdit_conString.Size = new System.Drawing.Size(209, 20);
             txtEdit_conString.StyleController = lC_Root;
             txtEdit_conString.TabIndex = 0;
             // 
@@ -170,15 +170,15 @@ namespace Foxoft
             barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             barDockControlTop.Location = new System.Drawing.Point(0, 31);
             barDockControlTop.Manager = toolbarFormManager1;
-            barDockControlTop.Size = new System.Drawing.Size(473, 0);
+            barDockControlTop.Size = new System.Drawing.Size(434, 0);
             // 
             // barDockControlBottom
             // 
             barDockControlBottom.CausesValidation = false;
             barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            barDockControlBottom.Location = new System.Drawing.Point(0, 292);
+            barDockControlBottom.Location = new System.Drawing.Point(0, 321);
             barDockControlBottom.Manager = toolbarFormManager1;
-            barDockControlBottom.Size = new System.Drawing.Size(473, 0);
+            barDockControlBottom.Size = new System.Drawing.Size(434, 0);
             // 
             // barDockControlLeft
             // 
@@ -186,15 +186,15 @@ namespace Foxoft
             barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             barDockControlLeft.Location = new System.Drawing.Point(0, 31);
             barDockControlLeft.Manager = toolbarFormManager1;
-            barDockControlLeft.Size = new System.Drawing.Size(0, 261);
+            barDockControlLeft.Size = new System.Drawing.Size(0, 290);
             // 
             // barDockControlRight
             // 
             barDockControlRight.CausesValidation = false;
             barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            barDockControlRight.Location = new System.Drawing.Point(473, 31);
+            barDockControlRight.Location = new System.Drawing.Point(434, 31);
             barDockControlRight.Manager = toolbarFormManager1;
-            barDockControlRight.Size = new System.Drawing.Size(0, 261);
+            barDockControlRight.Size = new System.Drawing.Size(0, 290);
             // 
             // barButtonItem1
             // 
@@ -212,11 +212,19 @@ namespace Foxoft
             barButtonItem2.Name = "barButtonItem2";
             barButtonItem2.ItemClick += barButtonItem2_ItemClick;
             // 
+            // BBI_GetKey
+            // 
+            BBI_GetKey.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            BBI_GetKey.Caption = "bbi";
+            BBI_GetKey.Id = 2;
+            BBI_GetKey.Name = "BBI_GetKey";
+            BBI_GetKey.ItemClick += BBI_GetKey_ItemClick;
+            // 
             // btn_SaveConn
             // 
-            btn_SaveConn.Location = new System.Drawing.Point(343, 12);
+            btn_SaveConn.Location = new System.Drawing.Point(314, 12);
             btn_SaveConn.Name = "btn_SaveConn";
-            btn_SaveConn.Size = new System.Drawing.Size(118, 22);
+            btn_SaveConn.Size = new System.Drawing.Size(108, 22);
             btn_SaveConn.StyleController = lC_Root;
             btn_SaveConn.TabIndex = 8;
             btn_SaveConn.Text = "Yadda Saxla";
@@ -228,16 +236,16 @@ namespace Foxoft
             lCG_Root.GroupBordersVisible = false;
             lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_ERP, lCI_POS, lCI_UserName, lCI_Password, lCI_RemindMe, lCI_ConString, layoutControlItem2 });
             lCG_Root.Name = "Root";
-            lCG_Root.Size = new System.Drawing.Size(473, 261);
+            lCG_Root.Size = new System.Drawing.Size(434, 290);
             lCG_Root.TextVisible = false;
             // 
             // lCI_ERP
             // 
             lCI_ERP.Control = btn_ERP;
-            lCI_ERP.Location = new System.Drawing.Point(226, 98);
+            lCI_ERP.Location = new System.Drawing.Point(207, 98);
             lCI_ERP.MinSize = new System.Drawing.Size(78, 26);
             lCI_ERP.Name = "lCI_ERP";
-            lCI_ERP.Size = new System.Drawing.Size(227, 143);
+            lCI_ERP.Size = new System.Drawing.Size(207, 172);
             lCI_ERP.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_ERP.TextSize = new System.Drawing.Size(0, 0);
             lCI_ERP.TextVisible = false;
@@ -248,7 +256,7 @@ namespace Foxoft
             lCI_POS.Location = new System.Drawing.Point(0, 98);
             lCI_POS.MinSize = new System.Drawing.Size(78, 26);
             lCI_POS.Name = "lCI_POS";
-            lCI_POS.Size = new System.Drawing.Size(226, 143);
+            lCI_POS.Size = new System.Drawing.Size(207, 172);
             lCI_POS.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_POS.TextSize = new System.Drawing.Size(0, 0);
             lCI_POS.TextVisible = false;
@@ -258,7 +266,7 @@ namespace Foxoft
             lCI_UserName.Control = txtEdit_UserName;
             lCI_UserName.Location = new System.Drawing.Point(0, 26);
             lCI_UserName.Name = "lCI_UserName";
-            lCI_UserName.Size = new System.Drawing.Size(453, 24);
+            lCI_UserName.Size = new System.Drawing.Size(414, 24);
             lCI_UserName.Text = "İstifadəçi";
             lCI_UserName.TextSize = new System.Drawing.Size(77, 13);
             // 
@@ -267,7 +275,7 @@ namespace Foxoft
             lCI_Password.Control = txtEdit_Password;
             lCI_Password.Location = new System.Drawing.Point(0, 50);
             lCI_Password.Name = "lCI_Password";
-            lCI_Password.Size = new System.Drawing.Size(453, 24);
+            lCI_Password.Size = new System.Drawing.Size(414, 24);
             lCI_Password.Text = "Şifrə";
             lCI_Password.TextSize = new System.Drawing.Size(77, 13);
             // 
@@ -276,7 +284,7 @@ namespace Foxoft
             lCI_RemindMe.Control = checkEdit_RemindMe;
             lCI_RemindMe.Location = new System.Drawing.Point(0, 74);
             lCI_RemindMe.Name = "lCI_RemindMe";
-            lCI_RemindMe.Size = new System.Drawing.Size(453, 24);
+            lCI_RemindMe.Size = new System.Drawing.Size(414, 24);
             lCI_RemindMe.TextSize = new System.Drawing.Size(0, 0);
             lCI_RemindMe.TextVisible = false;
             // 
@@ -285,16 +293,16 @@ namespace Foxoft
             lCI_ConString.Control = txtEdit_conString;
             lCI_ConString.Location = new System.Drawing.Point(0, 0);
             lCI_ConString.Name = "lCI_ConString";
-            lCI_ConString.Size = new System.Drawing.Size(331, 26);
+            lCI_ConString.Size = new System.Drawing.Size(302, 26);
             lCI_ConString.Text = "Database Əlaqə";
             lCI_ConString.TextSize = new System.Drawing.Size(77, 13);
             // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_SaveConn;
-            layoutControlItem2.Location = new System.Drawing.Point(331, 0);
+            layoutControlItem2.Location = new System.Drawing.Point(302, 0);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(122, 26);
+            layoutControlItem2.Size = new System.Drawing.Size(112, 26);
             layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
@@ -303,7 +311,7 @@ namespace Foxoft
             toolbarFormControl1.Location = new System.Drawing.Point(0, 0);
             toolbarFormControl1.Manager = toolbarFormManager1;
             toolbarFormControl1.Name = "toolbarFormControl1";
-            toolbarFormControl1.Size = new System.Drawing.Size(473, 31);
+            toolbarFormControl1.Size = new System.Drawing.Size(434, 31);
             toolbarFormControl1.TabIndex = 3;
             toolbarFormControl1.TabStop = false;
             toolbarFormControl1.TitleItemLinks.Add(barButtonItem1);
@@ -311,19 +319,11 @@ namespace Foxoft
             toolbarFormControl1.TitleItemLinks.Add(BBI_GetKey);
             toolbarFormControl1.ToolbarForm = this;
             // 
-            // BBI_GetKey
-            // 
-            BBI_GetKey.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            BBI_GetKey.Caption = "bbi";
-            BBI_GetKey.Id = 2;
-            BBI_GetKey.Name = "BBI_GetKey";
-            BBI_GetKey.ItemClick += BBI_GetKey_ItemClick;
-            // 
             // FormLogin
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(473, 292);
+            ClientSize = new System.Drawing.Size(434, 321);
             Controls.Add(lC_Root);
             Controls.Add(barDockControlLeft);
             Controls.Add(barDockControlRight);

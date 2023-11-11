@@ -100,7 +100,7 @@ namespace Foxoft
                     LayoutControlItem controlItem = item as LayoutControlItem;
                     if (controlItem != null)
                         if (controlItem.Control is BaseEdit)
-                            (controlItem.Control as BaseEdit).EditValueChanged += item_EditValueChanged;
+                            (controlItem.Control as BaseEdit).Leave += item_Leave;
                 }
             }
         }
@@ -120,11 +120,6 @@ namespace Foxoft
         private void FormInvoice_Shown(object sender, EventArgs e)
         {
             gC_InvoiceLine.Focus();
-        }
-
-        private void item_EditValueChanged(object sender, EventArgs e)
-        {
-            SaveInvoiceHeader();
         }
 
         private void SaveInvoiceHeader()
@@ -222,7 +217,17 @@ namespace Foxoft
             //      gC_InvoiceLine.Enabled = true;
             //   }
 
-            //gV_InvoiceLine.Focus();
+            gV_InvoiceLine.Focus();
+        }
+
+        private void item_EditValueChanged(object sender, EventArgs e)
+        {
+            //SaveInvoiceHeader();
+        }
+
+        private void item_Leave(object sender, EventArgs e)
+        {
+            SaveInvoiceHeader();
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -1745,11 +1750,15 @@ namespace Foxoft
             string storeCode = lUE_StoreCode.EditValue.ToString();
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStore(storeCode);
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStore(storeCode);
+
             if (dcWarehouses is not null)
             {
                 DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
                 if (dcWarehouse is not null)
+                {
+                    trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                     lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                }
             }
         }
 
@@ -1772,7 +1781,10 @@ namespace Foxoft
                     {
                         DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
                         if (dcWarehouse is not null)
+                        {
+                            trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
                             lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                        }
                     }
                 }
             }

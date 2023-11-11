@@ -68,9 +68,11 @@ namespace Foxoft
 
         private void LoadInvoice(TrInvoiceHeader invoiceHeader)
         {
+            ClearControls();
+
             gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeader.InvoiceHeaderId);
             gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeader.InvoiceHeaderId);
-            gC_ReturnInvoiceLine.DataSource = null;
+
 
             if (invoiceHeader.DcCurrAcc is not null)
                 txt_CurrAccDesc.Text = invoiceHeader.DcCurrAcc.CurrAccDesc;
@@ -165,7 +167,7 @@ namespace Foxoft
                 XtraMessageBox.Show("Geri qaytarıla bilecek miqdar yoxdur");
         }
 
-        private void btn_Payment_Click(object sender, EventArgs e)
+        private void btn_Ok_Click(object sender, EventArgs e)
         {
             decimal sumNetAmount = efMethods.SelectInvoiceNetAmount(returnInvoiceHeaderId);
 
@@ -186,19 +188,24 @@ namespace Foxoft
                 //if (formPayment.ShowDialog(this) == DialogResult.OK)
                 //{
 
-                returnInvoiceHeaderId = Guid.NewGuid();
                 efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
                 MakePayment(sumNetAmount, false);
 
-                trInvoiceHeader = null;
-                gC_InvoiceLine.DataSource = null;
-                gC_PaymentLine.DataSource = null;
-                gC_ReturnInvoiceLine.DataSource = null;
-                btnEdit_InvoiceHeader.EditValue = null;
-                txt_CurrAccDesc.Text = null;
+                ClearControls();
             }
             else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
+        }
+
+        private void ClearControls()
+        {
+            returnInvoiceHeaderId = Guid.NewGuid();
+            trInvoiceHeader = null;
+            gC_InvoiceLine.DataSource = null;
+            gC_PaymentLine.DataSource = null;
+            gC_ReturnInvoiceLine.DataSource = null;
+            btnEdit_InvoiceHeader.EditValue = null;
+            txt_CurrAccDesc.Text = null;
         }
 
         private void MakePayment(decimal summaryInvoice, bool autoPayment)
@@ -235,7 +242,13 @@ namespace Foxoft
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Geri Qaytarma Ləğv Edilsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                efMethods.DeleteInvoice(returnInvoiceHeaderId);
+                if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
+                {
+                    efMethods.DeleteInvoice(returnInvoiceHeaderId);
+
+                    ClearControls();
+                }
+
         }
     }
 }

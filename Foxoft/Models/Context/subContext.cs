@@ -119,7 +119,9 @@ namespace Foxoft.Models
             modelBuilder.Entity<GetNextDocNum>() //procedure
                         .HasNoKey();
 
-            modelBuilder.Entity<SlugifyResult>(e => e.HasNoKey()); // function
+            modelBuilder.Entity<SlugifyResult>()
+                .HasNoKey()
+                .ToView(nameof(SlugifyResult)); // function
 
 
             // more foreign key same table configure
@@ -129,8 +131,6 @@ namespace Foxoft.Models
              .WithMany(fk => fk.TrPaymentHeaderToCashes)
              .HasForeignKey(fk => fk.ToCashRegCode);
             });
-
-
 
             modelBuilder.Entity<DcCurrAcc>().HasData(
                 new DcCurrAcc { CurrAccCode = "C-000001", CurrAccDesc = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },

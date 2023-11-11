@@ -37,6 +37,9 @@ namespace Foxoft.Models
         [Display(Name = "Lisenziya")]
         public string? License { get; set; }
 
+        [Display(Name = "Son Tarix")]
+        public string? DueDate { get; set; }
+
 
 
         [ForeignKey("LocalCurrencyCode")]

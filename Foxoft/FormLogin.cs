@@ -1,4 +1,5 @@
-﻿using DevExpress.DirectX.Common;
+﻿using DevExpress.DataAccess.Native.Web;
+using DevExpress.DirectX.Common;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
@@ -13,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,6 +24,7 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Foxoft
@@ -71,6 +74,8 @@ namespace Foxoft
 
             Trace.Write("\n InitializeComponent Finished. \n SplashScreenStartup closing... ");
             Trace.Flush();
+
+            UpdateDueDate();
 
             SplashScreenManager.CloseForm();
 
@@ -135,7 +140,7 @@ namespace Foxoft
         {
             if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
             {
-                if (CheckHasLicense())
+                if (CheckDueDate())
                 {
                     FormERP formERP = new();
                     //SaveNewConStr();
@@ -215,58 +220,66 @@ namespace Foxoft
             SaveNewConStr();
         }
 
+        private bool CheckDueDate()
+        {
+            string encrypt = efMethods.SelectAppSetting().DueDate;
+            byte[] decript = Convert.FromBase64String(encrypt);
+            string someString = Encoding.ASCII.GetString(decript);
+            DateTime dateTime = DateTime.ParseExact(someString, "yyyyMMdd", null);
+            return dateTime > DateTime.Now;
+        }
+
         private async void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("myurl");
 
-            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        }
 
-            //Stream resStream = response.GetResponseStream();
-            //string tempString = null;
-            //int count = 0;
-
-            //do
-            //{
-            //    // fill the buffer with data
-            //    count = resStream.Read(new byte[] { }, 0, buf.Length);
-
-            //    // make sure we read some data
-            //    if (count != 0)
-            //    {
-            //        // translate from bytes to ASCII text
-            //        tempString = Encoding.ASCII.GetString(buf, 0, count);
-
-            //        // continue building the string
-            //        sb.Append(tempString);
-            //    }
-            //}
-            //while (count > 0); // any more data to read?
-
-            //// print out page source
-            //Console.WriteLine(sb.ToString());
-
-            string asd = "";
+        private bool UpdateDueDate()
+        {
             string url = "https://www.tokla.az/txt.txt";
 
-            using (var client = new HttpClient())
-            using (var result = await client.GetAsync(url))
-                asd = result.IsSuccessStatusCode ? await result.Content.ReadAsStringAsync() : null;
+            if (!CheckForInternetConnection(1000, url))
+                return false;
 
-            string[] asdfghj = asd.Split(new string[] { " ", "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            string result = "";
+            using (HttpClient client = new() { Timeout = TimeSpan.FromMilliseconds(2000) })
+            using (HttpResponseMessage response = client.GetAsync(url).Result)
+                result = response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : null;
 
+            string[] txtLisence = result.Split(new string[] { " ", "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
-            for (int i = 0; i < asdfghj.Length; i = i + 2)
+            if (txtLisence is not null)
             {
-                DateTime dateTime;
-
-                if (asdfghj[i] == GetPhiscalAdress())
+                for (int i = 0; i < txtLisence.Length; i = i + 3)
                 {
-                    string gfgfh = asdfghj[i + 1];
-                    dateTime = DateTime.ParseExact(gfgfh, "yyyyMMdd", null);
-
-                    //String path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"txt.txt");
-
+                    if (txtLisence[i + 1] == GetPhiscalAdress())
+                    {
+                        string date = txtLisence[i + 2];
+                        byte[] bytes = Encoding.ASCII.GetBytes(date);
+                        string encrypt = Convert.ToBase64String(bytes);
+                        efMethods.UpdateAppSettingDueDate(encrypt);
+                    }
                 }
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool CheckForInternetConnection(int timeoutMs = 10000, string url = null)
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.KeepAlive = false;
+                request.Timeout = timeoutMs;
+                using (var response = (HttpWebResponse)request.GetResponse())
+                    return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

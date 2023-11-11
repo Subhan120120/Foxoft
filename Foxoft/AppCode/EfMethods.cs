@@ -85,7 +85,7 @@ namespace Foxoft
             using subContext db = new();
 
             decimal sumNetAmount = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                    .Sum(x => x.NetAmount);
+                                                    .Sum(x => x.NetAmountLoc);
             return sumNetAmount;
         }
 
@@ -1546,6 +1546,14 @@ namespace Foxoft
             using subContext db = new();
             AppSetting appSetting = new() { Id = 1, TwilioInstanceId = instanceId };
             db.Entry(appSetting).Property(x => x.TwilioInstanceId).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateAppSettingDueDate(string dueDate)
+        {
+            using subContext db = new();
+            AppSetting appSetting = new() { Id = 1, DueDate = dueDate };
+            db.Entry(appSetting).Property(x => x.DueDate).IsModified = true;
             return db.SaveChanges();
         }
 

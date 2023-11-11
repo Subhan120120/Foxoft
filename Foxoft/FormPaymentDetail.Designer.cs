@@ -38,8 +38,6 @@ namespace Foxoft
             bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
             bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -136,7 +134,7 @@ namespace Foxoft
             // ribbon
             // 
             ribbon.ExpandCollapseItem.Id = 0;
-            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, ribbon.SearchEditItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, barButtonItem1, barButtonItem2, barButtonItem3, BBI_Info });
+            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, ribbon.SearchEditItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, barButtonItem1, BBI_Info });
             ribbon.Location = new System.Drawing.Point(0, 0);
             ribbon.MaxItemId = 11;
             ribbon.Name = "ribbon";
@@ -194,20 +192,6 @@ namespace Foxoft
             barButtonItem1.Name = "barButtonItem1";
             barButtonItem1.ItemClick += barButtonItem1_ItemClick;
             // 
-            // barButtonItem2
-            // 
-            barButtonItem2.Caption = "Wp";
-            barButtonItem2.Id = 8;
-            barButtonItem2.Name = "barButtonItem2";
-            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
-            // 
-            // barButtonItem3
-            // 
-            barButtonItem3.Caption = "test";
-            barButtonItem3.Id = 9;
-            barButtonItem3.Name = "barButtonItem3";
-            barButtonItem3.ItemClick += barButtonItem3_ItemClick;
-            // 
             // BBI_Info
             // 
             BBI_Info.Caption = "İnfo";
@@ -234,14 +218,12 @@ namespace Foxoft
             // 
             ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyPayment);
-            ribbonPageGroup2.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Alət";
             // 
             // RPG_Report
             // 
             RPG_Report.ItemLinks.Add(barButtonItem1);
-            RPG_Report.ItemLinks.Add(barButtonItem3);
             RPG_Report.Name = "RPG_Report";
             RPG_Report.Text = "Hesabat";
             // 
@@ -841,10 +823,8 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_CopyPayment;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Report;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraEditors.CheckEdit checkEdit_IsSent;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem BBI_Info;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodId;

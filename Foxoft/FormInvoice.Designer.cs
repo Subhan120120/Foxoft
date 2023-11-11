@@ -561,7 +561,7 @@ namespace Foxoft
             checkEdit_IsReturn.Name = "checkEdit_IsReturn";
             checkEdit_IsReturn.Properties.Caption = "Qaytarılmadır";
             checkEdit_IsReturn.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            checkEdit_IsReturn.Size = new System.Drawing.Size(95, 20);
+            checkEdit_IsReturn.Size = new System.Drawing.Size(108, 20);
             checkEdit_IsReturn.StyleController = dataLayoutControl1;
             checkEdit_IsReturn.TabIndex = 3;
             // 
@@ -1080,7 +1080,7 @@ namespace Foxoft
             ItemForIsReturn.Control = checkEdit_IsReturn;
             ItemForIsReturn.Location = new System.Drawing.Point(0, 24);
             ItemForIsReturn.Name = "ItemForIsReturn";
-            ItemForIsReturn.Size = new System.Drawing.Size(99, 24);
+            ItemForIsReturn.Size = new System.Drawing.Size(112, 24);
             ItemForIsReturn.Text = "Qaytarılmadır";
             ItemForIsReturn.TextSize = new System.Drawing.Size(0, 0);
             ItemForIsReturn.TextVisible = false;
@@ -1200,9 +1200,9 @@ namespace Foxoft
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new System.Drawing.Point(99, 24);
+            emptySpaceItem1.Location = new System.Drawing.Point(112, 24);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new System.Drawing.Size(399, 24);
+            emptySpaceItem1.Size = new System.Drawing.Size(386, 24);
             emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // lCI_printCount

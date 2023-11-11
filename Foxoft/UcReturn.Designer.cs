@@ -72,7 +72,7 @@ namespace Foxoft
          this.col_VatRate = new DevExpress.XtraGrid.Columns.GridColumn();
          this.col_Return = new DevExpress.XtraGrid.Columns.GridColumn();
          this.repoBtn_ReturnLine = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-         this.btn_Payment = new DevExpress.XtraEditors.SimpleButton();
+         this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
          this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
          this.btnEdit_InvoiceHeader = new DevExpress.XtraEditors.ButtonEdit();
          this.txt_CurrAccDesc = new DevExpress.XtraEditors.TextEdit();
@@ -124,7 +124,7 @@ namespace Foxoft
          this.lC_Root.Controls.Add(this.gC_ReturnInvoiceLine);
          this.lC_Root.Controls.Add(this.gC_PaymentLine);
          this.lC_Root.Controls.Add(this.gC_InvoiceLine);
-         this.lC_Root.Controls.Add(this.btn_Payment);
+         this.lC_Root.Controls.Add(this.btn_Ok);
          this.lC_Root.Controls.Add(this.btn_Cancel);
          this.lC_Root.Controls.Add(this.btnEdit_InvoiceHeader);
          this.lC_Root.Controls.Add(this.txt_CurrAccDesc);
@@ -487,15 +487,15 @@ namespace Foxoft
          // 
          // btn_Payment
          // 
-         this.btn_Payment.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-         this.btn_Payment.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Payment.ImageOptions.SvgImage")));
-         this.btn_Payment.Location = new System.Drawing.Point(787, 555);
-         this.btn_Payment.Name = "btn_Payment";
-         this.btn_Payment.Size = new System.Drawing.Size(82, 83);
-         this.btn_Payment.StyleController = this.lC_Root;
-         this.btn_Payment.TabIndex = 6;
-         this.btn_Payment.Text = "simpleButton1";
-         this.btn_Payment.Click += new System.EventHandler(this.btn_Payment_Click);
+         this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+         this.btn_Ok.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btn_Payment.ImageOptions.SvgImage")));
+         this.btn_Ok.Location = new System.Drawing.Point(787, 555);
+         this.btn_Ok.Name = "btn_Payment";
+         this.btn_Ok.Size = new System.Drawing.Size(82, 83);
+         this.btn_Ok.StyleController = this.lC_Root;
+         this.btn_Ok.TabIndex = 6;
+         this.btn_Ok.Text = "simpleButton1";
+         this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
          // 
          // btn_Cancel
          // 
@@ -592,7 +592,7 @@ namespace Foxoft
          // 
          // lCI_Cash
          // 
-         this.lCI_Cash.Control = this.btn_Payment;
+         this.lCI_Cash.Control = this.btn_Ok;
          this.lCI_Cash.Location = new System.Drawing.Point(775, 543);
          this.lCI_Cash.MinSize = new System.Drawing.Size(78, 26);
          this.lCI_Cash.Name = "lCI_Cash";
@@ -741,7 +741,7 @@ namespace Foxoft
       private DevExpress.XtraGrid.Columns.GridColumn col_VatRate;
       private DevExpress.XtraGrid.Columns.GridColumn col_Return;
       private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn_ReturnLine;
-      private DevExpress.XtraEditors.SimpleButton btn_Payment;
+      private DevExpress.XtraEditors.SimpleButton btn_Ok;
       private DevExpress.XtraEditors.SimpleButton btn_Cancel;
       private DevExpress.XtraLayout.LayoutControlItem lCI_Cancel;
       private DevExpress.XtraLayout.LayoutControlItem lCI_Cash;
