@@ -51,15 +51,18 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
+                    ClearControls();
+
+                    if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
+                        efMethods.DeleteInvoice(returnInvoiceHeaderId);                // delete previous invoice
+
+                    returnInvoiceHeaderId = Guid.NewGuid();                   // create next invoice
+
                     Guid invoiceHeaderId = form.trInvoiceLine.InvoiceHeaderId;
 
                     trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
                     btnEdit_InvoiceHeader.EditValue = trInvoiceHeader.DocumentNumber;
-
-                    if (efMethods.InvoiceHeaderExist(returnInvoiceHeaderId))
-                        efMethods.DeleteInvoice(returnInvoiceHeaderId);                // delete previous invoice
-                    returnInvoiceHeaderId = Guid.NewGuid();                             // create next invoice
 
                     LoadInvoice(trInvoiceHeader);
                 }
@@ -68,8 +71,6 @@ namespace Foxoft
 
         private void LoadInvoice(TrInvoiceHeader invoiceHeader)
         {
-            ClearControls();
-
             gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeader.InvoiceHeaderId);
             gC_PaymentLine.DataSource = efMethods.SelectPaymentLinesByInvoice(invoiceHeader.InvoiceHeaderId);
 
