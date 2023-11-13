@@ -155,6 +155,13 @@ namespace Foxoft
                 BBI.Id = 57;
                 BBI.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductCart.ImageOptions.SvgImage");
                 BBI.Name = report.DcReport.ReportId.ToString();
+                //String txt = new BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J).ToString();
+                if (!string.IsNullOrEmpty(report.Shortcut))
+                {
+                    KeysConverter cvt = new();
+                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    BBI.ItemShortcut = new BarShortcut(key);
+                }
                 BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
 
                 ((ISupportInitialize)ribbonControl1).BeginInit();
@@ -180,9 +187,11 @@ namespace Foxoft
                         filter = "[ProductCode] in ( " + combined + ")";
                     }
 
+                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
                     if (dcReport.ReportTypeId == 1)
                     {
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport);
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
                         formGrid.Show();
                     }
                     else if (dcReport.ReportTypeId == 2)
@@ -415,19 +424,6 @@ namespace Foxoft
 
             if (view.SelectedRowsCount > 0)
             {
-                if (e.KeyCode == Keys.F9)
-                {
-                    object productCode = view.GetFocusedRowCellValue(colProductCode);
-                    DcReport dcReport = efMethods.SelectReport(1005);
-                    if (productCode is not null && dcReport is not null)
-                    {
-                        string filter = "[ProductCode] = '" + productCode + "' ";
-                        string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                        formGrid.Show();
-                    }
-                }
-
                 if (e.KeyCode == Keys.C && e.Control)
                 {
                     //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
@@ -460,20 +456,6 @@ namespace Foxoft
                     };
 
                     e.Handled = true;
-                }
-
-                if (e.KeyCode == Keys.F10)
-                {
-                    object productCode = view.GetFocusedRowCellValue(colProductCode);
-                    DcReport dcReport = efMethods.SelectReport(1004);
-                    if (productCode is not null && dcReport is not null)
-                    {
-                        string filter = "[ProductCode] = '" + productCode + "' ";
-                        string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-
-                        formGrid.Show();
-                    }
                 }
             }
         }

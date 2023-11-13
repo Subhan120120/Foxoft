@@ -153,6 +153,12 @@ namespace Foxoft
                 BBI.Id = 57;
                 BBI.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
                 BBI.Name = report.DcReport.ReportId.ToString();
+                if (!string.IsNullOrEmpty(report.Shortcut))
+                {
+                    KeysConverter cvt = new();
+                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    BBI.ItemShortcut = new BarShortcut(key);
+                }
                 BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
 
                 ((ISupportInitialize)ribbonControl1).BeginInit();

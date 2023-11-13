@@ -1175,7 +1175,7 @@ namespace Foxoft
             return dcCurrency.ExchangeRate;
         }
 
-        public int SelectInvoicePrinCount(Guid invoiceHeaderId)
+        public int SelectInvoicePrinCount(Guid? invoiceHeaderId)
         {
             using subContext db = new();
             int rtrn = 0;

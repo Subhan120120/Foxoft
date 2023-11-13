@@ -91,6 +91,7 @@ namespace Foxoft
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
+
             ClearControlsAddNew();
 
             foreach (BaseLayoutItem item in dataLayoutControl1.Items)
@@ -314,7 +315,7 @@ namespace Foxoft
 
         private void ShowPrintCount()
         {
-            int printCount = efMethods.SelectInvoicePrinCount(trInvoiceHeader.InvoiceHeaderId);
+            int printCount = efMethods.SelectInvoicePrinCount(trInvoiceHeader?.InvoiceHeaderId);
 
             txtEdit_PrintCount.Text = printCount.ToString();
         }
@@ -1749,12 +1750,15 @@ namespace Foxoft
         {
             string storeCode = lUE_StoreCode.EditValue.ToString();
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStore(storeCode);
-            lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStore(storeCode);
+            lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
+
+            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.WarehouseCode) && trInvoiceHeader is not null)
+                trInvoiceHeader.WarehouseCode = null;
 
             if (dcWarehouses is not null)
             {
                 DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
-                if (dcWarehouse is not null)
+                if (dcWarehouse is not null && trInvoiceHeader?.WarehouseCode is null)
                 {
                     trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                     lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
@@ -1764,30 +1768,33 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
         {
-            object objCurrAcc = btnEdit_CurrAccCode.EditValue;
-            if (objCurrAcc is not null)
+            DcCurrAcc curr = efMethods.SelectCurrAcc(btnEdit_CurrAccCode.EditValue?.ToString());
+
+            if (curr is not null)
             {
-                DcCurrAcc curr = efMethods.SelectCurrAcc(objCurrAcc.ToString());
+                trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
+                lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
 
-                if (curr is not null)
+                string storeCode = trInvoiceHeader.CurrAccCode;
+                List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStore(storeCode);
+
+                lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
+
+                if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
+                    trInvoiceHeader.ToWarehouseCode = null;
+
+                if (dcWarehouses is not null)
                 {
-                    trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
-                    lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
+                    DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
 
-                    string storeCode = trInvoiceHeader.CurrAccCode;
-                    List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStore(storeCode);
-                    lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStore(storeCode);
-                    if (dcWarehouses is not null)
+                    if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
                     {
-                        DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
-                        if (dcWarehouse is not null)
-                        {
-                            trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
-                            lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
-                        }
+                        trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
+                        lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
                     }
                 }
             }
+
         }
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
@@ -1829,7 +1836,12 @@ namespace Foxoft
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {
-            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + settingStore.PrinterName, "", null, null);
+            await PrintFast(settingStore.PrinterName);
+        }
+
+        private async Task PrintFast(string printerName)
+        {
+            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + printerName, "", null, null);
 
             if (trInvoiceHeader is not null)
                 await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId));
@@ -1837,7 +1849,7 @@ namespace Foxoft
 
             Task task = Task.Run((Action)ShowPrintCount);
 
-            alertControl1.Show(this, "Print Göndərildi.", "Printer: " + settingStore.PrinterName, "", null, null);
+            alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", null, null);
         }
 
         private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)
@@ -1917,5 +1929,27 @@ namespace Foxoft
 
         }
 
+        private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)
+        {
+            PopupMenu menu = (sender as PopupMenu);
+
+            menu.ItemLinks.Clear();
+
+            foreach (string printer in PrinterSettings.InstalledPrinters)
+            {
+                BarButtonItem BBI = new();
+                BBI.Caption = printer;
+                BBI.Name = printer;
+                BBI.ImageOptions.SvgImage = svgImageCollection1["print"]; ;
+                BBI.ItemClick += async (sender, e) =>
+                {
+                    await PrintFast(printer);
+                };
+
+                menu.AddItem(BBI);
+
+            }
+            e.Cancel = false;
+        }
     }
 }

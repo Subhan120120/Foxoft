@@ -17,12 +17,14 @@ namespace Foxoft.Models
         [Display(Name = "Report Id")]
         public int ReportId { get; set; }
 
+        [Display(Name = "Qısayol")]
+        public string Shortcut { get; set; }
+
 
         [ForeignKey("FormCode")]
         public virtual DcForm DcForm { get; set; }
 
         [ForeignKey("ReportId")]
         public virtual DcReport DcReport { get; set; }
-        
     }
 }
