@@ -245,7 +245,7 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
+            CalcCurrAccBalance(trPaymentHeader.FromCashRegCode, trPaymentHeader.OperationDate);
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -331,15 +331,14 @@ namespace Foxoft
             //CalcRowLocNetAmount(e);
         }
 
-        private void CalcCurrAccBalance(string CurrAccCode, DateTime dateTime)
+        private void CalcCurrAccBalance(string cashReg, DateTime dateTime)
         {
-            if (!String.IsNullOrEmpty(CurrAccCode))
+            if (!String.IsNullOrEmpty(cashReg))
             {
-                decimal Balance = efMethods.SelectCurrAccBalance(CurrAccCode, dateTime);
-
+                decimal Balance = efMethods.SelectCashRegBalance(cashReg, dateTime);
                 lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Balance.ToString();
 
-                decimal CurrentBalance = efMethods.SelectPaymentSum(CurrAccCode, trPaymentHeader.DocumentNumber);
+                decimal CurrentBalance = efMethods.SelectPaymentSum(cashReg, trPaymentHeader.DocumentNumber);
                 Balance = Balance - CurrentBalance;
                 lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Balance.ToString();
             }
@@ -347,8 +346,8 @@ namespace Foxoft
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            decimal balanceAfter = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
-            decimal invoiceSum = efMethods.SelectPaymentSum(trPaymentHeader.CurrAccCode, trPaymentHeader.DocumentNumber);
+            decimal balanceAfter = efMethods.SelectCashRegBalance(trPaymentHeader.FromCashRegCode, trPaymentHeader.OperationDate);
+            decimal invoiceSum = (-1) * efMethods.SelectPaymentSum(trPaymentHeader.FromCashRegCode, trPaymentHeader.DocumentNumber);
             decimal balanceBefore = balanceAfter - invoiceSum;
 
             gV_PaymentLine.SetFocusedRowCellValue(colBalanceBefor, balanceBefore);
@@ -364,7 +363,7 @@ namespace Foxoft
                 XtraMessageBox.Show(combinedString);
             }
 
-            CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
+            CalcCurrAccBalance(trPaymentHeader.FromCashRegCode, trPaymentHeader.OperationDate);
         }
 
         private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)

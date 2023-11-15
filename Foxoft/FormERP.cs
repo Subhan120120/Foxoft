@@ -83,12 +83,12 @@ namespace Foxoft
                 AccordionControlElement aCE = new();
 
                 aCE.ImageOptions.SvgImage = svgImageCollection1[0];
-                aCE.Name = dcReport.ReportName;
+                aCE.Name = dcReport.ReportId.ToString();
                 aCE.Style = ElementStyle.Item;
                 aCE.Text = dcReport.ReportName;
                 aCE.Click += (sender, e) =>
                 {
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportName);
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString());
                     if (!currAccHasClaims)
                     {
                         MessageBox.Show("Yetkiniz yoxdur! ");

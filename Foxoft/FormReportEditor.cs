@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,7 +54,6 @@ namespace Foxoft
             EfMethods efMethods = new();
             AdoMethods adoMethods = new();
 
-
             dcReport = dcReportsBindingSource.Current as DcReport;
 
             if (!String.IsNullOrEmpty(dcReport?.ReportQuery))
@@ -64,7 +64,10 @@ namespace Foxoft
 
                 try
                 {
-                    DataTable dt = adoMethods.SqlGetDt(qryMaster);
+                    CustomMethods cM = new();
+                    string qry = cM.ClearVariablesFromQuery(qryMaster);
+                    DataTable dt = adoMethods.SqlGetDt(qry);
+
                     if (!efMethods.ReportExist(dcReport.ReportId)) //if doesnt exist
                         efMethods.InsertReport(dcReport);
                     else

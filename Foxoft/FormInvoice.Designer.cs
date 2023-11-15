@@ -115,6 +115,7 @@ namespace Foxoft
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
+            BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -283,7 +284,7 @@ namespace Foxoft
             gV_InvoiceLine.OptionsView.ShowFooter = true;
             gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
             gV_InvoiceLine.RowCellStyle += gV_InvoiceLine_RowCellStyle;
-            gV_InvoiceLine.RowStyle += gV_Report_RowStyle;
+            gV_InvoiceLine.RowStyle += gV_InvoiceLine_RowStyle;
             gV_InvoiceLine.PopupMenuShowing += gV_Report_PopupMenuShowing;
             gV_InvoiceLine.InitNewRow += gV_InvoiceLine_InitNewRow;
             gV_InvoiceLine.HiddenEditor += gV_InvoiceLine_HiddenEditor;
@@ -698,9 +699,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2, barButtonItem4 });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2, barButtonItem4, BSI_Reports });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 44;
+            ribbonControl1.MaxItemId = 45;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -955,6 +956,13 @@ namespace Foxoft
             popupMenu1.Ribbon = ribbonControl1;
             popupMenu1.BeforePopup += popupMenuPrinters_BeforePopup;
             // 
+            // BSI_reports
+            // 
+            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Id = 44;
+            BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_reports.ImageOptions.SvgImage");
+            BSI_Reports.Name = "BSI_reports";
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, ribbonPageGroup3, ribbonPageGroup2, ribbonPageGroup1, ribbonPageGroup8 });
@@ -983,6 +991,7 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
             ribbonPageGroup2.ItemLinks.Add(BBI_Print);
             ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
+            ribbonPageGroup2.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Print";
             // 
@@ -1020,6 +1029,7 @@ namespace Foxoft
             // 
             // ribbonPageGroup6
             // 
+            ribbonPageGroup6.ItemLinks.Add(barButtonItem4);
             ribbonPageGroup6.ItemLinks.Add(BEI_PrinterName);
             ribbonPageGroup6.ItemLinks.Add(BBI_PrintSettingSave);
             ribbonPageGroup6.Name = "ribbonPageGroup6";
@@ -1036,7 +1046,6 @@ namespace Foxoft
             // ribbonPageGroup9
             // 
             ribbonPageGroup9.ItemLinks.Add(barButtonItem2);
-            ribbonPageGroup9.ItemLinks.Add(barButtonItem4);
             ribbonPageGroup9.Name = "ribbonPageGroup9";
             ribbonPageGroup9.Text = "ribbonPageGroup9";
             // 
@@ -1260,6 +1269,7 @@ namespace Foxoft
             // svgImageCollection1
             // 
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
+            svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             // 
             // FormInvoice
             // 
@@ -1462,5 +1472,6 @@ namespace Foxoft
         private DevExpress.XtraBars.PopupMenu popupMenuPrinters;
         private DevExpress.XtraBars.PopupMenu popupMenu1;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraBars.BarSubItem BSI_Reports;
     }
 }

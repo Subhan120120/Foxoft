@@ -10,6 +10,7 @@ using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Docking2010;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -73,6 +74,8 @@ namespace Foxoft
 
             InitializeComponent();
 
+            AddReports();
+
             BEI_TwilioInstance.EditValue = Settings.Default.AppSetting.TwilioInstanceId;
             BEI_TwilioToken.EditValue = Settings.Default.AppSetting.TwilioToken;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
@@ -122,6 +125,69 @@ namespace Foxoft
         {
             gC_InvoiceLine.Focus();
         }
+
+        private void AddReports()
+        {
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
+
+            foreach (TrFormReport report in trFormReports)
+            {
+                BarButtonItem BBI = new();
+                BBI.Caption = report.DcReport.ReportName;
+                BBI.Id = 57;
+                BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
+                BBI.Name = report.DcReport.ReportId.ToString();
+                //String txt = new BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J).ToString();
+                if (!string.IsNullOrEmpty(report.Shortcut))
+                {
+                    KeysConverter cvt = new();
+                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    BBI.ItemShortcut = new BarShortcut(key);
+                }
+                BSI_Reports.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+
+                ((ISupportInitialize)ribbonControl1).BeginInit();
+                ribbonControl1.Items.Add(BBI);
+                ((ISupportInitialize)ribbonControl1).EndInit();
+
+                BBI.ItemClick += (sender, e) =>
+                {
+                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+
+
+                    string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
+
+                    string filter = "";
+                    if (!string.IsNullOrEmpty(productCode))
+                        filter = "[ProductCode] = '" + productCode + "' ";
+                    else
+                    {
+                        List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(gV_InvoiceLine).ToList();
+                        var combined = "";
+                        foreach (TrInvoiceLine rowView in mydata)
+                            combined += "'" + rowView.ProductCode.ToString() + "',";
+
+                        combined = combined.Substring(0, combined.Length - 1);
+                        filter = "[ProductCode] in ( " + combined + ")";
+                    }
+
+                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                    if (dcReport.ReportTypeId == 1)
+                    {
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
+                        formGrid.Show();
+                    }
+                    else if (dcReport.ReportTypeId == 2)
+                    {
+                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
+                        form.WindowState = FormWindowState.Maximized;
+                        form.Show();
+                    }
+                };
+            }
+        }
+
 
         private void SaveInvoiceHeader()
         {
@@ -999,7 +1065,6 @@ namespace Foxoft
 
                     //GetPrintDialogToWarehouse();
 
-
                     ClearControlsAddNew();
                 }
                 else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
@@ -1875,7 +1940,7 @@ namespace Foxoft
         {
         }
 
-        private void gV_Report_RowStyle(object sender, RowStyleEventArgs e)
+        private void gV_InvoiceLine_RowStyle(object sender, RowStyleEventArgs e)
         {
             GridView view = sender as GridView;
 

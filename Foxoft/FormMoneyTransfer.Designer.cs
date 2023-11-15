@@ -30,6 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMoneyTransfer));
             ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
             bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
@@ -69,6 +70,7 @@ namespace Foxoft
             colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
             colReceivePayment = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
             OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             trPaymentHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
             OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -91,7 +93,6 @@ namespace Foxoft
             ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
@@ -143,6 +144,7 @@ namespace Foxoft
             // 
             bBI_DeletePayment.Caption = "Ödənişi Sil";
             bBI_DeletePayment.Id = 1;
+            bBI_DeletePayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_DeletePayment.ImageOptions.SvgImage");
             bBI_DeletePayment.Name = "bBI_DeletePayment";
             bBI_DeletePayment.ItemClick += bBI_DeletePayment_ItemClick;
             // 
@@ -150,6 +152,7 @@ namespace Foxoft
             // 
             bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
             bBI_SaveAndClose.Id = 2;
+            bBI_SaveAndClose.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SaveAndClose.ImageOptions.SvgImage");
             bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
             bBI_SaveAndClose.Name = "bBI_SaveAndClose";
             bBI_SaveAndClose.ItemClick += bBI_SaveAndClose_ItemClick;
@@ -165,6 +168,7 @@ namespace Foxoft
             // 
             bBI_NewPayment.Caption = "Yeni Ödəniş";
             bBI_NewPayment.Id = 5;
+            bBI_NewPayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_NewPayment.ImageOptions.SvgImage");
             bBI_NewPayment.Name = "bBI_NewPayment";
             bBI_NewPayment.ItemClick += bBI_NewPayment_ItemClick;
             // 
@@ -172,6 +176,7 @@ namespace Foxoft
             // 
             bBI_CopyPayment.Caption = "Kopyala";
             bBI_CopyPayment.Id = 6;
+            bBI_CopyPayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CopyPayment.ImageOptions.SvgImage");
             bBI_CopyPayment.Name = "bBI_CopyPayment";
             bBI_CopyPayment.ItemClick += bBI_CopyPayment_ItemClick;
             // 
@@ -191,8 +196,8 @@ namespace Foxoft
             // 
             // ribbonPageGroup2
             // 
-            ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyPayment);
+            ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Alət";
             // 
@@ -443,6 +448,11 @@ namespace Foxoft
             colReceivePayment.FieldName = "ReceivePayment";
             colReceivePayment.Name = "colReceivePayment";
             // 
+            // colPaymentMethodId
+            // 
+            colPaymentMethodId.FieldName = "PaymentMethodId";
+            colPaymentMethodId.Name = "colPaymentMethodId";
+            // 
             // OperationDateDateEdit
             // 
             OperationDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPaymentHeadersBindingSource, "OperationDate", true));
@@ -672,11 +682,6 @@ namespace Foxoft
             layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
-            // 
-            // colPaymentMethodId
-            // 
-            colPaymentMethodId.FieldName = "PaymentMethodId";
-            colPaymentMethodId.Name = "colPaymentMethodId";
             // 
             // FormMoneyTransfer
             // 

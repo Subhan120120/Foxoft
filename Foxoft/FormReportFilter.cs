@@ -61,9 +61,10 @@ namespace Foxoft
             this.dcReport = efMethods.SelectReport(Report.ReportId); // reload dcReport
             this.Text = Report.ReportName;
 
+            CustomMethods cM = new ();
             string querySql = null;
             if (dcReport is not null)
-                querySql = ClearVariables(dcReport.ReportQuery);
+                querySql = cM.ClearVariablesFromQuery(dcReport.ReportQuery);
 
             if (querySql is not null)
                 filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql);
@@ -289,6 +290,7 @@ namespace Foxoft
             }
             return dict;
         }
+
         private void ExtractOne(Dictionary<string, object> dict, CriteriaOperator op)
         {
             BinaryOperator opBinary = op as BinaryOperator;
@@ -301,7 +303,6 @@ namespace Foxoft
 
         private void bBI_ReportEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string qry = dcReport.ReportQuery;
             int id = dcReport.ReportId;
 
             FormReportEditor formQueryEditor = new(id);

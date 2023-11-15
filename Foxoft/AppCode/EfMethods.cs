@@ -1020,6 +1020,17 @@ namespace Foxoft
             return invoiceSum + paymentSum;
         }
 
+        public decimal SelectCashRegBalance(string cashRegCode, DateTime documentDate)
+        {
+            using subContext db = new();
+
+            decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                       .Where(x => x.CashRegisterCode == cashRegCode && x.TrPaymentHeader.OperationDate <= documentDate)
+                                       .Sum(x => x.PaymentLoc);
+
+            return paymentSum;
+        }
+
         public decimal SelectPaymentSum(string currAccCode, string docNum)
         {
             using subContext db = new();
@@ -1385,7 +1396,7 @@ namespace Foxoft
                            .ThenInclude(x => x.TrClaimReports)
                            .ThenInclude(x => x.DcReport)
                         .Where(x => x.CurrAccCode == currAccCode)
-                        .Any(x => x.DcRole.TrRoleClaims.Any(x => x.DcClaim.TrClaimReports.Any(x => x.DcReport.ReportName == claim)));
+                        .Any(x => x.DcRole.TrRoleClaims.Any(x => x.DcClaim.TrClaimReports.Any(x => x.DcReport.ReportId.ToString() == claim)));
 
             return hasClaim;
         }

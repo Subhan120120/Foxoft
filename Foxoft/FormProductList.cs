@@ -144,8 +144,6 @@ namespace Foxoft
 
         private void AddReports()
         {
-            ComponentResourceManager resources = new(typeof(FormProductList));
-
             List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
 
             foreach (TrFormReport report in trFormReports)
@@ -153,7 +151,7 @@ namespace Foxoft
                 BarButtonItem BBI = new();
                 BBI.Caption = report.DcReport.ReportName;
                 BBI.Id = 57;
-                BBI.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductCart.ImageOptions.SvgImage");
+                BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
                 BBI.Name = report.DcReport.ReportId.ToString();
                 //String txt = new BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J).ToString();
                 if (!string.IsNullOrEmpty(report.Shortcut))

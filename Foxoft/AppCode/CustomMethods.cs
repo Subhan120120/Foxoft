@@ -8,6 +8,23 @@ namespace Foxoft.AppCode
 {
     public class CustomMethods
     {
+        public string ClearVariablesFromQuery(string querySql)
+        {
+            if (querySql is not null)
+
+                if (querySql.Contains("{"))
+                {
+                    int startindex = querySql.IndexOf('{');
+                    int endindex = querySql.IndexOf('}');
+                    string outputstring = querySql.Substring(startindex, endindex - startindex + 1);
+                    string newQuerySql = querySql.Replace(outputstring, "");
+                    return newQuerySql;
+                }
+                else
+                    return querySql;
+            else return null;
+        }
+
         public string GetDataFromFile(string pathFile)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
