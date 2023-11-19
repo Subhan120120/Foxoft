@@ -22,6 +22,7 @@ namespace Foxoft.Models
 
 
 
+
         [ForeignKey("HierarchyCode")]
         public virtual DcHierarchy DcHierarchy { get; set; }
 

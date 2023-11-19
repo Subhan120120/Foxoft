@@ -45,7 +45,6 @@ namespace Foxoft
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             ProductTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            BarcodeTextEdit = new DevExpress.XtraEditors.TextEdit();
             PurchasePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
             WholesalePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
             RetailPriceTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -54,7 +53,6 @@ namespace Foxoft
             BalanceTextEdit = new DevExpress.XtraEditors.TextEdit();
             btn_ProductFeature = new DevExpress.XtraEditors.SimpleButton();
             pictureEdit = new DevExpress.XtraEditors.PictureEdit();
-            Btn_BarcodeGenerate = new DevExpress.XtraEditors.SimpleButton();
             textEdit_ProductCode2 = new DevExpress.XtraEditors.TextEdit();
             btnEdit_Hierarchy = new DevExpress.XtraEditors.ButtonEdit();
             txtEdit_Price = new DevExpress.XtraEditors.TextEdit();
@@ -62,6 +60,7 @@ namespace Foxoft
             txtEdit_Rating = new DevExpress.XtraEditors.TextEdit();
             btn_ProductDiscount = new DevExpress.XtraEditors.SimpleButton();
             btnEdit_Slug = new DevExpress.XtraEditors.ButtonEdit();
+            BtnEdit_Barcode = new DevExpress.XtraEditors.ButtonEdit();
             ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPromotionCode2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -80,8 +79,6 @@ namespace Foxoft
             ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
             ProductCode2 = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
-            lCI_BarcodeGenerate = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_hierarchyCode = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -96,6 +93,7 @@ namespace Foxoft
             ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForBarcode = new DevExpress.XtraLayout.LayoutControlItem();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -109,7 +107,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProductDescTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProductTypeCodeLookUpEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)BarcodeTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PurchasePriceTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)WholesalePriceTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RetailPriceTextEdit.Properties).BeginInit();
@@ -123,6 +120,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)txtEdit_Desc.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Rating.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_Slug.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BtnEdit_Barcode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).BeginInit();
@@ -141,8 +139,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForProductTypeCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForProductDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProductCode2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForBarcode).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lCI_BarcodeGenerate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
@@ -157,6 +153,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
             SuspendLayout();
@@ -174,7 +171,6 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(btn_Ok);
             dataLayoutControl1.Controls.Add(btn_Cancel);
             dataLayoutControl1.Controls.Add(ProductTypeCodeLookUpEdit);
-            dataLayoutControl1.Controls.Add(BarcodeTextEdit);
             dataLayoutControl1.Controls.Add(PurchasePriceTextEdit);
             dataLayoutControl1.Controls.Add(WholesalePriceTextEdit);
             dataLayoutControl1.Controls.Add(RetailPriceTextEdit);
@@ -183,7 +179,6 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(BalanceTextEdit);
             dataLayoutControl1.Controls.Add(btn_ProductFeature);
             dataLayoutControl1.Controls.Add(pictureEdit);
-            dataLayoutControl1.Controls.Add(Btn_BarcodeGenerate);
             dataLayoutControl1.Controls.Add(textEdit_ProductCode2);
             dataLayoutControl1.Controls.Add(btnEdit_Hierarchy);
             dataLayoutControl1.Controls.Add(txtEdit_Price);
@@ -191,6 +186,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(txtEdit_Rating);
             dataLayoutControl1.Controls.Add(btn_ProductDiscount);
             dataLayoutControl1.Controls.Add(btnEdit_Slug);
+            dataLayoutControl1.Controls.Add(BtnEdit_Barcode);
             dataLayoutControl1.DataSource = dcProductsBindingSource;
             dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForUsePos, ItemForPromotionCode, ItemForPromotionCode2, ItemForTaxRate });
@@ -204,7 +200,7 @@ namespace Foxoft
             // 
             // btn_SaveImage
             // 
-            btn_SaveImage.Location = new System.Drawing.Point(392, 299);
+            btn_SaveImage.Location = new System.Drawing.Point(392, 297);
             btn_SaveImage.Name = "btn_SaveImage";
             btn_SaveImage.Size = new System.Drawing.Size(107, 22);
             btn_SaveImage.StyleController = dataLayoutControl1;
@@ -269,7 +265,7 @@ namespace Foxoft
             // IsDisabledCheckEdit
             // 
             IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "IsDisabled", true));
-            IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 325);
+            IsDisabledCheckEdit.Location = new System.Drawing.Point(12, 323);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
             IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -291,9 +287,9 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new System.Drawing.Point(383, 325);
+            btn_Ok.Location = new System.Drawing.Point(383, 323);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new System.Drawing.Size(116, 85);
+            btn_Ok.Size = new System.Drawing.Size(116, 87);
             btn_Ok.StyleController = dataLayoutControl1;
             btn_Ok.TabIndex = 17;
             btn_Ok.Text = "simpleButton1";
@@ -303,9 +299,9 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new System.Drawing.Point(282, 325);
+            btn_Cancel.Location = new System.Drawing.Point(282, 323);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new System.Drawing.Size(97, 85);
+            btn_Cancel.Size = new System.Drawing.Size(97, 87);
             btn_Cancel.StyleController = dataLayoutControl1;
             btn_Cancel.TabIndex = 16;
             btn_Cancel.Text = "simpleButton2";
@@ -323,19 +319,10 @@ namespace Foxoft
             ProductTypeCodeLookUpEdit.StyleController = dataLayoutControl1;
             ProductTypeCodeLookUpEdit.TabIndex = 2;
             // 
-            // BarcodeTextEdit
-            // 
-            BarcodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "Barcode", true));
-            BarcodeTextEdit.Location = new System.Drawing.Point(123, 132);
-            BarcodeTextEdit.Name = "BarcodeTextEdit";
-            BarcodeTextEdit.Size = new System.Drawing.Size(129, 20);
-            BarcodeTextEdit.StyleController = dataLayoutControl1;
-            BarcodeTextEdit.TabIndex = 7;
-            // 
             // PurchasePriceTextEdit
             // 
             PurchasePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "PurchasePrice", true));
-            PurchasePriceTextEdit.Location = new System.Drawing.Point(135, 217);
+            PurchasePriceTextEdit.Location = new System.Drawing.Point(135, 215);
             PurchasePriceTextEdit.Name = "PurchasePriceTextEdit";
             PurchasePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             PurchasePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -349,7 +336,7 @@ namespace Foxoft
             // WholesalePriceTextEdit
             // 
             WholesalePriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "WholesalePrice", true));
-            WholesalePriceTextEdit.Location = new System.Drawing.Point(135, 241);
+            WholesalePriceTextEdit.Location = new System.Drawing.Point(135, 239);
             WholesalePriceTextEdit.Name = "WholesalePriceTextEdit";
             WholesalePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             WholesalePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -363,7 +350,7 @@ namespace Foxoft
             // RetailPriceTextEdit
             // 
             RetailPriceTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "RetailPrice", true));
-            RetailPriceTextEdit.Location = new System.Drawing.Point(135, 265);
+            RetailPriceTextEdit.Location = new System.Drawing.Point(135, 263);
             RetailPriceTextEdit.Name = "RetailPriceTextEdit";
             RetailPriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             RetailPriceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -391,7 +378,7 @@ namespace Foxoft
             // UseInternetCheckEdit
             // 
             UseInternetCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "UseInternet", true));
-            UseInternetCheckEdit.Location = new System.Drawing.Point(114, 325);
+            UseInternetCheckEdit.Location = new System.Drawing.Point(114, 323);
             UseInternetCheckEdit.Name = "UseInternetCheckEdit";
             UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
             UseInternetCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
@@ -416,7 +403,7 @@ namespace Foxoft
             // btn_ProductFeature
             // 
             btn_ProductFeature.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductFeature.ImageOptions.SvgImage");
-            btn_ProductFeature.Location = new System.Drawing.Point(12, 349);
+            btn_ProductFeature.Location = new System.Drawing.Point(12, 347);
             btn_ProductFeature.Name = "btn_ProductFeature";
             btn_ProductFeature.Size = new System.Drawing.Size(130, 36);
             btn_ProductFeature.StyleController = dataLayoutControl1;
@@ -430,20 +417,10 @@ namespace Foxoft
             pictureEdit.Name = "pictureEdit";
             pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
             pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            pictureEdit.Size = new System.Drawing.Size(217, 235);
+            pictureEdit.Size = new System.Drawing.Size(217, 233);
             pictureEdit.StyleController = dataLayoutControl1;
             pictureEdit.TabIndex = 1;
             pictureEdit.DoubleClick += pictureEdit_DoubleClick;
-            // 
-            // Btn_BarcodeGenerate
-            // 
-            Btn_BarcodeGenerate.Location = new System.Drawing.Point(256, 132);
-            Btn_BarcodeGenerate.Name = "Btn_BarcodeGenerate";
-            Btn_BarcodeGenerate.Size = new System.Drawing.Size(22, 22);
-            Btn_BarcodeGenerate.StyleController = dataLayoutControl1;
-            Btn_BarcodeGenerate.TabIndex = 8;
-            Btn_BarcodeGenerate.Text = "+";
-            Btn_BarcodeGenerate.Click += btn_BarcodeGenerate_Click;
             // 
             // textEdit_ProductCode2
             // 
@@ -457,7 +434,7 @@ namespace Foxoft
             // btnEdit_Hierarchy
             // 
             btnEdit_Hierarchy.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "HierarchyCode", true));
-            btnEdit_Hierarchy.Location = new System.Drawing.Point(123, 158);
+            btnEdit_Hierarchy.Location = new System.Drawing.Point(123, 156);
             btnEdit_Hierarchy.Name = "btnEdit_Hierarchy";
             btnEdit_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_Hierarchy.Size = new System.Drawing.Size(155, 20);
@@ -468,7 +445,7 @@ namespace Foxoft
             // txtEdit_Price
             // 
             txtEdit_Price.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Price", true));
-            txtEdit_Price.Location = new System.Drawing.Point(135, 217);
+            txtEdit_Price.Location = new System.Drawing.Point(135, 215);
             txtEdit_Price.Name = "txtEdit_Price";
             txtEdit_Price.Size = new System.Drawing.Size(131, 20);
             txtEdit_Price.StyleController = dataLayoutControl1;
@@ -477,7 +454,7 @@ namespace Foxoft
             // txtEdit_Desc
             // 
             txtEdit_Desc.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Desc", true));
-            txtEdit_Desc.Location = new System.Drawing.Point(135, 241);
+            txtEdit_Desc.Location = new System.Drawing.Point(135, 239);
             txtEdit_Desc.Name = "txtEdit_Desc";
             txtEdit_Desc.Size = new System.Drawing.Size(131, 20);
             txtEdit_Desc.StyleController = dataLayoutControl1;
@@ -486,7 +463,7 @@ namespace Foxoft
             // txtEdit_Rating
             // 
             txtEdit_Rating.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Rating", true));
-            txtEdit_Rating.Location = new System.Drawing.Point(135, 289);
+            txtEdit_Rating.Location = new System.Drawing.Point(135, 287);
             txtEdit_Rating.Name = "txtEdit_Rating";
             txtEdit_Rating.Size = new System.Drawing.Size(131, 20);
             txtEdit_Rating.StyleController = dataLayoutControl1;
@@ -495,7 +472,7 @@ namespace Foxoft
             // btn_ProductDiscount
             // 
             btn_ProductDiscount.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductDiscount.ImageOptions.SvgImage");
-            btn_ProductDiscount.Location = new System.Drawing.Point(146, 349);
+            btn_ProductDiscount.Location = new System.Drawing.Point(146, 347);
             btn_ProductDiscount.Name = "btn_ProductDiscount";
             btn_ProductDiscount.Size = new System.Drawing.Size(132, 36);
             btn_ProductDiscount.StyleController = dataLayoutControl1;
@@ -503,16 +480,27 @@ namespace Foxoft
             btn_ProductDiscount.Text = "Endirim";
             btn_ProductDiscount.Click += btn_ProductDiscount_Click;
             // 
-            // buttonEdit1
+            // btnEdit_Slug
             // 
             btnEdit_Slug.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "SiteProduct.Slug", true));
-            btnEdit_Slug.Location = new System.Drawing.Point(135, 265);
-            btnEdit_Slug.Name = "buttonEdit1";
+            btnEdit_Slug.Location = new System.Drawing.Point(135, 263);
+            btnEdit_Slug.Name = "btnEdit_Slug";
             btnEdit_Slug.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus) });
             btnEdit_Slug.Size = new System.Drawing.Size(131, 20);
             btnEdit_Slug.StyleController = dataLayoutControl1;
             btnEdit_Slug.TabIndex = 22;
             btnEdit_Slug.ButtonPressed += buttonEdit1_ButtonPressed;
+            // 
+            // BtnEdit_Barcode
+            // 
+            BtnEdit_Barcode.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcProductsBindingSource, "Barcode", true));
+            BtnEdit_Barcode.Location = new System.Drawing.Point(123, 132);
+            BtnEdit_Barcode.Name = "BtnEdit_Barcode";
+            BtnEdit_Barcode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus) });
+            BtnEdit_Barcode.Size = new System.Drawing.Size(155, 20);
+            BtnEdit_Barcode.StyleController = dataLayoutControl1;
+            BtnEdit_Barcode.TabIndex = 23;
+            BtnEdit_Barcode.ButtonPressed += BtnEdit_Barcode_ButtonPressed;
             // 
             // ItemForUsePos
             // 
@@ -564,7 +552,7 @@ namespace Foxoft
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1, ItemForPosDiscount, ItemForBalance, layoutControlItem3, layoutControlItem4, ItemForUseInternet, ItemForIsDisabled, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ProductCode2, ItemForBarcode, lCI_BarcodeGenerate, lCI_hierarchyCode, emptySpaceItem1, layoutControlItem5, tabbedControlGroup1, layoutControlItem10 });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1, ItemForPosDiscount, ItemForBalance, layoutControlItem3, layoutControlItem4, ItemForUseInternet, ItemForIsDisabled, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ProductCode2, lCI_hierarchyCode, emptySpaceItem1, layoutControlItem5, tabbedControlGroup1, layoutControlItem10, ItemForBarcode });
             layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new System.Drawing.Size(491, 402);
@@ -572,10 +560,10 @@ namespace Foxoft
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_Cancel;
-            layoutControlItem2.Location = new System.Drawing.Point(270, 313);
+            layoutControlItem2.Location = new System.Drawing.Point(270, 311);
             layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(101, 89);
+            layoutControlItem2.Size = new System.Drawing.Size(101, 91);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem2.TextVisible = false;
@@ -583,10 +571,10 @@ namespace Foxoft
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Ok;
-            layoutControlItem1.Location = new System.Drawing.Point(371, 313);
+            layoutControlItem1.Location = new System.Drawing.Point(371, 311);
             layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new System.Drawing.Size(120, 89);
+            layoutControlItem1.Size = new System.Drawing.Size(120, 91);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem1.TextVisible = false;
@@ -612,9 +600,9 @@ namespace Foxoft
             // layoutControlItem3
             // 
             layoutControlItem3.Control = btn_ProductFeature;
-            layoutControlItem3.Location = new System.Drawing.Point(0, 337);
+            layoutControlItem3.Location = new System.Drawing.Point(0, 335);
             layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new System.Drawing.Size(134, 65);
+            layoutControlItem3.Size = new System.Drawing.Size(134, 67);
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
@@ -624,7 +612,7 @@ namespace Foxoft
             layoutControlItem4.Location = new System.Drawing.Point(270, 48);
             layoutControlItem4.MinSize = new System.Drawing.Size(24, 24);
             layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new System.Drawing.Size(221, 239);
+            layoutControlItem4.Size = new System.Drawing.Size(221, 237);
             layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem4.TextVisible = false;
@@ -632,7 +620,7 @@ namespace Foxoft
             // ItemForUseInternet
             // 
             ItemForUseInternet.Control = UseInternetCheckEdit;
-            ItemForUseInternet.Location = new System.Drawing.Point(102, 313);
+            ItemForUseInternet.Location = new System.Drawing.Point(102, 311);
             ItemForUseInternet.Name = "ItemForUseInternet";
             ItemForUseInternet.Size = new System.Drawing.Size(168, 24);
             ItemForUseInternet.Text = "İnternetdə İstifadə Et";
@@ -642,7 +630,7 @@ namespace Foxoft
             // ItemForIsDisabled
             // 
             ItemForIsDisabled.Control = IsDisabledCheckEdit;
-            ItemForIsDisabled.Location = new System.Drawing.Point(0, 313);
+            ItemForIsDisabled.Location = new System.Drawing.Point(0, 311);
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new System.Drawing.Size(102, 24);
             ItemForIsDisabled.Text = "Is Disabled";
@@ -684,30 +672,10 @@ namespace Foxoft
             ProductCode2.Size = new System.Drawing.Size(270, 24);
             ProductCode2.TextSize = new System.Drawing.Size(99, 13);
             // 
-            // ItemForBarcode
-            // 
-            ItemForBarcode.Control = BarcodeTextEdit;
-            ItemForBarcode.Location = new System.Drawing.Point(0, 120);
-            ItemForBarcode.Name = "ItemForBarcode";
-            ItemForBarcode.Size = new System.Drawing.Size(244, 26);
-            ItemForBarcode.Text = "Barcode";
-            ItemForBarcode.TextSize = new System.Drawing.Size(99, 13);
-            // 
-            // lCI_BarcodeGenerate
-            // 
-            lCI_BarcodeGenerate.Control = Btn_BarcodeGenerate;
-            lCI_BarcodeGenerate.Location = new System.Drawing.Point(244, 120);
-            lCI_BarcodeGenerate.MinSize = new System.Drawing.Size(20, 26);
-            lCI_BarcodeGenerate.Name = "lCI_BarcodeGenerate";
-            lCI_BarcodeGenerate.Size = new System.Drawing.Size(26, 26);
-            lCI_BarcodeGenerate.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            lCI_BarcodeGenerate.TextSize = new System.Drawing.Size(0, 0);
-            lCI_BarcodeGenerate.TextVisible = false;
-            // 
             // lCI_hierarchyCode
             // 
             lCI_hierarchyCode.Control = btnEdit_Hierarchy;
-            lCI_hierarchyCode.Location = new System.Drawing.Point(0, 146);
+            lCI_hierarchyCode.Location = new System.Drawing.Point(0, 144);
             lCI_hierarchyCode.Name = "lCI_hierarchyCode";
             lCI_hierarchyCode.Size = new System.Drawing.Size(270, 24);
             lCI_hierarchyCode.TextSize = new System.Drawing.Size(99, 13);
@@ -715,7 +683,7 @@ namespace Foxoft
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new System.Drawing.Point(270, 287);
+            emptySpaceItem1.Location = new System.Drawing.Point(270, 285);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new System.Drawing.Size(110, 26);
             emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
@@ -723,7 +691,7 @@ namespace Foxoft
             // layoutControlItem5
             // 
             layoutControlItem5.Control = btn_SaveImage;
-            layoutControlItem5.Location = new System.Drawing.Point(380, 287);
+            layoutControlItem5.Location = new System.Drawing.Point(380, 285);
             layoutControlItem5.Name = "layoutControlItem5";
             layoutControlItem5.Size = new System.Drawing.Size(111, 26);
             layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
@@ -731,7 +699,7 @@ namespace Foxoft
             // 
             // tabbedControlGroup1
             // 
-            tabbedControlGroup1.Location = new System.Drawing.Point(0, 170);
+            tabbedControlGroup1.Location = new System.Drawing.Point(0, 168);
             tabbedControlGroup1.Name = "tabbedControlGroup1";
             tabbedControlGroup1.SelectedTabPage = layoutControlGroup2;
             tabbedControlGroup1.Size = new System.Drawing.Size(270, 143);
@@ -813,11 +781,20 @@ namespace Foxoft
             // layoutControlItem10
             // 
             layoutControlItem10.Control = btn_ProductDiscount;
-            layoutControlItem10.Location = new System.Drawing.Point(134, 337);
+            layoutControlItem10.Location = new System.Drawing.Point(134, 335);
             layoutControlItem10.Name = "layoutControlItem10";
-            layoutControlItem10.Size = new System.Drawing.Size(136, 65);
+            layoutControlItem10.Size = new System.Drawing.Size(136, 67);
             layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem10.TextVisible = false;
+            // 
+            // ItemForBarcode
+            // 
+            ItemForBarcode.Control = BtnEdit_Barcode;
+            ItemForBarcode.Location = new System.Drawing.Point(0, 120);
+            ItemForBarcode.Name = "ItemForBarcode";
+            ItemForBarcode.Size = new System.Drawing.Size(270, 24);
+            ItemForBarcode.Text = "Barcode";
+            ItemForBarcode.TextSize = new System.Drawing.Size(99, 13);
             // 
             // gridControl1
             // 
@@ -853,7 +830,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ProductDescTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ProductTypeCodeLookUpEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)BarcodeTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PurchasePriceTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)WholesalePriceTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)RetailPriceTextEdit.Properties).EndInit();
@@ -867,6 +843,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)txtEdit_Desc.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Rating.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_Slug.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BtnEdit_Barcode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePos).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).EndInit();
@@ -885,8 +862,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForProductTypeCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForProductDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)ProductCode2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForBarcode).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lCI_BarcodeGenerate).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
@@ -901,6 +876,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
             ResumeLayout(false);
@@ -918,7 +894,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.CheckEdit IsDisabledCheckEdit;
         private DevExpress.XtraEditors.TextEdit ProductDescTextEdit;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForBarcode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForUsePos;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPromotionCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPromotionCode2;
@@ -934,7 +909,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
         private DevExpress.XtraEditors.LookUpEdit ProductTypeCodeLookUpEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
-        private DevExpress.XtraEditors.TextEdit BarcodeTextEdit;
         private DevExpress.XtraEditors.TextEdit ProductCodeTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductCode;
         private DevExpress.XtraEditors.TextEdit PurchasePriceTextEdit;
@@ -950,8 +924,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraEditors.PictureEdit pictureEdit;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        private DevExpress.XtraEditors.SimpleButton Btn_BarcodeGenerate;
-        private DevExpress.XtraLayout.LayoutControlItem lCI_BarcodeGenerate;
         private DevExpress.XtraEditors.SimpleButton btn_SaveImage;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.XtraEditors.TextEdit txtEdit_Price;
@@ -975,5 +947,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_Slug;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
+        private DevExpress.XtraEditors.ButtonEdit BtnEdit_Barcode;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForBarcode;
     }
 }

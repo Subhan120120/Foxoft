@@ -24,6 +24,11 @@ namespace Foxoft.Models
         public string FeatureCode { get; set; }
 
 
+        [Display(Name = "Identity")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdentityColumn { get; set; }
+
+
 
         [ForeignKey("ProductCode")]
         public virtual DcProduct DcProduct { get; set; }

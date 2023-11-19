@@ -262,13 +262,6 @@ namespace Foxoft
             openFileDialog();
         }
 
-        private void btn_BarcodeGenerate_Click(object sender, EventArgs e)
-        {
-            string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "DcProducts", 10);
-            string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
-            BarcodeTextEdit.EditValue = genNumber + checkDigit;
-        }
-
         public string CalculateChecksumDigit(string countryCode, string productCode)
         {
             string sTemp = countryCode + productCode;
@@ -322,6 +315,13 @@ namespace Foxoft
         {
             string slugify = dbContext.Slugify.FromSqlInterpolated($"Select dbo.Slugify ({ProductDescTextEdit.EditValue?.ToString()}) as Slugify").FirstOrDefault().Slugify;
             btnEdit_Slug.EditValue = slugify;
+        }
+
+        private void BtnEdit_Barcode_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "DcProducts", 10);
+            string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
+            BtnEdit_Barcode.EditValue = genNumber + checkDigit;
         }
     }
 }
