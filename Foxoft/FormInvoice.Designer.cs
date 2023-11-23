@@ -304,20 +304,17 @@ namespace Foxoft
             // 
             // col_InvoiceLineId
             // 
-            col_InvoiceLineId.Caption = "InvoiceLineId";
             col_InvoiceLineId.FieldName = "InvoiceLineId";
             col_InvoiceLineId.Name = "col_InvoiceLineId";
             col_InvoiceLineId.OptionsEditForm.StartNewRow = true;
             // 
             // col_InvoiceHeaderId
             // 
-            col_InvoiceHeaderId.Caption = "InvoiceHeaderId";
             col_InvoiceHeaderId.FieldName = "InvoiceHeaderId";
             col_InvoiceHeaderId.Name = "col_InvoiceHeaderId";
             // 
             // col_ProductCode
             // 
-            col_ProductCode.Caption = "Məhsul";
             col_ProductCode.ColumnEdit = repoBtnEdit_ProductCode;
             col_ProductCode.FieldName = "ProductCode";
             col_ProductCode.Name = "col_ProductCode";
@@ -374,7 +371,6 @@ namespace Foxoft
             // 
             // col_Price
             // 
-            col_Price.Caption = "Qiymət";
             col_Price.ColumnEdit = repoCalcEdit_Price;
             col_Price.DisplayFormat.FormatString = "{0:n2}";
             col_Price.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
@@ -427,7 +423,6 @@ namespace Foxoft
             // 
             // col_Amount
             // 
-            col_Amount.Caption = "Tutar";
             col_Amount.DisplayFormat.FormatString = "{0:n2}";
             col_Amount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_Amount.FieldName = "Amount";
@@ -447,7 +442,6 @@ namespace Foxoft
             // 
             // col_NetAmount
             // 
-            col_NetAmount.Caption = "Net Tutar";
             col_NetAmount.DisplayFormat.FormatString = "{0:n2}";
             col_NetAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_NetAmount.FieldName = "NetAmount";
@@ -459,7 +453,6 @@ namespace Foxoft
             // 
             // col_LineDesc
             // 
-            col_LineDesc.Caption = "Qeyd";
             col_LineDesc.FieldName = "LineDescription";
             col_LineDesc.Name = "col_LineDesc";
             col_LineDesc.Visible = true;
@@ -535,7 +528,6 @@ namespace Foxoft
             // 
             // colBarcode
             // 
-            colBarcode.Caption = "Barkod";
             colBarcode.FieldName = "Barcode";
             colBarcode.Name = "colBarcode";
             colBarcode.Visible = true;
@@ -547,7 +539,6 @@ namespace Foxoft
             checkEdit_IsSent.Enabled = false;
             checkEdit_IsSent.Location = new System.Drawing.Point(12, 357);
             checkEdit_IsSent.Name = "checkEdit_IsSent";
-            checkEdit_IsSent.Properties.Caption = "Göndərilib";
             checkEdit_IsSent.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             checkEdit_IsSent.Size = new System.Drawing.Size(83, 20);
             checkEdit_IsSent.StyleController = dataLayoutControl1;
@@ -564,7 +555,6 @@ namespace Foxoft
             checkEdit_IsReturn.Enabled = false;
             checkEdit_IsReturn.Location = new System.Drawing.Point(12, 36);
             checkEdit_IsReturn.Name = "checkEdit_IsReturn";
-            checkEdit_IsReturn.Properties.Caption = "Qaytarılmadır";
             checkEdit_IsReturn.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             checkEdit_IsReturn.Size = new System.Drawing.Size(108, 20);
             checkEdit_IsReturn.StyleController = dataLayoutControl1;

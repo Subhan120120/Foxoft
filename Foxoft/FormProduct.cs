@@ -36,11 +36,8 @@ namespace Foxoft
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;
 
-            if (isNew)
-            {
-                btn_ProductFeature.Enabled = false;
-                btn_ProductDiscount.Enabled = false;
-            }
+            if (!isNew)
+                btn_ProductDiscount.Enabled = true;
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
@@ -193,7 +190,6 @@ namespace Foxoft
 
         private void btn_ProductFeature_Click(object sender, EventArgs e)
         {
-
             FormProductFeature formFeature = new(dcProduct.ProductCode);
             formFeature.ShowDialog();
         }
@@ -262,30 +258,6 @@ namespace Foxoft
             openFileDialog();
         }
 
-        public string CalculateChecksumDigit(string countryCode, string productCode)
-        {
-            string sTemp = countryCode + productCode;
-            int iSum = 0;
-            int iDigit = 0;
-
-            // Calculate the checksum digit here.
-            for (int i = sTemp.Length; i >= 1; i--)
-            {
-                iDigit = Convert.ToInt32(sTemp.Substring(i - 1, 1));
-                if (i % 2 == 0)
-                {  // odd
-                    iSum += iDigit * 3;
-                }
-                else
-                {  // even
-                    iSum += iDigit * 1;
-                }
-            }
-
-            int iCheckSum = (10 - (iSum % 10)) % 10;
-            return iCheckSum.ToString();
-        }
-
         private void btn_SaveImage_Click(object sender, EventArgs e)
         {
             SaveImage();
@@ -319,9 +291,25 @@ namespace Foxoft
 
         private void BtnEdit_Barcode_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
-            string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "DcProducts", 10);
-            string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
-            BtnEdit_Barcode.EditValue = genNumber + checkDigit;
+        }
+
+        private void btnEdit_Hierarchy_EditValueChanged(object sender, EventArgs e)
+        {
+            ButtonEdit buttonEdit = (ButtonEdit)sender;
+            string hierarchy = buttonEdit.EditValue?.ToString();
+
+            if (!isNew)
+                if (!string.IsNullOrEmpty(hierarchy))
+                    if (efMethods.HierarchyExist(hierarchy))
+                        btn_ProductFeature.Enabled = true;
+                    else btn_ProductFeature.Enabled = false;
+
+        }
+
+        private void Btn_ProductBarcode_Click(object sender, EventArgs e)
+        {
+            FormProductBarcode formBarcode = new FormProductBarcode(dcProduct.ProductCode);
+            formBarcode.ShowDialog();
         }
     }
 }

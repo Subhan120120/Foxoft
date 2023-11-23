@@ -502,6 +502,7 @@ namespace Foxoft
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
             GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
+            col.UnboundDataType = typeof(string);
         }
 
         private void TrimNumbersFormat()
@@ -525,13 +526,20 @@ namespace Foxoft
 
         private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
+            GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
+
             if (e.MenuType == GridMenuType.Column)
             {
-                GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
-
                 if (menu.Column != null)
+                {
                     menu.Items.Add(CreateItemExpression("Expression", e.HitInfo.RowHandle, menu.Column, null));
 
+                    DXSubMenuItem menuSubItem = CreateSubMenuReports(e.HitInfo.Column, e.HitInfo.RowHandle);
+                    menuSubItem.BeginGroup = true;
+
+                    if (menuSubItem.Items.Count > 0)
+                        menu.Items.Add(menuSubItem);
+                }
             }
             else if (e.MenuType == GridMenuType.Row)
             {
@@ -539,7 +547,7 @@ namespace Foxoft
 
                 CreateMenuItemEdit(e);
 
-                DXSubMenuItem menuSubItem = CreateSubMenuReports(e.HitInfo.RowHandle, e.HitInfo.Column);
+                DXSubMenuItem menuSubItem = CreateSubMenuReports(e.HitInfo.Column, e.HitInfo.RowHandle);
                 menuSubItem.BeginGroup = true;
 
                 if (menuSubItem.Items.Count > 0)
@@ -611,82 +619,72 @@ namespace Foxoft
             }
         }
 
-        DXSubMenuItem CreateSubMenuReports(int rowHandle, GridColumn gridColumn)
+        DXSubMenuItem CreateSubMenuReports(GridColumn gridColumn, int rowHandle)
         {
             DXSubMenuItem subMenu = new("Hesabat");
 
             subMenu.ImageOptions.SvgImage = svgImageCollection1[0];
 
+            List<TrFormReport> trFormReports = new List<TrFormReport>();
             if (gridColumn.FieldName == "ProductCode")
-            {
-                List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
-
-                foreach (TrFormReport report in trFormReports)
-                {
-                    DXMenuItem dxItem = new(report.DcReport.ReportName);
-                    dxItem.Tag = new CellInfo(rowHandle, gridColumn);
-                    dxItem.Enabled = gV_Report.IsDataRow(rowHandle) || gV_Report.IsGroupRow(rowHandle);
-                    dxItem.ImageOptions.SvgImage = svgImageCollection1[0];
-                    subMenu.Items.Add(dxItem);
-
-                    dxItem.Click += (sender, e) =>
-                    {
-                        DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
-
-                        string filter = gridColumn.FieldName + " = '" + gV_Report.GetRowCellValue(rowHandle, gridColumn) + "' ";
-
-                        if (dcReport.ReportTypeId == 1)
-                        {
-                            FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport);
-                            formGrid.Show();
-                        }
-                        else if (dcReport.ReportTypeId == 2)
-                        {
-                            FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
-                            form.WindowState = FormWindowState.Maximized;
-                            form.Show();
-                        }
-                    };
-                }
-            }
+                trFormReports = efMethods.SelectFormReports("Products");
             else if (gridColumn.FieldName == "CurrAccCode")
+                trFormReports = efMethods.SelectFormReports("CurrAccs");
+
+            foreach (TrFormReport report in trFormReports)
             {
-                List<TrFormReport> trFormReports = efMethods.SelectFormReports("CurrAccs");
+                DXMenuItem dxItem = new(report.DcReport.ReportName);
+                dxItem.Tag = new CellInfo(rowHandle, gridColumn);
+                //dxItem.Enabled = gV_Report.IsDataRow(rowHandle) || gV_Report.IsGroupRow(rowHandle);
+                dxItem.ImageOptions.SvgImage = svgImageCollection1[0];
+                subMenu.Items.Add(dxItem);
 
-                foreach (TrFormReport report in trFormReports)
+                dxItem.Click += (sender, e) =>
                 {
-                    DXMenuItem dxItem = new(report.DcReport.ReportName);
-                    dxItem.Tag = new CellInfo(rowHandle, gridColumn);
-                    dxItem.Enabled = gV_Report.IsDataRow(rowHandle) || gV_Report.IsGroupRow(rowHandle);
-                    dxItem.ImageOptions.SvgImage = svgImageCollection1[0];
+                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
 
-                    dxItem.Click += (sender, e) =>
+                    List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_Report).ToList();
+
+                    string filter = "";
+
+                    if (rowHandle > 0)
+                        filter = gridColumn.FieldName + " = '" + gV_Report.GetRowCellValue(rowHandle, gridColumn) + "' ";
+                    else
                     {
-                        DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+                        var combined = "";
+                        foreach (DataRowView rowView in mydata)
+                            combined += "'" + rowView[gridColumn.FieldName].ToString() + "',";
 
-                        string filter = gridColumn.FieldName + " = '" + gV_Report.GetRowCellValue(rowHandle, gridColumn) + "' ";
+                        combined = combined.Substring(0, combined.Length - 1);
+                        filter = "[" + gridColumn.FieldName + "] in ( " + combined + ")";
+                    }
 
-                        string activeFilterStr = filter;
-
-                        if (dcReport.ReportTypeId == 1)
-                        {
-                            FormReportGrid formGrid = new(dcReport.ReportQuery, "", dcReport, activeFilterStr);
-                            formGrid.Show();
-                        }
-                        else if (dcReport.ReportTypeId == 2)
-                        {
-                            FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
-                            form.WindowState = FormWindowState.Maximized;
-                            form.Show();
-                        }
-                    };
-
-                    subMenu.Items.Add(dxItem);
-                }
+                    if (dcReport.ReportTypeId == 1)
+                    {
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport);
+                        formGrid.Show();
+                    }
+                    else if (dcReport.ReportTypeId == 2)
+                    {
+                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
+                        form.WindowState = FormWindowState.Maximized;
+                        form.Show();
+                    }
+                };
             }
 
             return subMenu;
         }
+
+        public static List<T> GetFilteredData<T>(ColumnView view)
+        {
+            List<T> resp = new List<T>();
+            for (int i = 0; i < view.DataRowCount; i++)
+                resp.Add((T)view.GetRow(i));
+
+            return resp;
+        }
+
 
         DXMenuItem CreateItemExpression(string caption, int rowHandle, GridColumn column, Image image)
         {

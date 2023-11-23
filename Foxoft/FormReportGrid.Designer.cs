@@ -41,7 +41,7 @@ namespace Foxoft
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
             bBI_Quit = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            BBI_AddColumn = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -81,7 +81,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, barButtonItem1, barButtonItem2, BBI_ExportExcel });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, BBI_AddColumn, barButtonItem2, BBI_ExportExcel });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
             ribbonControl1.MaxItemId = 12;
             ribbonControl1.Name = "ribbonControl1";
@@ -150,11 +150,11 @@ namespace Foxoft
             // 
             // barButtonItem1
             // 
-            barButtonItem1.Caption = "Kolon Əlavə Et";
-            barButtonItem1.Id = 9;
-            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            barButtonItem1.Name = "barButtonItem1";
-            barButtonItem1.ItemClick += barButtonItem1_ItemClick;
+            BBI_AddColumn.Caption = "Kolon Əlavə Et";
+            BBI_AddColumn.Id = 9;
+            BBI_AddColumn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            BBI_AddColumn.Name = "barButtonItem1";
+            BBI_AddColumn.ItemClick += barButtonItem1_ItemClick;
             // 
             // barButtonItem2
             // 
@@ -188,7 +188,7 @@ namespace Foxoft
             // 
             ribbonPageGroup2.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup2.ItemLinks.Add(BBI_ExportExcel);
-            ribbonPageGroup2.ItemLinks.Add(barButtonItem1);
+            ribbonPageGroup2.ItemLinks.Add(BBI_AddColumn);
             ribbonPageGroup2.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Export";
@@ -257,7 +257,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem bBI_Quit;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumn;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.BarButtonItem BBI_ExportExcel;

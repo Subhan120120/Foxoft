@@ -24,7 +24,7 @@ namespace Foxoft.Models
       public Guid? RelatedLineId { get; set; }
 
 
-      [Display(Name = "Məhsul")]
+      [Display(Name = "Məhsul Kodu")]
       [ForeignKey("DcProduct")]
       [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
       [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]

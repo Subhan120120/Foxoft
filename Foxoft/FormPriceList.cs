@@ -392,7 +392,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
 
             //using FormPriceTypeList form = new(priceTypeCode);
-            using FormCommonList<DcPriceType> form = new FormCommonList<DcPriceType>("", "PriceTypeCode", priceTypeCode);
+            using FormCommonList<DcPriceType> form = new("", "PriceTypeCode", priceTypeCode);
 
             try
             {

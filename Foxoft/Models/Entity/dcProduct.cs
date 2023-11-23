@@ -145,5 +145,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
         public virtual ICollection<TrProductDiscount> TrProductDiscounts { get; set; }
         public virtual ICollection<TrPriceListLine> TrPriceListLines { get; set; }
+        public virtual ICollection<TrProductBarcode> TrProductBarcodes { get; set; }
     }
 }

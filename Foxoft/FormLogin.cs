@@ -231,10 +231,8 @@ namespace Foxoft
 
         private async void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            String txt = new BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J).ToString();
-            System.Windows.Forms.KeysConverter cvt = new();
-            System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)cvt.ConvertFrom(txt);
-            System.Windows.Forms.MessageBox.Show(new BarShortcut(key).ToString());
+            Form1 form = new Form1();
+            form.ShowDialog();
         }
 
         private bool UpdateDueDate()

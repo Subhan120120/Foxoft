@@ -74,6 +74,9 @@ namespace Foxoft
 
             InitializeComponent();
 
+            checkEdit_IsSent.Properties.Caption = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.IsSent);
+            checkEdit_IsReturn.Properties.Caption = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.IsReturn);
+
             AddReports();
 
             BEI_TwilioInstance.EditValue = Settings.Default.AppSetting.TwilioInstanceId;
@@ -458,36 +461,11 @@ namespace Foxoft
 
                 if (e.KeyCode == Keys.C && e.Control)
                 {
-                    string cellValue = gV.GetFocusedValue().ToString();
-                    Clipboard.SetText(cellValue);
-                    e.Handled = true;
-                }
-
-                if (e.KeyCode == Keys.F9)
-                {
-                    object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
-                    if (productCode != null)
+                    string cellValue = gV.GetFocusedValue()?.ToString();
+                    if (!string.IsNullOrEmpty(cellValue))
                     {
-                        DcReport dcReport = efMethods.SelectReport(1005);
-
-                        string filter = " [ProductCode] = '" + productCode + "' ";
-                        string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                        formGrid.Show();
-                    }
-                }
-
-                if (e.KeyCode == Keys.F10)
-                {
-                    object productCode = gV.GetFocusedRowCellValue(col_ProductCode);
-                    if (productCode != null)
-                    {
-                        DcReport dcReport = efMethods.SelectReport(1004);
-
-                        string filter = "[ProductCode] = '" + productCode + "' ";
-                        string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                        formGrid.Show();
+                        Clipboard.SetText(cellValue);
+                        e.Handled = true;
                     }
                 }
 

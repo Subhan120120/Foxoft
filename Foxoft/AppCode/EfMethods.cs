@@ -173,7 +173,10 @@ namespace Foxoft
             if (string.IsNullOrEmpty(barCode))
                 return null;
             using subContext db = new();
-            return QueryableSelectProducts(db).FirstOrDefault(x => x.Barcode == barCode);
+            return db.TrProductBarcodes
+                .Where(x => x.Barcode == barCode)
+                .Select(x => x.DcProduct)
+                .FirstOrDefault();
         }
 
         public DcProduct SelectProductBySlug(string slug)
@@ -1322,6 +1325,12 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcFeatures.Any(x => x.FeatureCode == featureCode && x.FeatureTypeId == featureTypeId);
+        }
+
+        public bool HierarchyExist(string hierarchy)
+        {
+            using subContext db = new();
+            return db.DcHierarchies.Any(x => x.HierarchyCode == hierarchy);
         }
 
         public bool ReportExist(int Id)

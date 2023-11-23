@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20231122141129_sdffh")]
+    partial class sdffh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2870,13 +2872,7 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrProductBarcode", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("Barcode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BarcodeTypeCode")
@@ -2908,10 +2904,7 @@ namespace Foxoft.Migrations
                     b.Property<string>("ProductCode")
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("Barcode")
-                        .IsUnique();
+                    b.HasKey("Barcode");
 
                     b.HasIndex("BarcodeTypeCode");
 

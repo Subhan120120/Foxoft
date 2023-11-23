@@ -32,6 +32,7 @@ namespace Foxoft.Models
         public DbSet<DcProcess> DcProcesses { get; set; }
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<SiteProduct> SiteProducts { get; set; }
+        public DbSet<TrProductBarcode> TrProductBarcodes { get; set; }
         public DbSet<DcDiscount> DcDiscounts { get; set; }
         public DbSet<TrProductDiscount> TrProductDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
@@ -300,6 +301,11 @@ namespace Foxoft.Models
                 new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "İşıq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) }
             );
 
+            modelBuilder.Entity<DcBarcodeType>().HasData(
+                new DcBarcodeType { BarcodeTypeCode = "Serbest", BarcodeTypeDesc = "Sərbəst" },
+                new DcBarcodeType { BarcodeTypeCode = "EAN13", BarcodeTypeDesc = "EAN13" }
+            );
+
             //modelBuilder.Entity<TrProductFeature>() 
             //.HasNoKey();
 
@@ -345,6 +351,13 @@ namespace Foxoft.Models
                 new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" },
                 new DcProductType { ProductTypeCode = 3, ProductTypeDesc = "Servis" }
             );
+
+            //modelBuilder.Entity<TrProductBarcode>()
+            //    .HasAlternateKey(c => c.Barcode);
+
+            modelBuilder.Entity<TrProductBarcode>()
+                    .HasIndex(u => u.Barcode)
+                    .IsUnique();
 
             modelBuilder.Entity<DcWarehouse>().HasData(
                 new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Mərkəz deposu", OfficeCode = "ofs01", StoreCode = "mgz01", IsDefault = true });
@@ -406,6 +419,7 @@ namespace Foxoft.Models
                 new AppSetting { Id = 1, GridViewLayout = gvListDefault });
 
             modelBuilder.Entity<DcVariable>().HasData(
+                new DcVariable { VariableCode = "20", VariableDesc = "Barkod" },
                 new DcVariable { VariableCode = "C", VariableDesc = "Cari" },
                 new DcVariable { VariableCode = "CI", VariableDesc = "Sayım Artırma" },
                 new DcVariable { VariableCode = "CO", VariableDesc = "Sayım Azaltma" },

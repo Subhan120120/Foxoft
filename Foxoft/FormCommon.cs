@@ -207,7 +207,9 @@ namespace Foxoft
 
             Control_Id.Control.Text = NewDocNum;
 
-            Control_2.Control.Text = Value_2;
+            if (Control_2.Control is not null)
+                Control_2.Control.Text = Value_2;
+
             dataLayoutControl1.SetCurrentRecordFieldValue(FieldName_2, Value_2);
         }
 

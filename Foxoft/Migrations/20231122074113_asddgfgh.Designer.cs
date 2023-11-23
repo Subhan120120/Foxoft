@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20231122074113_asddgfgh")]
+    partial class asddgfgh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1635,11 +1637,6 @@ namespace Foxoft.Migrations
                     b.HasData(
                         new
                         {
-                            VariableCode = "20",
-                            VariableDesc = "Barkod"
-                        },
-                        new
-                        {
                             VariableCode = "C",
                             VariableDesc = "Cari"
                         },
@@ -2870,54 +2867,23 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrProductBarcode", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("Barcode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BarcodeTypeCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
                     b.Property<string>("ProductCode")
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("Barcode")
-                        .IsUnique();
+                    b.HasKey("Barcode");
 
                     b.HasIndex("BarcodeTypeCode");
 
                     b.HasIndex("ProductCode");
 
-                    b.ToTable("TrProductBarcodes");
+                    b.ToTable("TrProductBarcode");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrProductDiscount", b =>
