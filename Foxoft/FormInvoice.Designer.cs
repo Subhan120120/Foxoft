@@ -946,12 +946,12 @@ namespace Foxoft
             popupMenu1.Ribbon = ribbonControl1;
             popupMenu1.BeforePopup += popupMenuPrinters_BeforePopup;
             // 
-            // BSI_reports
+            // BSI_Reports
             // 
             BSI_Reports.Caption = "Hesabat";
             BSI_Reports.Id = 44;
-            BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_reports.ImageOptions.SvgImage");
-            BSI_Reports.Name = "BSI_reports";
+            BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
+            BSI_Reports.Name = "BSI_Reports";
             // 
             // ribbonPage1
             // 

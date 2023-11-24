@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
@@ -15,7 +16,7 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormProductBarcode : XtraForm
+    public partial class FormProductBarcode : RibbonForm
     {
         private subContext dbContext;
         string ProductCode;
@@ -127,11 +128,18 @@ namespace Foxoft
         private void RepoBtnEdit_Barcode_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
-            EfMethods efMethods = new EfMethods();
-            string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "DcProducts", 10);
-            string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
-            string barcode = genNumber + checkDigit;
-            editor.EditValue = barcode;
+            int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
+            if (buttonIndex == 0)
+            {
+                string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "DcProducts", 10);
+                string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
+                string barcode = genNumber + checkDigit;
+                editor.EditValue = barcode;
+            }
+            if (buttonIndex == 1)
+            {
+                MessageBox.Show("Test");
+            }
         }
 
         public string CalculateChecksumDigit(string countryCode, string productCode)
@@ -166,12 +174,16 @@ namespace Foxoft
             if (column == colBarcode)
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
-                DcProduct product = efMethods.SelectProductByBarcode(eValue);
+                string oldValue = GV_ProductBarcode.GetFocusedValue()?.ToString();
 
-                if (product is not null)
+                if (eValue != oldValue) // different value
                 {
-                    e.ErrorText = "Belə bir barcode var";
-                    e.Valid = false;
+                    DcProduct product = efMethods.SelectProductByBarcode(eValue);
+                    if (product is not null)
+                    {
+                        e.ErrorText = "Belə bir barcode var";
+                        e.Valid = false;
+                    }
                 }
             }
         }
@@ -180,6 +192,11 @@ namespace Foxoft
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
             e.WindowCaption = "Diqqət";
+        }
+
+        private void myGridControl1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

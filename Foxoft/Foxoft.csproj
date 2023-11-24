@@ -39,6 +39,7 @@
     <None Remove="AppCode\Qry_PaymentVendors.sql" />
     <None Remove="AppCode\Qry_Sales.sql" />
     <None Remove="AppCode\Report\Report_Detail_ProductCard.sql" />
+    <None Remove="AppCode\Report\Report_Embedded_Barcode.sql" />
     <None Remove="AppCode\Report\Report_Embedded_CashRegList.sql" />
     <None Remove="AppCode\Report\Report_Embedded_CurrAccList.sql" />
     <None Remove="AppCode\Report\Report_Embedded_InvoiceReport.sql" />
@@ -71,6 +72,7 @@
   <ItemGroup>
     <EmbeddedResource Include="AppCode\ReportDesign\GUNSONU.repx" />
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
+    <EmbeddedResource Include="AppCode\Report\Report_Embedded_Barcode.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_InvoiceReport.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Detail_ProductCard.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_CashRegList.sql" />
