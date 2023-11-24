@@ -80,6 +80,8 @@ namespace Foxoft
             GV_ProductBarcode.InitNewRow += GV_ProductBarcode_InitNewRow;
             GV_ProductBarcode.RowDeleted += GV_ProductBarcode_RowDeleted;
             GV_ProductBarcode.RowUpdated += GV_ProductBarcode_RowUpdated;
+            GV_ProductBarcode.ValidatingEditor += GV_ProductBarcode_ValidatingEditor;
+            GV_ProductBarcode.InvalidValueException += GV_ProductBarcode_InvalidValueException;
             // 
             // colBarcode
             // 

@@ -657,7 +657,7 @@ namespace Foxoft
                 }
                 else
                 {
-                    e.ErrorText = "Belə nir məhsul yoxdur";
+                    e.ErrorText = "Belə bir məhsul yoxdur";
                     e.Valid = false;
                 }
             }
@@ -677,7 +677,7 @@ namespace Foxoft
 
                 else
                 {
-                    e.ErrorText = "Belə nir məhsul yoxdur";
+                    e.ErrorText = "Belə bir məhsul yoxdur";
                     e.Valid = false;
                 }
             }

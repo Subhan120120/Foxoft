@@ -1,13 +1,14 @@
-﻿using DevExpress.XtraBars.Customization;
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
-using Foxoft.Migrations;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace Foxoft
     {
         private subContext dbContext;
         string ProductCode;
+        private EfMethods efMethods = new();
 
         public FormProductBarcode()
         {
@@ -156,5 +158,28 @@ namespace Foxoft
             return iCheckSum.ToString();
         }
 
+        private void GV_ProductBarcode_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
+        {
+            GridView view = sender as GridView;
+            GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
+
+            if (column == colBarcode)
+            {
+                string eValue = (e.Value ??= String.Empty).ToString();
+                DcProduct product = efMethods.SelectProductByBarcode(eValue);
+
+                if (product is not null)
+                {
+                    e.ErrorText = "Belə bir barcode var";
+                    e.Valid = false;
+                }
+            }
+        }
+
+        private void GV_ProductBarcode_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ExceptionMode = ExceptionMode.DisplayError;
+            e.WindowCaption = "Diqqət";
+        }
     }
 }
