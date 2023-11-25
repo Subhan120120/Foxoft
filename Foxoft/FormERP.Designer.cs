@@ -85,7 +85,7 @@ namespace Foxoft
             // parentRibbonControl
             // 
             parentRibbonControl.ExpandCollapseItem.Id = 0;
-            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, barButtonItem1, barButtonItem3, barButtonItem4, BSI_StoreDesc, BBI_ChangeUser, parentRibbonControl.SearchEditItem });
+            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, parentRibbonControl.SearchEditItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, barButtonItem1, barButtonItem3, barButtonItem4, BSI_StoreDesc, BBI_ChangeUser });
             parentRibbonControl.Location = new System.Drawing.Point(0, 0);
             parentRibbonControl.MaxItemId = 20;
             parentRibbonControl.Name = "parentRibbonControl";
@@ -172,6 +172,7 @@ namespace Foxoft
             BBI_ChangeUser.Id = 19;
             BBI_ChangeUser.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ChangeUser.ImageOptions.SvgImage");
             BBI_ChangeUser.Name = "BBI_ChangeUser";
+            BBI_ChangeUser.ItemClick += BBI_ChangeUser_ItemClick;
             // 
             // ribbonPage_Home
             // 

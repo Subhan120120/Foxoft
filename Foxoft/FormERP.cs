@@ -41,13 +41,19 @@ namespace Foxoft
                 this.BackgroundImage = Image.FromStream(stream);
             }
             UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
-            LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 
-            bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-            BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
+            LoadLookAndFeel();
+
             InitializeReports();
             //adorners1 = new List<AdornerElement>();
             //adornerUIManager1 = new AdornerUIManager(this.components);
+        }
+
+        private void LoadLookAndFeel()
+        {
+            LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
+            bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+            BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
         }
 
         private void InitComponentName()
@@ -681,6 +687,11 @@ namespace Foxoft
             ArrayList list = new ArrayList(MdiChildren);
             foreach (Form f in list)
                 f.Close();
+        }
+
+        private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

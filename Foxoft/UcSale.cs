@@ -218,21 +218,21 @@ namespace Foxoft
         {
             if (txtEdit_Barcode.EditValue != null)
             {
-                DcProduct DcProduct = new DcProduct { Barcode = txtEdit_Barcode.EditValue.ToString() };
+                //DcProduct DcProduct = new DcProduct { Barcode = txtEdit_Barcode.EditValue.ToString() };
 
-                if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                    InsertInvoiceHeader();
+                //if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
+                //    InsertInvoiceHeader();
 
-                int result = efMethods.InsertInvoiceLine(DcProduct, invoiceHeaderId);
+                //int result = efMethods.InsertInvoiceLine(DcProduct, invoiceHeaderId);
 
-                if (result > 0)
-                {
-                    gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
-                    gV_InvoiceLine.MoveLast();
-                    txtEdit_Barcode.EditValue = string.Empty;
-                }
-                else
-                    XtraMessageBox.Show("Barkod Tapılmadı", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //if (result > 0)
+                //{
+                //    gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
+                //    gV_InvoiceLine.MoveLast();
+                //    txtEdit_Barcode.EditValue = string.Empty;
+                //}
+                //else
+                //    XtraMessageBox.Show("Barkod Tapılmadı", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             ActiveControl = txtEdit_Barcode;
         }

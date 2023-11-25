@@ -31,22 +31,22 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductBarcode));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject13 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject14 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject15 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject16 = new DevExpress.Utils.SerializableAppearanceObject();
-            myGridControl1 = new MyGridControl();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            GC_ProductBarcode = new MyGridControl();
             bindingSourceProductBarcode = new System.Windows.Forms.BindingSource(components);
             GV_ProductBarcode = new DevExpress.XtraGrid.Views.Grid.GridView();
             colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
-            RepoBtnEdit_Barcode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            RepoBtnEdit_BarcodeGenerate = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             colBarcodeTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
             RepoBtnEdit_BarcodeType = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -56,30 +56,33 @@ namespace Foxoft
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colQty = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            BBI_PrintBarcode = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ((System.ComponentModel.ISupportInitialize)myGridControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)GC_ProductBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceProductBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GV_ProductBarcode).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_Barcode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeGenerate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeType).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_ProductCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             SuspendLayout();
             // 
-            // myGridControl1
+            // GC_ProductBarcode
             // 
-            myGridControl1.DataSource = bindingSourceProductBarcode;
-            myGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            myGridControl1.Location = new System.Drawing.Point(0, 158);
-            myGridControl1.MainView = GV_ProductBarcode;
-            myGridControl1.Name = "myGridControl1";
-            myGridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { RepoBtnEdit_BarcodeType, RepoBtnEdit_Barcode, RepoBtnEdit_ProductCode });
-            myGridControl1.Size = new System.Drawing.Size(800, 292);
-            myGridControl1.TabIndex = 0;
-            myGridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { GV_ProductBarcode });
-            myGridControl1.Click += myGridControl1_Click;
+            GC_ProductBarcode.DataSource = bindingSourceProductBarcode;
+            GC_ProductBarcode.Dock = System.Windows.Forms.DockStyle.Fill;
+            GC_ProductBarcode.Location = new System.Drawing.Point(0, 158);
+            GC_ProductBarcode.MainView = GV_ProductBarcode;
+            GC_ProductBarcode.Name = "GC_ProductBarcode";
+            GC_ProductBarcode.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { RepoBtnEdit_BarcodeType, RepoBtnEdit_BarcodeGenerate, RepoBtnEdit_ProductCode });
+            GC_ProductBarcode.Size = new System.Drawing.Size(800, 292);
+            GC_ProductBarcode.TabIndex = 0;
+            GC_ProductBarcode.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { GV_ProductBarcode });
+            GC_ProductBarcode.Click += myGridControl1_Click;
+            GC_ProductBarcode.KeyDown += GC_ProductBarcode_KeyDown;
             // 
             // bindingSourceProductBarcode
             // 
@@ -87,11 +90,12 @@ namespace Foxoft
             // 
             // GV_ProductBarcode
             // 
-            GV_ProductBarcode.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colBarcode, colBarcodeTypeCode, colProductCode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colId });
-            GV_ProductBarcode.GridControl = myGridControl1;
+            GV_ProductBarcode.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colBarcode, colBarcodeTypeCode, colProductCode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colId, colQty });
+            GV_ProductBarcode.GridControl = GC_ProductBarcode;
             GV_ProductBarcode.Name = "GV_ProductBarcode";
             GV_ProductBarcode.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             GV_ProductBarcode.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            GV_ProductBarcode.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
             GV_ProductBarcode.OptionsView.ShowGroupPanel = false;
             GV_ProductBarcode.InitNewRow += GV_ProductBarcode_InitNewRow;
             GV_ProductBarcode.RowDeleted += GV_ProductBarcode_RowDeleted;
@@ -101,22 +105,22 @@ namespace Foxoft
             // 
             // colBarcode
             // 
-            colBarcode.ColumnEdit = RepoBtnEdit_Barcode;
+            colBarcode.ColumnEdit = RepoBtnEdit_BarcodeGenerate;
             colBarcode.FieldName = "Barcode";
             colBarcode.Name = "colBarcode";
             colBarcode.Visible = true;
             colBarcode.VisibleIndex = 0;
             // 
-            // RepoBtnEdit_Barcode
+            // RepoBtnEdit_BarcodeGenerate
             // 
-            RepoBtnEdit_Barcode.AutoHeight = false;
-            editorButtonImageOptions3.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions3.SvgImage");
-            editorButtonImageOptions3.SvgImageSize = new System.Drawing.Size(16, 16);
-            editorButtonImageOptions4.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions4.SvgImage");
-            editorButtonImageOptions4.SvgImageSize = new System.Drawing.Size(16, 16);
-            RepoBtnEdit_Barcode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
-            RepoBtnEdit_Barcode.Name = "RepoBtnEdit_Barcode";
-            RepoBtnEdit_Barcode.ButtonPressed += RepoBtnEdit_Barcode_ButtonPressed;
+            RepoBtnEdit_BarcodeGenerate.AutoHeight = false;
+            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
+            editorButtonImageOptions1.SvgImageSize = new System.Drawing.Size(16, 16);
+            editorButtonImageOptions2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions2.SvgImage");
+            editorButtonImageOptions2.SvgImageSize = new System.Drawing.Size(16, 16);
+            RepoBtnEdit_BarcodeGenerate.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            RepoBtnEdit_BarcodeGenerate.Name = "RepoBtnEdit_BarcodeGenerate";
+            RepoBtnEdit_BarcodeGenerate.ButtonPressed += RepoBtnEdit_Barcode_ButtonPressed;
             // 
             // colBarcodeTypeCode
             // 
@@ -138,8 +142,6 @@ namespace Foxoft
             colProductCode.ColumnEdit = RepoBtnEdit_ProductCode;
             colProductCode.FieldName = "ProductCode";
             colProductCode.Name = "colProductCode";
-            colProductCode.Visible = true;
-            colProductCode.VisibleIndex = 2;
             // 
             // RepoBtnEdit_ProductCode
             // 
@@ -173,15 +175,30 @@ namespace Foxoft
             colId.FieldName = "Id";
             colId.Name = "colId";
             // 
+            // colQty
+            // 
+            colQty.FieldName = "Qty";
+            colQty.Name = "colQty";
+            colQty.Visible = true;
+            colQty.VisibleIndex = 2;
+            // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, BBI_PrintBarcode });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 1;
+            ribbonControl1.MaxItemId = 2;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new System.Drawing.Size(800, 158);
+            // 
+            // barButtonItem1
+            // 
+            BBI_PrintBarcode.Caption = "Barkod";
+            BBI_PrintBarcode.Id = 1;
+            BBI_PrintBarcode.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            BBI_PrintBarcode.Name = "barButtonItem1";
+            BBI_PrintBarcode.ItemClick += BBI_PrintBarcode_ItemClick;
             // 
             // ribbonPage1
             // 
@@ -191,23 +208,24 @@ namespace Foxoft
             // 
             // ribbonPageGroup1
             // 
+            ribbonPageGroup1.ItemLinks.Add(BBI_PrintBarcode);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "ribbonPageGroup1";
+            ribbonPageGroup1.Text = "İdarə";
             // 
             // FormProductBarcode
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(800, 450);
-            Controls.Add(myGridControl1);
+            Controls.Add(GC_ProductBarcode);
             Controls.Add(ribbonControl1);
             Name = "FormProductBarcode";
             Ribbon = ribbonControl1;
             Text = "FormBarcode";
-            ((System.ComponentModel.ISupportInitialize)myGridControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)GC_ProductBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceProductBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)GV_ProductBarcode).EndInit();
-            ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_Barcode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeGenerate).EndInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeType).EndInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_ProductCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
@@ -235,5 +253,9 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl1;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private MyGridControl GC_ProductBarcode;
+        private DevExpress.XtraGrid.Columns.GridColumn colQty;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit RepoBtnEdit_BarcodeGenerate;
+        private DevExpress.XtraBars.BarButtonItem BBI_PrintBarcode;
     }
 }

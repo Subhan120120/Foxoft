@@ -296,10 +296,10 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcProduct>().HasData(
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDesc = "Test Məhsul 01", Barcode = "123456", RetailPrice = 4.5m, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDesc = "Test Məhsul 01", Barcode = "2000000000013", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xərci", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "İşıq Pulu", Barcode = "", RetailPrice = 0, CreatedDate = new DateTime(1901, 01, 01) }
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDesc = "Test Məhsul 01", RetailPrice = 4.5m, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDesc = "Test Məhsul 01", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xərci", CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "İşıq Pulu", CreatedDate = new DateTime(1901, 01, 01) }
             );
 
             modelBuilder.Entity<DcBarcodeType>().HasData(

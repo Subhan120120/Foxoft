@@ -266,7 +266,6 @@ namespace Foxoft
                                     CreatedUserName = x.CreatedUserName,
                                     LastUpdatedDate = x.LastUpdatedDate,
                                     LastUpdatedUserName = x.LastUpdatedUserName,
-                                    Barcode = x.Barcode,
                                     HierarchyCode = x.HierarchyCode,
                                     TrProductFeatures = x.TrProductFeatures,
                                     SiteProduct = x.SiteProduct,
@@ -508,8 +507,6 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(dcProduct.ProductCode))
                 dcProducts = dcProducts.Where(x => x.ProductCode == dcProduct.ProductCode);
-            else if (!string.IsNullOrEmpty(dcProduct.Barcode))
-                dcProducts = dcProducts.Where(x => x.Barcode == dcProduct.Barcode);
 
             DcProduct product = dcProducts.FirstOrDefault();
 

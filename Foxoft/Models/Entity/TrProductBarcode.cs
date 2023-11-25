@@ -28,6 +28,11 @@ namespace Foxoft.Models
         public string BarcodeTypeCode { get; set; }
 
 
+        [Display(Name = "Say")]
+        [DefaultValue(1)]
+        public int Qty { get; set; }
+
+
         [ForeignKey("BarcodeTypeCode")]
         public virtual DcBarcodeType DcBarcodeType { get; set; }
 

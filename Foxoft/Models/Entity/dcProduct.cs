@@ -43,10 +43,6 @@ namespace Foxoft.Models
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? ProductFeature { get; set; }
 
-        [Display(Name = "Barkod")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string? Barcode { get; set; }
-
         [Display(Name = "Məhsul Tipi")]
         [ForeignKey("DcProductType")]
         [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]

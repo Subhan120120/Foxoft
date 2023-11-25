@@ -1,15 +1,16 @@
 ﻿using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -52,13 +53,13 @@ namespace Foxoft
             dbContext = new subContext();
 
             dbContext.TrProductBarcodes.Where(x => x.ProductCode == productCode)
-                                    //.OrderBy(x => x.CreatedDate)
-                                    .LoadAsync()
-                                    .ContinueWith(loadTask =>
-                                    {
-                                        LocalView<TrProductBarcode> lV_productBarcode = dbContext.TrProductBarcodes.Local;
-                                        bindingSourceProductBarcode.DataSource = lV_productBarcode.ToBindingList();
-                                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                //.OrderBy(x => x.CreatedDate)
+                .LoadAsync()
+                .ContinueWith(loadTask =>
+                {
+                    LocalView<TrProductBarcode> lV_productBarcode = dbContext.TrProductBarcodes.Local;
+                    bindingSourceProductBarcode.DataSource = lV_productBarcode.ToBindingList();
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void GV_ProductBarcode_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -66,7 +67,7 @@ namespace Foxoft
             GV_ProductBarcode.SetRowCellValue(e.RowHandle, colProductCode, ProductCode);
         }
 
-        private void GV_ProductBarcode_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
+        private void GV_ProductBarcode_RowUpdated(object sender, RowObjectEventArgs e)
         {
             SaveData();
         }
@@ -88,7 +89,7 @@ namespace Foxoft
             SaveData();
         }
 
-        private void RepoBtnEdit_BarcodeType_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void RepoBtnEdit_BarcodeType_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
@@ -108,7 +109,7 @@ namespace Foxoft
 
         }
 
-        private void RepoBtnEdit_ProductCode_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void RepoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
@@ -125,21 +126,50 @@ namespace Foxoft
             }
         }
 
-        private void RepoBtnEdit_Barcode_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void RepoBtnEdit_Barcode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
             int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
             if (buttonIndex == 0)
             {
-                string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "DcProducts", 10);
+                string genNumber = efMethods.GetNextDocNum(false, "20", "Barcode", "TrProductBarcodes", 10);
                 string checkDigit = CalculateChecksumDigit("20", genNumber.Substring(2));
                 string barcode = genNumber + checkDigit;
                 editor.EditValue = barcode;
             }
             if (buttonIndex == 1)
             {
-                MessageBox.Show("Test");
+                DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_Barcode");
+
+                string barcode = GV_ProductBarcode.GetFocusedRowCellValue(colBarcode)?.ToString();
+
+                string filter = "";
+                if (!string.IsNullOrEmpty(barcode))
+                    filter = "[Barcode] = '" + barcode + "' ";
+                //else
+                //{
+                //    List<TrProductBarcode> mydata = GetFilteredData<TrProductBarcode>(GV_ProductBarcode).ToList();
+                //    var combined = "";
+                //    foreach (TrProductBarcode rowView in mydata)
+                //        combined += "'" + rowView.ProductCode.ToString() + "',";
+
+                //    combined = combined.Substring(0, combined.Length - 1);
+                //    filter = "[ProductCode] in ( " + combined + ")";
+                //}
+
+                FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
+                form.WindowState = FormWindowState.Maximized;
+                form.Show();
             }
+        }
+
+        public static List<T> GetFilteredData<T>(ColumnView view)
+        {
+            List<T> resp = new List<T>();
+            for (int i = 0; i < view.DataRowCount; i++)
+                resp.Add((T)view.GetRow(i));
+
+            return resp;
         }
 
         public string CalculateChecksumDigit(string countryCode, string productCode)
@@ -166,7 +196,7 @@ namespace Foxoft
             return iCheckSum.ToString();
         }
 
-        private void GV_ProductBarcode_ValidatingEditor(object sender, DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs e)
+        private void GV_ProductBarcode_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
         {
             GridView view = sender as GridView;
             GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
@@ -197,6 +227,38 @@ namespace Foxoft
         private void myGridControl1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void GC_ProductBarcode_KeyDown(object sender, KeyEventArgs e)
+        {
+            GridControl gC = sender as GridControl;
+            GridView gV = gC.MainView as GridView;
+
+            if (gV.SelectedRowsCount > 0)
+            {
+                if (e.KeyCode == Keys.Delete)
+                {
+                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                        return;
+
+                    gV.DeleteSelectedRows();
+                }
+            }
+        }
+
+        private void BBI_PrintBarcode_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_Barcode");
+
+            string productCode = GV_ProductBarcode.GetFocusedRowCellValue(colProductCode)?.ToString();
+
+            string filter = "";
+            if (!string.IsNullOrEmpty(productCode))
+                filter = "[ProductCode] = '" + productCode + "' ";
+
+            FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
         }
     }
 }

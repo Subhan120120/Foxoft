@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20231124191929_dfdfgh4")]
+    partial class dfdfgh4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1002,6 +1004,10 @@ namespace Foxoft.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("Barcode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -1107,6 +1113,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ProductCode = "test01",
+                            Barcode = "123456",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1123,6 +1130,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ProductCode = "test02",
+                            Barcode = "2000000000013",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1139,6 +1147,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ProductCode = "xerc01",
+                            Barcode = "",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1155,6 +1164,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ProductCode = "xerc02",
+                            Barcode = "",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1330,7 +1340,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_Barcode",
-                            ReportQuery = "\r\n\r\n\r\n\r\nSELECT   t2.number + 1 RepeatNumber\r\n	, DcProducts.*\r\nFROM    TrProductBarcodes pb\r\nJOIN DcProducts on DcProducts.ProductCode = pb.ProductCode\r\nJOIN    master.dbo.spt_values t2 ON t2.type = 'P' AND t2.number < pb.Qty\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n\r\n\r\nSELECT  t1.*, t2.number + 1 RepeatNumber\r\nFROM    DcProducts t1\r\nJOIN    master.dbo.spt_values t2 ON t2.type = 'P' AND t2.number < 1\r\n\r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)0
                         },
                         new

@@ -17,7 +17,7 @@ namespace Foxoft
 {
     public partial class FormReportPreview : XtraForm
     {
-        XtraReport reportE;
+        XtraReport xReport;
         private EfMethods efMethods = new();
         readonly SettingStore settingStore;
 
@@ -40,9 +40,9 @@ namespace Foxoft
 
             XtraReport xtraReport = GetInvoiceReport(dcReport, qryMaster);
 
-            this.reportE = xtraReport;
+            this.xReport = xtraReport;
             documentViewer1.DocumentSource = xtraReport;
-            reportE.CreateDocument();
+            this.xReport.CreateDocument();
             Show();
         }
 
@@ -108,7 +108,7 @@ namespace Foxoft
             BarButtonItem bbi_Design = CreateItem();
             pageGroup.ItemLinks.Add(bbi_Design);
 
-            FormDesignRibbon.OpenReport(reportE);
+            FormDesignRibbon.OpenReport(xReport);
             FormDesignRibbon.Show();
         }
 
@@ -120,11 +120,11 @@ namespace Foxoft
 
         private MemoryStream GetInvoiceReportImg()
         {
-            if (reportE is not null)
+            if (xReport is not null)
             {
                 MemoryStream ms = new();
 
-                reportE.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1-30", ExportMode = ImageExportMode.SingleFilePageByPage, Resolution = 480 });
+                xReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1-30", ExportMode = ImageExportMode.SingleFilePageByPage, Resolution = 480 });
 
                 return ms;
             }

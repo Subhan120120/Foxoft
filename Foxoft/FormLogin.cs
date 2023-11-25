@@ -1,30 +1,21 @@
-﻿using DevExpress.DataAccess.Native.Web;
-using DevExpress.DirectX.Common;
-using DevExpress.XtraBars;
+﻿using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
-using DevExpress.XtraSpreadsheet.Import.Xls;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Reflection;
-using System.Security.Policy;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Foxoft
@@ -126,7 +117,7 @@ namespace Foxoft
 
         private void btn_POS_Click(object sender, EventArgs e)
         {
-            if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
+            if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
             {
                 FormPOS formPos = new();
                 //SaveNewConStr();
@@ -138,7 +129,7 @@ namespace Foxoft
 
         private void btn_ERP_Click(object sender, EventArgs e)
         {
-            if (Login(txtEdit_UserName.Text, txtEdit_Password.Text))
+            if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
             {
                 if (CheckDueDate())
                 {
@@ -153,43 +144,6 @@ namespace Foxoft
             }
             else
                 XtraMessageBox.Show("İstifadəçi və ya şifrə yanlışdır");
-        }
-
-        public bool Login(string user, string password)
-        {
-            EfMethods efMethods = new();
-            if (efMethods.Login(user, password))
-            {
-                SessionSave();
-                return true;
-            }
-            else
-                return false;
-        }
-
-        private void SessionSave()
-        {
-            EfMethods efMethods = new();
-
-            if (checkEdit_RemindMe.Checked)
-            {
-                Settings.Default.LoginName = txtEdit_UserName.Text;
-                Settings.Default.LoginPassword = txtEdit_Password.Text;
-                Settings.Default.LoginChecked = checkEdit_RemindMe.Checked;
-                Settings.Default.Save();
-            }
-            else
-            {
-                Settings.Default.LoginName = string.Empty;
-                Settings.Default.LoginPassword = string.Empty;
-                Settings.Default.LoginChecked = false;
-                Settings.Default.Save();
-            }
-
-            Authorization.CurrAccCode = txtEdit_UserName.Text;
-            Authorization.DcRoles = efMethods.SelectRoles(txtEdit_UserName.Text);
-            Authorization.StoreCode = efMethods.SelectStoreCode(txtEdit_UserName.Text);
-            Authorization.OfficeCode = efMethods.SelectOfficeCode(txtEdit_UserName.Text);
         }
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
