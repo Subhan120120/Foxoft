@@ -37,9 +37,11 @@ namespace Foxoft
             bBI_SendWhatsapp = new DevExpress.XtraBars.BarButtonItem();
             bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
             bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             lbl_CurrAccBalansBefore = new DevExpress.XtraEditors.LabelControl();
@@ -93,8 +95,6 @@ namespace Foxoft
             ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
@@ -183,6 +183,14 @@ namespace Foxoft
             bBI_CopyPayment.Name = "bBI_CopyPayment";
             bBI_CopyPayment.ItemClick += bBI_CopyPayment_ItemClick;
             // 
+            // BBI_Info
+            // 
+            BBI_Info.Caption = "İnfo";
+            BBI_Info.Id = 7;
+            BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Info.ImageOptions.SvgImage");
+            BBI_Info.Name = "BBI_Info";
+            BBI_Info.ItemClick += BBI_Info_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3 });
@@ -203,6 +211,13 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(bBI_SendWhatsapp);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Alət";
+            // 
+            // ribbonPageGroup3
+            // 
+            ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
+            ribbonPageGroup3.ItemLinks.Add(BBI_Info);
+            ribbonPageGroup3.Name = "ribbonPageGroup3";
+            ribbonPageGroup3.Text = "Məlumat";
             // 
             // ribbonStatusBar
             // 
@@ -298,6 +313,7 @@ namespace Foxoft
             gV_PaymentLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
             gV_PaymentLine.OptionsView.ShowGroupPanel = false;
             gV_PaymentLine.InitNewRow += gV_PaymentLine_InitNewRow;
+            gV_PaymentLine.CellValueChanged += gV_PaymentLine_CellValueChanged;
             gV_PaymentLine.CellValueChanging += gV_PaymentLine_CellValueChanging;
             gV_PaymentLine.RowDeleted += gV_PaymentLine_RowDeleted;
             gV_PaymentLine.RowUpdated += gV_PaymentLine_RowUpdated;
@@ -685,21 +701,6 @@ namespace Foxoft
             layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
-            // 
-            // ribbonPageGroup3
-            // 
-            ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
-            ribbonPageGroup3.ItemLinks.Add(BBI_Info);
-            ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Məlumat";
-            // 
-            // BBI_Info
-            // 
-            BBI_Info.Caption = "İnfo";
-            BBI_Info.Id = 7;
-            BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            BBI_Info.Name = "BBI_Info";
-            BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
             // FormMoneyTransfer
             // 

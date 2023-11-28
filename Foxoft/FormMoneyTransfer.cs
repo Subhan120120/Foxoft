@@ -5,6 +5,7 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
@@ -346,6 +347,15 @@ namespace Foxoft
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
+            GridView gV = (GridView)sender;
+
+            if (gV is not null)
+            {
+                string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+                gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
+                gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
+            }
+
             decimal balanceAfter = efMethods.SelectCashRegBalance(trPaymentHeader.FromCashRegCode, trPaymentHeader.OperationDate);
             decimal invoiceSum = (-1) * efMethods.SelectPaymentSum(trPaymentHeader.FromCashRegCode, trPaymentHeader.DocumentNumber);
             decimal balanceBefore = balanceAfter - invoiceSum;
@@ -515,11 +525,22 @@ namespace Foxoft
 
         private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.CreatedUserName);
+            DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.CreatedUserName);
+            DcCurrAcc updatedCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.LastUpdatedUserName);
 
-            string userName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
-            string createDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trPaymentHeader.CreatedDate.ToString();
-            XtraMessageBox.Show(userName + '\n' + '\n' + createDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string lastUpdatedDate = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedDate.ToString();
+            string lastUpdatedUserName = efMethods.SelectPaymentLines(trPaymentHeader.PaymentHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedUserName.ToString();
+
+            string createdUserName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
+            string createdDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trPaymentHeader.CreatedDate.ToString();
+            string updatedUserName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
+            string updatedDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
+
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void gV_PaymentLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
         }
     }
 }

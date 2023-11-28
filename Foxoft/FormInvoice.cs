@@ -504,12 +504,6 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
-            //CalcRowLocNetAmount(e);
-            GridView view = (GridView)sender;
-
-            if (view == null) return;
-
-            //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
 
         }
 
@@ -837,8 +831,14 @@ namespace Foxoft
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            //DataRowView rowView = e.Row as DataRowView;
-            //DataRow row = rowView.Row;
+            GridView gV = (GridView)sender;
+
+            if (gV is not null)
+            {
+                string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+                gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
+                gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
+            }
 
             SaveInvoice();
         }
@@ -1932,10 +1932,18 @@ namespace Foxoft
 
         private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
-            string userName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
-            string createDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
-            XtraMessageBox.Show(userName + '\n' + '\n' + createDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
+            DcCurrAcc updatedCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.LastUpdatedUserName);
+
+            string lastUpdatedDate = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedDate.ToString();
+            string lastUpdatedUserName = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedUserName.ToString();
+
+            string createdUserName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
+            string createdDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
+            string updatedUserName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
+            string updatedDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
+
+            XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BBI_picture_ItemClick(object sender, ItemClickEventArgs e)

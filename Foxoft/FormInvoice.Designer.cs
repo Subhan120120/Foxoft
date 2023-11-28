@@ -62,14 +62,16 @@ namespace Foxoft
             col_LineDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_SalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtnEdit_SalesPersonCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             colAmountLoc = new DevExpress.XtraGrid.Columns.GridColumn();
             colNetAmountLoc = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
             colBenefit = new DevExpress.XtraGrid.Columns.GridColumn();
             colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
             checkEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
@@ -273,7 +275,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, colCreatedDate, col_ProductDesc, colAmountLoc, colNetAmountLoc, colCreatedUserName, colLastPurchasePrice, colBenefit, colBarcode });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colLastPurchasePrice, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName });
             gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 456, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -472,11 +474,6 @@ namespace Foxoft
             repoBtnEdit_SalesPersonCode.Name = "repoBtnEdit_SalesPersonCode";
             repoBtnEdit_SalesPersonCode.ButtonPressed += repoBtnEdit_SalesPersonCode_ButtonPressed;
             // 
-            // colCreatedDate
-            // 
-            colCreatedDate.FieldName = "CreatedDate";
-            colCreatedDate.Name = "colCreatedDate";
-            // 
             // col_ProductDesc
             // 
             col_ProductDesc.FieldName = "ProductDesc";
@@ -499,12 +496,6 @@ namespace Foxoft
             colNetAmountLoc.FieldName = "NetAmountLoc";
             colNetAmountLoc.Name = "colNetAmountLoc";
             colNetAmountLoc.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmountLoc", "Toplam={0:n2}") });
-            // 
-            // colCreatedUserName
-            // 
-            colCreatedUserName.FieldName = "CreatedUserName";
-            colCreatedUserName.Name = "colCreatedUserName";
-            colCreatedUserName.OptionsColumn.ReadOnly = true;
             // 
             // colLastPurchasePrice
             // 
@@ -532,6 +523,27 @@ namespace Foxoft
             colBarcode.Name = "colBarcode";
             colBarcode.Visible = true;
             colBarcode.VisibleIndex = 0;
+            // 
+            // colCreatedDate
+            // 
+            colCreatedDate.FieldName = "CreatedDate";
+            colCreatedDate.Name = "colCreatedDate";
+            // 
+            // colCreatedUserName
+            // 
+            colCreatedUserName.FieldName = "CreatedUserName";
+            colCreatedUserName.Name = "colCreatedUserName";
+            colCreatedUserName.OptionsColumn.ReadOnly = true;
+            // 
+            // colLastUpdatedDate
+            // 
+            colLastUpdatedDate.FieldName = "LastUpdatedDate";
+            colLastUpdatedDate.Name = "colLastUpdatedDate";
+            // 
+            // colLastUpdatedUserName
+            // 
+            colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
+            colLastUpdatedUserName.Name = "colLastUpdatedUserName";
             // 
             // checkEdit_IsSent
             // 
@@ -1463,5 +1475,7 @@ namespace Foxoft
         private DevExpress.XtraBars.PopupMenu popupMenu1;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
     }
 }
