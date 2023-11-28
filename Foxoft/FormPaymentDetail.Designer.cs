@@ -330,6 +330,7 @@ namespace Foxoft
             gV_PaymentLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
             gV_PaymentLine.OptionsView.ShowGroupPanel = false;
             gV_PaymentLine.InitNewRow += gV_PaymentLine_InitNewRow;
+            gV_PaymentLine.CellValueChanged += gV_PaymentLine_CellValueChanged;
             gV_PaymentLine.CellValueChanging += gV_PaymentLine_CellValueChanging;
             gV_PaymentLine.RowDeleted += gV_PaymentLine_RowDeleted;
             gV_PaymentLine.RowUpdated += gV_PaymentLine_RowUpdated;

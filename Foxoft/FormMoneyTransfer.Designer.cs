@@ -93,6 +93,8 @@ namespace Foxoft
             ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            BBI_Info = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
@@ -132,9 +134,9 @@ namespace Foxoft
             // ribbon
             // 
             ribbon.ExpandCollapseItem.Id = 0;
-            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, ribbon.SearchEditItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment });
+            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, ribbon.SearchEditItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info });
             ribbon.Location = new System.Drawing.Point(0, 0);
-            ribbon.MaxItemId = 7;
+            ribbon.MaxItemId = 8;
             ribbon.Name = "ribbon";
             ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbon.Size = new System.Drawing.Size(899, 158);
@@ -161,6 +163,7 @@ namespace Foxoft
             // 
             bBI_SendWhatsapp.Caption = "Whatsapa Göndər";
             bBI_SendWhatsapp.Id = 3;
+            bBI_SendWhatsapp.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SendWhatsapp.ImageOptions.SvgImage");
             bBI_SendWhatsapp.Name = "bBI_SendWhatsapp";
             bBI_SendWhatsapp.ItemClick += bBI_SendWhatsapp_ItemClick;
             // 
@@ -182,7 +185,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "Ödəmə";
             // 
@@ -683,6 +686,21 @@ namespace Foxoft
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
+            // ribbonPageGroup3
+            // 
+            ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
+            ribbonPageGroup3.ItemLinks.Add(BBI_Info);
+            ribbonPageGroup3.Name = "ribbonPageGroup3";
+            ribbonPageGroup3.Text = "Məlumat";
+            // 
+            // BBI_Info
+            // 
+            BBI_Info.Caption = "İnfo";
+            BBI_Info.Id = 7;
+            BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            BBI_Info.Name = "BBI_Info";
+            BBI_Info.ItemClick += BBI_Info_ItemClick;
+            // 
             // FormMoneyTransfer
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -797,5 +815,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.ButtonEdit FromCashRegCodeButtonEdit;
         private DevExpress.XtraGrid.Columns.GridColumn colReceivePayment;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodId;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraBars.BarButtonItem BBI_Info;
     }
 }

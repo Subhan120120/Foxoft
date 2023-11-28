@@ -118,9 +118,7 @@
     <PackageReference Include="RestSharp" Version="108.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="FormPriceList.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="FormPriceList.cs" />
     <Compile Update="FormPaymentHeaderList.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>

@@ -1,16 +1,13 @@
 ﻿
 #region Using
 using DevExpress.Data;
-using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
-using DevExpress.Diagram.Core.Shapes;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Docking2010;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -29,12 +26,10 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using RestSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -43,7 +38,6 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
@@ -885,7 +879,7 @@ namespace Foxoft
                             string temp = trIH.WarehouseCode;
                             copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
                             copyTrIH.ToWarehouseCode = temp;
-                            copyTrIH.StoreCode = trIH.StoreCode;
+                            copyTrIH.StoreCode = trIH.CurrAccCode;
                             copyTrIH.IsMainTF = false;
 
                             switch (entry.State)

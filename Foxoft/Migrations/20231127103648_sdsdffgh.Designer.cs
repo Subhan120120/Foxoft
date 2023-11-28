@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20231127103648_sdsdffgh")]
+    partial class sdsdffgh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2577,8 +2579,6 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("ProcessCode");
 
-                    b.HasIndex("StoreCode");
-
                     b.HasIndex("ToCashRegCode");
 
                     b.ToTable("TrPaymentHeaders");
@@ -3511,21 +3511,13 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
-                        .WithMany("DcStoreTrPaymentHeaders")
-                        .HasForeignKey("StoreCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Foxoft.Models.DcCurrAcc", "ToCashReg")
-                        .WithMany("ToCashRegTrPaymentHeaders")
+                        .WithMany("TrPaymentHeaderToCashes")
                         .HasForeignKey("ToCashRegCode");
 
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("DcProcess");
-
-                    b.Navigation("DcStore");
 
                     b.Navigation("ToCashReg");
 
@@ -3760,17 +3752,15 @@ namespace Foxoft.Migrations
                 {
                     b.Navigation("DcPaymentMethods");
 
-                    b.Navigation("DcStoreTrPaymentHeaders");
-
                     b.Navigation("SettingStores");
-
-                    b.Navigation("ToCashRegTrPaymentHeaders");
 
                     b.Navigation("TrCurrAccRole");
 
                     b.Navigation("TrInvoiceHeaders");
 
                     b.Navigation("TrPaymentHeaders");
+
+                    b.Navigation("TrPaymentHeaderToCashes");
 
                     b.Navigation("TrPaymentLines");
                 });

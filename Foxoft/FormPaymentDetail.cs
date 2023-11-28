@@ -42,6 +42,11 @@ namespace Foxoft
 
             ClearControlsAddNew();
 
+            gV_PaymentLine.DataController.ListChanged += (sender, e) =>
+            {
+                MessageBox.Show("deyisdi");
+            };
+
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
             if (!currAccHasClaims)
             {
@@ -527,6 +532,14 @@ namespace Foxoft
             string userName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
             string createDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trPaymentHeader.CreatedDate.ToString();
             XtraMessageBox.Show(userName + '\n' + '\n' + createDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void gV_PaymentLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            GridView gV = sender as GridView;
+            string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+            gV.SetFocusedRowCellValue(colLastUpdatedDate, DateTime.Now.ToString());
+            gV.SetFocusedRowCellValue(colLastUpdatedUserName, userName);
         }
     }
 }

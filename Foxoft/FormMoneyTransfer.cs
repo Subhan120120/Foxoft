@@ -512,5 +512,14 @@ namespace Foxoft
                 CalcCurrAccBalance(dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
             }
         }
+
+        private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trPaymentHeader.CreatedUserName);
+
+            string userName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName;
+            string createDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trPaymentHeader.CreatedDate.ToString();
+            XtraMessageBox.Show(userName + '\n' + '\n' + createDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

@@ -128,8 +128,12 @@ namespace Foxoft.Models
             // more foreign key same table configure
             modelBuilder.Entity<TrPaymentHeader>(e =>
             {
+                e.HasOne(field => field.DcStore)
+             .WithMany(fk => fk.DcStoreTrPaymentHeaders)
+             .HasForeignKey(fk => fk.StoreCode);
+
                 e.HasOne(field => field.ToCashReg)
-             .WithMany(fk => fk.TrPaymentHeaderToCashes)
+             .WithMany(fk => fk.ToCashRegTrPaymentHeaders)
              .HasForeignKey(fk => fk.ToCashRegCode);
             });
 

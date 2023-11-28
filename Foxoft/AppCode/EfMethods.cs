@@ -436,7 +436,10 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.DcHierarchies.OrderBy(x => x.Order).ToList();
+            return db.DcHierarchies
+                .Include(x => x.TrHierarchyFeatures)
+                    .ThenInclude(x => x.DcFeatureType)
+                .OrderBy(x => x.Order).ToList();
         }
 
         public TrInvoiceHeader SelectInvoiceHeaderByDocNum(string documentNumber)
@@ -1547,6 +1550,14 @@ namespace Foxoft
             using subContext db = new();
             AppSetting appSetting = new() { Id = 1, GridViewLayout = layout };
             db.Entry(appSetting).Property(x => x.GridViewLayout).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateProductHierarchyCode(string productCode, string hierarchyCode)
+        {
+            using subContext db = new();
+            DcProduct dcProduct = new() { ProductCode = productCode, HierarchyCode = hierarchyCode };
+            db.Entry(dcProduct).Property(x => x.HierarchyCode).IsModified = true;
             return db.SaveChanges();
         }
 

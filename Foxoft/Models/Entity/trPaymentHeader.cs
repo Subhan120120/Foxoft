@@ -60,8 +60,8 @@ namespace Foxoft.Models
         [ForeignKey("DcCurrAcc")]
         public string CurrAccCode { get; set; }
 
-        [Display(Name = "Kassaya")]
         [ForeignKey("ToCashReg")]
+        [Display(Name = "Kassaya")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ToCashRegCode { get; set; }
 
@@ -87,9 +87,9 @@ namespace Foxoft.Models
         [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string OfficeCode { get; set; }
 
+        [ForeignKey("DcStore")]
         [Display(Name = "Mağaza Kodu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        //[ForeignKey("DcStore")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string StoreCode { get; set; }
 
@@ -123,11 +123,10 @@ namespace Foxoft.Models
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcCurrAcc ToCashReg { get; set; }
+        public virtual DcCurrAcc DcStore { get; set; }
         public virtual DcProcess DcProcess { get; set; }
         //public virtual DcCurrAcc FromCashReg { get; set; }
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
-        //[ForeignKey("StoreCode")]
-        //public virtual DcCurrAcc DcStore { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
     }
 }

@@ -57,7 +57,6 @@ namespace Foxoft
             layoutControlItem7.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Desc);
             layoutControlItem11.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Slug);
             layoutControlItem9.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Rating);
-
         }
 
         public FormProduct(byte productTypeCode, string productCode)
@@ -181,6 +180,9 @@ namespace Foxoft
                     pictureEdit.Image.Save(outPutImage);
                     GC.Collect();
                 }
+                else
+                    File.Delete(outPutImage);
+
             }
             catch (Exception ex)
             {
@@ -190,13 +192,9 @@ namespace Foxoft
 
         private void btn_ProductFeature_Click(object sender, EventArgs e)
         {
+            efMethods.UpdateProductHierarchyCode(dcProduct.ProductCode, btnEdit_Hierarchy.Text);
             FormProductFeature formFeature = new(dcProduct.ProductCode);
             formFeature.ShowDialog();
-        }
-
-        private void pictureEdit_EditValueChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void openFileDialog()
@@ -287,10 +285,6 @@ namespace Foxoft
         {
             string slugify = dbContext.Slugify.FromSqlInterpolated($"Select dbo.Slugify ({ProductDescTextEdit.EditValue?.ToString()}) as Slugify").FirstOrDefault().Slugify;
             btnEdit_Slug.EditValue = slugify;
-        }
-
-        private void BtnEdit_Barcode_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
-        {
         }
 
         private void btnEdit_Hierarchy_EditValueChanged(object sender, EventArgs e)
