@@ -101,6 +101,12 @@ namespace Foxoft
             return db.DcCurrAccTypes.ToList();
         }
 
+        public List<DcTerminal> SelectTerminals()
+        {
+            using subContext db = new();
+            return db.DcTerminals.ToList();
+        }
+
         public List<DcFeatureType> SelectFeatureTypes()
         {
             using subContext db = new();

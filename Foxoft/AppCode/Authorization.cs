@@ -35,30 +35,11 @@ namespace Foxoft
                 Authorization.StoreCode = efMethods.SelectStoreCode(user);
                 Authorization.OfficeCode = efMethods.SelectOfficeCode(user);
 
-                SessionSave(user, password, Checked);
                 return true;
             }
             else
                 return false;
         }
 
-        private static void SessionSave(string user, string password, bool Checked)
-        {
-            if (Checked)
-            {
-                Settings.Default.LoginName = user;
-                Settings.Default.LoginPassword = password;
-                Settings.Default.LoginChecked = Checked;
-                Settings.Default.Save();
-            }
-            else
-            {
-                Settings.Default.LoginName = string.Empty;
-                Settings.Default.LoginPassword = string.Empty;
-                Settings.Default.LoginChecked = false;
-                Settings.Default.Save();
-            }
-
-        }
     }
 }

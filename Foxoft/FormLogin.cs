@@ -1,6 +1,9 @@
-﻿using DevExpress.XtraBars;
+﻿using DevExpress.CodeParser;
+using DevExpress.Utils;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.Models;
@@ -17,6 +20,7 @@ using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text;
 using System.Windows;
+using System.Xml;
 
 namespace Foxoft
 {
@@ -59,6 +63,15 @@ namespace Foxoft
 
             InitializeComponent();
 
+            LUE_Terminal.Properties.DataSource = efMethods.SelectTerminals();
+
+            //string fileName = System.Security.Principal.WindowsIdentity.GetCurrent().Name + ".xml";
+            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Terminals");
+            //if (!Directory.Exists(layoutFileDir))
+            //    Directory.CreateDirectory(layoutFileDir);
+            //string fullPath = Path.Combine(layoutFileDir, fileName);
+
+            LUE_Terminal.EditValue = Settings.Default.TerminalId;
             txtEdit_UserName.Text = Settings.Default.LoginName;
             txtEdit_Password.Text = Settings.Default.LoginPassword;
             checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
@@ -131,6 +144,8 @@ namespace Foxoft
         {
             if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
             {
+                SessionSave(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked, Convert.ToInt32(LUE_Terminal.EditValue));
+
                 if (CheckDueDate())
                 {
                     FormERP formERP = new();
@@ -144,6 +159,27 @@ namespace Foxoft
             }
             else
                 XtraMessageBox.Show("İstifadəçi və ya şifrə yanlışdır");
+        }
+
+
+        private static void SessionSave(string user, string password, bool Checked, int terminalId)
+        {
+            Settings.Default.TerminalId = terminalId;
+
+            if (Checked)
+            {
+                Settings.Default.LoginName = user;
+                Settings.Default.LoginPassword = password;
+                Settings.Default.LoginChecked = Checked;
+                Settings.Default.Save();
+            }
+            else
+            {
+                Settings.Default.LoginName = string.Empty;
+                Settings.Default.LoginPassword = string.Empty;
+                Settings.Default.LoginChecked = false;
+                Settings.Default.Save();
+            }
         }
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)

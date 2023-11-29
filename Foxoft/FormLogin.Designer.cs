@@ -1,4 +1,7 @@
 ﻿
+using DevExpress.XtraEditors.Controls;
+using Foxoft.Models;
+
 namespace Foxoft
 {
     partial class FormLogin
@@ -56,6 +59,8 @@ namespace Foxoft
             lCI_ConString = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
+            LUE_Terminal = new DevExpress.XtraEditors.LookUpEdit();
+            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)txtEdit_UserName.Properties).BeginInit();
@@ -72,6 +77,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_ConString).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_Terminal.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
             SuspendLayout();
             // 
             // btn_ERP
@@ -80,16 +87,17 @@ namespace Foxoft
             btn_ERP.Appearance.Options.UseFont = true;
             btn_ERP.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_ERP.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ERP.ImageOptions.SvgImage");
-            btn_ERP.Location = new System.Drawing.Point(219, 110);
+            btn_ERP.Location = new System.Drawing.Point(219, 134);
             btn_ERP.Name = "btn_ERP";
-            btn_ERP.Size = new System.Drawing.Size(203, 168);
+            btn_ERP.Size = new System.Drawing.Size(203, 144);
             btn_ERP.StyleController = lC_Root;
-            btn_ERP.TabIndex = 7;
+            btn_ERP.TabIndex = 8;
             btn_ERP.Text = "Arxa Ofis";
             btn_ERP.Click += btn_ERP_Click;
             // 
             // lC_Root
             // 
+            lC_Root.Controls.Add(LUE_Terminal);
             lC_Root.Controls.Add(btn_POS);
             lC_Root.Controls.Add(btn_ERP);
             lC_Root.Controls.Add(txtEdit_UserName);
@@ -111,39 +119,39 @@ namespace Foxoft
             btn_POS.Appearance.Options.UseFont = true;
             btn_POS.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_POS.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_POS.ImageOptions.SvgImage");
-            btn_POS.Location = new System.Drawing.Point(12, 110);
+            btn_POS.Location = new System.Drawing.Point(12, 134);
             btn_POS.Name = "btn_POS";
-            btn_POS.Size = new System.Drawing.Size(203, 168);
+            btn_POS.Size = new System.Drawing.Size(203, 144);
             btn_POS.StyleController = lC_Root;
-            btn_POS.TabIndex = 6;
+            btn_POS.TabIndex = 7;
             btn_POS.Text = "Satış";
             btn_POS.Click += btn_POS_Click;
             // 
             // txtEdit_UserName
             // 
-            txtEdit_UserName.Location = new System.Drawing.Point(101, 38);
+            txtEdit_UserName.Location = new System.Drawing.Point(101, 62);
             txtEdit_UserName.Name = "txtEdit_UserName";
             txtEdit_UserName.Size = new System.Drawing.Size(321, 20);
             txtEdit_UserName.StyleController = lC_Root;
-            txtEdit_UserName.TabIndex = 3;
+            txtEdit_UserName.TabIndex = 4;
             // 
             // txtEdit_Password
             // 
-            txtEdit_Password.Location = new System.Drawing.Point(101, 62);
+            txtEdit_Password.Location = new System.Drawing.Point(101, 86);
             txtEdit_Password.Name = "txtEdit_Password";
             txtEdit_Password.Properties.UseSystemPasswordChar = true;
             txtEdit_Password.Size = new System.Drawing.Size(321, 20);
             txtEdit_Password.StyleController = lC_Root;
-            txtEdit_Password.TabIndex = 4;
+            txtEdit_Password.TabIndex = 5;
             // 
             // checkEdit_RemindMe
             // 
-            checkEdit_RemindMe.Location = new System.Drawing.Point(12, 86);
+            checkEdit_RemindMe.Location = new System.Drawing.Point(12, 110);
             checkEdit_RemindMe.Name = "checkEdit_RemindMe";
             checkEdit_RemindMe.Properties.Caption = "meni xatırla";
             checkEdit_RemindMe.Size = new System.Drawing.Size(410, 20);
             checkEdit_RemindMe.StyleController = lC_Root;
-            checkEdit_RemindMe.TabIndex = 5;
+            checkEdit_RemindMe.TabIndex = 6;
             // 
             // txtEdit_conString
             // 
@@ -226,7 +234,7 @@ namespace Foxoft
             btn_SaveConn.Name = "btn_SaveConn";
             btn_SaveConn.Size = new System.Drawing.Size(108, 22);
             btn_SaveConn.StyleController = lC_Root;
-            btn_SaveConn.TabIndex = 8;
+            btn_SaveConn.TabIndex = 2;
             btn_SaveConn.Text = "Yadda Saxla";
             btn_SaveConn.Click += btn_SaveConn_Click;
             // 
@@ -234,7 +242,7 @@ namespace Foxoft
             // 
             lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             lCG_Root.GroupBordersVisible = false;
-            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_ERP, lCI_POS, lCI_UserName, lCI_Password, lCI_RemindMe, lCI_ConString, layoutControlItem2 });
+            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_ERP, lCI_POS, lCI_UserName, lCI_Password, lCI_RemindMe, lCI_ConString, layoutControlItem2, layoutControlItem3 });
             lCG_Root.Name = "Root";
             lCG_Root.Size = new System.Drawing.Size(434, 290);
             lCG_Root.TextVisible = false;
@@ -242,10 +250,10 @@ namespace Foxoft
             // lCI_ERP
             // 
             lCI_ERP.Control = btn_ERP;
-            lCI_ERP.Location = new System.Drawing.Point(207, 98);
+            lCI_ERP.Location = new System.Drawing.Point(207, 122);
             lCI_ERP.MinSize = new System.Drawing.Size(78, 26);
             lCI_ERP.Name = "lCI_ERP";
-            lCI_ERP.Size = new System.Drawing.Size(207, 172);
+            lCI_ERP.Size = new System.Drawing.Size(207, 148);
             lCI_ERP.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_ERP.TextSize = new System.Drawing.Size(0, 0);
             lCI_ERP.TextVisible = false;
@@ -253,10 +261,10 @@ namespace Foxoft
             // lCI_POS
             // 
             lCI_POS.Control = btn_POS;
-            lCI_POS.Location = new System.Drawing.Point(0, 98);
+            lCI_POS.Location = new System.Drawing.Point(0, 122);
             lCI_POS.MinSize = new System.Drawing.Size(78, 26);
             lCI_POS.Name = "lCI_POS";
-            lCI_POS.Size = new System.Drawing.Size(207, 172);
+            lCI_POS.Size = new System.Drawing.Size(207, 148);
             lCI_POS.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_POS.TextSize = new System.Drawing.Size(0, 0);
             lCI_POS.TextVisible = false;
@@ -264,7 +272,7 @@ namespace Foxoft
             // lCI_UserName
             // 
             lCI_UserName.Control = txtEdit_UserName;
-            lCI_UserName.Location = new System.Drawing.Point(0, 26);
+            lCI_UserName.Location = new System.Drawing.Point(0, 50);
             lCI_UserName.Name = "lCI_UserName";
             lCI_UserName.Size = new System.Drawing.Size(414, 24);
             lCI_UserName.Text = "İstifadəçi";
@@ -273,7 +281,7 @@ namespace Foxoft
             // lCI_Password
             // 
             lCI_Password.Control = txtEdit_Password;
-            lCI_Password.Location = new System.Drawing.Point(0, 50);
+            lCI_Password.Location = new System.Drawing.Point(0, 74);
             lCI_Password.Name = "lCI_Password";
             lCI_Password.Size = new System.Drawing.Size(414, 24);
             lCI_Password.Text = "Şifrə";
@@ -282,7 +290,7 @@ namespace Foxoft
             // lCI_RemindMe
             // 
             lCI_RemindMe.Control = checkEdit_RemindMe;
-            lCI_RemindMe.Location = new System.Drawing.Point(0, 74);
+            lCI_RemindMe.Location = new System.Drawing.Point(0, 98);
             lCI_RemindMe.Name = "lCI_RemindMe";
             lCI_RemindMe.Size = new System.Drawing.Size(414, 24);
             lCI_RemindMe.TextSize = new System.Drawing.Size(0, 0);
@@ -319,6 +327,29 @@ namespace Foxoft
             toolbarFormControl1.TitleItemLinks.Add(BBI_GetKey);
             toolbarFormControl1.ToolbarForm = this;
             // 
+            // LUE_Terminal
+            // 
+            LUE_Terminal.Location = new System.Drawing.Point(101, 38);
+            LUE_Terminal.MenuManager = toolbarFormManager1;
+            LUE_Terminal.Name = "LUE_Terminal";
+            LUE_Terminal.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_Terminal.Properties.NullText = "";
+            LUE_Terminal.Size = new System.Drawing.Size(321, 20);
+            LUE_Terminal.StyleController = lC_Root;
+            LUE_Terminal.TabIndex = 7;
+            LUE_Terminal.Properties.ValueMember = "TerminalId";
+            LUE_Terminal.Properties.DisplayMember = "TerminalDesc";
+            LUE_Terminal.Properties.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo("TerminalId"), new LookUpColumnInfo("TerminalDesc") });
+            // 
+            // layoutControlItem3
+            // 
+            layoutControlItem3.Control = LUE_Terminal;
+            layoutControlItem3.Location = new System.Drawing.Point(0, 26);
+            layoutControlItem3.Name = "layoutControlItem3";
+            layoutControlItem3.Size = new System.Drawing.Size(414, 24);
+            layoutControlItem3.Text = "Terminal";
+            layoutControlItem3.TextSize = new System.Drawing.Size(77, 13);
+            // 
             // FormLogin
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,6 +382,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_ConString).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_Terminal.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -386,5 +419,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.BarButtonItem BBI_GetKey;
+        private DevExpress.XtraEditors.LookUpEdit LUE_Terminal;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
     }
 }
