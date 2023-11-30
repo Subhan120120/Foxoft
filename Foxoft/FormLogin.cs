@@ -34,6 +34,9 @@ namespace Foxoft
             // SplashScreenManager sSM = new(this, typeof(SplashScreenStartup), true, true,500);
 
             SplashScreenManager.ShowForm(this, typeof(SplashScreenStartup), true, true, true);
+
+            InitializeComponent();
+
             using subContext db = new();
 
             if (!db.Database.CanConnect())
@@ -60,11 +63,11 @@ namespace Foxoft
                 Settings.Default.AppSetting = appSetting;
                 Settings.Default.Save();
 
+                LUE_Terminal.Properties.DataSource = efMethods.SelectTerminals();
             }
 
             AcceptButton = btn_ERP;
 
-            InitializeComponent();
 
             //string fileName = System.Security.Principal.WindowsIdentity.GetCurrent().Name + ".xml";
             //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Terminals");
@@ -80,7 +83,17 @@ namespace Foxoft
             Trace.Write("\n InitializeComponent Finished. \n SplashScreenStartup closing... ");
             Trace.Flush();
 
-            DcTerminal dcTerminal = efMethods.SelectTerminal(Settings.Default.TerminalId);
+            TouchUIMode(Settings.Default.TerminalId);
+
+            SplashScreenManager.CloseForm();
+
+            if (Settings.Default.AppSetting.LocalCurrencyCode is null)
+                MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
+        }
+
+        private void TouchUIMode(int terminalId)
+        {
+            DcTerminal dcTerminal = efMethods.SelectTerminal(terminalId);
 
             if (dcTerminal != null)
             {
@@ -91,11 +104,6 @@ namespace Foxoft
 
                 WindowsFormsSettings.TouchScaleFactor = dcTerminal.TouchScaleFactor;
             }
-
-            SplashScreenManager.CloseForm();
-
-            if (Settings.Default.AppSetting.LocalCurrencyCode is null)
-                MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
         }
 
         private void UpdateReportsLayout()
@@ -324,6 +332,11 @@ namespace Foxoft
                         Clipboard.SetText(nic.Id + pInterfaceProperties);
                     }
             }
+        }
+
+        private void LUE_Terminal_EditValueChanged(object sender, EventArgs e)
+        {
+            TouchUIMode(Convert.ToInt32(LUE_Terminal.EditValue));
         }
     }
 }

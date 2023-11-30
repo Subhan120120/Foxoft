@@ -36,11 +36,7 @@ namespace Foxoft
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             btn_ERP = new DevExpress.XtraEditors.SimpleButton();
             lC_Root = new DevExpress.XtraLayout.LayoutControl();
-            btn_POS = new DevExpress.XtraEditors.SimpleButton();
-            txtEdit_UserName = new DevExpress.XtraEditors.TextEdit();
-            txtEdit_Password = new DevExpress.XtraEditors.TextEdit();
-            checkEdit_RemindMe = new DevExpress.XtraEditors.CheckEdit();
-            txtEdit_conString = new DevExpress.XtraEditors.TextEdit();
+            LUE_Terminal = new DevExpress.XtraEditors.LookUpEdit();
             toolbarFormManager1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormManager(components);
             barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -49,6 +45,11 @@ namespace Foxoft
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
+            btn_POS = new DevExpress.XtraEditors.SimpleButton();
+            txtEdit_UserName = new DevExpress.XtraEditors.TextEdit();
+            txtEdit_Password = new DevExpress.XtraEditors.TextEdit();
+            checkEdit_RemindMe = new DevExpress.XtraEditors.CheckEdit();
+            txtEdit_conString = new DevExpress.XtraEditors.TextEdit();
             btn_SaveConn = new DevExpress.XtraEditors.SimpleButton();
             lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
             lCI_ERP = new DevExpress.XtraLayout.LayoutControlItem();
@@ -58,16 +59,16 @@ namespace Foxoft
             lCI_RemindMe = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_ConString = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
-            LUE_Terminal = new DevExpress.XtraEditors.LookUpEdit();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)LUE_Terminal.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_UserName.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Password.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_RemindMe.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_conString.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)toolbarFormManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_ERP).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_POS).BeginInit();
@@ -76,9 +77,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_RemindMe).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_ConString).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LUE_Terminal.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).BeginInit();
             SuspendLayout();
             // 
             // btn_ERP
@@ -113,54 +113,20 @@ namespace Foxoft
             lC_Root.Size = new System.Drawing.Size(434, 290);
             lC_Root.TabIndex = 2;
             // 
-            // btn_POS
+            // LUE_Terminal
             // 
-            btn_POS.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            btn_POS.Appearance.Options.UseFont = true;
-            btn_POS.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            btn_POS.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_POS.ImageOptions.SvgImage");
-            btn_POS.Location = new System.Drawing.Point(12, 134);
-            btn_POS.Name = "btn_POS";
-            btn_POS.Size = new System.Drawing.Size(203, 144);
-            btn_POS.StyleController = lC_Root;
-            btn_POS.TabIndex = 7;
-            btn_POS.Text = "Satış";
-            btn_POS.Click += btn_POS_Click;
-            // 
-            // txtEdit_UserName
-            // 
-            txtEdit_UserName.Location = new System.Drawing.Point(101, 62);
-            txtEdit_UserName.Name = "txtEdit_UserName";
-            txtEdit_UserName.Size = new System.Drawing.Size(321, 20);
-            txtEdit_UserName.StyleController = lC_Root;
-            txtEdit_UserName.TabIndex = 4;
-            // 
-            // txtEdit_Password
-            // 
-            txtEdit_Password.Location = new System.Drawing.Point(101, 86);
-            txtEdit_Password.Name = "txtEdit_Password";
-            txtEdit_Password.Properties.UseSystemPasswordChar = true;
-            txtEdit_Password.Size = new System.Drawing.Size(321, 20);
-            txtEdit_Password.StyleController = lC_Root;
-            txtEdit_Password.TabIndex = 5;
-            // 
-            // checkEdit_RemindMe
-            // 
-            checkEdit_RemindMe.Location = new System.Drawing.Point(12, 110);
-            checkEdit_RemindMe.Name = "checkEdit_RemindMe";
-            checkEdit_RemindMe.Properties.Caption = "meni xatırla";
-            checkEdit_RemindMe.Size = new System.Drawing.Size(410, 20);
-            checkEdit_RemindMe.StyleController = lC_Root;
-            checkEdit_RemindMe.TabIndex = 6;
-            // 
-            // txtEdit_conString
-            // 
-            txtEdit_conString.Location = new System.Drawing.Point(101, 12);
-            txtEdit_conString.MenuManager = toolbarFormManager1;
-            txtEdit_conString.Name = "txtEdit_conString";
-            txtEdit_conString.Size = new System.Drawing.Size(209, 20);
-            txtEdit_conString.StyleController = lC_Root;
-            txtEdit_conString.TabIndex = 0;
+            LUE_Terminal.Location = new System.Drawing.Point(101, 38);
+            LUE_Terminal.MenuManager = toolbarFormManager1;
+            LUE_Terminal.Name = "LUE_Terminal";
+            LUE_Terminal.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
+            LUE_Terminal.Properties.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo("TerminalId", "TerminalId"), new LookUpColumnInfo("TerminalDesc", "TerminalDesc") });
+            LUE_Terminal.Properties.DisplayMember = "TerminalDesc";
+            LUE_Terminal.Properties.NullText = "";
+            LUE_Terminal.Properties.ValueMember = "TerminalId";
+            LUE_Terminal.Size = new System.Drawing.Size(321, 20);
+            LUE_Terminal.StyleController = lC_Root;
+            LUE_Terminal.TabIndex = 7;
+            LUE_Terminal.EditValueChanged += LUE_Terminal_EditValueChanged;
             // 
             // toolbarFormManager1
             // 
@@ -227,6 +193,55 @@ namespace Foxoft
             BBI_GetKey.Id = 2;
             BBI_GetKey.Name = "BBI_GetKey";
             BBI_GetKey.ItemClick += BBI_GetKey_ItemClick;
+            // 
+            // btn_POS
+            // 
+            btn_POS.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            btn_POS.Appearance.Options.UseFont = true;
+            btn_POS.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_POS.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_POS.ImageOptions.SvgImage");
+            btn_POS.Location = new System.Drawing.Point(12, 134);
+            btn_POS.Name = "btn_POS";
+            btn_POS.Size = new System.Drawing.Size(203, 144);
+            btn_POS.StyleController = lC_Root;
+            btn_POS.TabIndex = 7;
+            btn_POS.Text = "Satış";
+            btn_POS.Click += btn_POS_Click;
+            // 
+            // txtEdit_UserName
+            // 
+            txtEdit_UserName.Location = new System.Drawing.Point(101, 62);
+            txtEdit_UserName.Name = "txtEdit_UserName";
+            txtEdit_UserName.Size = new System.Drawing.Size(321, 20);
+            txtEdit_UserName.StyleController = lC_Root;
+            txtEdit_UserName.TabIndex = 4;
+            // 
+            // txtEdit_Password
+            // 
+            txtEdit_Password.Location = new System.Drawing.Point(101, 86);
+            txtEdit_Password.Name = "txtEdit_Password";
+            txtEdit_Password.Properties.UseSystemPasswordChar = true;
+            txtEdit_Password.Size = new System.Drawing.Size(321, 20);
+            txtEdit_Password.StyleController = lC_Root;
+            txtEdit_Password.TabIndex = 5;
+            // 
+            // checkEdit_RemindMe
+            // 
+            checkEdit_RemindMe.Location = new System.Drawing.Point(12, 110);
+            checkEdit_RemindMe.Name = "checkEdit_RemindMe";
+            checkEdit_RemindMe.Properties.Caption = "meni xatırla";
+            checkEdit_RemindMe.Size = new System.Drawing.Size(410, 20);
+            checkEdit_RemindMe.StyleController = lC_Root;
+            checkEdit_RemindMe.TabIndex = 6;
+            // 
+            // txtEdit_conString
+            // 
+            txtEdit_conString.Location = new System.Drawing.Point(101, 12);
+            txtEdit_conString.MenuManager = toolbarFormManager1;
+            txtEdit_conString.Name = "txtEdit_conString";
+            txtEdit_conString.Size = new System.Drawing.Size(209, 20);
+            txtEdit_conString.StyleController = lC_Root;
+            txtEdit_conString.TabIndex = 0;
             // 
             // btn_SaveConn
             // 
@@ -314,6 +329,15 @@ namespace Foxoft
             layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
+            // layoutControlItem3
+            // 
+            layoutControlItem3.Control = LUE_Terminal;
+            layoutControlItem3.Location = new System.Drawing.Point(0, 26);
+            layoutControlItem3.Name = "layoutControlItem3";
+            layoutControlItem3.Size = new System.Drawing.Size(414, 24);
+            layoutControlItem3.Text = "Terminal";
+            layoutControlItem3.TextSize = new System.Drawing.Size(77, 13);
+            // 
             // toolbarFormControl1
             // 
             toolbarFormControl1.Location = new System.Drawing.Point(0, 0);
@@ -326,30 +350,6 @@ namespace Foxoft
             toolbarFormControl1.TitleItemLinks.Add(barButtonItem2);
             toolbarFormControl1.TitleItemLinks.Add(BBI_GetKey);
             toolbarFormControl1.ToolbarForm = this;
-            // 
-            // LUE_Terminal
-            // 
-            LUE_Terminal.Location = new System.Drawing.Point(101, 38);
-            LUE_Terminal.MenuManager = toolbarFormManager1;
-            LUE_Terminal.Name = "LUE_Terminal";
-            LUE_Terminal.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            LUE_Terminal.Properties.NullText = "";
-            LUE_Terminal.Size = new System.Drawing.Size(321, 20);
-            LUE_Terminal.StyleController = lC_Root;
-            LUE_Terminal.TabIndex = 7;
-            LUE_Terminal.Properties.ValueMember = "TerminalId";
-            LUE_Terminal.Properties.DisplayMember = "TerminalDesc";
-            LUE_Terminal.Properties.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo("TerminalId"), new LookUpColumnInfo("TerminalDesc") });
-            LUE_Terminal.Properties.DataSource = efMethods.SelectTerminals();
-            // 
-            // layoutControlItem3
-            // 
-            layoutControlItem3.Control = LUE_Terminal;
-            layoutControlItem3.Location = new System.Drawing.Point(0, 26);
-            layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new System.Drawing.Size(414, 24);
-            layoutControlItem3.Text = "Terminal";
-            layoutControlItem3.TextSize = new System.Drawing.Size(77, 13);
             // 
             // FormLogin
             // 
@@ -369,11 +369,12 @@ namespace Foxoft
             Load += FormLogin_Load;
             ((System.ComponentModel.ISupportInitialize)lC_Root).EndInit();
             lC_Root.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)LUE_Terminal.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_UserName.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Password.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_RemindMe.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_conString.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)toolbarFormManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_ERP).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_POS).EndInit();
@@ -382,9 +383,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_RemindMe).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_ConString).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LUE_Terminal.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)toolbarFormControl1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

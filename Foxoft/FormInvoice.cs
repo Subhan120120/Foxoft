@@ -2006,10 +2006,19 @@ namespace Foxoft
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
             string productCode = view.GetRowCellValue(rowInd, col_ProductCode)?.ToString();
 
-            DcProduct dcProduct = dbContext.DcProducts
+            DcProduct dcProduct = dbContext.DcProducts // more fast query
                                     .Include(x => x.DcHierarchy)
                                     .Include(x => x.TrProductFeatures)
                                     .FirstOrDefault(x => x.ProductCode == productCode);
+
+            dcProduct.Balance = dbContext.TrInvoiceLines.Where(x => x.ProductCode == productCode).Sum(x => x.QtyIn - x.QtyOut);
+            dcProduct.LastPurchasePrice = dbContext.TrInvoiceLines.Where(x => x.ProductCode == productCode)
+                                                                  .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
+                                                                  .Where(l => l.TrInvoiceHeader.IsReturn == false)
+                                                                  .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
+                                                                  .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
+                                                                  .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
+                                                                  .FirstOrDefault();
 
             if (dcProduct is not null && e.IsGetData)
             {
