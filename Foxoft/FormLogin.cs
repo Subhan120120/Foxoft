@@ -54,16 +54,17 @@ namespace Foxoft
 
                 UpdateReportsLayout();
 
+                UpdateDueDate();
+
                 AppSetting appSetting = efMethods.SelectAppSetting();
                 Settings.Default.AppSetting = appSetting;
                 Settings.Default.Save();
+
             }
 
             AcceptButton = btn_ERP;
 
             InitializeComponent();
-
-            LUE_Terminal.Properties.DataSource = efMethods.SelectTerminals();
 
             //string fileName = System.Security.Principal.WindowsIdentity.GetCurrent().Name + ".xml";
             //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Terminals");
@@ -79,7 +80,17 @@ namespace Foxoft
             Trace.Write("\n InitializeComponent Finished. \n SplashScreenStartup closing... ");
             Trace.Flush();
 
-            UpdateDueDate();
+            DcTerminal dcTerminal = efMethods.SelectTerminal(Settings.Default.TerminalId);
+
+            if (dcTerminal != null)
+            {
+                if (dcTerminal.TouchUIMode == true)
+                    WindowsFormsSettings.TouchUIMode = DevExpress.LookAndFeel.TouchUIMode.True;
+                else
+                    WindowsFormsSettings.TouchUIMode = DevExpress.LookAndFeel.TouchUIMode.False;
+
+                WindowsFormsSettings.TouchScaleFactor = dcTerminal.TouchScaleFactor;
+            }
 
             SplashScreenManager.CloseForm();
 

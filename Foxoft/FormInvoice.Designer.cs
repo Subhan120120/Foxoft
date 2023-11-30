@@ -291,12 +291,14 @@ namespace Foxoft
             gV_InvoiceLine.InitNewRow += gV_InvoiceLine_InitNewRow;
             gV_InvoiceLine.HiddenEditor += gV_InvoiceLine_HiddenEditor;
             gV_InvoiceLine.ShownEditor += gV_InvoiceLine_ShownEditor;
+            gV_InvoiceLine.FocusedRowChanged += gV_InvoiceLine_FocusedRowChanged;
             gV_InvoiceLine.CellValueChanged += gV_InvoiceLine_CellValueChanged;
             gV_InvoiceLine.CellValueChanging += gV_InvoiceLine_CellValueChanging;
             gV_InvoiceLine.InvalidRowException += gV_InvoiceLine_InvalidRowException;
             gV_InvoiceLine.RowDeleted += gV_InvoiceLine_RowDeleted;
             gV_InvoiceLine.ValidateRow += gV_InvoiceLine_ValidateRow;
             gV_InvoiceLine.RowUpdated += gV_InvoiceLine_RowUpdated;
+            gV_InvoiceLine.CustomUnboundColumnData += gV_InvoiceLine_CustomUnboundColumnData;
             gV_InvoiceLine.RowLoaded += gV_InvoiceLine_RowLoaded;
             gV_InvoiceLine.AsyncCompleted += gV_InvoiceLine_AsyncCompleted;
             gV_InvoiceLine.KeyPress += gV_InvoiceLine_KeyPress;
@@ -333,8 +335,11 @@ namespace Foxoft
             // 
             // colBalance
             // 
-            colBalance.FieldName = "Balance";
+            colBalance.FieldName = "DcProduct.Balance";
             colBalance.Name = "colBalance";
+            colBalance.OptionsColumn.AllowEdit = false;
+            colBalance.OptionsColumn.ReadOnly = true;
+            colBalance.UnboundDataType = typeof(int);
             colBalance.Visible = true;
             colBalance.VisibleIndex = 3;
             colBalance.Width = 33;
@@ -476,10 +481,11 @@ namespace Foxoft
             // 
             // col_ProductDesc
             // 
-            col_ProductDesc.FieldName = "ProductDesc";
+            col_ProductDesc.FieldName = "DcProduct.ProductDesc";
             col_ProductDesc.MinWidth = 100;
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.OptionsColumn.AllowEdit = false;
+            col_ProductDesc.UnboundDataType = typeof(string);
             col_ProductDesc.Visible = true;
             col_ProductDesc.VisibleIndex = 2;
             col_ProductDesc.Width = 225;
@@ -503,6 +509,9 @@ namespace Foxoft
             colLastPurchasePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             colLastPurchasePrice.FieldName = "LastPurchasePrice";
             colLastPurchasePrice.Name = "colLastPurchasePrice";
+            colLastPurchasePrice.OptionsColumn.AllowEdit = false;
+            colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+            colLastPurchasePrice.UnboundDataType = typeof(decimal);
             colLastPurchasePrice.Visible = true;
             colLastPurchasePrice.VisibleIndex = 10;
             colLastPurchasePrice.Width = 57;

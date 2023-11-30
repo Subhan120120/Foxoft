@@ -5,9 +5,11 @@ using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
 using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -692,6 +694,21 @@ namespace Foxoft
         private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private void BBI_ModeMouse_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            int TerminalId = Settings.Default.TerminalId;
+            efMethods.UpdateTerminalTouchUIMode(TerminalId, false);
+            WindowsFormsSettings.TouchUIMode = TouchUIMode.False;
+        }
+
+        private void BBI_ModeTouch_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            int TerminalId = Settings.Default.TerminalId;
+            efMethods.UpdateTerminalTouchUIMode(TerminalId, true);
+            WindowsFormsSettings.TouchUIMode = TouchUIMode.True;
+            WindowsFormsSettings.TouchScaleFactor = 2;
         }
     }
 }

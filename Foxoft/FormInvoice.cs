@@ -48,17 +48,18 @@ namespace Foxoft
 {
     public partial class FormInvoice : RibbonForm
     {
-        readonly SettingStore settingStore;
-        //string pathMyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private EfMethods efMethods = new();
+        private subContext dbContext;
+
         string reportFileNameInvoice = @"InvoiceRS_A4.repx";
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
+        readonly SettingStore settingStore;
         private TrInvoiceHeader trInvoiceHeader;
-        private EfMethods efMethods = new();
         Guid invoiceHeaderId;
-        private subContext dbContext;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
+
 
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
         public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode)
@@ -68,6 +69,9 @@ namespace Foxoft
 
             InitializeComponent();
 
+            colLastPurchasePrice.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.LastPurchasePrice);
+            colBalance.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.Balance);
+            col_ProductDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
             checkEdit_IsSent.Properties.Caption = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.IsSent);
             checkEdit_IsReturn.Properties.Caption = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.IsReturn);
 
@@ -348,14 +352,15 @@ namespace Foxoft
                                     .LoadAsync()
                                     .ContinueWith(loadTask =>
                                     {
-                                        LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
-
-                                        lV_invoiceLine.ForEach(x =>
-                                        {
-                                            x.ProductDesc = GetProductDescWide(x.DcProduct);
-                                        });
-
-                                        trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
+                                        //LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
+                                        //
+                                        //lV_invoiceLine.ForEach(x =>
+                                        //{
+                                        //    x.ProductDesc = GetProductDescWide(x.DcProduct);
+                                        //});
+                                        //
+                                        //trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
+                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
                                         gV_InvoiceLine.BestFitColumns();
                                         gV_InvoiceLine.Focus();
@@ -692,7 +697,7 @@ namespace Foxoft
 
         private int CalcProductBalance(object objProductCode, object objInvoicelineId, string wareHouse)
         {
-            string productCode = (objProductCode ??= "").ToString();
+            string productCode = objProductCode?.ToString();
 
             if (!String.IsNullOrEmpty(productCode))
             {
@@ -879,7 +884,7 @@ namespace Foxoft
                             string temp = trIH.WarehouseCode;
                             copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
                             copyTrIH.ToWarehouseCode = temp;
-                            copyTrIH.StoreCode = trIH.CurrAccCode;
+                            copyTrIH.StoreCode = trIH.CurrAccCode ??= trIH.StoreCode;
                             copyTrIH.IsMainTF = false;
 
                             switch (entry.State)
@@ -1736,11 +1741,7 @@ namespace Foxoft
 
         private void FillRow(int rowHandle, DcProduct product)
         {
-            string productDescWide = GetProductDescWide(product);
-
             gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductCode, product.ProductCode);
-            gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductDesc, productDescWide);
-            gV_InvoiceLine.SetRowCellValue(rowHandle, colBalance, product.Balance);
             gV_InvoiceLine.SetRowCellValue(rowHandle, colLastPurchasePrice, product.LastPurchasePrice);
 
             decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
@@ -1753,7 +1754,7 @@ namespace Foxoft
         {
             var idList = new[] { 4, 5 };
             string arr = "";
-            foreach (var item in product.TrProductFeatures.Where(f => idList.Contains(f.FeatureTypeId)))
+            foreach (var item in product?.TrProductFeatures.Where(f => idList.Contains(f.FeatureTypeId)))
                 arr += " " + item.FeatureCode;
             string productDescWide = product.HierarchyCode + " " + product.ProductDesc + arr;
             return productDescWide;
@@ -1995,6 +1996,43 @@ namespace Foxoft
 
             }
             e.Cancel = false;
+        }
+
+        private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+        {
+            dbContext = new subContext();
+
+            GridView view = sender as GridView;
+            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+            string productCode = view.GetRowCellValue(rowInd, col_ProductCode)?.ToString();
+
+            DcProduct dcProduct = dbContext.DcProducts
+                                    .Include(x => x.DcHierarchy)
+                                    .Include(x => x.TrProductFeatures)
+                                    .FirstOrDefault(x => x.ProductCode == productCode);
+
+            if (dcProduct is not null && e.IsGetData)
+            {
+                if (e.Column == col_ProductDesc)
+                {
+                    string productDescWide = GetProductDescWide(dcProduct);
+                    e.Value = productDescWide;
+                }
+
+                if (e.Column == colBalance)
+                {
+                    e.Value = dcProduct.Balance;
+                }
+
+                //if (e.Column == colLastPurchasePrice)
+                //{
+                //    e.Value = dcProduct.LastPurchasePrice;
+                //}
+            }
+        }
+
+        private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+        {
         }
     }
 }

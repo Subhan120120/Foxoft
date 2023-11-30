@@ -30,6 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -38,11 +39,15 @@ namespace Foxoft
             bBI_CloseWindows = new DevExpress.XtraBars.BarButtonItem();
             bBI_POS = new DevExpress.XtraBars.BarButtonItem();
             bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
-            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Test = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             BSI_StoreDesc = new DevExpress.XtraBars.BarStaticItem();
             BBI_ChangeUser = new DevExpress.XtraBars.BarButtonItem();
+            barSubItem1 = new DevExpress.XtraBars.BarSubItem();
+            BBI_ModeMouse = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ModeTouch = new DevExpress.XtraBars.BarButtonItem();
+            repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -77,24 +82,27 @@ namespace Foxoft
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
             SuspendLayout();
             // 
             // parentRibbonControl
             // 
             parentRibbonControl.ExpandCollapseItem.Id = 0;
-            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, parentRibbonControl.SearchEditItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, barButtonItem1, barButtonItem3, barButtonItem4, BSI_StoreDesc, BBI_ChangeUser });
+            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, parentRibbonControl.SearchEditItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BBI_Test, barButtonItem3, barButtonItem4, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch });
             parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-            parentRibbonControl.MaxItemId = 20;
+            parentRibbonControl.MaxItemId = 28;
             parentRibbonControl.Name = "parentRibbonControl";
-            parentRibbonControl.OptionsTouch.ShowTouchUISelectorInQAT = true;
-            parentRibbonControl.OptionsTouch.ShowTouchUISelectorVisibilityItemInQATMenu = true;
             parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage_Home });
             parentRibbonControl.QuickToolbarItemLinks.Add(skinRibbonGalleryBarItem);
             parentRibbonControl.QuickToolbarItemLinks.Add(skinPaletteDropDownButtonItem);
             parentRibbonControl.QuickToolbarItemLinks.Add(bBI_POS);
+            parentRibbonControl.QuickToolbarItemLinks.Add(barSubItem1);
+            parentRibbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemImageComboBox1, repositoryItemComboBox1 });
             parentRibbonControl.Size = new System.Drawing.Size(1023, 158);
             parentRibbonControl.StatusBar = ribbonStatusBar;
             // 
@@ -140,12 +148,12 @@ namespace Foxoft
             bSI_UserName.Id = 13;
             bSI_UserName.Name = "bSI_UserName";
             // 
-            // barButtonItem1
+            // BBI_Test
             // 
-            barButtonItem1.Caption = "Test";
-            barButtonItem1.Id = 14;
-            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            barButtonItem1.Name = "barButtonItem1";
+            BBI_Test.Caption = "Test";
+            BBI_Test.Id = 14;
+            BBI_Test.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Test.ImageOptions.SvgImage");
+            BBI_Test.Name = "BBI_Test";
             // 
             // barButtonItem3
             // 
@@ -174,6 +182,38 @@ namespace Foxoft
             BBI_ChangeUser.Name = "BBI_ChangeUser";
             BBI_ChangeUser.ItemClick += BBI_ChangeUser_ItemClick;
             // 
+            // barSubItem1
+            // 
+            barSubItem1.Caption = "barSubItem1";
+            barSubItem1.Id = 23;
+            barSubItem1.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("barSubItem1.ImageOptions.Image");
+            barSubItem1.ImageOptions.LargeImage = (System.Drawing.Image)resources.GetObject("barSubItem1.ImageOptions.LargeImage");
+            barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_ModeMouse, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph), new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, BBI_ModeTouch, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph) });
+            barSubItem1.MenuDrawMode = DevExpress.XtraBars.MenuDrawMode.LargeImagesText;
+            barSubItem1.Name = "barSubItem1";
+            // 
+            // BBI_ModeMouse
+            // 
+            BBI_ModeMouse.Caption = "Mouse Mod";
+            BBI_ModeMouse.Id = 24;
+            BBI_ModeMouse.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ModeMouse.ImageOptions.SvgImage");
+            BBI_ModeMouse.Name = "BBI_ModeMouse";
+            BBI_ModeMouse.ItemClick += BBI_ModeMouse_ItemClick;
+            // 
+            // BBI_ModeTouch
+            // 
+            BBI_ModeTouch.Caption = "Sensor Mod";
+            BBI_ModeTouch.Id = 25;
+            BBI_ModeTouch.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ModeTouch.ImageOptions.SvgImage");
+            BBI_ModeTouch.Name = "BBI_ModeTouch";
+            BBI_ModeTouch.ItemClick += BBI_ModeTouch_ItemClick;
+            // 
+            // repositoryItemImageComboBox1
+            // 
+            repositoryItemImageComboBox1.AutoHeight = false;
+            repositoryItemImageComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemImageComboBox1.Name = "repositoryItemImageComboBox1";
+            // 
             // ribbonPage_Home
             // 
             ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroup1, ribbonPageGroup2 });
@@ -189,8 +229,8 @@ namespace Foxoft
             // 
             // ribbonPageGroup1
             // 
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem1);
-            ribbonPageGroup1.ItemLinks.Add(BBI_ChangeUser);
+            ribbonPageGroup1.ItemLinks.Add(BBI_Test);
+            ribbonPageGroup1.ItemLinks.Add(BBI_ChangeUser, true);
             ribbonPageGroup1.ItemLinks.Add(barButtonItem3);
             ribbonPageGroup1.ItemLinks.Add(barButtonItem4);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
@@ -418,6 +458,12 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("bo_report", "image://svgimages/business objects/bo_report.svg");
             // 
+            // repositoryItemComboBox1
+            // 
+            repositoryItemComboBox1.AutoHeight = false;
+            repositoryItemComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemComboBox1.Name = "repositoryItemComboBox1";
+            // 
             // FormERP
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -434,8 +480,10 @@ namespace Foxoft
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
             FormClosing += FormERP_FormClosing;
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -473,7 +521,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator5;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator4;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_InventoryTransfer;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem BBI_Test;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CashTransfer;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PurchaseIsReturn;
@@ -493,5 +541,10 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PriceList;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator8;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Discounts;
+        private DevExpress.XtraBars.BarSubItem barSubItem1;
+        private DevExpress.XtraBars.BarButtonItem BBI_ModeMouse;
+        private DevExpress.XtraBars.BarButtonItem BBI_ModeTouch;
+        private DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox repositoryItemImageComboBox1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox1;
     }
 }

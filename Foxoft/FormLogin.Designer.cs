@@ -340,6 +340,7 @@ namespace Foxoft
             LUE_Terminal.Properties.ValueMember = "TerminalId";
             LUE_Terminal.Properties.DisplayMember = "TerminalDesc";
             LUE_Terminal.Properties.Columns.AddRange(new LookUpColumnInfo[] { new LookUpColumnInfo("TerminalId"), new LookUpColumnInfo("TerminalDesc") });
+            LUE_Terminal.Properties.DataSource = efMethods.SelectTerminals();
             // 
             // layoutControlItem3
             // 

@@ -10,6 +10,7 @@ using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection.Metadata.Ecma335;
+using DevExpress.LookAndFeel;
 
 namespace Foxoft
 {
@@ -105,6 +106,12 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcTerminals.ToList();
+        }
+
+        public DcTerminal SelectTerminal(int id)
+        {
+            using subContext db = new();
+            return db.DcTerminals.FirstOrDefault(x => x.TerminalId == id);
         }
 
         public List<DcFeatureType> SelectFeatureTypes()
@@ -1556,6 +1563,15 @@ namespace Foxoft
             using subContext db = new();
             AppSetting appSetting = new() { Id = 1, GridViewLayout = layout };
             db.Entry(appSetting).Property(x => x.GridViewLayout).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateTerminalTouchUIMode(int terminalId, bool touchUIMode)
+        {
+            using subContext db = new();
+            DcTerminal dcTerminal = new() { TerminalId = terminalId, TouchUIMode = touchUIMode, TouchScaleFactor = 2 };
+            db.Entry(dcTerminal).Property(x => x.TouchUIMode).IsModified = true;
+            db.Entry(dcTerminal).Property(x => x.TouchScaleFactor).IsModified = true;
             return db.SaveChanges();
         }
 
