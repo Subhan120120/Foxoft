@@ -216,28 +216,19 @@ namespace Foxoft
                 return;
             }
 
-            FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
+            try
+            {
+                FormCurrAccList form = new(new byte[] { 1, 2, 3 });
+                form.MdiParent = this;
+                form.Show();
+                form.WindowState = FormWindowState.Maximized;
+                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
-            if (form != null)
-            {
-                form.BringToFront();
-                form.Activate();
-            }
-            else
-            {
-                try
-                {
-                    form = new(new byte[] { 1, 2, 3 });
-                    form.MdiParent = this;
-                    form.Show();
-                    form.WindowState = FormWindowState.Maximized;
-                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
         }
 
         private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)

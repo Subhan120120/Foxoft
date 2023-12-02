@@ -115,10 +115,10 @@ namespace Foxoft
             gC_ProductList.TabIndex = 0;
             gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ProductList });
             // 
-            // gridView1
+            // gV_ProductList
             // 
             gV_ProductList.GridControl = gC_ProductList;
-            gV_ProductList.Name = "gridView1";
+            gV_ProductList.Name = "gV_ProductList";
             // 
             // colProductCode
             // 
@@ -327,6 +327,7 @@ namespace Foxoft
             bBI_quit.Caption = "Bağla";
             bBI_quit.Id = 6;
             bBI_quit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_quit.ImageOptions.SvgImage");
+            bBI_quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
             bBI_quit.Name = "bBI_quit";
             // 
             // barButtonItem1
