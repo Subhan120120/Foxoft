@@ -140,7 +140,7 @@ namespace Foxoft
                 BBI.Id = 57;
                 BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
                 BBI.Name = report.DcReport.ReportId.ToString();
-                //String txt = new BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J).ToString();
+
                 if (!string.IsNullOrEmpty(report.Shortcut))
                 {
                     KeysConverter cvt = new();
@@ -164,35 +164,40 @@ namespace Foxoft
                         return;
                     }
 
-                    string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
+                    List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(gV_InvoiceLine).ToList();
 
-                    string filter = "";
-                    if (!string.IsNullOrEmpty(productCode))
-                        filter = "[ProductCode] = '" + productCode + "' ";
-                    else
+                    if (mydata.Count > 0)
                     {
-                        List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(gV_InvoiceLine).ToList();
-                        var combined = "";
-                        foreach (TrInvoiceLine rowView in mydata)
-                            combined += "'" + rowView.ProductCode.ToString() + "',";
+                        string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
 
-                        combined = combined.Substring(0, combined.Length - 1);
-                        filter = "[ProductCode] in ( " + combined + ")";
-                    }
+                        string filter = "";
+                        if (!string.IsNullOrEmpty(productCode))
+                            filter = "[ProductCode] = '" + productCode + "' ";
+                        else
+                        {
+                            var combined = "";
+                            foreach (TrInvoiceLine rowView in mydata)
+                                combined += "'" + rowView.ProductCode.ToString() + "',";
 
-                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+                            combined = combined.Substring(0, combined.Length - 1);
+                            filter = "[ProductCode] in ( " + combined + ")";
+                        }
 
-                    if (dcReport.ReportTypeId == 1)
-                    {
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                        formGrid.Show();
+                        string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                        if (dcReport.ReportTypeId == 1)
+                        {
+                            FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
+                            formGrid.Show();
+                        }
+                        else if (dcReport.ReportTypeId == 2)
+                        {
+                            FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
+                            form.WindowState = FormWindowState.Maximized;
+                            form.Show();
+                        }
                     }
-                    else if (dcReport.ReportTypeId == 2)
-                    {
-                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
-                        form.WindowState = FormWindowState.Maximized;
-                        form.Show();
-                    }
+                    else XtraMessageBox.Show("Qeydə alınmış məlumat yoxdur");
                 };
             }
         }
