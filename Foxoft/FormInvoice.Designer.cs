@@ -271,7 +271,6 @@ namespace Foxoft
             gC_InvoiceLine.EditorKeyUp += gC_InvoiceLine_EditorKeyUp;
             gC_InvoiceLine.EditorKeyPress += gC_InvoiceLine_EditorKeyPress;
             gC_InvoiceLine.KeyDown += gC_InvoiceLine_KeyDown;
-            gC_InvoiceLine.KeyUp += gC_InvoiceLine_KeyUp;
             // 
             // gV_InvoiceLine
             // 
@@ -301,7 +300,6 @@ namespace Foxoft
             gV_InvoiceLine.CustomUnboundColumnData += gV_InvoiceLine_CustomUnboundColumnData;
             gV_InvoiceLine.RowLoaded += gV_InvoiceLine_RowLoaded;
             gV_InvoiceLine.AsyncCompleted += gV_InvoiceLine_AsyncCompleted;
-            gV_InvoiceLine.KeyPress += gV_InvoiceLine_KeyPress;
             gV_InvoiceLine.DoubleClick += gV_InvoiceLine_DoubleClick;
             gV_InvoiceLine.ValidatingEditor += gV_InvoiceLine_ValidatingEditor;
             gV_InvoiceLine.InvalidValueException += gV_InvoiceLine_InvalidValueException;
@@ -453,7 +451,6 @@ namespace Foxoft
             col_NetAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_NetAmount.FieldName = "NetAmount";
             col_NetAmount.Name = "col_NetAmount";
-            col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}") });
             col_NetAmount.Visible = true;
             col_NetAmount.VisibleIndex = 8;
             col_NetAmount.Width = 42;
@@ -494,6 +491,7 @@ namespace Foxoft
             // 
             colAmountLoc.FieldName = "AmountLoc";
             colAmountLoc.Name = "colAmountLoc";
+            colAmountLoc.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "AmountLoc", "{0:n2}") });
             // 
             // colNetAmountLoc
             // 
@@ -501,7 +499,6 @@ namespace Foxoft
             colNetAmountLoc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             colNetAmountLoc.FieldName = "NetAmountLoc";
             colNetAmountLoc.Name = "colNetAmountLoc";
-            colNetAmountLoc.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmountLoc", "Toplam={0:n2}") });
             // 
             // colLastPurchasePrice
             // 

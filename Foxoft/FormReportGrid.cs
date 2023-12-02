@@ -39,6 +39,7 @@ using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using System.Windows.Forms;
 using System;
+using DevExpress.XtraBars.Navigation;
 #endregion
 
 namespace Foxoft
@@ -349,6 +350,25 @@ namespace Foxoft
 
             if (trInvoiceHeader is not null)
             {
+                string claim = trInvoiceHeader.ProcessCode switch
+                {
+                    "IT" => "InventoryTransfer",
+                    "CI" => "CountIn",
+                    "CO" => "CountOut",
+                    "RS" => "RetailSaleInvoice",
+                    "RP" => "RetailPurchaseInvoice",
+                    "EX" => "Expense",
+                    _ => ""
+                };
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+
+
                 byte[] bytes = trInvoiceHeader.ProcessCode switch
                 {
                     "IT" => new byte[] { 1 },
@@ -388,7 +408,6 @@ namespace Foxoft
                     frm.Show();
                     formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
                 }
-
             }
             else
                 MessageBox.Show("Belə bir sənəd yoxdur.");

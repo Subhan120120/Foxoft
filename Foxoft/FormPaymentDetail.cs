@@ -548,6 +548,23 @@ namespace Foxoft
 
         private void gV_PaymentLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
+            GridView gV = (GridView)sender;
+
+            if (gV is not null)
+            {
+                if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName)
+                {
+                    Object oldvalue1 = gV.ActiveEditor?.OldEditValue;
+
+                    if (!Object.Equals(e.Value, oldvalue1))
+                    {
+                        string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
+
+                        gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
+                        gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
+                    }
+                }
+            }
         }
 
         private void gV_PaymentLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)

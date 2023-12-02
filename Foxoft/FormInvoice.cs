@@ -38,6 +38,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
@@ -50,6 +51,7 @@ namespace Foxoft
     {
         private EfMethods efMethods = new();
         private subContext dbContext;
+        subContext subContext = new();
 
         string reportFileNameInvoice = @"InvoiceRS_A4.repx";
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
@@ -155,6 +157,12 @@ namespace Foxoft
                 {
                     DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
 
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString());
+                    if (!currAccHasClaims)
+                    {
+                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        return;
+                    }
 
                     string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
 
@@ -504,12 +512,28 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
-            //CalcRowLocNetAmount(e);
+
         }
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
+            GridView gV = (GridView)sender;
 
+            if (gV is not null)
+            {
+                if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName)
+                {
+                    Object oldvalue = gV.ActiveEditor?.OldEditValue;
+
+                    if (!Object.Equals(e.Value, oldvalue))
+                    {
+                        string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
+
+                        gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
+                        gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
+                    }
+                }
+            }
         }
 
         #region CalcRowLocNetAmount
@@ -836,16 +860,23 @@ namespace Foxoft
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            GridView gV = (GridView)sender;
+            //GridView gV = (GridView)sender;
 
-            if (gV is not null)
-            {
-                string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-                gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
-                gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
-            }
+            //if (gV is not null)
+            //{
+            //    string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
+            //    gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
+
+            //    if (!string.IsNullOrEmpty(userName))
+            //        gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
+            //}
 
             SaveInvoice();
+        }
+
+        private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
+        {
+
         }
 
         private void gV_InvoiceLine_RowDeleted(object sender, RowDeletedEventArgs e)
@@ -1275,22 +1306,22 @@ namespace Foxoft
 
         private void gV_InvoiceLine_RowCellStyle(object sender, RowCellStyleEventArgs e)
         {
-            GridView gridView = sender as GridView;
+            GridView gV = sender as GridView;
 
             Color readOnlyBackColor = Color.LightGray;
             try
             {
-                if (e.RowHandle >= 0 && (!gridView.OptionsBehavior.Editable || !e.Column.OptionsColumn.AllowEdit || e.Column.ReadOnly))
+                if (e.RowHandle >= 0 && (!gV.OptionsBehavior.Editable || !e.Column.OptionsColumn.AllowEdit || e.Column.ReadOnly))
                 {
-                    GridViewInfo viewInfo = gridView.GetViewInfo() as GridViewInfo;
+                    GridViewInfo viewInfo = gV.GetViewInfo() as GridViewInfo;
                     GridDataRowInfo rowInfo = viewInfo.RowsInfo.GetInfoByHandle(e.RowHandle) as GridDataRowInfo;
 
                     if (rowInfo == null || (rowInfo != null && rowInfo.ConditionInfo.GetCellAppearance(e.Column) == null))
                     {
                         bool hasrules = false;
-                        foreach (GridFormatRule rule in gridView.FormatRules)
+                        foreach (GridFormatRule rule in gV.FormatRules)
                         {
-                            if (rule.IsFit(e.CellValue, gridView.GetDataSourceRowIndex(e.RowHandle)))
+                            if (rule.IsFit(e.CellValue, gV.GetDataSourceRowIndex(e.RowHandle)))
                             {
                                 hasrules = true;
                                 break;
@@ -1301,8 +1332,8 @@ namespace Foxoft
                     }
                 }
                 // This is to fix the selection color when a color is set for the column  
-                if (e.Column.AppearanceCell.Options.UseBackColor && gridView.IsCellSelected(e.RowHandle, e.Column))
-                    e.Appearance.BackColor = gridView.PaintAppearance.SelectedRow.BackColor;
+                if (e.Column.AppearanceCell.Options.UseBackColor && gV.IsCellSelected(e.RowHandle, e.Column))
+                    e.Appearance.BackColor = gV.PaintAppearance.SelectedRow.BackColor;
             }
             catch (Exception ex)
             {
@@ -1395,6 +1426,11 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (true)
+            {
+
+            }
+
             if (checkEdit_IsReturn.Enabled)
                 checkEdit_IsReturn.Enabled = false;
             else
@@ -1462,7 +1498,6 @@ namespace Foxoft
             string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
             if (File.Exists(layoutFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
-
         }
 
         private void SaveLayout()
@@ -1515,26 +1550,6 @@ namespace Foxoft
             public GridColumn Column;
         }
 
-        private void gV_InvoiceLine_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //GridView gv = sender as GridView;
-
-            //if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
-            //{
-            //   gv.MoveNext();
-            //}
-
-            //DcProduct product = efMethods.SelectProduct(currValue);
-
-            //int balance = CalcProductBalance(view);
-
-            //if (product is null)
-            //{
-            //   e.ErrorText = "Belə nir məhsul yoxdur";
-            //   e.Valid = false;
-            //}
-        }
-
         private void gC_InvoiceLine_EditorKeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return) // Barcode Scan Device 
@@ -1542,14 +1557,6 @@ namespace Foxoft
                 gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
                 gV_InvoiceLine.MoveNext();
                 gV_InvoiceLine.FocusedColumn = colBarcode;
-            }
-        }
-
-        private void gC_InvoiceLine_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Return)
-            {
-                //gV_InvoiceLine.FocusedColumn = colBarcode;
             }
         }
 
@@ -1793,7 +1800,7 @@ namespace Foxoft
             if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.WarehouseCode) && trInvoiceHeader is not null)
                 trInvoiceHeader.WarehouseCode = null;
 
-            if (dcWarehouses is not null)
+            if (dcWarehouses is not null && trInvoiceHeader is not null)
             {
                 DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
                 if (dcWarehouse is not null && trInvoiceHeader?.WarehouseCode is null)
@@ -1808,7 +1815,7 @@ namespace Foxoft
         {
             DcCurrAcc curr = efMethods.SelectCurrAcc(btnEdit_CurrAccCode.EditValue?.ToString());
 
-            if (curr is not null)
+            if (curr is not null && trInvoiceHeader is not null)
             {
                 trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
                 lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
@@ -1899,14 +1906,6 @@ namespace Foxoft
         private void BBI_PrintSettingSave_ItemClick(object sender, ItemClickEventArgs e)
         {
             efMethods.UpdateStoreSettingPrinterName(BEI_PrinterName.EditValue.ToString());
-        }
-
-        private void Btn_EditInvoice_Click(object sender, EventArgs e)
-        {
-            if (checkEdit_IsReturn.Enabled)
-                checkEdit_IsReturn.Enabled = false;
-            else
-                checkEdit_IsReturn.Enabled = true;
         }
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
@@ -2000,48 +1999,51 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            dbContext = new subContext();
-
             GridView view = sender as GridView;
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
-            string productCode = view.GetRowCellValue(rowInd, col_ProductCode)?.ToString();
+            object obj = view.GetRowCellValue(rowInd, col_ProductCode);
 
-            DcProduct dcProduct = dbContext.DcProducts // more fast query
-                                    .Include(x => x.DcHierarchy)
-                                    .Include(x => x.TrProductFeatures)
-                                    .FirstOrDefault(x => x.ProductCode == productCode);
-
-            dcProduct.Balance = dbContext.TrInvoiceLines.Where(x => x.ProductCode == productCode).Sum(x => x.QtyIn - x.QtyOut);
-            dcProduct.LastPurchasePrice = dbContext.TrInvoiceLines.Where(x => x.ProductCode == productCode)
-                                                                  .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
-                                                                  .Where(l => l.TrInvoiceHeader.IsReturn == false)
-                                                                  .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                                                                  .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
-                                                                  .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
-                                                                  .FirstOrDefault();
-
-            if (dcProduct is not null && e.IsGetData)
+            if (obj is not null)
             {
-                if (e.Column == col_ProductDesc)
-                {
-                    string productDescWide = GetProductDescWide(dcProduct);
-                    e.Value = productDescWide;
-                }
 
-                if (e.Column == colBalance)
-                {
-                    e.Value = dcProduct.Balance;
-                }
+                string productCode = obj?.ToString();
+                DcProduct dcProduct = subContext.DcProducts // more fast query
+                                        .Include(x => x.DcHierarchy)
+                                        .Include(x => x.TrProductFeatures)
+                                        .FirstOrDefault(x => x.ProductCode == productCode);
 
-                //if (e.Column == colLastPurchasePrice)
-                //{
-                //    e.Value = dcProduct.LastPurchasePrice;
-                //}
+                if (dcProduct is not null)
+                {
+                    dcProduct.Balance = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode).Sum(x => x.QtyIn - x.QtyOut);
+                    dcProduct.LastPurchasePrice = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode)
+                                                                          .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
+                                                                          .Where(l => l.TrInvoiceHeader.IsReturn == false)
+                                                                          .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
+                                                                          .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
+                                                                          .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
+                                                                          .FirstOrDefault();
+
+                    if (e.IsGetData)
+                    {
+                        if (e.Column == col_ProductDesc)
+                        {
+                            string productDescWide = GetProductDescWide(dcProduct);
+                            e.Value = productDescWide;
+                        }
+
+                        if (e.Column == colBalance)
+                        {
+                            e.Value = dcProduct.Balance;
+                        }
+
+                        //if (e.Column == colLastPurchasePrice)
+                        //{
+                        //    e.Value = dcProduct.LastPurchasePrice;
+                        //}
+                    }
+                }
             }
         }
 
-        private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
-        {
-        }
     }
 }
