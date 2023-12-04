@@ -326,13 +326,6 @@ namespace Foxoft
         {
             GridView gV = (GridView)sender;
 
-            if (gV is not null)
-            {
-                string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-                gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
-                gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
-            }
-
             decimal balanceAfter = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
             decimal invoiceSum = efMethods.SelectPaymentSum(trPaymentHeader.CurrAccCode, trPaymentHeader.DocumentNumber);
             decimal balanceBefore = balanceAfter - invoiceSum;
@@ -552,7 +545,7 @@ namespace Foxoft
 
             if (gV is not null)
             {
-                if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName)
+                if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
                 {
                     Object oldvalue1 = gV.ActiveEditor?.OldEditValue;
 

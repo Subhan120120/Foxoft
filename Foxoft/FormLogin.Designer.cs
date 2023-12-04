@@ -126,7 +126,9 @@ namespace Foxoft
             LUE_Terminal.Size = new System.Drawing.Size(321, 20);
             LUE_Terminal.StyleController = lC_Root;
             LUE_Terminal.TabIndex = 7;
+            LUE_Terminal.InvalidValue += LUE_Terminal_InvalidValue;
             LUE_Terminal.EditValueChanged += LUE_Terminal_EditValueChanged;
+            LUE_Terminal.Validating += LUE_Terminal_Validating;
             // 
             // toolbarFormManager1
             // 

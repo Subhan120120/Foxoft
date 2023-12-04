@@ -1121,10 +1121,10 @@ namespace Foxoft
             }
         }
 
-        private void GetPrintToWarehouse(Guid invoiceHeader)
+        private void GetPrintToWarehouse(Guid invoiceHeader, string printerName)
         {
             XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
-            report.PrinterName = settingStore.PrinterName;
+            report.PrinterName = printerName;
 
             if (report is not null)
             {
@@ -1431,9 +1431,23 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (true)
+            if (trInvoiceHeader.ProcessCode == "RS")
             {
-
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "SaleIsReturn");
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+            }
+            else if (trInvoiceHeader.ProcessCode == "RP")
+            {
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PurchaseIsReturn");
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
             }
 
             if (checkEdit_IsReturn.Enabled)
@@ -1894,7 +1908,7 @@ namespace Foxoft
             alertControl1.Show(this, "Print Göndərilir...", "Printer: " + printerName, "", null, null);
 
             if (trInvoiceHeader is not null)
-                await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId));
+                await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId, printerName));
             else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
 
             Task task = Task.Run((Action)ShowPrintCount);
@@ -1915,6 +1929,7 @@ namespace Foxoft
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
+
         }
 
         private void gV_InvoiceLine_RowStyle(object sender, RowStyleEventArgs e)
@@ -2017,35 +2032,34 @@ namespace Foxoft
                                         .Include(x => x.TrProductFeatures)
                                         .FirstOrDefault(x => x.ProductCode == productCode);
 
-                if (dcProduct is not null)
+                if (dcProduct is not null && e.IsGetData)
                 {
                     dcProduct.Balance = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode).Sum(x => x.QtyIn - x.QtyOut);
-                    dcProduct.LastPurchasePrice = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode)
-                                                                          .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
-                                                                          .Where(l => l.TrInvoiceHeader.IsReturn == false)
-                                                                          .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                                                                          .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
-                                                                          .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
-                                                                          .FirstOrDefault();
+                    //dcProduct.LastPurchasePrice = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode)
+                    //                                                      .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
+                    //                                                      .Where(l => l.TrInvoiceHeader.IsReturn == false)
+                    //                                                      .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
+                    //                                                      .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
+                    //                                                      .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
+                    //                                                      .FirstOrDefault();
 
-                    if (e.IsGetData)
+
+                    if (e.Column == col_ProductDesc)
                     {
-                        if (e.Column == col_ProductDesc)
-                        {
-                            string productDescWide = GetProductDescWide(dcProduct);
-                            e.Value = productDescWide;
-                        }
-
-                        if (e.Column == colBalance)
-                        {
-                            e.Value = dcProduct.Balance;
-                        }
-
-                        //if (e.Column == colLastPurchasePrice)
-                        //{
-                        //    e.Value = dcProduct.LastPurchasePrice;
-                        //}
+                        string productDescWide = GetProductDescWide(dcProduct);
+                        e.Value = productDescWide;
                     }
+
+                    if (e.Column == colBalance)
+                    {
+                        e.Value = dcProduct.Balance;
+                    }
+
+                    //if (e.Column == colLastPurchasePrice)
+                    //{
+                    //    e.Value = dcProduct.LastPurchasePrice;
+                    //}
+
                 }
             }
         }

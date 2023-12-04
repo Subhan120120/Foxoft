@@ -1,7 +1,6 @@
 ﻿
 #region usings
 using DevExpress.Data;
-using DevExpress.Mvvm.Native;
 using DevExpress.Utils;
 using DevExpress.Utils.Design;
 using DevExpress.Utils.Menu;
@@ -17,7 +16,7 @@ using DevExpress.XtraGrid.Localization;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraReports;
+using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
@@ -33,13 +32,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using DevExpress.XtraPrinting;
-using DevExpress.XtraReports.UI;
-using System.Windows.Forms;
-using System;
-using DevExpress.XtraBars.Navigation;
 #endregion
 
 namespace Foxoft
@@ -752,5 +745,20 @@ namespace Foxoft
             gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
         }
 
+        private void BBI_PrintPreview_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gC_Report.ShowPrintPreview();
+        }
+
+        private void gV_Report_PrintInitialize(object sender, PrintInitializeEventArgs e)
+        {
+            PrintingSystemBase pb = e.PrintingSystem as PrintingSystemBase;
+            pb.PageSettings.Landscape = true;
+            pb.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
+            pb.PageSettings.TopMarginF = 0.75f;
+            pb.PageSettings.BottomMarginF = 0.75f;
+            pb.PageSettings.RightMarginF = 0.75f;
+            pb.PageSettings.LeftMarginF = 0.75f;
+        }
     }
 }

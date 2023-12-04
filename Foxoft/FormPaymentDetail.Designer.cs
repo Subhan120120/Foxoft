@@ -490,6 +490,8 @@ namespace Foxoft
             // 
             colBalanceBefor.FieldName = "BalanceBefor";
             colBalanceBefor.Name = "colBalanceBefor";
+            colBalanceBefor.OptionsColumn.AllowEdit = false;
+            colBalanceBefor.OptionsColumn.ReadOnly = true;
             colBalanceBefor.Visible = true;
             colBalanceBefor.VisibleIndex = 7;
             colBalanceBefor.Width = 89;
@@ -498,6 +500,8 @@ namespace Foxoft
             // 
             colBalanceAfter.FieldName = "BalanceAfter";
             colBalanceAfter.Name = "colBalanceAfter";
+            colBalanceAfter.OptionsColumn.AllowEdit = false;
+            colBalanceAfter.OptionsColumn.ReadOnly = true;
             colBalanceAfter.Visible = true;
             colBalanceAfter.VisibleIndex = 8;
             colBalanceAfter.Width = 88;

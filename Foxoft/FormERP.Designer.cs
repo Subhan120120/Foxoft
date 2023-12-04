@@ -30,7 +30,6 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -40,18 +39,16 @@ namespace Foxoft
             bBI_POS = new DevExpress.XtraBars.BarButtonItem();
             bSI_UserName = new DevExpress.XtraBars.BarStaticItem();
             BBI_Test = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             BSI_StoreDesc = new DevExpress.XtraBars.BarStaticItem();
             BBI_ChangeUser = new DevExpress.XtraBars.BarButtonItem();
             barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             BBI_ModeMouse = new DevExpress.XtraBars.BarButtonItem();
             BBI_ModeTouch = new DevExpress.XtraBars.BarButtonItem();
-            repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
+            repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
             aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -82,20 +79,20 @@ namespace Foxoft
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            bSI_TerminalName = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
             SuspendLayout();
             // 
             // parentRibbonControl
             // 
             parentRibbonControl.ExpandCollapseItem.Id = 0;
-            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, parentRibbonControl.SearchEditItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BBI_Test, barButtonItem3, barButtonItem4, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch });
+            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, parentRibbonControl.SearchEditItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BBI_Test, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName });
             parentRibbonControl.Location = new System.Drawing.Point(0, 0);
-            parentRibbonControl.MaxItemId = 28;
+            parentRibbonControl.MaxItemId = 29;
             parentRibbonControl.Name = "parentRibbonControl";
             parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage_Home });
             parentRibbonControl.QuickToolbarItemLinks.Add(skinRibbonGalleryBarItem);
@@ -155,18 +152,6 @@ namespace Foxoft
             BBI_Test.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Test.ImageOptions.SvgImage");
             BBI_Test.Name = "BBI_Test";
             // 
-            // barButtonItem3
-            // 
-            barButtonItem3.Caption = "Save";
-            barButtonItem3.Id = 16;
-            barButtonItem3.Name = "barButtonItem3";
-            // 
-            // barButtonItem4
-            // 
-            barButtonItem4.Caption = "Load";
-            barButtonItem4.Id = 17;
-            barButtonItem4.Name = "barButtonItem4";
-            // 
             // BSI_StoreDesc
             // 
             BSI_StoreDesc.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
@@ -208,15 +193,9 @@ namespace Foxoft
             BBI_ModeTouch.Name = "BBI_ModeTouch";
             BBI_ModeTouch.ItemClick += BBI_ModeTouch_ItemClick;
             // 
-            // repositoryItemImageComboBox1
-            // 
-            repositoryItemImageComboBox1.AutoHeight = false;
-            repositoryItemImageComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repositoryItemImageComboBox1.Name = "repositoryItemImageComboBox1";
-            // 
             // ribbonPage_Home
             // 
-            ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroup1, ribbonPageGroup2 });
+            ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroup1 });
             ribbonPage_Home.MergeOrder = 0;
             ribbonPage_Home.Name = "ribbonPage_Home";
             ribbonPage_Home.Text = "Ümumi";
@@ -231,20 +210,26 @@ namespace Foxoft
             // 
             ribbonPageGroup1.ItemLinks.Add(BBI_Test);
             ribbonPageGroup1.ItemLinks.Add(BBI_ChangeUser, true);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem3);
-            ribbonPageGroup1.ItemLinks.Add(barButtonItem4);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Nəzarət";
             // 
-            // ribbonPageGroup2
+            // repositoryItemImageComboBox1
             // 
-            ribbonPageGroup2.Name = "ribbonPageGroup2";
-            ribbonPageGroup2.Text = "Manager";
+            repositoryItemImageComboBox1.AutoHeight = false;
+            repositoryItemImageComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemImageComboBox1.Name = "repositoryItemImageComboBox1";
+            // 
+            // repositoryItemComboBox1
+            // 
+            repositoryItemComboBox1.AutoHeight = false;
+            repositoryItemComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemComboBox1.Name = "repositoryItemComboBox1";
             // 
             // ribbonStatusBar
             // 
             ribbonStatusBar.ItemLinks.Add(BSI_StoreDesc);
             ribbonStatusBar.ItemLinks.Add(bSI_UserName);
+            ribbonStatusBar.ItemLinks.Add(bSI_TerminalName);
             ribbonStatusBar.Location = new System.Drawing.Point(0, 612);
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = parentRibbonControl;
@@ -458,11 +443,12 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("bo_report", "image://svgimages/business objects/bo_report.svg");
             // 
-            // repositoryItemComboBox1
+            // bSI_TerminalName
             // 
-            repositoryItemComboBox1.AutoHeight = false;
-            repositoryItemComboBox1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repositoryItemComboBox1.Name = "repositoryItemComboBox1";
+            bSI_TerminalName.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            bSI_TerminalName.Caption = " | Terminal Adı";
+            bSI_TerminalName.Id = 28;
+            bSI_TerminalName.Name = "bSI_TerminalName";
             // 
             // FormERP
             // 
@@ -481,9 +467,9 @@ namespace Foxoft
             FormClosing += FormERP_FormClosing;
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -546,5 +532,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_ModeTouch;
         private DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox repositoryItemImageComboBox1;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox1;
+        private DevExpress.XtraBars.BarStaticItem bSI_TerminalName;
     }
 }

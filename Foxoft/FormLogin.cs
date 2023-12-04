@@ -167,11 +167,16 @@ namespace Foxoft
 
                 if (CheckDueDate())
                 {
-                    FormERP formERP = new();
-                    //SaveNewConStr();
-                    Hide();
-                    formERP.ShowDialog();
-                    Close();
+                    if (Convert.ToUInt32(LUE_Terminal.EditValue) != 0) {
+
+                        FormERP formERP = new();
+                        //SaveNewConStr();
+                        Hide();
+                        formERP.ShowDialog();
+                        Close();
+                    }
+                    else
+                        XtraMessageBox.Show("Terminal boş buraxıla bilməz!");
                 }
                 else
                     XtraMessageBox.Show("Lisenziya Aktiv Deyil!");
@@ -337,6 +342,14 @@ namespace Foxoft
         private void LUE_Terminal_EditValueChanged(object sender, EventArgs e)
         {
             TouchUIMode(Convert.ToInt32(LUE_Terminal.EditValue));
+        }
+
+        private void LUE_Terminal_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+        }
+
+        private void LUE_Terminal_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
         }
     }
 }

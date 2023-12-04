@@ -34,6 +34,14 @@ namespace Foxoft
 
             InitComponentName();
 
+            DcTerminal dcTerminal = efMethods.SelectTerminal(Settings.Default.TerminalId);
+            if (dcTerminal is not null)
+            {
+                if (dcTerminal.TouchUIMode == true)
+                    aC_Root.ItemHeight = 24 + (dcTerminal.TouchScaleFactor * 8);
+                else aC_Root.ItemHeight = 0;
+            }
+
             string path = Path.Combine(AppContext.BaseDirectory, "backgroundImage.png");
 
             if (File.Exists(path))
@@ -42,20 +50,17 @@ namespace Foxoft
                 Stream stream = File.OpenRead(path);
                 this.BackgroundImage = Image.FromStream(stream);
             }
-            UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
 
-            LoadLookAndFeel();
+            UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
+            LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
+
+            bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+            BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
+            bSI_TerminalName.Caption = "| " + efMethods.SelectTerminal(Settings.Default.TerminalId).TerminalDesc;
 
             InitializeReports();
             //adorners1 = new List<AdornerElement>();
             //adornerUIManager1 = new AdornerUIManager(this.components);
-        }
-
-        private void LoadLookAndFeel()
-        {
-            LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
-            bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-            BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
         }
 
         private void InitComponentName()
@@ -692,14 +697,27 @@ namespace Foxoft
             int TerminalId = Settings.Default.TerminalId;
             efMethods.UpdateTerminalTouchUIMode(TerminalId, false);
             WindowsFormsSettings.TouchUIMode = TouchUIMode.False;
+            aC_Root.ItemHeight = 0;
         }
 
         private void BBI_ModeTouch_ItemClick(object sender, ItemClickEventArgs e)
         {
             int TerminalId = Settings.Default.TerminalId;
+            DcTerminal dcTerminal = efMethods.SelectTerminal(TerminalId);
             efMethods.UpdateTerminalTouchUIMode(TerminalId, true);
             WindowsFormsSettings.TouchUIMode = TouchUIMode.True;
             WindowsFormsSettings.TouchScaleFactor = 2;
+            aC_Root.ItemHeight = 24 + (dcTerminal.TouchScaleFactor * 8);
+        }
+
+        private void barButtonItem3_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barButtonItem4_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

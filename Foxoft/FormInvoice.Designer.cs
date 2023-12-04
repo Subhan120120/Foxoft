@@ -354,12 +354,14 @@ namespace Foxoft
             // 
             colQtyIn.FieldName = "QtyIn";
             colQtyIn.Name = "colQtyIn";
+            colQtyIn.OptionsColumn.AllowEdit = false;
             colQtyIn.Width = 89;
             // 
             // colQtyOut
             // 
             colQtyOut.FieldName = "QtyOut";
             colQtyOut.Name = "colQtyOut";
+            colQtyOut.OptionsColumn.AllowEdit = false;
             colQtyOut.Width = 89;
             // 
             // colPriceLoc
