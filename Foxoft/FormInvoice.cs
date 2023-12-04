@@ -526,7 +526,7 @@ namespace Foxoft
 
             if (gV is not null)
             {
-                if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName)
+                if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
                 {
                     Object oldvalue = gV.ActiveEditor?.OldEditValue;
 
