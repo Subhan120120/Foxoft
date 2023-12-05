@@ -37,7 +37,10 @@ namespace Foxoft
             this.isNew = isNew;
 
             if (!isNew)
+            {
                 btn_ProductDiscount.Enabled = true;
+                Btn_ProductBarcode.Enabled = true;
+            }
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))

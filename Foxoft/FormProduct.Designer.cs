@@ -961,9 +961,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_Slug;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
-        private DevExpress.XtraEditors.ButtonEdit BtnEdit_Barcode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForBarcode;
-        private DevExpress.XtraEditors.SimpleButton Btn_Barcode;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
         private DevExpress.XtraEditors.SimpleButton Btn_ProductBarcode;
