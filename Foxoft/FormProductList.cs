@@ -121,12 +121,17 @@ namespace Foxoft
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
-            int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
-            if (rowHandle != GridControl.InvalidRowHandle)
-                gV_ProductList.FocusedRowHandle = rowHandle;
+            FocusValue(productCode);
 
             //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
             //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+        }
+
+        private void FocusValue(string productCode)
+        {
+            int rowHandle = gV_ProductList.LocateByValue(0, colProductCode, productCode);
+            if (rowHandle != GridControl.InvalidRowHandle)
+                gV_ProductList.FocusedRowHandle = rowHandle;
         }
 
         private void FormProductList_Activated(object sender, EventArgs e)
@@ -382,6 +387,7 @@ namespace Foxoft
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
                 LoadProducts(productTypeArr);
+                FocusValue(formProduct.dcProduct.ProductCode);
             }
         }
 

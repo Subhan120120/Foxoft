@@ -752,13 +752,13 @@ namespace Foxoft
 
         private void gV_Report_PrintInitialize(object sender, PrintInitializeEventArgs e)
         {
-            PrintingSystemBase pb = e.PrintingSystem as PrintingSystemBase;
-            pb.PageSettings.Landscape = true;
-            pb.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
-            pb.PageSettings.TopMarginF = 0.75f;
-            pb.PageSettings.BottomMarginF = 0.75f;
-            pb.PageSettings.RightMarginF = 0.75f;
-            pb.PageSettings.LeftMarginF = 0.75f;
+            //PrintingSystemBase pb = e.PrintingSystem as PrintingSystemBase;
+            //pb.PageSettings.Landscape = true;
+            //pb.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.A4;
+            //pb.PageSettings.TopMarginF = 0.75f;
+            //pb.PageSettings.BottomMarginF = 0.75f;
+            //pb.PageSettings.RightMarginF = 0.75f;
+            //pb.PageSettings.LeftMarginF = 0.75f;
         }
     }
 }
