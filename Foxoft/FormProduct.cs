@@ -107,7 +107,13 @@ namespace Foxoft
                 {
                     using (var alma = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
-                        pictureEdit.Image = Image.FromStream(alma);
+                        try
+                        {
+                            pictureEdit.Image = Image.FromStream(alma);
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
             }

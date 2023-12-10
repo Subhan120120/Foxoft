@@ -228,12 +228,14 @@ namespace Foxoft.Models
                 new TrClaimReport { ClaimReportId = 3, ClaimCode = "ButunHesabatlar", ReportId = 3 },
                 new TrClaimReport { ClaimReportId = 4, ClaimCode = "ButunHesabatlar", ReportId = 4 },
                 new TrClaimReport { ClaimReportId = 5, ClaimCode = "ButunHesabatlar", ReportId = 5 },
-                new TrClaimReport { ClaimReportId = 6, ClaimCode = "ButunHesabatlar", ReportId = 6 },
-                new TrClaimReport { ClaimReportId = 7, ClaimCode = "ButunHesabatlar", ReportId = 7 },
-                new TrClaimReport { ClaimReportId = 8, ClaimCode = "ButunHesabatlar", ReportId = 8 },
-                new TrClaimReport { ClaimReportId = 9, ClaimCode = "ButunHesabatlar", ReportId = 9 },
-                new TrClaimReport { ClaimReportId = 10, ClaimCode = "ButunHesabatlar", ReportId = 10 },
-                new TrClaimReport { ClaimReportId = 11, ClaimCode = "ButunHesabatlar", ReportId = 11 }
+                new TrClaimReport { ClaimReportId = 11, ClaimCode = "ButunHesabatlar", ReportId = 11 },
+                new TrClaimReport { ClaimReportId = 12, ClaimCode = "ButunHesabatlar", ReportId = 12 },
+                new TrClaimReport { ClaimReportId = 13, ClaimCode = "ButunHesabatlar", ReportId = 13 },
+                new TrClaimReport { ClaimReportId = 14, ClaimCode = "ButunHesabatlar", ReportId = 14 },
+                new TrClaimReport { ClaimReportId = 15, ClaimCode = "ButunHesabatlar", ReportId = 15 },
+                new TrClaimReport { ClaimReportId = 16, ClaimCode = "ButunHesabatlar", ReportId = 16 },
+                new TrClaimReport { ClaimReportId = 17, ClaimCode = "ButunHesabatlar", ReportId = 17 },
+                new TrClaimReport { ClaimReportId = 18, ClaimCode = "ButunHesabatlar", ReportId = 18 }
                );
 
             static string GetReportFile(string fileName)

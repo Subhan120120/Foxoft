@@ -237,10 +237,16 @@ namespace Foxoft
         private bool CheckDueDate()
         {
             string encrypt = efMethods.SelectAppSetting().DueDate;
-            byte[] decript = Convert.FromBase64String(encrypt);
-            string someString = Encoding.ASCII.GetString(decript);
-            DateTime dateTime = DateTime.ParseExact(someString, "yyyyMMdd", null);
-            return dateTime > DateTime.Now;
+
+            if (string.IsNullOrEmpty(encrypt))
+                return false;
+            else
+            {
+                byte[] decript = Convert.FromBase64String(encrypt);
+                string someString = Encoding.ASCII.GetString(decript);
+                DateTime dateTime = DateTime.ParseExact(someString, "yyyyMMdd", null);
+                return dateTime > DateTime.Now;
+            }
         }
 
         private async void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)

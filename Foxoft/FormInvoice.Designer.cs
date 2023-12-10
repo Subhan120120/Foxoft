@@ -501,6 +501,7 @@ namespace Foxoft
             colNetAmountLoc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             colNetAmountLoc.FieldName = "NetAmountLoc";
             colNetAmountLoc.Name = "colNetAmountLoc";
+            colNetAmountLoc.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmountLoc", "{0:n2}") });
             // 
             // colLastPurchasePrice
             // 
