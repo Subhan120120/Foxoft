@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20231216213156_Report_Embedded_ProductList")]
+    partial class Report_Embedded_ProductList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1635,30 +1637,6 @@ namespace Foxoft.Migrations
                     b.HasKey("TerminalId");
 
                     b.ToTable("DcTerminals");
-
-                    b.HasData(
-                        new
-                        {
-                            TerminalId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDisabled = false,
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            TerminalDesc = "Notebook",
-                            TouchScaleFactor = 1,
-                            TouchUIMode = false
-                        },
-                        new
-                        {
-                            TerminalId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDisabled = false,
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
-                            TerminalDesc = "Telefon",
-                            TouchScaleFactor = 2,
-                            TouchUIMode = true
-                        });
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcVariable", b =>

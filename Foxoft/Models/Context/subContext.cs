@@ -142,6 +142,11 @@ namespace Foxoft.Models
                 new DcForm { FormCode = "Products", FormDesc = "Products" }
                 );
 
+            modelBuilder.Entity<DcTerminal>().HasData(
+                new DcTerminal { TerminalId = 1, TerminalDesc = "Notebook", TouchUIMode = false, TouchScaleFactor = 1 },
+                new DcTerminal { TerminalId = 2, TerminalDesc = "Telefon", TouchUIMode = true, TouchScaleFactor = 2 }
+                );
+
             modelBuilder.Entity<DcCurrAcc>().HasData(
                 new DcCurrAcc { CurrAccCode = "C-000001", CurrAccDesc = "Administrator", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "C-000002", CurrAccDesc = "Mudir", LastName = "Mudir", NewPassword = "123", PhoneNum = "0519678909", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
