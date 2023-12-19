@@ -31,14 +31,14 @@ namespace Foxoft
         public FormReportPreview(string query, string filter, DcReport dcReport)
             : this()
         {
-            query = CustomExtensions.AddTop(query, int.MaxValue);
+            query = CustomExtensions.AddTop(query, "100 PERCENT");
 
             string qryMaster = "Select * from ( " + query + " \n) as master";
 
             if (!string.IsNullOrEmpty(filter))
                 qryMaster = qryMaster + " where " + filter;
 
-            XtraReport xtraReport = GetInvoiceReport(dcReport, qryMaster);
+            XtraReport xtraReport = GetInvoiceReport(dcReport, qryMaster + "order by RowNumber");
 
             this.xReport = xtraReport;
             documentViewer1.DocumentSource = xtraReport;

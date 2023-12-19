@@ -71,11 +71,7 @@ namespace Foxoft
 
             InitializeComponent();
 
-            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
-            colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
-            col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
-            checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
-            checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
+            InitializeColumnName();
 
             AddReports();
 
@@ -110,6 +106,15 @@ namespace Foxoft
                             (controlItem.Control as BaseEdit).Leave += item_Leave;
                 }
             }
+        }
+
+        private void InitializeColumnName()
+        {
+            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
+            colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
+            col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
+            checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
+            checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
         }
 
         public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode, Guid invoiceHeaderId)
@@ -1487,14 +1492,7 @@ namespace Foxoft
         {
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
 
-            colBalance.OptionsColumn.ReadOnly = true;
-            colLastPurchasePrice.OptionsColumn.ReadOnly = true;
-            col_NetAmount.OptionsColumn.ReadOnly = true;
-            colNetAmountLoc.OptionsColumn.ReadOnly = true;
-            col_Amount.OptionsColumn.ReadOnly = true;
-            colAmountLoc.OptionsColumn.ReadOnly = true;
-
-            if (dcProcess.ProcessCode == "EX" || dcProcess.ProcessCode == "CI" || dcProcess.ProcessCode == "CO" || dcProcess.ProcessCode == "IT")
+            if (new string[] { "EX", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
                 btnEdit_CurrAccCode.Enabled = false;
                 colBalance.Visible = false;
@@ -1504,6 +1502,7 @@ namespace Foxoft
 
                 if (dcProcess.ProcessCode == "EX")
                     colQty.Visible = false;
+
                 if (dcProcess.ProcessCode == "IT")
                 {
                     btnEdit_CurrAccCode.Enabled = true;
@@ -1513,10 +1512,20 @@ namespace Foxoft
                 }
             }
 
-            string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
-            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "Invoice" + dcProcess.ProcessCode + "Layout.xml");
             if (File.Exists(layoutFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
+
+            colBalance.OptionsColumn.ReadOnly = true;
+            colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+            col_NetAmount.OptionsColumn.ReadOnly = true;
+            colNetAmountLoc.OptionsColumn.ReadOnly = true;
+            col_Amount.OptionsColumn.ReadOnly = true;
+            colAmountLoc.OptionsColumn.ReadOnly = true;
+
+
+            if (!colNetAmountLoc.Summary.Any(x => x.SummaryType == SummaryItemType.Sum))
+                colNetAmountLoc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, "NetAmountLoc", "{0:n2}") });
         }
 
         private void SaveLayout()
@@ -1535,9 +1544,7 @@ namespace Foxoft
                 GridViewColumnMenu menu = e.Menu as GridViewColumnMenu;
                 //menu.Items.Clear();
                 if (menu.Column != null)
-                {
                     menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
-                }
             }
         }
 

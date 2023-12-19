@@ -113,9 +113,9 @@ namespace Foxoft
                     string ts = String.Join(",", currAccTypeArr);
                     string where = " Where CurrAccTypeCode in (" + ts + ") ";
 
-                    string query = CustomExtensions.AddTop(dcReport.ReportQuery, int.MaxValue);
+                    string query = CustomExtensions.AddTop(dcReport.ReportQuery, "100 PERCENT");
 
-                    string qryMaster = "select * from (" + query + " \n) as Master " + where;
+                    string qryMaster = "select * from (" + query + " \n) as Master " + where + "order by RowNumber";
                     //+ " order by CurrAccDesc";
                     DataTable dt = adoMethods.SqlGetDt(qryMaster);
                     if (dt.Rows.Count > 0)

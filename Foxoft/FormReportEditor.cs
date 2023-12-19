@@ -58,9 +58,9 @@ namespace Foxoft
 
             if (!String.IsNullOrEmpty(dcReport?.ReportQuery))
             {
-                string query = CustomExtensions.AddTop(dcReport.ReportQuery, 1);
+                string query = CustomExtensions.AddTop(dcReport.ReportQuery, "1");
 
-                string qryMaster = "select * from (" + query + " \n) as Master ";
+                string qryMaster = "select * from (" + query + " \n) as Master " + "order by RowNumber";
 
                 try
                 {

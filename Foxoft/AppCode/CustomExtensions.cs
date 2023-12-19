@@ -122,7 +122,7 @@ namespace Foxoft
             return ipHost;
         }
 
-        public static string AddTop(string query, int count)
+        public static string AddTop(string query, string count)
         {
             query = query.Trim();
 
@@ -132,8 +132,11 @@ namespace Foxoft
 
             bool topExist = top.Contains("Top", StringComparison.OrdinalIgnoreCase);
 
-            if (!topExist)
-                query = query.Substring(0, selectIndx) + "Select Top " + count.ToString() + query.Substring(selectIndx + 6);
+            if (topExist)
+                query = query.Substring(0, selectIndx) + "Select Top " + count + query.Substring(selectIndx + 6);
+            else 
+                query = query.Substring(0, selectIndx) + "Select Top " + count + " ROW_NUMBER() OVER (Order by (select 0)) as RowNumber, " + query.Substring(selectIndx + 6);
+
             return query;
         }
 
