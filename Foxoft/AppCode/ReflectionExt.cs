@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace Foxoft
 {
-   public static class ReflectionExtensions
+   public static class ReflectionExt
    {
       public static T GetAttribute<T>(this MemberInfo member, bool isRequired)
       where T : Attribute
@@ -32,7 +32,7 @@ namespace Foxoft
          return (T)attribute;
       }
 
-      public static string GetPropertyDisplayName<T>(Expression<Func<T, object>> expression)
+      public static string GetDisplayName<T>(Expression<Func<T, object>> expression)
       {
          MemberInfo memberInfo = GetPropertyInformation(expression.Body);
          if (memberInfo == null)

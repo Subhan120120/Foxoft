@@ -54,19 +54,19 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
-        private void InitializeControlText()
-        {
-            layoutControlItem6.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Price);
-            layoutControlItem7.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Desc);
-            layoutControlItem11.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Slug);
-            layoutControlItem9.Name = ReflectionExtensions.GetPropertyDisplayName<SiteProduct>(x => x.Rating);
-        }
-
         public FormProduct(byte productTypeCode, string productCode)
             : this(productTypeCode, false)
         {
             this.dcProduct.ProductCode = productCode;
             ItemForProductCode.Enabled = false;
+        }
+
+        private void InitializeControlText()
+        {
+            layoutControlItem6.Name = ReflectionExt.GetDisplayName<SiteProduct>(x => x.Price);
+            layoutControlItem7.Name = ReflectionExt.GetDisplayName<SiteProduct>(x => x.Desc);
+            layoutControlItem11.Name = ReflectionExt.GetDisplayName<SiteProduct>(x => x.Slug);
+            layoutControlItem9.Name = ReflectionExt.GetDisplayName<SiteProduct>(x => x.Rating);
         }
 
         private void FormProduct_Load(object sender, EventArgs e)

@@ -31,680 +31,628 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPriceListDetail));
-            this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            this.bBI_DeletePriceList = new DevExpress.XtraBars.BarButtonItem();
-            this.bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
-            this.bBI_NewPriceList = new DevExpress.XtraBars.BarButtonItem();
-            this.BBI_Info = new DevExpress.XtraBars.BarButtonItem();
-            this.BBI_ImportExcel = new DevExpress.XtraBars.BarButtonItem();
-            this.BBI_exportXLSX = new DevExpress.XtraBars.BarButtonItem();
-            this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            this.gC_PriceListLine = new DevExpress.XtraGrid.GridControl();
-            this.trPriceListLinesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gV_PriceListLine = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colPriceListLineId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPriceListHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoBtnEdit_ProductCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            this.colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-            this.colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoCalcEdit_ReceivePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
-            this.repoCalcEdit_MakePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
-            this.DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
-            this.trPriceListHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
-            this.DueDateDateEdit = new DevExpress.XtraEditors.DateEdit();
-            this.DueTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
-            this.DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
-            this.IsDisabledCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            this.IsConfirmedCheckEdit = new DevExpress.XtraEditors.CheckEdit();
-            this.btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
-            this.btnEdit_PriceTypeCode = new DevExpress.XtraEditors.ButtonEdit();
-            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDueDate = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDueTime = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForIsConfirmed = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
-            this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
-            this.dataLayoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gC_PriceListLine)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trPriceListLinesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gV_PriceListLine)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_ReceivePriceList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_MakePriceList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trPriceListHeadersBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentTimeTimeSpanEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DueDateDateEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DueDateDateEdit.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DueTimeTimeSpanEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IsDisabledCheckEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IsConfirmedCheckEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_PriceTypeCode.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentDate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDueDate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDueTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForIsConfirmed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
-            this.SuspendLayout();
+            ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            bBI_DeletePriceList = new DevExpress.XtraBars.BarButtonItem();
+            bBI_SaveAndClose = new DevExpress.XtraBars.BarButtonItem();
+            bBI_NewPriceList = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Info = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ImportExcel = new DevExpress.XtraBars.BarButtonItem();
+            BBI_exportXLSX = new DevExpress.XtraBars.BarButtonItem();
+            ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            gC_PriceListLine = new DevExpress.XtraGrid.GridControl();
+            trPriceListLinesBindingSource = new System.Windows.Forms.BindingSource(components);
+            gV_PriceListLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            colPriceListLineId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPriceListHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoBtnEdit_ProductCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
+            colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoCalcEdit_ReceivePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            repoCalcEdit_MakePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
+            DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
+            trPriceListHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
+            DocumentTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
+            DueDateDateEdit = new DevExpress.XtraEditors.DateEdit();
+            DueTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
+            DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
+            IsDisabledCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            IsConfirmedCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
+            btnEdit_PriceTypeCode = new DevExpress.XtraEditors.ButtonEdit();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDueDate = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDueTime = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForIsConfirmed = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
+            emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
+            dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gC_PriceListLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trPriceListLinesBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gV_PriceListLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePriceList).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePriceList).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trPriceListHeadersBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentTimeTimeSpanEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DueDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DueDateDateEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DueTimeTimeSpanEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IsConfirmedCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_PriceTypeCode.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDueDate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDueTime).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForIsConfirmed).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
+            SuspendLayout();
             // 
             // ribbon
             // 
-            this.ribbon.ExpandCollapseItem.Id = 0;
-            this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbon.ExpandCollapseItem,
-            this.bBI_DeletePriceList,
-            this.bBI_SaveAndClose,
-            this.bBI_NewPriceList,
-            this.BBI_Info,
-            this.BBI_ImportExcel,
-            this.BBI_exportXLSX});
-            this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 12;
-            this.ribbon.Name = "ribbon";
-            this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPage1,
-            this.ribbonPage2});
-            this.ribbon.Size = new System.Drawing.Size(948, 158);
-            this.ribbon.StatusBar = this.ribbonStatusBar;
+            ribbon.ExpandCollapseItem.Id = 0;
+            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, bBI_DeletePriceList, bBI_SaveAndClose, bBI_NewPriceList, BBI_Info, BBI_ImportExcel, BBI_exportXLSX, ribbon.SearchEditItem });
+            ribbon.Location = new System.Drawing.Point(0, 0);
+            ribbon.MaxItemId = 12;
+            ribbon.Name = "ribbon";
+            ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
+            ribbon.Size = new System.Drawing.Size(948, 158);
+            ribbon.StatusBar = ribbonStatusBar;
             // 
             // bBI_DeletePriceList
             // 
-            this.bBI_DeletePriceList.Caption = "Qiymət Siyahısını Sil";
-            this.bBI_DeletePriceList.Id = 1;
-            this.bBI_DeletePriceList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_DeletePriceList.ImageOptions.SvgImage")));
-            this.bBI_DeletePriceList.Name = "bBI_DeletePriceList";
-            this.bBI_DeletePriceList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_DeletePriceList_ItemClick);
+            bBI_DeletePriceList.Caption = "Qiymət Siyahısını Sil";
+            bBI_DeletePriceList.Id = 1;
+            bBI_DeletePriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_DeletePriceList.ImageOptions.SvgImage");
+            bBI_DeletePriceList.Name = "bBI_DeletePriceList";
+            bBI_DeletePriceList.ItemClick += bBI_DeletePriceList_ItemClick;
             // 
             // bBI_SaveAndClose
             // 
-            this.bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
-            this.bBI_SaveAndClose.Id = 2;
-            this.bBI_SaveAndClose.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_SaveAndClose.ImageOptions.SvgImage")));
-            this.bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
-            this.bBI_SaveAndClose.Name = "bBI_SaveAndClose";
-            this.bBI_SaveAndClose.ItemDoubleClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_SaveAndClose_ItemClick);
+            bBI_SaveAndClose.Caption = "Yadda Saxla Bağla";
+            bBI_SaveAndClose.Id = 2;
+            bBI_SaveAndClose.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SaveAndClose.ImageOptions.SvgImage");
+            bBI_SaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
+            bBI_SaveAndClose.Name = "bBI_SaveAndClose";
+            bBI_SaveAndClose.ItemDoubleClick += bBI_SaveAndClose_ItemClick;
             // 
             // bBI_NewPriceList
             // 
-            this.bBI_NewPriceList.Caption = "Yeni Qiymət Siyahısı";
-            this.bBI_NewPriceList.Id = 5;
-            this.bBI_NewPriceList.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("bBI_NewPriceList.ImageOptions.SvgImage")));
-            this.bBI_NewPriceList.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
-            this.bBI_NewPriceList.Name = "bBI_NewPriceList";
-            this.bBI_NewPriceList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bBI_NewPriceList_ItemClick);
+            bBI_NewPriceList.Caption = "Yeni Qiymət Siyahısı";
+            bBI_NewPriceList.Id = 5;
+            bBI_NewPriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_NewPriceList.ImageOptions.SvgImage");
+            bBI_NewPriceList.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N);
+            bBI_NewPriceList.Name = "bBI_NewPriceList";
+            bBI_NewPriceList.ItemClick += bBI_NewPriceList_ItemClick;
             // 
             // BBI_Info
             // 
-            this.BBI_Info.Caption = "İnfo";
-            this.BBI_Info.Id = 10;
-            this.BBI_Info.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_Info.ImageOptions.SvgImage")));
-            this.BBI_Info.Name = "BBI_Info";
+            BBI_Info.Caption = "İnfo";
+            BBI_Info.Id = 10;
+            BBI_Info.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Info.ImageOptions.SvgImage");
+            BBI_Info.Name = "BBI_Info";
             // 
             // BBI_ImportExcel
             // 
-            this.BBI_ImportExcel.Caption = "Excel\'dən Al";
-            this.BBI_ImportExcel.Id = 11;
-            this.BBI_ImportExcel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_ImportExcel.ImageOptions.SvgImage")));
-            this.BBI_ImportExcel.Name = "BBI_ImportExcel";
-            this.BBI_ImportExcel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_ImportExcel_ItemClick);
+            BBI_ImportExcel.Caption = "Excel'dən Al";
+            BBI_ImportExcel.Id = 11;
+            BBI_ImportExcel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ImportExcel.ImageOptions.SvgImage");
+            BBI_ImportExcel.Name = "BBI_ImportExcel";
+            BBI_ImportExcel.ItemClick += BBI_ImportExcel_ItemClick;
             // 
             // BBI_exportXLSX
             // 
-            this.BBI_exportXLSX.Caption = "Excel\'ə Göndər";
-            this.BBI_exportXLSX.Id = 22;
-            this.BBI_exportXLSX.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BBI_exportXLSX.ImageOptions.SvgImage")));
-            this.BBI_exportXLSX.Name = "BBI_exportXLSX";
-            this.BBI_exportXLSX.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_exportXLSX_ItemClick);
+            BBI_exportXLSX.Caption = "Excel'ə Göndər";
+            BBI_exportXLSX.Id = 22;
+            BBI_exportXLSX.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_exportXLSX.ImageOptions.SvgImage");
+            BBI_exportXLSX.Name = "BBI_exportXLSX";
+            BBI_exportXLSX.ItemClick += BBI_exportXLSX_ItemClick;
             // 
             // ribbonPage1
             // 
-            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup3});
-            this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "Ödəmə";
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
+            ribbonPage1.Name = "ribbonPage1";
+            ribbonPage1.Text = "Ödəmə";
             // 
             // ribbonPageGroup1
             // 
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_SaveAndClose);
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_NewPriceList);
-            this.ribbonPageGroup1.ItemLinks.Add(this.bBI_DeletePriceList);
-            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "Ödəmə";
+            ribbonPageGroup1.ItemLinks.Add(bBI_SaveAndClose);
+            ribbonPageGroup1.ItemLinks.Add(bBI_NewPriceList);
+            ribbonPageGroup1.ItemLinks.Add(bBI_DeletePriceList);
+            ribbonPageGroup1.Name = "ribbonPageGroup1";
+            ribbonPageGroup1.Text = "Ödəmə";
             // 
             // ribbonPageGroup3
             // 
-            this.ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
-            this.ribbonPageGroup3.ItemLinks.Add(this.BBI_Info);
-            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
-            this.ribbonPageGroup3.Text = "Məlumat";
+            ribbonPageGroup3.Alignment = DevExpress.XtraBars.Ribbon.RibbonPageGroupAlignment.Far;
+            ribbonPageGroup3.ItemLinks.Add(BBI_Info);
+            ribbonPageGroup3.Name = "ribbonPageGroup3";
+            ribbonPageGroup3.Text = "Məlumat";
             // 
             // ribbonPage2
             // 
-            this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup2});
-            this.ribbonPage2.Name = "ribbonPage2";
-            this.ribbonPage2.Text = "Ayarlar";
+            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2 });
+            ribbonPage2.Name = "ribbonPage2";
+            ribbonPage2.Text = "Ayarlar";
             // 
             // ribbonPageGroup2
             // 
-            this.ribbonPageGroup2.ItemLinks.Add(this.BBI_ImportExcel);
-            this.ribbonPageGroup2.ItemLinks.Add(this.BBI_exportXLSX);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "Excel";
+            ribbonPageGroup2.ItemLinks.Add(BBI_ImportExcel);
+            ribbonPageGroup2.ItemLinks.Add(BBI_exportXLSX);
+            ribbonPageGroup2.Name = "ribbonPageGroup2";
+            ribbonPageGroup2.Text = "Excel";
             // 
             // ribbonStatusBar
             // 
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 623);
-            this.ribbonStatusBar.Name = "ribbonStatusBar";
-            this.ribbonStatusBar.Ribbon = this.ribbon;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(948, 24);
+            ribbonStatusBar.Location = new System.Drawing.Point(0, 623);
+            ribbonStatusBar.Name = "ribbonStatusBar";
+            ribbonStatusBar.Ribbon = ribbon;
+            ribbonStatusBar.Size = new System.Drawing.Size(948, 24);
             // 
             // dataLayoutControl1
             // 
-            this.dataLayoutControl1.Controls.Add(this.gC_PriceListLine);
-            this.dataLayoutControl1.Controls.Add(this.DocumentDateDateEdit);
-            this.dataLayoutControl1.Controls.Add(this.DocumentTimeTimeSpanEdit);
-            this.dataLayoutControl1.Controls.Add(this.DueDateDateEdit);
-            this.dataLayoutControl1.Controls.Add(this.DueTimeTimeSpanEdit);
-            this.dataLayoutControl1.Controls.Add(this.DescriptionTextEdit);
-            this.dataLayoutControl1.Controls.Add(this.IsDisabledCheckEdit);
-            this.dataLayoutControl1.Controls.Add(this.IsConfirmedCheckEdit);
-            this.dataLayoutControl1.Controls.Add(this.btnEdit_DocNum);
-            this.dataLayoutControl1.Controls.Add(this.btnEdit_PriceTypeCode);
-            this.dataLayoutControl1.DataSource = this.trPriceListHeadersBindingSource;
-            this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataLayoutControl1.Location = new System.Drawing.Point(0, 158);
-            this.dataLayoutControl1.Name = "dataLayoutControl1";
-            this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(947, 331, 650, 400);
-            this.dataLayoutControl1.Root = this.Root;
-            this.dataLayoutControl1.Size = new System.Drawing.Size(948, 465);
-            this.dataLayoutControl1.TabIndex = 2;
-            this.dataLayoutControl1.Text = "dataLayoutControl1";
+            dataLayoutControl1.Controls.Add(gC_PriceListLine);
+            dataLayoutControl1.Controls.Add(DocumentDateDateEdit);
+            dataLayoutControl1.Controls.Add(DocumentTimeTimeSpanEdit);
+            dataLayoutControl1.Controls.Add(DueDateDateEdit);
+            dataLayoutControl1.Controls.Add(DueTimeTimeSpanEdit);
+            dataLayoutControl1.Controls.Add(DescriptionTextEdit);
+            dataLayoutControl1.Controls.Add(IsDisabledCheckEdit);
+            dataLayoutControl1.Controls.Add(IsConfirmedCheckEdit);
+            dataLayoutControl1.Controls.Add(btnEdit_DocNum);
+            dataLayoutControl1.Controls.Add(btnEdit_PriceTypeCode);
+            dataLayoutControl1.DataSource = trPriceListHeadersBindingSource;
+            dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataLayoutControl1.Location = new System.Drawing.Point(0, 158);
+            dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(947, 331, 650, 400);
+            dataLayoutControl1.Root = Root;
+            dataLayoutControl1.Size = new System.Drawing.Size(948, 465);
+            dataLayoutControl1.TabIndex = 2;
+            dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // gC_PriceListLine
             // 
-            this.gC_PriceListLine.DataSource = this.trPriceListLinesBindingSource;
-            this.gC_PriceListLine.Location = new System.Drawing.Point(12, 108);
-            this.gC_PriceListLine.MainView = this.gV_PriceListLine;
-            this.gC_PriceListLine.MenuManager = this.ribbon;
-            this.gC_PriceListLine.Name = "gC_PriceListLine";
-            this.gC_PriceListLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repoLUE_CurrencyCode,
-            this.repoCalcEdit_ReceivePriceList,
-            this.repoCalcEdit_MakePriceList,
-            this.repoBtnEdit_ProductCode});
-            this.gC_PriceListLine.Size = new System.Drawing.Size(924, 345);
-            this.gC_PriceListLine.TabIndex = 9;
-            this.gC_PriceListLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gV_PriceListLine});
-            this.gC_PriceListLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gC_PriceListLine_KeyDown);
+            gC_PriceListLine.DataSource = trPriceListLinesBindingSource;
+            gC_PriceListLine.Location = new System.Drawing.Point(12, 108);
+            gC_PriceListLine.MainView = gV_PriceListLine;
+            gC_PriceListLine.MenuManager = ribbon;
+            gC_PriceListLine.Name = "gC_PriceListLine";
+            gC_PriceListLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_CurrencyCode, repoCalcEdit_ReceivePriceList, repoCalcEdit_MakePriceList, repoBtnEdit_ProductCode });
+            gC_PriceListLine.Size = new System.Drawing.Size(924, 345);
+            gC_PriceListLine.TabIndex = 9;
+            gC_PriceListLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_PriceListLine });
+            gC_PriceListLine.KeyDown += gC_PriceListLine_KeyDown;
             // 
             // trPriceListLinesBindingSource
             // 
-            this.trPriceListLinesBindingSource.DataSource = typeof(Foxoft.Models.TrPriceListLine);
+            trPriceListLinesBindingSource.DataSource = typeof(TrPriceListLine);
             // 
             // gV_PriceListLine
             // 
-            this.gV_PriceListLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colPriceListLineId,
-            this.colPriceListHeaderId,
-            this.colProductCode,
-            this.colPrice,
-            this.colCurrencyCode,
-            this.colLineDescription,
-            this.colProductDesc,
-            this.colLastPurchasePrice});
-            this.gV_PriceListLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 390, 264, 272);
-            this.gV_PriceListLine.GridControl = this.gC_PriceListLine;
-            this.gV_PriceListLine.Name = "gV_PriceListLine";
-            this.gV_PriceListLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-            this.gV_PriceListLine.OptionsNavigation.AutoFocusNewRow = true;
-            this.gV_PriceListLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-            this.gV_PriceListLine.OptionsView.ShowGroupPanel = false;
-            this.gV_PriceListLine.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gV_PriceListLine_RowCellStyle);
-            this.gV_PriceListLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_PriceListLine_InitNewRow);
-            this.gV_PriceListLine.RowDeleted += new DevExpress.Data.RowDeletedEventHandler(this.gV_PriceListLine_RowDeleted);
-            this.gV_PriceListLine.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gV_PriceListLine_RowUpdated);
-            this.gV_PriceListLine.CustomUnboundColumnData += new DevExpress.XtraGrid.Views.Base.CustomColumnDataEventHandler(this.gV_PriceListLine_CustomUnboundColumnData);
+            gV_PriceListLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListLineId, colPriceListHeaderId, colProductCode, colPrice, colCurrencyCode, colLineDescription, colProductDesc, colLastPurchasePrice });
+            gV_PriceListLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 390, 264, 272);
+            gV_PriceListLine.GridControl = gC_PriceListLine;
+            gV_PriceListLine.Name = "gV_PriceListLine";
+            gV_PriceListLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            gV_PriceListLine.OptionsNavigation.AutoFocusNewRow = true;
+            gV_PriceListLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            gV_PriceListLine.OptionsView.ShowGroupPanel = false;
+            gV_PriceListLine.RowCellStyle += gV_PriceListLine_RowCellStyle;
+            gV_PriceListLine.InitNewRow += gV_PriceListLine_InitNewRow;
+            gV_PriceListLine.RowDeleted += gV_PriceListLine_RowDeleted;
+            gV_PriceListLine.RowUpdated += gV_PriceListLine_RowUpdated;
+            gV_PriceListLine.CustomUnboundColumnData += gV_PriceListLine_CustomUnboundColumnData;
             // 
             // colPriceListLineId
             // 
-            this.colPriceListLineId.FieldName = "PriceListLineId";
-            this.colPriceListLineId.Name = "colPriceListLineId";
-            this.colPriceListLineId.OptionsColumn.AllowEdit = false;
-            this.colPriceListLineId.OptionsColumn.ReadOnly = true;
+            colPriceListLineId.FieldName = "PriceListLineId";
+            colPriceListLineId.Name = "colPriceListLineId";
+            colPriceListLineId.OptionsColumn.AllowEdit = false;
+            colPriceListLineId.OptionsColumn.ReadOnly = true;
             // 
             // colPriceListHeaderId
             // 
-            this.colPriceListHeaderId.FieldName = "PriceListHeaderId";
-            this.colPriceListHeaderId.Name = "colPriceListHeaderId";
-            this.colPriceListHeaderId.OptionsColumn.AllowEdit = false;
-            this.colPriceListHeaderId.OptionsColumn.ReadOnly = true;
+            colPriceListHeaderId.FieldName = "PriceListHeaderId";
+            colPriceListHeaderId.Name = "colPriceListHeaderId";
+            colPriceListHeaderId.OptionsColumn.AllowEdit = false;
+            colPriceListHeaderId.OptionsColumn.ReadOnly = true;
             // 
             // colProductCode
             // 
-            this.colProductCode.ColumnEdit = this.repoBtnEdit_ProductCode;
-            this.colProductCode.FieldName = "ProductCode";
-            this.colProductCode.Name = "colProductCode";
-            this.colProductCode.Visible = true;
-            this.colProductCode.VisibleIndex = 0;
-            this.colProductCode.Width = 118;
+            colProductCode.ColumnEdit = repoBtnEdit_ProductCode;
+            colProductCode.FieldName = "ProductCode";
+            colProductCode.Name = "colProductCode";
+            colProductCode.Visible = true;
+            colProductCode.VisibleIndex = 0;
+            colProductCode.Width = 118;
             // 
             // repoBtnEdit_ProductCode
             // 
-            this.repoBtnEdit_ProductCode.AutoHeight = false;
-            this.repoBtnEdit_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
-            this.repoBtnEdit_ProductCode.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoBtnEdit_ProductCode_ButtonPressed);
+            repoBtnEdit_ProductCode.AutoHeight = false;
+            repoBtnEdit_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
+            repoBtnEdit_ProductCode.ButtonPressed += repoBtnEdit_ProductCode_ButtonPressed;
             // 
             // colPrice
             // 
-            this.colPrice.FieldName = "Price";
-            this.colPrice.Name = "colPrice";
-            this.colPrice.Visible = true;
-            this.colPrice.VisibleIndex = 2;
-            this.colPrice.Width = 101;
+            colPrice.FieldName = "Price";
+            colPrice.Name = "colPrice";
+            colPrice.Visible = true;
+            colPrice.VisibleIndex = 2;
+            colPrice.Width = 101;
             // 
             // colCurrencyCode
             // 
-            this.colCurrencyCode.ColumnEdit = this.repoLUE_CurrencyCode;
-            this.colCurrencyCode.FieldName = "CurrencyCode";
-            this.colCurrencyCode.Name = "colCurrencyCode";
-            this.colCurrencyCode.Visible = true;
-            this.colCurrencyCode.VisibleIndex = 3;
-            this.colCurrencyCode.Width = 108;
+            colCurrencyCode.ColumnEdit = repoLUE_CurrencyCode;
+            colCurrencyCode.FieldName = "CurrencyCode";
+            colCurrencyCode.Name = "colCurrencyCode";
+            colCurrencyCode.Visible = true;
+            colCurrencyCode.VisibleIndex = 3;
+            colCurrencyCode.Width = 108;
             // 
             // repoLUE_CurrencyCode
             // 
-            this.repoLUE_CurrencyCode.AutoHeight = false;
-            this.repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
-            this.repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""),
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "")});
-            this.repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
-            this.repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
-            this.repoLUE_CurrencyCode.NullText = "";
-            this.repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
-            this.repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
-            this.repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
+            repoLUE_CurrencyCode.AutoHeight = false;
+            repoLUE_CurrencyCode.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup;
+            repoLUE_CurrencyCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_CurrencyCode.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrencyDesc", "") });
+            repoLUE_CurrencyCode.DisplayMember = "CurrencyDesc";
+            repoLUE_CurrencyCode.Name = "repoLUE_CurrencyCode";
+            repoLUE_CurrencyCode.NullText = "";
+            repoLUE_CurrencyCode.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
+            repoLUE_CurrencyCode.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
+            repoLUE_CurrencyCode.ValueMember = "CurrencyCode";
             // 
             // colLineDescription
             // 
-            this.colLineDescription.FieldName = "LineDescription";
-            this.colLineDescription.Name = "colLineDescription";
-            this.colLineDescription.Visible = true;
-            this.colLineDescription.VisibleIndex = 4;
-            this.colLineDescription.Width = 242;
+            colLineDescription.FieldName = "LineDescription";
+            colLineDescription.Name = "colLineDescription";
+            colLineDescription.Visible = true;
+            colLineDescription.VisibleIndex = 4;
+            colLineDescription.Width = 242;
             // 
             // colProductDesc
             // 
-            this.colProductDesc.FieldName = "DcProduct.ProductDesc";
-            this.colProductDesc.Name = "colProductDesc";
-            this.colProductDesc.OptionsColumn.AllowEdit = false;
-            this.colProductDesc.OptionsColumn.ReadOnly = true;
-            this.colProductDesc.UnboundDataType = typeof(string);
-            this.colProductDesc.Visible = true;
-            this.colProductDesc.VisibleIndex = 1;
-            this.colProductDesc.Width = 421;
+            colProductDesc.FieldName = "DcProduct.ProductDesc";
+            colProductDesc.Name = "colProductDesc";
+            colProductDesc.OptionsColumn.AllowEdit = false;
+            colProductDesc.OptionsColumn.ReadOnly = true;
+            colProductDesc.UnboundDataType = typeof(string);
+            colProductDesc.Visible = true;
+            colProductDesc.VisibleIndex = 1;
+            colProductDesc.Width = 421;
             // 
             // colLastPurchasePrice
             // 
-            this.colLastPurchasePrice.FieldName = "DcProduct.LastPurchasePrice";
-            this.colLastPurchasePrice.Name = "colLastPurchasePrice";
-            this.colLastPurchasePrice.OptionsColumn.AllowEdit = false;
-            this.colLastPurchasePrice.OptionsColumn.ReadOnly = true;
-            this.colLastPurchasePrice.UnboundDataType = typeof(decimal);
-            this.colLastPurchasePrice.Visible = true;
-            this.colLastPurchasePrice.VisibleIndex = 5;
+            colLastPurchasePrice.FieldName = "DcProduct.LastPurchasePrice";
+            colLastPurchasePrice.Name = "colLastPurchasePrice";
+            colLastPurchasePrice.OptionsColumn.AllowEdit = false;
+            colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+            colLastPurchasePrice.UnboundDataType = typeof(decimal);
+            colLastPurchasePrice.Visible = true;
+            colLastPurchasePrice.VisibleIndex = 5;
             // 
             // repoCalcEdit_ReceivePriceList
             // 
-            this.repoCalcEdit_ReceivePriceList.AutoHeight = false;
-            this.repoCalcEdit_ReceivePriceList.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoCalcEdit_ReceivePriceList.Name = "repoCalcEdit_ReceivePriceList";
+            repoCalcEdit_ReceivePriceList.AutoHeight = false;
+            repoCalcEdit_ReceivePriceList.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoCalcEdit_ReceivePriceList.Name = "repoCalcEdit_ReceivePriceList";
             // 
             // repoCalcEdit_MakePriceList
             // 
-            this.repoCalcEdit_MakePriceList.AutoHeight = false;
-            this.repoCalcEdit_MakePriceList.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repoCalcEdit_MakePriceList.Name = "repoCalcEdit_MakePriceList";
+            repoCalcEdit_MakePriceList.AutoHeight = false;
+            repoCalcEdit_MakePriceList.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoCalcEdit_MakePriceList.Name = "repoCalcEdit_MakePriceList";
             // 
             // DocumentDateDateEdit
             // 
-            this.DocumentDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "DocumentDate", true));
-            this.DocumentDateDateEdit.EditValue = null;
-            this.DocumentDateDateEdit.Location = new System.Drawing.Point(135, 36);
-            this.DocumentDateDateEdit.MenuManager = this.ribbon;
-            this.DocumentDateDateEdit.Name = "DocumentDateDateEdit";
-            this.DocumentDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.DocumentDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.DocumentDateDateEdit.Size = new System.Drawing.Size(337, 20);
-            this.DocumentDateDateEdit.StyleController = this.dataLayoutControl1;
-            this.DocumentDateDateEdit.TabIndex = 2;
+            DocumentDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "DocumentDate", true));
+            DocumentDateDateEdit.EditValue = null;
+            DocumentDateDateEdit.Location = new System.Drawing.Point(135, 36);
+            DocumentDateDateEdit.MenuManager = ribbon;
+            DocumentDateDateEdit.Name = "DocumentDateDateEdit";
+            DocumentDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DocumentDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DocumentDateDateEdit.Size = new System.Drawing.Size(337, 20);
+            DocumentDateDateEdit.StyleController = dataLayoutControl1;
+            DocumentDateDateEdit.TabIndex = 2;
             // 
             // trPriceListHeadersBindingSource
             // 
-            this.trPriceListHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrPriceListHeader);
-            this.trPriceListHeadersBindingSource.AddingNew += new System.ComponentModel.AddingNewEventHandler(this.trPriceListHeadersBindingSource_AddingNew);
-            this.trPriceListHeadersBindingSource.CurrentItemChanged += new System.EventHandler(this.trPriceListHeadersBindingSource_CurrentItemChanged);
+            trPriceListHeadersBindingSource.DataSource = typeof(TrPriceListHeader);
+            trPriceListHeadersBindingSource.AddingNew += trPriceListHeadersBindingSource_AddingNew;
+            trPriceListHeadersBindingSource.CurrentItemChanged += trPriceListHeadersBindingSource_CurrentItemChanged;
             // 
             // DocumentTimeTimeSpanEdit
             // 
-            this.DocumentTimeTimeSpanEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "DocumentTime", true));
-            this.DocumentTimeTimeSpanEdit.EditValue = System.TimeSpan.Parse("00:00:00");
-            this.DocumentTimeTimeSpanEdit.Location = new System.Drawing.Point(135, 60);
-            this.DocumentTimeTimeSpanEdit.MenuManager = this.ribbon;
-            this.DocumentTimeTimeSpanEdit.Name = "DocumentTimeTimeSpanEdit";
-            this.DocumentTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.DocumentTimeTimeSpanEdit.Size = new System.Drawing.Size(337, 20);
-            this.DocumentTimeTimeSpanEdit.StyleController = this.dataLayoutControl1;
-            this.DocumentTimeTimeSpanEdit.TabIndex = 4;
+            DocumentTimeTimeSpanEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "DocumentTime", true));
+            DocumentTimeTimeSpanEdit.EditValue = System.TimeSpan.Parse("00:00:00");
+            DocumentTimeTimeSpanEdit.Location = new System.Drawing.Point(135, 60);
+            DocumentTimeTimeSpanEdit.MenuManager = ribbon;
+            DocumentTimeTimeSpanEdit.Name = "DocumentTimeTimeSpanEdit";
+            DocumentTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DocumentTimeTimeSpanEdit.Size = new System.Drawing.Size(337, 20);
+            DocumentTimeTimeSpanEdit.StyleController = dataLayoutControl1;
+            DocumentTimeTimeSpanEdit.TabIndex = 4;
             // 
             // DueDateDateEdit
             // 
-            this.DueDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "DueDate", true));
-            this.DueDateDateEdit.EditValue = null;
-            this.DueDateDateEdit.Location = new System.Drawing.Point(599, 36);
-            this.DueDateDateEdit.MenuManager = this.ribbon;
-            this.DueDateDateEdit.Name = "DueDateDateEdit";
-            this.DueDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.DueDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.DueDateDateEdit.Size = new System.Drawing.Size(337, 20);
-            this.DueDateDateEdit.StyleController = this.dataLayoutControl1;
-            this.DueDateDateEdit.TabIndex = 3;
+            DueDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "DueDate", true));
+            DueDateDateEdit.EditValue = null;
+            DueDateDateEdit.Location = new System.Drawing.Point(599, 36);
+            DueDateDateEdit.MenuManager = ribbon;
+            DueDateDateEdit.Name = "DueDateDateEdit";
+            DueDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DueDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DueDateDateEdit.Size = new System.Drawing.Size(337, 20);
+            DueDateDateEdit.StyleController = dataLayoutControl1;
+            DueDateDateEdit.TabIndex = 3;
             // 
             // DueTimeTimeSpanEdit
             // 
-            this.DueTimeTimeSpanEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "DueTime", true));
-            this.DueTimeTimeSpanEdit.EditValue = System.TimeSpan.Parse("00:00:00");
-            this.DueTimeTimeSpanEdit.Location = new System.Drawing.Point(599, 60);
-            this.DueTimeTimeSpanEdit.MenuManager = this.ribbon;
-            this.DueTimeTimeSpanEdit.Name = "DueTimeTimeSpanEdit";
-            this.DueTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.DueTimeTimeSpanEdit.Size = new System.Drawing.Size(337, 20);
-            this.DueTimeTimeSpanEdit.StyleController = this.dataLayoutControl1;
-            this.DueTimeTimeSpanEdit.TabIndex = 5;
+            DueTimeTimeSpanEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "DueTime", true));
+            DueTimeTimeSpanEdit.EditValue = System.TimeSpan.Parse("00:00:00");
+            DueTimeTimeSpanEdit.Location = new System.Drawing.Point(599, 60);
+            DueTimeTimeSpanEdit.MenuManager = ribbon;
+            DueTimeTimeSpanEdit.Name = "DueTimeTimeSpanEdit";
+            DueTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DueTimeTimeSpanEdit.Size = new System.Drawing.Size(337, 20);
+            DueTimeTimeSpanEdit.StyleController = dataLayoutControl1;
+            DueTimeTimeSpanEdit.TabIndex = 5;
             // 
             // DescriptionTextEdit
             // 
-            this.DescriptionTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "Description", true));
-            this.DescriptionTextEdit.Location = new System.Drawing.Point(599, 84);
-            this.DescriptionTextEdit.MenuManager = this.ribbon;
-            this.DescriptionTextEdit.Name = "DescriptionTextEdit";
-            this.DescriptionTextEdit.Size = new System.Drawing.Size(337, 20);
-            this.DescriptionTextEdit.StyleController = this.dataLayoutControl1;
-            this.DescriptionTextEdit.TabIndex = 8;
+            DescriptionTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "Description", true));
+            DescriptionTextEdit.Location = new System.Drawing.Point(599, 84);
+            DescriptionTextEdit.MenuManager = ribbon;
+            DescriptionTextEdit.Name = "DescriptionTextEdit";
+            DescriptionTextEdit.Size = new System.Drawing.Size(337, 20);
+            DescriptionTextEdit.StyleController = dataLayoutControl1;
+            DescriptionTextEdit.TabIndex = 8;
             // 
             // IsDisabledCheckEdit
             // 
-            this.IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "IsDisabled", true));
-            this.IsDisabledCheckEdit.Location = new System.Drawing.Point(244, 84);
-            this.IsDisabledCheckEdit.MenuManager = this.ribbon;
-            this.IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
-            this.IsDisabledCheckEdit.Properties.Caption = "Ləğv Edilib";
-            this.IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.IsDisabledCheckEdit.Size = new System.Drawing.Size(212, 20);
-            this.IsDisabledCheckEdit.StyleController = this.dataLayoutControl1;
-            this.IsDisabledCheckEdit.TabIndex = 7;
+            IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "IsDisabled", true));
+            IsDisabledCheckEdit.Location = new System.Drawing.Point(138, 84);
+            IsDisabledCheckEdit.MenuManager = ribbon;
+            IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
+            IsDisabledCheckEdit.Properties.Caption = "Ləğv Edilib";
+            IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            IsDisabledCheckEdit.Size = new System.Drawing.Size(122, 20);
+            IsDisabledCheckEdit.StyleController = dataLayoutControl1;
+            IsDisabledCheckEdit.TabIndex = 7;
             // 
             // IsConfirmedCheckEdit
             // 
-            this.IsConfirmedCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "IsConfirmed", true));
-            this.IsConfirmedCheckEdit.Location = new System.Drawing.Point(12, 84);
-            this.IsConfirmedCheckEdit.MenuManager = this.ribbon;
-            this.IsConfirmedCheckEdit.Name = "IsConfirmedCheckEdit";
-            this.IsConfirmedCheckEdit.Properties.Caption = "Təsdiqlənib";
-            this.IsConfirmedCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            this.IsConfirmedCheckEdit.Size = new System.Drawing.Size(228, 20);
-            this.IsConfirmedCheckEdit.StyleController = this.dataLayoutControl1;
-            this.IsConfirmedCheckEdit.TabIndex = 6;
+            IsConfirmedCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "IsConfirmed", true));
+            IsConfirmedCheckEdit.Location = new System.Drawing.Point(12, 84);
+            IsConfirmedCheckEdit.MenuManager = ribbon;
+            IsConfirmedCheckEdit.Name = "IsConfirmedCheckEdit";
+            IsConfirmedCheckEdit.Properties.Caption = "Təsdiqlənib";
+            IsConfirmedCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            IsConfirmedCheckEdit.Size = new System.Drawing.Size(122, 20);
+            IsConfirmedCheckEdit.StyleController = dataLayoutControl1;
+            IsConfirmedCheckEdit.TabIndex = 6;
             // 
             // btnEdit_DocNum
             // 
-            this.btnEdit_DocNum.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "DocumentNumber", true));
-            this.btnEdit_DocNum.Location = new System.Drawing.Point(135, 12);
-            this.btnEdit_DocNum.MenuManager = this.ribbon;
-            this.btnEdit_DocNum.Name = "btnEdit_DocNum";
-            this.btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnEdit_DocNum.Size = new System.Drawing.Size(337, 20);
-            this.btnEdit_DocNum.StyleController = this.dataLayoutControl1;
-            this.btnEdit_DocNum.TabIndex = 0;
-            this.btnEdit_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_DocNum_ButtonPressed);
+            btnEdit_DocNum.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "DocumentNumber", true));
+            btnEdit_DocNum.Location = new System.Drawing.Point(135, 12);
+            btnEdit_DocNum.MenuManager = ribbon;
+            btnEdit_DocNum.Name = "btnEdit_DocNum";
+            btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_DocNum.Size = new System.Drawing.Size(337, 20);
+            btnEdit_DocNum.StyleController = dataLayoutControl1;
+            btnEdit_DocNum.TabIndex = 0;
+            btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
             // 
             // btnEdit_PriceTypeCode
             // 
-            this.btnEdit_PriceTypeCode.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trPriceListHeadersBindingSource, "PriceTypeCode", true));
-            this.btnEdit_PriceTypeCode.Location = new System.Drawing.Point(599, 12);
-            this.btnEdit_PriceTypeCode.MenuManager = this.ribbon;
-            this.btnEdit_PriceTypeCode.Name = "btnEdit_PriceTypeCode";
-            this.btnEdit_PriceTypeCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.btnEdit_PriceTypeCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnEdit_PriceTypeCode.Size = new System.Drawing.Size(337, 20);
-            this.btnEdit_PriceTypeCode.StyleController = this.dataLayoutControl1;
-            this.btnEdit_PriceTypeCode.TabIndex = 10;
-            this.btnEdit_PriceTypeCode.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_PriceTypeCode_ButtonPressed);
+            btnEdit_PriceTypeCode.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", trPriceListHeadersBindingSource, "PriceTypeCode", true));
+            btnEdit_PriceTypeCode.Location = new System.Drawing.Point(599, 12);
+            btnEdit_PriceTypeCode.MenuManager = ribbon;
+            btnEdit_PriceTypeCode.Name = "btnEdit_PriceTypeCode";
+            btnEdit_PriceTypeCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            btnEdit_PriceTypeCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_PriceTypeCode.Size = new System.Drawing.Size(337, 20);
+            btnEdit_PriceTypeCode.StyleController = dataLayoutControl1;
+            btnEdit_PriceTypeCode.TabIndex = 10;
+            btnEdit_PriceTypeCode.ButtonPressed += btnEdit_PriceTypeCode_ButtonPressed;
             // 
             // Root
             // 
-            this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.Root.GroupBordersVisible = false;
-            this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlGroup1});
-            this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(948, 465);
-            this.Root.TextVisible = false;
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Name = "Root";
+            Root.Size = new System.Drawing.Size(948, 465);
+            Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
-            this.layoutControlGroup1.AllowDrawBackground = false;
-            this.layoutControlGroup1.GroupBordersVisible = false;
-            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.ItemForDocumentDate,
-            this.ItemForDocumentTime,
-            this.ItemForDueDate,
-            this.ItemForDueTime,
-            this.ItemForDescription,
-            this.ItemForIsConfirmed,
-            this.ItemForIsDisabled,
-            this.emptySpaceItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroup1.Name = "autoGeneratedGroup0";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(928, 445);
+            layoutControlGroup1.AllowDrawBackground = false;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, ItemForDocumentDate, ItemForDocumentTime, ItemForDueDate, ItemForDueTime, ItemForDescription, ItemForIsConfirmed, ItemForIsDisabled, emptySpaceItem1, layoutControlItem2, layoutControlItem3 });
+            layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            layoutControlGroup1.Name = "autoGeneratedGroup0";
+            layoutControlGroup1.Size = new System.Drawing.Size(928, 445);
             // 
             // layoutControlItem1
             // 
-            this.layoutControlItem1.Control = this.gC_PriceListLine;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 96);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(928, 349);
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem1.TextVisible = false;
+            layoutControlItem1.Control = gC_PriceListLine;
+            layoutControlItem1.Location = new System.Drawing.Point(0, 96);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new System.Drawing.Size(928, 349);
+            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem1.TextVisible = false;
             // 
             // ItemForDocumentDate
             // 
-            this.ItemForDocumentDate.Control = this.DocumentDateDateEdit;
-            this.ItemForDocumentDate.Location = new System.Drawing.Point(0, 24);
-            this.ItemForDocumentDate.Name = "ItemForDocumentDate";
-            this.ItemForDocumentDate.Size = new System.Drawing.Size(464, 24);
-            this.ItemForDocumentDate.TextSize = new System.Drawing.Size(111, 13);
+            ItemForDocumentDate.Control = DocumentDateDateEdit;
+            ItemForDocumentDate.Location = new System.Drawing.Point(0, 24);
+            ItemForDocumentDate.Name = "ItemForDocumentDate";
+            ItemForDocumentDate.Size = new System.Drawing.Size(464, 24);
+            ItemForDocumentDate.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDocumentTime
             // 
-            this.ItemForDocumentTime.Control = this.DocumentTimeTimeSpanEdit;
-            this.ItemForDocumentTime.Location = new System.Drawing.Point(0, 48);
-            this.ItemForDocumentTime.Name = "ItemForDocumentTime";
-            this.ItemForDocumentTime.Size = new System.Drawing.Size(464, 24);
-            this.ItemForDocumentTime.TextSize = new System.Drawing.Size(111, 13);
+            ItemForDocumentTime.Control = DocumentTimeTimeSpanEdit;
+            ItemForDocumentTime.Location = new System.Drawing.Point(0, 48);
+            ItemForDocumentTime.Name = "ItemForDocumentTime";
+            ItemForDocumentTime.Size = new System.Drawing.Size(464, 24);
+            ItemForDocumentTime.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDueDate
             // 
-            this.ItemForDueDate.Control = this.DueDateDateEdit;
-            this.ItemForDueDate.Location = new System.Drawing.Point(464, 24);
-            this.ItemForDueDate.Name = "ItemForDueDate";
-            this.ItemForDueDate.Size = new System.Drawing.Size(464, 24);
-            this.ItemForDueDate.TextSize = new System.Drawing.Size(111, 13);
+            ItemForDueDate.Control = DueDateDateEdit;
+            ItemForDueDate.Location = new System.Drawing.Point(464, 24);
+            ItemForDueDate.Name = "ItemForDueDate";
+            ItemForDueDate.Size = new System.Drawing.Size(464, 24);
+            ItemForDueDate.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDueTime
             // 
-            this.ItemForDueTime.Control = this.DueTimeTimeSpanEdit;
-            this.ItemForDueTime.Location = new System.Drawing.Point(464, 48);
-            this.ItemForDueTime.Name = "ItemForDueTime";
-            this.ItemForDueTime.Size = new System.Drawing.Size(464, 24);
-            this.ItemForDueTime.TextSize = new System.Drawing.Size(111, 13);
+            ItemForDueTime.Control = DueTimeTimeSpanEdit;
+            ItemForDueTime.Location = new System.Drawing.Point(464, 48);
+            ItemForDueTime.Name = "ItemForDueTime";
+            ItemForDueTime.Size = new System.Drawing.Size(464, 24);
+            ItemForDueTime.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForDescription
             // 
-            this.ItemForDescription.Control = this.DescriptionTextEdit;
-            this.ItemForDescription.Location = new System.Drawing.Point(464, 72);
-            this.ItemForDescription.Name = "ItemForDescription";
-            this.ItemForDescription.Size = new System.Drawing.Size(464, 24);
-            this.ItemForDescription.TextSize = new System.Drawing.Size(111, 13);
+            ItemForDescription.Control = DescriptionTextEdit;
+            ItemForDescription.Location = new System.Drawing.Point(464, 72);
+            ItemForDescription.Name = "ItemForDescription";
+            ItemForDescription.Size = new System.Drawing.Size(464, 24);
+            ItemForDescription.TextSize = new System.Drawing.Size(111, 13);
             // 
             // ItemForIsConfirmed
             // 
-            this.ItemForIsConfirmed.Control = this.IsConfirmedCheckEdit;
-            this.ItemForIsConfirmed.Location = new System.Drawing.Point(0, 72);
-            this.ItemForIsConfirmed.Name = "ItemForIsConfirmed";
-            this.ItemForIsConfirmed.Size = new System.Drawing.Size(232, 24);
-            this.ItemForIsConfirmed.TextSize = new System.Drawing.Size(0, 0);
-            this.ItemForIsConfirmed.TextVisible = false;
+            ItemForIsConfirmed.Control = IsConfirmedCheckEdit;
+            ItemForIsConfirmed.Location = new System.Drawing.Point(0, 72);
+            ItemForIsConfirmed.Name = "ItemForIsConfirmed";
+            ItemForIsConfirmed.Size = new System.Drawing.Size(126, 24);
+            ItemForIsConfirmed.TextSize = new System.Drawing.Size(0, 0);
+            ItemForIsConfirmed.TextVisible = false;
             // 
             // ItemForIsDisabled
             // 
-            this.ItemForIsDisabled.Control = this.IsDisabledCheckEdit;
-            this.ItemForIsDisabled.Location = new System.Drawing.Point(232, 72);
-            this.ItemForIsDisabled.Name = "ItemForIsDisabled";
-            this.ItemForIsDisabled.Size = new System.Drawing.Size(216, 24);
-            this.ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
-            this.ItemForIsDisabled.TextVisible = false;
+            ItemForIsDisabled.Control = IsDisabledCheckEdit;
+            ItemForIsDisabled.Location = new System.Drawing.Point(126, 72);
+            ItemForIsDisabled.Name = "ItemForIsDisabled";
+            ItemForIsDisabled.Size = new System.Drawing.Size(126, 24);
+            ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
+            ItemForIsDisabled.TextVisible = false;
             // 
             // emptySpaceItem1
             // 
-            this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(448, 72);
-            this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(16, 24);
-            this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+            emptySpaceItem1.AllowHotTrack = false;
+            emptySpaceItem1.Location = new System.Drawing.Point(252, 72);
+            emptySpaceItem1.Name = "emptySpaceItem1";
+            emptySpaceItem1.Size = new System.Drawing.Size(212, 24);
+            emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItem2
             // 
-            this.layoutControlItem2.Control = this.btnEdit_DocNum;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem2.Name = "Faktura Nömrəsi";
-            this.layoutControlItem2.Size = new System.Drawing.Size(464, 24);
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(111, 13);
+            layoutControlItem2.Control = btnEdit_DocNum;
+            layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+            layoutControlItem2.Name = "Faktura Nömrəsi";
+            layoutControlItem2.Size = new System.Drawing.Size(464, 24);
+            layoutControlItem2.TextSize = new System.Drawing.Size(111, 13);
             // 
             // layoutControlItem3
             // 
-            this.layoutControlItem3.Control = this.btnEdit_PriceTypeCode;
-            this.layoutControlItem3.Location = new System.Drawing.Point(464, 0);
-            this.layoutControlItem3.Name = "Qiymət Siyahı Tipi Kodu";
-            this.layoutControlItem3.Size = new System.Drawing.Size(464, 24);
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(111, 13);
+            layoutControlItem3.Control = btnEdit_PriceTypeCode;
+            layoutControlItem3.Location = new System.Drawing.Point(464, 0);
+            layoutControlItem3.Name = "Qiymət Siyahı Tipi Kodu";
+            layoutControlItem3.Size = new System.Drawing.Size(464, 24);
+            layoutControlItem3.TextSize = new System.Drawing.Size(111, 13);
             // 
             // FormPriceListDetail
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(948, 647);
-            this.Controls.Add(this.dataLayoutControl1);
-            this.Controls.Add(this.ribbonStatusBar);
-            this.Controls.Add(this.ribbon);
-            this.Name = "FormPriceListDetail";
-            this.Ribbon = this.ribbon;
-            this.StatusBar = this.ribbonStatusBar;
-            this.Text = "Qiymət Siyahısı";
-            ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
-            this.dataLayoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gC_PriceListLine)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trPriceListLinesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gV_PriceListLine)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoLUE_CurrencyCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_ReceivePriceList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoCalcEdit_MakePriceList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentDateDateEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trPriceListHeadersBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DocumentTimeTimeSpanEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DueDateDateEdit.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DueDateDateEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DueTimeTimeSpanEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DescriptionTextEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IsDisabledCheckEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IsConfirmedCheckEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_PriceTypeCode.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentDate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDueDate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDueTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForIsConfirmed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForIsDisabled)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(948, 647);
+            Controls.Add(dataLayoutControl1);
+            Controls.Add(ribbonStatusBar);
+            Controls.Add(ribbon);
+            Name = "FormPriceListDetail";
+            Ribbon = ribbon;
+            StatusBar = ribbonStatusBar;
+            Text = "Qiymət Siyahısı";
+            ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
+            dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)gC_PriceListLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trPriceListLinesBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gV_PriceListLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_ReceivePriceList).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoCalcEdit_MakePriceList).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trPriceListHeadersBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentTimeTimeSpanEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DueDateDateEdit.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DueDateDateEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DueTimeTimeSpanEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IsConfirmedCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_PriceTypeCode.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDueDate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDueTime).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForIsConfirmed).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

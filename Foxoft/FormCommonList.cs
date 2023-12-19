@@ -155,7 +155,7 @@ namespace Foxoft
             {
                 if (gridView1.Columns["ProductDesc"] is null)
                 {
-                    gridColumn.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
+                    gridColumn.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
                     gridColumn.FieldName = "ProductDesc";
                     gridColumn.UnboundDataType = typeof(string);
                     gridView1.Columns.Add(gridColumn);
@@ -166,7 +166,7 @@ namespace Foxoft
             {
                 if (gridView1.Columns["DiscountDesc"] is null)
                 {
-                    gridColumn.Caption = ReflectionExtensions.GetPropertyDisplayName<DcDiscount>(x => x.DiscountDesc);
+                    gridColumn.Caption = ReflectionExt.GetDisplayName<DcDiscount>(x => x.DiscountDesc);
                     gridColumn.FieldName = "DiscountDesc";
                     gridColumn.UnboundDataType = typeof(string);
                     gridView1.Columns.Add(gridColumn);

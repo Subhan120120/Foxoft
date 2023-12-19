@@ -71,11 +71,11 @@ namespace Foxoft
 
             InitializeComponent();
 
-            colLastPurchasePrice.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.LastPurchasePrice);
-            colBalance.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.Balance);
-            col_ProductDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
-            checkEdit_IsSent.Properties.Caption = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.IsSent);
-            checkEdit_IsReturn.Properties.Caption = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.IsReturn);
+            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
+            colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
+            col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
+            checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
+            checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
 
             AddReports();
 
@@ -1684,7 +1684,7 @@ namespace Foxoft
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    string captionProductCode = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.ProductCode);
+                    string captionProductCode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCode);
                     string productCode = row[captionProductCode].ToString();
 
                     if (!string.IsNullOrEmpty(productCode))
@@ -1702,24 +1702,24 @@ namespace Foxoft
                             {
                                 try
                                 {
-                                    string captionQty = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.Qty);
+                                    string captionQty = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Qty);
                                     if (column.ColumnName == captionQty)
                                     {
                                         GridColumn qty = CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut;
                                         gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, qty, row[captionQty].ToString());
                                     }
 
-                                    string captionLineDesc = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.LineDescription);
+                                    string captionLineDesc = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.LineDescription);
                                     if (column.ColumnName == captionLineDesc)
                                         gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
 
                                     if (dcProcess.ProcessCode != "IT")
                                     {
-                                        string captionPrice = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.Price);
+                                        string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
                                         if (column.ColumnName == captionPrice)
                                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_Price, row[captionPrice].ToString());
 
-                                        string captionCurrency = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
+                                        string captionCurrency = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
                                         if (column.ColumnName == captionCurrency)
                                         {
                                             if (!string.IsNullOrEmpty(row[captionCurrency].ToString()))
@@ -1738,11 +1738,11 @@ namespace Foxoft
                                             }
                                         }
 
-                                        string captionExRate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.ExchangeRate);
+                                        string captionExRate = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ExchangeRate);
                                         if (column.ColumnName == captionExRate)
                                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colExchangeRate, row[captionExRate].ToString());
 
-                                        string captionPosDiscount = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.PosDiscount);
+                                        string captionPosDiscount = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.PosDiscount);
                                         if (column.ColumnName == captionPosDiscount)
                                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_PosDiscount, row[captionPosDiscount].ToString());
                                     }
@@ -1958,10 +1958,10 @@ namespace Foxoft
             string lastUpdatedDate = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedDate.ToString();
             string lastUpdatedUserName = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedUserName.ToString();
 
-            string createdUserName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
-            string createdDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
-            string updatedUserName = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
-            string updatedDate = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
+            string createdUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
+            string createdDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
+            string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
+            string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
 
             XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

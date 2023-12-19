@@ -37,8 +37,8 @@ namespace Foxoft
         public FormPriceListDetail()
         {
             InitializeComponent();
-            colProductDesc.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.ProductDesc);
-            colLastPurchasePrice.Caption = ReflectionExtensions.GetPropertyDisplayName<DcProduct>(x => x.LastPurchasePrice);
+            colProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
+            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
 
             //StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
@@ -465,7 +465,7 @@ namespace Foxoft
 
             foreach (DataRow row in dt.Rows)
             {
-                string captionProductCode = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.ProductCode);
+                string captionProductCode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCode);
                 string productCode = row[captionProductCode].ToString();
 
                 if (!string.IsNullOrEmpty(productCode))
@@ -487,11 +487,11 @@ namespace Foxoft
                                 //if (column.ColumnName == captionLineDesc)
                                 //    gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
 
-                                string captionPrice = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.Price);
+                                string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
                                 if (column.ColumnName == captionPrice)
                                     gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colPrice, row[captionPrice].ToString());
 
-                                string captionCurrency = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
+                                string captionCurrency = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
                                 if (column.ColumnName == captionCurrency)
                                 {
                                     if (!string.IsNullOrEmpty(row[captionCurrency].ToString()))

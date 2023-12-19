@@ -60,7 +60,7 @@ namespace Foxoft
             DataTable dt = new();
             dt.Load(dr);
 
-            ReflectionExtensions.SetCaptionName(dt);
+            ReflectionExt.SetCaptionName(dt);
 
             return dt;
 
@@ -88,7 +88,7 @@ namespace Foxoft
             DataTable dt = new();
             da.Fill(dt);
 
-            ReflectionExtensions.SetCaptionName(dt);
+            ReflectionExt.SetCaptionName(dt);
 
             return dt;
         }
