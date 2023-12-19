@@ -38,8 +38,8 @@ namespace Foxoft
 
             if (!isNew)
             {
-                btn_ProductDiscount.Enabled = true;
-                Btn_ProductBarcode.Enabled = true;
+                BBI_ProductDiscount.Enabled = true;
+                BBI_ProductBarcode.Enabled = true;
             }
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
@@ -199,13 +199,6 @@ namespace Foxoft
             }
         }
 
-        private void btn_ProductFeature_Click(object sender, EventArgs e)
-        {
-            efMethods.UpdateProductHierarchyCode(dcProduct.ProductCode, btnEdit_Hierarchy.Text);
-            FormProductFeature formFeature = new(dcProduct.ProductCode);
-            formFeature.ShowDialog();
-        }
-
         private void openFileDialog()
         {
             OpenFileDialog dialog = new();
@@ -283,13 +276,6 @@ namespace Foxoft
             }
         }
 
-        private void btn_ProductDiscount_Click(object sender, EventArgs e)
-        {
-            //FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId");
-            FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId", "", "ProductCode", dcProduct.ProductCode);
-            formFeature.ShowDialog();
-        }
-
         private void buttonEdit1_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
             string slugify = dbContext.Slugify.FromSqlInterpolated($"Select dbo.Slugify ({ProductDescTextEdit.EditValue?.ToString()}) as Slugify").FirstOrDefault().Slugify;
@@ -304,15 +290,29 @@ namespace Foxoft
             if (!isNew)
                 if (!string.IsNullOrEmpty(hierarchy))
                     if (efMethods.HierarchyExist(hierarchy))
-                        btn_ProductFeature.Enabled = true;
-                    else btn_ProductFeature.Enabled = false;
+                        BBI_ProductFeature.Enabled = true;
+                    else BBI_ProductFeature.Enabled = false;
 
         }
 
-        private void Btn_ProductBarcode_Click(object sender, EventArgs e)
+        private void BBI_ProductFeature_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            FormProductBarcode formBarcode = new FormProductBarcode(dcProduct.ProductCode);
-            formBarcode.ShowDialog();
+            efMethods.UpdateProductHierarchyCode(dcProduct.ProductCode, btnEdit_Hierarchy.Text);
+            FormProductFeature frm = new(dcProduct.ProductCode);
+            frm.ShowDialog();
+        }
+
+        private void BBI_ProductDiscount_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            //FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId");
+            FormCommonList<TrProductDiscount> frm = new("", "DiscountId", "", "ProductCode", dcProduct.ProductCode);
+            frm.ShowDialog();
+        }
+
+        private void BBI_ProductBarcode_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            FormProductBarcode frm = new(dcProduct.ProductCode);
+            frm.ShowDialog();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿
-
 --declare @StartDate date = dateadd(DAY, 1, getdate())
 --declare @StartTime time =  '00:00:00.000'
 
@@ -21,11 +20,6 @@ select DcProducts.ProductCode
 		, Manatla = ROUND(WholesalePrice*1.703, -1 )
 		, DcProducts.HierarchyCode
 		, HierarchyDesc
-		, ProductTypeCode
-		, ProductId
-		, DcHierarchies.HierarchyCode
-		, HierarchyDesc
-		, WholesalePrice 
 		, ProductTypeCode
 		, ProductId
 		--, [Marka] = isnull(' ' + Feature03,'')
@@ -64,10 +58,4 @@ left join (select * from (
 	--	(CAST(@StartDate AS DATETIME) + CAST(@StartTime AS DATETIME))
 	--and il.ProductCode = '5503'
 			
-
-
-
-
-
-
 

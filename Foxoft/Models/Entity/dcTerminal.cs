@@ -22,11 +22,12 @@ namespace Foxoft.Models
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string TerminalDesc { get; set; }
 
+        [DefaultValue("0")]
         [Display(Name = "Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }
 
         [Display(Name = "Guid Id")]
-        public Guid RowGuid { get; set; }
+        public Guid? RowGuid { get; set; }
 
         [Display(Name = "TouchScreen Mod")]
         public bool TouchUIMode { get; set; }
