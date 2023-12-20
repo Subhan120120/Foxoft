@@ -49,6 +49,7 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceLine> TrInvoiceLines { get; set; }
         public DbSet<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public DbSet<TrPaymentLine> TrPaymentLines { get; set; }
+        public DbSet<TrPaymentLineExt> TrPaymentLineExts { get; set; }
         public DbSet<TrRoleClaim> TrRoleClaims { get; set; }
         public DbSet<DcReport> DcReports { get; set; }
         public DbSet<DcReportType> DcReportTypes { get; set; }
@@ -421,6 +422,13 @@ namespace Foxoft.Models
             {
                 entity.HasOne(x => x.DcProduct)
                     .WithOne(x => x.SiteProduct)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrPaymentLineExt>(entity =>
+            {
+                entity.HasOne(x => x.TrPaymentLine)
+                    .WithOne(x => x.TrPaymentLineExt)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

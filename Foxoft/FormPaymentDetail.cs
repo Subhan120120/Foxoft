@@ -76,7 +76,8 @@ namespace Foxoft
 
             trPaymentHeader = trPaymentHeadersBindingSource.AddNew() as TrPaymentHeader;
 
-            dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == trPaymentHeader.InvoiceHeaderId)
+            dbContext.TrPaymentLines.Include(x=>x.TrPaymentLineExt)
+                                    .Where(x => x.PaymentHeaderId == trPaymentHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trPaymentLinesBindingSource.DataSource = dbContext.TrPaymentLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -177,7 +178,8 @@ namespace Foxoft
             trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
             trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
 
-            dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == paymentHeaderId)
+            dbContext.TrPaymentLines.Include(x => x.TrPaymentLineExt)
+                                    .Where(x => x.PaymentHeaderId == paymentHeaderId)
                                     .OrderBy(x => x.CreatedDate)
                                     .LoadAsync()
                                     .ContinueWith(loadTask =>
