@@ -83,7 +83,7 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(filter))
                 qryMaster = qryMaster + " where " + filter;
 
-            this.qry = qryMaster + "order by RowNumber";
+            this.qry = qryMaster + " order by RowNumber";
             this.report = report;
             Text = report.ReportName;
 

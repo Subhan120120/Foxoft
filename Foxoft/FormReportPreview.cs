@@ -38,7 +38,7 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(filter))
                 qryMaster = qryMaster + " where " + filter;
 
-            XtraReport xtraReport = GetInvoiceReport(dcReport, qryMaster + "order by RowNumber");
+            XtraReport xtraReport = GetInvoiceReport(dcReport, qryMaster + " order by RowNumber");
 
             this.xReport = xtraReport;
             documentViewer1.DocumentSource = xtraReport;

@@ -60,7 +60,7 @@ namespace Foxoft
             {
                 string query = CustomExtensions.AddTop(dcReport.ReportQuery, "1");
 
-                string qryMaster = "select * from (" + query + " \n) as Master " + "order by RowNumber";
+                string qryMaster = "select * from (" + query + " \n) as Master " + " order by RowNumber";
 
                 try
                 {
