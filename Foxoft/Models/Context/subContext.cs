@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
 using System.IO;
 using Foxoft.Models.Entity.View_and_Procedur;
+using Foxoft.Migrations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -420,6 +421,27 @@ namespace Foxoft.Models
             {
                 entity.HasOne(x => x.DcProduct)
                     .WithOne(x => x.SiteProduct)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<DcReportFilter>(entity =>
+            {
+                entity.HasOne(x => x.DcReport)
+                    .WithMany(x => x.DcReportFilters)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrClaimReport>(entity =>
+            {
+                entity.HasOne(x => x.DcReport)
+                    .WithMany(x => x.TrClaimReports)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrFormReport>(entity =>
+            {
+                entity.HasOne(x => x.DcReport)
+                    .WithMany(x => x.TrFormReports)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

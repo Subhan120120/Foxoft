@@ -113,7 +113,7 @@ namespace Foxoft
                     string ts = String.Join(",", currAccTypeArr);
                     string where = " Where CurrAccTypeCode in (" + ts + ") ";
 
-                    string query = CustomExtensions.AddTop(dcReport.ReportQuery, "100 PERCENT");
+                    string query = CustomExtensions.AddTop(dcReport.ReportQuery, int.MaxValue);
 
                     string qryMaster = "select * from (" + query + " \n) as Master " + where + " order by RowNumber";
                     //+ " order by CurrAccDesc";
@@ -449,38 +449,38 @@ namespace Foxoft
 
         private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcReport dcReport = efMethods.SelectReport(1003);
-            object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
+            //DcReport dcReport = efMethods.SelectReport(1003);
+            //object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
 
-            if (currAccCode is not null)
-            {
-                efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
+            //if (currAccCode is not null)
+            //{
+            //    efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
 
-                dcReport = efMethods.SelectReport(dcReport.ReportId);
+            //    dcReport = efMethods.SelectReport(dcReport.ReportId);
 
-                string reportQuery = dcReport.ReportQuery;
+            //    string reportQuery = dcReport.ReportQuery;
 
-                ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
-                CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
-                int index = 0;
-                foreach (DcReportFilter rf in dcReportFilters)
-                {
-                    BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
+            //    ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
+            //    CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
+            //    int index = 0;
+            //    foreach (DcReportFilter rf in dcReportFilters)
+            //    {
+            //        BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
 
-                    criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
+            //        criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
 
-                    string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
-                    reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
+            //        string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
+            //        reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
 
-                    index++;
-                }
-                //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
+            //        index++;
+            //    }
+            //    //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
 
-                string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            //    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-                FormReportGrid formGrid = new(reportQuery, "", dcReport, activeFilterStr);
-                formGrid.Show();
-            }
+            //    FormReportGrid formGrid = new(reportQuery, "", dcReport, activeFilterStr);
+            //    formGrid.Show();
+            //}
         }
 
         private BinaryOperatorType ConvertOperatorType(string filterOperatorType)

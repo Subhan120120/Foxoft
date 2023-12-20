@@ -64,7 +64,6 @@ namespace Foxoft
             bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
             bBI_quit = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ReportCurrAcc = new DevExpress.XtraBars.BarButtonItem();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
@@ -256,7 +255,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_quit, BBI_ReportCurrAcc, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, BSI_Report, barButtonItem3, barButtonItem4, BBI_test, BBI_query });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_quit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, BSI_Report, barButtonItem3, barButtonItem4, BBI_test, BBI_query });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
             ribbonControl1.MaxItemId = 29;
             ribbonControl1.Name = "ribbonControl1";
@@ -289,14 +288,6 @@ namespace Foxoft
             bBI_quit.Name = "bBI_quit";
             bBI_quit.ItemClick += bBI_quit_ItemClick;
             // 
-            // BBI_ReportCurrAcc
-            // 
-            BBI_ReportCurrAcc.Caption = "Müştəri ilə Haqq Hesab";
-            BBI_ReportCurrAcc.Id = 5;
-            BBI_ReportCurrAcc.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCurrAcc.ImageOptions.SvgImage");
-            BBI_ReportCurrAcc.Name = "BBI_ReportCurrAcc";
-            BBI_ReportCurrAcc.ItemClick += bBI_Report1_ItemClick;
-            // 
             // bBI_ExportXlsx
             // 
             bBI_ExportXlsx.Caption = "Excelə Göndər";
@@ -326,7 +317,6 @@ namespace Foxoft
             BSI_Report.Caption = "Hesabat";
             BSI_Report.Id = 24;
             BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
-            BSI_Report.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ReportCurrAcc) });
             BSI_Report.Name = "BSI_Report";
             // 
             // barButtonItem3
@@ -442,7 +432,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_CurrAccNew;
         private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
         private DevExpress.XtraBars.BarButtonItem bBI_quit;
-        private DevExpress.XtraBars.BarButtonItem BBI_ReportCurrAcc;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
         private System.Windows.Forms.BindingSource dcCurrAccsBindingSource;
