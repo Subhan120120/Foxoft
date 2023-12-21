@@ -167,7 +167,8 @@ namespace Foxoft
 
                 if (CheckDueDate())
                 {
-                    if (Convert.ToUInt32(LUE_Terminal.EditValue) != 0) {
+                    if (Convert.ToUInt32(LUE_Terminal.EditValue) != 0)
+                    {
 
                         FormERP formERP = new();
                         //SaveNewConStr();
@@ -337,11 +338,10 @@ namespace Foxoft
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                    if (nic.Name == "Ethernet")
-                    {
-                        PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
-                        Clipboard.SetText(nic.Id + pInterfaceProperties);
-                    }
+                {
+                    PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
+                    Clipboard.SetText(nic.Id + pInterfaceProperties);
+                }
             }
         }
 
