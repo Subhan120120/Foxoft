@@ -313,7 +313,6 @@ namespace Foxoft
                 PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
 
                 if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                    if (nic.Name == "Ethernet")
                         fiscal = nic.Id + pInterfaceProperties;
             }
 
@@ -327,7 +326,7 @@ namespace Foxoft
                 PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
 
                 if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                    if (efMethods.CheckHasLicense(nic.Id + pInterfaceProperties))
+                    if (nic.Name == "Ethernet" && efMethods.CheckHasLicense(nic.Id + pInterfaceProperties))
                         return true;
             }
             return false;
