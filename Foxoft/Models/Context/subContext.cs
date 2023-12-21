@@ -49,7 +49,7 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceLine> TrInvoiceLines { get; set; }
         public DbSet<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public DbSet<TrPaymentLine> TrPaymentLines { get; set; }
-        public DbSet<TrPaymentLineExt> TrPaymentLineExts { get; set; }
+        public DbSet<trInvoiceLineExt> trInvoiceLineExt { get; set; }
         public DbSet<TrRoleClaim> TrRoleClaims { get; set; }
         public DbSet<DcReport> DcReports { get; set; }
         public DbSet<DcReportType> DcReportTypes { get; set; }
@@ -120,7 +120,8 @@ namespace Foxoft.Models
                         .ToView(nameof(RetailSale));
 
             modelBuilder.Entity<GetNextDocNum>() //procedure
-                        .HasNoKey();
+                        .HasNoKey()
+                        .ToView(nameof(GetNextDocNum));
 
             modelBuilder.Entity<SlugifyResult>()
                 .HasNoKey()
@@ -425,10 +426,10 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<TrPaymentLineExt>(entity =>
+            modelBuilder.Entity<trInvoiceLineExt>(entity =>
             {
-                entity.HasOne(x => x.TrPaymentLine)
-                    .WithOne(x => x.TrPaymentLineExt)
+                entity.HasOne(x => x.TrInvoiceLine)
+                    .WithOne(x => x.TrInvoiceLineExt)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

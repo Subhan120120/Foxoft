@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20231221001544_trInvoiceLineExt")]
+    partial class trInvoiceLineExt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3294,9 +3296,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
-                    b.Property<Guid>("InvoiceLineId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("LastUpdatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -3308,12 +3307,15 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
+                    b.Property<Guid>("PaymentLineId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("PriceDiscounted")
                         .HasColumnType("money");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InvoiceLineId")
+                    b.HasIndex("PaymentLineId")
                         .IsUnique();
 
                     b.ToTable("trInvoiceLineExt");
@@ -3851,7 +3853,7 @@ namespace Foxoft.Migrations
                 {
                     b.HasOne("Foxoft.Models.TrInvoiceLine", "TrInvoiceLine")
                         .WithOne("TrInvoiceLineExt")
-                        .HasForeignKey("Foxoft.Models.trInvoiceLineExt", "InvoiceLineId")
+                        .HasForeignKey("Foxoft.Models.trInvoiceLineExt", "PaymentLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
