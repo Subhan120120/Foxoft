@@ -1384,6 +1384,21 @@ namespace Foxoft
             db.SaveChanges();
         }
 
+        public void InsertHierarchy(DcHierarchy dcHierarchy)
+        {
+            using subContext db = new();
+            db.DcHierarchies.Add(dcHierarchy);
+            db.SaveChanges();
+        }
+
+
+        public int DeleteHierarchy(string hierarchyCode)
+        {
+            using subContext db = new();
+            db.DcHierarchies.Remove(db.DcHierarchies.FirstOrDefault(x => x.HierarchyCode == hierarchyCode));
+            return db.SaveChanges();
+        }
+
         public void InsertFeature(DcPriceType DcPriceType)
         {
             using subContext db = new();
@@ -1580,6 +1595,15 @@ namespace Foxoft
             using subContext db = new();
             DcProduct dcProduct = new() { ProductCode = productCode, HierarchyCode = hierarchyCode };
             db.Entry(dcProduct).Property(x => x.HierarchyCode).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateHierarchyDesc(string hierarchyCode, string hierarchyDesc)
+        {
+            using subContext db = new();
+            DcHierarchy hierarcy = new DcHierarchy() { HierarchyCode = hierarchyCode, HierarchyDesc = hierarchyDesc };
+            //hierarcy.HierarchyDesc = hierarchyDesc;
+            db.Entry(hierarcy).Property(x => x.HierarchyDesc).IsModified = true;
             return db.SaveChanges();
         }
 
