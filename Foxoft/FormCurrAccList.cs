@@ -183,24 +183,28 @@ namespace Foxoft
                     else
                     {
                         List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_CurrAccList).ToList();
-                        var combined = "";
+                        string combined = "";
                         foreach (DataRowView rowView in mydata)
                             combined += "'" + rowView["CurrAccCode"].ToString() + "',";
 
                         combined = combined.Substring(0, combined.Length - 1);
-                        filter = columnName + " In (" + combined + ")";
+                        filter = columnName + " in (" + combined + ")";
                     }
 
-                    string activeFilterStr = filter + dateFilter;
+                    string activeFilterStr = dateFilter;
+
+                    string query = dcReport.ReportQuery;
+                    if (query.Contains("{CurrAccCode}")) 
+                        query = query.Replace("{CurrAccCode}", " and " + filter); // filter sorgunun icinde temsilci ile deyisdirilir
 
                     if (dcReport.ReportTypeId == 1)
                     {
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, "", dcReport, activeFilterStr);
+                        FormReportGrid formGrid = new(query, filter, dcReport, activeFilterStr);
                         formGrid.Show();
                     }
                     else if (dcReport.ReportTypeId == 2)
                     {
-                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
+                        FormReportPreview form = new(query, filter, dcReport);
                         form.WindowState = FormWindowState.Maximized;
                         form.Show();
                     }

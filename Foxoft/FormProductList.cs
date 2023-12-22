@@ -175,14 +175,13 @@ namespace Foxoft
                 {
                     DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
 
-                    List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
-
                     string filter = "";
                     if (dcProduct is not null)
                         filter = "[ProductCode] = '" + dcProduct.ProductCode + "' ";
                     else
                     {
-                        var combined = "";
+                        List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
+                        string combined = "";
                         foreach (DataRowView rowView in mydata)
                             combined += "'" + rowView["ProductCode"].ToString() + "',";
 
@@ -191,6 +190,10 @@ namespace Foxoft
                     }
 
                     string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                    string query = dcReport.ReportQuery;
+                    if (query.Contains("{ProductCode}"))
+                        query = query.Replace("{ProductCode}", " and " + filter); // filter sorgunun icinde temsilci ile deyisdirilir
 
                     if (dcReport.ReportTypeId == 1)
                     {

@@ -1,18 +1,11 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
-using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Excel;
-using DevExpress.DataAccess.Sql;
-using DevExpress.DataAccess.UI.Sql;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
-using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraReports.UI;
-using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using System;
@@ -22,7 +15,6 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 

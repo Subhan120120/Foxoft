@@ -2043,14 +2043,6 @@ namespace Foxoft
                 if (dcProduct is not null && e.IsGetData)
                 {
                     dcProduct.Balance = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode).Sum(x => x.QtyIn - x.QtyOut);
-                    //dcProduct.LastPurchasePrice = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode)
-                    //                                                      .Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
-                    //                                                      .Where(l => l.TrInvoiceHeader.IsReturn == false)
-                    //                                                      .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                    //                                                      .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
-                    //                                                      .Select(x => x.PriceLoc * (1 - (x.PosDiscount / 100)))
-                    //                                                      .FirstOrDefault();
-
 
                     if (e.Column == col_ProductDesc)
                     {
