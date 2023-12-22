@@ -1,6 +1,6 @@
 ﻿
 
-select top 10000000 DcCurrAccs.CurrAccCode
+select DcCurrAccs.CurrAccCode
 , CurrAccDesc
 , Balance =ISNULL(SUM(CAST(Amount as money)),0)
 , PhoneNum

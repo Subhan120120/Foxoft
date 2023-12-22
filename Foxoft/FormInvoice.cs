@@ -7,6 +7,7 @@ using DevExpress.DataAccess.Sql;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
+using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -1912,7 +1913,7 @@ namespace Foxoft
 
         private async Task PrintFast(string printerName)
         {
-            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + printerName, "", null, null);
+            alertControl1.Show(this, "Print Göndərilir...", "Printer: " + printerName, "", (Image)null, null);
 
             if (trInvoiceHeader is not null)
                 await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId, printerName));
@@ -1920,7 +1921,7 @@ namespace Foxoft
 
             Task task = Task.Run((Action)ShowPrintCount);
 
-            alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", null, null);
+            alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
         }
 
         private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)

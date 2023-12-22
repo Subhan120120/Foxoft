@@ -72,8 +72,7 @@ namespace Foxoft.Models
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
         public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
-
-        public virtual DbSet<SlugifyResult> Slugify { get; set; }
+        public virtual DbSet<SlugifyResult> Slugify { get; set; } // function
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
@@ -93,11 +92,8 @@ namespace Foxoft.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //for DefaultValue Attribute for Entity propertires. Usage:
-            // [DefaultValue("400")]
-            // public int LengthInMeters { get; set; }
+            //for DefaultValue Attribute for Entity propertires.
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
-            {
                 foreach (IMutableProperty property in entityType.GetProperties())
                 {
                     MemberInfo memberInfo = property.PropertyInfo ?? (MemberInfo)property.FieldInfo;
@@ -106,15 +102,12 @@ namespace Foxoft.Models
                     if (defaultValue == null) continue;
                     property.SetDefaultValueSql(defaultValue.Value.ToString());
                 }
-            }
-
-            //All foreignkeys DeleteBehavior to Restrict (NoAction)
-            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
-                foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
-            }
 
             base.OnModelCreating(modelBuilder);
+
+            InitializeHasData(modelBuilder);
+
+            InitializeDeleteBehaviour(modelBuilder);
 
             modelBuilder.Entity<RetailSale>() //view
                         .ToView(nameof(RetailSale));
@@ -124,22 +117,184 @@ namespace Foxoft.Models
                         .ToView(nameof(GetNextDocNum));
 
             modelBuilder.Entity<SlugifyResult>()
-                .HasNoKey()
-                .ToView(nameof(SlugifyResult)); // function
-
+                        .HasNoKey()
+                        .ToView(nameof(SlugifyResult)); // function
 
             // more foreign key same table configure
             modelBuilder.Entity<TrPaymentHeader>(e =>
             {
                 e.HasOne(field => field.DcStore)
-             .WithMany(fk => fk.DcStoreTrPaymentHeaders)
-             .HasForeignKey(fk => fk.StoreCode);
+                 .WithMany(fk => fk.DcStoreTrPaymentHeaders)
+                 .HasForeignKey(fk => fk.StoreCode);
 
                 e.HasOne(field => field.ToCashReg)
-             .WithMany(fk => fk.ToCashRegTrPaymentHeaders)
-             .HasForeignKey(fk => fk.ToCashRegCode);
+                 .WithMany(fk => fk.ToCashRegTrPaymentHeaders)
+                 .HasForeignKey(fk => fk.ToCashRegCode);
             });
 
+            modelBuilder.Entity<DcFeature>()
+                        .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
+
+            modelBuilder.Entity<TrProductDiscount>()
+                        .HasKey(bc => new { bc.ProductCode, bc.DiscountId });
+
+            modelBuilder.Entity<TrPaymentMethodDiscount>()
+                        .HasKey(bc => new { bc.DiscountId, bc.PaymentMethodId });
+
+            modelBuilder.Entity<TrProductFeature>()
+                        .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId, bc.FeatureCode });
+
+            modelBuilder.Entity<DcFeature>()
+                        .HasMany(e => e.TrProductFeatures)
+                        .WithOne(e => e.DcFeature)
+                        .HasForeignKey(e => new { e.FeatureCode, e.FeatureTypeId });
+
+            modelBuilder.Entity<TrFormReport>()
+                       .HasKey(bc => new { bc.FormCode, bc.ReportId });
+
+            modelBuilder.Entity<TrProductHierarchy>()
+                        .HasKey(bc => new { bc.ProductCode, bc.HierarchyCode });
+
+            modelBuilder.Entity<TrHierarchyFeature>()
+                        .HasKey(bc => new { bc.HierarchyCode, bc.FeatureTypeId });
+
+            modelBuilder.Entity<TrProductBarcode>()
+                        .HasIndex(u => u.Barcode)
+                        .IsUnique();
+
+            modelBuilder.Entity<TrInvoiceHeader>(entity =>
+            {
+                entity.Property(e => e.InvoiceHeaderId)
+                      .ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<TrInvoiceLine>(entity =>
+            {
+                entity.Property(e => e.InvoiceLineId)
+                      .ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<MigrationHistory>(entity =>
+            {
+                entity.HasKey(e => new { e.MigrationId, e.ContextKey })
+                      .HasName("PK_dbo.__MigrationHistory");
+
+                entity.ToTable("__MigrationHistory");
+
+                entity.Property(e => e.MigrationId)
+                      .HasMaxLength(150);
+
+                entity.Property(e => e.ContextKey)
+                      .HasMaxLength(300);
+
+                entity.Property(e => e.Model)
+                      .IsRequired();
+
+                entity.Property(e => e.ProductVersion)
+                      .IsRequired()
+                      .HasMaxLength(32);
+            });
+
+            modelBuilder.Entity<Sysdiagrams>(entity =>
+            {
+                entity.HasKey(e => e.DiagramId)
+                      .HasName("PK_dbo.sysdiagrams");
+
+                entity.ToTable("sysdiagrams");
+
+                entity.Property(e => e.DiagramId)
+                      .HasColumnName("diagram_id");
+
+                entity.Property(e => e.Definition)
+                      .HasColumnName("definition");
+
+                entity.Property(e => e.Name)
+                      .IsRequired()
+                      .HasColumnName("name")
+                      .HasMaxLength(128);
+
+                entity.Property(e => e.PrincipalId)
+                      .HasColumnName("principal_id");
+
+                entity.Property(e => e.Version)
+                      .HasColumnName("version");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        private static void InitializeDeleteBehaviour(ModelBuilder modelBuilder)
+        {
+            //All foreignkeys DeleteBehavior to Restrict (NoAction)
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
+
+            modelBuilder.Entity<TrInvoiceLine>(entity =>
+            {
+                entity.HasOne(x => x.TrInvoiceHeader)
+                   .WithMany(x => x.TrInvoiceLines)
+                   .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrProductFeature>(entity =>
+            {
+                entity.HasOne(x => x.DcProduct)
+                   .WithMany(x => x.TrProductFeatures)
+                   .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrPaymentLine>(entity =>
+            {
+                entity.HasOne(x => x.TrPaymentHeader)
+                    .WithMany(x => x.TrPaymentLines)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrPriceListLine>(entity =>
+            {
+                entity.HasOne(x => x.TrPriceListHeader)
+                    .WithMany(x => x.TrPriceListLines)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<SiteProduct>(entity =>
+            {
+                entity.HasOne(x => x.DcProduct)
+                    .WithOne(x => x.SiteProduct)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<trInvoiceLineExt>(entity =>
+            {
+                entity.HasOne(x => x.TrInvoiceLine)
+                    .WithOne(x => x.TrInvoiceLineExt)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<DcReportFilter>(entity =>
+            {
+                entity.HasOne(x => x.DcReport)
+                    .WithMany(x => x.DcReportFilters)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrClaimReport>(entity =>
+            {
+                entity.HasOne(x => x.DcReport)
+                    .WithMany(x => x.TrClaimReports)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrFormReport>(entity =>
+            {
+                entity.HasOne(x => x.DcReport)
+                    .WithMany(x => x.TrFormReports)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        private static void InitializeHasData(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<DcForm>().HasData(
                 new DcForm { FormCode = "CurrAccs", FormDesc = "CurrAccs" },
                 new DcForm { FormCode = "Products", FormDesc = "Products" }
@@ -251,18 +406,6 @@ namespace Foxoft.Models
                 new TrClaimReport { ClaimReportId = 18, ClaimCode = "ButunHesabatlar", ReportId = 18 }
                );
 
-            static string GetReportFile(string fileName)
-            {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                string qry = "";
-                string path = "Foxoft.AppCode.Report." + fileName;
-                Stream stream = assembly.GetManifestResourceStream(path);
-                StreamReader reader = new(stream);
-                qry = reader.ReadToEnd();
-
-                return qry;
-            }
-
             CustomMethods cM = new();
 
             modelBuilder.Entity<DcReport>().HasData(
@@ -326,133 +469,14 @@ namespace Foxoft.Models
                 new DcBarcodeType { BarcodeTypeCode = "EAN13", BarcodeTypeDesc = "EAN13" }
             );
 
-            //modelBuilder.Entity<TrProductFeature>() 
-            //.HasNoKey();
-
-            //modelBuilder.Entity<DcFeature>(e =>
-            //{
-            //    e.HasMany(field => field.TrProductFeatures)
-            //     .WithOne(fk => fk.DcFeature)
-            //     .HasForeignKey(tr => new { tr.FeatureCode, tr.DcFeatureType });
-            //
-            //    //e.HasOne(field => field.FromCashReg)
-            //    //.WithMany(fk => fk.TrPaymentHeaderFromCashes)
-            //    //.HasForeignKey(fk => fk.FromCashRegCode);
-            //});
-
-            modelBuilder.Entity<DcFeature>()
-                        .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
-
-            modelBuilder.Entity<TrProductDiscount>()
-                        .HasKey(bc => new { bc.ProductCode, bc.DiscountId });
-
-            modelBuilder.Entity<TrPaymentMethodDiscount>()
-                        .HasKey(bc => new { bc.DiscountId, bc.PaymentMethodId });
-
-            modelBuilder.Entity<TrProductFeature>()
-                        .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId, bc.FeatureCode });
-
-            modelBuilder.Entity<DcFeature>()
-                        .HasMany(e => e.TrProductFeatures)
-                        .WithOne(e => e.DcFeature)
-                        .HasForeignKey(e => new { e.FeatureCode, e.FeatureTypeId });
-
-            modelBuilder.Entity<TrFormReport>()
-                       .HasKey(bc => new { bc.FormCode, bc.ReportId });
-
-            modelBuilder.Entity<TrProductHierarchy>()
-                        .HasKey(bc => new { bc.ProductCode, bc.HierarchyCode });
-
-            modelBuilder.Entity<TrHierarchyFeature>()
-                        .HasKey(bc => new { bc.HierarchyCode, bc.FeatureTypeId });
-
             modelBuilder.Entity<DcProductType>().HasData(
                 new DcProductType { ProductTypeCode = 1, ProductTypeDesc = "Məhsul" },
                 new DcProductType { ProductTypeCode = 2, ProductTypeDesc = "Xərc" },
                 new DcProductType { ProductTypeCode = 3, ProductTypeDesc = "Servis" }
             );
 
-            //modelBuilder.Entity<TrProductBarcode>()
-            //    .HasAlternateKey(c => c.Barcode);
-
-            modelBuilder.Entity<TrProductBarcode>()
-                    .HasIndex(u => u.Barcode)
-                    .IsUnique();
-
             modelBuilder.Entity<DcWarehouse>().HasData(
                 new DcWarehouse { WarehouseCode = "depo-01", WarehouseDesc = "Mərkəz deposu", OfficeCode = "ofs01", StoreCode = "mgz01", IsDefault = true });
-
-            modelBuilder.Entity<TrInvoiceHeader>(entity =>
-            {
-                entity.Property(e => e.InvoiceHeaderId)
-                   .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<TrInvoiceLine>(entity =>
-            {
-                entity.HasOne(x => x.TrInvoiceHeader)
-                   .WithMany(x => x.TrInvoiceLines)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-                entity.Property(e => e.InvoiceLineId)
-                   .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<TrProductFeature>(entity =>
-            {
-                entity.HasOne(x => x.DcProduct)
-                   .WithMany(x => x.TrProductFeatures)
-                   .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<TrPaymentLine>(entity =>
-            {
-                entity.HasOne(x => x.TrPaymentHeader)
-                    .WithMany(x => x.TrPaymentLines)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<TrPriceListLine>(entity =>
-            {
-                entity.HasOne(x => x.TrPriceListHeader)
-                    .WithMany(x => x.TrPriceListLines)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<SiteProduct>(entity =>
-            {
-                entity.HasOne(x => x.DcProduct)
-                    .WithOne(x => x.SiteProduct)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<trInvoiceLineExt>(entity =>
-            {
-                entity.HasOne(x => x.TrInvoiceLine)
-                    .WithOne(x => x.TrInvoiceLineExt)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<DcReportFilter>(entity =>
-            {
-                entity.HasOne(x => x.DcReport)
-                    .WithMany(x => x.DcReportFilters)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<TrClaimReport>(entity =>
-            {
-                entity.HasOne(x => x.DcReport)
-                    .WithMany(x => x.TrClaimReports)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            modelBuilder.Entity<TrFormReport>(entity =>
-            {
-                entity.HasOne(x => x.DcReport)
-                    .WithMany(x => x.TrFormReports)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
 
             modelBuilder.Entity<DcReportType>().HasData(
                 new DcReportType { ReportTypeId = 0, ReportTypeDesc = "Embedded" },
@@ -481,56 +505,6 @@ namespace Foxoft.Models
                 new DcVariable { VariableCode = "IT", VariableDesc = "Mal Transferi" },
                 new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" }
                 );
-
-            modelBuilder.Entity<MigrationHistory>(entity =>
-            {
-                entity.HasKey(e => new { e.MigrationId, e.ContextKey })
-                   .HasName("PK_dbo.__MigrationHistory");
-
-                entity.ToTable("__MigrationHistory");
-
-                entity.Property(e => e.MigrationId)
-                   .HasMaxLength(150);
-
-                entity.Property(e => e.ContextKey)
-                   .HasMaxLength(300);
-
-                entity.Property(e => e.Model)
-                   .IsRequired();
-
-                entity.Property(e => e.ProductVersion)
-                   .IsRequired()
-                   .HasMaxLength(32);
-            });
-
-            modelBuilder.Entity<Sysdiagrams>(entity =>
-            {
-                entity.HasKey(e => e.DiagramId)
-                   .HasName("PK_dbo.sysdiagrams");
-
-                entity.ToTable("sysdiagrams");
-
-                entity.Property(e => e.DiagramId)
-                   .HasColumnName("diagram_id");
-
-                entity.Property(e => e.Definition)
-                   .HasColumnName("definition");
-
-                entity.Property(e => e.Name)
-                   .IsRequired()
-                   .HasColumnName("name")
-                   .HasMaxLength(128);
-
-                entity.Property(e => e.PrincipalId)
-                   .HasColumnName("principal_id");
-
-                entity.Property(e => e.Version)
-                   .HasColumnName("version");
-            });
-
-            OnModelCreatingPartial(modelBuilder);
-
-
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
