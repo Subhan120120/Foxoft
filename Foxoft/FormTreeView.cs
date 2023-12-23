@@ -33,6 +33,7 @@ namespace Foxoft
         private void TreeList_GetStateImage(object sender, GetStateImageEventArgs e)
         {
             e.NodeImageIndex = 0;
+            //ssd
         }
 
         private void FormTreeView_Load(object sender, EventArgs e)
