@@ -16,14 +16,14 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormTreeView : XtraForm
+    public partial class FormHierarchyList : XtraForm
     {
         private EfMethods efMethods = new();
         private subContext dbContext;
 
         public DcHierarchy DcHierarchy;
 
-        public FormTreeView()
+        public FormHierarchyList()
         {
             InitializeComponent();
 
@@ -33,7 +33,6 @@ namespace Foxoft
         private void TreeList_GetStateImage(object sender, GetStateImageEventArgs e)
         {
             e.NodeImageIndex = 0;
-            //
         }
 
         private void FormTreeView_Load(object sender, EventArgs e)

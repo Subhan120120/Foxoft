@@ -267,7 +267,7 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormTreeView form = new())
+            using (FormHierarchyList form = new())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {

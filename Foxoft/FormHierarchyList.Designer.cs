@@ -1,6 +1,6 @@
 ﻿namespace Foxoft
 {
-    partial class FormTreeView
+    partial class FormHierarchyList
     {
         /// <summary>
         /// Required designer variable.
