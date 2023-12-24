@@ -12,17 +12,12 @@ select DcProducts.ProductCode
 			+ isnull(' ' + Feature23,'') + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') 
 			+ isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') 
 		, ProductDesc
-		, Mərkəz = ISNULL([depo-01], 0)
-		, [Sıra 20] = ISNULL([depo-02], 0)
-		, [Sıra 5] = ISNULL([depo-03], 0)
 		, Balance = isnull([depo-01], 0) + isnull([depo-02],0) + isnull([depo-03],0)
 		, WholesalePrice
-		, Manatla = ROUND(WholesalePrice*1.703, -1 )
 		, DcProducts.HierarchyCode
 		, HierarchyDesc
 		, ProductTypeCode
 		, ProductId
-		--, [Marka] = isnull(' ' + Feature03,'')
 		, LastPurchasePrice = CAST((select top 1 toplam = TrInvoiceLines.PriceLoc * (1 - (TrInvoiceLines.PosDiscount / 100))  
 							 from TrInvoiceLines 
 							 join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId
