@@ -89,10 +89,13 @@ namespace Foxoft
         {
             string hierarchyCode = treeList1.FocusedNode.GetValue(treeListCol_HierarchyCode)?.ToString();
 
-            int result = efMethods.DeleteHierarchy(hierarchyCode);
+            if (!string.IsNullOrEmpty(hierarchyCode))
+            {
+                int result = efMethods.DeleteHierarchy(hierarchyCode);
 
-            if (result > 0)
-                treeList1.DeleteNode(treeList1.FocusedNode);
+                if (result > 0)
+                    treeList1.DeleteNode(treeList1.FocusedNode);
+            }
         }
 
         private void treeList1_HiddenEditor(object sender, System.EventArgs e)
