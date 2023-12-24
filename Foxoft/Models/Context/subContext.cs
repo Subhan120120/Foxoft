@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
 using System.IO;
 using Foxoft.Models.Entity.View_and_Procedur;
-using Foxoft.Migrations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -295,6 +294,10 @@ namespace Foxoft.Models
 
         private static void InitializeHasData(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DcHierarchy>().HasData(
+                new DcHierarchy { HierarchyCode = "Root", HierarchyDesc = "Root", HierarchyLevel = 0, Order = 0 }
+                );
+
             modelBuilder.Entity<DcForm>().HasData(
                 new DcForm { FormCode = "CurrAccs", FormDesc = "CurrAccs" },
                 new DcForm { FormCode = "Products", FormDesc = "Products" }
