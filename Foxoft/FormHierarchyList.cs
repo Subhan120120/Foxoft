@@ -6,12 +6,6 @@ using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -39,6 +33,17 @@ namespace Foxoft
         {
             List<DcHierarchy> DcHierarchies = efMethods.SelectHierarchies();
             treeList1.DataSource = DcHierarchies;
+        }
+
+        private void FormTreeView_Activated(object sender, EventArgs e)
+        {
+            //AutoFocus FindPanel
+            if (treeList1 is not null)
+            {
+                treeList1.FindPanelVisible = false;
+                if (!treeList1.FindPanelVisible)
+                    treeList1.BeginInvoke(new Action(treeList1.ShowFindPanel));
+            }
         }
 
         private void treeList1_InitNewRow(object sender, TreeListInitNewRowEventArgs e)
@@ -101,10 +106,23 @@ namespace Foxoft
             {
                 treeList1.FocusedNode = ((TreeListNodeMenu)e.Menu).Node;
 
+                DXMenuItem dx_Edit = new("Dəyiş", bbEdit_ItemClick, svgImageCollection1["edit"], DXMenuItemPriority.Normal);
+
                 e.Menu.Items.Add(new DXMenuItem("Əlavə et", bbAdd_ItemClick, svgImageCollection1["add"], DXMenuItemPriority.Normal));
                 e.Menu.Items.Add(new DXMenuItem("Uşaq əlavə et", bbAddChild_ItemClick, svgImageCollection1["child"], DXMenuItemPriority.Normal));
-                e.Menu.Items.Add(new DXMenuItem("Dəyiş", bbEdit_ItemClick, svgImageCollection1["edit"], DXMenuItemPriority.Normal));
+                e.Menu.Items.Add(dx_Edit);
                 e.Menu.Items.Add(new DXMenuItem("Sil", bbDelete_ItemClick, svgImageCollection1["delete"], DXMenuItemPriority.Normal));
+
+                if (treeList1.FocusedColumn == treeListCol_HierarchyCode)
+                {
+                    string hierarchyCode = treeList1.FocusedValue?.ToString();
+                    if (!string.IsNullOrEmpty(hierarchyCode))
+                    {
+                        DcHierarchy dcHierarchy = efMethods.SelectHierarchy(hierarchyCode);
+                        if (dcHierarchy is not null)
+                            dx_Edit.Enabled = false;
+                    }
+                }
             }
         }
 
@@ -128,21 +146,10 @@ namespace Foxoft
                     efMethods.InsertHierarchy(DcHierarchy);
                 }
 
-                if (!string.IsNullOrEmpty(hierarchyCode))
+                if (!string.IsNullOrEmpty(hierarchyDesc))
                 {
                     efMethods.UpdateHierarchyDesc(hierarchyCode, hierarchyDesc);
                 }
-            }
-        }
-
-        private void FormTreeView_Activated(object sender, EventArgs e)
-        {
-            //AutoFocus FindPanel
-            if (treeList1 is not null)
-            {
-                treeList1.FindPanelVisible = false;
-                if (!treeList1.FindPanelVisible)
-                    treeList1.BeginInvoke(new Action(treeList1.ShowFindPanel));
             }
         }
     }

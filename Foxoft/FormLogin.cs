@@ -312,8 +312,8 @@ namespace Foxoft
             {
                 PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
 
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                        fiscal = nic.Id + pInterfaceProperties;
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet && nic.Name.StartsWith("Ethernet"))
+                    fiscal = nic.Id + pInterfaceProperties;
             }
 
             return fiscal;
@@ -336,7 +336,7 @@ namespace Foxoft
         {
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet && nic.Name.StartsWith("Ethernet"))
                 {
                     PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
                     Clipboard.SetText(nic.Id + pInterfaceProperties);
