@@ -60,7 +60,7 @@ namespace Foxoft
                 DcHierarchy = efMethods.SelectHierarchy(HierarchyCode.ToString());
         }
 
-        private void bbAddChild_ItemClick(object sender, EventArgs e)
+        private void dx_AddChild_ItemClick(object sender, EventArgs e)
         {
             TreeListNode newNode = treeList1.AppendNode(null, treeList1.FocusedNode);
             //newNode.SetValue("HierarchyCode", "");
@@ -70,7 +70,7 @@ namespace Foxoft
             treeList1.ShowEditor();
         }
 
-        private void bbAdd_ItemClick(object sender, EventArgs e)
+        private void dx_Add_ItemClick(object sender, EventArgs e)
         {
             TreeListNode newNode = treeList1.AppendNode(null, treeList1.FocusedNode.ParentNode);
             treeList1.FocusedNode = newNode;
@@ -79,13 +79,13 @@ namespace Foxoft
             treeList1.ShowEditor();
         }
 
-        private void bbEdit_ItemClick(object sender, EventArgs e)
+        private void dx_Edit_ItemClick(object sender, EventArgs e)
         {
             treeList1.OptionsBehavior.Editable = true;
             treeList1.ShowEditor();
         }
 
-        private void bbDelete_ItemClick(object sender, EventArgs e)
+        private void dx_Delete_ItemClick(object sender, EventArgs e)
         {
             string hierarchyCode = treeList1.FocusedNode.GetValue(treeListCol_HierarchyCode)?.ToString();
 
@@ -98,7 +98,7 @@ namespace Foxoft
             }
         }
 
-        private void treeList1_HiddenEditor(object sender, System.EventArgs e)
+        private void treeList1_HiddenEditor(object sender, EventArgs e)
         {
             treeList1.OptionsBehavior.Editable = false;
         }
@@ -109,12 +109,15 @@ namespace Foxoft
             {
                 treeList1.FocusedNode = ((TreeListNodeMenu)e.Menu).Node;
 
-                DXMenuItem dx_Edit = new("Dəyiş", bbEdit_ItemClick, svgImageCollection1["edit"], DXMenuItemPriority.Normal);
+                DXMenuItem dx_Edit = new("Dəyiş", dx_Edit_ItemClick, svgImageCollection1["edit"], DXMenuItemPriority.Normal);
+                DXMenuItem dx_Add = new("Əlavə et", dx_Add_ItemClick, svgImageCollection1["add"], DXMenuItemPriority.Normal); 
+                DXMenuItem dx_AddChild = new("Uşaq əlavə et", dx_AddChild_ItemClick, svgImageCollection1["child"], DXMenuItemPriority.Normal);
+                DXMenuItem dx_Delete = new("Sil", dx_Delete_ItemClick, svgImageCollection1["delete"], DXMenuItemPriority.Normal);
 
-                e.Menu.Items.Add(new DXMenuItem("Əlavə et", bbAdd_ItemClick, svgImageCollection1["add"], DXMenuItemPriority.Normal));
-                e.Menu.Items.Add(new DXMenuItem("Uşaq əlavə et", bbAddChild_ItemClick, svgImageCollection1["child"], DXMenuItemPriority.Normal));
+                e.Menu.Items.Add(dx_Add);
+                e.Menu.Items.Add(dx_AddChild);
                 e.Menu.Items.Add(dx_Edit);
-                e.Menu.Items.Add(new DXMenuItem("Sil", bbDelete_ItemClick, svgImageCollection1["delete"], DXMenuItemPriority.Normal));
+                e.Menu.Items.Add(dx_Delete);
 
                 if (treeList1.FocusedColumn == treeListCol_HierarchyCode)
                 {

@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraReports;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;

@@ -141,7 +141,7 @@ namespace Foxoft.Models
         public decimal? LastPurchasePrice { get; set; }
 
         [Display(Name = "Mənfəət")]
-        public decimal? Benefit { get { return (decimal?)PriceLoc - LastPurchasePrice; } }
+        public decimal? Benefit => (decimal?)PriceLoc - LastPurchasePrice;
 
         [NotMapped]
         [Display(Name = "Qalıq")]

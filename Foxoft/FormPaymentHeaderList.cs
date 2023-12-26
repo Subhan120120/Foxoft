@@ -207,7 +207,7 @@ namespace Foxoft
                     _ => new byte[] { }
                 };
 
-                FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, 2, invoiceHeaderId);
+                FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, Guid.Empty, invoiceHeaderId);
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                 formInvoice.MdiParent = formERP;
                 formInvoice.WindowState = FormWindowState.Maximized;

@@ -73,35 +73,6 @@ namespace Foxoft
             ribbonControl1.Minimized = true;
         }
 
-        private void Events()
-        {
-            Load += FormProductList_Load;
-            Activated += FormProductList_Activated;
-            BBI_Save.ItemClick += BBI_Save_ItemClick;
-            BBI_Show.ItemClick += BBI_Show_ItemClick;
-            BBI_ProductNew.ItemClick += BBI_ProductNew_ItemClick;
-            bBI_ExportExcel.ItemClick += bBI_ExportExcel_ItemClick;
-            bBI_quit.ItemClick += bBI_quit_ItemClick;
-            barButtonItem1.ItemClick += barButtonItem1_ItemClick_1;
-            bBI_ProductDelete.ItemClick += bBI_ProductDelete_ItemClick;
-            bBI_ProductRefresh.ItemClick += bBI_ProductRefresh_ItemClick;
-            BBI_Feature.ItemClick += BBI_Feature_ItemClick;
-            BarcodePrint.ItemClick += BarcodePrint_ItemClick;
-            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
-            BBI_query.ItemClick += BBI_Query_ItemClick;
-            btn_ProductEdit.ItemClick += btn_productEdit_ItemClick;
-            gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
-            gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
-            gV_ProductList.RowCellStyle += gV_ProductList_RowCellStyle;
-            gV_ProductList.RowStyle += gV_ProductList_RowStyle;
-            gV_ProductList.PopupMenuShowing += gV_ProductList_PopupMenuShowing;
-            gV_ProductList.CalcRowHeight += gV_ProductList_CalcRowHeight;
-            gV_ProductList.FocusedRowChanged += gV_ProductList_FocusedRowChanged;
-            gV_ProductList.ColumnFilterChanged += gV_ProductList_ColumnFilterChanged;
-            gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
-            gV_ProductList.DoubleClick += gridView1_DoubleClick;
-        }
-
         public FormProductList(byte[] productTypeArr)
             : this()
         {
@@ -125,6 +96,32 @@ namespace Foxoft
 
             //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
             //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
+        }
+
+        private void Events()
+        {
+            Load += FormProductList_Load;
+            Activated += FormProductList_Activated;
+            BBI_Save.ItemClick += BBI_Save_ItemClick;
+            BBI_Show.ItemClick += BBI_Show_ItemClick;
+            BBI_ProductNew.ItemClick += BBI_ProductNew_ItemClick;
+            bBI_ExportExcel.ItemClick += bBI_ExportExcel_ItemClick;
+            bBI_quit.ItemClick += bBI_quit_ItemClick;
+            bBI_ProductDelete.ItemClick += bBI_ProductDelete_ItemClick;
+            bBI_ProductRefresh.ItemClick += bBI_ProductRefresh_ItemClick;
+            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
+            BBI_query.ItemClick += BBI_Query_ItemClick;
+            btn_ProductEdit.ItemClick += btn_productEdit_ItemClick;
+            gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
+            gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
+            gV_ProductList.RowCellStyle += gV_ProductList_RowCellStyle;
+            gV_ProductList.RowStyle += gV_ProductList_RowStyle;
+            gV_ProductList.PopupMenuShowing += gV_ProductList_PopupMenuShowing;
+            gV_ProductList.CalcRowHeight += gV_ProductList_CalcRowHeight;
+            gV_ProductList.FocusedRowChanged += gV_ProductList_FocusedRowChanged;
+            gV_ProductList.ColumnFilterChanged += gV_ProductList_ColumnFilterChanged;
+            gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
+            gV_ProductList.DoubleClick += gridView1_DoubleClick;
         }
 
         private void FocusValue(string productCode)

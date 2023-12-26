@@ -155,6 +155,7 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            BBI_InvoiceExpenses = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -710,9 +711,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2, barButtonItem4, BSI_Reports });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_TwilioSave, BEI_TwilioInstance, BEI_TwilioToken, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2, barButtonItem4, BSI_Reports, BBI_InvoiceExpenses });
             ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 45;
+            ribbonControl1.MaxItemId = 46;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -1012,6 +1013,7 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_Whatsapp);
             ribbonPageGroup1.ItemLinks.Add(BBI_ModifyInvoice, true);
             ribbonPageGroup1.ItemLinks.Add(BBI_picture);
+            ribbonPageGroup1.ItemLinks.Add(BBI_InvoiceExpenses);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Nəzarət";
             // 
@@ -1282,6 +1284,14 @@ namespace Foxoft
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             // 
+            // BBI_InvoiceExpenses
+            // 
+            BBI_InvoiceExpenses.Caption = "Xərclər";
+            BBI_InvoiceExpenses.Id = 45;
+            BBI_InvoiceExpenses.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem5.ImageOptions.SvgImage");
+            BBI_InvoiceExpenses.Name = "BBI_InvoiceExpenses";
+            BBI_InvoiceExpenses.ItemClick += BBI_InvoiceExpenses_ItemClick;
+            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1486,5 +1496,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
+        private DevExpress.XtraBars.BarButtonItem BBI_InvoiceExpenses;
     }
 }

@@ -1581,6 +1581,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateSettingStoreImagePath(string storeCode, string imagePath)
+        {
+            using subContext db = new();
+            SettingStore setting = new() { StoreCode = storeCode, ImageFolder = imagePath };
+            db.Entry(setting).Property(x => x.ImageFolder).IsModified = true;
+            return db.SaveChanges();
+        }
+
         public int UpdateTerminalTouchUIMode(int terminalId, bool touchUIMode)
         {
             using subContext db = new();

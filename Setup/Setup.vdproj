@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_0D336490C1E84A1C85159957875EF658"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0F4A7E635DB94A558453A3F6CA4B3B46"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -111,12 +105,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4CD478E6C55944DE9AB3933E20358505"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_5DDC40A112D6470F84775505F3B48E51"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -172,12 +160,6 @@
         "Entry"
         {
         "MsmKey" = "8:_7193392695D54D0BAFBBFC928F521844"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7553D26E7D0F472EA6A876A1E300C1E9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -261,12 +243,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AE05206522514FB5A50BC9FBA7A87097"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_AEFE184B8C2247E387358C6C6E562B1C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -292,12 +268,6 @@
         "Entry"
         {
         "MsmKey" = "8:_C4000EBA5FA84A778DCB88F0D41F87C2"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C422997782514122BBD72B719BD2D3C6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -845,26 +815,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0D336490C1E84A1C85159957875EF658"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net5.0-windows\\tr\\json resources\\dx-analytics-core.tr.json"
-            "TargetName" = "8:dx-analytics-core.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_A991F928559046378F1CB95FE4795579"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0F4A7E635DB94A558453A3F6CA4B3B46"
             {
             "AssemblyRegister" = "3:1"
@@ -1288,26 +1238,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4CD478E6C55944DE9AB3933E20358505"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net5.0-windows\\tr\\json resources\\dx-rich.tr.json"
-            "TargetName" = "8:dx-rich.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_A991F928559046378F1CB95FE4795579"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5DDC40A112D6470F84775505F3B48E51"
             {
             "AssemblyRegister" = "3:1"
@@ -1582,26 +1512,6 @@
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7553D26E7D0F472EA6A876A1E300C1E9"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net5.0-windows\\tr\\json resources\\dx-reporting.tr.json"
-            "TargetName" = "8:dx-reporting.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_A991F928559046378F1CB95FE4795579"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1977,26 +1887,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AE05206522514FB5A50BC9FBA7A87097"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net5.0-windows\\tr\\json resources\\dx-dashboard.tr.json"
-            "TargetName" = "8:dx-dashboard.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_A991F928559046378F1CB95FE4795579"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AEFE184B8C2247E387358C6C6E562B1C"
             {
             "AssemblyRegister" = "3:1"
@@ -2138,26 +2028,6 @@
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C422997782514122BBD72B719BD2D3C6"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net5.0-windows\\tr\\json resources\\dx-spreadsheet.tr.json"
-            "TargetName" = "8:dx-spreadsheet.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_A991F928559046378F1CB95FE4795579"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2736,7 +2606,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Foxoft"
         "ProductCode" = "8:{45CA112D-09DD-478B-AD26-1FA73E8263C8}"
-        "PackageCode" = "8:{89CC2FCD-1724-4ECD-96B7-C6E8E69BD825}"
+        "PackageCode" = "8:{25228332-57EB-4315-BA84-C5F9AB371B05}"
         "UpgradeCode" = "8:{F9623061-39E4-403B-99A1-E6554D6C90B4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -3271,7 +3141,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9AA614FB560C4CCF8C67B69D5C08DAFC"
             {
-            "SourcePath" = "8:..\\Foxoft\\obj\\Debug\\net5.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\Foxoft\\obj\\Debug\\net6.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"

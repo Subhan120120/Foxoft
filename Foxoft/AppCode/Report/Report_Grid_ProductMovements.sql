@@ -56,7 +56,6 @@ select  InvoiceLineId
 , PrintCount
 , IsSalesViaInternet
 , IsLocked
-, Barcode
 , DcProducts.ProductTypeCode
 , ProductTypeDesc
 , UsePos

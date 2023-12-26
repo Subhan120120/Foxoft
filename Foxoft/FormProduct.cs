@@ -174,6 +174,22 @@ namespace Foxoft
 
         private void SaveImage()
         {
+            if (imageFolder is null)
+            {
+                FolderBrowserDialog folderDlg = new FolderBrowserDialog();
+                folderDlg.ShowNewFolderButton = true;
+
+                DialogResult result = folderDlg.ShowDialog();
+                if (result == DialogResult.OK)
+                    efMethods.UpdateSettingStoreImagePath(Authorization.StoreCode, folderDlg.SelectedPath);
+
+                if (imageFolder is null)
+                    return;
+            }
+
+            if (!Directory.Exists(imageFolder))
+                Directory.CreateDirectory(imageFolder);
+
             string outPutImage = Path.Combine(imageFolder, dcProduct.ProductCode + ".jpg");
 
             //pictureEdit.Image.Save(imagePath);

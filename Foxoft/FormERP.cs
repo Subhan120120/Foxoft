@@ -245,7 +245,7 @@ namespace Foxoft
                 return;
             }
 
-            FormInvoice formInvoice = new("RP", new byte[] { 1, 3 }, 2);
+            FormInvoice formInvoice = new("RP", new byte[] { 1, 3 }, Guid.Empty);
             formInvoice.MdiParent = this;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();
@@ -261,7 +261,7 @@ namespace Foxoft
                 return;
             }
 
-            FormInvoice formInvoice = new("RS", new byte[] { 1, 3 }, 1);
+            FormInvoice formInvoice = new("RS", new byte[] { 1, 3 }, Guid.Empty);
             formInvoice.MdiParent = this;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();
@@ -293,7 +293,7 @@ namespace Foxoft
 
             if (OpenFormCount == 0)
             {
-                FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, 0);
+                FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, Guid.Empty);
                 formInvoice.MdiParent = this;
                 formInvoice.Show();
                 parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
@@ -398,7 +398,7 @@ namespace Foxoft
                 return;
             }
 
-            FormInvoice formInvoice = new("CI", new byte[] { 1 }, 0);
+            FormInvoice formInvoice = new("CI", new byte[] { 1 }, Guid.Empty);
             formInvoice.MdiParent = this;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();
@@ -414,7 +414,7 @@ namespace Foxoft
                 return;
             }
 
-            FormInvoice formInvoice = new("CO", new byte[] { 1 }, 0);
+            FormInvoice formInvoice = new("CO", new byte[] { 1 }, Guid.Empty);
             formInvoice.MdiParent = this;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();
@@ -452,7 +452,7 @@ namespace Foxoft
                 return;
             }
 
-            FormInvoice formInvoice = new("IT", new byte[] { 1 }, 4);
+            FormInvoice formInvoice = new("IT", new byte[] { 1 }, Guid.Empty);
             formInvoice.MdiParent = this;
             formInvoice.WindowState = FormWindowState.Maximized;
             formInvoice.Show();

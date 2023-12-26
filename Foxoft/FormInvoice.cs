@@ -60,12 +60,13 @@ namespace Foxoft
         readonly SettingStore settingStore;
         private TrInvoiceHeader trInvoiceHeader;
         Guid invoiceHeaderId;
+        Guid relatedInvoiceId;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
 
-
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
-        public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode)
+
+        public FormInvoice(string processCode, byte[] productTypeArr, Guid relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             dcProcess = efMethods.SelectProcess(processCode);
@@ -76,11 +77,12 @@ namespace Foxoft
 
             AddReports();
 
+            this.productTypeArr = productTypeArr;
+            this.relatedInvoiceId = relatedInvoiceId;
+            this.Text = dcProcess.ProcessDesc;
             BEI_TwilioInstance.EditValue = Settings.Default.AppSetting.TwilioInstanceId;
             BEI_TwilioToken.EditValue = Settings.Default.AppSetting.TwilioToken;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
-            this.productTypeArr = productTypeArr;
-            this.Text = dcProcess.ProcessDesc;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
@@ -109,17 +111,8 @@ namespace Foxoft
             }
         }
 
-        private void InitializeColumnName()
-        {
-            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
-            colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
-            col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
-            checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
-            checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
-        }
-
-        public FormInvoice(string processCode, byte[] productTypeArr, byte currAccTypeCode, Guid invoiceHeaderId)
-            : this(processCode, productTypeArr, currAccTypeCode)
+        public FormInvoice(string processCode, byte[] productTypeArr, Guid relatedInvoiceId, Guid invoiceHeaderId)
+            : this(processCode, productTypeArr, relatedInvoiceId)
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
             LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
@@ -133,6 +126,15 @@ namespace Foxoft
         private void FormInvoice_Shown(object sender, EventArgs e)
         {
             gC_InvoiceLine.Focus();
+        }
+
+        private void InitializeColumnName()
+        {
+            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
+            colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
+            col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
+            checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
+            checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
         }
 
         private void AddReports()
@@ -271,6 +273,7 @@ namespace Foxoft
         {
             TrInvoiceHeader invoiceHeader = new();
             invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
+            invoiceHeader.RelatedInvoiceId = relatedInvoiceId;
             string NewDocNum = efMethods.GetNextDocNum(true, dcProcess.ProcessCode, "DocumentNumber", "TrInvoiceHeaders", 6);
             invoiceHeader.DocumentNumber = NewDocNum;
             invoiceHeader.DocumentDate = DateTime.Now;
@@ -2064,5 +2067,11 @@ namespace Foxoft
             }
         }
 
+        private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, invoiceHeaderId);
+            formInvoice.WindowState = FormWindowState.Normal    ; ;
+            formInvoice.ShowDialog();
+        }
     }
 }
