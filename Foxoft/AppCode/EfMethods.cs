@@ -11,6 +11,7 @@ using DevExpress.Data.ODataLinq.Helpers;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection.Metadata.Ecma335;
 using DevExpress.LookAndFeel;
+using DevExpress.Mvvm.Native;
 
 namespace Foxoft
 {
@@ -566,6 +567,29 @@ namespace Foxoft
             return db.TrInvoiceHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
         }
 
+        public bool ExpensesExistByInvoiceId(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            return db.TrInvoiceHeaders.Where(x => x.ProcessCode == "EX")
+                                      .Any(x => x.RelatedInvoiceId == invoiceHeaderId);
+        }
+
+        public void DeleteExpensesByInvoiceId(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+
+            var expences = db.TrInvoiceHeaders.Where(x=>x.ProcessCode == "EX")
+                                              .Where(x => x.RelatedInvoiceId == invoiceHeaderId);
+
+            expences.ForEach(x =>
+            {
+                db.TrInvoiceHeaders.Remove(x);
+                DeletePaymentsByInvoiceId(x.InvoiceHeaderId);
+            });
+
+            db.SaveChanges();
+        }
+
         public bool PriceListHeaderExist(Guid priceListHeaderId)
         {
             using subContext db = new();
@@ -711,7 +735,7 @@ namespace Foxoft
             return db.TrPaymentHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
         }
 
-        public int DeletePaymentsByInvoice(Guid invoiceHeaderId)
+        public int DeletePaymentsByInvoiceId(Guid invoiceHeaderId)
         {
             using subContext db = new();
             List<TrPaymentHeader> trPaymentHeaders = db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)

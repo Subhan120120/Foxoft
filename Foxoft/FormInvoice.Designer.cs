@@ -118,11 +118,12 @@ namespace Foxoft
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
+            BBI_InvoiceExpenses = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            RPG_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -155,7 +156,6 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            BBI_InvoiceExpenses = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -975,9 +975,17 @@ namespace Foxoft
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
             // 
+            // BBI_InvoiceExpenses
+            // 
+            BBI_InvoiceExpenses.Caption = "Xərclər";
+            BBI_InvoiceExpenses.Id = 45;
+            BBI_InvoiceExpenses.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_InvoiceExpenses.ImageOptions.SvgImage");
+            BBI_InvoiceExpenses.Name = "BBI_InvoiceExpenses";
+            BBI_InvoiceExpenses.ItemClick += BBI_InvoiceExpenses_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, ribbonPageGroup3, ribbonPageGroup2, ribbonPageGroup1, ribbonPageGroup8 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, ribbonPageGroup2, RPG_Control, ribbonPageGroup8 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "Faktura";
             // 
@@ -991,12 +999,13 @@ namespace Foxoft
             Faktura.Name = "Faktura";
             Faktura.Text = "Faktura";
             // 
-            // ribbonPageGroup3
+            // RPG_Payment
             // 
-            ribbonPageGroup3.ItemLinks.Add(bBI_Payment);
-            ribbonPageGroup3.ItemLinks.Add(bBI_DeletePayment);
-            ribbonPageGroup3.Name = "ribbonPageGroup3";
-            ribbonPageGroup3.Text = "Ödəmə";
+            RPG_Payment.ItemLinks.Add(bBI_Payment);
+            RPG_Payment.ItemLinks.Add(bBI_DeletePayment);
+            RPG_Payment.Name = "RPG_Payment";
+            RPG_Payment.Text = "Ödəmə";
+            RPG_Payment.Visible = false;
             // 
             // ribbonPageGroup2
             // 
@@ -1004,18 +1013,19 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(BBI_Print);
             ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
             ribbonPageGroup2.ItemLinks.Add(BSI_Reports);
+            ribbonPageGroup2.ItemLinks.Add(bBI_CopyInvoice);
+            ribbonPageGroup2.ItemLinks.Add(BBI_picture);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Print";
             // 
-            // ribbonPageGroup1
+            // RPG_Control
             // 
-            ribbonPageGroup1.ItemLinks.Add(bBI_CopyInvoice);
-            ribbonPageGroup1.ItemLinks.Add(bBI_Whatsapp);
-            ribbonPageGroup1.ItemLinks.Add(BBI_ModifyInvoice, true);
-            ribbonPageGroup1.ItemLinks.Add(BBI_picture);
-            ribbonPageGroup1.ItemLinks.Add(BBI_InvoiceExpenses);
-            ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "Nəzarət";
+            RPG_Control.ItemLinks.Add(bBI_Whatsapp);
+            RPG_Control.ItemLinks.Add(BBI_ModifyInvoice, true);
+            RPG_Control.ItemLinks.Add(BBI_InvoiceExpenses);
+            RPG_Control.Name = "RPG_Control";
+            RPG_Control.Text = "Nəzarət";
+            RPG_Control.Visible = false;
             // 
             // ribbonPageGroup8
             // 
@@ -1284,14 +1294,6 @@ namespace Foxoft
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             // 
-            // BBI_InvoiceExpenses
-            // 
-            BBI_InvoiceExpenses.Caption = "Xərclər";
-            BBI_InvoiceExpenses.Id = 45;
-            BBI_InvoiceExpenses.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem5.ImageOptions.SvgImage");
-            BBI_InvoiceExpenses.Name = "BBI_InvoiceExpenses";
-            BBI_InvoiceExpenses.ItemClick += BBI_InvoiceExpenses_ItemClick;
-            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1497,5 +1499,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
         private DevExpress.XtraBars.BarButtonItem BBI_InvoiceExpenses;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Payment;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup RPG_Control;
     }
 }

@@ -40,22 +40,13 @@ namespace Foxoft
             gV_InvoiceHeaderList.OptionsFind.FindMode = FindMode.Always;
         }
 
-        public FormInvoiceHeaderList(string processCode)
+        public FormInvoiceHeaderList(string processCode, Guid relatedInvoiceId)
             : this()
         {
             this.processCode = processCode;
-            LoadInvoiveHeaders();
-
-            string storeCode = Authorization.StoreCode;
-            this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
-
-            gV_InvoiceHeaderList.BestFitColumns();
-        }
-
-        public FormInvoiceHeaderList(string processCode, Guid relatedInvoiceId)
-            : this(processCode)
-        {
             RelatedInvoiceId = relatedInvoiceId;
+
+            LoadInvoiveHeaders();
         }
 
         private void LoadInvoiveHeaders()
@@ -87,7 +78,7 @@ namespace Foxoft
 
             List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
                         .Include(x => x.DcCurrAcc)
-                        .Where(x =>  RelatedInvoiceId == Guid.Empty ? true : x.RelatedInvoiceId == RelatedInvoiceId)
+                        .Where(x => RelatedInvoiceId == Guid.Empty ? true : x.RelatedInvoiceId == RelatedInvoiceId)
                         .Where(x => x.ProcessCode == processCode && x.IsMainTF == true)
                         .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
                         .Select(x => new TrInvoiceHeader
@@ -127,6 +118,11 @@ namespace Foxoft
                         .ToList();
 
             trInvoiceHeadersBindingSource.DataSource = headerList;
+
+            string storeCode = Authorization.StoreCode;
+            this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
+
+            gV_InvoiceHeaderList.BestFitColumns();
 
             //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }

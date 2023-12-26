@@ -75,8 +75,6 @@ namespace Foxoft
 
             InitializeColumnName();
 
-            AddReports();
-
             this.productTypeArr = productTypeArr;
             this.relatedInvoiceId = relatedInvoiceId;
             this.Text = dcProcess.ProcessDesc;
@@ -87,6 +85,14 @@ namespace Foxoft
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
+
+            if (processCode != "EX")
+            {
+                RPG_Control.Visible = true;
+                RPG_Payment.Visible = true;
+            }
+
+            AddReports();
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
                 repoCBE_PrinterName.Items.Add(printer);
@@ -235,9 +241,6 @@ namespace Foxoft
 
         private void ClearControlsAddNew()
         {
-            // if (dcProcess.ProcessCode == "IT")
-            //    gC_InvoiceLine.Enabled = false;
-
             dbContext = new subContext();
 
             invoiceHeaderId = Guid.NewGuid();
@@ -263,8 +266,6 @@ namespace Foxoft
                               .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
-
-            //ShowPrintCount();
 
             checkEdit_IsReturn.Enabled = false;
         }
@@ -299,14 +300,6 @@ namespace Foxoft
 
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            //SaveInvoiceHeader();
-
-            //if (trInvoiceHeader is not null)
-            //   if (trInvoiceHeader.ToWarehouseCode is not null)
-            //   {
-            //      gC_InvoiceLine.Enabled = true;
-            //   }
-
             gV_InvoiceLine.Focus();
         }
 
@@ -332,7 +325,7 @@ namespace Foxoft
 
         private void SelectDocNum()
         {
-            using FormInvoiceHeaderList form = new(dcProcess.ProcessCode);
+            using FormInvoiceHeaderList form = new(dcProcess.ProcessCode, relatedInvoiceId);
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -1007,7 +1000,7 @@ namespace Foxoft
                 trPaymentHeader.DocumentNumber = NewDocNum;
                 trPaymentHeader.Description = trInvoiceHeader.Description;
 
-                efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
+                efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
 
                 efMethods.InsertPaymentHeader(trPaymentHeader);
 
@@ -1260,8 +1253,14 @@ namespace Foxoft
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     if (efMethods.PaymentHeaderExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
-                        if (MessageBox.Show("Ödənişi də Silirsiniz! ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                            efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
+                        if (dcProcess.ProcessCode == "EX")
+                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                        else if (MessageBox.Show("Qaimə üzrə olan ödənişləri də silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+
+                    if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
+                        if (MessageBox.Show("Qaimə üzrə olan xərcləri də Silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                            efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
 
                     efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
 
@@ -1276,7 +1275,7 @@ namespace Foxoft
         {
             if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                efMethods.DeletePaymentsByInvoice(trInvoiceHeader.InvoiceHeaderId);
+                efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                 CalcPaidAmount();
             }
         }
@@ -2069,8 +2068,8 @@ namespace Foxoft
 
         private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, invoiceHeaderId);
-            formInvoice.WindowState = FormWindowState.Normal    ; ;
+            FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId);
+            formInvoice.WindowState = FormWindowState.Normal; ;
             formInvoice.ShowDialog();
         }
     }

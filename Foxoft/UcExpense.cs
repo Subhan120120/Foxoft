@@ -55,7 +55,7 @@ namespace Foxoft
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            using (FormInvoiceHeaderList form = new("EX"))
+            using (FormInvoiceHeaderList form = new("EX", Guid.Empty))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
