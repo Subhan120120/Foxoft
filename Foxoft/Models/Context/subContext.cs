@@ -7,7 +7,7 @@ using System.ComponentModel;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
 using System.IO;
-using Foxoft.Models.Entity.View_and_Procedur;
+using Foxoft.Models.Entity;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
