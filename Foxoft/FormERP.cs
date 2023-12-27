@@ -606,7 +606,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kassa Hesablar açıla bilmir: \n" + ex.ToString());
+                MessageBox.Show($"Kassa Hesablar açıla bilmir: \n" + ex);
             }
 
         }
@@ -640,7 +640,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex.ToString());
+                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex);
             }
         }
 
@@ -676,13 +676,13 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex.ToString());
+                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex);
             }
         }
 
         private void bBI_CloseWindows_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            ArrayList list = new ArrayList(MdiChildren);
+            ArrayList list = new(MdiChildren);
             foreach (Form f in list)
                 f.Close();
         }

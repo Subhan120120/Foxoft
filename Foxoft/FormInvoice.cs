@@ -86,11 +86,7 @@ namespace Foxoft
             lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
-            if (processCode != "EX")
-            {
-                RPG_Control.Visible = true;
-                RPG_Payment.Visible = true;
-            }
+
 
             AddReports();
 
@@ -1494,6 +1490,11 @@ namespace Foxoft
         private void LoadLayout()
         {
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
+            if (dcProcess.ProcessCode != "EX")
+            {
+                RPG_Control.Visible = true;
+                RPG_Payment.Visible = true;
+            }
 
             if (new string[] { "EX", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {

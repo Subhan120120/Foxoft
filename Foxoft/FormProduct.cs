@@ -176,7 +176,7 @@ namespace Foxoft
         {
             if (imageFolder is null)
             {
-                FolderBrowserDialog folderDlg = new FolderBrowserDialog();
+                FolderBrowserDialog folderDlg = new();
                 folderDlg.ShowNewFolderButton = true;
 
                 DialogResult result = folderDlg.ShowDialog();
@@ -292,9 +292,9 @@ namespace Foxoft
             }
         }
 
-        private void buttonEdit1_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void BtnEdit_Slug_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
-            string slugify = dbContext.Slugify.FromSqlInterpolated($"Select dbo.Slugify ({ProductDescTextEdit.EditValue?.ToString()}) as Slugify").FirstOrDefault().Slugify;
+            string slugify = dbContext.Slugify.FromSqlInterpolated($"Select dbo.Slugify ({ProductDescTextEdit.EditValue}) as Slugify").FirstOrDefault().Slugify;
             btnEdit_Slug.EditValue = slugify;
         }
 

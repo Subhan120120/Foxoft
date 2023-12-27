@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Foxoft.Models.Entity.View_and_Procedur
+namespace Foxoft.Models.Entity
 {
     public class SlugifyResult
     {

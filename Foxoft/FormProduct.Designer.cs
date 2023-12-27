@@ -470,7 +470,7 @@ namespace Foxoft
             btnEdit_Slug.Size = new System.Drawing.Size(143, 20);
             btnEdit_Slug.StyleController = dataLayoutControl1;
             btnEdit_Slug.TabIndex = 12;
-            btnEdit_Slug.ButtonPressed += buttonEdit1_ButtonPressed;
+            btnEdit_Slug.ButtonPressed += BtnEdit_Slug_ButtonPressed;
             // 
             // ItemForUsePos
             // 
