@@ -578,7 +578,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            var expences = db.TrInvoiceHeaders.Where(x=>x.ProcessCode == "EX")
+            var expences = db.TrInvoiceHeaders.Where(x => x.ProcessCode == "EX")
                                               .Where(x => x.RelatedInvoiceId == invoiceHeaderId);
 
             expences.ForEach(x =>
@@ -1501,16 +1501,22 @@ namespace Foxoft
             return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportId == id);
         }
 
-        public List<DcReportSubQuery> SelectReportQueriesByReport(int reportId)
+        public List<TrReportSubQuery> SelectReportQueriesByReport(int reportId)
         {
             using subContext db = new();
-            return db.DcReportSubQueries.Where(x => x.ReportId == reportId).ToList();
+            return db.TrReportSubQueries.Where(x => x.ReportId == reportId).ToList();
         }
 
-        public List<DcQueryParam> SelectQueryParamsByQuery(int queryId)
+        public List<TrReportSubQueryRelationColumn> SelectSubQueryRelationColumnByQueryId(int subQueryId)
         {
             using subContext db = new();
-            return db.DcQueryParams.Where(x => x.QueryId == queryId).ToList();
+            return db.TrReportSubQueryRelationColumns.Where(x => x.SubQueryId == subQueryId).ToList();
+        }
+
+        public List<DcQueryParam> SelectQueryParamsByReport(int reportId)
+        {
+            using subContext db = new();
+            return db.DcQueryParams.Where(x => x.ReportId == reportId).ToList();
         }
 
         public DcReport SelectReportByName(string name)
@@ -1594,6 +1600,14 @@ namespace Foxoft
         {
             using subContext db = new();
             db.DcReports.Add(dcReport);
+            db.SaveChanges();
+        }
+
+        public void InsertFormReport(string formCode, int reportId)
+        {
+            using subContext db = new();
+            TrFormReport trFormReport = new() { FormCode = formCode, ReportId = reportId };
+            db.TrFormReports.Add(trFormReport);
             db.SaveChanges();
         }
 

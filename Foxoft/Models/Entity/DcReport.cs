@@ -13,6 +13,7 @@ namespace Foxoft.Models
             DcReportFilters = new HashSet<DcReportFilter>();
             TrClaimReports = new HashSet<TrClaimReport>();
             TrFormReports = new HashSet<TrFormReport>();
+            DcQueryParams = new HashSet<DcQueryParam>();
         }
 
         [Key]
@@ -36,6 +37,7 @@ namespace Foxoft.Models
         public string? ReportFilter { get; set; }
 
         public virtual DcReportType DcReportType { get; set; }
+        public virtual ICollection<DcQueryParam> DcQueryParams { get; set; }
         public virtual ICollection<DcReportFilter> DcReportFilters { get; set; }
         public virtual ICollection<TrClaimReport> TrClaimReports { get; set; }
         public virtual ICollection<TrFormReport> TrFormReports { get; set; }

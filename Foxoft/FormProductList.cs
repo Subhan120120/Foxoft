@@ -2,6 +2,7 @@
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Customization;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -12,7 +13,9 @@ using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
+using Foxoft.Migrations;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
@@ -146,13 +149,17 @@ namespace Foxoft
 
         private void AddReports()
         {
+            BSI_Report.LinksPersistInfo.Clear();
+
             List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
+
+            BarButtonItem BBI;
 
             foreach (TrFormReport report in trFormReports)
             {
-                BarButtonItem BBI = new();
+                BBI = new();
                 BBI.Caption = report.DcReport.ReportName;
-                BBI.Id = 57;
+                //BBI.Id = report.DcReport.ReportId;
                 BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
                 BBI.Name = report.DcReport.ReportId.ToString();
                 //String txt = new BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J).ToString();
@@ -170,7 +177,7 @@ namespace Foxoft
 
                 BBI.ItemClick += (sender, e) =>
                 {
-                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+                    DcReport dcReport = report.DcReport;
 
                     string filter = "";
                     if (dcProduct is not null)
@@ -205,6 +212,33 @@ namespace Foxoft
                     }
                 };
             }
+
+            BBI = new();
+            BBI.Caption = "Əlavə Et";
+            //BBI.Id = report.DcReport.ReportId;
+            BBI.ImageOptions.SvgImage = svgImageCollection1["add"];
+            BBI.Name = "Add";
+
+            BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+            ((ISupportInitialize)ribbonControl1).BeginInit();
+            ribbonControl1.Items.Add(BBI);
+            ((ISupportInitialize)ribbonControl1).EndInit();
+
+            BBI.ItemClick += (sender, e) =>
+            {
+                //DcReport dcReport = report.DcReport;
+                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", "Products");
+                try
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                        efMethods.InsertFormReport("Products", Convert.ToInt32(form.Value_Id));
+                    AddReports();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            };
         }
 
         private void SaveLayout()

@@ -64,7 +64,7 @@ namespace Foxoft
             this.Value_Id = value_Id;
         }
 
-        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string fieldName_2, string value_2)
+        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string fieldName_2, string value_2) // 2 eded deyisen olanlar ucun
             : this(processCode, fieldName_Id, value_Id)
         {
             this.Col_2.FieldName = fieldName_2;
@@ -147,7 +147,7 @@ namespace Foxoft
 
         private void AddUnboundColumns(GridColumn column)
         {
-            GridColumn gridColumn = new GridColumn();
+            GridColumn gridColumn = new();
             gridColumn.OptionsColumn.AllowEdit = false;
             gridColumn.OptionsColumn.ReadOnly = true;
 

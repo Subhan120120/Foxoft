@@ -7,6 +7,7 @@ using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using Foxoft.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -33,57 +34,67 @@ namespace Foxoft
         {
             query = CustomExtensions.AddTop(query, int.MaxValue);
 
-            string qryMaster = "Select * from ( " + query + " \n) as master";
+            string qryMaster = $"Select TOP {int.MaxValue} * from ( " + query + " \n) as master";
 
             if (!string.IsNullOrEmpty(filter))
-                qryMaster = qryMaster + " where " + filter;
+                qryMaster += " where " + filter;
 
-            XtraReport xtraReport = GetInvoiceReport(dcReport, qryMaster + " order by RowNumber");
+            qryMaster += " order by RowNumber";
 
-            this.xReport = xtraReport;
+            CustomSqlQuery mainQuery = new("Main", qryMaster);
+
+            List<TrReportSubQuery> ReportSubQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
+
+            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
+
+            foreach (TrReportSubQuery reportSubQuery in ReportSubQueries)
+            {
+                string subquery = CustomExtensions.AddTop(reportSubQuery.SubQueryText, int.MaxValue);
+                string reportSubQueryTxt = $@"select * from ({subquery}) as [{reportSubQuery.SubQueryName}] where 1=1";
+
+                List<TrReportSubQueryRelationColumn> relationColumns = efMethods.SelectSubQueryRelationColumnByQueryId(reportSubQuery.SubQueryId);
+                foreach (TrReportSubQueryRelationColumn relationColumn in relationColumns)
+                {
+                    string mainQueryTxt = $@"select {relationColumn.ParentColumnName} from ({mainQuery.Sql}) as main";
+                    reportSubQueryTxt += $" and [{reportSubQuery.SubQueryName}].{relationColumn.SubColumnName} in ({mainQueryTxt})";
+                }
+
+                CustomSqlQuery subQuery = new(reportSubQuery.SubQueryName, reportSubQueryTxt);
+                sqlQueries.Add(subQuery);
+            }
+
+            sqlQueries = AddParameters(sqlQueries, dcReport.ReportId);
+
+            ReportClass reportClass = new();
+            XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+
+            xReport = xtraReport;
             documentViewer1.DocumentSource = xtraReport;
-            this.xReport.CreateDocument();
+            xReport.CreateDocument();
             Show();
         }
 
-        private XtraReport GetInvoiceReport(DcReport dcReport, string reportQry)
+        public List<CustomSqlQuery> AddParameters(List<CustomSqlQuery> sqlQueries, int reportId)
         {
-            List<DcReportSubQuery> ReportSubQueries = efMethods.SelectReportQueriesByReport(dcReport.ReportId);
-            List<CustomSqlQuery> sqlQueries = new();
-
-            sqlQueries.Add(new CustomSqlQuery("Data", reportQry));
-
-            foreach (DcReportSubQuery reportSubQuery in ReportSubQueries)
-            {
-                CustomSqlQuery sqlQuery = SelectQry(reportSubQuery);
-                sqlQueries.Add(sqlQuery);
-            }
-
-            ReportClass reportClass = new();
-            return reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
-        }
-
-        public CustomSqlQuery SelectQry(DcReportSubQuery reportSubQuery)
-        {
-            List<DcQueryParam> dcQueryParams = efMethods.SelectQueryParamsByQuery(reportSubQuery.SubQueryId);
-
-            CustomSqlQuery sqlQuery = new(reportSubQuery.SubQueryName, reportSubQuery.SubQueryText);
+            List<DcQueryParam> dcQueryParams = efMethods.SelectQueryParamsByReport(reportId);
 
             foreach (DcQueryParam queryParam in dcQueryParams)
             {
-                //string typeName = typeof(DateTime).FullName;
+                foreach (CustomSqlQuery sqlQuery in sqlQueries)
+                {
+                    //string typeName = typeof(DateTime).FullName;
+                    object value = Convert.ChangeType(queryParam.ParameterValue, Type.GetType(queryParam.ParameterType));
+                    QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), value);
+                    sqlQuery.Parameters.Add(queryParameter);
 
-                //object value = Convert.ChangeType(queryParam.ParameterValue, Type.GetType(queryParam.ParameterType));
-                //QueryParameter queryParameter = new(queryParam.ParameterName, Type.GetType(queryParam.ParameterType), value);
-                //sqlQuery.Parameters.Add(queryParameter);
-
-                //QueryParameter queryParameter2 = new();
-                //queryParameter2.Name = "EndDate";
-                //queryParameter2.Type = typeof(DateTime);
-                //queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
+                    //QueryParameter queryParameter2 = new();
+                    //queryParameter2.Name = "EndDate";
+                    //queryParameter2.Type = typeof(DateTime);
+                    //queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
+                }
             }
 
-            return sqlQuery;
+            return sqlQueries;
         }
 
         private BarButtonItem CreateItem()

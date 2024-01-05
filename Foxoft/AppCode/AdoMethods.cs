@@ -39,6 +39,7 @@ namespace Foxoft
             using SqlConnection con = new(subConnString);
             using SqlCommand cmd = new(query, con);
 
+
             cmd.Parameters.AddRange(sqlParameters);
             con.Open();
 
@@ -54,15 +55,16 @@ namespace Foxoft
             using SqlConnection con = new(subConnString);
             con.Open();
 
-            using SqlCommand command = new(query, con);
+            using SqlCommand cmd = new(query, con);
 
-            SqlDataReader dr = command.ExecuteReader();
+            SqlDataReader dr = cmd.ExecuteReader();
             DataTable dt = new();
             dt.Load(dr);
 
             ReflectionExt.SetCaptionName(dt);
 
             return dt;
+            #region SqlDataAdapter
 
             //using (SqlDataAdapter da = new SqlDataAdapter(query, con))
             //{
@@ -76,7 +78,8 @@ namespace Foxoft
             //      MessageBox.Show($"Databaza Hal Hazırda məşğuldur \n {ex}");
             //   }
             //   return dt;
-            //}
+            //} 
+            #endregion
         }
 
         public DataTable SqlGetDt(string query, SqlParameter[] sqlParameters)

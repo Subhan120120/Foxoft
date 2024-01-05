@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240103151718_asdfgghg")]
+    partial class asdfgghg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1255,27 +1257,25 @@ namespace Foxoft.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ParameterName")
+                    b.Property<string>("ColumnName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("ParameterType")
+                    b.Property<string>("ParentColumnName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("ParameterValue")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<int>("QueryId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("ReportId")
+                    b.Property<int?>("TrReportSubQuerySubQueryId")
                         .HasColumnType("int");
 
                     b.HasKey("ParameterId");
 
-                    b.HasIndex("ReportId");
+                    b.HasIndex("TrReportSubQuerySubQueryId");
 
                     b.ToTable("DcQueryParams");
                 });
@@ -3501,13 +3501,12 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcQueryParam", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcReport", "DcReport")
+                    b.HasOne("Foxoft.Models.TrReportSubQuery", "TrReportSubQuery")
                         .WithMany("DcQueryParams")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TrReportSubQuerySubQueryId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("DcReport");
+                    b.Navigation("TrReportSubQuery");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
@@ -3916,7 +3915,7 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrReportSubQueryRelationColumn", b =>
                 {
                     b.HasOne("Foxoft.Models.TrReportSubQuery", "TrReportSubQuery")
-                        .WithMany("TrReportSubQueryRelationColumns")
+                        .WithMany()
                         .HasForeignKey("SubQueryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -4090,8 +4089,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
-                    b.Navigation("DcQueryParams");
-
                     b.Navigation("DcReportFilters");
 
                     b.Navigation("TrClaimReports");
@@ -4135,7 +4132,7 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
                 {
-                    b.Navigation("TrReportSubQueryRelationColumns");
+                    b.Navigation("DcQueryParams");
                 });
 
             modelBuilder.Entity("Foxoft.Models.dcClaimType", b =>

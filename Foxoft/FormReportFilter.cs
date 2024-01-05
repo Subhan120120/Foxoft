@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.Excel;
+using DevExpress.Office.Utils;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -33,14 +35,13 @@ namespace Foxoft
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
-
             if (settingStore is not null)
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
 
             ComponentResourceManager resources = new(typeof(FormReportFilter));
 
-            SvgImage ımage = ((SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+            SvgImage ımage = (SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
 
             SvgBitmap bm = new(ımage);
             Image img = bm.Render(null, 0.5);
@@ -53,13 +54,11 @@ namespace Foxoft
             this.dcReport = efMethods.SelectReport(Report.ReportId); // reload dcReport
             this.Text = Report.ReportName;
 
-            CustomMethods cM = new ();
-            string querySql = null;
-            if (dcReport is not null)
-                querySql = cM.ClearVariablesFromQuery(dcReport.ReportQuery);
+            string querySql = AddParameters(Report, out SqlParameter[] SqlParameters);
 
-            if (querySql is not null)
-                filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql);
+            if (!String.IsNullOrEmpty(querySql))
+                filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql, SqlParameters);
+
             filterControl_Outer.FilterString = dcReport.ReportFilter;
 
             GroupOperator groupOperator = GetFiltersFromDatabase(dcReport.DcReportFilters);
@@ -67,21 +66,22 @@ namespace Foxoft
             filterControl_Inner.FilterCriteria = groupOperator;
         }
 
-        private string ClearVariables(string querySql)
+        private string AddParameters(DcReport Report, out SqlParameter[] SqlParameterArr)
         {
-            if (querySql is not null)
+            CustomMethods cM = new();
+            string querySql;
 
-                if (querySql.Contains("{"))
-                {
-                    int startindex = querySql.IndexOf('{');
-                    int endindex = querySql.IndexOf('}');
-                    string outputstring = querySql.Substring(startindex, endindex - startindex + 1);
-                    string newQuerySql = querySql.Replace(outputstring, "");
-                    return newQuerySql;
-                }
-                else
-                    return querySql;
-            else return null;
+            querySql = cM.ClearVariablesFromQuery(dcReport.ReportQuery);
+
+            List<DcQueryParam> queryParams = efMethods.SelectQueryParamsByReport(Report.ReportId);
+            List<SqlParameter> sqlParametersList = new();
+
+            foreach (DcQueryParam param in queryParams)
+                sqlParametersList.Add(new SqlParameter(param.ParameterName, param.ParameterValue));
+
+            SqlParameterArr = sqlParametersList.ToArray();
+
+            return querySql;
         }
 
         private DataTable opToDt(GroupOperator groupOperand)

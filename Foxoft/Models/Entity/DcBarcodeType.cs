@@ -7,9 +7,8 @@ namespace Foxoft.Models
     {
         public DcBarcodeType()
         {
-            //DcClaims = new HashSet<DcClaim>();
-            // TrRoleClaims = new HashSet<TrRoleClaim>();
-        }
+            TrProductBarcodes = new HashSet<TrProductBarcode>();
+    }
 
         [Key]
         [Display(Name = "Barkod Tipi Kodu")]

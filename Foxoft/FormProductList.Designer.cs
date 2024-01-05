@@ -111,10 +111,10 @@ namespace Foxoft
             gC_ProductList.TabIndex = 0;
             gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ProductList });
             // 
-            // gV_ProductList
+            // gridView1
             // 
             gV_ProductList.GridControl = gC_ProductList;
-            gV_ProductList.Name = "gV_ProductList";
+            gV_ProductList.Name = "gridView1";
             // 
             // colProductCode
             // 
@@ -459,6 +459,7 @@ namespace Foxoft
             // svgImageCollection1
             // 
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
+            svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
             // 
             // FormProductList
             // 

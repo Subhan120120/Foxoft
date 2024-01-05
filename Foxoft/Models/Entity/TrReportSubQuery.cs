@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    public partial class DcReportSubQuery
+    public partial class TrReportSubQuery
     {
-        public DcReportSubQuery()
+        public TrReportSubQuery()
         {
-
+            TrReportSubQueryRelationColumns = new HashSet<TrReportSubQueryRelationColumn>();
         }
 
         [Key]
@@ -29,6 +29,6 @@ namespace Foxoft.Models
         public string SubQueryText { get; set; }
 
         public virtual DcReport DcReport { get; set; }
-        public virtual ICollection<DcQueryParam> DcQueryParams { get; set; }
+        public virtual ICollection<TrReportSubQueryRelationColumn> TrReportSubQueryRelationColumns { get; set; }
     }
 }
