@@ -109,6 +109,7 @@ from (
 		, FeatureTypeId2 = '0' + DcFeatures.FeatureTypeId
 	from TrProductFeatures 
 	left join DcFeatures on TrProductFeatures.FeatureCode = DcFeatures.FeatureCode
+		and TrProductFeatures.FeatureTypeId = DcFeatures.FeatureTypeId
 	--where ProductCode = 'P-001247'
 ) as tblo
 PIVOT (Max(FeatureCode) FOR FeatureTypeId IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25],

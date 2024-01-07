@@ -40,6 +40,9 @@ namespace Foxoft.Models
         [Display(Name = "Son Tarix")]
         public string? DueDate { get; set; }
 
+        [DefaultValue("0")]
+        [Display(Name = "Qiymət Cədvəli İstifadə Et")]
+        public bool UsePriceList { get; set; }
 
 
         [ForeignKey("LocalCurrencyCode")]

@@ -1520,6 +1520,19 @@ namespace Foxoft
             if (File.Exists(layoutFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
 
+            colLastPurchasePrice = gV_InvoiceLine.Columns[nameof(DcProduct.LastPurchasePrice)];
+            if (colLastPurchasePrice != null)
+            {
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_LastPurchasePrice");
+                if (!currAccHasClaims)
+                {
+                    colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = false;
+                    colLastPurchasePrice.Visible = false;
+                    colBenefit.OptionsColumn.ShowInCustomizationForm = false;
+                    colBenefit.Visible = false;
+                }
+            }
+
             colBalance.OptionsColumn.ReadOnly = true;
             colLastPurchasePrice.OptionsColumn.ReadOnly = true;
             col_NetAmount.OptionsColumn.ReadOnly = true;

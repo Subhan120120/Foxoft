@@ -67,7 +67,7 @@ namespace Foxoft
                 {
                     CustomMethods cM = new();
                     string qry = cM.ClearVariablesFromQuery(qryMaster);
-                    DataTable dt = adoMethods.SqlGetDt(qry);
+                    DataTable dt = adoMethods.SqlGetDt(qry); // if query is correct 
 
                     if (!efMethods.ReportExist(dcReport.ReportId)) //if doesnt exist
                         efMethods.InsertReport(dcReport);
