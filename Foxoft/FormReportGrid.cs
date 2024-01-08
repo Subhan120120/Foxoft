@@ -21,12 +21,14 @@ using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using DevExpress.XtraReports.UserDesigner.Native;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -45,11 +47,14 @@ namespace Foxoft
 
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
-        DcReport report = new();
-        string qry = "select 0 Nothing";
-        string imageFolder;
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
+        CustomMethods cM = new();
+        DcReport dcReport = new();
+        SqlParameter[] sqlParameters;
+
+        string qry = "select 0 Nothing";
+        string imageFolder;
 
         RepositoryItemPictureEdit riPictureEdit = new();
         GridColumn colImage = new();
@@ -73,27 +78,31 @@ namespace Foxoft
             badge2.TargetElement = ribbonPage1;
         }
 
-        public FormReportGrid(string query, string filter, DcReport report)
+        public FormReportGrid(string query, string filter, DcReport dcReport)
         : this()
         {
-            query = CustomExtensions.AddTop(query, int.MaxValue);
+            query = cM.AddTop(query, int.MaxValue);
 
-            string qryMaster = "Select * from ( " + query + " \n) as master" ;
+            string qryMaster = "Select * from ( " + query + " \n) as master";
 
             if (!string.IsNullOrEmpty(filter))
                 qryMaster = qryMaster + " where " + filter;
 
-            this.qry = qryMaster + " order by RowNumber";
-            this.report = report;
-            Text = report.ReportName;
+            query = qryMaster + " order by RowNumber";
+
+            qry = cM.AddFilters(query, dcReport);
+            sqlParameters = cM.AddParameters(dcReport);
+
+            this.dcReport = dcReport;
+            Text = dcReport.ReportName;
 
             LoadData();
             HyperLinkColumns();
             LoadLayout();
         }
 
-        public FormReportGrid(string qry, string filter, DcReport report, string activeFilterStr)
-           : this(qry, filter, report)
+        public FormReportGrid(string qry, string filter, DcReport dcReport, string activeFilterStr)
+           : this(qry, filter, dcReport)
         {
             gV_Report.ActiveFilterString = activeFilterStr;
         }
@@ -155,7 +164,7 @@ namespace Foxoft
 
         private void LoadData()
         {
-            DataTable dt = adoMethods.SqlGetDt(qry);
+            DataTable dt = adoMethods.SqlGetDt(qry, sqlParameters);
             gC_Report.DataSource = dt;
             gV_Report.MoveLast();
             gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
@@ -228,14 +237,14 @@ namespace Foxoft
 
         private void bBI_LayoutSave_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (report.ReportId > 0)
+            if (dcReport.ReportId > 0)
             {
                 Stream str = new MemoryStream();
                 gV_Report.SaveLayoutToStream(str);
                 str.Seek(0, SeekOrigin.Begin);
                 StreamReader reader = new(str);
                 string layoutTxt = reader.ReadToEnd();
-                efMethods.UpdateReportLayout(report.ReportId, layoutTxt);
+                efMethods.UpdateReportLayout(dcReport.ReportId, layoutTxt);
             }
         }
 
@@ -246,8 +255,8 @@ namespace Foxoft
 
         private void LoadLayout()
         {
-            DcReport dcReport = efMethods.SelectReport(report.ReportId);
-            if (!string.IsNullOrEmpty(dcReport.ReportLayout) && report.ReportId > 0)
+            dcReport = efMethods.SelectReport(dcReport.ReportId);
+            if (!string.IsNullOrEmpty(dcReport.ReportLayout) && dcReport.ReportId > 0)
             {
                 byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
                 MemoryStream stream = new(byteArray);
@@ -421,7 +430,7 @@ namespace Foxoft
             {
                 Filter = "Excel Faylı|*.xlsx",
                 Title = "Excel Faylı Yadda Saxla",
-                FileName = report.ReportName,
+                FileName = dcReport.ReportName,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 DefaultExt = "*.xlsx",
             };
@@ -452,7 +461,7 @@ namespace Foxoft
             {
                 Filter = "Excel Faylı|*.xlsx",
                 Title = "Excel Faylı Yadda Saxla",
-                FileName = report.ReportName,
+                FileName = dcReport.ReportName,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                 DefaultExt = "*.xlsx",
             };

@@ -122,23 +122,6 @@ namespace Foxoft
             return ipHost;
         }
 
-        public static string AddTop(string query, int count)
-        {
-            query = query.Trim();
-
-            int selectIndx = query.IndexOf("Select", StringComparison.OrdinalIgnoreCase);
-
-            string top = query.Substring(selectIndx + 7, 3);
-
-            bool topExist = top.Contains("Top", StringComparison.OrdinalIgnoreCase);
-
-            if (topExist)
-                query = query.Substring(0, selectIndx) + "Select Top " + count.ToString() + query.Substring(selectIndx + 6);
-            else 
-                query = query.Substring(0, selectIndx) + "Select Top " + count.ToString() + " ROW_NUMBER() OVER (Order by (select null)) as RowNumber, " + query.Substring(selectIndx + 6);
-
-            return query;
-        }
 
     }
 

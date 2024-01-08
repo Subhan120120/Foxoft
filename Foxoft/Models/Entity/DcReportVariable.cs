@@ -10,42 +10,51 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    public partial class DcReportFilter
+    public partial class DcReportVariable
     {
-        public DcReportFilter()
+        public DcReportVariable()
         {
         }
 
         [Key]
-        [Display(Name = "Filter ID")]
-        public int FilterId { get; set; }
+        [Display(Name = "Dəyişən ID")]
+        public int VariableId { get; set; }
 
-        [Display(Name = "Filter String")]
+        [Display(Name = "Hesabat İD")]
         [ForeignKey("DcReport")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public int ReportId { get; set; }
 
-        [Display(Name = "Property")]
+        [Display(Name = "Dəyişən tipi İD")]
+        [ForeignKey("DcReportVariableType")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public byte VariableTypeId { get; set; }
+
+        [Display(Name = "Dəyişən Propertisi")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string FilterProperty { get; set; }
+        public string VariableProperty { get; set; }
 
-        [Display(Name = "Value")]
+        [Display(Name = "Dəyişən Dəyəri")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string FilterValue { get; set; }
+        public string VariableValue { get; set; }
 
-        [Display(Name = "Filter String")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = "Əməliyat")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string FilterOperatorType { get; set; }
+        public string VariableOperator { get; set; }
 
-        [Display(Name = "Filter Təmsilci")]
+        [Display(Name = "Dəyər Tipi")]
+        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string VariableValueType { get; set; }
+
+        [Display(Name = "Dəyişən Təmsilci")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string Representative { get; set; }
 
         public virtual DcReport DcReport { get; set; }
+        public virtual DcReportVariableType DcReportVariableType { get; set; }
 
     }
 }

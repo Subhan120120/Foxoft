@@ -48,11 +48,12 @@ namespace Foxoft.Models
         public DbSet<TrInvoiceLine> TrInvoiceLines { get; set; }
         public DbSet<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public DbSet<TrPaymentLine> TrPaymentLines { get; set; }
-        public DbSet<trInvoiceLineExt> trInvoiceLineExt { get; set; }
+        public DbSet<trInvoiceLineExt> TrInvoiceLineExt { get; set; }
         public DbSet<TrRoleClaim> TrRoleClaims { get; set; }
         public DbSet<DcReport> DcReports { get; set; }
         public DbSet<DcReportType> DcReportTypes { get; set; }
-        public DbSet<DcReportFilter> DcReportFilters { get; set; }
+        public DbSet<DcReportVariable> DcReportVariables { get; set; }
+        public DbSet<DcReportVariableType> dcReportVariableTypes { get; set; }
         public DbSet<TrReportSubQuery> TrReportSubQueries { get; set; }
         public DbSet<TrReportSubQueryRelationColumn> TrReportSubQueryRelationColumns { get; set; }
         public DbSet<DcQueryParam> DcQueryParams { get; set; }
@@ -271,10 +272,10 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<DcReportFilter>(entity =>
+            modelBuilder.Entity<DcReportVariable>(entity =>
             {
                 entity.HasOne(x => x.DcReport)
-                    .WithMany(x => x.DcReportFilters)
+                    .WithMany(x => x.DcReportVariables)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -408,6 +409,11 @@ namespace Foxoft.Models
                 new TrClaimReport { ClaimReportId = 16, ClaimCode = "ButunHesabatlar", ReportId = 16 },
                 new TrClaimReport { ClaimReportId = 17, ClaimCode = "ButunHesabatlar", ReportId = 17 },
                 new TrClaimReport { ClaimReportId = 18, ClaimCode = "ButunHesabatlar", ReportId = 18 }
+               );
+
+            modelBuilder.Entity<DcReportVariableType>().HasData(
+                new DcReportVariableType { VariableTypeId = 1, VariableTypeDesc = "Parameter" },
+                new DcReportVariableType { VariableTypeId = 2, VariableTypeDesc = "Filter" }
                );
 
             CustomMethods cM = new();

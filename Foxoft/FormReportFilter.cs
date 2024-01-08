@@ -8,6 +8,7 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
 using Foxoft.AppCode;
+using Foxoft.Migrations;
 using Foxoft.Models;
 using System;
 using System.Collections;
@@ -25,8 +26,9 @@ namespace Foxoft
     public partial class FormReportFilter : RibbonForm
     {
         readonly SettingStore settingStore;
-        EfMethods efMethods = new EfMethods();
-        AdoMethods adoMethods = new AdoMethods();
+        EfMethods efMethods = new();
+        AdoMethods adoMethods = new();
+        CustomMethods cM = new();
         DcReport dcReport = new();
 
         public FormReportFilter(DcReport Report)
@@ -54,34 +56,17 @@ namespace Foxoft
             this.dcReport = efMethods.SelectReport(Report.ReportId); // reload dcReport
             this.Text = Report.ReportName;
 
-            string querySql = AddParameters(Report, out SqlParameter[] SqlParameters);
+            dcReport.ReportQuery = cM.AddFilters(dcReport.ReportQuery, dcReport);
+            SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
 
-            if (!String.IsNullOrEmpty(querySql))
-                filterControl_Outer.SourceControl = adoMethods.SqlGetDt(querySql, SqlParameters);
+            if (!String.IsNullOrEmpty(dcReport.ReportQuery))
+                filterControl_Outer.SourceControl = adoMethods.SqlGetDt(dcReport.ReportQuery, sqlParameters);
 
             filterControl_Outer.FilterString = dcReport.ReportFilter;
 
-            GroupOperator groupOperator = GetFiltersFromDatabase(dcReport.DcReportFilters);
+            GroupOperator groupOperator = GetFiltersFromDatabase(dcReport.DcReportVariables);
             filterControl_Inner.SourceControl = opToDt(groupOperator);
             filterControl_Inner.FilterCriteria = groupOperator;
-        }
-
-        private string AddParameters(DcReport Report, out SqlParameter[] SqlParameterArr)
-        {
-            CustomMethods cM = new();
-            string querySql;
-
-            querySql = cM.ClearVariablesFromQuery(dcReport.ReportQuery);
-
-            List<DcQueryParam> queryParams = efMethods.SelectQueryParamsByReport(Report.ReportId);
-            List<SqlParameter> sqlParametersList = new();
-
-            foreach (DcQueryParam param in queryParams)
-                sqlParametersList.Add(new SqlParameter(param.ParameterName, param.ParameterValue));
-
-            SqlParameterArr = sqlParametersList.ToArray();
-
-            return querySql;
         }
 
         private DataTable opToDt(GroupOperator groupOperand)
@@ -95,14 +80,14 @@ namespace Foxoft
             return dt;
         }
 
-        private GroupOperator GetFiltersFromDatabase(ICollection<DcReportFilter> dcReportFilters)
+        private GroupOperator GetFiltersFromDatabase(ICollection<DcReportVariable> dcReportVariables)
         {
             GroupOperator groupOperand = new();
 
-            foreach (DcReportFilter rf in dcReportFilters)
+            foreach (DcReportVariable rf in dcReportVariables)
             {
-                BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
-                CriteriaOperator op = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
+                BinaryOperatorType operatorType = ConvertOperatorType(rf.VariableOperator);
+                CriteriaOperator op = new BinaryOperator(rf.VariableProperty, rf.VariableValue, operatorType);
                 groupOperand.Operands.Add(op);
             }
 
@@ -146,24 +131,22 @@ namespace Foxoft
 
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
-            string reportQuery = dcReport.ReportQuery;
-            ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
-            reportQuery = AddFilterToQuery(reportQuery, dcReportFilters);
+
             //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
 
             string filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
 
             switch (dcReport.ReportTypeId)
             {
-                case 1: OpenGridReport(reportQuery, filter); break;
-                case 2: OpenDetailReport(reportQuery, filter); break;
-                default: OpenGridReport(reportQuery, filter); break;
+                case 1: OpenGridReport(dcReport.ReportQuery, filter); break;
+                case 2: OpenDetailReport(dcReport.ReportQuery, filter); break;
+                default: OpenGridReport(dcReport.ReportQuery, filter); break;
             }
 
-            SaveFilterToDB();
+            SaveOuterFilterToDB();
         }
 
-        private void SaveFilterToDB()
+        private void SaveOuterFilterToDB()
         {
             string filterCriteria = "";
             if (filterControl_Outer.FilterCriteria is not null)
@@ -221,24 +204,6 @@ namespace Foxoft
             MessageBox.Show("Item clicked");
         }
 
-        private string AddFilterToQuery(string reportQuery, ICollection<DcReportFilter> dcReportFilters)
-        {
-            CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
-            int index = 0;
-            foreach (DcReportFilter rf in dcReportFilters)
-            {
-                BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
-
-                criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
-
-                string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
-                reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
-
-                index++;
-            }
-
-            return reportQuery;
-        }
 
         private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
         {
@@ -324,10 +289,9 @@ namespace Foxoft
 
             if (e.Value is not null && e.PropertyName is not null)
             {
-                foreach (var item in dcReport.DcReportFilters)
-                {
+                foreach (var item in dcReport.DcReportVariables)
                     efMethods.UpdateReportFilter(dcReport.ReportId, e.PropertyName, e.Value.ToString());
-                }
+
                 this.dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
             }
         }

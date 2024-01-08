@@ -11,12 +11,14 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -32,6 +34,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
+        CustomMethods cM = new();
         public DcCurrAcc dcCurrAcc { get; set; }
         public byte[] currAccTypeArr;
         public byte cashRegPaymentTypeCode;
@@ -113,11 +116,14 @@ namespace Foxoft
                     string ts = String.Join(",", currAccTypeArr);
                     string where = " Where CurrAccTypeCode in (" + ts + ") ";
 
-                    string query = CustomExtensions.AddTop(dcReport.ReportQuery, int.MaxValue);
+                    string query = cM.AddTop(dcReport.ReportQuery, int.MaxValue);
+
+                    query = cM.AddFilters(query, dcReport);
+                    SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
 
                     string qryMaster = "select * from (" + query + " \n) as Master " + where + " order by RowNumber";
-                    //+ " order by CurrAccDesc";
-                    DataTable dt = adoMethods.SqlGetDt(qryMaster);
+
+                    DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
                         dataSource = dt;
                 }
@@ -194,7 +200,7 @@ namespace Foxoft
                     string activeFilterStr = dateFilter;
 
                     string query = dcReport.ReportQuery;
-                    if (query.Contains("{CurrAccCode}")) 
+                    if (query.Contains("{CurrAccCode}"))
                         query = query.Replace("{CurrAccCode}", " and " + filter); // filter sorgunun icinde temsilci ile deyisdirilir
 
                     if (dcReport.ReportTypeId == 1)
@@ -458,16 +464,16 @@ namespace Foxoft
 
             //if (currAccCode is not null)
             //{
-            //    efMethods.UpdateDcReportFilter_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
+            //    efMethods.UpdateDcReportVariable_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
 
             //    dcReport = efMethods.SelectReport(dcReport.ReportId);
 
             //    string reportQuery = dcReport.ReportQuery;
 
-            //    ICollection<DcReportFilter> dcReportFilters = dcReport.DcReportFilters;
-            //    CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportFilters.Count];
+            //    ICollection<dcReportVariable> dcReportVariables = dcReport.DcReportFilters;
+            //    CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportVariables.Count];
             //    int index = 0;
-            //    foreach (DcReportFilter rf in dcReportFilters)
+            //    foreach (dcReportVariable rf in dcReportVariables)
             //    {
             //        BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
 

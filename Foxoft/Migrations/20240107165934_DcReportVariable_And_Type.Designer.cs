@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240107165934_DcReportVariable_And_Type")]
+    partial class DcReportVariable_And_Type
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1528,7 +1530,8 @@ namespace Foxoft.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("VariableOperator")
+                    b.Property<string>("VariableOperatorType")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -1542,10 +1545,6 @@ namespace Foxoft.Migrations
 
                     b.Property<string>("VariableValue")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("VariableValueType")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -3954,7 +3953,7 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
                 {
                     b.HasOne("Foxoft.Models.DcReport", "DcReport")
-                        .WithMany("TrReportSubQueries")
+                        .WithMany()
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -4146,8 +4145,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrClaimReports");
 
                     b.Navigation("TrFormReports");
-
-                    b.Navigation("TrReportSubQueries");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReportType", b =>

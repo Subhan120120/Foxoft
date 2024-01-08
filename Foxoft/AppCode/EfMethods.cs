@@ -1498,7 +1498,9 @@ namespace Foxoft
         public DcReport SelectReport(int id)
         {
             using subContext db = new();
-            return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportId == id);
+            return db.DcReports.Include(x => x.TrReportSubQueries).ThenInclude(x => x.TrReportSubQueryRelationColumns)
+                               .Include(x => x.DcReportVariables)
+                               .FirstOrDefault(x => x.ReportId == id);
         }
 
         public List<TrReportSubQuery> SelectReportQueriesByReport(int reportId)
@@ -1522,7 +1524,7 @@ namespace Foxoft
         public DcReport SelectReportByName(string name)
         {
             using subContext db = new();
-            return db.DcReports.Include(x => x.DcReportFilters).FirstOrDefault(x => x.ReportName == name);
+            return db.DcReports.Include(x => x.DcReportVariables).FirstOrDefault(x => x.ReportName == name);
         }
 
         public List<DcReport> SelectReports()
@@ -1545,13 +1547,13 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateDcReportFilter_Value(int ReportId, string fieldName, string filterValue)
+        public int UpdateDcReportVariable_Value(int ReportId, string fieldName, string filterValue)
         {
             using subContext db = new();
-            DcReportFilter dcReport = db.DcReportFilters.Where(x => x.FilterProperty == fieldName)
+            DcReportVariable reportVariable = db.DcReportVariables.Where(x => x.VariableProperty == fieldName)
                                                         .FirstOrDefault(x => x.ReportId == ReportId);
-            dcReport.FilterValue = filterValue;
-            db.Entry(dcReport).Property(x => x.FilterValue).IsModified = true;
+            reportVariable.VariableValue = filterValue;
+            db.Entry(reportVariable).Property(x => x.VariableValue).IsModified = true;
             return db.SaveChanges();
         }
 
@@ -1587,10 +1589,13 @@ namespace Foxoft
         public int UpdateReportFilter(int id, string prop, string value)
         {
             using subContext db = new();
-            DcReportFilter dcReportFilter = db.DcReportFilters.FirstOrDefault(x => x.FilterProperty == prop && x.ReportId == id);
-            dcReportFilter.FilterValue = value;
+            DcReportVariable dcReportVariable = db.DcReportVariables.FirstOrDefault(x => x.VariableProperty == prop && x.ReportId == id);
+            dcReportVariable.VariableValue = value;
 
-            db.Entry(dcReportFilter).Property(x => x.FilterValue).IsModified = true;
+            db.Entry(dcReportVariable).Property(x => x.VariableValue).IsModified = true;
+
+
+
             return db.SaveChanges();
         }
 

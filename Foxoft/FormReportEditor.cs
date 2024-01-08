@@ -5,6 +5,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,8 +13,9 @@ namespace Foxoft
 {
     public partial class FormReportEditor : XtraForm
     {
-        public DcReport dcReport = new DcReport();
-        subContext dbContext = new subContext();
+        public DcReport dcReport = new();
+        subContext dbContext = new();
+        CustomMethods cM = new();
 
         public FormReportEditor(int reportId)
         {
@@ -36,7 +38,7 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                dbContext.DcReports.Include(x => x.DcReportFilters)
+                dbContext.DcReports.Include(x => x.DcReportVariables)
                                     .Where(x => x.ReportId == dcReport.ReportId)
                                    .Load();
                 dcReportsBindingSource.DataSource = dbContext.DcReports.Local.ToBindingList();
@@ -59,15 +61,17 @@ namespace Foxoft
 
             if (!String.IsNullOrEmpty(dcReport?.ReportQuery))
             {
-                string query = CustomExtensions.AddTop(dcReport.ReportQuery, 1);
+                string query = cM.AddTop(dcReport.ReportQuery, 1);
 
                 string qryMaster = "select * from (" + query + " \n) as Master " + " order by RowNumber";
 
                 try
                 {
-                    CustomMethods cM = new();
-                    string qry = cM.ClearVariablesFromQuery(qryMaster);
-                    DataTable dt = adoMethods.SqlGetDt(qry); // if query is correct 
+                    //string qry = cM.ClearVariablesFromQuery(qryMaster);
+                    string qry = cM.AddFilters(qryMaster, dcReport);
+                    SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
+
+                    DataTable dt = adoMethods.SqlGetDt(qry, sqlParameters); // if query is correct 
 
                     if (!efMethods.ReportExist(dcReport.ReportId)) //if doesnt exist
                         efMethods.InsertReport(dcReport);

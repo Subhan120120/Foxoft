@@ -2,7 +2,6 @@
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Customization;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -13,9 +12,8 @@ using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
-using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
-using Foxoft.Migrations;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
@@ -23,6 +21,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -38,6 +37,8 @@ namespace Foxoft
         SettingStore settingStore = new();
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
+        CustomMethods cM = new();
+
         string barcodeDesignFile = @"Barcode.repx";
         public byte[] productTypeArr;
         RepositoryItemPictureEdit riPictureEdit = new();
@@ -341,9 +342,13 @@ namespace Foxoft
                 {
                     string ts = String.Join(",", productTypeArr);
                     string where = " Where ProductTypeCode in (" + ts + ") ";
-                    string query = CustomExtensions.AddTop(dcReport.ReportQuery, int.MaxValue);
+                    string query = cM.AddTop(dcReport.ReportQuery, int.MaxValue);
+
+                    query = cM.AddFilters(query, dcReport);
+                    SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
+
                     string qryMaster = "select * from (" + query + " \n) as Master " + where + " order by RowNumber";
-                    DataTable dt = adoMethods.SqlGetDt(qryMaster);
+                    DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
                         dataSource = dt;
                 }
