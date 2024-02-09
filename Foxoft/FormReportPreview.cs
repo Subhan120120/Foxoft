@@ -9,6 +9,7 @@ using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
+using Foxoft.Migrations;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
@@ -47,10 +48,14 @@ namespace Foxoft
 
             qryMaster += " order by RowNumber";
 
+            qryMaster = cM.AddFilters(qryMaster, dcReport);
+
             CustomSqlQuery mainQuery = new("Main", qryMaster);
 
-            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
+            mainQuery = cM.AddParameters(mainQuery, dcReport);
 
+
+            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
 
             foreach (TrReportSubQuery reportSubQuery in dcReport.TrReportSubQueries)
             {

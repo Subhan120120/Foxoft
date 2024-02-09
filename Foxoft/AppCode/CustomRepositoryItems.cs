@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Repository;
+using System;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -35,6 +36,7 @@ namespace Foxoft
                 "StoreCode" => MyStoreCode(),
                 "CashRegisterCode" => MyCashRegisterCode(),
                 "WarehouseCode" => MyWarehouseCode(),
+                "HierarchyCode" => MyHierarchyCode(),
                 _ => null,
             };
         }
@@ -71,6 +73,14 @@ namespace Foxoft
             return repoBtnEdit;
         }
 
+        private static RepositoryItem MyHierarchyCode()
+        {
+            RepositoryItemButtonEdit repoBtnEdit = new();
+            repoBtnEdit.AutoHeight = false;
+            repoBtnEdit.ButtonPressed += (sender, e) => { SelectHierarchy(sender); };
+            return repoBtnEdit;
+        }
+
         private static RepositoryItem MyWarehouseCode()
         {
             RepositoryItemButtonEdit repoBtnEdit = new();
@@ -91,9 +101,7 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            string value = "";
-            if (editor.EditValue is not null)
-                value = editor.EditValue.ToString();
+            string value = editor.EditValue?.ToString();
 
             using (FormProductList form = new(new byte[] { 1, 3 }, value))
             {
@@ -106,14 +114,25 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            string value = "";
-            if (editor.EditValue is not null)
-                value = editor.EditValue.ToString();
+            string value = editor.EditValue?.ToString();
 
             using (FormCurrAccList form = new(currAccTypeCode, value))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;
+            }
+        }
+
+        private static void SelectHierarchy(object sender)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+
+            string value = editor.EditValue?.ToString();
+
+            using (FormHierarchyList form = new(value))
+            {
+                if (form.ShowDialog(parentForm) == DialogResult.OK)
+                    editor.EditValue = form.DcHierarchy.HierarchyCode;
             }
         }
     }

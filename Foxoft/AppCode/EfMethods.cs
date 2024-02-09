@@ -97,6 +97,12 @@ namespace Foxoft
             return db.DcProductTypes.ToList();
         }
 
+        public List<DcReportType> SelectReportTypes()
+        {
+            using subContext db = new();
+            return db.DcReportTypes.ToList();
+        }
+
         public List<DcCurrAccType> SelectCurrAccTypes()
         {
             using subContext db = new();
@@ -1515,11 +1521,11 @@ namespace Foxoft
             return db.TrReportSubQueryRelationColumns.Where(x => x.SubQueryId == subQueryId).ToList();
         }
 
-        public List<DcQueryParam> SelectQueryParamsByReport(int reportId)
-        {
-            using subContext db = new();
-            return db.DcQueryParams.Where(x => x.ReportId == reportId).ToList();
-        }
+        //public List<DcQueryParam> SelectQueryParamsByReport(int reportId)
+        //{
+        //    using subContext db = new();
+        //    return db.DcQueryParams.Where(x => x.ReportId == reportId).ToList();
+        //}
 
         public DcReport SelectReportByName(string name)
         {

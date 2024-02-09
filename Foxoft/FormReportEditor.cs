@@ -16,6 +16,7 @@ namespace Foxoft
         public DcReport dcReport = new();
         subContext dbContext = new();
         CustomMethods cM = new();
+        EfMethods efMethods = new();
 
         public FormReportEditor(int reportId)
         {
@@ -25,6 +26,10 @@ namespace Foxoft
 
             CancelButton = btn_Cancel;
             AcceptButton = btn_Ok;
+
+            ReportTypeIdLookUpEdit.Properties.DataSource = efMethods.SelectReportTypes();
+            ReportTypeIdLookUpEdit.Properties.ValueMember = "ReportTypeId";
+            ReportTypeIdLookUpEdit.Properties.DisplayMember = "ReportTypeDesc";
         }
 
         private void FormQueryEditor_Load(object sender, EventArgs e)

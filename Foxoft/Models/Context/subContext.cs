@@ -56,7 +56,7 @@ namespace Foxoft.Models
         public DbSet<DcReportVariableType> dcReportVariableTypes { get; set; }
         public DbSet<TrReportSubQuery> TrReportSubQueries { get; set; }
         public DbSet<TrReportSubQueryRelationColumn> TrReportSubQueryRelationColumns { get; set; }
-        public DbSet<DcQueryParam> DcQueryParams { get; set; }
+        //public DbSet<DcQueryParam> DcQueryParams { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<SettingStore> SettingStores { get; set; }
         public DbSet<DcVariable> DcVariables { get; set; }
@@ -454,9 +454,13 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcProcess>().HasData(
                 new DcProcess { ProcessCode = "RP", ProcessDesc = "Alış", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "RS", ProcessDesc = "Satış", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "RPO", ProcessDesc = "Alış Sifarişi", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "RSO", ProcessDesc = "Satış Sifarişi", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "PA", ProcessDesc = "Ödəmə", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "SB", ProcessDesc = "Toptan Alış", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "WS", ProcessDesc = "Toptan Satış", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "SBO", ProcessDesc = "Toptan Alış Sifarişi", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "WSO", ProcessDesc = "Toptan Satış Sifarişi", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "EX", ProcessDesc = "Xərc", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "PE", ProcessDesc = "Dovr", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma", ProcessDir = 1 },
@@ -511,6 +515,10 @@ namespace Foxoft.Models
                 new DcVariable { VariableCode = "PA", VariableDesc = "Ödəmə" },
                 new DcVariable { VariableCode = "SB", VariableDesc = "Toptan Alış" },
                 new DcVariable { VariableCode = "WS", VariableDesc = "Toptan Satış" },
+                new DcVariable { VariableCode = "RSO", VariableDesc = "Pərakəndə Satış Sifarişi" },
+                new DcVariable { VariableCode = "RPO", VariableDesc = "Pərakəndə Alış Sifarişi" },
+                new DcVariable { VariableCode = "SBO", VariableDesc = "Toptan Alış Sifarişi" },
+                new DcVariable { VariableCode = "WSO", VariableDesc = "Topdan Satış Sifarişi" },
                 new DcVariable { VariableCode = "EX", VariableDesc = "Xərclər" },
                 new DcVariable { VariableCode = "IT", VariableDesc = "Mal Transferi" },
                 new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" }

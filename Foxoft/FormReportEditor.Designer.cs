@@ -29,252 +29,269 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-         this.components = new System.ComponentModel.Container();
-         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportEditor));
-         this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-         this.ReportQueryMemoEdit = new DevExpress.XtraEditors.MemoEdit();
-         this.dcReportsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-         this.btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
-         this.btn_Ok = new DevExpress.XtraEditors.SimpleButton();
-         this.ReportIdTextEdit = new DevExpress.XtraEditors.TextEdit();
-         this.ReportNameTextEdit = new DevExpress.XtraEditors.TextEdit();
-         this.DcReportFiltersGridControl = new DevExpress.XtraGrid.GridControl();
-         this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-         this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-         this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-         this.ItemForReportName = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForReportId = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.ItemForDcReportFilters = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-         this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-         ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
-         this.dataLayoutControl1.SuspendLayout();
-         ((System.ComponentModel.ISupportInitialize)(this.ReportQueryMemoEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.dcReportsBindingSource)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ReportIdTextEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ReportNameTextEdit.Properties)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.DcReportFiltersGridControl)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForReportName)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForReportId)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForDcReportFilters)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-         this.SuspendLayout();
-         // 
-         // dataLayoutControl1
-         // 
-         this.dataLayoutControl1.Controls.Add(this.ReportQueryMemoEdit);
-         this.dataLayoutControl1.Controls.Add(this.btn_Cancel);
-         this.dataLayoutControl1.Controls.Add(this.btn_Ok);
-         this.dataLayoutControl1.Controls.Add(this.ReportIdTextEdit);
-         this.dataLayoutControl1.Controls.Add(this.ReportNameTextEdit);
-         this.dataLayoutControl1.Controls.Add(this.DcReportFiltersGridControl);
-         this.dataLayoutControl1.DataSource = this.dcReportsBindingSource;
-         this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-         this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
-         this.dataLayoutControl1.Name = "dataLayoutControl1";
-         this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1224, 305, 650, 400);
-         this.dataLayoutControl1.Root = this.Root;
-         this.dataLayoutControl1.Size = new System.Drawing.Size(870, 644);
-         this.dataLayoutControl1.TabIndex = 0;
-         this.dataLayoutControl1.Text = "dataLayoutControl1";
-         // 
-         // ReportQueryMemoEdit
-         // 
-         this.ReportQueryMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcReportsBindingSource, "ReportQuery", true));
-         this.ReportQueryMemoEdit.Location = new System.Drawing.Point(82, 36);
-         this.ReportQueryMemoEdit.Name = "ReportQueryMemoEdit";
-         this.ReportQueryMemoEdit.Size = new System.Drawing.Size(776, 390);
-         this.ReportQueryMemoEdit.StyleController = this.dataLayoutControl1;
-         this.ReportQueryMemoEdit.TabIndex = 4;
-         // 
-         // dcReportsBindingSource
-         // 
-         this.dcReportsBindingSource.DataSource = typeof(Foxoft.Models.DcReport);
-         // 
-         // btn_Cancel
-         // 
-         this.btn_Cancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_Cancel.ImageOptions.Image")));
-         this.btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-         this.btn_Cancel.Location = new System.Drawing.Point(12, 575);
-         this.btn_Cancel.Name = "btn_Cancel";
-         this.btn_Cancel.Size = new System.Drawing.Size(421, 57);
-         this.btn_Cancel.StyleController = this.dataLayoutControl1;
-         this.btn_Cancel.TabIndex = 5;
-         this.btn_Cancel.Text = "btn_Cancel";
-         // 
-         // btn_Ok
-         // 
-         this.btn_Ok.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_Ok.ImageOptions.Image")));
-         this.btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-         this.btn_Ok.Location = new System.Drawing.Point(437, 575);
-         this.btn_Ok.Name = "btn_Ok";
-         this.btn_Ok.Size = new System.Drawing.Size(421, 57);
-         this.btn_Ok.StyleController = this.dataLayoutControl1;
-         this.btn_Ok.TabIndex = 6;
-         this.btn_Ok.Text = "btn_Ok";
-         this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
-         // 
-         // ReportIdTextEdit
-         // 
-         this.ReportIdTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcReportsBindingSource, "ReportId", true));
-         this.ReportIdTextEdit.Location = new System.Drawing.Point(82, 12);
-         this.ReportIdTextEdit.Name = "ReportIdTextEdit";
-         this.ReportIdTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-         this.ReportIdTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-         this.ReportIdTextEdit.Properties.Mask.EditMask = "N0";
-         this.ReportIdTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
-         this.ReportIdTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-         this.ReportIdTextEdit.Size = new System.Drawing.Size(209, 20);
-         this.ReportIdTextEdit.StyleController = this.dataLayoutControl1;
-         this.ReportIdTextEdit.TabIndex = 0;
-         // 
-         // ReportNameTextEdit
-         // 
-         this.ReportNameTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.dcReportsBindingSource, "ReportName", true));
-         this.ReportNameTextEdit.Location = new System.Drawing.Point(365, 12);
-         this.ReportNameTextEdit.Name = "ReportNameTextEdit";
-         this.ReportNameTextEdit.Size = new System.Drawing.Size(493, 20);
-         this.ReportNameTextEdit.StyleController = this.dataLayoutControl1;
-         this.ReportNameTextEdit.TabIndex = 2;
-         // 
-         // DcReportFiltersGridControl
-         // 
-         this.DcReportFiltersGridControl.DataBindings.Add(new System.Windows.Forms.Binding("DataSource", this.dcReportsBindingSource, "DcReportFilters", true));
-         this.DcReportFiltersGridControl.Location = new System.Drawing.Point(12, 430);
-         this.DcReportFiltersGridControl.MainView = this.gridView2;
-         this.DcReportFiltersGridControl.Name = "DcReportFiltersGridControl";
-         this.DcReportFiltersGridControl.Size = new System.Drawing.Size(846, 141);
-         this.DcReportFiltersGridControl.TabIndex = 7;
-         this.DcReportFiltersGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView2});
-         // 
-         // gridView2
-         // 
-         this.gridView2.GridControl = this.DcReportFiltersGridControl;
-         this.gridView2.Name = "gridView2";
-         this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-         this.gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-         // 
-         // Root
-         // 
-         this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-         this.Root.GroupBordersVisible = false;
-         this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlGroup1});
-         this.Root.Name = "Root";
-         this.Root.Size = new System.Drawing.Size(870, 644);
-         this.Root.TextVisible = false;
-         // 
-         // layoutControlGroup1
-         // 
-         this.layoutControlGroup1.AllowDrawBackground = false;
-         this.layoutControlGroup1.GroupBordersVisible = false;
-         this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.ItemForReportName,
-            this.ItemForReportId,
-            this.layoutControlItem4,
-            this.ItemForDcReportFilters,
-            this.layoutControlItem1,
-            this.layoutControlItem2});
-         this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-         this.layoutControlGroup1.Name = "autoGeneratedGroup0";
-         this.layoutControlGroup1.Size = new System.Drawing.Size(850, 624);
-         // 
-         // ItemForReportName
-         // 
-         this.ItemForReportName.Control = this.ReportNameTextEdit;
-         this.ItemForReportName.Location = new System.Drawing.Point(283, 0);
-         this.ItemForReportName.Name = "ItemForReportName";
-         this.ItemForReportName.Size = new System.Drawing.Size(567, 24);
-         this.ItemForReportName.Text = "Hesabat Adı";
-         this.ItemForReportName.TextSize = new System.Drawing.Size(58, 13);
-         // 
-         // ItemForReportId
-         // 
-         this.ItemForReportId.Control = this.ReportIdTextEdit;
-         this.ItemForReportId.Location = new System.Drawing.Point(0, 0);
-         this.ItemForReportId.Name = "ItemForReportId";
-         this.ItemForReportId.Size = new System.Drawing.Size(283, 24);
-         this.ItemForReportId.Text = "Report ID";
-         this.ItemForReportId.TextSize = new System.Drawing.Size(58, 13);
-         // 
-         // layoutControlItem4
-         // 
-         this.layoutControlItem4.Control = this.ReportQueryMemoEdit;
-         this.layoutControlItem4.Location = new System.Drawing.Point(0, 24);
-         this.layoutControlItem4.Name = "layoutControlItem4";
-         this.layoutControlItem4.Size = new System.Drawing.Size(850, 394);
-         this.layoutControlItem4.Text = "Sorgu";
-         this.layoutControlItem4.TextSize = new System.Drawing.Size(58, 13);
-         // 
-         // ItemForDcReportFilters
-         // 
-         this.ItemForDcReportFilters.Control = this.DcReportFiltersGridControl;
-         this.ItemForDcReportFilters.Location = new System.Drawing.Point(0, 418);
-         this.ItemForDcReportFilters.Name = "ItemForDcReportFilters";
-         this.ItemForDcReportFilters.Size = new System.Drawing.Size(850, 145);
-         this.ItemForDcReportFilters.StartNewLine = true;
-         this.ItemForDcReportFilters.Text = "Dc Report Filters";
-         this.ItemForDcReportFilters.TextSize = new System.Drawing.Size(0, 0);
-         this.ItemForDcReportFilters.TextVisible = false;
-         // 
-         // layoutControlItem1
-         // 
-         this.layoutControlItem1.Control = this.btn_Ok;
-         this.layoutControlItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("layoutControlItem1.ImageOptions.Image")));
-         this.layoutControlItem1.Location = new System.Drawing.Point(425, 563);
-         this.layoutControlItem1.MinSize = new System.Drawing.Size(67, 23);
-         this.layoutControlItem1.Name = "layoutControlItem1";
-         this.layoutControlItem1.Size = new System.Drawing.Size(425, 61);
-         this.layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem1.TextVisible = false;
-         // 
-         // layoutControlItem2
-         // 
-         this.layoutControlItem2.Control = this.btn_Cancel;
-         this.layoutControlItem2.Location = new System.Drawing.Point(0, 563);
-         this.layoutControlItem2.MinSize = new System.Drawing.Size(67, 23);
-         this.layoutControlItem2.Name = "layoutControlItem2";
-         this.layoutControlItem2.Size = new System.Drawing.Size(425, 61);
-         this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-         this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-         this.layoutControlItem2.TextVisible = false;
-         // 
-         // FormReportEditor
-         // 
-         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(870, 644);
-         this.Controls.Add(this.dataLayoutControl1);
-         this.Name = "FormReportEditor";
-         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-         this.Text = "FormQueryEditor";
-         this.Load += new System.EventHandler(this.FormQueryEditor_Load);
-         ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
-         this.dataLayoutControl1.ResumeLayout(false);
-         ((System.ComponentModel.ISupportInitialize)(this.ReportQueryMemoEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.dcReportsBindingSource)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ReportIdTextEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ReportNameTextEdit.Properties)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.DcReportFiltersGridControl)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForReportName)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForReportId)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.ItemForDcReportFilters)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-         ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-         this.ResumeLayout(false);
-
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportEditor));
+            dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            ReportQueryMemoEdit = new DevExpress.XtraEditors.MemoEdit();
+            dcReportsBindingSource = new System.Windows.Forms.BindingSource(components);
+            btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
+            btn_Ok = new DevExpress.XtraEditors.SimpleButton();
+            ReportIdTextEdit = new DevExpress.XtraEditors.TextEdit();
+            ReportNameTextEdit = new DevExpress.XtraEditors.TextEdit();
+            DcReportVariablesGridControl = new DevExpress.XtraGrid.GridControl();
+            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForReportId = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDcReportVariables = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForReportName = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForReportTypeId = new DevExpress.XtraLayout.LayoutControlItem();
+            ReportTypeIdLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
+            dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ReportQueryMemoEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dcReportsBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ReportIdTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ReportNameTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DcReportVariablesGridControl).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForReportId).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDcReportVariables).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForReportName).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForReportTypeId).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ReportTypeIdLookUpEdit.Properties).BeginInit();
+            SuspendLayout();
+            // 
+            // dataLayoutControl1
+            // 
+            dataLayoutControl1.Controls.Add(ReportQueryMemoEdit);
+            dataLayoutControl1.Controls.Add(btn_Cancel);
+            dataLayoutControl1.Controls.Add(btn_Ok);
+            dataLayoutControl1.Controls.Add(ReportIdTextEdit);
+            dataLayoutControl1.Controls.Add(ReportNameTextEdit);
+            dataLayoutControl1.Controls.Add(DcReportVariablesGridControl);
+            dataLayoutControl1.Controls.Add(ReportTypeIdLookUpEdit);
+            dataLayoutControl1.DataSource = dcReportsBindingSource;
+            dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
+            dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1224, 305, 650, 400);
+            dataLayoutControl1.Root = Root;
+            dataLayoutControl1.Size = new System.Drawing.Size(870, 644);
+            dataLayoutControl1.TabIndex = 0;
+            dataLayoutControl1.Text = "dataLayoutControl1";
+            // 
+            // ReportQueryMemoEdit
+            // 
+            ReportQueryMemoEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcReportsBindingSource, "ReportQuery", true));
+            ReportQueryMemoEdit.Location = new System.Drawing.Point(83, 60);
+            ReportQueryMemoEdit.Name = "ReportQueryMemoEdit";
+            ReportQueryMemoEdit.Size = new System.Drawing.Size(775, 323);
+            ReportQueryMemoEdit.StyleController = dataLayoutControl1;
+            ReportQueryMemoEdit.TabIndex = 3;
+            // 
+            // dcReportsBindingSource
+            // 
+            dcReportsBindingSource.DataSource = typeof(Models.DcReport);
+            // 
+            // btn_Cancel
+            // 
+            btn_Cancel.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btn_Cancel.ImageOptions.Image");
+            btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_Cancel.Location = new System.Drawing.Point(12, 555);
+            btn_Cancel.Name = "btn_Cancel";
+            btn_Cancel.Size = new System.Drawing.Size(421, 77);
+            btn_Cancel.StyleController = dataLayoutControl1;
+            btn_Cancel.TabIndex = 4;
+            btn_Cancel.Text = "btn_Cancel";
+            // 
+            // btn_Ok
+            // 
+            btn_Ok.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btn_Ok.ImageOptions.Image");
+            btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_Ok.Location = new System.Drawing.Point(437, 555);
+            btn_Ok.Name = "btn_Ok";
+            btn_Ok.Size = new System.Drawing.Size(421, 77);
+            btn_Ok.StyleController = dataLayoutControl1;
+            btn_Ok.TabIndex = 5;
+            btn_Ok.Text = "btn_Ok";
+            btn_Ok.Click += btn_Ok_Click;
+            // 
+            // ReportIdTextEdit
+            // 
+            ReportIdTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcReportsBindingSource, "ReportId", true));
+            ReportIdTextEdit.Location = new System.Drawing.Point(83, 12);
+            ReportIdTextEdit.Name = "ReportIdTextEdit";
+            ReportIdTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            ReportIdTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            ReportIdTextEdit.Properties.Mask.EditMask = "N0";
+            ReportIdTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            ReportIdTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            ReportIdTextEdit.Size = new System.Drawing.Size(350, 20);
+            ReportIdTextEdit.StyleController = dataLayoutControl1;
+            ReportIdTextEdit.TabIndex = 0;
+            // 
+            // ReportNameTextEdit
+            // 
+            ReportNameTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcReportsBindingSource, "ReportName", true));
+            ReportNameTextEdit.Location = new System.Drawing.Point(83, 36);
+            ReportNameTextEdit.Name = "ReportNameTextEdit";
+            ReportNameTextEdit.Size = new System.Drawing.Size(775, 20);
+            ReportNameTextEdit.StyleController = dataLayoutControl1;
+            ReportNameTextEdit.TabIndex = 2;
+            // 
+            // DcReportVariablesGridControl
+            // 
+            DcReportVariablesGridControl.DataBindings.Add(new System.Windows.Forms.Binding("DataSource", dcReportsBindingSource, "DcReportVariables", true));
+            DcReportVariablesGridControl.Location = new System.Drawing.Point(12, 387);
+            DcReportVariablesGridControl.MainView = gridView1;
+            DcReportVariablesGridControl.Name = "DcReportVariablesGridControl";
+            DcReportVariablesGridControl.Size = new System.Drawing.Size(846, 164);
+            DcReportVariablesGridControl.TabIndex = 6;
+            DcReportVariablesGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
+            // 
+            // gridView1
+            // 
+            gridView1.GridControl = DcReportVariablesGridControl;
+            gridView1.Name = "gridView1";
+            // 
+            // Root
+            // 
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Name = "Root";
+            Root.Size = new System.Drawing.Size(870, 644);
+            Root.TextVisible = false;
+            // 
+            // layoutControlGroup1
+            // 
+            layoutControlGroup1.AllowDrawBackground = false;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForReportId, layoutControlItem4, layoutControlItem1, layoutControlItem2, ItemForDcReportVariables, ItemForReportName, ItemForReportTypeId });
+            layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            layoutControlGroup1.Name = "autoGeneratedGroup0";
+            layoutControlGroup1.Size = new System.Drawing.Size(850, 624);
+            // 
+            // ItemForReportId
+            // 
+            ItemForReportId.Control = ReportIdTextEdit;
+            ItemForReportId.Location = new System.Drawing.Point(0, 0);
+            ItemForReportId.Name = "ItemForReportId";
+            ItemForReportId.Size = new System.Drawing.Size(425, 24);
+            ItemForReportId.Text = "Report ID";
+            ItemForReportId.TextSize = new System.Drawing.Size(59, 13);
+            // 
+            // layoutControlItem4
+            // 
+            layoutControlItem4.Control = ReportQueryMemoEdit;
+            layoutControlItem4.Location = new System.Drawing.Point(0, 48);
+            layoutControlItem4.Name = "layoutControlItem4";
+            layoutControlItem4.Size = new System.Drawing.Size(850, 327);
+            layoutControlItem4.Text = "Sorgu";
+            layoutControlItem4.TextSize = new System.Drawing.Size(59, 13);
+            // 
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = btn_Ok;
+            layoutControlItem1.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("layoutControlItem1.ImageOptions.Image");
+            layoutControlItem1.Location = new System.Drawing.Point(425, 543);
+            layoutControlItem1.MinSize = new System.Drawing.Size(67, 23);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new System.Drawing.Size(425, 81);
+            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem1.TextVisible = false;
+            // 
+            // layoutControlItem2
+            // 
+            layoutControlItem2.Control = btn_Cancel;
+            layoutControlItem2.Location = new System.Drawing.Point(0, 543);
+            layoutControlItem2.MinSize = new System.Drawing.Size(67, 23);
+            layoutControlItem2.Name = "layoutControlItem2";
+            layoutControlItem2.Size = new System.Drawing.Size(425, 81);
+            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem2.TextVisible = false;
+            // 
+            // ItemForDcReportVariables
+            // 
+            ItemForDcReportVariables.Control = DcReportVariablesGridControl;
+            ItemForDcReportVariables.Location = new System.Drawing.Point(0, 375);
+            ItemForDcReportVariables.Name = "ItemForDcReportVariables";
+            ItemForDcReportVariables.Size = new System.Drawing.Size(850, 168);
+            ItemForDcReportVariables.StartNewLine = true;
+            ItemForDcReportVariables.Text = "Dc Report Variables";
+            ItemForDcReportVariables.TextSize = new System.Drawing.Size(0, 0);
+            ItemForDcReportVariables.TextVisible = false;
+            // 
+            // ItemForReportName
+            // 
+            ItemForReportName.Control = ReportNameTextEdit;
+            ItemForReportName.Location = new System.Drawing.Point(0, 24);
+            ItemForReportName.Name = "ItemForReportName";
+            ItemForReportName.Size = new System.Drawing.Size(850, 24);
+            ItemForReportName.Text = "Hesabat Adı";
+            ItemForReportName.TextSize = new System.Drawing.Size(59, 13);
+            // 
+            // ItemForReportTypeId
+            // 
+            ItemForReportTypeId.Control = ReportTypeIdLookUpEdit;
+            ItemForReportTypeId.Location = new System.Drawing.Point(425, 0);
+            ItemForReportTypeId.Name = "ItemForReportTypeId";
+            ItemForReportTypeId.Size = new System.Drawing.Size(425, 24);
+            ItemForReportTypeId.TextSize = new System.Drawing.Size(59, 13);
+            // 
+            // ReportTypeIdLookUpEdit
+            // 
+            ReportTypeIdLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcReportsBindingSource, "ReportTypeId", true));
+            ReportTypeIdLookUpEdit.Location = new System.Drawing.Point(508, 12);
+            ReportTypeIdLookUpEdit.Name = "ReportTypeIdLookUpEdit";
+            ReportTypeIdLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
+            ReportTypeIdLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            ReportTypeIdLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            ReportTypeIdLookUpEdit.Properties.NullText = "";
+            ReportTypeIdLookUpEdit.Size = new System.Drawing.Size(350, 20);
+            ReportTypeIdLookUpEdit.StyleController = dataLayoutControl1;
+            ReportTypeIdLookUpEdit.TabIndex = 8;
+            // 
+            // FormReportEditor
+            // 
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(870, 644);
+            Controls.Add(dataLayoutControl1);
+            Name = "FormReportEditor";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "FormQueryEditor";
+            Load += FormQueryEditor_Load;
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
+            dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ReportQueryMemoEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dcReportsBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ReportIdTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ReportNameTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DcReportVariablesGridControl).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForReportId).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDcReportVariables).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForReportName).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForReportTypeId).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ReportTypeIdLookUpEdit.Properties).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -295,5 +312,12 @@ namespace Foxoft
         private DevExpress.XtraGrid.GridControl DcReportFiltersGridControl;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportFilters;
+        private DevExpress.XtraGrid.GridControl DcReportVariablesGridControl;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportVariables;
+        private DevExpress.XtraEditors.ComboBoxEdit DcReportTypeComboBoxEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDcReportType;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForReportTypeId;
+        private DevExpress.XtraEditors.LookUpEdit ReportTypeIdLookUpEdit;
     }
 }

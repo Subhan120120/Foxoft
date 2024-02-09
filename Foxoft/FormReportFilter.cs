@@ -7,6 +7,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
+using DevExpress.XtraGantt;
 using Foxoft.AppCode;
 using Foxoft.Migrations;
 using Foxoft.Models;
@@ -64,9 +65,8 @@ namespace Foxoft
 
             filterControl_Outer.FilterString = dcReport.ReportFilter;
 
-            GroupOperator groupOperator = GetFiltersFromDatabase(dcReport.DcReportVariables);
-            filterControl_Inner.SourceControl = opToDt(groupOperator);
-            filterControl_Inner.FilterCriteria = groupOperator;
+            filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types
+            filterControl_Inner.FilterCriteria = GetFiltersFromDatabase(dcReport.DcReportVariables);
         }
 
         private DataTable opToDt(GroupOperator groupOperand)
@@ -80,6 +80,17 @@ namespace Foxoft
             return dt;
         }
 
+        private DataTable GetColumnsFromDatabase(ICollection<DcReportVariable> dcReportVariables)
+        {
+            DataTable dt = new();
+            dt.Clear();
+
+            foreach (DcReportVariable rf in dcReportVariables)
+                dt.Columns.Add(rf.VariableProperty, Type.GetType(rf.VariableValueType));
+
+            return dt;
+        }
+
         private GroupOperator GetFiltersFromDatabase(ICollection<DcReportVariable> dcReportVariables)
         {
             GroupOperator groupOperand = new();
@@ -87,7 +98,11 @@ namespace Foxoft
             foreach (DcReportVariable rf in dcReportVariables)
             {
                 BinaryOperatorType operatorType = ConvertOperatorType(rf.VariableOperator);
-                CriteriaOperator op = new BinaryOperator(rf.VariableProperty, rf.VariableValue, operatorType);
+
+                object value = Convert.ChangeType(rf.VariableValue, Type.GetType(rf.VariableValueType));
+
+                CriteriaOperator op = new BinaryOperator(rf.VariableProperty, value, operatorType);
+
                 groupOperand.Operands.Add(op);
             }
 
@@ -231,19 +246,14 @@ namespace Foxoft
         {
             Dictionary<string, object> dict = new();
             GroupOperator opGroup = op as GroupOperator;
+
             if (ReferenceEquals(opGroup, null))
-            {
                 ExtractOne(dict, op);
-            }
             else
             {
                 if (opGroup.OperatorType == GroupOperatorType.And)
-                {
                     foreach (var opn in opGroup.Operands)
-                    {
                         ExtractOne(dict, opn);
-                    }
-                }
             }
             return dict;
         }
@@ -263,13 +273,14 @@ namespace Foxoft
             int id = dcReport.ReportId;
 
             FormReportEditor formQueryEditor = new(id);
+
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
                 dcReport.ReportQuery = formQueryEditor.dcReport.ReportQuery;
         }
 
         private void bBI_ReportNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormReportEditor formQueryEditor = new(0);
+            FormReportEditor formQueryEditor = new(1);
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
             {
             }

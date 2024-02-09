@@ -411,6 +411,7 @@ namespace Foxoft
             pictureEdit.Size = new System.Drawing.Size(205, 209);
             pictureEdit.StyleController = dataLayoutControl1;
             pictureEdit.TabIndex = 1;
+            pictureEdit.EditValueChanged += pictureEdit_EditValueChanged;
             pictureEdit.DoubleClick += pictureEdit_DoubleClick;
             // 
             // textEdit_ProductCode2

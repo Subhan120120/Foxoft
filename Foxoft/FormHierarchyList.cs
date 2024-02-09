@@ -24,6 +24,12 @@ namespace Foxoft
             treeList1.GetStateImage += TreeList_GetStateImage;
         }
 
+        public FormHierarchyList(string hierarchyCode)
+            : this()
+        {
+            DcHierarchy = efMethods.SelectHierarchy(hierarchyCode);
+        }
+
         private void TreeList_GetStateImage(object sender, GetStateImageEventArgs e)
         {
             e.NodeImageIndex = 0;
@@ -33,6 +39,10 @@ namespace Foxoft
         {
             List<DcHierarchy> DcHierarchies = efMethods.SelectHierarchies();
             treeList1.DataSource = DcHierarchies;
+
+            TreeListNode node = treeList1.FindNodeByFieldValue("HierarchyCode", DcHierarchy.HierarchyCode);
+            treeList1.FocusedNode = node;
+            node.Expanded = true;
         }
 
         private void FormTreeView_Activated(object sender, EventArgs e)
@@ -110,7 +120,7 @@ namespace Foxoft
                 treeList1.FocusedNode = ((TreeListNodeMenu)e.Menu).Node;
 
                 DXMenuItem dx_Edit = new("Dəyiş", dx_Edit_ItemClick, svgImageCollection1["edit"], DXMenuItemPriority.Normal);
-                DXMenuItem dx_Add = new("Əlavə et", dx_Add_ItemClick, svgImageCollection1["add"], DXMenuItemPriority.Normal); 
+                DXMenuItem dx_Add = new("Əlavə et", dx_Add_ItemClick, svgImageCollection1["add"], DXMenuItemPriority.Normal);
                 DXMenuItem dx_AddChild = new("Uşaq əlavə et", dx_AddChild_ItemClick, svgImageCollection1["child"], DXMenuItemPriority.Normal);
                 DXMenuItem dx_Delete = new("Sil", dx_Delete_ItemClick, svgImageCollection1["delete"], DXMenuItemPriority.Normal);
 

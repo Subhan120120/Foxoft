@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240127215619_orderİnvoice")]
+    partial class orderİnvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1276,6 +1278,38 @@ namespace Foxoft.Migrations
                             ProductTypeCode = (byte)3,
                             ProductTypeDesc = "Servis"
                         });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcQueryParam", b =>
+                {
+                    b.Property<int>("ParameterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ParameterName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ParameterType")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ParameterValue")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("ReportId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ParameterId");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("DcQueryParams");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
@@ -3552,6 +3586,17 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProductType");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcQueryParam", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcReport", "DcReport")
+                        .WithMany("DcQueryParams")
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcReport");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
                     b.HasOne("Foxoft.Models.DcReportType", "DcReportType")
@@ -4140,6 +4185,8 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
+                    b.Navigation("DcQueryParams");
+
                     b.Navigation("DcReportVariables");
 
                     b.Navigation("TrClaimReports");

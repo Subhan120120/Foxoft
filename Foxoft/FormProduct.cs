@@ -330,5 +330,10 @@ namespace Foxoft
             FormProductBarcode frm = new(dcProduct.ProductCode);
             frm.ShowDialog();
         }
+
+        private void pictureEdit_EditValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

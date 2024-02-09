@@ -71,6 +71,8 @@ namespace Foxoft
             this.ACE_CashRegs.Name = "CashRegs";
             this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
             this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
+            this.ACE_RetailPurchaseOrder.Name = "RetailPurchaseOrder";
+            this.ACE_RetailSaleOrder.Name = "RetailSaleOrder";
             this.ACE_PurchaseIsReturn.Name = "PurchaseIsReturn";
             this.ACE_SaleIsReturn.Name = "SaleIsReturn";
             this.aCE_InventoryTransfer.Name = "InventoryTransfer";
@@ -85,6 +87,7 @@ namespace Foxoft
             this.aCE_CurrAccAll.Name = "CurrAccAll";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_Discounts.Name = "DiscountList";
+            this.ACE_ProductFeatures.Name = "ProductFeatures";
         }
 
         private void InitializeReports()
@@ -716,6 +719,33 @@ namespace Foxoft
         }
 
         private void barButtonItem4_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void ACE_RetailPurchaseOrder_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ACE_RetailSaleOrder_Click(object sender, EventArgs e)
+        {
+
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
+            if (!currAccHasClaims)
+            {
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+
+            FormInvoice formInvoice = new("RSO", new byte[] { 1, 3 }, Guid.Empty);
+            formInvoice.MdiParent = this;
+            formInvoice.WindowState = FormWindowState.Maximized;
+            formInvoice.Show();
+            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+        }
+
+        private void ACE_ProductFeatures_Click(object sender, EventArgs e)
         {
 
         }
