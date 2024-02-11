@@ -81,7 +81,7 @@ namespace Foxoft
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_ProductFeatures = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_ProductFeatureTypes = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
@@ -453,7 +453,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccAll, ACE_ProductFeatures, accordionControlSeparator2 });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccAll, ACE_ProductFeatureTypes, accordionControlSeparator2 });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -468,11 +468,11 @@ namespace Foxoft
             // 
             // ACE_ProductFeatures
             // 
-            ACE_ProductFeatures.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ProductFeatures.ImageOptions.SvgImage");
-            ACE_ProductFeatures.Name = "ACE_ProductFeatures";
-            ACE_ProductFeatures.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_ProductFeatures.Text = "Məhsul Özəllikləri";
-            ACE_ProductFeatures.Click += ACE_ProductFeatures_Click;
+            ACE_ProductFeatureTypes.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ProductFeatures.ImageOptions.SvgImage");
+            ACE_ProductFeatureTypes.Name = "ACE_ProductFeatures";
+            ACE_ProductFeatureTypes.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_ProductFeatureTypes.Text = "Məhsul Özəllikləri";
+            ACE_ProductFeatureTypes.Click += ACE_ProductFeatureTypes_Click;
             // 
             // accordionControlSeparator2
             // 
@@ -568,6 +568,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailPurchaseOrder;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailSaleOrder;
         private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ProductFeatures;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ProductFeatureTypes;
     }
 }

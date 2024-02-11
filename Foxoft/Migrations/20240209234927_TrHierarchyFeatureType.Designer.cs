@@ -4,14 +4,16 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240209234927_TrHierarchyFeatureType")]
+    partial class TrHierarchyFeatureType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2312,7 +2314,7 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("FeatureTypeId");
 
-                    b.ToTable("TrHierarchyFeatureTypes");
+                    b.ToTable("TrHierarchyFeatures");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
@@ -3661,13 +3663,13 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrHierarchyFeatureType", b =>
                 {
                     b.HasOne("Foxoft.Models.DcFeatureType", "DcFeatureType")
-                        .WithMany("TrHierarchyFeatureTypes")
+                        .WithMany("TrHierarchyFeatures")
                         .HasForeignKey("FeatureTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
-                        .WithMany("TrHierarchyFeatureTypes")
+                        .WithMany("TrHierarchyFeatures")
                         .HasForeignKey("HierarchyCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -4067,7 +4069,7 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcFeatureType", b =>
                 {
-                    b.Navigation("TrHierarchyFeatureTypes");
+                    b.Navigation("TrHierarchyFeatures");
 
                     b.Navigation("TrProductFeatures");
                 });
@@ -4081,7 +4083,7 @@ namespace Foxoft.Migrations
                 {
                     b.Navigation("DcProducts");
 
-                    b.Navigation("TrHierarchyFeatureTypes");
+                    b.Navigation("TrHierarchyFeatures");
 
                     b.Navigation("TrProductHierarchies");
                 });

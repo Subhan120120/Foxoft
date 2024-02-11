@@ -1,7 +1,9 @@
 ﻿
 using DevExpress.Utils.Extensions;
+using DevExpress.XtraBars;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -279,20 +281,16 @@ namespace Foxoft
             SaveImage();
         }
 
-        private void btnEdit_Hierarchy_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void btnEdit_Hierarchy_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
             using (FormHierarchyList form = new())
-            {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                {
                     buttonEdit.EditValue = form.DcHierarchy.HierarchyCode;
-                }
-            }
         }
 
-        private void BtnEdit_Slug_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void BtnEdit_Slug_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             string slugify = dbContext.Slugify.FromSqlInterpolated($"Select dbo.Slugify ({ProductDescTextEdit.EditValue}) as Slugify").FirstOrDefault().Slugify;
             btnEdit_Slug.EditValue = slugify;
@@ -311,21 +309,21 @@ namespace Foxoft
 
         }
 
-        private void BBI_ProductFeature_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void BBI_ProductFeature_ItemClick(object sender, ItemClickEventArgs e)
         {
             efMethods.UpdateProductHierarchyCode(dcProduct.ProductCode, btnEdit_Hierarchy.Text);
             FormProductFeature frm = new(dcProduct.ProductCode);
             frm.ShowDialog();
         }
 
-        private void BBI_ProductDiscount_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void BBI_ProductDiscount_ItemClick(object sender, ItemClickEventArgs e)
         {
             //FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId");
             FormCommonList<TrProductDiscount> frm = new("", "DiscountId", "", "ProductCode", dcProduct.ProductCode);
             frm.ShowDialog();
         }
 
-        private void BBI_ProductBarcode_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void BBI_ProductBarcode_ItemClick(object sender, ItemClickEventArgs e)
         {
             FormProductBarcode frm = new(dcProduct.ProductCode);
             frm.ShowDialog();

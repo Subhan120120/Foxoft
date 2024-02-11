@@ -133,8 +133,8 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            List<DcFeatureType> featureTypes = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatures)
-                                                                .Where(x => x.TrHierarchyFeatures.Where(x => x.HierarchyCode == hierarchyCode).Any() || !x.TrHierarchyFeatures.Any())
+            List<DcFeatureType> featureTypes = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatureTypes)
+                                                                .Where(x => x.TrHierarchyFeatureTypes.Where(x => x.HierarchyCode == hierarchyCode).Any() || !x.TrHierarchyFeatureTypes.Any())
                                                                 .OrderByDescending(x => x.Order)
                                                                 .ToList();
 
@@ -457,7 +457,7 @@ namespace Foxoft
             using subContext db = new();
 
             return db.DcHierarchies
-                .Include(x => x.TrHierarchyFeatures)
+                .Include(x => x.TrHierarchyFeatureTypes)
                     .ThenInclude(x => x.DcFeatureType)
                 .OrderBy(x => x.Order).ToList();
         }
@@ -1200,7 +1200,7 @@ namespace Foxoft
             using subContext db = new();
 
             var asd = db.DcHierarchies
-                     .Include(x => x.TrHierarchyFeatures).ThenInclude(x => x.DcFeatureType)
+                     .Include(x => x.TrHierarchyFeatureTypes).ThenInclude(x => x.DcFeatureType)
                      .FirstOrDefault(x => x.Id == hierarchyId);
 
             return asd;

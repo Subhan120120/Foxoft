@@ -87,7 +87,7 @@ namespace Foxoft
             this.aCE_CurrAccAll.Name = "CurrAccAll";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_Discounts.Name = "DiscountList";
-            this.ACE_ProductFeatures.Name = "ProductFeatures";
+            this.ACE_ProductFeatureTypes.Name = "ProductFeatures";
         }
 
         private void InitializeReports()
@@ -745,9 +745,33 @@ namespace Foxoft
             parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
         }
 
-        private void ACE_ProductFeatures_Click(object sender, EventArgs e)
+        private void ACE_ProductFeatureTypes_Click(object sender, EventArgs e)
         {
+            FormProductFeatureTypes form = Application.OpenForms[nameof(FormProductFeatureTypes)] as FormProductFeatureTypes;
 
+            try
+            {
+                if (form == null)
+                {
+                    form = new();
+                    form.MdiParent = this;
+                    form.Show();
+                    form.WindowState = FormWindowState.Maximized;
+                    //parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+                }
+                else
+                {
+                    if (form != null)
+                    {
+                        form.BringToFront();
+                        form.Activate();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex);
+            }
         }
     }
 }

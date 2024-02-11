@@ -64,7 +64,7 @@ namespace Foxoft.Models
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<DcHierarchy> DcHierarchies { get; set; }
         public DbSet<TrProductHierarchy> TrProductHierarchies { get; set; }
-        public DbSet<TrHierarchyFeature> TrHierarchyFeatures { get; set; }
+        public DbSet<TrHierarchyFeatureType> TrHierarchyFeatureTypes { get; set; }
         public DbSet<TrPaymentMethodDiscount> TrPaymentMethodDiscounts { get; set; }
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
@@ -156,7 +156,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrProductHierarchy>()
                         .HasKey(bc => new { bc.ProductCode, bc.HierarchyCode });
 
-            modelBuilder.Entity<TrHierarchyFeature>()
+            modelBuilder.Entity<TrHierarchyFeatureType>()
                         .HasKey(bc => new { bc.HierarchyCode, bc.FeatureTypeId });
 
             modelBuilder.Entity<TrProductBarcode>()

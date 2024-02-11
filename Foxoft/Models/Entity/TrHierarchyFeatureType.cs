@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
-    public partial class TrHierarchyFeature
+    public partial class TrHierarchyFeatureType
     {
         [Key, Column(Order = 0)]
         [ForeignKey("DcHierarchy")]

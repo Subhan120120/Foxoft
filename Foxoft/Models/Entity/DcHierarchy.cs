@@ -10,7 +10,7 @@ namespace Foxoft.Models
         public DcHierarchy()
         {
             TrProductHierarchies = new HashSet<TrProductHierarchy>();
-            TrHierarchyFeatures = new HashSet<TrHierarchyFeature>();
+            TrHierarchyFeatureTypes = new HashSet<TrHierarchyFeatureType>();
             DcProducts = new HashSet<DcProduct>();
         }
 
@@ -41,7 +41,7 @@ namespace Foxoft.Models
 
 
         public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
-        public virtual ICollection<TrHierarchyFeature> TrHierarchyFeatures { get; set; }
+        public virtual ICollection<TrHierarchyFeatureType> TrHierarchyFeatureTypes { get; set; }
         public virtual ICollection<DcProduct> DcProducts { get; set; }
     }
 }
