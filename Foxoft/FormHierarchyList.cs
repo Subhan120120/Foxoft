@@ -40,9 +40,10 @@ namespace Foxoft
             List<DcHierarchy> DcHierarchies = efMethods.SelectHierarchies();
             treeList1.DataSource = DcHierarchies;
 
-            TreeListNode node = treeList1.FindNodeByFieldValue("HierarchyCode", DcHierarchy.HierarchyCode);
+            TreeListNode node = treeList1.FindNodeByFieldValue("HierarchyCode", DcHierarchy?.HierarchyCode);
             treeList1.FocusedNode = node;
-            node.Expanded = true;
+            if (node is not null)
+                node.Expanded = true;
         }
 
         private void FormTreeView_Activated(object sender, EventArgs e)
