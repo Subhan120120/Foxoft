@@ -97,7 +97,7 @@ namespace Foxoft
             // 
             // colPriceListTypeCode
             // 
-            colPriceListTypeCode.FieldName = "PriceListTypeCode";
+            colPriceListTypeCode.FieldName = "PriceTypeCode";
             colPriceListTypeCode.Name = "colPriceListTypeCode";
             colPriceListTypeCode.Visible = true;
             colPriceListTypeCode.VisibleIndex = 7;

@@ -8,6 +8,8 @@ using DevExpress.DataAccess.Sql;
 using Foxoft.Models;
 using System.Data.SqlClient;
 using System.Data;
+using System.Threading;
+using System.Globalization;
 
 namespace Foxoft.AppCode
 {
@@ -90,7 +92,11 @@ namespace Foxoft.AppCode
                 {
                     BinaryOperatorType operatorType = ConvertOperatorType(rf.VariableOperator);
 
-                    criteriaOperators[index] = new BinaryOperator(rf.VariableProperty, rf.VariableValue, operatorType);
+                    string variableValue = rf.VariableValue;
+                    if (rf.VariableValueType == "System.DateTime")
+                        variableValue = DateTime.Parse(rf.VariableValue).ToString("yyyyMMdd");
+
+                    criteriaOperators[index] = new BinaryOperator(rf.VariableProperty, variableValue, operatorType);
 
                     string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
                     sqlQuery = sqlQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
@@ -103,7 +109,7 @@ namespace Foxoft.AppCode
 
         public string AddRelation(string mainQuery, TrReportSubQuery reportSubQuery)
         {
-            string subQueryTxt = $@"select * from ({reportSubQuery.SubQueryText}) as [{reportSubQuery.SubQueryName}] where 1=1";
+            string subQueryTxt = $"select * from ({reportSubQuery.SubQueryText} \n ) as [{reportSubQuery.SubQueryName}] where 1=1";
 
             foreach (TrReportSubQueryRelationColumn relationColumn in reportSubQuery.TrReportSubQueryRelationColumns)
             {
@@ -120,24 +126,24 @@ namespace Foxoft.AppCode
         {
             return type switch
             {
-                "byte" => DbType.Byte,
-                "sbyte" => DbType.SByte,
-                "short" => DbType.Int16,
-                "ushort" => DbType.UInt16,
-                "int" => DbType.Int32,
-                "uint" => DbType.UInt32,
-                "long" => DbType.Int64,
-                "ulong" => DbType.UInt64,
-                "float" => DbType.Single,
-                "double" => DbType.Double,
-                "decimal" => DbType.Decimal,
-                "bool" => DbType.Boolean,
-                "string" => DbType.String,
-                "char" => DbType.StringFixedLength,
-                "Guid" => DbType.Guid,
-                "DateTime" => DbType.DateTime,
-                "DateTimeOffset" => DbType.DateTimeOffset,
-                "byte[]" => DbType.Binary,
+                "System.Byte" => DbType.Byte,
+                "System.Sbyte" => DbType.SByte,
+                "System.Short" => DbType.Int16,
+                "System.Ushort" => DbType.UInt16,
+                "System.Int" => DbType.Int32,
+                "System.Uint" => DbType.UInt32,
+                "System.Long" => DbType.Int64,
+                "System.Ulong" => DbType.UInt64,
+                "System.Float" => DbType.Single,
+                "System.Double" => DbType.Double,
+                "System.Decimal" => DbType.Decimal,
+                "System.Bool" => DbType.Boolean,
+                "System.String" => DbType.String,
+                "System.Char" => DbType.StringFixedLength,
+                "System.Guid" => DbType.Guid,
+                "System.DateTime" => DbType.DateTime,
+                "System.DateTimeOffset" => DbType.DateTimeOffset,
+                "System.Byte[]" => DbType.Binary,
                 "byte?" => DbType.Byte,
                 "sbyte?" => DbType.SByte,
                 "short?" => DbType.Int16,

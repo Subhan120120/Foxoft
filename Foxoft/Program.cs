@@ -29,14 +29,14 @@ namespace Foxoft
 
             CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
             Thread.CurrentThread.CurrentUICulture = culture;
-            //Thread.CurrentThread.CurrentCulture = culture;
-            //CultureInfo.DefaultThreadCurrentCulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;//
+            CultureInfo.DefaultThreadCurrentCulture = culture;//
             CultureInfo.DefaultThreadCurrentUICulture = culture;
-            if (Debugger.IsAttached)
-            {
-                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
-                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en-US");
-            }
+            //if (Debugger.IsAttached)
+            //{
+            //    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            //    CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            //}
 
             ExportSettings.DefaultExportType = ExportType.WYSIWYG;
             WindowsFormsSettings.DefaultFont = new Font("Tahoma", 10);

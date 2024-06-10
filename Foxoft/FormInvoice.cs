@@ -22,6 +22,7 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -40,8 +41,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WaitForm_SetDescription;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -335,6 +338,8 @@ namespace Foxoft
 
         private void LoadInvoice(Guid InvoiceHeaderId)
         {
+            SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
+
             dbContext = new subContext();
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
@@ -384,6 +389,8 @@ namespace Foxoft
             //ShowPrintCount();
 
             checkEdit_IsReturn.Enabled = false;
+
+            SplashScreenManager.CloseForm(false);
         }
 
         private void CalcPaidAmount()
@@ -1685,6 +1692,8 @@ namespace Foxoft
             DialogResult dr = dialog.ShowDialog();
             if (dr == DialogResult.OK)
             {
+                SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
+
                 ExcelDataSource excelDataSource = new();
                 excelDataSource.FileName = dialog.FileName;
 
@@ -1705,15 +1714,21 @@ namespace Foxoft
                 dt = ToDataTableFromExcelDataSource(excelDataSource);
 
                 string errorCodes = "";
-
+                double rowCount = 0;
                 foreach (DataRow row in dt.Rows)
                 {
+                    int i = Convert.ToInt32(rowCount / dt.Rows.Count * 100);
+                    SplashScreenManager.Default.SendCommand(WaitForm1.WaitFormCommand.SetProgress, i);
+                    SplashScreenManager.Default.SetWaitFormDescription(i + "%");
+                    rowCount++;
+
                     string captionProductCode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCode);
                     string productCode = row[captionProductCode].ToString();
 
                     if (!string.IsNullOrEmpty(productCode))
                     {
                         DcProduct product = efMethods.SelectProduct(productCode);
+
                         if (product is not null)
                         {
                             object objInvoiceHeadId = gV_InvoiceLine.GetRowCellValue(GridControl.NewItemRowHandle, col_InvoiceHeaderId);
@@ -1784,6 +1799,7 @@ namespace Foxoft
                     }
                 }
 
+                SplashScreenManager.CloseForm(false);
                 if (!string.IsNullOrEmpty(errorCodes))
                     MessageBox.Show("Aşağıdakı kodlar üzrə Dəyər tapılmadı \n" + errorCodes, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

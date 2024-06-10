@@ -103,9 +103,7 @@ namespace Foxoft
             DcReport dcReport = null;
 
             if (currAccTypeArr.Contains((byte)5))
-            {
                 dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
-            }
             else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3) || currAccTypeArr.Contains((byte)4))
                 dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 

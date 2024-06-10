@@ -102,7 +102,8 @@ namespace Foxoft.AppCode
 
                         var skin = CommonSkins.GetSkin(UserLookAndFeel.Default);
                         SvgPalette fireBall = skin.CustomSvgPalettes[settings.skinPaletteName];
-                        skin.SvgPalettes[Skin.DefaultSkinPaletteName].SetCustomPalette(fireBall);
+                        if (fireBall is not null)
+                            skin.SvgPalettes[Skin.DefaultSkinPaletteName].SetCustomPalette(fireBall);
                         LookAndFeelHelper.ForceDefaultLookAndFeelChanged();
                     }
                 }

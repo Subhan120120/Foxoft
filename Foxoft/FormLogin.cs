@@ -258,7 +258,7 @@ namespace Foxoft
 
         private bool UpdateDueDate()
         {
-            string url = "https://www.tokla.az/txt.txt";
+            string url = @"https://drive.usercontent.google.com/download?id=1NCnJoEonMjtzxIaM3n5x5ppC3DlvpLCu&export=download&authuser=0&confirm=t&uuid=10ba17da-5c80-445b-8974-62f562889c84&at=APZUnTUKwjTq71SBFZ5uIwBa1UWI:1717941152672";
 
             if (!CheckForInternetConnection(1000, url))
                 return false;
