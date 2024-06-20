@@ -886,16 +886,17 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public decimal SelectPrice(string processCode)
+        public decimal SelectPrice(string processCode, string productCode)
         {
             using subContext db = new();
 
             string priceTypeCode = db.TrProcessPriceTypes.FirstOrDefault(x => x.ProcessCode == processCode).PriceTypeCode;
 
-            var price = db.TrPriceListLines.Include(x => x.TrPriceListHeader)
-                                 .Where(x => x.TrPriceListHeader.PriceTypeCode == priceTypeCode)
-                                 .OrderBy(x => x.TrPriceListHeader.DocumentDate).ThenBy(x => x.TrPriceListHeader.DocumentTime)
-                                 .FirstOrDefault().Price;
+            var price = db.TrPriceListLines.Where(x => x.ProductCode == productCode)
+                                           .Include(x => x.TrPriceListHeader)
+                                           .Where(x => x.TrPriceListHeader.PriceTypeCode == priceTypeCode)
+                                           .OrderBy(x => x.TrPriceListHeader.DocumentDate).ThenBy(x => x.TrPriceListHeader.DocumentTime)
+                                           .FirstOrDefault().Price;
 
             return price;
         }
