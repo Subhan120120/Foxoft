@@ -886,6 +886,20 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public decimal SelectPrice(string processCode)
+        {
+            using subContext db = new();
+
+            string priceTypeCode = db.TrProcessPriceTypes.FirstOrDefault(x => x.ProcessCode == processCode).PriceTypeCode;
+
+            var price = db.TrPriceListLines.Include(x => x.TrPriceListHeader)
+                                 .Where(x => x.TrPriceListHeader.PriceTypeCode == priceTypeCode)
+                                 .OrderBy(x => x.TrPriceListHeader.DocumentDate).ThenBy(x => x.TrPriceListHeader.DocumentTime)
+                                 .FirstOrDefault().Price;
+
+            return price;
+        }
+
         public int UpdateInvoiceSalesPerson(Guid invoiceLineId, string currAccCode)
         {
             using subContext db = new();

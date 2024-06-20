@@ -1810,7 +1810,22 @@ namespace Foxoft
             gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductCode, product.ProductCode);
             gV_InvoiceLine.SetRowCellValue(rowHandle, colLastPurchasePrice, product.LastPurchasePrice);
 
-            decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
+
+            decimal priceProduct = 0;
+
+            if (dcProcess.ProcessCode == "RS")
+                if (Settings.Default.AppSetting.UsePriceList)
+                    priceProduct = efMethods.SelectPrice("RS");
+                else
+                    priceProduct = product.WholesalePrice;
+
+            if (dcProcess.ProcessCode == "RP")
+                if (Settings.Default.AppSetting.UsePriceList)
+                    priceProduct = efMethods.SelectPrice("RP");
+                else
+                    priceProduct = product.PurchasePrice;
+
+            //decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
             decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
             if (priceInvoice == 0)
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);

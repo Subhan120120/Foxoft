@@ -70,6 +70,7 @@ namespace Foxoft.Models
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
         public DbSet<DcPriceType> DcPriceTypes { get; set; }
+        public DbSet<TrProcessPriceType> TrProcessPriceTypes { get; set; }
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
         public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
@@ -161,6 +162,10 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrProductBarcode>()
                         .HasIndex(u => u.Barcode)
+                        .IsUnique();
+
+            modelBuilder.Entity<TrProcessPriceType>()
+                        .HasIndex(u => new { u.ProcessCode, u.PriceTypeCode })
                         .IsUnique();
 
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
