@@ -10,11 +10,65 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Threading;
 using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Foxoft.AppCode
 {
     public class CustomMethods
     {
+        public string EncryptString(string plainText, string key, string iv)
+        {
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+            byte[] ivBytes = Encoding.UTF8.GetBytes(iv);
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = keyBytes;
+                aesAlg.IV = ivBytes;
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(plainText);
+                        }
+                        return Convert.ToBase64String(msEncrypt.ToArray());
+                    }
+                }
+            }
+        }
+
+        public string DecryptString(string cipherText, string key, string iv)
+        {
+            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+            byte[] ivBytes = Encoding.UTF8.GetBytes(iv);
+            byte[] cipherTextBytes = Convert.FromBase64String(cipherText);
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = keyBytes;
+                aesAlg.IV = ivBytes;
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msDecrypt = new MemoryStream(cipherTextBytes))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+            }
+        }
+
         public string AddTop(string query, int count)
         {
             query = query.Trim();

@@ -57,7 +57,7 @@ namespace Foxoft
 
                 UpdateReportsLayout();
 
-                UpdateDueDate();
+                UpdateLicense();
 
                 AppSetting appSetting = efMethods.SelectAppSetting();
                 Settings.Default.AppSetting = appSetting;
@@ -165,7 +165,7 @@ namespace Foxoft
             {
                 SessionSave(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked, Convert.ToInt32(LUE_Terminal.EditValue));
 
-                if (CheckDueDate())
+                if (CheckLicense())
                 {
                     if (Convert.ToUInt32(LUE_Terminal.EditValue) != 0)
                     {
@@ -235,18 +235,23 @@ namespace Foxoft
             SaveNewConStr();
         }
 
-        private bool CheckDueDate()
+        private bool CheckLicense()
         {
-            string encrypt = efMethods.SelectAppSetting().DueDate;
+            string encrypt = efMethods.SelectAppSetting().License;
 
             if (string.IsNullOrEmpty(encrypt))
                 return false;
             else
             {
-                byte[] decript = Convert.FromBase64String(encrypt);
-                string someString = Encoding.ASCII.GetString(decript);
-                DateTime dateTime = DateTime.ParseExact(someString, "yyyyMMdd", null);
-                return dateTime > DateTime.Now;
+                string key = "FoxoftIsTheBestP";
+                string iv = "ThisIsAnInitVect";
+
+                CustomMethods cM = new();
+                string decrypted = cM.DecryptString(encrypt, key, iv);
+                string localAddress = decrypted.Split('+')[0];
+                string date = decrypted.Split('+')[1];
+                DateTime dateTime = DateTime.ParseExact(date, "yyyyMMdd", null);
+                return dateTime > DateTime.Now && localAddress == GetPhiscalAdress();
             }
         }
 
@@ -256,7 +261,7 @@ namespace Foxoft
             form.ShowDialog();
         }
 
-        private bool UpdateDueDate()
+        private bool UpdateLicense()
         {
             string url = @"https://drive.usercontent.google.com/download?id=1NCnJoEonMjtzxIaM3n5x5ppC3DlvpLCu&export=download&authuser=0&confirm=t&uuid=10ba17da-5c80-445b-8974-62f562889c84&at=APZUnTUKwjTq71SBFZ5uIwBa1UWI:1717941152672";
 
@@ -276,10 +281,18 @@ namespace Foxoft
                 {
                     if (txtLisence[i + 1] == GetPhiscalAdress())
                     {
+                        string localAddress = txtLisence[i + 1];
                         string date = txtLisence[i + 2];
-                        byte[] bytes = Encoding.ASCII.GetBytes(date);
-                        string encrypt = Convert.ToBase64String(bytes);
-                        efMethods.UpdateAppSettingDueDate(encrypt);
+
+
+                        string license = localAddress + "+" + date;
+                        string key = "FoxoftIsTheBestP";
+                        string iv = "ThisIsAnInitVect";
+
+                        CustomMethods cM = new();
+                        string encrypt = cM.EncryptString(license, key, iv);
+
+                        efMethods.UpdateAppSettingLicense(encrypt);
                     }
                 }
 

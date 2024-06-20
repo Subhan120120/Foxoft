@@ -1686,6 +1686,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateAppSettingLicense(string license)
+        {
+            using subContext db = new();
+            AppSetting appSetting = new() { Id = 1, License = license };
+            db.Entry(appSetting).Property(x => x.License).IsModified = true;
+            return db.SaveChanges();
+        }
+
         public int UpdateAppSettingTwilioToken(string token)
         {
             using subContext db = new();

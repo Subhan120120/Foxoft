@@ -143,7 +143,7 @@ namespace Foxoft.Models
         [Display(Name = "Mənfəət")]
         public decimal? Benefit => (decimal?)PriceLoc - LastPurchasePrice;
 
-        [NotMapped]
+    [NotMapped]
         [Display(Name = "Qalıq")]
         public int Balance { get; set; }
 
