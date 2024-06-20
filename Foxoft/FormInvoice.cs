@@ -1815,13 +1815,13 @@ namespace Foxoft
 
             if (dcProcess.ProcessCode == "RS")
                 if (Settings.Default.AppSetting.UsePriceList)
-                    priceProduct = efMethods.SelectPrice("RS");
+                    priceProduct = efMethods.SelectPrice("RS", product.ProductCode);
                 else
                     priceProduct = product.WholesalePrice;
 
             if (dcProcess.ProcessCode == "RP")
                 if (Settings.Default.AppSetting.UsePriceList)
-                    priceProduct = efMethods.SelectPrice("RP");
+                    priceProduct = efMethods.SelectPrice("RP", product.ProductCode);
                 else
                     priceProduct = product.PurchasePrice;
 
