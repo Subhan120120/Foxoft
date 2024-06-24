@@ -1,4 +1,5 @@
-﻿using LinqTest;
+﻿using DevExpress.Xpo;
+using LinqTest;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,9 +43,7 @@ namespace Foxoft
         public static extern int GetCurrentThreadId();
 
         [DllImport("advapi32", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern bool ConvertSidToStringSid(
-            [MarshalAs(UnmanagedType.LPArray)] byte[] pSID,
-            out IntPtr ptrSid);
+        static extern bool ConvertSidToStringSid([MarshalAs(UnmanagedType.LPArray)] byte[] pSID, out IntPtr ptrSid);
 
         public static string getLogonSid()
         {

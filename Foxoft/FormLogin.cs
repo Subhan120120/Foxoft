@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -37,21 +38,20 @@ namespace Foxoft
 
             InitializeComponent();
 
+
             using subContext db = new();
 
-            if (!db.Database.CanConnect())
-                if (MessageBoxResult.OK == MessageBox.Show("Databasa ilə əlaqə qurula bilmir. \n connection string: \n" + db.Database.GetConnectionString() + "\n" +
-                "Yeni Database Yaratmaq isteyirsiz?", "Diqqət", MessageBoxButton.OKCancel))
-                    db.Database.EnsureCreated();
+            if (SqlServerConnected(db))
+                if (!db.Database.CanConnect())
+                    if (MessageBoxResult.OK == MessageBox.Show($"Databasa ilə əlaqə qurula bilmir. \nConnection string: \n{db.Database.GetConnectionString()}\n" +
+                    "Yeni Database Yaratmaq isteyirsiz?", "Diqqət", MessageBoxButton.OKCancel))
+                        db.Database.EnsureCreated();
 
             if (db.Database.CanConnect())
             {
                 //db.Database.Migrate();
 
                 //string sql = db.Database.GenerateCreateScript();
-
-                //IRelationalDatabaseCreator databaseCreator = db.GetService<IRelationalDatabaseCreator>();
-                //databaseCreator.CreateTables();
 
                 CreateViews(db.Database);
 
@@ -89,6 +89,33 @@ namespace Foxoft
 
             if (Settings.Default.AppSetting.LocalCurrencyCode is null)
                 MessageBox.Show("Yerli Pul Vahidi Təyin olunmayıb");
+        }
+
+        private bool SqlServerConnected(subContext db)
+        {
+            string connString = db.Database.GetConnectionString();
+
+            var builder = new SqlConnectionStringBuilder(connString);
+            builder.InitialCatalog = string.Empty;
+
+            var optionsBuilder = new DbContextOptionsBuilder<subContext>();
+            optionsBuilder.UseSqlServer(builder.ConnectionString);
+
+
+            using (db = new subContext(optionsBuilder.Options))
+            {
+                try
+                {
+                    db.Database.OpenConnection();
+                    db.Database.CloseConnection();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Server ilə əlaqə qurula bilmir. \nConnection string: \n{builder.ConnectionString} \nError: {ex.Message}", "Diqqət");
+                    return false;
+                }
+            }
         }
 
         private void TouchUIMode(int terminalId)
@@ -232,7 +259,9 @@ namespace Foxoft
 
         private void btn_SaveConn_Click(object sender, EventArgs e)
         {
-            SaveNewConStr();
+            Form2 asd = new(Settings.Default.subConnString);
+            asd.Show();
+            //SaveNewConStr();
         }
 
         private bool CheckLicense()

@@ -56,7 +56,6 @@ namespace Foxoft.Models
         public DbSet<DcReportVariableType> dcReportVariableTypes { get; set; }
         public DbSet<TrReportSubQuery> TrReportSubQueries { get; set; }
         public DbSet<TrReportSubQueryRelationColumn> TrReportSubQueryRelationColumns { get; set; }
-        //public DbSet<DcQueryParam> DcQueryParams { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<SettingStore> SettingStores { get; set; }
         public DbSet<DcVariable> DcVariables { get; set; }

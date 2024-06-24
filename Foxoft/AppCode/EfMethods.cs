@@ -1326,7 +1326,7 @@ namespace Foxoft
             return cashRegCode;
         }
 
-        public string SelectCustomerByStore(string storeCode)
+        public string SelectDefaultCustomerByStore(string storeCode)
         {
             using subContext db = new();
 

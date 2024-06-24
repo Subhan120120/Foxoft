@@ -178,7 +178,6 @@ namespace Foxoft
             barButtonItem1.Id = 0;
             barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
             barButtonItem1.Name = "barButtonItem1";
-            barButtonItem1.ItemClick += barButtonItem1_ItemClick;
             // 
             // barButtonItem2
             // 

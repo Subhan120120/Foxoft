@@ -100,7 +100,7 @@ namespace Foxoft
             trInvoiceHeader.IsMainTF = true;
             trInvoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
-            string defaultCustomer = efMethods.SelectCustomerByStore(Authorization.StoreCode);
+            string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
             trInvoiceHeader.CurrAccCode = defaultCustomer;
 
             if (efMethods.SelectCurrAcc(defaultCustomer) is not null)

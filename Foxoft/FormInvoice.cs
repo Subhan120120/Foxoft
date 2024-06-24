@@ -287,7 +287,7 @@ namespace Foxoft
 
             if (dcProcess.ProcessCode == "RS")
             {
-                string defaultCustomer = efMethods.SelectCustomerByStore(Authorization.StoreCode);
+                string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
                 invoiceHeader.CurrAccCode = defaultCustomer;
 
                 if (efMethods.SelectCurrAcc(defaultCustomer) is not null)
@@ -670,38 +670,24 @@ namespace Foxoft
                 }
             }
 
-            if (column == colBarcode)
+            if (column == colBarcode && column == col_ProductCode)
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
-                DcProduct product = efMethods.SelectProductByBarcode(eValue);
 
-                if (product is not null)
-                {
-                    FillRow(gV_InvoiceLine.FocusedRowHandle, product);
-                    gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-                    if (dcProcess.ProcessCode == "EX")
-                        gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, colQty, 1);
-                }
-                else
-                {
-                    e.ErrorText = "Belə bir məhsul yoxdur";
-                    e.Valid = false;
-                }
-            }
+                DcProduct product = null;
 
-            if (column == col_ProductCode)
-            {
-                string eValue = (e.Value ??= String.Empty).ToString();
-                DcProduct product = efMethods.SelectProduct(eValue);
+                if (column == colBarcode)
+                    product = efMethods.SelectProductByBarcode(eValue);
+                if (column == col_ProductCode)
+                    product = efMethods.SelectProduct(eValue);
 
                 if (product is not null)
                 {
                     FillRow(view.FocusedRowHandle, product);
-                    gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+                    view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
                     if (dcProcess.ProcessCode == "EX")
-                        gV_InvoiceLine.SetRowCellValue(gV_InvoiceLine.FocusedRowHandle, colQty, 1);
+                        view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
                 }
-
                 else
                 {
                     e.ErrorText = "Belə bir məhsul yoxdur";
