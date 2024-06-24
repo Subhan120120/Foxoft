@@ -303,11 +303,7 @@ namespace Foxoft
             }
         }
 
-        private string subConnString = ConfigurationManager
-                         .OpenExeConfiguration(ConfigurationUserLevel.None)
-                         .ConnectionStrings
-                         .ConnectionStrings["subConnString"]
-                         .ConnectionString;
+        private string subConnString = Settings.Default.subConnString;
 
         private void aCE_ReportZet_Click(object sender, EventArgs e)
         {

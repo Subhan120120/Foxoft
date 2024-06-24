@@ -11,6 +11,7 @@ using DevExpress.XtraGantt;
 using Foxoft.AppCode;
 using Foxoft.Migrations;
 using Foxoft.Models;
+using Foxoft.Properties;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -200,11 +201,7 @@ namespace Foxoft
             }
         }
 
-        private string subConnString = ConfigurationManager
-                 .OpenExeConfiguration(ConfigurationUserLevel.None)
-                 .ConnectionStrings
-                 .ConnectionStrings["subConnString"]
-                 .ConnectionString;
+        private string subConnString = Settings.Default.subConnString;
 
         private BarButtonItem CreateItem()
         {

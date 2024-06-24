@@ -661,11 +661,7 @@ namespace Foxoft
             colImage.Width = gV.RowHeight;
         }
 
-        private string subConnString = ConfigurationManager
-                   .OpenExeConfiguration(ConfigurationUserLevel.None)
-                   .ConnectionStrings
-                   .ConnectionStrings["subConnString"]
-                   .ConnectionString;
+        private string subConnString = Settings.Default.subConnString;
         private void BarcodePrint_ItemClick(object sender, ItemClickEventArgs e)
         {
             ShowReportPreview();

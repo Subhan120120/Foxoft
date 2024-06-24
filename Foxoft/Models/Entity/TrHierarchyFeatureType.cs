@@ -8,12 +8,12 @@ namespace Foxoft.Models
 {
     public partial class TrHierarchyFeatureType
     {
-        [Key, Column(Order = 0)]
+        //[Key, Column(Order = 0)]
         [ForeignKey("DcHierarchy")]
         [Display(Name = "İyerarxiya Kodu")]
         public string HierarchyCode { get; set; }
 
-        [Key, Column(Order = 1)]
+        //[Key, Column(Order = 1)]
         [ForeignKey("DcFeatureType")]
         [Display(Name = "Özəllik Tipi Kodu")]
         public int FeatureTypeId { get; set; }

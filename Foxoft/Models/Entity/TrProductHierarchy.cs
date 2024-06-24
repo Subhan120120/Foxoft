@@ -10,12 +10,12 @@ namespace Foxoft.Models
         {
         }
 
-        [Key, Column(Order = 0)]
+        //[Key, Column(Order = 0)]
         [Display(Name = "İyerarxiya Kodu")]
         [ForeignKey("DcHierarchy")]
         public string HierarchyCode { get; set; }
 
-        [Key, Column(Order = 1)]
+        //[Key, Column(Order = 1)]
         [Display(Name = "Məhsul Kodu")]
         [ForeignKey("DcProduct")]
         public string ProductCode { get; set; }
