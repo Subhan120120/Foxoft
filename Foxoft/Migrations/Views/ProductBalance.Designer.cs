@@ -3461,7 +3461,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             RoleClaimId = 20,
-                            ClaimCode = "WholeSaleReturn",
+                            ClaimCode = "WholesaleReturn",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

@@ -360,7 +360,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "WholesaleReturn", ClaimDesc = "Topdan Satışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəlliyi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "HierarchyFeatureType", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "Session", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 }
+                new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1 }
                 );
 
             modelBuilder.Entity<dcClaimType>().HasData(
@@ -408,7 +408,7 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 18, RoleCode = "Admin", ClaimCode = "WholesaleInvoice" },
                 new TrRoleClaim { RoleClaimId = 19, RoleCode = "Admin", ClaimCode = "RetailPurchaseReturn" },
                 new TrRoleClaim { RoleClaimId = 20, RoleCode = "Admin", ClaimCode = "RetailSaleReturn" },
-                new TrRoleClaim { RoleClaimId = 21, RoleCode = "Admin", ClaimCode = "WholeSaleReturn" },
+                new TrRoleClaim { RoleClaimId = 21, RoleCode = "Admin", ClaimCode = "WholesaleReturn" },
                 new TrRoleClaim { RoleClaimId = 22, RoleCode = "Admin", ClaimCode = "ProductFeatureType" },
                 new TrRoleClaim { RoleClaimId = 23, RoleCode = "Admin", ClaimCode = "HierarchyFeatureType" },
                 new TrRoleClaim { RoleClaimId = 24, RoleCode = "Admin", ClaimCode = "Session" }
