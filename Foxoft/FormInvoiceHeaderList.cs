@@ -6,11 +6,13 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -133,12 +135,42 @@ namespace Foxoft
             GridView view = sender as GridView;
             GridHitInfo info = view.CalcHitInfo(ea.Location);
             if ((info.InRow || info.InRowCell) && trInvoiceHeader is not null)
-            {
-                efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
+                ApproveInvoiceHeader();
+        }
+
+        private void ApproveInvoiceHeader()
+        {
+            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
+            Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
+            Settings.Default.Save();
+
+            bool isOpen = InvoiceIsOpen();
+
+            if (!isOpen)
                 DialogResult = DialogResult.OK;
-                Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
-                Settings.Default.Save();
+        }
+
+        private bool InvoiceIsOpen()
+        {
+            bool isOpen = false;
+            Process[]? processes = Process.GetProcessesByName("Foxoft");
+            foreach (Process? process in processes)
+            {
+                List<WindowInfo> childWindows = WindowsAPI.GetMDIChildWindowsOfProcess(process);
+                foreach (WindowInfo? window in childWindows)
+                {
+                    if (window.Tag == trInvoiceHeader.DocumentNumber)
+                    {
+                        isOpen = true;
+                        XtraMessageBox.Show("Qaimə açıqdır.");
+                    }
+
+                    // Close the window if necessary
+                    // CloseWindow(window.Handle);
+                }
             }
+
+            return isOpen;
         }
 
         private void gC_InvoiceHeaderList_ProcessGridKey(object sender, KeyEventArgs e)
@@ -150,13 +182,7 @@ namespace Foxoft
                 trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
 
             if (e.KeyCode == Keys.Enter && trInvoiceHeader is not null)
-            {
-                efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
-                Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
-                Settings.Default.Save();
-
-                DialogResult = DialogResult.OK;
-            }
+                ApproveInvoiceHeader();
 
             if (e.KeyCode == Keys.Escape)
                 Close();

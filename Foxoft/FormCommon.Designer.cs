@@ -87,7 +87,7 @@ namespace Foxoft
             this.btn_Ok.Size = new System.Drawing.Size(428, 22);
             this.btn_Ok.StyleController = this.dataLayoutControl1;
             this.btn_Ok.TabIndex = 4;
-            this.btn_Ok.Text = "simpleButton1";
+            this.btn_Ok.Text = "Yadda Saxla";
             this.btn_Ok.Click += new System.EventHandler(this.btn_Ok_Click);
             // 
             // LCI_Ok
@@ -107,7 +107,7 @@ namespace Foxoft
             this.btn_Cancel.Size = new System.Drawing.Size(428, 22);
             this.btn_Cancel.StyleController = this.dataLayoutControl1;
             this.btn_Cancel.TabIndex = 5;
-            this.btn_Cancel.Text = "simpleButton2";
+            this.btn_Cancel.Text = "Ləğv Et";
             // 
             // LCI_Cancel
             // 

@@ -16,19 +16,13 @@ using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -272,17 +266,17 @@ namespace Foxoft
             }
 
             // Kolonlarin Yetkisi 
-            colLastPurchasePrice = gV_ProductList.Columns[nameof(dcProduct.LastPurchasePrice)];
-            if (colLastPurchasePrice != null)
+            colProductCost = gV_ProductList.Columns[nameof(dcProduct.ProductCost)];
+            if (colProductCost != null)
             {
-                colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = false;
-                colLastPurchasePrice.Visible = false;
+                colProductCost.OptionsColumn.ShowInCustomizationForm = false;
+                colProductCost.Visible = false;
 
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_LastPurchasePrice");
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_ProductCost");
                 if (currAccHasClaims)
                 {
-                    colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = true;
-                    colLastPurchasePrice.Visible = true;
+                    colProductCost.OptionsColumn.ShowInCustomizationForm = true;
+                    colProductCost.Visible = true;
                 }
             }
 
@@ -661,7 +655,6 @@ namespace Foxoft
             colImage.Width = gV.RowHeight;
         }
 
-        private string subConnString = Settings.Default.subConnString;
         private void BarcodePrint_ItemClick(object sender, ItemClickEventArgs e)
         {
             ShowReportPreview();

@@ -59,7 +59,7 @@ namespace Foxoft
             repoLUE_CurrencyCode = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
             repoCalcEdit_ReceivePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             repoCalcEdit_MakePriceList = new DevExpress.XtraEditors.Repository.RepositoryItemCalcEdit();
             DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
@@ -264,7 +264,7 @@ namespace Foxoft
             // 
             // gV_PriceListLine
             // 
-            gV_PriceListLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListLineId, colPriceListHeaderId, colProductCode, colPrice, colCurrencyCode, colLineDescription, colProductDesc, colLastPurchasePrice });
+            gV_PriceListLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPriceListLineId, colPriceListHeaderId, colProductCode, colPrice, colCurrencyCode, colLineDescription, colProductDesc, colProductCost });
             gV_PriceListLine.CustomizationFormBounds = new System.Drawing.Rectangle(760, 390, 264, 272);
             gV_PriceListLine.GridControl = gC_PriceListLine;
             gV_PriceListLine.Name = "gV_PriceListLine";
@@ -359,13 +359,13 @@ namespace Foxoft
             // 
             // colLastPurchasePrice
             // 
-            colLastPurchasePrice.FieldName = "DcProduct.LastPurchasePrice";
-            colLastPurchasePrice.Name = "colLastPurchasePrice";
-            colLastPurchasePrice.OptionsColumn.AllowEdit = false;
-            colLastPurchasePrice.OptionsColumn.ReadOnly = true;
-            colLastPurchasePrice.UnboundDataType = typeof(decimal);
-            colLastPurchasePrice.Visible = true;
-            colLastPurchasePrice.VisibleIndex = 5;
+            colProductCost.FieldName = "DcProduct.ProductCost";
+            colProductCost.Name = "colProductCost";
+            colProductCost.OptionsColumn.AllowEdit = false;
+            colProductCost.OptionsColumn.ReadOnly = true;
+            colProductCost.UnboundDataType = typeof(decimal);
+            colProductCost.Visible = true;
+            colProductCost.VisibleIndex = 5;
             // 
             // repoCalcEdit_ReceivePriceList
             // 
@@ -710,6 +710,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem BBI_exportXLSX;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colProductCost;
     }
 }

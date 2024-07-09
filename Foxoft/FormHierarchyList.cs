@@ -169,5 +169,11 @@ namespace Foxoft
                 }
             }
         }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DcHierarchy = null;
+            DialogResult = DialogResult.OK;
+        }
     }
 }

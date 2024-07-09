@@ -5,7 +5,6 @@ using DevExpress.Mvvm.POCO;
 using DevExpress.XtraEditors;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
-using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,7 +17,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
 
-        private string subConnString = Settings.Default.subConnString;
+        private string subConnString = Properties.Settings.Default.SubConnString;
 
         public string SelectDesign()
         {

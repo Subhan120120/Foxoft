@@ -1,48 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <SSDTUnitTestPath Condition="'$(SSDTUnitTestPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB</SSDTUnitTestPath>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SSDTPath Condition="'$(SSDTPath)' == ''">$(VsInstallRoot)\Common7\IDE\Extensions\Microsoft\SQLDB\DAC</SSDTPath>
-  </PropertyGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>FoxoftIcon64.ico</ApplicationIcon>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
   <ItemGroup>
-    <Compile Remove="Migrations\New folder\**" />
-    <Compile Remove="Models\Entity\Mapping\**" />
-    <EmbeddedResource Remove="Migrations\New folder\**" />
-    <EmbeddedResource Remove="Models\Entity\Mapping\**" />
-    <None Remove="Migrations\New folder\**" />
-    <None Remove="Models\Entity\Mapping\**" />
-    <Page Remove="Migrations\New folder\**" />
-    <Page Remove="Models\Entity\Mapping\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Models\Entity\dcStore.cs" />
-    <Compile Remove="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="AppCode\GUNSONU.repx" />
     <None Remove="AppCode\GvListDefaultLayout.xml" />
-    <None Remove="AppCode\Qry_CurrAccExtra.sql" />
-    <None Remove="AppCode\Qry_Debts.sql" />
-    <None Remove="AppCode\Qry_Expences.sql" />
-    <None Remove="AppCode\Qry_PaymentCustomers.sql" />
-    <None Remove="AppCode\Qry_Payments.sql" />
-    <None Remove="AppCode\Qry_PaymentVendors.sql" />
-    <None Remove="AppCode\Qry_Sales.sql" />
     <None Remove="AppCode\Report\Report_Detail_ProductCard.sql" />
     <None Remove="AppCode\Report\Report_Embedded_Barcode.sql" />
     <None Remove="AppCode\Report\Report_Embedded_CashRegList.sql" />
     <None Remove="AppCode\Report\Report_Embedded_CurrAccList.sql" />
     <None Remove="AppCode\Report\Report_Embedded_InvoiceReport.sql" />
+    <None Remove="AppCode\Report\Report_Embedded_ProductList.sql" />
     <None Remove="AppCode\Report\Report_Grid_Expenses.sql" />
     <None Remove="AppCode\Report\Report_Grid_Expenses.xml" />
     <None Remove="AppCode\Report\Report_Grid_MoneyMovements.sql" />
@@ -57,26 +30,43 @@
     <None Remove="AppCode\Report\Report_Grid_RecentGoods.xml" />
     <None Remove="AppCode\Report\Report_Grid_WarehouseBalance.sql" />
     <None Remove="AppCode\Report\Report_Grid_WarehouseBalance.xml" />
+    <None Remove="AppCode\SqlQuery\Qry_Debts.sql" />
+    <None Remove="AppCode\SqlQuery\Qry_Expences.sql" />
     <None Remove="AppCode\SqlQuery\Qry_Invoice.sql" />
+    <None Remove="AppCode\SqlQuery\Qry_PaymentCustomers.sql" />
+    <None Remove="AppCode\SqlQuery\Qry_Payments.sql" />
+    <None Remove="AppCode\SqlQuery\Qry_PaymentVendors.sql" />
     <None Remove="AppCode\SqlQuery\Qry_ProductBarcode.sql" />
-    <None Remove="AppCode\SqlQuery\Report_Embedded_FormProductList.sql" />
+    <None Remove="AppCode\SqlQuery\Qry_Sales.sql" />
     <None Remove="AppCode\SqlQuery\View_AllPayments.sql" />
     <None Remove="AppCode\SqlQuery\View_ProductFeatures - Copy.sql" />
     <None Remove="AppCode\SqlQuery\View_ProductFeatures.sql" />
     <None Remove="AppCode\SqlQuery\View_RetailSales.sql" />
     <None Remove="AppCode\SqlQuery\View_Transactions.sql" />
-    <None Remove="FoxoftIcon copy.ico" />
-    <None Remove="fox_007.ico" />
+    <None Remove="Resources\add_administrator_48px.png" />
+    <None Remove="Resources\add_client_32px.png" />
+    <None Remove="Resources\add_client_32px1.png" />
+    <None Remove="Resources\CreditCard-32x32.png" />
+    <None Remove="Resources\credit_card.png" />
+    <None Remove="Resources\credit_cards32x32.png" />
     <None Remove="Resources\fox_007.ico" />
+    <None Remove="Resources\NoPhoto.ico" />
+    <None Remove="Resources\NoPhoto.png" />
+    <None Remove="Resources\registration_24px.png" />
+    <None Remove="Resources\registration_32px.png" />
+    <None Remove="Resources\search_client_32px.png" />
+    <None Remove="Resources\startup.png" />
+    <None Remove="Resources\startup550x363.png.png" />
+    <None Remove="Resources\Untitled-32x32x.png" />
   </ItemGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="AppCode\ReportDesign\GUNSONU.repx" />
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
-    <EmbeddedResource Include="AppCode\Report\Report_Embedded_Barcode.sql" />
-    <EmbeddedResource Include="AppCode\Report\Report_Embedded_InvoiceReport.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Detail_ProductCard.sql" />
+    <EmbeddedResource Include="AppCode\Report\Report_Embedded_Barcode.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_CashRegList.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_CurrAccList.sql" />
+    <EmbeddedResource Include="AppCode\Report\Report_Embedded_InvoiceReport.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_ProductList.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_Expenses.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_Expenses.xml" />
@@ -92,80 +82,64 @@
     <EmbeddedResource Include="AppCode\Report\Report_Grid_RecentGoods.xml" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_WarehouseBalance.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_WarehouseBalance.xml" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Debts.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Expences.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Invoice.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentCustomers.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Payments.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentVendors.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_ProductBarcode.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Sales.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\View_AllPayments.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\View_ProductFeatures - Copy.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\View_ProductFeatures.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentVendors.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_PaymentCustomers.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Expences.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Payments.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Debts.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Invoice.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_ProductBarcode.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\View_AllPayments.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\View_Transactions.sql" />
     <EmbeddedResource Include="AppCode\SqlQuery\View_RetailSales.sql" />
-    <EmbeddedResource Include="AppCode\SqlQuery\Qry_Sales.sql" />
+    <EmbeddedResource Include="AppCode\SqlQuery\View_Transactions.sql" />
+    <EmbeddedResource Include="Resources\add_administrator_48px.png" />
+    <EmbeddedResource Include="Resources\add_client_32px.png" />
+    <EmbeddedResource Include="Resources\add_client_32px1.png" />
+    <EmbeddedResource Include="Resources\CreditCard-32x32.png" />
+    <EmbeddedResource Include="Resources\credit_card.png" />
+    <EmbeddedResource Include="Resources\credit_cards32x32.png" />
     <EmbeddedResource Include="Resources\fox_007.ico" />
+    <EmbeddedResource Include="Resources\NoPhoto.ico" />
+    <EmbeddedResource Include="Resources\NoPhoto.png" />
+    <EmbeddedResource Include="Resources\registration_24px.png" />
+    <EmbeddedResource Include="Resources\registration_32px.png" />
+    <EmbeddedResource Include="Resources\search_client_32px.png" />
+    <EmbeddedResource Include="Resources\startup.png" />
+    <EmbeddedResource Include="Resources\startup550x363.png.png" />
+    <EmbeddedResource Include="Resources\Untitled-32x32x.png" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="DevExpress.Win.Design" Version="21.2.*-*" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
+    <PackageReference Include="DevExpress.Win.Design" Version="23.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="RestSharp" Version="108.0.1" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Update="FormPriceList.cs" />
-    <Compile Update="FormPaymentHeaderList.cs" />
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+
   <ItemGroup>
     <None Update="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup Condition="$(VisualStudioVersion) == '17.0'">
-    <Reference Include="Microsoft.Data.Tools.Schema.Sql, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>$(SSDTPath)\Microsoft.Data.Tools.Schema.Sql.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTesting, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+
+  <ItemGroup>
+    <Folder Include="AppCode\CustomFunctions\" />
+    <Folder Include="Migrations\main\" />
   </ItemGroup>
-  <PropertyGroup>
-    <SsdtUnitTestVersion>3.1</SsdtUnitTestVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <WarningLevel>6</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <WarningLevel>6</WarningLevel>
-  </PropertyGroup>
-  <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' == ''" />
+
 </Project>

@@ -28,9 +28,9 @@ namespace Foxoft.Models
         public bool Filterable { get; set; }
 
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual ICollection<TrHierarchyFeatureType> TrHierarchyFeatureTypes { get; set; }
     }
 }

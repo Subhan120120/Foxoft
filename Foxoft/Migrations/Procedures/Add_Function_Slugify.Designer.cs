@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20231225122210_Add_Function_Slugify")]
+    [Migration("20341225122210_Add_Function_Slugify")]
     partial class Add_Function_Slugify
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

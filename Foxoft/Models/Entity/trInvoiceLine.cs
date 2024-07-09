@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +11,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
+    [Microsoft.EntityFrameworkCore.Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
     public partial class TrInvoiceLine : BaseEntity
     {
         [Key]
@@ -131,22 +130,22 @@ namespace Foxoft.Models
 
         [Display(Name = "Sətir Açıqlaması")]
         [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
-        public string LineDescription { get; set; }
+        public string? LineDescription { get; set; }
 
         [Display(Name = "Satıcı")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
-        public string SalesPersonCode { get; set; }
+        public string? SalesPersonCode { get; set; }
 
-        [Display(Name = "Son Alış Qiy.")]
-        public decimal? LastPurchasePrice { get; set; }
+        [Display(Name = "Maya Dəyəri")]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal? ProductCost { get; set; }
 
         [Display(Name = "Mənfəət")]
-        public decimal? Benefit => (decimal?)PriceLoc - LastPurchasePrice;
+        public decimal? Benefit => (decimal?)PriceLoc - ProductCost;
 
-    [NotMapped]
+        [NotMapped]
         [Display(Name = "Qalıq")]
         public int Balance { get; set; }
-
 
         [NotMapped]
         public int ReturnQty { get; set; }

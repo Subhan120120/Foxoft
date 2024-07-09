@@ -9,12 +9,12 @@ namespace Foxoft.Models
     [Display(Name = "Məhsul Endirimi")]
     public partial class TrProductDiscount
     {
-        //[Key, Column(Order = 0)]
+        [Key, Column(Order = 0)]
         [ForeignKey("DcProduct")]
         [Display(Name = "Məhsul Kodu")]
         public string ProductCode { get; set; }
 
-        //[Key, Column(Order = 1)]
+        [Key, Column(Order = 1)]
         [ForeignKey("DcDiscount")]
         [Display(Name = "Endirim Id")]
         public int DiscountId { get; set; }

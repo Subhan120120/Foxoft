@@ -124,7 +124,7 @@ namespace Foxoft.Models
 
         [NotMapped]
         [Display(Name = "Son Alış Qiy.")]
-        public decimal? LastPurchasePrice { get; set; }
+        public decimal? ProductCost { get; set; }
 
         [NotMapped]
         [Display(Name = "Son Satış Qiy.")]

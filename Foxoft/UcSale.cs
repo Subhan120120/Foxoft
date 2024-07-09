@@ -391,11 +391,7 @@ namespace Foxoft
 
         }
 
-        private string subConnString = ConfigurationManager
-                       .OpenExeConfiguration(ConfigurationUserLevel.None)
-                       .ConnectionStrings
-                       .ConnectionStrings["subConnString"]
-                       .ConnectionString;
+        private string subConnString = Properties.Settings.Default.SubConnString;
 
         private void btn_ReportZ_Click(object sender, EventArgs e)
         {

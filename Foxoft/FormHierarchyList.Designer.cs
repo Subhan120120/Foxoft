@@ -34,6 +34,7 @@
             treeListCol_HierarchyDesc = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             treeListCol_HierarchyParentCode = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            btn_Clear = new Button();
             ((System.ComponentModel.ISupportInitialize)treeList1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             SuspendLayout();
@@ -41,9 +42,9 @@
             // treeList1
             // 
             treeList1.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] { treeListCol_HierarchyCode, treeListCol_HierarchyDesc, treeListCol_HierarchyParentCode });
-            treeList1.Dock = System.Windows.Forms.DockStyle.Fill;
+            treeList1.Dock = DockStyle.Fill;
             treeList1.KeyFieldName = "HierarchyCode";
-            treeList1.Location = new System.Drawing.Point(0, 0);
+            treeList1.Location = new Point(0, 0);
             treeList1.Name = "treeList1";
             treeList1.OptionsBehavior.Editable = false;
             treeList1.OptionsFilter.ExpandNodesOnFiltering = true;
@@ -52,7 +53,7 @@
             treeList1.OptionsFind.FindDelay = 100;
             treeList1.OptionsMenu.ShowExpandCollapseItems = false;
             treeList1.ParentFieldName = "HierarchyParentCode";
-            treeList1.Size = new System.Drawing.Size(366, 290);
+            treeList1.Size = new Size(379, 290);
             treeList1.StateImageList = svgImageCollection1;
             treeList1.TabIndex = 0;
             treeList1.ViewStyle = DevExpress.XtraTreeList.TreeListViewStyle.TreeView;
@@ -91,13 +92,24 @@
             svgImageCollection1.Add("edit", "image://svgimages/icon builder/actions_edit.svg");
             svgImageCollection1.Add("delete", "image://svgimages/icon builder/actions_delete.svg");
             // 
-            // FormTreeView
+            // button1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(366, 290);
+            btn_Clear.Location = new Point(292, 255);
+            btn_Clear.Name = "button1";
+            btn_Clear.Size = new Size(75, 23);
+            btn_Clear.TabIndex = 1;
+            btn_Clear.Text = "Təmizlə";
+            btn_Clear.UseVisualStyleBackColor = true;
+            btn_Clear.Click += btnClear_Click;
+            // 
+            // FormHierarchyList
+            // 
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(379, 290);
+            Controls.Add(btn_Clear);
             Controls.Add(treeList1);
-            Name = "FormTreeView";
+            Name = "FormHierarchyList";
             Text = "Form1";
             Activated += FormTreeView_Activated;
             Load += FormTreeView_Load;
@@ -114,5 +126,6 @@
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_HierarchyDesc;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_HierarchyParentCode;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private Button btn_Clear;
     }
 }

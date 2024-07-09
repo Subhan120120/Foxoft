@@ -3,8 +3,8 @@
 
 select 
  [Topdan Sat. Qiy.] =  Round(WholesalePrice, 0)
-, [Son Alış Qiy.] =  Round(LastPurchasePrice, 0)
-, [%] =CONVERT(int, Round((1 - (PivotTable.LastPurchasePrice / NULLIF(PivotTable.WholesalePrice,0))) * 100, 0)) 
+, [Maya Dəyəri.] =  Round(ProductCost, 0)
+, [%] =CONVERT(int, Round((1 - (PivotTable.ProductCost / NULLIF(PivotTable.WholesalePrice,0))) * 100, 0)) 
 , *
 from (
 	select prdcts.ProductCode
@@ -15,7 +15,7 @@ from (
 	, FeatureCode
 	, FeatureTypeId
 	, WholesalePrice
-	, LastPurchasePrice = (select top 1  PriceLoc * (1 - (PosDiscount / 100))	
+	, ProductCost = (select top 1  PriceLoc * (1 - (PosDiscount / 100))	
 								from TrInvoiceLines il
 								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId
 								where il.ProductCode = prdcts.ProductCode

@@ -1,6 +1,7 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.LookAndFeel;
+using DevExpress.Mvvm.Native;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
@@ -34,6 +35,29 @@ namespace Foxoft
 
             InitComponentName();
 
+            foreach (AccordionControlElement parentElements in aC_Root.Elements)
+            {
+                foreach (AccordionControlElement? childElement in parentElements.Elements)
+                {
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, childElement.Name);
+                    if (!currAccHasClaims)
+                        childElement.Visible = false;
+                }
+            }
+
+            foreach (BarItem bbi in parentRibbonControl.Items)
+            {
+                if (bbi is BarButtonItem barButtonItem)
+                {
+                    if (new string[] { "Session" }.Contains(bbi.Name))
+                    {
+                        bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, bbi.Name);
+                        if (!currAccHasClaims)
+                            bbi.Visibility = BarItemVisibility.Never;
+                    }
+                }
+            }
+
             DcTerminal dcTerminal = efMethods.SelectTerminal(Settings.Default.TerminalId);
             if (dcTerminal is not null)
             {
@@ -54,6 +78,7 @@ namespace Foxoft
             UserLookAndFeel.Default.StyleChanged += new EventHandler(UserLookAndFeel_StyleChanged);
             LookAndFeelSettingsHelper.Load(Authorization.CurrAccCode);
 
+            BSI_CompanyDesc.Caption = "| " + efMethods.SelectCompany(Settings.Default.CompanyCode).CompanyDesc;
             bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
             BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
             bSI_TerminalName.Caption = "| " + efMethods.SelectTerminal(Settings.Default.TerminalId).TerminalDesc;
@@ -71,10 +96,12 @@ namespace Foxoft
             this.ACE_CashRegs.Name = "CashRegs";
             this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
             this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
+            this.aCE_WholesaleInvoice.Name = "WholesaleInvoice";
             this.ACE_RetailPurchaseOrder.Name = "RetailPurchaseOrder";
             this.ACE_RetailSaleOrder.Name = "RetailSaleOrder";
-            this.ACE_PurchaseIsReturn.Name = "PurchaseIsReturn";
-            this.ACE_SaleIsReturn.Name = "SaleIsReturn";
+            this.ACE_PurchaseReturn.Name = "RetailPurchaseReturn";
+            this.ACE_RetailSaleReturn.Name = "RetailSaleReturn";
+            this.aCE_WholesaleReturn.Name = "WholeSaleReturn";
             this.aCE_InventoryTransfer.Name = "InventoryTransfer";
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
@@ -87,7 +114,9 @@ namespace Foxoft
             this.aCE_CurrAccAll.Name = "CurrAccAll";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_Discounts.Name = "DiscountList";
-            this.ACE_ProductFeatureTypes.Name = "ProductFeatures";
+            this.ACE_ProductFeatureType.Name = "ProductFeatureType";
+            this.ACE_HierarchyFeatureType.Name = "HierarchyFeatureType";
+            this.bBI_Session.Name = "Session";
         }
 
         private void InitializeReports()
@@ -110,10 +139,7 @@ namespace Foxoft
                         MessageBox.Show("Yetkiniz yoxdur! ");
                         return;
                     }
-                    FormReportFilter formReport = new(dcReport);
-                    formReport.MdiParent = this;
-                    formReport.Show();
-                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+                    ShowNewForm<FormReportFilter>(dcReport);
                 };
 
                 aCE_Reports.Elements.Add(aCE);
@@ -167,528 +193,23 @@ namespace Foxoft
 
         private void CloseOpenChildForms()
         {
-            foreach (var child in this.MdiChildren)
-            {
-                var customChild = child as RibbonForm;
-                if (customChild == null) continue; //if there are any casting problems
+            ArrayList list = new(MdiChildren);
+            foreach (Form f in list)
+                f.Close();
 
-                customChild.Close();
-            }
-        }
-
-        private void FormERP_MdiChildActivate(object sender, EventArgs e)
-        {
-            try { parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0]; }
-            catch (Exception ex) { /*xetani nezere alma*/ }
-        }
-
-        private void aCE_Products_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormProductList form = Application.OpenForms[nameof(FormProductList)] as FormProductList;
-
-            if (form != null)
-            {
-                form.BringToFront();
-                form.Activate();
-            }
-            else
-            {
-                try
-                {
-                    form = new(new byte[] { 1 });
-                    form.MdiParent = this;
-                    form.Show();
-                    form.WindowState = FormWindowState.Maximized;
-                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-        }
-
-        private void aCE_CurrAccs_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            try
-            {
-                FormCurrAccList form = new(new byte[] { 1, 2, 3 });
-                form.MdiParent = this;
-                form.Show();
-                form.WindowState = FormWindowState.Maximized;
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-        }
-
-        private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormInvoice formInvoice = new("RP", new byte[] { 1, 3 }, Guid.Empty);
-            formInvoice.MdiParent = this;
-            formInvoice.WindowState = FormWindowState.Maximized;
-            formInvoice.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-        }
-
-        private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormInvoice formInvoice = new("RS", new byte[] { 1, 3 }, Guid.Empty);
-            formInvoice.MdiParent = this;
-            formInvoice.WindowState = FormWindowState.Maximized;
-            formInvoice.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-
-        }
-
-        private void aCE_Expense_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            int OpenFormCount = 0;
-
-            foreach (Form form in Application.OpenForms)
-            {
-                FormInvoice formInvoice = form as FormInvoice;
-                if (formInvoice != null && formInvoice.dcProcess.ProcessCode == "EX")
-                {
-                    formInvoice.BringToFront();
-                    formInvoice.Activate();
-                    OpenFormCount++;
-                }
-            }
-
-            if (OpenFormCount == 0)
-            {
-                FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, Guid.Empty);
-                formInvoice.MdiParent = this;
-                formInvoice.Show();
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-        }
-
-        private string subConnString = Settings.Default.subConnString;
-
-        private void aCE_ReportZet_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            DsMethods dsMethods = new();
-            ReportClass reportClass = new();
-
-            //object[] objInvoiceHeaders = efMethods.SelectInvoiceLineForReport(invoiceHeaderId).Cast<object>().ToArray();
-
-            //DataTable trInvoiceLines = adoMethods.SelectInvoiceLines(DateTime.Now.Date, DateTime.Now.Date);
-            //DataTable trPaymentLines = adoMethods.SelectPaymentLines(DateTime.Now.Date, DateTime.Now.Date);
-
-            //DataSet dataSet = new("GunSonu");
-            //dataSet.Tables.AddRange(new DataTable[] { trInvoiceLines, trPaymentLines });
-
-            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-            dataSource.Name = "GunSonu";
-
-            //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
-
-            CustomSqlQuery sqlDepozit = new("Depozit", "select 0 depozit");
-
-            DateTime dateTime = new(2022, 06, 23); // DateTime.Now.Date; // 
-
-            DateTime startDate = dateTime;
-            DateTime endDate = dateTime;
-
-            SqlQuery sqlQuerySale = dsMethods.SelectSales(startDate, endDate);
-            SqlQuery sqlQueryPayment = dsMethods.SelectPayments(startDate, endDate);
-            SqlQuery sqlQueryExpences = dsMethods.SelectExpences(startDate, endDate);
-            SqlQuery sqlQueryDbtCustomers = dsMethods.SelectDebtCustomers();
-            //SqlQuery sqlQueryDbtVendors = dsMethods.SelectDebtVendors();
-            SqlQuery sqlQueryPaymentCustomers = dsMethods.SelectPaymentCustomers(startDate, endDate);
-            SqlQuery sqlQueryPaymentVendors = dsMethods.SelectPaymentVendors(startDate, endDate);
-
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlDepozit, sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryDbtCustomers, sqlQueryPaymentCustomers, sqlQueryPaymentVendors });
-            dataSource.Fill();
-
-            // string designPath = Settings.Default.AppSetting.PrintDesignPath;
-
-            string designPath = Path.Combine(AppContext.BaseDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
-
-            ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
-            designTool.ShowRibbonDesignerDialog();
-        }
-
-        private void aCE_Payments_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            int OpenFormCount = 0;
-
-            foreach (Form form in Application.OpenForms)
-            {
-                FormPaymentLineList formPaymentHeaders = form as FormPaymentLineList;
-                if (formPaymentHeaders != null)
-                {
-                    formPaymentHeaders.BringToFront();
-                    formPaymentHeaders.Activate();
-                    OpenFormCount++;
-                }
-            }
-
-            if (OpenFormCount == 0)
-            {
-                FormPaymentLineList formPaymentHeaders = new();
-                formPaymentHeaders.MdiParent = this;
-                formPaymentHeaders.WindowState = FormWindowState.Maximized;
-                formPaymentHeaders.Show();
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-        }
-
-        private void aCE_CountIn_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormInvoice formInvoice = new("CI", new byte[] { 1 }, Guid.Empty);
-            formInvoice.MdiParent = this;
-            formInvoice.WindowState = FormWindowState.Maximized;
-            formInvoice.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-        }
-
-        private void aCE_CountOut_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormInvoice formInvoice = new("CO", new byte[] { 1 }, Guid.Empty);
-            formInvoice.MdiParent = this;
-            formInvoice.WindowState = FormWindowState.Maximized;
-            formInvoice.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-        }
-
-        private void aCE_PaymentDetail_Click(object sender, EventArgs e)
-        {
-            //bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            //if (!currAccHasClaims)
+            //foreach (var child in this.MdiChildren)
             //{
-            //    MessageBox.Show("Yetkiniz yoxdur! ");
-            //    return;
-            //}
+            //    var customChild = child as RibbonForm;
+            //    if (customChild == null) continue; //if there are any casting problems
 
-            FormPaymentDetail formPaymentDetail = new();
-            formPaymentDetail.MdiParent = this;
-            formPaymentDetail.WindowState = FormWindowState.Maximized;
-            if (parentRibbonControl.MergedPages.Count > 0)
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            //    customChild.Close();
+            //}
         }
 
         private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (MessageBox.Show("Programdan Çıx", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 e.Cancel = true;
-        }
-
-        private void aCE_InventoryTransfer_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormInvoice formInvoice = new("IT", new byte[] { 1 }, Guid.Empty);
-            formInvoice.MdiParent = this;
-            formInvoice.WindowState = FormWindowState.Maximized;
-            formInvoice.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-        }
-
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
-        private void ACE_CashTransfer_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormMoneyTransfer form = new();
-            form.MdiParent = this;
-            form.WindowState = FormWindowState.Maximized;
-            form.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-        }
-
-        private void ACE_PurchaseIsReturn_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            int OpenFormCount = 0;
-
-            foreach (Form form in Application.OpenForms)
-            {
-                FormReturn frmRtrn = form as FormReturn;
-                if (frmRtrn != null)
-                {
-                    frmRtrn.BringToFront();
-                    frmRtrn.Activate();
-                    OpenFormCount++;
-                }
-            }
-
-            if (OpenFormCount == 0)
-            {
-                FormReturn frmRtrn = new("RP");
-                frmRtrn.MdiParent = this;
-                frmRtrn.WindowState = FormWindowState.Maximized;
-                frmRtrn.Show();
-            }
-        }
-
-        private void ACE_SaleIsReturn_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            int OpenFormCount = 0;
-
-            foreach (Form form in Application.OpenForms)
-            {
-                FormReturn frmRtrn = form as FormReturn;
-                if (frmRtrn != null)
-                {
-                    frmRtrn.BringToFront();
-                    frmRtrn.Activate();
-                    OpenFormCount++;
-                }
-            }
-
-            if (OpenFormCount == 0)
-            {
-                FormReturn frmRtrn = new("RS");
-                frmRtrn.MdiParent = this;
-                frmRtrn.WindowState = FormWindowState.Maximized;
-                frmRtrn.Show();
-            }
-        }
-
-        private void ACE_ReportFinally_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            DsMethods dsMethods = new();
-            ReportClass reportClass = new();
-
-            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-            dataSource.Name = "Kapital";
-
-            //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
-
-            CustomSqlQuery sqlDepozit = new("Depozit", "select 0 depozit");
-
-            DateTime dateTime = new(2022, 06, 23); // DateTime.Now.Date; // 
-
-            DateTime startDate = dateTime;
-            DateTime endDate = dateTime;
-
-            SqlQuery sqlQuerySale = dsMethods.SelectSales(startDate, endDate);
-            SqlQuery sqlQueryPayment = dsMethods.SelectPayments(startDate, endDate);
-            SqlQuery sqlQueryExpences = dsMethods.SelectExpences(startDate, endDate);
-            SqlQuery sqlQueryDbtCustomers = dsMethods.SelectDebtCustomers();
-            //SqlQuery sqlQueryDbtVendors = dsMethods.SelectDebtVendors();
-            SqlQuery sqlQueryPaymentCustomers = dsMethods.SelectPaymentCustomers(startDate, endDate);
-            SqlQuery sqlQueryPaymentVendors = dsMethods.SelectPaymentVendors(startDate, endDate);
-
-            dataSource.Queries.AddRange(new SqlQuery[] { sqlDepozit, sqlQuerySale, sqlQueryPayment, sqlQueryExpences, sqlQueryDbtCustomers, sqlQueryPaymentCustomers, sqlQueryPaymentVendors });
-            dataSource.Fill();
-
-            // string designPath = Settings.Default.AppSetting.PrintDesignPath;
-
-            string designPath = Path.Combine(AppContext.BaseDirectory, @"AppCode\ReportDesign\", "GUNSONU.repx");
-
-            ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
-            designTool.ShowRibbonDesignerDialog();
-        }
-
-        private void ACE_CashRegs_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormCurrAccList form = Application.OpenForms[nameof(FormCurrAccList)] as FormCurrAccList;
-
-            try
-            {
-                form = new(new byte[] { 5 });
-                form.MdiParent = this;
-                form.Show();
-                form.WindowState = FormWindowState.Maximized;
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Kassa Hesablar açıla bilmir: \n" + ex);
-            }
-
-        }
-
-        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
-        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
-        private void ACE_PricList_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormPriceListDetail form = Application.OpenForms[nameof(FormPriceListDetail)] as FormPriceListDetail;
-
-            try
-            {
-                form = new();
-                form.MdiParent = this;
-                form.Show();
-                form.WindowState = FormWindowState.Maximized;
-                parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex);
-            }
-        }
-
-        private void ACE_Discounts_Click(object sender, EventArgs e)
-        {
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormCommonList<DcDiscount> form = Application.OpenForms[nameof(FormCommonList<DcDiscount>)] as FormCommonList<DcDiscount>;
-
-            try
-            {
-                if (form == null)
-                {
-                    form = new("", "DiscountId");
-                    form.MdiParent = this;
-                    form.Show();
-                    form.WindowState = FormWindowState.Maximized;
-                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-                }
-                else
-                {
-                    if (form != null)
-                    {
-                        form.BringToFront();
-                        form.Activate();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex);
-            }
-        }
-
-        private void bBI_CloseWindows_ItemClick_1(object sender, ItemClickEventArgs e)
-        {
-            ArrayList list = new(MdiChildren);
-            foreach (Form f in list)
-                f.Close();
-        }
-
-        private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
         }
 
         private void BBI_ModeMouse_ItemClick(object sender, ItemClickEventArgs e)
@@ -709,12 +230,143 @@ namespace Foxoft
             aC_Root.ItemHeight = 24 + (dcTerminal.TouchScaleFactor * 8);
         }
 
-        private void barButtonItem3_ItemClick_1(object sender, ItemClickEventArgs e)
+        private void FormERP_MdiChildActivate(object sender, EventArgs e)
         {
-
+            //if (parentRibbonControl.MergedPages.Count > 0)
+            //    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0]; // islemir
         }
 
-        private void barButtonItem4_ItemClick_1(object sender, ItemClickEventArgs e)
+        private void ShowNewForm<T>(params object[] args) where T : Form
+        {
+            T form = null;
+
+            try
+            {
+                var constructor = typeof(T).GetConstructor(args.Select(a => a.GetType()).ToArray());
+
+                if (constructor == null)
+                    throw new ArgumentException($"No matching constructor found for {typeof(T).Name}");
+
+                // Create an instance of the form using the matched constructor
+                form = (T)constructor.Invoke(args);
+                form.MdiParent = this;
+                form.Show();
+                form.WindowState = FormWindowState.Maximized;
+                if (parentRibbonControl.MergedPages.Count > 0)
+                    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{(form != null ? form.Text : typeof(T).Name)} açıla bilmir: \n" + ex);
+            }
+        }
+
+        private void ShowExistForm<T>(params object[] args) where T : Form
+        {
+            T form = Application.OpenForms[typeof(T).Name] as T;
+
+            if (form != null)
+            {
+                form.BringToFront();
+                form.Activate();
+            }
+            else
+            {
+                ShowNewForm<T>(args);
+            }
+        }
+
+        private void aCE_Products_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormProductList>(new byte[] { 1 });
+        }
+
+        private void aCE_CurrAccs_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormCurrAccList>(new byte[] { 1, 2, 3 });
+        }
+
+        private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("RP", new byte[] { 1, 3 }, Guid.Empty);
+        }
+
+        private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("RS", new byte[] { 1, 3 }, Guid.Empty);
+        }
+
+        private void ACE_WholesaleInvoice_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("WS", new byte[] { 1, 3 }, Guid.Empty);
+        }
+
+        private void aCE_Expense_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormInvoice>("EX", new byte[] { 2, 3 }, Guid.Empty);
+        }
+
+        private void aCE_Payments_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormPaymentLineList>();
+        }
+
+        private void aCE_CountIn_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("CI", new byte[] { 1 }, Guid.Empty);
+        }
+
+        private void aCE_CountOut_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("CO", new byte[] { 1 }, Guid.Empty);
+        }
+
+        private void aCE_PaymentDetail_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormPaymentDetail>();
+        }
+
+        private void aCE_InventoryTransfer_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("IT", new byte[] { 1 }, Guid.Empty);
+        }
+
+        private void ACE_CashTransfer_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormMoneyTransfer>();
+        }
+
+        private void ACE_PurchaseReturn_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormReturn>("RP");
+        }
+
+        private void ACE_RetailSaleReturn_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormReturn>("RS");
+        }
+
+        private void aCE_WholesaleReturn_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormReturn>("WS");
+        }
+
+        private void ACE_CashRegs_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormCurrAccList>(new byte[] { 5 });
+        }
+
+        private void ACE_PricList_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormPriceListDetail>();
+        }
+
+        private void ACE_Discounts_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormCommonList<DcDiscount>>("", "DiscountId");
+        }
+
+        private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
         {
 
         }
@@ -726,48 +378,27 @@ namespace Foxoft
 
         private void ACE_RetailSaleOrder_Click(object sender, EventArgs e)
         {
-
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, (sender as AccordionControlElement).Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-
-            FormInvoice formInvoice = new("RSO", new byte[] { 1, 3 }, Guid.Empty);
-            formInvoice.MdiParent = this;
-            formInvoice.WindowState = FormWindowState.Maximized;
-            formInvoice.Show();
-            parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
+            ShowNewForm<FormInvoice>("RSO", new byte[] { 1, 3 }, Guid.Empty);
         }
 
         private void ACE_ProductFeatureTypes_Click(object sender, EventArgs e)
         {
-            FormProductFeatureTypes form = Application.OpenForms[nameof(FormProductFeatureTypes)] as FormProductFeatureTypes;
 
-            try
-            {
-                if (form == null)
-                {
-                    form = new();
-                    form.MdiParent = this;
-                    form.Show();
-                    form.WindowState = FormWindowState.Maximized;
-                    //parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0];
-                }
-                else
-                {
-                    if (form != null)
-                    {
-                        form.BringToFront();
-                        form.Activate();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{form.Text} açıla bilmir: \n" + ex);
-            }
+        }
+
+        private void BBI_Test_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void BBI_Session_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowExistForm<FormUser>();
+        }
+
+        private void ACE_HierarchyFeatureType_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormHierarchyFeatureType>();
         }
     }
 }

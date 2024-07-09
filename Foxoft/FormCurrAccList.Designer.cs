@@ -34,7 +34,7 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAccList));
             gC_CurrAccList = new DevExpress.XtraGrid.GridControl();
-            dcCurrAccsBindingSource = new System.Windows.Forms.BindingSource(components);
+            dcCurrAccsBindingSource = new BindingSource(components);
             gV_CurrAccList = new DevExpress.XtraGrid.Views.Grid.GridView();
             colCurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -89,12 +89,12 @@ namespace Foxoft
             // gC_CurrAccList
             // 
             gC_CurrAccList.DataSource = dcCurrAccsBindingSource;
-            gC_CurrAccList.Dock = System.Windows.Forms.DockStyle.Fill;
-            gC_CurrAccList.Location = new System.Drawing.Point(0, 158);
+            gC_CurrAccList.Dock = DockStyle.Fill;
+            gC_CurrAccList.Location = new Point(0, 158);
             gC_CurrAccList.MainView = gV_CurrAccList;
             gC_CurrAccList.Name = "gC_CurrAccList";
             gC_CurrAccList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemTextEdit1 });
-            gC_CurrAccList.Size = new System.Drawing.Size(858, 413);
+            gC_CurrAccList.Size = new Size(858, 413);
             gC_CurrAccList.TabIndex = 0;
             gC_CurrAccList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_CurrAccList });
             gC_CurrAccList.Paint += gC_CurrAccList_Paint;
@@ -104,7 +104,7 @@ namespace Foxoft
             // gV_CurrAccList
             // 
             gV_CurrAccList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCurrAccCode, colCurrAccDesc, colCurrAccTypeCode, colCompanyCode, colOfficeCode, colStoreCode, colFirstName, colLastName, colFatherName, colIdentityNum, colTaxNum, colDataLanguageCode, colCreditLimit, colIsVip, colCustomerTypeCode, colVendorTypeCode, colCustomerPosDiscountRate, colIsDisabled, colBonusCardNum, colAddress, colPhoneNum, colBirthDate, colBalance });
-            gV_CurrAccList.CustomizationFormBounds = new System.Drawing.Rectangle(760, 248, 264, 272);
+            gV_CurrAccList.CustomizationFormBounds = new Rectangle(760, 248, 264, 272);
             gV_CurrAccList.GridControl = gC_CurrAccList;
             gV_CurrAccList.Name = "gV_CurrAccList";
             gV_CurrAccList.OptionsBehavior.Editable = false;
@@ -255,13 +255,13 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_quit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, BSI_Report, barButtonItem3, barButtonItem4, BBI_test, BBI_query });
-            ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_quit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, BSI_Report, barButtonItem3, barButtonItem4, BBI_test, BBI_query });
+            ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 29;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.PageHeaderItemLinks.Add(bBI_quit);
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage3 });
-            ribbonControl1.Size = new System.Drawing.Size(858, 158);
+            ribbonControl1.Size = new Size(858, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             // 
             // bBI_CurrAccNew
@@ -367,7 +367,6 @@ namespace Foxoft
             // 
             ribbonPageGroup3.ItemLinks.Add(bBI_ExportXlsx);
             ribbonPageGroup3.ItemLinks.Add(BSI_Report);
-            ribbonPageGroup3.ItemLinks.Add(BBI_test);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = "Hesabat";
             // 
@@ -385,10 +384,10 @@ namespace Foxoft
             // 
             // ribbonStatusBar1
             // 
-            ribbonStatusBar1.Location = new System.Drawing.Point(0, 571);
+            ribbonStatusBar1.Location = new Point(0, 571);
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
-            ribbonStatusBar1.Size = new System.Drawing.Size(858, 24);
+            ribbonStatusBar1.Size = new Size(858, 24);
             // 
             // ribbonPage2
             // 
@@ -397,15 +396,15 @@ namespace Foxoft
             // 
             // FormCurrAccList
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(858, 595);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(858, 595);
             Controls.Add(gC_CurrAccList);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
             Name = "FormCurrAccList";
             Ribbon = ribbonControl1;
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
             Text = "Cari Hesablar";
             Activated += FormCurrAccList_Activated;

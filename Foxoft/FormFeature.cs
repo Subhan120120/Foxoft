@@ -1,6 +1,5 @@
 ﻿using DevExpress.Map.Kml.Model;
 using DevExpress.XtraEditors;
-using Foxoft.Migrations;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -80,7 +79,7 @@ namespace Foxoft
                     if (!efMethods.FeatureExist(DcFeature.FeatureCode, DcFeature.FeatureTypeId))
                         efMethods.InsertFeature(DcFeature);
                     else
-                        MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
+                        MessageBox.Show("Bu kodda özəllik artıq mövcuddur.");
                 else
                     dbContext.SaveChanges();
 

@@ -1,8 +1,12 @@
-﻿using DevExpress.XtraGrid.Views.Grid;
+﻿using DevExpress.CodeParser;
+using DevExpress.Xpo;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Foxoft
@@ -30,16 +34,45 @@ namespace Foxoft
         {
             if (efMethods.Login(user, password))
             {
+                List<TrSession> trSessions = efMethods.SelectSessions();
+
+                foreach (var session in trSessions)
+                {
+                    try
+                    {
+                        Process process = Process.GetProcessById(session.PID);
+
+                        if (process is not null && session.CurrAccCode == user)
+                        {
+                            XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
+                            return false;
+                        }
+                    }
+                    catch (ArgumentException)
+                    {
+                        efMethods.DeleteSession(session);
+                    }
+                }
+
+                TrSession trSession = new();
+                trSession.CurrAccCode = user;
+                trSession.PID = Process.GetCurrentProcess().Id;
+                trSession.CreatedDate = DateTime.Now;
+
+                efMethods.InsertTrSession(trSession);
+
                 Authorization.CurrAccCode = user;
                 Authorization.DcRoles = efMethods.SelectRoles(user);
                 Authorization.StoreCode = efMethods.SelectStoreCode(user);
                 Authorization.OfficeCode = efMethods.SelectOfficeCode(user);
-
-                return true;
             }
             else
+            {
+                XtraMessageBox.Show("İstifadəçi və ya şifrə yanlışdır");
                 return false;
-        }
+            }
 
+            return true;
+        }
     }
 }

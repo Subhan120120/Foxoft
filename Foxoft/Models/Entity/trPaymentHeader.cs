@@ -58,17 +58,17 @@ namespace Foxoft.Models
         [Display(Name = "Cari Hesab")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         [ForeignKey("DcCurrAcc")]
-        public string CurrAccCode { get; set; }
+        public string? CurrAccCode { get; set; }
 
         [ForeignKey("ToCashReg")]
         [Display(Name = "Kassaya")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string ToCashRegCode { get; set; }
+        public string? ToCashRegCode { get; set; }
 
         //[NotMapped]
         [Display(Name = "Kassadan")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string FromCashRegCode { get { return CurrAccCode; } set { CurrAccCode = value; } }
+        public string? FromCashRegCode { get { return CurrAccCode; } set { CurrAccCode = value; } }
 
         [Display(Name = "Açıqlama")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -80,7 +80,7 @@ namespace Foxoft.Models
 
         [DefaultValue("0")]
         [Display(Name = "Şirkət")]
-        public decimal CompanyCode { get; set; }
+        public string? CompanyCode { get; set; }
 
         [Display(Name = "Ofis")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]

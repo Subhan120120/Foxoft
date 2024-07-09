@@ -7,7 +7,7 @@ namespace Foxoft.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             var createProcSql = @"
-                CREATE function [dbo].[Slugify](@string varchar(4000))   
+                CREATE OR ALTER function [dbo].[Slugify](@string varchar(4000))   
                     RETURNS varchar(4000) AS BEGIN   
                     declare @out varchar(4000)  
                   

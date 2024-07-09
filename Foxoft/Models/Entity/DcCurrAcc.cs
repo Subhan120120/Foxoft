@@ -39,7 +39,7 @@ namespace Foxoft.Models
         public byte CurrAccTypeCode { get; set; }
 
         [Display(Name = "Şirkət")]
-        public byte CompanyCode { get; set; }
+        public string? CompanyCode { get; set; }
 
         [Display(Name = "Ofis")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
@@ -149,6 +149,7 @@ namespace Foxoft.Models
         public virtual DcCurrAccType DcCurrAccType { get; set; }
         [ForeignKey("CashRegPaymentTypeCode")]
         public virtual DcPaymentType DcPaymentType { get; set; }
+        public virtual TrSession TrSession { get; set; }
         public virtual ICollection<SettingStore> SettingStores { get; set; }
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }

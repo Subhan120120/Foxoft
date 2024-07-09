@@ -124,7 +124,7 @@
       <property name="MaxWidth">0</property>
     </property>
     <property name="Item17" isnull="true" iskey="true">
-      <property name="Name">colLastPurchasePrice</property>
+      <property name="Name">colProductCost</property>
       <property name="Width">87</property>
       <property name="MinWidth">20</property>
       <property name="MaxWidth">0</property>

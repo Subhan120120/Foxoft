@@ -6,7 +6,7 @@ namespace Foxoft.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var createProcSql = @"CREATE PROCEDURE [dbo].[GetNextDocNum] @DefisExist bit, @VariableCode nvarchar(5), @ColumnName nvarchar(30), @TableName nvarchar(30), @ReplicateNum int
+            var createProcSql = @"CREATE OR ALTER PROCEDURE [dbo].[GetNextDocNum] @DefisExist bit, @VariableCode nvarchar(5), @ColumnName nvarchar(30), @TableName nvarchar(30), @ReplicateNum int
 				AS
 				BEGIN
 				
@@ -37,6 +37,23 @@ namespace Foxoft.Migrations
 						EXEC sp_executesql @QryDocCount, N'@DocNum int OUTPUT', @DocCount OUTPUT
 				
 					END
+
+					DECLARE @IsIdentityColumn BIT =  (SELECT 
+														    CASE 
+														        WHEN c.is_identity = 1 THEN CAST(1 AS BIT)
+														        ELSE CAST(0 AS BIT)
+														    END AS IsIdentityColumn
+														FROM 
+														    sys.tables AS t
+														INNER JOIN 
+														    sys.columns AS c
+														    ON t.object_id = c.object_id
+														WHERE 
+														    t.name = @TableName
+														    AND c.name = @ColumnName)
+					IF(@IsIdentityColumn = 1)
+						set @NextDoc = 0;
+
 					SELECT @NextDoc AS Value
 					UPDATE DcVariables SET LastNumber = @LastNumber WHERE VariableCode = @VariableCode 
 				END";

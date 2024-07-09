@@ -10,7 +10,7 @@ using Foxoft.Models;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20211014013633_Add_procedures")]
+    [Migration("20341014013633_Add_procedures")]
     partial class Add_procedures_GetNextDocNum
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

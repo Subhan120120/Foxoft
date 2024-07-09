@@ -56,7 +56,6 @@ namespace Foxoft.AppCode
         {
             MemoryStream stream;
             LookAndFeelSettings settings;
-            BinaryFormatter formatter;
 
             settings = new LookAndFeelSettings();
             settings.SkinName = UserLookAndFeel.Default.SkinName;
@@ -66,9 +65,10 @@ namespace Foxoft.AppCode
 
             using (stream = new MemoryStream())
             {
+#pragma warning disable SYSLIB0011
+                BinaryFormatter formatter;
                 formatter = new BinaryFormatter();
                 //formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
-#pragma warning disable SYSLIB0011
                 formatter.Serialize(stream, settings);
 #pragma warning restore SYSLIB0011
 
@@ -90,9 +90,11 @@ namespace Foxoft.AppCode
                 {
                     byte[] byteArray = Convert.FromBase64String(dcCurrAcc.Theme);
                     MemoryStream stream = new(byteArray);
+#pragma warning disable SYSLIB0011
                     BinaryFormatter formatter = new();
                     //formatter.AssemblyFormat = FormatterAssemblyStyle.Simple;
                     LookAndFeelSettings settings = formatter.Deserialize(stream) as LookAndFeelSettings;
+#pragma warning restore SYSLIB0011
 
                     if (settings != null)
                     {

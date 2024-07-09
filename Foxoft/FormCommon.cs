@@ -9,7 +9,6 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
-using Foxoft.Migrations;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,6 +21,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -59,29 +59,18 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
-        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id)
+        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string[] specialColumnsHide = null)
             : this(processCode, isNew, fieldName_Id)
         {
             this.Value_Id = value_Id;
-        }
-
-        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string[] specialColumnsHide)
-            : this(processCode, isNew, fieldName_Id, value_Id)
-        {
             this.SpecialColumnsHide = specialColumnsHide;
         }
 
-        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string fieldName_2, string value_2)
-            : this(processCode, isNew, fieldName_Id, value_Id)
+        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string fieldName_2, string value_2, string[] specialColumnsHide = null)
+            : this(processCode, isNew, fieldName_Id, value_Id, specialColumnsHide)
         {
             this.FieldName_2 = fieldName_2;
             this.Value_2 = value_2;
-        }
-
-        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string fieldName_2, string value_2, string[] specialColumnsHide)
-            : this(processCode, isNew, fieldName_Id, value_Id, fieldName_2, value_2)
-        {
-            this.SpecialColumnsHide = specialColumnsHide;
         }
 
         private void FormCommon_Load(object sender, EventArgs e)
@@ -131,7 +120,7 @@ namespace Foxoft
                                 dataLayoutControl1.Remove(item);
                             else if (new string[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" }.Contains(itemFieldName))
                                 item.Visibility = LayoutVisibility.OnlyInCustomization;
-                            else if (SpecialColumnsHide.Contains(itemFieldName))
+                            else if (SpecialColumnsHide is not null && SpecialColumnsHide.Contains(itemFieldName))
                                 item.Visibility = LayoutVisibility.OnlyInCustomization;
                         }
 
@@ -199,14 +188,14 @@ namespace Foxoft
 
         private Func<T, bool> ConvertToPredicate(string propName, string value)
         {
-            var param = Expression.Parameter(typeof(T));
-            MemberExpression member = Expression.Property(param, propName);
-            var asString = this.GetType().GetMethod("AsString");
-            var stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
-            ConstantExpression constant = Expression.Constant(value);
-            var expression = Expression.Equal(stringMember, constant);
-            var lambda = Expression.Lambda(expression, param);
-            var predicate = (Func<T, bool>)lambda.Compile();
+            ParameterExpression? param = Expression.Parameter(typeof(T));
+            MemberExpression? member = Expression.Property(param, propName);
+            MethodInfo? asString = this.GetType().GetMethod("AsString");
+            MethodCallExpression? stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
+            ConstantExpression? constant = Expression.Constant(value);
+            BinaryExpression? expression = Expression.Equal(stringMember, constant);
+            LambdaExpression? lambda = Expression.Lambda(expression, param);
+            Func<T, bool> predicate = (Func<T, bool>)lambda.Compile();
             return predicate;
         }
 
@@ -214,7 +203,7 @@ namespace Foxoft
         {
             Entity = bindingSource1.AddNew() as T;
 
-            var tableName = dbContext.Model.FindEntityType(typeof(T)).GetTableName();
+            string tableName = dbContext.Model.FindEntityType(typeof(T)).GetTableName();
 
             string NewDocNum = efMethods.GetNextDocNum(false, ProcessCode, FieldName_Id, tableName, 4);
 
@@ -248,7 +237,7 @@ namespace Foxoft
                         dbContext.SaveChanges();
                     }
                     else
-                        MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
+                        MessageBox.Show("Bu kodda məlumat artıq mövcuddur.");
                 else
                     dbContext.SaveChanges();
 
@@ -267,6 +256,8 @@ namespace Foxoft
             else if (e.FieldName == "DiscountId") e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == "ReportId") e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == "FormCode") e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == "HierarchyCode") e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == "FeatureTypeId") e.EditorType = typeof(ButtonEdit);
 
             e.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             e.Handled = true;
@@ -274,25 +265,35 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieved(object sender, FieldRetrievedEventArgs e)
         {
-            if (e.FieldName == "ProductCode")
+            if (e.FieldName == "ProductCode") // add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ProductCode_ButtonPressed);
             }
-            if (e.FieldName == "DiscountId")
+            if (e.FieldName == "DiscountId")// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_DiscountId_ButtonPressed);
             }
-            if (e.FieldName == "FormCode")
+            if (e.FieldName == "FormCode")// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FormCode_ButtonPressed);
             }
-            if (e.FieldName == "ReportId")
+            if (e.FieldName == "ReportId")// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ReportId_ButtonPressed);
+            }
+            if (e.FieldName == "HierarchyCode")// add FieldRetrieving too
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_HierarchyCode_ButtonPressed);
+            }
+            if (e.FieldName == "FeatureTypeId")// add FieldRetrieving too
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FeatureTypeId_ButtonPressed);
             }
         }
 
@@ -337,7 +338,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string value = editor.EditValue?.ToString();
 
-            using FormCommonList<DcReport> form = new("", "ReportId", value);
+            using FormCommonList<DcReport> form = new("", "ReportId", value, new string[] { "ReportQuery", "ReportTypeId", "ReportLayout", "ReportFilter" });
 
             try
             {
@@ -356,6 +357,42 @@ namespace Foxoft
             string value = editor.EditValue?.ToString();
 
             using FormCommonList<DcForm> form = new("", "FormCode", value);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.Value_Id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_HierarchyCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string value = editor.EditValue?.ToString();
+
+            using FormCommonList<DcHierarchy> form = new("", "HierarchyCode", value);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.Value_Id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_FeatureTypeId_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string value = editor.EditValue?.ToString();
+
+            using FormCommonList<DcFeatureType> form = new("", "FeatureTypeId", value);
 
             try
             {

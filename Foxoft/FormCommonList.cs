@@ -36,6 +36,7 @@ namespace Foxoft
         public string Value_Id;
         public string Value_2;
         string ProcessCode;
+        string[] SpecialColumnsHide;
         GridColumn Col_Id = new();
         GridColumn Col_2 = new();
 
@@ -58,14 +59,15 @@ namespace Foxoft
             this.ProcessCode = processCode;
         }
 
-        public FormCommonList(string processCode, string fieldName_Id, string value_Id)
+        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string[] specialColumnsHide = null)
             : this(processCode, fieldName_Id)
         {
             this.Value_Id = value_Id;
+            this.SpecialColumnsHide = specialColumnsHide;
         }
 
-        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string fieldName_2, string value_2) // 2 eded deyisen olanlar ucun
-            : this(processCode, fieldName_Id, value_Id)
+        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string fieldName_2, string value_2, string[] specialColumnsHide = null) // 2 eded deyisen olanlar ucun
+            : this(processCode, fieldName_Id, value_Id, specialColumnsHide)
         {
             this.Col_2.FieldName = fieldName_2;
             this.Value_2 = value_2;
@@ -137,12 +139,16 @@ namespace Foxoft
             gridView1.BestFitColumns();
         }
 
-        private static void InvisibleSomeColumns(GridColumn column)
+        private void InvisibleSomeColumns(GridColumn column)
         {
             string[] hiddenColumns = new[] { "CreatedUserName", "CreatedDate", "LastUpdatedUserName", "LastUpdatedDate" };
 
             if (hiddenColumns.Contains(column.FieldName))
                 column.Visible = false;
+
+            if (SpecialColumnsHide is not null)
+                if (SpecialColumnsHide.Contains(column.FieldName))
+                    column.Visible = false;
         }
 
         private void AddUnboundColumns(GridColumn column)

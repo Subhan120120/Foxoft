@@ -42,7 +42,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Əməliyat")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string VariableOperator { get; set; }
+        public string? VariableOperator { get; set; }
 
         [Display(Name = "Dəyər Tipi")]
         [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]

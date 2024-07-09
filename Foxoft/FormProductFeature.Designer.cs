@@ -43,14 +43,14 @@ namespace Foxoft
             // layoutControl1
             // 
             layoutControl1.AutoSize = true;
-            layoutControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowOnly;
+            layoutControl1.AutoSizeMode = AutoSizeMode.GrowOnly;
             layoutControl1.Controls.Add(simpleButtonOk);
-            layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            layoutControl1.Location = new System.Drawing.Point(0, 0);
+            layoutControl1.Dock = DockStyle.Fill;
+            layoutControl1.Location = new Point(0, 0);
             layoutControl1.Name = "layoutControl1";
-            layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(450, 54, 399, 400);
+            layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(450, 54, 399, 400);
             layoutControl1.Root = Root;
-            layoutControl1.Size = new System.Drawing.Size(298, 136);
+            layoutControl1.Size = new Size(298, 136);
             layoutControl1.TabIndex = 0;
             layoutControl1.Text = "layoutControl1";
             // 
@@ -58,9 +58,9 @@ namespace Foxoft
             // 
             simpleButtonOk.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             simpleButtonOk.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("simpleButtonOk.ImageOptions.SvgImage");
-            simpleButtonOk.Location = new System.Drawing.Point(12, 12);
+            simpleButtonOk.Location = new Point(12, 12);
             simpleButtonOk.Name = "simpleButtonOk";
-            simpleButtonOk.Size = new System.Drawing.Size(274, 36);
+            simpleButtonOk.Size = new Size(274, 36);
             simpleButtonOk.StyleController = layoutControl1;
             simpleButtonOk.TabIndex = 4;
             simpleButtonOk.Click += simpleButtonOk_Click;
@@ -71,28 +71,28 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
             Root.Name = "Root";
-            Root.Size = new System.Drawing.Size(298, 136);
+            Root.Size = new Size(298, 136);
             Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = simpleButtonOk;
-            layoutControlItem1.Location = new System.Drawing.Point(0, 0);
+            layoutControlItem1.Location = new Point(0, 0);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new System.Drawing.Size(278, 116);
-            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem1.Size = new Size(278, 116);
+            layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
             // FormProductFeature
             // 
             AcceptButton = simpleButtonOk;
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new System.Drawing.Size(298, 136);
+            ClientSize = new Size(298, 136);
             Controls.Add(layoutControl1);
             Name = "FormProductFeature";
-            Text = "FormFeatureTest";
+            Text = "Məhsul Özəllikləri";
             Load += FormFeatureTest_Load;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);

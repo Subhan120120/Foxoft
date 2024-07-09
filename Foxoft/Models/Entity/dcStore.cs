@@ -24,7 +24,7 @@ namespace Foxoft.Models
 
         [DisplayName("Şirkət")]
         [Column(TypeName = "numeric(4, 0)")]
-        public decimal CompanyCode { get; set; }
+        public string? CompanyCode { get; set; }
 
         [DisplayName("Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }

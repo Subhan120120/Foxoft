@@ -14,7 +14,6 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -497,17 +496,17 @@ namespace Foxoft
                 //    MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
-                MetaWhatsapp meta = new();
-                var metaResponce = meta.SendWhatsapp(phoneNum, CopyText2);
+                //MetaWhatsapp meta = new();
+                //var metaResponce = meta.SendWhatsapp(phoneNum, CopyText2);
 
-                if (metaResponce.error is not null)
-                    MessageBox.Show(metaResponce.error.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                else //(!string.IsNullOrEmpty(metaResponce.messages.FirstOrDefault().id))
-                {
-                    efMethods.UpdatePaymentIsSent(trPaymentHeader.PaymentHeaderId);
-                    checkEdit_IsSent.EditValue = true;
-                    MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                //if (metaResponce.error is not null)
+                //    MessageBox.Show(metaResponce.error.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //else //(!string.IsNullOrEmpty(metaResponce.messages.FirstOrDefault().id))
+                //{
+                //    efMethods.UpdatePaymentIsSent(trPaymentHeader.PaymentHeaderId);
+                //    checkEdit_IsSent.EditValue = true;
+                //    MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
 
 
             }

@@ -8,203 +8,179 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Foxoft.Properties
-{
-
-
+namespace Foxoft.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
-    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
             }
         }
-
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Foxoft;Persist Security Info=True;User ID=sa;Password=sql123_")]
-        public string subConnString
-        {
-            get
-            {
-                return ((string)(this["subConnString"]));
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LoginName {
+            get {
+                return ((string)(this["LoginName"]));
             }
-            set
-            {
-                this["subConnString"] = value;
+            set {
+                this["LoginName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LoginPassword {
+            get {
+                return ((string)(this["LoginPassword"]));
+            }
+            set {
+                this["LoginPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LoginChecked {
+            get {
+                return ((bool)(this["LoginChecked"]));
+            }
+            set {
+                this["LoginChecked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GridViewLayout {
+            get {
+                return ((string)(this["GridViewLayout"]));
+            }
+            set {
+                this["GridViewLayout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::Foxoft.Models.AppSetting AppSetting {
+            get {
+                return ((global::Foxoft.Models.AppSetting)(this["AppSetting"]));
+            }
+            set {
+                this["AppSetting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OfficeCode {
+            get {
+                return ((string)(this["OfficeCode"]));
+            }
+            set {
+                this["OfficeCode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string StoreCode {
+            get {
+                return ((string)(this["StoreCode"]));
+            }
+            set {
+                this["StoreCode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WarehouseCode {
+            get {
+                return ((string)(this["WarehouseCode"]));
+            }
+            set {
+                this["WarehouseCode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpenDocNum {
+            get {
+                return ((string)(this["OpenDocNum"]));
+            }
+            set {
+                this["OpenDocNum"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TerminalId {
+            get {
+                return ((int)(this["TerminalId"]));
+            }
+            set {
+                this["TerminalId"] = value;
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Main;Persist Security Info=True;User ID=sa;Password=sql123_")]
-        public string mainConnString
-        {
-            get
-            {
-                return ((string)(this["mainConnString"]));
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Main;Persist Security Info=True;TrustServerC" +
+            "ertificate=True;User ID=sa;Password=sql123_")]
+        public string MainConnString {
+            get {
+                return ((string)(this["MainConnString"]));
             }
             set
             {
-                this["mainConnString"] = value;
+                this["MainConnString"] = value;
             }
         }
-
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServe" +
+            "rCertificate=True;User ID=sa;Password=sql123_")]
+        public string SubConnString {
+            get {
+                return ((string)(this["SubConnString"]));
+            }
+            set
+            {
+                this["SubConnString"] = value;
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LoginName
-        {
-            get
-            {
-                return ((string)(this["LoginName"]));
+        public string CompanyCode {
+            get {
+                return ((string)(this["CompanyCode"]));
             }
-            set
-            {
-                this["LoginName"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LoginPassword
-        {
-            get
-            {
-                return ((string)(this["LoginPassword"]));
-            }
-            set
-            {
-                this["LoginPassword"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool LoginChecked
-        {
-            get
-            {
-                return ((bool)(this["LoginChecked"]));
-            }
-            set
-            {
-                this["LoginChecked"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GridViewLayout
-        {
-            get
-            {
-                return ((string)(this["GridViewLayout"]));
-            }
-            set
-            {
-                this["GridViewLayout"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::Foxoft.Models.AppSetting AppSetting
-        {
-            get
-            {
-                return ((global::Foxoft.Models.AppSetting)(this["AppSetting"]));
-            }
-            set
-            {
-                this["AppSetting"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string OfficeCode
-        {
-            get
-            {
-                return ((string)(this["OfficeCode"]));
-            }
-            set
-            {
-                this["OfficeCode"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string StoreCode
-        {
-            get
-            {
-                return ((string)(this["StoreCode"]));
-            }
-            set
-            {
-                this["StoreCode"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string WarehouseCode
-        {
-            get
-            {
-                return ((string)(this["WarehouseCode"]));
-            }
-            set
-            {
-                this["WarehouseCode"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string OpenDocNum
-        {
-            get
-            {
-                return ((string)(this["OpenDocNum"]));
-            }
-            set
-            {
-                this["OpenDocNum"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TerminalId
-        {
-            get
-            {
-                return ((int)(this["TerminalId"]));
-            }
-            set
-            {
-                this["TerminalId"] = value;
+            set {
+                this["CompanyCode"] = value;
             }
         }
     }

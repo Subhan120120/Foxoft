@@ -1,9 +1,9 @@
 ﻿
 
 
-SELECT Maya = (-1)*(case when Dvijok.ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ISNULL(ISNULL(NULLIF(SonQiymet, 0), LastPurchasePrice),0) else 0 end)
-, Menfeet = (-1)*(case when ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), LastPurchasePrice),0)) else 0 end)
-, [Net Menfeet] = (-1)*(case when ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), LastPurchasePrice),0)) else 0 end) - Xərc
+SELECT Maya = (-1)*(case when Dvijok.ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0) else 0 end)
+, Menfeet = (-1)*(case when ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end)
+, [Net Menfeet] = (-1)*(case when ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end) - Xərc
 , *
 FROM (
 select  InvoiceLineId
@@ -21,7 +21,7 @@ select  InvoiceLineId
 , Satis = (-1)*(case when TrInvoiceHeaders.ProcessCode = 'RS' then (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100)) else 0 end)
 , Artirma = case when TrInvoiceHeaders.ProcessCode = 'CI' then NetAmountLoc else 0 end
 , Silinme = case when TrInvoiceHeaders.ProcessCode = 'CO' then NetAmountLoc else 0 end
-, LastPurchasePrice
+, ProductCost
 , SonQiymet = (select top 1 toplam = il.PriceLoc * (1 - (il.PosDiscount / 100))  
 					from TrInvoiceLines il
 					join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId
@@ -40,7 +40,7 @@ select  InvoiceLineId
 , TrInvoiceHeaders.ProcessCode
 , ProcessDesc
 , InvoiceNumber = DocumentNumber
-, Faiz =Round( ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - LastPurchasePrice)  / NULLIF(LastPurchasePrice,0) * 100,2)
+, Faiz =Round( ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)  / NULLIF(ProductCost,0) * 100,2)
 , DocumentDate
 , DocumentTime
 , OperationDate
@@ -59,7 +59,6 @@ select  InvoiceLineId
 , IsCompleted
 , IsSalesViaInternet
 , IsLocked
-, Barcode
 , DcProducts.ProductTypeCode
 , ProductTypeDesc
 , UsePos

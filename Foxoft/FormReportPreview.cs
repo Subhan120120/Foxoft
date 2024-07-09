@@ -9,7 +9,6 @@ using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
-using Foxoft.Migrations;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
@@ -73,12 +72,15 @@ namespace Foxoft
             }
 
             ReportClass reportClass = new();
-            XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
 
-            xReport = xtraReport;
-            documentViewer1.DocumentSource = xtraReport;
-            xReport.CreateDocument();
-            Show();
+            xReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
+
+            if (xReport is not null)
+            {
+                documentViewer1.DocumentSource = xReport;
+                xReport.CreateDocument();
+                Show();
+            }
         }
 
         private BarButtonItem CreateItem()

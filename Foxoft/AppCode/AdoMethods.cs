@@ -1,5 +1,4 @@
 ﻿using DevExpress.XtraEditors;
-using Foxoft.Properties;
 using System;
 using System.Configuration;
 using System.Data;
@@ -13,7 +12,7 @@ namespace Foxoft
     public class AdoMethods
     {
 
-        private string subConnString = Settings.Default.subConnString;
+        private string subConnString = Properties.Settings.Default.SubConnString;
 
 
         private SqlParameter[] paramArray = Array.Empty<SqlParameter>();
@@ -61,22 +60,6 @@ namespace Foxoft
             ReflectionExt.SetCaptionName(dt);
 
             return dt;
-            #region SqlDataAdapter
-
-            //using (SqlDataAdapter da = new SqlDataAdapter(query, con))
-            //{
-            //   DataTable dt = new DataTable();
-            //   try
-            //   {
-            //      da.Fill(dt);
-            //   }
-            //   catch (Exception ex)
-            //   {
-            //      MessageBox.Show($"Databaza Hal Hazırda məşğuldur \n {ex}");
-            //   }
-            //   return dt;
-            //} 
-            #endregion
         }
 
         public DataTable SqlGetDt(string query, SqlParameter[] sqlParameters)

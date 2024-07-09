@@ -38,7 +38,7 @@ namespace Foxoft
         {
             InitializeComponent();
             colProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
-            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
+            colProductCost.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductCost);
 
             //StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
@@ -373,7 +373,7 @@ namespace Foxoft
                 e.Value = dcProduct?.ProductDesc;
             }
 
-            if (e.Column.FieldName == "DcProduct.LastPurchasePrice" && e.IsGetData)
+            if (e.Column.FieldName == "DcProduct.ProductCost" && e.IsGetData)
             {
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
@@ -381,7 +381,7 @@ namespace Foxoft
 
                 DcProduct dcProduct = efMethods.SelectProduct(productCode);
 
-                e.Value = dcProduct?.LastPurchasePrice;
+                e.Value = dcProduct?.ProductCost;
             }
         }
 

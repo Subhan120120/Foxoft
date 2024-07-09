@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Foxoft.AppCode;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
 using System.IO;
 using Foxoft.Models.Entity;
+using Foxoft.AppCode;
+using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using DevExpress.XtraReports.Templates;
+using System.Reflection.Emit;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -24,15 +28,18 @@ namespace Foxoft.Models
 
         public DbSet<DcClaim> DcClaims { get; set; }
         public DbSet<dcClaimType> DcClaimTypes { get; set; }
+        public DbSet<TrClaimReport> TrClaimReports { get; set; }
         public DbSet<DcCurrAcc> DcCurrAccs { get; set; }
         public DbSet<DcCurrAccType> DcCurrAccTypes { get; set; }
         public DbSet<DcOffice> DcOffices { get; set; }
         public DbSet<DcPaymentType> DcPaymentTypes { get; set; }
         public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
+        //public DbSet<TrInvoiceHeaderDeleted> TrInvoiceHeaderDeleteds { get; set; }
         public DbSet<DcProcess> DcProcesses { get; set; }
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<SiteProduct> SiteProducts { get; set; }
         public DbSet<TrProductBarcode> TrProductBarcodes { get; set; }
+        public DbSet<DcBarcodeType> DcBarcodeTypes { get; set; }
         public DbSet<DcDiscount> DcDiscounts { get; set; }
         public DbSet<TrProductDiscount> TrProductDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
@@ -40,15 +47,15 @@ namespace Foxoft.Models
         public DbSet<DcForm> DcForms { get; set; }
         public DbSet<TrFormReport> TrFormReports { get; set; }
         public DbSet<DcTerminal> DcTerminals { get; set; }
+        public DbSet<TrSession> TrSessions { get; set; }
         public DbSet<DcWarehouse> DcWarehouses { get; set; }
         public DbSet<MigrationHistory> MigrationHistory { get; set; }
         public DbSet<TrCurrAccRole> TrCurrAccRoles { get; set; }
-        public DbSet<Sysdiagrams> Sysdiagrams { get; set; }
         public DbSet<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public DbSet<TrInvoiceLine> TrInvoiceLines { get; set; }
         public DbSet<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public DbSet<TrPaymentLine> TrPaymentLines { get; set; }
-        public DbSet<trInvoiceLineExt> TrInvoiceLineExt { get; set; }
+        public DbSet<trInvoiceLineExt> TrInvoiceLineExts { get; set; }
         public DbSet<TrRoleClaim> TrRoleClaims { get; set; }
         public DbSet<DcReport> DcReports { get; set; }
         public DbSet<DcReportType> DcReportTypes { get; set; }
@@ -79,9 +86,12 @@ namespace Foxoft.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.EnableDetailedErrors();
+            optionsBuilder.EnableSensitiveDataLogging();
+
             if (!optionsBuilder.IsConfigured)
             {
-                string subConnString = Properties.Settings.Default.subConnString;
+                string subConnString = Properties.Settings.Default.SubConnString;
                 //string conf = config
                 //                    .ConnectionStrings
                 //                    .ConnectionStrings["subConnString"]
@@ -110,6 +120,9 @@ namespace Foxoft.Models
 
             InitializeDeleteBehaviour(modelBuilder);
 
+            modelBuilder.HasDbFunction(typeof(SqlFunctions).GetMethod(nameof(SqlFunctions.GetProductCost)))
+                        .HasName("GetProductCost"); // function
+
             modelBuilder.Entity<RetailSale>() //view
                         .ToView(nameof(RetailSale));
 
@@ -117,21 +130,27 @@ namespace Foxoft.Models
                         .HasNoKey()
                         .ToView(nameof(GetNextDocNum));
 
-            modelBuilder.Entity<SlugifyResult>()
+            modelBuilder.Entity<SlugifyResult>() // function
                         .HasNoKey()
-                        .ToView(nameof(SlugifyResult)); // function
+                        .ToView(nameof(SlugifyResult));
 
             // more foreign key same table configure
             modelBuilder.Entity<TrPaymentHeader>(e =>
             {
                 e.HasOne(field => field.DcStore)
                  .WithMany(fk => fk.DcStoreTrPaymentHeaders)
-                 .HasForeignKey(fk => fk.StoreCode);
+                 .HasForeignKey(fk => fk.StoreCode)
+                 .OnDelete(DeleteBehavior.Restrict);
 
                 e.HasOne(field => field.ToCashReg)
                  .WithMany(fk => fk.ToCashRegTrPaymentHeaders)
-                 .HasForeignKey(fk => fk.ToCashRegCode);
+                 .HasForeignKey(fk => fk.ToCashRegCode)
+                 .OnDelete(DeleteBehavior.Restrict);
             });
+
+            //EntityTypeBuilder deleted = modelBuilder.Entity<TrInvoiceHeaderDeleted>()
+            //    .ToTable("TrInvoiceHeaderDeleteds")
+            //    .HasBaseType<TrInvoiceHeader>();
 
             modelBuilder.Entity<DcFeature>()
                         .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
@@ -169,15 +188,25 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
             {
+                entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta verir 
+
                 entity.Property(e => e.InvoiceHeaderId)
                       .ValueGeneratedNever();
             });
 
             modelBuilder.Entity<TrInvoiceLine>(entity =>
             {
+                entity.ToTable(tb => tb.HasTrigger("CalcPaymenLineExt"));
+
+                entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta verir 
+
                 entity.Property(e => e.InvoiceLineId)
                       .ValueGeneratedNever();
             });
+
+            //modelBuilder.Entity<TrInvoiceLine>()
+            //.Property(a => a.ProductCost)
+            //.HasComputedColumnSql("[dbo].[GetProductCost]([ProductCode])");
 
             modelBuilder.Entity<MigrationHistory>(entity =>
             {
@@ -200,31 +229,6 @@ namespace Foxoft.Models
                       .HasMaxLength(32);
             });
 
-            modelBuilder.Entity<Sysdiagrams>(entity =>
-            {
-                entity.HasKey(e => e.DiagramId)
-                      .HasName("PK_dbo.sysdiagrams");
-
-                entity.ToTable("sysdiagrams");
-
-                entity.Property(e => e.DiagramId)
-                      .HasColumnName("diagram_id");
-
-                entity.Property(e => e.Definition)
-                      .HasColumnName("definition");
-
-                entity.Property(e => e.Name)
-                      .IsRequired()
-                      .HasColumnName("name")
-                      .HasMaxLength(128);
-
-                entity.Property(e => e.PrincipalId)
-                      .HasColumnName("principal_id");
-
-                entity.Property(e => e.Version)
-                      .HasColumnName("version");
-            });
-
             OnModelCreatingPartial(modelBuilder);
         }
 
@@ -234,12 +238,6 @@ namespace Foxoft.Models
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
 
-            modelBuilder.Entity<TrInvoiceLine>(entity =>
-            {
-                entity.HasOne(x => x.TrInvoiceHeader)
-                   .WithMany(x => x.TrInvoiceLines)
-                   .OnDelete(DeleteBehavior.Cascade);
-            });
 
             modelBuilder.Entity<TrProductFeature>(entity =>
             {
@@ -267,6 +265,13 @@ namespace Foxoft.Models
                 entity.HasOne(x => x.DcProduct)
                     .WithOne(x => x.SiteProduct)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrInvoiceLine>(entity =>
+            {
+                entity.HasOne(x => x.TrInvoiceHeader)
+                   .WithMany(x => x.TrInvoiceLines)
+                   .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<trInvoiceLineExt>(entity =>
@@ -335,7 +340,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ButunHesabatlar", ClaimDesc = "Butun Hesabatlar", ClaimTypeId = 2 },
                 new DcClaim { ClaimCode = "CashRegs", ClaimDesc = "Kassalar", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CashTransfer", ClaimDesc = "Pul Transferi", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "Column_LastPurchasePrice", ClaimDesc = "Son Alış Qiyməti", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "Column_ProductCost", ClaimDesc = "Son Alış Qiyməti", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CountIn", ClaimDesc = "Sayım Artırma", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CountOut", ClaimDesc = "Sayım Azaltma", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CurrAccs", ClaimDesc = "Cari Hesablar", ClaimTypeId = 1 },
@@ -346,11 +351,16 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "Products", ClaimDesc = "Məhsullar", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "PurchaseIsReturn", ClaimDesc = "Alışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "ReportZet", ClaimDesc = "Gün Sonu Hesabatı", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailPurchaseInvoice", ClaimDesc = "Alış Fakturası", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailSaleInvoice", ClaimDesc = "Satış Fakturası", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "SaleIsReturn", ClaimDesc = "Satışın Qaytarılması", ClaimTypeId = 1 }
+                new DcClaim { ClaimCode = "WholesaleInvoice", ClaimDesc = "Topdan Satışın Qaytarılması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "RetailPurchaseReturn", ClaimDesc = "Alışın Qaytarılması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "RetailSaleReturn", ClaimDesc = "Satışın Qaytarılması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "WholesaleReturn", ClaimDesc = "Topdan Satışın Qaytarılması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəlliyi", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "HierarchyFeatureType", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "Session", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 }
                 );
 
             modelBuilder.Entity<dcClaimType>().HasData(
@@ -381,7 +391,7 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 1, RoleCode = "Admin", ClaimCode = "ButunHesabatlar" },
                 new TrRoleClaim { RoleClaimId = 2, RoleCode = "Admin", ClaimCode = "CashRegs" },
                 new TrRoleClaim { RoleClaimId = 3, RoleCode = "Admin", ClaimCode = "CashTransfer" },
-                new TrRoleClaim { RoleClaimId = 4, RoleCode = "Admin", ClaimCode = "Column_LastPurchasePrice" },
+                new TrRoleClaim { RoleClaimId = 4, RoleCode = "Admin", ClaimCode = "Column_ProductCost" },
                 new TrRoleClaim { RoleClaimId = 5, RoleCode = "Admin", ClaimCode = "CountIn" },
                 new TrRoleClaim { RoleClaimId = 6, RoleCode = "Admin", ClaimCode = "CountOut" },
                 new TrRoleClaim { RoleClaimId = 7, RoleCode = "Admin", ClaimCode = "CurrAccs" },
@@ -392,11 +402,16 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 12, RoleCode = "Admin", ClaimCode = "PosDiscount" },
                 new TrRoleClaim { RoleClaimId = 13, RoleCode = "Admin", ClaimCode = "PriceList" },
                 new TrRoleClaim { RoleClaimId = 14, RoleCode = "Admin", ClaimCode = "Products" },
-                new TrRoleClaim { RoleClaimId = 15, RoleCode = "Admin", ClaimCode = "PurchaseIsReturn" },
-                new TrRoleClaim { RoleClaimId = 16, RoleCode = "Admin", ClaimCode = "ReportZet" },
-                new TrRoleClaim { RoleClaimId = 17, RoleCode = "Admin", ClaimCode = "RetailPurchaseInvoice" },
-                new TrRoleClaim { RoleClaimId = 18, RoleCode = "Admin", ClaimCode = "RetailSaleInvoice" },
-                new TrRoleClaim { RoleClaimId = 19, RoleCode = "Admin", ClaimCode = "SaleIsReturn" }
+                new TrRoleClaim { RoleClaimId = 15, RoleCode = "Admin", ClaimCode = "ReportZet" },
+                new TrRoleClaim { RoleClaimId = 16, RoleCode = "Admin", ClaimCode = "RetailPurchaseInvoice" },
+                new TrRoleClaim { RoleClaimId = 17, RoleCode = "Admin", ClaimCode = "RetailSaleInvoice" },
+                new TrRoleClaim { RoleClaimId = 18, RoleCode = "Admin", ClaimCode = "WholesaleInvoice" },
+                new TrRoleClaim { RoleClaimId = 19, RoleCode = "Admin", ClaimCode = "RetailPurchaseReturn" },
+                new TrRoleClaim { RoleClaimId = 20, RoleCode = "Admin", ClaimCode = "RetailSaleReturn" },
+                new TrRoleClaim { RoleClaimId = 21, RoleCode = "Admin", ClaimCode = "WholeSaleReturn" },
+                new TrRoleClaim { RoleClaimId = 22, RoleCode = "Admin", ClaimCode = "ProductFeatureType" },
+                new TrRoleClaim { RoleClaimId = 23, RoleCode = "Admin", ClaimCode = "HierarchyFeatureType" },
+                new TrRoleClaim { RoleClaimId = 24, RoleCode = "Admin", ClaimCode = "Session" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -418,6 +433,11 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcReportVariableType>().HasData(
                 new DcReportVariableType { VariableTypeId = 1, VariableTypeDesc = "Parameter" },
                 new DcReportVariableType { VariableTypeId = 2, VariableTypeDesc = "Filter" }
+               );
+
+            modelBuilder.Entity<DcReportVariable>().HasData(
+                new DcReportVariable { VariableId = 1, ReportId = 13, VariableTypeId = 2, VariableProperty = "CurrAccCode", Representative = "{CurrAccCode}", VariableValue = "c-0000001", VariableOperator = "=", VariableValueType = "System.String" },
+                new DcReportVariable { VariableId = 2, ReportId = 17, VariableTypeId = 2, VariableProperty = "DocumentDate", Representative = "{StartDate}", VariableValue = "08.01.2030", VariableOperator = "<=", VariableValueType = "System.DateTime" }
                );
 
             CustomMethods cM = new();
@@ -500,6 +520,10 @@ namespace Foxoft.Models
                 new DcReportType { ReportTypeId = 0, ReportTypeDesc = "Embedded" },
                 new DcReportType { ReportTypeId = 1, ReportTypeDesc = "Grid" },
                 new DcReportType { ReportTypeId = 2, ReportTypeDesc = "Detail" }
+                );
+
+            modelBuilder.Entity<DcPriceType>().HasData(
+                new DcPriceType { PriceTypeCode = "STD", PriceTypeDesc = "Standart" }
                 );
 
             CustomMethods customMethods = new();

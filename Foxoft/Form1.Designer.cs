@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new System.Windows.Forms.TextBox();
-            button1 = new System.Windows.Forms.Button();
+            textBox1 = new TextBox();
+            button1 = new Button();
             SuspendLayout();
             // 
             // textBox1
             // 
-            textBox1.Location = new System.Drawing.Point(70, 85);
+            textBox1.Location = new Point(34, 49);
             textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(100, 23);
+            textBox1.Size = new Size(192, 20);
             textBox1.TabIndex = 0;
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(267, 85);
+            button1.Location = new Point(34, 75);
             button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(75, 23);
+            button1.Size = new Size(192, 27);
             button1.TabIndex = 1;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
@@ -51,15 +51,15 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(686, 390);
             Controls.Add(button1);
             Controls.Add(textBox1);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpo;
+using DevExpress.XtraLayout.Customization;
 using LinqTest;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,10 @@ namespace Foxoft
         private void button1_Click_1(object sender, EventArgs e)
         {
             textBox1.Text = GetLogonSid.getLogonSid();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
         }
     }
 

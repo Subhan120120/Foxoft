@@ -8,7 +8,7 @@ namespace Foxoft.Models
         public DcBarcodeType()
         {
             TrProductBarcodes = new HashSet<TrProductBarcode>();
-    }
+        }
 
         [Key]
         [Display(Name = "Barkod Tipi Kodu")]

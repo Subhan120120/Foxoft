@@ -148,7 +148,7 @@ namespace Foxoft
         {
             IList list = ((IListSource)excelDataSource).GetList();
             DevExpress.DataAccess.Native.Excel.DataView dataView = (DevExpress.DataAccess.Native.Excel.DataView)list;
-            System.Collections.Generic.List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
+            List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
 
             DataTable table = new();
             for (int i = 0; i < props.Count; i++)

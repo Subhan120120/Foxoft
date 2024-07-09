@@ -4,7 +4,7 @@ select DcProducts.ProductCode
 	, DcProducts.ProductDesc
 	, TrInvoiceHeaders.WarehouseCode
 	, Balance = sum(QtyIn - QtyOut)
-	, LastPurchasePrice = (select top 1 PriceLoc * (100 - PosDiscount)/100
+	, ProductCost = (select top 1 PriceLoc * (100 - PosDiscount)/100
 					from TrInvoiceLines 
 					left join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId
 					where TrInvoiceLines.ProductCode = DcProducts.ProductCode

@@ -44,6 +44,10 @@ namespace Foxoft.Models
         [Display(Name = "Qiymət Cədvəli İstifadə Et")]
         public bool UsePriceList { get; set; }
 
+        [DefaultValue("0")]
+        [Display(Name = "Avtomatik Yadda Saxla")]
+        public bool AutoSave { get; set; }
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }

@@ -79,6 +79,8 @@ namespace Foxoft
                 txt_CurrAccDesc.Text = invoiceHeader.DcCurrAcc.CurrAccDesc;
 
             CalcPaidAmount();
+
+            Tag = invoiceHeader.DocumentNumber;
         }
         private void CalcPaidAmount()
         {

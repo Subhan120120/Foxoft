@@ -250,12 +250,27 @@ namespace Foxoft
 
         private void SavePayment(bool autoPayment)
         {
-            if (trPaymentLineCashless.PaymentLoc > 0) // lUE_PaymentMethod Validation
+            if (trPaymentLineCash.PaymentLoc > 0 && lUE_cashCurrency.EditValue == null)
+            {
+                dxErrorProvider1.SetError(lUE_cashCurrency, "Boş buraxıla bilməz!");
+                return;
+            }
+
+            if (trPaymentLineCashless.PaymentLoc > 0)// lUE_PaymentMethod Validation
+            {
                 if (lUE_PaymentMethod.EditValue == null)
                 {
-                    dxErrorProvider1.SetError(this.lUE_PaymentMethod, "Boş buraxıla bilməz!");
+                    dxErrorProvider1.SetError(lUE_PaymentMethod, "Boş buraxıla bilməz!");
                     return;
                 }
+                
+                if (lUE_CashlessCurrency.EditValue == null)
+                {
+                    dxErrorProvider1.SetError(lUE_CashlessCurrency, "Boş buraxıla bilməz!");
+                    return;
+                }
+            }
+
 
             if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
@@ -283,6 +298,7 @@ namespace Foxoft
                 }
                 else
                 {
+
                     efMethods.InsertPaymentHeader(trPaymentHeader);
 
                     if (trPaymentLineCash.PaymentLoc > 0)

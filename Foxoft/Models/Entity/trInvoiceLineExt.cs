@@ -23,6 +23,10 @@ namespace Foxoft.Models
         [Column(TypeName = "money")]
         public decimal PriceDiscounted { get; set; }
 
+        [Display(Name = "Ödəmə")]
+        [Column(TypeName = "money")]
+        public decimal? LineExpences { get; set; }
+
         //public decimal PriceDiscounted
         //{
         //    get { return TrInvoiceLine.Price * (100 - TrInvoiceLine.PosDiscount) / 100; }

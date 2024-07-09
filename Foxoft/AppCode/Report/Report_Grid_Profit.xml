@@ -336,10 +336,10 @@
 			</property>
 		</property>
 		<property name="Item18" isnull="true" iskey="true">
-			<property name="Name">colLastPurchasePrice</property>
+			<property name="Name">colProductCost</property>
 			<property name="ImageAlignment">Near</property>
 			<property name="ImageIndex">-1</property>
-			<property name="FieldName">LastPurchasePrice</property>
+			<property name="FieldName">ProductCost</property>
 			<property name="ColumnEditName" />
 			<property name="Width">68</property>
 			<property name="DisplayFormat" isnull="true" iskey="true">

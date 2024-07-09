@@ -10,11 +10,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    public partial class DcCompany : BaseEntity
+    public partial class DcCompany
     {
         [Key]
         [Display(Name = "Şirkət Kodu")]
-        public int CompanyCode { get; set; }
+        public string CompanyCode { get; set; }
 
         [Display(Name = "Şirkət Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]

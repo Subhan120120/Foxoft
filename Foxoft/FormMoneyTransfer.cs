@@ -415,12 +415,17 @@ namespace Foxoft
             {
                 string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
 
-                string copyText = PaymentText("%0A");
-                string CopyText2 = PaymentText("\n");
+                if (string.IsNullOrEmpty(phoneNum))
+                {
+                    string copyText = PaymentText("%0A");
+                    string CopyText2 = PaymentText("\n");
 
-                Clipboard.SetText(CopyText2);
+                    Clipboard.SetText(CopyText2);
 
-                sendWhatsApp(phoneNum, copyText);
+                    sendWhatsApp(phoneNum, copyText);
+                }
+                else
+                    MessageBox.Show("Telefon nömrəsi qeyd olunmayıb.");
             }
             else
                 MessageBox.Show("Cari Hesab qeyd olunmayıb.");

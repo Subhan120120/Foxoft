@@ -7,17 +7,17 @@ namespace Foxoft.Models
 {
     public partial class TrProductFeature
     {
-        //[Key, Column(Order = 0)]
+        [Key, Column(Order = 0)]
         [ForeignKey("DcProduct")]
         [Display(Name = "Məhsul Kodu")]
         public string ProductCode { get; set; }
 
-        //[Key, Column(Order = 1)]
+        [Key, Column(Order = 1)]
         [ForeignKey("DcFeatureType")]
         [Display(Name = "Özəllik Tipi Kodu")]
         public int FeatureTypeId { get; set; }
 
-        //[Key, Column(Order = 2)]
+        [Key, Column(Order = 2)]
         [ForeignKey("DcFeature")]
         [Display(Name = "Özəllik Kodu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]

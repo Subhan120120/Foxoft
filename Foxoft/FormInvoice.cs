@@ -40,7 +40,9 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -55,7 +57,7 @@ namespace Foxoft
     {
         private EfMethods efMethods = new();
         private subContext dbContext;
-        subContext subContext = new();
+        subContext subContext = new(); // for CustomUnboundColumnData
 
         string reportFileNameInvoice = @"InvoiceRS_A4.repx";
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
@@ -66,6 +68,8 @@ namespace Foxoft
         Guid relatedInvoiceId;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
+
+        private const int WM_GETTAG = 0x0400 + 1; // for acccess to tag via Windows API
 
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
@@ -81,15 +85,11 @@ namespace Foxoft
             this.productTypeArr = productTypeArr;
             this.relatedInvoiceId = relatedInvoiceId;
             this.Text = dcProcess.ProcessDesc;
-            BEI_TwilioInstance.EditValue = Settings.Default.AppSetting.TwilioInstanceId;
-            BEI_TwilioToken.EditValue = Settings.Default.AppSetting.TwilioToken;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
             lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
-
-
 
             AddReports();
 
@@ -116,6 +116,21 @@ namespace Foxoft
             }
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_GETTAG)
+            {
+                string tagValue = this.Tag?.ToString() ?? string.Empty;
+                byte[] tagBytes = Encoding.UTF8.GetBytes(tagValue);
+                IntPtr tagPointer = Marshal.AllocHGlobal(tagBytes.Length + 1);
+                Marshal.Copy(tagBytes, 0, tagPointer, tagBytes.Length);
+                Marshal.WriteByte(tagPointer, tagBytes.Length, 0); // Null-terminate the string
+                m.Result = tagPointer;
+                return;
+            }
+            base.WndProc(ref m);
+        }
+
         public FormInvoice(string processCode, byte[] productTypeArr, Guid relatedInvoiceId, Guid invoiceHeaderId)
             : this(processCode, productTypeArr, relatedInvoiceId)
         {
@@ -135,7 +150,7 @@ namespace Foxoft
 
         private void InitializeColumnName()
         {
-            colLastPurchasePrice.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.LastPurchasePrice);
+            colProductCost.Caption = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCost);
             colBalance.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.Balance);
             col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
             checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
@@ -216,10 +231,8 @@ namespace Foxoft
         }
 
 
-        private void SaveInvoiceHeader()
+        private void ChangeQtyByProcessDir()
         {
-            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
             if (trInvoiceHeader is not null) // if Isreturn Changed calculate Qty again
             {
                 for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
@@ -228,13 +241,6 @@ namespace Foxoft
                     int qtyInAbs = Math.Abs(qtyIn);
                     gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
                 }
-            }
-
-            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
-            {
-                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
-                if (count > 0)
-                    SaveInvoice();
             }
         }
 
@@ -285,7 +291,7 @@ namespace Foxoft
             invoiceHeader.IsMainTF = true;
             invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
-            if (dcProcess.ProcessCode == "RS")
+            if (new string[] { "RS", "WS", "IT" }.Contains(dcProcess.ProcessCode))
             {
                 string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
                 invoiceHeader.CurrAccCode = defaultCustomer;
@@ -309,7 +315,18 @@ namespace Foxoft
 
         private void item_Leave(object sender, EventArgs e)
         {
-            SaveInvoiceHeader();
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+            ChangeQtyByProcessDir();
+
+
+            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
+            {
+                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
+                if (count > 0)
+                    if (Settings.Default.AppSetting.AutoSave)
+                        SaveInvoice();
+            }
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -338,7 +355,7 @@ namespace Foxoft
 
         private void LoadInvoice(Guid InvoiceHeaderId)
         {
-            SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
+            SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
 
             dbContext = new subContext();
 
@@ -389,6 +406,8 @@ namespace Foxoft
             //ShowPrintCount();
 
             checkEdit_IsReturn.Enabled = false;
+
+            Tag = btnEdit_DocNum.EditValue;
 
             SplashScreenManager.CloseForm(false);
         }
@@ -626,7 +645,7 @@ namespace Foxoft
             if (column == colQty)
             {
                 int eValue = Convert.ToInt32(e.Value ??= 0);
-                if ((!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS") || trInvoiceHeader.ProcessCode == "IT")
+                if ((!trInvoiceHeader.IsReturn) && new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 {
                     object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
                     object objInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
@@ -652,7 +671,7 @@ namespace Foxoft
                         }
                 }
 
-                if (!trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "RS")
+                if (!trInvoiceHeader.IsReturn && new string[] { "RS", "WS" }.Contains(trInvoiceHeader.ProcessCode))
                 {
                     string currAccCode = trInvoiceHeader.CurrAccCode;
                     if (!String.IsNullOrEmpty(currAccCode))
@@ -670,7 +689,7 @@ namespace Foxoft
                 }
             }
 
-            if (column == colBarcode && column == col_ProductCode)
+            if (column == colBarcode || column == col_ProductCode)
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
 
@@ -841,6 +860,8 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
+                    gV_InvoiceLine.SetFocusedRowCellValue(colProductCost, form.dcProduct.ProductCost);
+
                     gV_InvoiceLine.CloseEditor();
                     gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
 
@@ -856,18 +877,8 @@ namespace Foxoft
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            //GridView gV = (GridView)sender;
-
-            //if (gV is not null)
-            //{
-            //    string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
-            //    gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
-
-            //    if (!string.IsNullOrEmpty(userName))
-            //        gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
-            //}
-
-            SaveInvoice();
+            if (Settings.Default.AppSetting.AutoSave)
+                SaveInvoice();
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -877,7 +888,8 @@ namespace Foxoft
 
         private void gV_InvoiceLine_RowDeleted(object sender, RowDeletedEventArgs e)
         {
-            SaveInvoice();
+            if (Settings.Default.AppSetting.AutoSave)
+                SaveInvoice();
         }
 
         Guid quidHead;
@@ -964,6 +976,8 @@ namespace Foxoft
             }
 
             SaveSession();
+
+            Tag = btnEdit_DocNum.EditValue;
         }
 
         private void SavePayment()
@@ -1428,7 +1442,7 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (trInvoiceHeader.ProcessCode == "RS")
+            if (new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
             {
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "SaleIsReturn");
                 if (!currAccHasClaims)
@@ -1494,7 +1508,7 @@ namespace Foxoft
                 btnEdit_CurrAccCode.Enabled = false;
                 colBalance.Visible = false;
                 col_PosDiscount.Visible = false;
-                colLastPurchasePrice.Visible = false;
+                colProductCost.Visible = false;
                 colBenefit.Visible = false;
 
                 if (dcProcess.ProcessCode == "EX")
@@ -1513,21 +1527,21 @@ namespace Foxoft
             if (File.Exists(layoutFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
 
-            colLastPurchasePrice = gV_InvoiceLine.Columns[nameof(DcProduct.LastPurchasePrice)];
-            if (colLastPurchasePrice != null)
+            colProductCost = gV_InvoiceLine.Columns[nameof(DcProduct.ProductCost)];
+            if (colProductCost != null)
             {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_LastPurchasePrice");
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_ProductCost");
                 if (!currAccHasClaims)
                 {
-                    colLastPurchasePrice.OptionsColumn.ShowInCustomizationForm = false;
-                    colLastPurchasePrice.Visible = false;
+                    colProductCost.OptionsColumn.ShowInCustomizationForm = false;
+                    colProductCost.Visible = false;
                     colBenefit.OptionsColumn.ShowInCustomizationForm = false;
                     colBenefit.Visible = false;
                 }
             }
 
             colBalance.OptionsColumn.ReadOnly = true;
-            colLastPurchasePrice.OptionsColumn.ReadOnly = true;
+            colProductCost.OptionsColumn.ReadOnly = true;
             col_NetAmount.OptionsColumn.ReadOnly = true;
             colNetAmountLoc.OptionsColumn.ReadOnly = true;
             col_Amount.OptionsColumn.ReadOnly = true;
@@ -1678,7 +1692,7 @@ namespace Foxoft
             DialogResult dr = dialog.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true, false);
+                SplashScreenManager.ShowForm(this, typeof(WaitForm), true, true, false);
 
                 ExcelDataSource excelDataSource = new();
                 excelDataSource.FileName = dialog.FileName;
@@ -1704,7 +1718,7 @@ namespace Foxoft
                 foreach (DataRow row in dt.Rows)
                 {
                     int i = Convert.ToInt32(rowCount / dt.Rows.Count * 100);
-                    SplashScreenManager.Default.SendCommand(WaitForm1.WaitFormCommand.SetProgress, i);
+                    SplashScreenManager.Default.SendCommand(WaitForm.WaitFormCommand.SetProgress, i);
                     SplashScreenManager.Default.SetWaitFormDescription(i + "%");
                     rowCount++;
 
@@ -1794,22 +1808,27 @@ namespace Foxoft
         private void FillRow(int rowHandle, DcProduct product)
         {
             gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductCode, product.ProductCode);
-            gV_InvoiceLine.SetRowCellValue(rowHandle, colLastPurchasePrice, product.LastPurchasePrice);
-
+            //gV_InvoiceLine.SetRowCellValue(rowHandle, colProductCost, product.ProductCost);
 
             decimal priceProduct = 0;
-
-            if (dcProcess.ProcessCode == "RS")
-                if (Settings.Default.AppSetting.UsePriceList)
-                    priceProduct = efMethods.SelectPrice("RS", product.ProductCode);
-                else
-                    priceProduct = product.WholesalePrice;
 
             if (dcProcess.ProcessCode == "RP")
                 if (Settings.Default.AppSetting.UsePriceList)
                     priceProduct = efMethods.SelectPrice("RP", product.ProductCode);
                 else
                     priceProduct = product.PurchasePrice;
+
+            if (dcProcess.ProcessCode == "RS")
+                if (Settings.Default.AppSetting.UsePriceList)
+                    priceProduct = efMethods.SelectPrice("RS", product.ProductCode);
+                else
+                    priceProduct = product.RetailPrice;
+
+            if (dcProcess.ProcessCode == "WS")
+                if (Settings.Default.AppSetting.UsePriceList)
+                    priceProduct = efMethods.SelectPrice("WS", product.ProductCode);
+                else
+                    priceProduct = product.WholesalePrice;
 
             //decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
             decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
@@ -1902,42 +1921,31 @@ namespace Foxoft
 
         }
 
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            MemoryStream memoryStream = GetInvoiceReportImg(reportFileNameInvoice);
+        //private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        //{
+        //    MemoryStream memoryStream = GetInvoiceReportImg(reportFileNameInvoice);
 
-            string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
-            string address = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).Address;
+        //    string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
+        //    string address = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).Address;
 
-            byte[] imageBytes = memoryStream.ToArray();
-            string AsBase64String = Convert.ToBase64String(imageBytes);
+        //    byte[] imageBytes = memoryStream.ToArray();
+        //    string AsBase64String = Convert.ToBase64String(imageBytes);
 
-            if (!string.IsNullOrEmpty(address))
-                phoneNum = address;
+        //    if (!string.IsNullOrEmpty(address))
+        //        phoneNum = address;
 
-            UltramsgClass twilioClass = new();
-            UltramsgResponce responce = twilioClass.SendWhatsapp(phoneNum, "image", AsBase64String);
+        //    UltramsgClass twilioClass = new();
+        //    UltramsgResponce responce = twilioClass.SendWhatsapp(phoneNum, "image", AsBase64String);
 
-            if (responce.message == "ok")
-            {
-                efMethods.UpdateInvoiceIsSent(trInvoiceHeader.InvoiceHeaderId);
-                checkEdit_IsSent.EditValue = true;
-                MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-                MessageBox.Show(responce.message + "\n" + responce.error, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private void BBI_TwilioSave_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            efMethods.UpdateAppSettingTwilioInstance(BEI_TwilioInstance.EditValue.ToString());
-            efMethods.UpdateAppSettingTwilioToken(BEI_TwilioToken.EditValue.ToString());
-
-            //AppSetting appSetting = efMethods.SelectAppSetting();
-            Settings.Default.AppSetting.TwilioInstanceId = BEI_TwilioInstance.EditValue.ToString();
-            Settings.Default.AppSetting.TwilioToken = BEI_TwilioToken.EditValue.ToString();
-            Settings.Default.Save();
-        }
+        //    if (responce.message == "ok")
+        //    {
+        //        efMethods.UpdateInvoiceIsSent(trInvoiceHeader.InvoiceHeaderId);
+        //        checkEdit_IsSent.EditValue = true;
+        //        MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    else
+        //        MessageBox.Show(responce.message + "\n" + responce.error, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //}
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -1979,13 +1987,13 @@ namespace Foxoft
 
             if (e.RowHandle >= 0)
             {
-                object isReturn = view.GetRowCellValue(e.RowHandle, view.Columns["Benefit"]);
+                object benefit = view.GetRowCellValue(e.RowHandle, view.Columns["Benefit"]);
 
-                if (isReturn is not null)
+                if (benefit is not null)
                 {
-                    decimal value = (decimal)isReturn;
+                    decimal value = (decimal)benefit;
 
-                    if (value <= 0 && dcProcess.ProcessCode == "RS" && trInvoiceHeader.IsReturn == false)
+                    if (value <= 0 && new string[] { "RS", "WS" }.Contains(dcProcess.ProcessCode) && trInvoiceHeader.IsReturn == false)
                         e.Appearance.ForeColor = Color.Red;
                 }
             }
@@ -1996,8 +2004,8 @@ namespace Foxoft
             DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
             DcCurrAcc updatedCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.LastUpdatedUserName);
 
-            string lastUpdatedDate = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedDate.ToString();
-            string lastUpdatedUserName = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault().LastUpdatedUserName.ToString();
+            string lastUpdatedDate = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault()?.LastUpdatedDate.ToString();
+            string lastUpdatedUserName = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault()?.LastUpdatedUserName.ToString();
 
             string createdUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
             string createdDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
@@ -2066,7 +2074,6 @@ namespace Foxoft
 
             if (obj is not null)
             {
-
                 string productCode = obj?.ToString();
                 DcProduct dcProduct = subContext.DcProducts // more fast query
                                         .Include(x => x.DcHierarchy)
@@ -2092,7 +2099,6 @@ namespace Foxoft
                     //{
                     //    e.Value = dcProduct.LastPurchasePrice;
                     //}
-
                 }
             }
         }
@@ -2102,6 +2108,14 @@ namespace Foxoft
             FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId);
             formInvoice.WindowState = FormWindowState.Normal; ;
             formInvoice.ShowDialog();
+        }
+
+        private void BCI_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            BBI_picture.Visibility = BCI_ShowPicture.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
+            BBI_Print.Visibility = BCI_ShowPrint.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
+            BBI_ReportPrintFast.Visibility = BCI_ShowPrint.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
+            bBI_CopyInvoice.Visibility = BCI_ShowCopy.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
         }
     }
 }

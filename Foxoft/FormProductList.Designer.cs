@@ -51,7 +51,7 @@ namespace Foxoft
             colWholesalePrice = new DevExpress.XtraGrid.Columns.GridColumn();
             colUseInternet = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
-            colLastPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastSalePrice = new DevExpress.XtraGrid.Columns.GridColumn();
             colDcProductType = new DevExpress.XtraGrid.Columns.GridColumn();
             colTrPrices = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -200,15 +200,15 @@ namespace Foxoft
             colBalance.FieldName = "Balance";
             colBalance.Name = "colBalance";
             // 
-            // colLastPurchasePrice
+            // colProductCost
             // 
-            colLastPurchasePrice.DisplayFormat.FormatString = "{0:n2}";
-            colLastPurchasePrice.DisplayFormat.FormatType = FormatType.Numeric;
-            colLastPurchasePrice.FieldName = "LastPurchasePrice";
-            colLastPurchasePrice.Name = "colLastPurchasePrice";
-            colLastPurchasePrice.Visible = true;
-            colLastPurchasePrice.VisibleIndex = 5;
-            colLastPurchasePrice.Width = 105;
+            colProductCost.DisplayFormat.FormatString = "{0:n2}";
+            colProductCost.DisplayFormat.FormatType = FormatType.Numeric;
+            colProductCost.FieldName = "ProductCost";
+            colProductCost.Name = "colProductCost";
+            colProductCost.Visible = true;
+            colProductCost.VisibleIndex = 5;
+            colProductCost.Width = 105;
             // 
             // colLastSalePrice
             // 
@@ -515,7 +515,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colWholesalePrice;
         private DevExpress.XtraGrid.Columns.GridColumn colUseInternet;
         private DevExpress.XtraGrid.Columns.GridColumn colBalance;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastPurchasePrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colProductCost;
         private DevExpress.XtraGrid.Columns.GridColumn colLastSalePrice;
         private DevExpress.XtraGrid.Columns.GridColumn colDcProductType;
         private DevExpress.XtraGrid.Columns.GridColumn colTrPrices;

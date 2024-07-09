@@ -287,7 +287,7 @@ namespace Foxoft
 
             using (FormHierarchyList form = new())
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    buttonEdit.EditValue = form.DcHierarchy.HierarchyCode;
+                    buttonEdit.EditValue = form.DcHierarchy?.HierarchyCode;
         }
 
         private void BtnEdit_Slug_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -299,26 +299,27 @@ namespace Foxoft
         private void btnEdit_Hierarchy_EditValueChanged(object sender, EventArgs e)
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
-            string hierarchy = buttonEdit.EditValue?.ToString();
+            //string hierarchy = buttonEdit.EditValue?.ToString();
 
+            //if (!string.IsNullOrEmpty(hierarchy))
+            //    if (efMethods.HierarchyExist(hierarchy))
             if (!isNew)
-                if (!string.IsNullOrEmpty(hierarchy))
-                    if (efMethods.HierarchyExist(hierarchy))
-                        BBI_ProductFeature.Enabled = true;
-                    else BBI_ProductFeature.Enabled = false;
+                BBI_ProductFeature.Enabled = true;
+            else BBI_ProductFeature.Enabled = false;
 
         }
 
         private void BBI_ProductFeature_ItemClick(object sender, ItemClickEventArgs e)
         {
-            efMethods.UpdateProductHierarchyCode(dcProduct.ProductCode, btnEdit_Hierarchy.Text);
+            string? hierarchy = string.IsNullOrEmpty(btnEdit_Hierarchy.Text) ? null : btnEdit_Hierarchy.Text;
+            efMethods.UpdateProductHierarchyCode(dcProduct.ProductCode, hierarchy);
+
             FormProductFeature frm = new(dcProduct.ProductCode);
             frm.ShowDialog();
         }
 
         private void BBI_ProductDiscount_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //FormCommonList<TrProductDiscount> formFeature = new("", "DiscountId");
             FormCommonList<TrProductDiscount> frm = new("", "DiscountId", "", "ProductCode", dcProduct.ProductCode);
             frm.ShowDialog();
         }

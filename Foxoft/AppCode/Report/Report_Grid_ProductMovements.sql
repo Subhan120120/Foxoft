@@ -34,8 +34,8 @@ select  InvoiceLineId
 , ProcessDesc
 , DocumentNumber
 , IsReturn
-, LastPurchasePrice
-, Benefit = (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - LastPurchasePrice)
+, ProductCost
+, Benefit = (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)
 , DocumentDate
 , DocumentTime
 , OperationDate

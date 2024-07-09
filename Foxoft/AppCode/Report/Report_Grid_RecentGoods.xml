@@ -57,7 +57,7 @@
 			<property name="MaxWidth">0</property>
 		</property>
 		<property name="Item8" isnull="true" iskey="true">
-			<property name="Name">colLastPurchasePrice</property>
+			<property name="Name">colProductCost</property>
 			<property name="VisibleIndex">4</property>
 			<property name="Visible">true</property>
 			<property name="Width">116</property>

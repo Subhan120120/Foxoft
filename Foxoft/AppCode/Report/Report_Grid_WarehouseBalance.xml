@@ -73,10 +73,10 @@
 			<property name="UnboundDataTypeName" />
 		</property>
 		<property name="Item4" isnull="true" iskey="true">
-			<property name="Name">colLastPurchasePrice</property>
+			<property name="Name">colProductCost</property>
 			<property name="ImageAlignment">Near</property>
 			<property name="ImageIndex">-1</property>
-			<property name="FieldName">LastPurchasePrice</property>
+			<property name="FieldName">ProductCost</property>
 			<property name="ColumnEditName" />
 			<property name="VisibleIndex">4</property>
 			<property name="Visible">true</property>

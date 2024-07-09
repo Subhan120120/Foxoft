@@ -62,7 +62,7 @@ namespace Foxoft.Models
 
       [Display(Name = "Açıqlama")]
       [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      public string Description { get; set; }
+      public string? Description { get; set; }
 
 #nullable enable
       [Display(Name = "Cari Hesab")]

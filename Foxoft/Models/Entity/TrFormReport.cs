@@ -7,18 +7,18 @@ namespace Foxoft.Models
 {
     public partial class TrFormReport
     {
-        //[Key, Column(Order = 0)]
+        [Key, Column(Order = 0)]
         [ForeignKey("DcForm")]
         [Display(Name = "Form Kodu")]
         public string FormCode { get; set; }
 
-        //[Key, Column(Order = 1)]
+        [Key, Column(Order = 1)]
         [ForeignKey("DcReport")]
         [Display(Name = "Report Id")]
         public int ReportId { get; set; }
 
         [Display(Name = "Qısayol")]
-        public string Shortcut { get; set; }
+        public string? Shortcut { get; set; }
 
 
         [ForeignKey("FormCode")]
