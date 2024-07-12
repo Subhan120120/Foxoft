@@ -6,7 +6,15 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AppCode\CustomFunctions\**" />
+    <EmbeddedResource Remove="AppCode\CustomFunctions\**" />
+    <None Remove="AppCode\CustomFunctions\**" />
+    <Page Remove="AppCode\CustomFunctions\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="AppCode\GvListDefaultLayout.xml" />
@@ -114,6 +122,7 @@
 
   <ItemGroup>
     <PackageReference Include="DevExpress.Win.Design" Version="23.1.5" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
@@ -138,7 +147,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AppCode\CustomFunctions\" />
     <Folder Include="Migrations\main\" />
   </ItemGroup>
 

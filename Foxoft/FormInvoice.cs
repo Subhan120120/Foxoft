@@ -1442,18 +1442,27 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
+             if (trInvoiceHeader.ProcessCode == "RP")
             {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "SaleIsReturn");
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailPurchaseReturn");
                 if (!currAccHasClaims)
                 {
                     MessageBox.Show("Yetkiniz yoxdur! ");
                     return;
                 }
             }
-            else if (trInvoiceHeader.ProcessCode == "RP")
+             if (trInvoiceHeader.ProcessCode == "RS")
             {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PurchaseIsReturn");
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn");
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+            }
+            else if (trInvoiceHeader.ProcessCode == "WS")
+            {
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "WholesaleReturn");
                 if (!currAccHasClaims)
                 {
                     MessageBox.Show("Yetkiniz yoxdur! ");
@@ -1830,7 +1839,6 @@ namespace Foxoft
                 else
                     priceProduct = product.WholesalePrice;
 
-            //decimal priceProduct = dcProcess.ProcessCode == "RS" ? product.WholesalePrice : (dcProcess.ProcessCode == "RP" ? product.PurchasePrice : 0);
             decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
             if (priceInvoice == 0)
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);

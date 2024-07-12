@@ -6,7 +6,7 @@ using System.Drawing;
 using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.Sql;
 using Foxoft.Models;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Threading;
 using System.Globalization;

@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -348,8 +348,9 @@ namespace Foxoft
                     "IT" => "InventoryTransfer",
                     "CI" => "CountIn",
                     "CO" => "CountOut",
-                    "RS" => "RetailSaleInvoice",
                     "RP" => "RetailPurchaseInvoice",
+                    "RS" => "RetailSaleInvoice",
+                    "WS" => "WholesaleInvoice",
                     "EX" => "Expense",
                     _ => ""
                 };
@@ -367,8 +368,9 @@ namespace Foxoft
                     "IT" => new byte[] { 1 },
                     "CI" => new byte[] { 1 },
                     "CO" => new byte[] { 1 },
-                    "RS" => new byte[] { 1, 3 },
                     "RP" => new byte[] { 1, 3 },
+                    "RS" => new byte[] { 1, 3 },
+                    "WS" => new byte[] { 1, 3 },
                     "EX" => new byte[] { 2, 3 },
                     _ => new byte[] { }
                 };

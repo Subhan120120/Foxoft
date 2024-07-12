@@ -14,7 +14,7 @@ namespace Foxoft.Migrations
 SELECT 
     TOP 1 WITH TIES *
     , closing_stock_sum = SUM(closing_stock) OVER (PARTITION BY ProductCode)
-    , fifo_corg = SUM(closing_stock) OVER (PARTITION BY ProductCode) / NULLIF(cumulative, 0)
+    , fifo_corg = CAST(SUM(closing_stock) OVER (PARTITION BY ProductCode) / NULLIF(cumulative, 0) AS DECIMAL(18, 2))
 FROM 
 (
     SELECT *,
@@ -35,7 +35,7 @@ FROM
                    --, ProcessCode
             FROM TrInvoiceLines 
             LEFT JOIN TrInvoiceHeaders ON TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId
-            WHERE ProcessCode = 'RS' --and ProductCode = 'P-000484'
+            WHERE ProcessCode = 'WS' --and ProductCode = 'P-000484'
             UNION ALL
             SELECT ROW_NUMBER() OVER (PARTITION BY ProductCode ORDER BY DocumentDate) AS srl
                    , ProductCode

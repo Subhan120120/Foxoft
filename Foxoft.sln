@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foxoft", "Foxoft\Foxoft.csproj", "{F5E905B5-E76C-4751-B1E3-D415C01E9C61}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{90194B38-B34E-4497-A8CE-A813C598A4E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{F5E905B5-E76C-4751-B1E3-D415C01E9C61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5E905B5-E76C-4751-B1E3-D415C01E9C61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5E905B5-E76C-4751-B1E3-D415C01E9C61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90194B38-B34E-4497-A8CE-A813C598A4E0}.Debug|Any CPU.ActiveCfg = Debug
+		{90194B38-B34E-4497-A8CE-A813C598A4E0}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

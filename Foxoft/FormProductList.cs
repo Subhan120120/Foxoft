@@ -18,7 +18,7 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;

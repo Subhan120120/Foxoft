@@ -201,8 +201,9 @@ namespace Foxoft
                     "IT" => new byte[] { 1 },
                     "CI" => new byte[] { 1 },
                     "CO" => new byte[] { 1 },
-                    "RS" => new byte[] { 1, 3 },
                     "RP" => new byte[] { 1, 3 },
+                    "RS" => new byte[] { 1, 3 },
+                    "WS" => new byte[] { 1, 3 },
                     "EX" => new byte[] { 2, 3 },
                     _ => new byte[] { }
                 };

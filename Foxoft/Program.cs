@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Win32;
 using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
@@ -50,8 +50,8 @@ namespace Foxoft
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (!Debugger.IsAttached)
-                RegistryWriteValue(@"SOFTWARE\Foxoft", "InstallLocation", AppContext.BaseDirectory); // for service
+            //if (!Debugger.IsAttached)
+            //    RegistryWriteValue(@"SOFTWARE\Foxoft", "InstallLocation", AppContext.BaseDirectory); // for service
 
             if (SqlServerConnected())
             {
@@ -187,16 +187,16 @@ namespace Foxoft
                 return fiscal;
             }
 
-            void RegistryWriteValue(string keyName, string valueName, object value)
-            {
-                using (RegistryKey key = Registry.LocalMachine.CreateSubKey(keyName))
-                {
-                    if (key != null)
-                    {
-                        key.SetValue(valueName, value);
-                    }
-                }
-            }
+            //void RegistryWriteValue(string keyName, string valueName, object value)
+            //{
+            //    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(keyName))
+            //    {
+            //        if (key != null)
+            //        {
+            //            key.SetValue(valueName, value);
+            //        }
+            //    }
+            //}
         }
     }
 }

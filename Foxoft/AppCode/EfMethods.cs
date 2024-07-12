@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Reflection.Metadata.Ecma335;
 using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using DevExpress.XtraRichEdit.Import.Html;
 using Foxoft.Models.Entity;
 
@@ -865,10 +865,15 @@ namespace Foxoft
         {
             using subContext db = new();
             TrInvoiceHeader trInvoiceHeader = db.TrInvoiceHeaders.FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
-            trInvoiceHeader.PrintCount = Convert.ToByte(trInvoiceHeader.PrintCount + 1);
-            db.Entry(trInvoiceHeader).Property(x => x.PrintCount).IsModified = true;
-            db.SaveChanges();
-            return trInvoiceHeader.PrintCount;
+            if (trInvoiceHeader is not null)
+            {
+                trInvoiceHeader.PrintCount = Convert.ToByte(trInvoiceHeader.PrintCount + 1);
+                db.Entry(trInvoiceHeader).Property(x => x.PrintCount).IsModified = true;
+                db.SaveChanges();
+                return trInvoiceHeader.PrintCount;
+            }
+            else
+                return 0;
         }
 
         public int UpdateInvoiceIsOpen(string docNum, bool isOpen)
