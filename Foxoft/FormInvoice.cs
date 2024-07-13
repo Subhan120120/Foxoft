@@ -1881,7 +1881,7 @@ namespace Foxoft
         private void lUE_StoreCode_EditValueChanged(object sender, EventArgs e)
         {
             string storeCode = lUE_StoreCode.EditValue.ToString();
-            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStore(storeCode);
+            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
 
             if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.WarehouseCode) && trInvoiceHeader is not null)
@@ -1892,8 +1892,8 @@ namespace Foxoft
                 DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
                 if (dcWarehouse is not null && trInvoiceHeader?.WarehouseCode is null)
                 {
-                    trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
-                    lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                    //trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode; subhan
+                    //lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
                 }
             }
         }

@@ -118,12 +118,20 @@ namespace Foxoft
             {
                 Process process = Process.GetProcessById(Convert.ToInt32(gridView1.GetFocusedRowCellValue(colPID)));
 
-                if (DialogResult.OK == XtraMessageBox.Show("Istifadəçini atmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel))
+                if (DialogResult.OK == XtraMessageBox.Show("İstifadəçini atmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel))
                     process.Kill(true);
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
                 XtraMessageBox.Show("Proses tapılmadı.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Console.WriteLine($"Cəhd əngəlləndi. Admin imtiyazlarınız olduğundan əmin olun.:" + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message);
             }
 
             LoadUsers();

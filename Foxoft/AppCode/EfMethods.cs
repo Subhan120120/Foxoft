@@ -1363,6 +1363,15 @@ namespace Foxoft
                                   .ToList();
         }
 
+        public List<DcWarehouse> SelectWarehousesByStoreIncludeDisabled(string storeCode)
+        {
+            using subContext db = new();
+            return db.DcWarehouses//.Where(x => x.IsDisabled == false)
+                                  .Where(x => x.StoreCode == storeCode)
+                                  .OrderBy(x => x.CreatedDate)
+                                  .ToList();
+        }
+
         public string SelectWarehouseByStore(string storeCode)
         {
             using subContext db = new();
