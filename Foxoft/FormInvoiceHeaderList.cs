@@ -140,17 +140,13 @@ namespace Foxoft
 
         private void ApproveInvoiceHeader()
         {
-            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, true);
-            Settings.Default.OpenDocNum = trInvoiceHeader.DocumentNumber;
-            Settings.Default.Save();
-
-            bool isOpen = InvoiceIsOpen();
+            bool isOpen = InvoiceIsOpen(trInvoiceHeader.DocumentNumber);
 
             if (!isOpen)
                 DialogResult = DialogResult.OK;
         }
 
-        private bool InvoiceIsOpen()
+        private bool InvoiceIsOpen(string docNum)
         {
             bool isOpen = false;
             Process[]? processes = Process.GetProcessesByName("Foxoft");
@@ -159,7 +155,7 @@ namespace Foxoft
                 List<WindowInfo> childWindows = WindowsAPI.GetMDIChildWindowsOfProcess(process);
                 foreach (WindowInfo? window in childWindows)
                 {
-                    if (window.Tag == trInvoiceHeader.DocumentNumber)
+                    if (window.Tag == docNum)
                     {
                         isOpen = true;
                         XtraMessageBox.Show("Qaimə açıqdır.");

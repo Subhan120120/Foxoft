@@ -4,6 +4,7 @@ using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
+using DevExpress.DataProcessing.InMemoryDataProcessor;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
@@ -87,7 +88,10 @@ namespace Foxoft
             this.Text = dcProcess.ProcessDesc;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
-            lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
+
+            //string storeCode = lUE_StoreCode.EditValue?.ToString();
+            //List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
+
             lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
@@ -291,7 +295,7 @@ namespace Foxoft
             invoiceHeader.IsMainTF = true;
             invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
 
-            if (new string[] { "RS", "WS", "IT" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "RS", "WS" }.Contains(dcProcess.ProcessCode))
             {
                 string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
                 invoiceHeader.CurrAccCode = defaultCustomer;
@@ -1442,7 +1446,7 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-             if (trInvoiceHeader.ProcessCode == "RP")
+            if (trInvoiceHeader.ProcessCode == "RP")
             {
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailPurchaseReturn");
                 if (!currAccHasClaims)
@@ -1451,7 +1455,7 @@ namespace Foxoft
                     return;
                 }
             }
-             if (trInvoiceHeader.ProcessCode == "RS")
+            if (trInvoiceHeader.ProcessCode == "RS")
             {
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn");
                 if (!currAccHasClaims)
@@ -1817,7 +1821,7 @@ namespace Foxoft
         private void FillRow(int rowHandle, DcProduct product)
         {
             gV_InvoiceLine.SetRowCellValue(rowHandle, col_ProductCode, product.ProductCode);
-            //gV_InvoiceLine.SetRowCellValue(rowHandle, colProductCost, product.ProductCost);
+            gV_InvoiceLine.SetFocusedRowCellValue(colProductCost, product.ProductCost);
 
             decimal priceProduct = 0;
 
@@ -1884,16 +1888,16 @@ namespace Foxoft
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
 
-            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.WarehouseCode) && trInvoiceHeader is not null)
-                trInvoiceHeader.WarehouseCode = null;
+            //if (trInvoiceHeader is not null)
+            //    trInvoiceHeader.WarehouseCode = null;
 
             if (dcWarehouses is not null && trInvoiceHeader is not null)
             {
                 DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
                 if (dcWarehouse is not null && trInvoiceHeader?.WarehouseCode is null)
                 {
-                    //trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode; subhan
-                    //lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                    trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
+                    lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
                 }
             }
         }
@@ -2124,6 +2128,13 @@ namespace Foxoft
             BBI_Print.Visibility = BCI_ShowPrint.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
             BBI_ReportPrintFast.Visibility = BCI_ShowPrint.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
             bBI_CopyInvoice.Visibility = BCI_ShowCopy.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
+        }
+
+        private void lUE_WarehouseCode_PopupFilter(object sender, PopupFilterEventArgs e)
+        {
+            string storeCode = lUE_StoreCode.EditValue.ToString();
+            var asd = efMethods.SelectWarehousesByStore(storeCode);
+            lUE_WarehouseCode.Properties.DataSource = asd;
         }
     }
 }

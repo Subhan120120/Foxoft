@@ -326,14 +326,38 @@ namespace Foxoft
         private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
         {
             object objDocNum = gV_Report.GetFocusedValue();
-
             string strDocNum = objDocNum?.ToString();
 
             if (!String.IsNullOrEmpty(strDocNum))
             {
-                OpenFormInvoice(strDocNum);
+                bool isOpen = InvoiceIsOpen(strDocNum);
+
+                if (!isOpen)
+                    OpenFormInvoice(strDocNum);
+            }
+        }
+
+        private bool InvoiceIsOpen(string docNum)
+        {
+            bool isOpen = false;
+            Process[]? processes = Process.GetProcessesByName("Foxoft");
+            foreach (Process? process in processes)
+            {
+                List<WindowInfo> childWindows = WindowsAPI.GetMDIChildWindowsOfProcess(process);
+                foreach (WindowInfo? window in childWindows)
+                {
+                    if (window.Tag == docNum)
+                    {
+                        isOpen = true;
+                        XtraMessageBox.Show("Qaimə açıqdır.");
+                    }
+
+                    // Close the window if necessary
+                    // CloseWindow(window.Handle);
+                }
             }
 
+            return isOpen;
         }
 
         private void OpenFormInvoice(string strDocNum)

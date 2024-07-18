@@ -74,7 +74,6 @@ namespace Foxoft.AppCode
         }
     }
 
-
     public class NativeMethods
     {
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);

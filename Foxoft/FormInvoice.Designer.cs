@@ -116,6 +116,7 @@ namespace Foxoft
             BBI_InvoiceExpenses = new DevExpress.XtraBars.BarButtonItem();
             BCI_ShowPicture = new DevExpress.XtraBars.BarCheckItem();
             BCI_ShowPrint = new DevExpress.XtraBars.BarCheckItem();
+            BCI_ShowCopy = new DevExpress.XtraBars.BarCheckItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -155,7 +156,6 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            BCI_ShowCopy = new DevExpress.XtraBars.BarCheckItem();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -689,6 +689,7 @@ namespace Foxoft
             lUE_WarehouseCode.Size = new Size(409, 20);
             lUE_WarehouseCode.StyleController = dataLayoutControl1;
             lUE_WarehouseCode.TabIndex = 8;
+            lUE_WarehouseCode.PopupFilter += lUE_WarehouseCode_PopupFilter;
             lUE_WarehouseCode.KeyDown += dataLayoutControls_KeyDown;
             // 
             // lUE_ToWarehouseCode
@@ -965,6 +966,14 @@ namespace Foxoft
             BCI_ShowPrint.Id = 47;
             BCI_ShowPrint.Name = "BCI_ShowPrint";
             BCI_ShowPrint.CheckedChanged += BCI_CheckedChanged;
+            // 
+            // BCI_ShowCopy
+            // 
+            BCI_ShowCopy.Caption = "Kopya Göstər";
+            BCI_ShowCopy.CheckBoxVisibility = DevExpress.XtraBars.CheckBoxVisibility.BeforeText;
+            BCI_ShowCopy.Id = 49;
+            BCI_ShowCopy.Name = "BCI_ShowCopy";
+            BCI_ShowCopy.CheckedChanged += BCI_CheckedChanged;
             // 
             // ribbonPage1
             // 
@@ -1286,14 +1295,6 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
-            // 
-            // BCI_ShowCopy
-            // 
-            BCI_ShowCopy.Caption = "Kopya Göstər";
-            BCI_ShowCopy.CheckBoxVisibility = DevExpress.XtraBars.CheckBoxVisibility.BeforeText;
-            BCI_ShowCopy.Id = 49;
-            BCI_ShowCopy.Name = "BCI_ShowCopy";
-            BCI_ShowCopy.CheckedChanged += BCI_CheckedChanged;
             // 
             // FormInvoice
             // 
