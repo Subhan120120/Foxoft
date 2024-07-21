@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="AppCode\client_secret.json" />
     <None Remove="AppCode\GvListDefaultLayout.xml" />
     <None Remove="AppCode\Report\Report_Detail_ProductCard.sql" />
     <None Remove="AppCode\Report\Report_Embedded_Barcode.sql" />
@@ -69,6 +70,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="AppCode\client_secret.json" />
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
     <EmbeddedResource Include="AppCode\Report\Report_Detail_ProductCard.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_Barcode.sql" />

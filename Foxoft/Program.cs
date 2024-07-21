@@ -108,15 +108,16 @@ namespace Foxoft
 
             bool UpdateLicense()
             {
-                string url = @"https://drive.usercontent.google.com/download?id=1NCnJoEonMjtzxIaM3n5x5ppC3DlvpLCu&export=download&authuser=0&confirm=t&uuid=ea0d30db-2f70-4e2e-85b1-f412e01e38a4&at=APZUnTWac6XtxzyvgGEqNxMfEK_B:1721286224713";
-
-                if (!CheckForInternetConnection(1000, url))
+                if (!CheckForInternetConnection(1000, "http://www.google.com"))
                     return false;
 
-                string result = "";
-                using (HttpClient client = new() { Timeout = TimeSpan.FromMilliseconds(2000) })
-                using (HttpResponseMessage response = client.GetAsync(url).Result)
-                    result = response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : null;
+                //string url = @"https://drive.usercontent.google.com/download?id=1NCnJoEonMjtzxIaM3n5x5ppC3DlvpLCu&export=download&authuser=0&confirm=t&uuid=10ba17da-5c80-445b-8974-62f562889c84&at=APZUnTUKwjTq71SBFZ5uIwBa1UWI:1717941152672";
+                //using (HttpClient client = new() { Timeout = TimeSpan.FromMilliseconds(2000) })
+                //using (HttpResponseMessage response = client.GetAsync(url).Result)
+                //    result = response.IsSuccessStatusCode ? response.Content.ReadAsStringAsync().Result : null;
+
+                GoogleDriveAPI googleDriveAPI = new();
+                string result = googleDriveAPI.Drive();
 
                 string[] txtLisence = result.Split(new string[] { " ", "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
@@ -145,9 +146,7 @@ namespace Foxoft
                                 {
                                     efMethods.UpdateAppSettingLicense(encrypt, company.CompanyDesc);
                                 }
-
                             }
-
                         }
                     }
 
@@ -161,7 +160,7 @@ namespace Foxoft
             {
                 try
                 {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                    var request = (HttpWebRequest)WebRequest.Create(url);
                     request.KeepAlive = false;
                     request.Timeout = timeoutMs;
                     using (var response = (HttpWebResponse)request.GetResponse())

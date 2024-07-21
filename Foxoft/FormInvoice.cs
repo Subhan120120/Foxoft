@@ -92,7 +92,7 @@ namespace Foxoft
             //string storeCode = lUE_StoreCode.EditValue?.ToString();
             //List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
 
-            lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
+            //lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
             AddReports();
@@ -768,25 +768,6 @@ namespace Foxoft
         private void repoBtnEdit_SalesPersonCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             SelectSalesPerson(sender);
-        }
-
-        private void repoBtnEdit_SerialNumberCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            ButtonEdit editor = (ButtonEdit)sender;
-
-            using FormCommonList<DcSerialNumber> form = new("SN", "SerialNumberCode", editor.EditValue?.ToString());
-
-            try
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    editor.EditValue = form.Value_Id;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
 
         BaseEdit editorCustom;
@@ -1931,7 +1912,7 @@ namespace Foxoft
                 lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
 
                 string storeCode = trInvoiceHeader.CurrAccCode;
-                List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStore(storeCode);
+                List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
 
                 lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
 
@@ -2154,6 +2135,13 @@ namespace Foxoft
             string storeCode = lUE_StoreCode.EditValue.ToString();
             var asd = efMethods.SelectWarehousesByStore(storeCode);
             lUE_WarehouseCode.Properties.DataSource = asd;
+        }
+
+        private void lUE_ToWarehouseCode_PopupFilter(object sender, PopupFilterEventArgs e)
+        {
+            string storeCode = btnEdit_CurrAccCode.EditValue.ToString();
+            var asd = efMethods.SelectWarehousesByStore(storeCode);
+            lUE_ToWarehouseCode.Properties.DataSource = asd;
         }
     }
 }

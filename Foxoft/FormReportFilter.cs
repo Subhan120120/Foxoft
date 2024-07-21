@@ -57,10 +57,13 @@ namespace Foxoft
             this.Text = Report.ReportName;
 
             dcReport.ReportQuery = cM.AddFilters(dcReport.ReportQuery, dcReport);
-            SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
 
             if (!String.IsNullOrEmpty(dcReport.ReportQuery))
-                filterControl_Outer.SourceControl = adoMethods.SqlGetDt(dcReport.ReportQuery, sqlParameters);
+            {
+                SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
+                string qry = cM.AddTop(dcReport.ReportQuery, 1);
+                filterControl_Outer.SourceControl = adoMethods.SqlGetDt(qry, sqlParameters);
+            }
 
             filterControl_Outer.FilterString = dcReport.ReportFilter;
 

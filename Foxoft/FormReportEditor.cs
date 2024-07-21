@@ -87,7 +87,7 @@ namespace Foxoft
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error Code: 1215451 ");
+                    MessageBox.Show(ex.Message, "Foxoft Error Code: 1215451 ");
                 }
             }
         }

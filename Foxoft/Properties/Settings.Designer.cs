@@ -145,8 +145,7 @@ namespace Foxoft.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Main;Persist Security Info=True;TrustServerC" +
-            "ertificate=True;User ID=sa;Password=sql123_")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Main;Persist Security Info=True;TrustServerCertificate=True;User ID=sa;Password=sql123_")]
         public string MainConnString {
             get {
                 return ((string)(this["MainConnString"]));
@@ -160,8 +159,7 @@ namespace Foxoft.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServer" +
-            "Certificate=True;User ID=sa;Password=sql123_")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServerCertificate=True;User ID=sa;Password=sql123_")]
         public string SubConnString {
             get {
                 return ((string)(this["SubConnString"]));

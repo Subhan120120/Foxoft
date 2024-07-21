@@ -136,6 +136,7 @@ namespace Foxoft
                             returnInvoiceLine.InvoiceHeaderId = returnInvoiceHeaderId;
                             returnInvoiceLine.RelatedLineId = invoiceLineID;
                             returnInvoiceLine.ProductCode = invoiceLine.ProductCode;
+                            returnInvoiceLine.ProductCost = invoiceLine.ProductCost;
 
                             if (CustomExtensions.ProcessDir(processCode) == "In")
                                 returnInvoiceLine.QtyIn = formQty.qty * (-1);
