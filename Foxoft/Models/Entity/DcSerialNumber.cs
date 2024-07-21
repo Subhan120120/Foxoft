@@ -23,11 +23,18 @@ namespace Foxoft.Models
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string SerialNumberCode { get; set; }
 
+
+        [Display(Name = "Məhsul Kodu")]
+        [ForeignKey("DcProduct")]
+        public string ProductCode { get; set; }
+
         //[Display(Name = "Seria Nömrəsi Açıqlaması")]
         //[Required(ErrorMessage = "{0} boş buraxıla bilmez \n")]
         //[StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         //public string SerialNumberDesc { get; set; }
 
+
+        public virtual DcProduct DcProduct { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
 
     }

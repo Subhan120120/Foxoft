@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Microsoft.EntityFrameworkCore.Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
+    [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
     public partial class TrInvoiceLine : BaseEntity
     {
         [Key]
@@ -132,6 +132,11 @@ namespace Foxoft.Models
         [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
         public string? LineDescription { get; set; }
 
+        [ForeignKey("DcSerialNumber")]
+        [Display(Name = "Seria Nömrəsi")]
+        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+        public string? SerialNumberCode { get; set; }
+
         [Display(Name = "Satıcı")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
         public string? SalesPersonCode { get; set; }
@@ -161,6 +166,7 @@ namespace Foxoft.Models
 
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
+        public virtual DcSerialNumber DcSerialNumber { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
         public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }
     }

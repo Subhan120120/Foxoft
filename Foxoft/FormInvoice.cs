@@ -770,6 +770,26 @@ namespace Foxoft
             SelectSalesPerson(sender);
         }
 
+        private void repoBtnEdit_SerialNumberCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
+
+            using FormCommonList<DcSerialNumber> form = new("SN", "SerialNumberCode", editor.EditValue?.ToString(), "ProductCode", productCode);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    editor.EditValue = form.Value_Id;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         BaseEdit editorCustom;
         private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
         {
