@@ -24,7 +24,7 @@ Select pro.ProductCode
 		, HierarchyDesc
 		, ProductTypeCode
 		--, ProductId	
-		, ProductCost = dbo.GetProductCost(pro.ProductCode)
+		, ProductCost = dbo.GetProductCost(pro.ProductCode, null)
 		, CalcClosingStockFifo.FIFO_CORG
 		
 from DcProducts pro
