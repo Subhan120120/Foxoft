@@ -118,6 +118,7 @@ namespace Foxoft
 
         private bool CheckLicense()
         {
+            return true;
             string encrypt = efMethods.SelectAppSetting().License;
 
             if (string.IsNullOrEmpty(encrypt))

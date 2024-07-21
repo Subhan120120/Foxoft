@@ -72,6 +72,8 @@ namespace Foxoft
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
+            colSerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoBtnEdit_SerialNumberCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
             checkEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
@@ -167,6 +169,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_Price).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SalesPersonCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SerialNumberCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsReturn.Properties).BeginInit();
@@ -268,7 +271,7 @@ namespace Foxoft
             gC_InvoiceLine.Location = new Point(12, 132);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
-            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc });
+            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode });
             gC_InvoiceLine.Size = new Size(1024, 221);
             gC_InvoiceLine.TabIndex = 11;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
@@ -279,7 +282,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(760, 456, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -552,6 +555,21 @@ namespace Foxoft
             colProductCost.Name = "colProductCost";
             colProductCost.Visible = true;
             colProductCost.VisibleIndex = 10;
+            // 
+            // colSerialNumberCode
+            // 
+            colSerialNumberCode.ColumnEdit = repoBtnEdit_SerialNumberCode;
+            colSerialNumberCode.FieldName = "SerialNumberCode";
+            colSerialNumberCode.Name = "colSerialNumberCode";
+            colSerialNumberCode.Visible = true;
+            colSerialNumberCode.VisibleIndex = 12;
+            // 
+            // repoBtnEdit_SerialNumberCode
+            // 
+            repoBtnEdit_SerialNumberCode.AutoHeight = false;
+            repoBtnEdit_SerialNumberCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_SerialNumberCode.Name = "repoBtnEdit_SerialNumberCode";
+            repoBtnEdit_SerialNumberCode.ButtonPressed += repoBtnEdit_SerialNumberCode_ButtonPressed;
             // 
             // checkEdit_IsSent
             // 
@@ -1324,6 +1342,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_Price).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SalesPersonCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SerialNumberCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsReturn.Properties).EndInit();
@@ -1501,5 +1520,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarCheckItem BCI_ShowPicture;
         private DevExpress.XtraBars.BarCheckItem BCI_ShowPrint;
         private DevExpress.XtraBars.BarCheckItem BCI_ShowCopy;
+        private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SerialNumberCode;
     }
 }
