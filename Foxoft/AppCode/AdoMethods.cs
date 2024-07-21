@@ -137,8 +137,5 @@ namespace Foxoft
         {
             SqlExec("update report");
         }
-
-
-
     }
 }

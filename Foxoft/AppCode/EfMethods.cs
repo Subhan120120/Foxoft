@@ -283,17 +283,7 @@ namespace Foxoft
                                     BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
                                     BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
                                     BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
-                                    //LastPurchasePrice = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.ProcessCode == "RP" || l.TrInvoiceHeader.ProcessCode == "CI")
-                                    //                                   .Where(l => !l.TrInvoiceHeader.IsReturn)
-                                    //                                   .OrderByDescending(l => l.TrInvoiceHeader.DocumentDate)
-                                    //                                   .ThenByDescending(l => l.TrInvoiceHeader.DocumentTime)
-                                    //                                   .Select(il => new
-                                    //                                   {
-                                    //                                       LineExpences = il.TrInvoiceLineExt.Sum(ile => ile.Expense) // Adjust if the column name is different
-                                    //                                   })
-                                    //                                   .Select(il => (decimal?)((il.PriceDiscounted ?? 0) + (il.LineExpences ?? 0))) // Adjusting for possible null values
-                                    //                                   .FirstOrDefault(),
-                                    ProductCost = SqlFunctions.GetProductCost(x.ProductCode),
+                                    ProductCost = SqlFunctions.GetProductCost(x.ProductCode, null),
                                     ProductCode = x.ProductCode,
                                     ProductDesc = x.ProductDesc,
                                     PosDiscount = x.PosDiscount,
