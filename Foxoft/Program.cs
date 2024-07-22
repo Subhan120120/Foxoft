@@ -93,7 +93,6 @@ namespace Foxoft
                 {
                     try
                     {
-                        DatabaseFacade asdasd = db.Database;
                         db.Database.OpenConnection();
                         db.Database.CloseConnection();
                         return true;

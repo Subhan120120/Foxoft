@@ -253,8 +253,10 @@ namespace Foxoft
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
             if (e.FieldName == "ProductCode") e.EditorType = typeof(ButtonEdit);
+            if (e.FieldName == "CurrAccCode") e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == "DiscountId") e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == "ReportId") e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == "RoleCode") e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == "FormCode") e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == "HierarchyCode") e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == "FeatureTypeId") e.EditorType = typeof(ButtonEdit);
@@ -270,6 +272,11 @@ namespace Foxoft
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ProductCode_ButtonPressed);
             }
+            if (e.FieldName == "CurrAccCode") // add FieldRetrieving too
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_CurrAccCode_ButtonPressed);
+            }
             if (e.FieldName == "DiscountId")// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
@@ -284,6 +291,11 @@ namespace Foxoft
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ReportId_ButtonPressed);
+            }
+            if (e.FieldName == "RoleCode")// add FieldRetrieving too
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_RoleCode_ButtonPressed);
             }
             if (e.FieldName == "HierarchyCode")// add FieldRetrieving too
             {
@@ -315,6 +327,24 @@ namespace Foxoft
             }
         }
 
+        private void repoBtnEdit_CurrAccCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string currAccCode = editor.EditValue?.ToString();
+
+            using FormCurrAccList form = new(new byte[] { 1, 2, 3}, currAccCode);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.dcCurrAcc.CurrAccCode;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         private void repoBtnEdit_DiscountId_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit editor = (ButtonEdit)sender;
@@ -339,6 +369,24 @@ namespace Foxoft
             string value = editor.EditValue?.ToString();
 
             using FormCommonList<DcReport> form = new("", "ReportId", value, new string[] { "ReportQuery", "ReportTypeId", "ReportLayout", "ReportFilter" });
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.Value_Id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_RoleCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string value = editor.EditValue?.ToString();
+
+            using FormCommonList<DcRole> form = new("", "RoleCode", value);
 
             try
             {

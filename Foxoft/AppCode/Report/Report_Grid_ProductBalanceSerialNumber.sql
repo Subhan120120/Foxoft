@@ -1,0 +1,4 @@
+﻿
+
+select * From ProductBalanceSerialNumber
+

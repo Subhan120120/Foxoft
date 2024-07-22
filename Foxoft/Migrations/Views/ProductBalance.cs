@@ -28,6 +28,27 @@ namespace Foxoft.Migrations
                   FOR WarehouseCode IN ([depo-01]) 
                 ) AS PivotTable"
                 );
+
+            migrationBuilder.Sql(
+            @"CREATE OR ALTER VIEW ProductBalanceSerialNumber
+                AS 
+                									
+                select * from (
+                				select ProductCode
+                								, WarehouseCode
+                								, Balance = SUM(ISNULL(QtyIn,0) - ISNULL(QtyOut,0))  
+                                                , SerialNumberCode
+                				from TrInvoiceLines il
+                				left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId
+                				group by ProductCode
+                								, WarehouseCode
+                                                , SerialNumberCode
+                ) AS SourceTable  
+                PIVOT  
+                ( AVG(Balance)
+                  FOR WarehouseCode IN ([depo-01]) 
+                ) AS PivotTable"
+                );
         }
 
         /// <inheritdoc />

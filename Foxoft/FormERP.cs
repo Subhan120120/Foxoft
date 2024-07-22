@@ -111,11 +111,12 @@ namespace Foxoft
             this.aCE_CountOut.Name = "CountOut";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
-            this.aCE_CurrAccAll.Name = "CurrAccAll";
+            this.aCE_CurrAccRole.Name = "CurrAccAll";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_Discounts.Name = "DiscountList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
             this.ACE_HierarchyFeatureType.Name = "HierarchyFeatureType";
+            this.aCE_CurrAccRole.Name = "CurrAccRole";
             this.bBI_Session.Name = "Session";
         }
 
@@ -399,6 +400,11 @@ namespace Foxoft
         private void ACE_HierarchyFeatureType_Click(object sender, EventArgs e)
         {
             ShowExistForm<FormHierarchyFeatureType>();
+        }
+
+        private void aCE_CurrAccRole_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormCurrAccRole>();
         }
     }
 }

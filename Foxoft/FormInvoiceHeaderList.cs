@@ -115,6 +115,7 @@ namespace Foxoft
                             RelatedInvoiceId = x.RelatedInvoiceId,
                             StoreCode = x.StoreCode,
                             WarehouseCode = x.WarehouseCode,
+                            ToWarehouseCode = x.ToWarehouseCode,
                             IsMainTF = x.IsMainTF
                         })
                         .ToList();

@@ -1914,7 +1914,7 @@ namespace Foxoft
             if (dcWarehouses is not null && trInvoiceHeader is not null)
             {
                 DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
-                if (dcWarehouse is not null && trInvoiceHeader?.WarehouseCode is null)
+                if (dcWarehouse is not null )
                 {
                     trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                     lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;

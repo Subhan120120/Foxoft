@@ -31,6 +31,7 @@
     <None Remove="AppCode\Report\Report_Grid_MoneyMovements.xml" />
     <None Remove="AppCode\Report\Report_Grid_MovementsWithAccounts.sql" />
     <None Remove="AppCode\Report\Report_Grid_MovementsWithAccounts.xml" />
+    <None Remove="AppCode\Report\Report_Grid_ProductBalanceSerialNumber.sql" />
     <None Remove="AppCode\Report\Report_Grid_ProductMovements.sql" />
     <None Remove="AppCode\Report\Report_Grid_ProductMovements.xml" />
     <None Remove="AppCode\Report\Report_Grid_Profit.sql" />
@@ -83,6 +84,7 @@
     <EmbeddedResource Include="AppCode\Report\Report_Grid_MoneyMovements.xml" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_MovementsWithAccounts.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_MovementsWithAccounts.xml" />
+    <EmbeddedResource Include="AppCode\Report\Report_Grid_ProductBalanceSerialNumber.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_ProductMovements.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_ProductMovements.xml" />
     <EmbeddedResource Include="AppCode\Report\Report_Grid_Profit.sql" />

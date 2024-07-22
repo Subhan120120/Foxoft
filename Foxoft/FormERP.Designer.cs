@@ -30,6 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -85,7 +86,7 @@ namespace Foxoft
             ACE_HierarchyFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Reports = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            aCE_CurrAccAll = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
@@ -501,23 +502,24 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccAll, ACE_ProductFeatureType, accordionControlSeparator2 });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_ProductFeatureType, accordionControlSeparator2 });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
             aCE_Setting.Text = "Parametr";
             // 
-            // aCE_CurrAccAll
+            // aCE_CurrAccRole
             // 
-            aCE_CurrAccAll.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccAll.ImageOptions.SvgImage");
-            aCE_CurrAccAll.Name = "aCE_CurrAccAll";
-            aCE_CurrAccAll.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            aCE_CurrAccAll.Text = "İstifadəçilər";
+            aCE_CurrAccRole.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccAll.ImageOptions.SvgImage");
+            aCE_CurrAccRole.Name = "aCE_CurrAccRole";
+            aCE_CurrAccRole.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_CurrAccRole.Text = "İstifadəçilər";
+            aCE_CurrAccRole.Click += aCE_CurrAccRole_Click;
             // 
-            // ACE_ProductFeatureTypes
+            // ACE_ProductFeatureType
             // 
-            ACE_ProductFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ProductFeatureTypes.ImageOptions.SvgImage");
-            ACE_ProductFeatureType.Name = "ACE_ProductFeatureTypes";
+            ACE_ProductFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ProductFeatureType.ImageOptions.SvgImage");
+            ACE_ProductFeatureType.Name = "ACE_ProductFeatureType";
             ACE_ProductFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_ProductFeatureType.Text = "Məhsul Özəllikləri";
             ACE_ProductFeatureType.Click += ACE_ProductFeatureTypes_Click;
@@ -574,7 +576,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_HumanResource;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Reports;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Setting;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAccAll;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAccRole;
         private DevExpress.XtraBars.BarButtonItem bBI_POS;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_RetailSaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_Expense;

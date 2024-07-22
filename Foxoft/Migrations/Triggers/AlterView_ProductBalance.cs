@@ -43,6 +43,41 @@ namespace Foxoft.Migrations
 									
 									");
 
+            migrationBuilder.Sql(@"
+									CREATE OR ALTER TRIGGER [dbo].[CreateView_ProductBalanceSerialNumber]
+									ON [dbo].[DcWarehouses]
+									AFTER INSERT, UPDATE, DELETE
+									AS
+									BEGIN
+										DECLARE  @colsPivot AS NVARCHAR(MAX), @SQL AS NVARCHAR(MAX);
+									
+										SELECT @colsPivot = COALESCE(@colsPivot + ', ', '') + QUOTENAME(WarehouseCode) FROM DcWarehouses
+									
+									    SET @SQL = N'
+										CREATE OR ALTER VIEW ProductBalanceSerialNumber
+										AS 
+									
+										select * from (
+											select ProductCode
+												, WarehouseCode
+												, Balance = SUM(ISNULL(QtyIn,0) - ISNULL(QtyOut,0))  
+                                                , SerialNumberCode
+											from TrInvoiceLines il
+											left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId
+											group by ProductCode
+												, WarehouseCode
+                                                , SerialNumberCode
+										) AS SourceTable  
+										PIVOT  
+										( AVG(Balance)
+										  FOR WarehouseCode IN (' + @colsPivot  + ') 
+										) AS PivotTable ';
+									    
+									    EXEC sp_executesql @SQL;
+									END;
+									
+									");
+
         }
 
         /// <inheritdoc />
