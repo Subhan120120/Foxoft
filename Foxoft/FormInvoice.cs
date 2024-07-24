@@ -1026,37 +1026,40 @@ namespace Foxoft
 
             decimal invoiceSumLoc = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
-            if (invoiceSumLoc > 0)
+            if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
+                invoiceSumLoc *= (-1);
+
+            bool isNegativ = false;
+
+            if (invoiceSumLoc < 0)
+                isNegativ = true;
+
+            bool paymentHeadExist = efMethods.PaymentHeaderExistByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            if (paymentHeadExist)
+                trPaymentHeader = efMethods.SelectPaymentHeaderByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            else
             {
-                if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
-                    invoiceSumLoc *= (-1);
-
-                bool isNegativ = false;
-
-                if (invoiceSumLoc < 0)
-                    isNegativ = true;
-
-                EfMethods efMethods = new();
-
                 string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
                 trPaymentHeader.DocumentNumber = NewDocNum;
                 trPaymentHeader.Description = trInvoiceHeader.Description;
 
-                efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-
                 efMethods.InsertPaymentHeader(trPaymentHeader);
+            }
 
-                List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
-                foreach (TrInvoiceLine il in trInvoiceLines)
+            efMethods.DeletePaymentLinesByPaymentHeader(trPaymentHeader.PaymentHeaderId);
+
+            List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+            foreach (TrInvoiceLine il in trInvoiceLines)
+            {
+                if (il.NetAmount != 0)
                 {
                     trPaymentLine.PaymentHeaderId = trPaymentHeader.PaymentHeaderId;
-                    trPaymentLine.PaymentLineId = Guid.NewGuid();
+                    trPaymentLine.PaymentLineId = il.InvoiceLineId;
                     trPaymentLine.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
                     trPaymentLine.CurrencyCode = il.CurrencyCode;
                     trPaymentLine.ExchangeRate = il.ExchangeRate;
                     trPaymentLine.LineDescription = il.LineDescription;
                     trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
-
                     efMethods.InsertPaymentLine(trPaymentLine);
                 }
             }

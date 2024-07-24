@@ -821,6 +821,12 @@ namespace Foxoft
             return db.TrPaymentHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
         }
 
+        public TrPaymentHeader SelectPaymentHeaderByInvoice(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            return db.TrPaymentHeaders.FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
+        }
+
         public int DeletePaymentsByInvoiceId(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -828,6 +834,17 @@ namespace Foxoft
                                                                .ToList();
             if (trPaymentHeaders is not null)
                 db.TrPaymentHeaders.RemoveRange(trPaymentHeaders);
+
+            return db.SaveChanges();
+        }
+
+        public int DeletePaymentLinesByPaymentHeader(Guid paymentHeader)
+        {
+            using subContext db = new();
+            List<TrPaymentLine> paymentLines = db.TrPaymentLines.Where(x => x.PaymentHeaderId == paymentHeader)
+                                                               .ToList();
+            if (paymentLines is not null)
+                db.TrPaymentLines.RemoveRange(paymentLines);
 
             return db.SaveChanges();
         }
