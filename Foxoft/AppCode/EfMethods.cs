@@ -215,6 +215,17 @@ namespace Foxoft
                 .FirstOrDefault();
         }
 
+        public DcProduct SelectProductBySerialNumber(string serialNumberCode)
+        {
+            if (string.IsNullOrEmpty(serialNumberCode))
+                return null;
+            using subContext db = new();
+            return db.DcSerialNumbers
+                .Where(x => x.SerialNumberCode == serialNumberCode)
+                .Select(x => x.DcProduct)
+                .FirstOrDefault();
+        }
+
         public DcProduct SelectProductBySlug(string slug)
         {
             if (string.IsNullOrEmpty(slug))

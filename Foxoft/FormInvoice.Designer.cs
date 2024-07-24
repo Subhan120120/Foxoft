@@ -158,6 +158,7 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            col_SerialNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -282,7 +283,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, col_SerialNumber });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(760, 456, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -329,7 +330,7 @@ namespace Foxoft
             col_ProductCode.FieldName = "ProductCode";
             col_ProductCode.Name = "col_ProductCode";
             col_ProductCode.Visible = true;
-            col_ProductCode.VisibleIndex = 1;
+            col_ProductCode.VisibleIndex = 2;
             col_ProductCode.Width = 42;
             // 
             // repoBtnEdit_ProductCode
@@ -392,7 +393,7 @@ namespace Foxoft
             col_Price.FieldName = "Price";
             col_Price.Name = "col_Price";
             col_Price.Visible = true;
-            col_Price.VisibleIndex = 5;
+            col_Price.VisibleIndex = 6;
             col_Price.Width = 45;
             // 
             // repoCalcEdit_Price
@@ -411,7 +412,7 @@ namespace Foxoft
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 6;
+            colCurrencyCode.VisibleIndex = 7;
             colCurrencyCode.Width = 45;
             // 
             // repoLUE_CurrencyCode
@@ -562,7 +563,7 @@ namespace Foxoft
             colSerialNumberCode.FieldName = "SerialNumberCode";
             colSerialNumberCode.Name = "colSerialNumberCode";
             colSerialNumberCode.Visible = true;
-            colSerialNumberCode.VisibleIndex = 12;
+            colSerialNumberCode.VisibleIndex = 13;
             // 
             // repoBtnEdit_SerialNumberCode
             // 
@@ -1315,6 +1316,13 @@ namespace Foxoft
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             // 
+            // col_SerialNumber
+            // 
+            col_SerialNumber.Caption = "Seria Nomresi";
+            col_SerialNumber.Name = "col_SerialNumber";
+            col_SerialNumber.Visible = true;
+            col_SerialNumber.VisibleIndex = 0;
+            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -1523,5 +1531,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarCheckItem BCI_ShowCopy;
         private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SerialNumberCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_SerialNumber;
     }
 }

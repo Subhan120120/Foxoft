@@ -89,6 +89,11 @@ namespace Foxoft
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
 
+
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
+            if (!currAccHasClaims)
+                RPG_Payment.Visible = false;
+
             //string storeCode = lUE_StoreCode.EditValue?.ToString();
             //List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
 
@@ -567,6 +572,30 @@ namespace Foxoft
                     }
                 }
             }
+
+            if (e.Column == col_SerialNumber)
+            {
+                if (gV.IsLastRow)
+                {
+                    // Add a new row
+                    gV.AddNewRow();
+
+                    gV.MoveNext();
+                    gV.UpdateCurrentRow();
+                    // Update the new row index
+                }
+                else
+                {
+                    // Move to the next row
+                    gV.MoveNext();
+                }
+
+                // Set the focus to the Barcode column in the new row
+                gV.FocusedColumn = e.Column;
+
+                // Ensure the cell is focused and in edit mode
+                gV.ShowEditor();
+            }
         }
 
         #region CalcRowLocNetAmount
@@ -693,7 +722,7 @@ namespace Foxoft
                 }
             }
 
-            if (column == colBarcode || column == col_ProductCode)
+            if (column == colBarcode || column == col_ProductCode || column == col_SerialNumber)
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
 
@@ -701,6 +730,8 @@ namespace Foxoft
 
                 if (column == colBarcode)
                     product = efMethods.SelectProductByBarcode(eValue);
+                if (column == col_SerialNumber)
+                    product = efMethods.SelectProductBySerialNumber(eValue);
                 if (column == col_ProductCode)
                     product = efMethods.SelectProduct(eValue);
 
@@ -796,23 +827,7 @@ namespace Foxoft
             GridView view = sender as GridView;
             editorCustom = view.ActiveEditor;
             editorCustom.DoubleClick += editor_DoubleClick;
-
-            //Barcode Move Next Row
-            //BaseEdit edit = (sender as GridView).ActiveEditor;
-            //edit.KeyDown -= Edit_KeyDown;
-            //edit.KeyDown += Edit_KeyDown;
         }
-
-        //private void Edit_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //   if (e.KeyCode == Keys.Enter)
-        //   {
-        //      if (!this.gV_InvoiceLine.IsLastVisibleRow)
-        //         this.gV_InvoiceLine.MoveNext();
-        //      else
-        //         this.gV_InvoiceLine.MoveFirst();
-        //   }
-        //}
 
         void gV_InvoiceLine_HiddenEditor(object sender, EventArgs e)
         {
@@ -1279,10 +1294,12 @@ namespace Foxoft
             {
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
+
                     if (efMethods.PaymentHeaderExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
                         if (dcProcess.ProcessCode == "EX")
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                        else if (MessageBox.Show("Qaimə üzrə olan ödənişləri də silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                        else if (currAccHasClaims && MessageBox.Show("Qaimə üzrə olan ödənişləri də silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
 
                     if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
@@ -1312,8 +1329,6 @@ namespace Foxoft
             LookUpEdit textEditor = (LookUpEdit)sender;
             float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
             gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, exRate);
-
-            //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_InvoiceLine.FocusedRowHandle, colExchangeRate, exRate));
         }
 
         private void bBI_SaveAndQuit_ItemClick(object sender, ItemClickEventArgs e)
@@ -1506,15 +1521,11 @@ namespace Foxoft
             GridView gv = gc.FocusedView as GridView;
 
             if (gv.FocusedColumn.ColumnType == typeof(decimal))
-            {
                 if (e.KeyChar == '.')
                     e.KeyChar = Convert.ToChar(",");
-            }
 
             if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
-            {
                 e.Handled = true;
-            }
         }
 
         private void bbi_ItemClick(object sender, ItemClickEventArgs e)
@@ -1637,9 +1648,10 @@ namespace Foxoft
         {
             if (e.KeyCode == Keys.Return) // Barcode Scan Device 
             {
-                gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
-                gV_InvoiceLine.MoveNext();
-                gV_InvoiceLine.FocusedColumn = colBarcode;
+                //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+
+                //gV_InvoiceLine.FocusedColumn = colBarcode;
+                //gV_InvoiceLine.MoveNext();
             }
         }
 
@@ -1908,13 +1920,11 @@ namespace Foxoft
             List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
             lUE_WarehouseCode.Properties.DataSource = dcWarehouses;
 
-            //if (trInvoiceHeader is not null)
-            //    trInvoiceHeader.WarehouseCode = null;
-
             if (dcWarehouses is not null && trInvoiceHeader is not null)
             {
                 DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
-                if (dcWarehouse is not null )
+
+                if (dcWarehouse is not null && !dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader.WarehouseCode))
                 {
                     trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                     lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
