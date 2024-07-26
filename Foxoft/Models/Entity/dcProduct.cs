@@ -23,7 +23,7 @@ namespace Foxoft.Models
             TrProductHierarchies = new HashSet<TrProductHierarchy>();
             TrProductDiscounts = new HashSet<TrProductDiscount>();
             TrPriceListLines = new HashSet<TrPriceListLine>();
-    }
+        }
 
         [Key]
         [Display(Name = "Məhsul Kodu")]
@@ -108,19 +108,6 @@ namespace Foxoft.Models
         [NotMapped]
         [Display(Name = "Qalıq")]
         public int Balance { get; set; }
-        //public int Balance { get { return TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut); } set { } }
-
-        [NotMapped]
-        [Display(Name = "Qalıq Merkez")]
-        public int BalanceM { get; set; }
-
-        [NotMapped]
-        [Display(Name = "Qalıq SIRA 20")]
-        public int BalanceF { get; set; }
-
-        [NotMapped]
-        [Display(Name = "Qalıq SIRA 5")]
-        public int BalanceS { get; set; }
 
         [NotMapped]
         [Display(Name = "Son Alış Qiy.")]
@@ -135,6 +122,7 @@ namespace Foxoft.Models
         //[ForeignKey("SiteProductId")]
         public virtual SiteProduct SiteProduct { get; set; }
         public virtual DcHierarchy DcHierarchy { get; set; }
+        public virtual ProductBalance ProductBalance { get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }

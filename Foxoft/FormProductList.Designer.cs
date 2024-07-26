@@ -33,38 +33,29 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductList));
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject1 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject2 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject3 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject4 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject5 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject6 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject7 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject8 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject9 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject10 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject11 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject12 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject13 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject14 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject15 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject16 = new SerializableAppearanceObject();
             gC_ProductList = new MyGridControl();
             gV_ProductList = new MyGridView(this);
-            dcProductsBindingSource = new System.Windows.Forms.BindingSource(components);
-            colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
-            colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colProductTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colUsePos = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPromotionCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPromotionCode2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            colTaxRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
-            colIsDisabled = new DevExpress.XtraGrid.Columns.GridColumn();
-            colRetailPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPurchasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            colWholesalePrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            colUseInternet = new DevExpress.XtraGrid.Columns.GridColumn();
-            colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
-            colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
-            colLastSalePrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            colDcProductType = new DevExpress.XtraGrid.Columns.GridColumn();
-            colTrPrices = new DevExpress.XtraGrid.Columns.GridColumn();
-            colTrInvoiceLines = new DevExpress.XtraGrid.Columns.GridColumn();
-            colTrFeature = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
-            colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            colBalanceF = new DevExpress.XtraGrid.Columns.GridColumn();
-            colBalanceM = new DevExpress.XtraGrid.Columns.GridColumn();
-            colBalanceS = new DevExpress.XtraGrid.Columns.GridColumn();
-            colHierarchyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            dcProductsBindingSource = new BindingSource(components);
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_ProductNew = new DevExpress.XtraBars.BarButtonItem();
             btn_ProductEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -91,6 +82,8 @@ namespace Foxoft
             popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             svgImageCollection1 = new SvgImageCollection(components);
+            repositoryItemRibbonSearchEdit1 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
+            repositoryItemRibbonSearchEdit2 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_ProductList).BeginInit();
@@ -98,203 +91,37 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit2).BeginInit();
             SuspendLayout();
             // 
             // gC_ProductList
             // 
             gC_ProductList.DataSource = dcProductsBindingSource;
-            gC_ProductList.Dock = System.Windows.Forms.DockStyle.Fill;
-            gC_ProductList.Location = new System.Drawing.Point(0, 158);
+            gC_ProductList.Dock = DockStyle.Fill;
+            gC_ProductList.Location = new Point(0, 158);
             gC_ProductList.MainView = gV_ProductList;
             gC_ProductList.Name = "gC_ProductList";
-            gC_ProductList.Size = new System.Drawing.Size(865, 481);
+            gC_ProductList.Size = new Size(865, 481);
             gC_ProductList.TabIndex = 0;
             gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ProductList });
             // 
-            // gridView1
+            // gV_ProductList
             // 
             gV_ProductList.GridControl = gC_ProductList;
-            gV_ProductList.Name = "gridView1";
-            // 
-            // colProductCode
-            // 
-            colProductCode.FieldName = "ProductCode";
-            colProductCode.Name = "colProductCode";
-            colProductCode.Visible = true;
-            colProductCode.VisibleIndex = 0;
-            colProductCode.Width = 77;
-            // 
-            // colProductDesc
-            // 
-            colProductDesc.FieldName = "ProductDesc";
-            colProductDesc.Name = "colProductDesc";
-            colProductDesc.Visible = true;
-            colProductDesc.VisibleIndex = 1;
-            colProductDesc.Width = 417;
-            // 
-            // colBarcode
-            // 
-            colBarcode.FieldName = "Barcode";
-            colBarcode.Name = "colBarcode";
-            // 
-            // colProductTypeCode
-            // 
-            colProductTypeCode.FieldName = "ProductTypeCode";
-            colProductTypeCode.Name = "colProductTypeCode";
-            // 
-            // colUsePos
-            // 
-            colUsePos.FieldName = "UsePos";
-            colUsePos.Name = "colUsePos";
-            // 
-            // colPromotionCode
-            // 
-            colPromotionCode.FieldName = "PromotionCode";
-            colPromotionCode.Name = "colPromotionCode";
-            // 
-            // colPromotionCode2
-            // 
-            colPromotionCode2.FieldName = "PromotionCode2";
-            colPromotionCode2.Name = "colPromotionCode2";
-            // 
-            // colTaxRate
-            // 
-            colTaxRate.FieldName = "TaxRate";
-            colTaxRate.Name = "colTaxRate";
-            // 
-            // colPosDiscount
-            // 
-            colPosDiscount.FieldName = "PosDiscount";
-            colPosDiscount.Name = "colPosDiscount";
-            // 
-            // colIsDisabled
-            // 
-            colIsDisabled.FieldName = "IsDisabled";
-            colIsDisabled.Name = "colIsDisabled";
-            // 
-            // colRetailPrice
-            // 
-            colRetailPrice.FieldName = "RetailPrice";
-            colRetailPrice.Name = "colRetailPrice";
-            // 
-            // colPurchasePrice
-            // 
-            colPurchasePrice.FieldName = "PurchasePrice";
-            colPurchasePrice.Name = "colPurchasePrice";
-            // 
-            // colWholesalePrice
-            // 
-            colWholesalePrice.FieldName = "WholesalePrice";
-            colWholesalePrice.Name = "colWholesalePrice";
-            colWholesalePrice.Visible = true;
-            colWholesalePrice.VisibleIndex = 6;
-            colWholesalePrice.Width = 122;
-            // 
-            // colUseInternet
-            // 
-            colUseInternet.FieldName = "UseInternet";
-            colUseInternet.Name = "colUseInternet";
-            // 
-            // colBalance
-            // 
-            colBalance.FieldName = "Balance";
-            colBalance.Name = "colBalance";
-            // 
-            // colProductCost
-            // 
-            colProductCost.DisplayFormat.FormatString = "{0:n2}";
-            colProductCost.DisplayFormat.FormatType = FormatType.Numeric;
-            colProductCost.FieldName = "ProductCost";
-            colProductCost.Name = "colProductCost";
-            colProductCost.Visible = true;
-            colProductCost.VisibleIndex = 5;
-            colProductCost.Width = 105;
-            // 
-            // colLastSalePrice
-            // 
-            colLastSalePrice.FieldName = "LastSalePrice";
-            colLastSalePrice.Name = "colLastSalePrice";
-            // 
-            // colDcProductType
-            // 
-            colDcProductType.FieldName = "DcProductType";
-            colDcProductType.Name = "colDcProductType";
-            // 
-            // colTrPrices
-            // 
-            colTrPrices.FieldName = "TrPrices";
-            colTrPrices.Name = "colTrPrices";
-            // 
-            // colTrInvoiceLines
-            // 
-            colTrInvoiceLines.FieldName = "TrInvoiceLines";
-            colTrInvoiceLines.Name = "colTrInvoiceLines";
-            // 
-            // colTrFeature
-            // 
-            colTrFeature.FieldName = "TrFeature";
-            colTrFeature.Name = "colTrFeature";
-            // 
-            // colCreatedUserName
-            // 
-            colCreatedUserName.FieldName = "CreatedUserName";
-            colCreatedUserName.Name = "colCreatedUserName";
-            // 
-            // colCreatedDate
-            // 
-            colCreatedDate.FieldName = "CreatedDate";
-            colCreatedDate.Name = "colCreatedDate";
-            // 
-            // colLastUpdatedUserName
-            // 
-            colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
-            colLastUpdatedUserName.Name = "colLastUpdatedUserName";
-            // 
-            // colLastUpdatedDate
-            // 
-            colLastUpdatedDate.FieldName = "LastUpdatedDate";
-            colLastUpdatedDate.Name = "colLastUpdatedDate";
-            // 
-            // colBalanceF
-            // 
-            colBalanceF.FieldName = "BalanceF";
-            colBalanceF.Name = "colBalanceF";
-            colBalanceF.Visible = true;
-            colBalanceF.VisibleIndex = 3;
-            colBalanceF.Width = 85;
-            // 
-            // colBalanceM
-            // 
-            colBalanceM.FieldName = "BalanceM";
-            colBalanceM.Name = "colBalanceM";
-            colBalanceM.Visible = true;
-            colBalanceM.VisibleIndex = 2;
-            colBalanceM.Width = 87;
-            // 
-            // colBalanceS
-            // 
-            colBalanceS.FieldName = "BalanceS";
-            colBalanceS.Name = "colBalanceS";
-            colBalanceS.Visible = true;
-            colBalanceS.VisibleIndex = 4;
-            // 
-            // colHierarchyCode
-            // 
-            colHierarchyCode.Caption = "gridColumn1";
-            colHierarchyCode.FieldName = "HierarchyCode";
-            colHierarchyCode.Name = "colHierarchyCode";
+            gV_ProductList.Name = "gV_ProductList";
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_quit, bBI_ProductDelete, bBI_ProductRefresh, barButtonItem2, BBI_query, BSI_Report, barButtonItem4, txtEdit_filtercolumns, BBI_Save, BBI_Show });
-            ribbonControl1.Location = new System.Drawing.Point(0, 0);
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_quit, bBI_ProductDelete, bBI_ProductRefresh, barButtonItem2, BBI_query, BSI_Report, barButtonItem4, txtEdit_filtercolumns, BBI_Save, BBI_Show });
+            ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 37;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.PageHeaderItemLinks.Add(bBI_quit);
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage3 });
             ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemTextEdit1 });
-            ribbonControl1.Size = new System.Drawing.Size(865, 158);
+            ribbonControl1.Size = new Size(865, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             // 
             // BBI_ProductNew
@@ -323,7 +150,7 @@ namespace Foxoft
             bBI_quit.Caption = "Bağla";
             bBI_quit.Id = 6;
             bBI_quit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_quit.ImageOptions.SvgImage");
-            bBI_quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
+            bBI_quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Escape);
             bBI_quit.Name = "bBI_quit";
             // 
             // bBI_ProductDelete
@@ -441,10 +268,10 @@ namespace Foxoft
             // 
             // ribbonStatusBar1
             // 
-            ribbonStatusBar1.Location = new System.Drawing.Point(0, 639);
+            ribbonStatusBar1.Location = new Point(0, 639);
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
-            ribbonStatusBar1.Size = new System.Drawing.Size(865, 24);
+            ribbonStatusBar1.Size = new Size(865, 24);
             // 
             // popupMenu1
             // 
@@ -461,17 +288,39 @@ namespace Foxoft
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
             // 
+            // repositoryItemRibbonSearchEdit1
+            // 
+            repositoryItemRibbonSearchEdit1.AllowFocused = false;
+            repositoryItemRibbonSearchEdit1.AutoHeight = false;
+            repositoryItemRibbonSearchEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            editorButtonImageOptions1.AllowGlyphSkinning = DefaultBoolean.True;
+            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
+            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions1, new KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions2, new KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, ToolTipAnchor.Default) });
+            repositoryItemRibbonSearchEdit1.Name = "repositoryItemRibbonSearchEdit1";
+            repositoryItemRibbonSearchEdit1.NullText = "Search";
+            // 
+            // repositoryItemRibbonSearchEdit2
+            // 
+            repositoryItemRibbonSearchEdit2.AllowFocused = false;
+            repositoryItemRibbonSearchEdit2.AutoHeight = false;
+            repositoryItemRibbonSearchEdit2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            editorButtonImageOptions3.AllowGlyphSkinning = DefaultBoolean.True;
+            editorButtonImageOptions3.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions3.SvgImage");
+            repositoryItemRibbonSearchEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions3, new KeyShortcut(Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions4, new KeyShortcut(Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, ToolTipAnchor.Default) });
+            repositoryItemRibbonSearchEdit2.Name = "repositoryItemRibbonSearchEdit2";
+            repositoryItemRibbonSearchEdit2.NullText = "Search";
+            // 
             // FormProductList
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(865, 663);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(865, 663);
             Controls.Add(gC_ProductList);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
             Name = "FormProductList";
             Ribbon = ribbonControl1;
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterParent;
             StatusBar = ribbonStatusBar1;
             Text = "Məhsul Siyahısı";
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).EndInit();
@@ -481,6 +330,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -500,36 +351,8 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_quit;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private System.Windows.Forms.BindingSource dcProductsBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductDesc;
-        private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductTypeCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colUsePos;
-        private DevExpress.XtraGrid.Columns.GridColumn colPromotionCode;
-        private DevExpress.XtraGrid.Columns.GridColumn colPromotionCode2;
-        private DevExpress.XtraGrid.Columns.GridColumn colTaxRate;
-        private DevExpress.XtraGrid.Columns.GridColumn colPosDiscount;
-        private DevExpress.XtraGrid.Columns.GridColumn colIsDisabled;
-        private DevExpress.XtraGrid.Columns.GridColumn colRetailPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colPurchasePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colWholesalePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colUseInternet;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalance;
-        private DevExpress.XtraGrid.Columns.GridColumn colProductCost;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastSalePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colDcProductType;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrPrices;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrInvoiceLines;
-        private DevExpress.XtraGrid.Columns.GridColumn colTrFeature;
-        private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
-        private DevExpress.XtraGrid.Columns.GridColumn colCreatedDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalanceF;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalanceM;
         private DevExpress.XtraBars.BarButtonItem bBI_ProductDelete;
         private DevExpress.XtraBars.BarButtonItem bBI_ProductRefresh;
-        private DevExpress.XtraGrid.Columns.GridColumn colBalanceS;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
@@ -539,7 +362,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarSubItem BSI_Report;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
         private DevExpress.XtraBars.BarButtonItem barButtonItem5;
-        private DevExpress.XtraGrid.Columns.GridColumn colHierarchyCode;
         private DevExpress.XtraBars.BarButtonItem BBI_Save;
         private DevExpress.XtraBars.PopupMenu popupMenu1;
         private DevExpress.XtraBars.BarListItem barListItem1;
@@ -549,5 +371,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
         private DevExpress.XtraBars.BarButtonItem BBI_Show;
         private SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit repositoryItemRibbonSearchEdit1;
+        private DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit repositoryItemRibbonSearchEdit2;
     }
 }

@@ -35,10 +35,13 @@ namespace Foxoft
 
         string barcodeDesignFile = @"Barcode.repx";
         public byte[] productTypeArr;
-        RepositoryItemPictureEdit riPictureEdit = new();
-        GridColumn colImage = new();
         public DcProduct dcProduct { get; set; }
         public string productCode { get; set; }
+
+        GridColumn colImage = new();
+        GridColumn colProductCode = new();
+        GridColumn colProductCost = new();
+        GridColumn colBalance = new();
 
 
         public FormProductList()
@@ -57,6 +60,7 @@ namespace Foxoft
 
             LoadLayout();
 
+            RepositoryItemPictureEdit riPictureEdit = new();
             colImage.FieldName = "Image";
             colImage.Caption = "Şəkil";
             colImage.UnboundType = UnboundColumnType.Object;
@@ -91,9 +95,6 @@ namespace Foxoft
         private void FormProductList_Load(object sender, EventArgs e)
         {
             FocusValue(productCode);
-
-            //gV_ProductList.OptionsFind.FindFilterColumns = "ProductDesc";
-            //gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
         }
 
         private void Events()
@@ -154,10 +155,8 @@ namespace Foxoft
             {
                 BBI = new();
                 BBI.Caption = report.DcReport.ReportName;
-                //BBI.Id = report.DcReport.ReportId;
                 BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
                 BBI.Name = report.DcReport.ReportId.ToString();
-                //String txt = new BarShortcut(System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J).ToString();
                 if (!string.IsNullOrEmpty(report.Shortcut))
                 {
                     KeysConverter cvt = new();
@@ -210,7 +209,6 @@ namespace Foxoft
 
             BBI = new();
             BBI.Caption = "Əlavə Et";
-            //BBI.Id = report.DcReport.ReportId;
             BBI.ImageOptions.SvgImage = svgImageCollection1["add"];
             BBI.Name = "Add";
 
@@ -221,7 +219,6 @@ namespace Foxoft
 
             BBI.ItemClick += (sender, e) =>
             {
-                //DcReport dcReport = report.DcReport;
                 using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", "Products");
                 try
                 {
@@ -249,6 +246,11 @@ namespace Foxoft
 
         private void LoadLayout()
         {
+
+            colProductCode = gV_ProductList.Columns[nameof(DcProduct.ProductCode)];
+            colBalance = gV_ProductList.Columns[nameof(DcProduct.Balance)];
+            colProductCost = gV_ProductList.Columns[nameof(DcProduct.ProductCost)];
+
             gV_ProductList.OptionsFind.FindFilterColumns = "*;Məhsulun Geniş Adı;" + nameof(dcProduct.ProductDesc) + ';' + nameof(dcProduct.HierarchyCode);
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
@@ -265,8 +267,6 @@ namespace Foxoft
                 gV_ProductList.RestoreLayoutFromStream(stream, option);
             }
 
-            // Kolonlarin Yetkisi 
-            colProductCost = gV_ProductList.Columns[nameof(dcProduct.ProductCost)];
             if (colProductCost != null)
             {
                 colProductCost.OptionsColumn.ShowInCustomizationForm = false;
@@ -642,11 +642,6 @@ namespace Foxoft
             LoadProducts(productTypeArr);
         }
 
-        private void BBI_Feature_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
         private void gV_ProductList_CalcRowHeight(object sender, RowHeightEventArgs e)
         {
             GridView gV = sender as GridView;
@@ -740,8 +735,6 @@ namespace Foxoft
             if (info == null) return;
 
             SaveLayout();
-
-            //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
         }
 
         class MenuColumnInfo

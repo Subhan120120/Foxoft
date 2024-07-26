@@ -291,9 +291,6 @@ namespace Foxoft
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                    BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
-                                    BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                                    BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
                                     ProductCost = SqlFunctions.GetProductCost(x.ProductCode, null),
                                     ProductCode = x.ProductCode,
                                     ProductDesc = x.ProductDesc,
@@ -386,9 +383,6 @@ namespace Foxoft
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                    BalanceM = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-01").Sum(l => l.QtyIn - l.QtyOut),
-                                    BalanceF = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-02").Sum(l => l.QtyIn - l.QtyOut),
-                                    BalanceS = x.TrInvoiceLines.Where(l => l.TrInvoiceHeader.WarehouseCode == "depo-03").Sum(l => l.QtyIn - l.QtyOut),
                                     ProductCode = x.ProductCode,
                                     ProductDesc = x.ProductDesc,
                                     RetailPrice = x.RetailPrice,
@@ -412,6 +406,15 @@ namespace Foxoft
 
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                     .Where(x => x.ProductCode == productCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                    .Sum(x => x.QtyIn - x.QtyOut);
+        }
+
+        public int SelectProductBalanceSerialNumber(string productCode, string warehouseCode, string serialNumberCode)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.ProductCode == productCode && x.SerialNumberCode == serialNumberCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 

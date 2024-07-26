@@ -81,6 +81,7 @@ namespace Foxoft.Models
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
         public DbSet<TrPriceListLine> TrPriceListLines { get; set; }
         public DbSet<RetailSale> RetailSales { get; set; } // view
+        public DbSet<ProductBalance> ProductBalances { get; set; } // view
         public virtual DbSet<SlugifyResult> Slugify { get; set; } // function
 
         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -126,6 +127,9 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<RetailSale>() //view
                         .ToView(nameof(RetailSale));
+
+            modelBuilder.Entity<ProductBalance>() //view
+                        .ToView(nameof(ProductBalance));
 
             modelBuilder.Entity<GetNextDocNum>() //procedure
                         .HasNoKey()

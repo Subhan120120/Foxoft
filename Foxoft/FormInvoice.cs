@@ -652,15 +652,16 @@ namespace Foxoft
                 if ((!trInvoiceHeader.IsReturn) && new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 {
                     object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
-                    object objInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
+                    object objSerialNumberCode = view.GetFocusedRowCellValue(colSerialNumberCode);
+                    string serialNumber = (objSerialNumberCode ??= "").ToString();
+                    string productCode = (objProductCode ??= "").ToString();
 
                     string wareHouse = lUE_WarehouseCode.EditValue.ToString();
                     if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
                         wareHouse = lUE_ToWarehouseCode.EditValue.ToString();
 
-                    int balance = CalcProductBalance(objProductCode, objInvoiceLineId, wareHouse);
+                    int balance = CalcProductBalance(productCode, wareHouse, serialNumber);
 
-                    string productCode = (objProductCode ??= "").ToString();
                     DcProduct product = efMethods.SelectProduct(productCode);
 
                     bool isServis = false;
@@ -743,18 +744,21 @@ namespace Foxoft
             return sumInvo;
         }
 
-        private int CalcProductBalance(object objProductCode, object objInvoicelineId, string wareHouse)
+        private int CalcProductBalance(string productCode, string wareHouse, string serialNumberCode)
         {
-            string productCode = objProductCode?.ToString();
+            object objInvoiceLineId = gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
 
             if (!String.IsNullOrEmpty(productCode))
             {
-                Guid invoiceLineId = (Guid)(objInvoicelineId ??= Guid.Empty);
+                Guid invoiceLineId = (Guid)(objInvoiceLineId ??= Guid.Empty);
 
                 TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
                 int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
 
-                return efMethods.SelectProductBalance(productCode, wareHouse) + currentQty;
+                if (!String.IsNullOrEmpty(serialNumberCode))
+                    return efMethods.SelectProductBalanceSerialNumber(productCode, wareHouse, serialNumberCode) + currentQty;
+                else
+                    return efMethods.SelectProductBalance(productCode, wareHouse) + currentQty;
             }
             else return 0;
         }
