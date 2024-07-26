@@ -573,28 +573,8 @@ namespace Foxoft
                 }
             }
 
-            if (e.Column == col_SerialNumber)
+            if (e.Column == colSerialNumberCode)
             {
-                if (gV.IsLastRow)
-                {
-                    // Add a new row
-                    gV.AddNewRow();
-
-                    gV.MoveNext();
-                    gV.UpdateCurrentRow();
-                    // Update the new row index
-                }
-                else
-                {
-                    // Move to the next row
-                    gV.MoveNext();
-                }
-
-                // Set the focus to the Barcode column in the new row
-                gV.FocusedColumn = e.Column;
-
-                // Ensure the cell is focused and in edit mode
-                gV.ShowEditor();
             }
         }
 
@@ -666,15 +646,6 @@ namespace Foxoft
             GridView view = sender as GridView;
             GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
 
-            //if (trInvoiceHeader.ProcessCode == "IT")
-            //{
-            //   if (trInvoiceHeader.ToWarehouseCode is null)
-            //   {
-            //      e.ErrorText = "Transfer Deposu qeyd Olunmayıb";
-            //      e.Valid = false;
-            //   }
-            //}
-
             if (column == colQty)
             {
                 int eValue = Convert.ToInt32(e.Value ??= 0);
@@ -722,7 +693,7 @@ namespace Foxoft
                 }
             }
 
-            if (column == colBarcode || column == col_ProductCode || column == col_SerialNumber)
+            if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
 
@@ -730,8 +701,11 @@ namespace Foxoft
 
                 if (column == colBarcode)
                     product = efMethods.SelectProductByBarcode(eValue);
-                if (column == col_SerialNumber)
+                if (column == colSerialNumberCode)
+                {
+                    gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, eValue);
                     product = efMethods.SelectProductBySerialNumber(eValue);
+                }
                 if (column == col_ProductCode)
                     product = efMethods.SelectProduct(eValue);
 
@@ -1459,7 +1433,7 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
         {
-            object eValue = trInvoiceHeader.CurrAccCode;
+            object eValue = trInvoiceHeader?.CurrAccCode;
 
             if (eValue is not null)
             {
@@ -1529,6 +1503,47 @@ namespace Foxoft
 
             if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
                 e.Handled = true;
+        }
+
+        private void gC_InvoiceLine_EditorKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return) // Barcode Scan Device 
+            {
+                //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
+
+                //gV_InvoiceLine.FocusedColumn = colBarcode;
+                //gV_InvoiceLine.MoveNext();
+            }
+        }
+
+        private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Check if we are in a cell
+                if (view.FocusedColumn != null && view.IsEditing)
+                {
+                    // Perform your custom action if needed
+                    // Example: move to the next row
+                    view.CloseEditor();
+                    if (view.FocusedRowHandle == GridControl.NewItemRowHandle)
+                    {
+                        //view.SetFocusedRowCellValue(col_ProductCode, "P-002087");
+                        //view.UpdateCurrentRow();
+                        //view.AddNewRow(); // Add a new row if at the last row
+                        view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
+                    }
+                    else
+                    {
+                        view.MoveNext();
+                        view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
+                    }
+
+                    // Prevent the default behavior of moving to the next column
+                    //e.SuppressKeyPress = true;
+                }
+            }
         }
 
         private void bbi_ItemClick(object sender, ItemClickEventArgs e)
@@ -1645,17 +1660,6 @@ namespace Foxoft
                 this.Column = column;
             }
             public GridColumn Column;
-        }
-
-        private void gC_InvoiceLine_EditorKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Return) // Barcode Scan Device 
-            {
-                //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
-
-                //gV_InvoiceLine.FocusedColumn = colBarcode;
-                //gV_InvoiceLine.MoveNext();
-            }
         }
 
         private void FormInvoice_FormClosing(object sender, FormClosingEventArgs e)

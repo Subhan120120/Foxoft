@@ -72,7 +72,6 @@ namespace Foxoft
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
-            colSerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtnEdit_SerialNumberCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
@@ -158,7 +157,7 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            col_SerialNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            colSerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -283,7 +282,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, col_SerialNumber });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(760, 456, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -309,6 +308,7 @@ namespace Foxoft
             gV_InvoiceLine.CustomUnboundColumnData += gV_InvoiceLine_CustomUnboundColumnData;
             gV_InvoiceLine.RowLoaded += gV_InvoiceLine_RowLoaded;
             gV_InvoiceLine.AsyncCompleted += gV_InvoiceLine_AsyncCompleted;
+            gV_InvoiceLine.KeyDown += gV_InvoiceLine_KeyDown;
             gV_InvoiceLine.DoubleClick += gV_InvoiceLine_DoubleClick;
             gV_InvoiceLine.ValidatingEditor += gV_InvoiceLine_ValidatingEditor;
             gV_InvoiceLine.InvalidValueException += gV_InvoiceLine_InvalidValueException;
@@ -330,7 +330,7 @@ namespace Foxoft
             col_ProductCode.FieldName = "ProductCode";
             col_ProductCode.Name = "col_ProductCode";
             col_ProductCode.Visible = true;
-            col_ProductCode.VisibleIndex = 2;
+            col_ProductCode.VisibleIndex = 1;
             col_ProductCode.Width = 42;
             // 
             // repoBtnEdit_ProductCode
@@ -393,7 +393,7 @@ namespace Foxoft
             col_Price.FieldName = "Price";
             col_Price.Name = "col_Price";
             col_Price.Visible = true;
-            col_Price.VisibleIndex = 6;
+            col_Price.VisibleIndex = 5;
             col_Price.Width = 45;
             // 
             // repoCalcEdit_Price
@@ -412,7 +412,7 @@ namespace Foxoft
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 7;
+            colCurrencyCode.VisibleIndex = 6;
             colCurrencyCode.Width = 45;
             // 
             // repoLUE_CurrencyCode
@@ -556,14 +556,6 @@ namespace Foxoft
             colProductCost.Name = "colProductCost";
             colProductCost.Visible = true;
             colProductCost.VisibleIndex = 10;
-            // 
-            // colSerialNumberCode
-            // 
-            colSerialNumberCode.ColumnEdit = repoBtnEdit_SerialNumberCode;
-            colSerialNumberCode.FieldName = "SerialNumberCode";
-            colSerialNumberCode.Name = "colSerialNumberCode";
-            colSerialNumberCode.Visible = true;
-            colSerialNumberCode.VisibleIndex = 13;
             // 
             // repoBtnEdit_SerialNumberCode
             // 
@@ -1316,12 +1308,12 @@ namespace Foxoft
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             // 
-            // col_SerialNumber
+            // colSerialNumberCode
             // 
-            col_SerialNumber.Caption = "Seria Nomresi";
-            col_SerialNumber.Name = "col_SerialNumber";
-            col_SerialNumber.Visible = true;
-            col_SerialNumber.VisibleIndex = 0;
+            colSerialNumberCode.FieldName = "SerialNumberCode";
+            colSerialNumberCode.Name = "colSerialNumberCode";
+            colSerialNumberCode.Visible = true;
+            colSerialNumberCode.VisibleIndex = 12;
             // 
             // FormInvoice
             // 
@@ -1529,8 +1521,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarCheckItem BCI_ShowPicture;
         private DevExpress.XtraBars.BarCheckItem BCI_ShowPrint;
         private DevExpress.XtraBars.BarCheckItem BCI_ShowCopy;
-        private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SerialNumberCode;
-        private DevExpress.XtraGrid.Columns.GridColumn col_SerialNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
     }
 }
