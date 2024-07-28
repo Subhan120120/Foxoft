@@ -183,6 +183,15 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Escape)
                 Close();
+
+            if (view.SelectedRowsCount > 0)
+            {
+                if (e.KeyCode == Keys.C && e.Control)
+                {
+                    object cellValue = view.GetFocusedValue();
+                    Clipboard.SetText(cellValue.ToString());
+                }
+            }
         }
 
         private void gV_InvoiceHeaderList_ColumnFilterChanged(object sender, EventArgs e)

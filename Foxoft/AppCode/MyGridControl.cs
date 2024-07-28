@@ -21,7 +21,6 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-
     public class MyGridControl : GridControl
     {
         public MyGridControl() : base()

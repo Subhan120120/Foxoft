@@ -177,24 +177,13 @@ namespace Foxoft
 
             if (sumNetAmount != 0)
             {
-                //SimpleButton simpleButton = sender as SimpleButton;
-
-                //byte paymentType = simpleButton.Name switch
-                //{
-                //   "simpleButtonCash" => 1,
-                //   "simpleButtonCashless" => 2,
-                //   "simpleButtonCustomerBonus" => 3,
-                //   _ => 0
-                //};
-
-                //using FormPayment formPayment = new(paymentType, sumNetAmount, new TrInvoiceHeader() { });
-
-                //if (formPayment.ShowDialog(this) == DialogResult.OK)
-                //{
-
                 efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
-                MakePayment(sumNetAmount, false);
+                //MakePayment(sumNetAmount, false);
+                if (DialogResult.OK == XtraMessageBox.Show("Qaiməni açmaq istəyirsiz?", "Qaiməni Aç", MessageBoxButtons.OKCancel))
+                {
+                    OpenFormInvoice(returnInvoHeader.DocumentNumber);
+                }
 
                 ClearControls();
             }
@@ -212,6 +201,53 @@ namespace Foxoft
             txt_CurrAccDesc.Text = null;
         }
 
+        private void OpenFormInvoice(string strDocNum)
+        {
+            TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
+
+            if (trInvoiceHeader is not null)
+            {
+                string claim = trInvoiceHeader.ProcessCode switch
+                {
+                    "IT" => "InventoryTransfer",
+                    "CI" => "CountIn",
+                    "CO" => "CountOut",
+                    "RP" => "RetailPurchaseInvoice",
+                    "RS" => "RetailSaleInvoice",
+                    "WS" => "WholesaleInvoice",
+                    "EX" => "Expense",
+                    _ => ""
+                };
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+
+                byte[] bytes = trInvoiceHeader.ProcessCode switch
+                {
+                    "IT" => new byte[] { 1 },
+                    "CI" => new byte[] { 1 },
+                    "CO" => new byte[] { 1 },
+                    "RP" => new byte[] { 1, 3 },
+                    "RS" => new byte[] { 1, 3 },
+                    "WS" => new byte[] { 1, 3 },
+                    "EX" => new byte[] { 2, 3 },
+                    _ => new byte[] { }
+                };
+
+                FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, Guid.Empty, trInvoiceHeader.InvoiceHeaderId);
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                frm.MdiParent = formERP;
+                frm.WindowState = FormWindowState.Maximized;
+                frm.Show();
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
+            else
+                MessageBox.Show("Belə bir sənəd yoxdur.");
+        }
         private void MakePayment(decimal summaryInvoice, bool autoPayment)
         {
             using FormPayment formPayment = new(1, summaryInvoice, returnInvoHeader, autoPayment);

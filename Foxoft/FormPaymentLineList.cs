@@ -124,6 +124,15 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Escape)
                 Close();
+
+            if (view.SelectedRowsCount > 0)
+            {
+                if (e.KeyCode == Keys.C && e.Control)
+                {
+                    object cellValue = view.GetFocusedValue();
+                    Clipboard.SetText(cellValue.ToString());
+                }
+            }
         }
 
         GridColumn prevColumn = null; // Disable the Immediate Edit Cell

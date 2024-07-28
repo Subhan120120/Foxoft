@@ -6,11 +6,14 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -155,6 +158,15 @@ namespace Foxoft
 
             if (e.KeyCode == Keys.Escape)
                 Close();
+
+            if (view.SelectedRowsCount > 0)
+            {
+                if (e.KeyCode == Keys.C && e.Control)
+                {
+                    object cellValue = view.GetFocusedValue();
+                    Clipboard.SetText(cellValue.ToString());
+                }
+            }
         }
 
         private void gV_InvoiceLineList_ColumnFilterChanged(object sender, EventArgs e)
