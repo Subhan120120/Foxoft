@@ -72,6 +72,7 @@ namespace Foxoft
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
+            colSerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtnEdit_SerialNumberCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
@@ -157,7 +158,6 @@ namespace Foxoft
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            colSerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -556,6 +556,14 @@ namespace Foxoft
             colProductCost.Name = "colProductCost";
             colProductCost.Visible = true;
             colProductCost.VisibleIndex = 10;
+            // 
+            // colSerialNumberCode
+            // 
+            colSerialNumberCode.ColumnEdit = repoBtnEdit_SerialNumberCode;
+            colSerialNumberCode.FieldName = "SerialNumberCode";
+            colSerialNumberCode.Name = "colSerialNumberCode";
+            colSerialNumberCode.Visible = true;
+            colSerialNumberCode.VisibleIndex = 12;
             // 
             // repoBtnEdit_SerialNumberCode
             // 
@@ -1307,13 +1315,6 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
-            // 
-            // colSerialNumberCode
-            // 
-            colSerialNumberCode.FieldName = "SerialNumberCode";
-            colSerialNumberCode.Name = "colSerialNumberCode";
-            colSerialNumberCode.Visible = true;
-            colSerialNumberCode.VisibleIndex = 12;
             // 
             // FormInvoice
             // 

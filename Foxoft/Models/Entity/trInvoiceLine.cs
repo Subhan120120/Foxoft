@@ -138,7 +138,7 @@ namespace Foxoft.Models
         public string? SerialNumberCode { get; set; }
 
         [Display(Name = "Satıcı")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+        [ForeignKey("DcCurrAcc")]
         public string? SalesPersonCode { get; set; }
 
         [Display(Name = "Maya Dəyəri")]
@@ -168,6 +168,7 @@ namespace Foxoft.Models
         public virtual DcProduct DcProduct { get; set; }
         public virtual DcSerialNumber DcSerialNumber { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
+        public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }
     }
 }

@@ -152,6 +152,7 @@ namespace Foxoft.Models
         public virtual TrSession TrSession { get; set; }
         public virtual ICollection<SettingStore> SettingStores { get; set; }
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
+        public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
 
         //[ForeignKey("StoreCode")]
