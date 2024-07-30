@@ -1,9 +1,9 @@
 ﻿
 
 
-SELECT Maya = (-1)*(case when Dvijok.ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0) else 0 end)
-, Menfeet = (-1)*(case when ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end)
-, [Net Menfeet] = (-1)*(case when ProcessCode = 'RS' then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end) - Xərc
+SELECT Maya = (-1)*(case when Dvijok.ProcessCode in ('RS', 'WS') then (Dvijok.QtyIn - Dvijok.QtyOut) * ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0) else 0 end)
+, Menfeet = (-1)*(case when ProcessCode in ('RS', 'WS') then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end)
+, [Net Menfeet] = (-1)*(case when ProcessCode in ('RS', 'WS') then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end) - Xərc
 , *
 FROM (
 select  InvoiceLineId
@@ -18,7 +18,7 @@ select  InvoiceLineId
 , QtyIn
 , QtyOut
 , Xərc = case when TrInvoiceHeaders.ProcessCode = 'EX' then NetAmountLoc else 0 end
-, Satis = (-1)*(case when TrInvoiceHeaders.ProcessCode = 'RS' then (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100)) else 0 end)
+, Satis = (-1)*(case when TrInvoiceHeaders.ProcessCode in ('RS', 'WS') then (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100)) else 0 end)
 , Artirma = case when TrInvoiceHeaders.ProcessCode = 'CI' then NetAmountLoc else 0 end
 , Silinme = case when TrInvoiceHeaders.ProcessCode = 'CO' then NetAmountLoc else 0 end
 , ProductCost
@@ -78,7 +78,7 @@ left join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccT
 left join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode
 left join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode	
 
-where TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'RS', 'EX')
+where TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'RS', 'WS', 'EX')
 --and DocumentNumber = 'RS-000012'
 ) Dvijok
 order by Dvijok.DocumentDate
