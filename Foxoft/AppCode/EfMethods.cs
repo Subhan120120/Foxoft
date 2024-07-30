@@ -220,7 +220,7 @@ namespace Foxoft
             if (string.IsNullOrEmpty(serialNumberCode))
                 return null;
             using subContext db = new();
-            return QueryableSelectProducts(db).Include(x => x.DcSerialNumbers)
+            return QueryableSelectProducts(db)
                                        .Where(x => x.DcSerialNumbers.Any(x => x.SerialNumberCode == serialNumberCode))
                                        .FirstOrDefault();
         }
@@ -287,6 +287,7 @@ namespace Foxoft
                                 .Include(x => x.TrProductDiscounts).ThenInclude(x => x.DcDiscount).ThenInclude(x => x.TrPaymentMethodDiscounts).ThenInclude(x => x.DcPaymentMethod)
                                 .Include(x => x.DcHierarchy)
                                 .Include(x => x.SiteProduct)
+                                .Include(x => x.DcSerialNumbers)
                                 .Select(x => new DcProduct
                                 {
                                     Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
