@@ -310,6 +310,7 @@ namespace Foxoft
                                     SiteProduct = x.SiteProduct,
                                     DcHierarchy = x.DcHierarchy,
                                     TrProductDiscounts = x.TrProductDiscounts,
+                                    DcSerialNumbers = x.DcSerialNumbers,
                                 })
                                 .OrderBy(x => x.ProductDesc);
             return products;
