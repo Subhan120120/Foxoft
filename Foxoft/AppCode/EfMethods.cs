@@ -220,10 +220,9 @@ namespace Foxoft
             if (string.IsNullOrEmpty(serialNumberCode))
                 return null;
             using subContext db = new();
-            return db.DcSerialNumbers
-                .Where(x => x.SerialNumberCode == serialNumberCode)
-                .Select(x => x.DcProduct)
-                .FirstOrDefault();
+            return QueryableSelectProducts(db).Include(x => x.DcSerialNumbers)
+                                       .Where(x => x.DcSerialNumbers.Any(x => x.SerialNumberCode == serialNumberCode))
+                                       .FirstOrDefault();
         }
 
         public DcProduct SelectProductBySlug(string slug)

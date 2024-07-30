@@ -123,6 +123,7 @@ namespace Foxoft.Models
         public virtual SiteProduct SiteProduct { get; set; }
         public virtual DcHierarchy DcHierarchy { get; set; }
         public virtual ProductBalance ProductBalance { get; set; }
+        public virtual ICollection<DcSerialNumber> DcSerialNumbers{ get; set; }
         public virtual ICollection<TrPrice> TrPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }

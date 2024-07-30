@@ -652,9 +652,9 @@ namespace Foxoft
                 if ((!trInvoiceHeader.IsReturn) && new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 {
                     object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
+                    string productCode = (objProductCode ??= "").ToString();
                     object objSerialNumberCode = view.GetFocusedRowCellValue(colSerialNumberCode);
                     string serialNumber = (objSerialNumberCode ??= "").ToString();
-                    string productCode = (objProductCode ??= "").ToString();
 
                     string wareHouse = lUE_WarehouseCode.EditValue.ToString();
                     if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
