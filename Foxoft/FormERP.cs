@@ -111,7 +111,6 @@ namespace Foxoft
             this.aCE_CountOut.Name = "CountOut";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
-            this.aCE_CurrAccRole.Name = "CurrAccAll";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_Discounts.Name = "DiscountList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";

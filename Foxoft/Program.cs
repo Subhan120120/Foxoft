@@ -120,7 +120,7 @@ namespace Foxoft
 
                 string[] txtLisence = result.Split(new string[] { " ", "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
-                if (txtLisence is not null)
+                if (txtLisence is not null && txtLisence.Length > 0)
                 {
                     for (int i = 0; i < txtLisence.Length; i = i + 3)
                     {
@@ -141,9 +141,9 @@ namespace Foxoft
 
                             foreach (DcCompany company in companies)
                             {
-                                if (company.CompanyDesc == databaseName)
+                                if (company.CompanyCode == databaseName)
                                 {
-                                    efMethods.UpdateAppSettingLicense(encrypt, company.CompanyDesc);
+                                    efMethods.UpdateAppSettingLicense(encrypt, company.CompanyCode);
                                 }
                             }
                         }

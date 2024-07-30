@@ -11,7 +11,7 @@ namespace Foxoft.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"
-									CREATE TRIGGER [dbo].[trgCreateView]
+									CREATE OR ALTER TRIGGER [dbo].[trgCreateView]
 									ON [dbo].[DcPriceTypes]
 									AFTER INSERT, UPDATE, DELETE
 									AS

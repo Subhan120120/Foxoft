@@ -316,7 +316,8 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcForm>().HasData(
                 new DcForm { FormCode = "CurrAccs", FormDesc = "CurrAccs" },
-                new DcForm { FormCode = "Products", FormDesc = "Products" }
+                new DcForm { FormCode = "Products", FormDesc = "Products" },
+                new DcForm { FormCode = "PaymentDetails", FormDesc = "Payment Details" }
                 );
 
             modelBuilder.Entity<DcTerminal>().HasData(
@@ -416,7 +417,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 21, RoleCode = "Admin", ClaimCode = "WholesaleReturn" },
                 new TrRoleClaim { RoleClaimId = 22, RoleCode = "Admin", ClaimCode = "ProductFeatureType" },
                 new TrRoleClaim { RoleClaimId = 23, RoleCode = "Admin", ClaimCode = "HierarchyFeatureType" },
-                new TrRoleClaim { RoleClaimId = 24, RoleCode = "Admin", ClaimCode = "Session" }
+                new TrRoleClaim { RoleClaimId = 24, RoleCode = "Admin", ClaimCode = "CurrAccRole" },
+                new TrRoleClaim { RoleClaimId = 25, RoleCode = "Admin", ClaimCode = "Session" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

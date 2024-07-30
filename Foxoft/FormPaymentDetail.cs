@@ -21,6 +21,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -36,11 +37,14 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            AddReports();
+
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
 
             ClearControlsAddNew();
+
 
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
             if (!currAccHasClaims)
@@ -103,6 +107,105 @@ namespace Foxoft
             paymentHeader.IsMainTF = true;
 
             e.NewObject = paymentHeader;
+        }
+
+        private void AddReports()
+        {
+            BSI_Report.LinksPersistInfo.Clear();
+
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports("PaymentDetails");
+
+            BarButtonItem BBI;
+
+            foreach (TrFormReport report in trFormReports)
+            {
+                BBI = new();
+                BBI.Caption = report.DcReport.ReportName;
+                BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
+                BBI.Name = report.DcReport.ReportId.ToString();
+                if (!string.IsNullOrEmpty(report.Shortcut))
+                {
+                    KeysConverter cvt = new();
+                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    BBI.ItemShortcut = new BarShortcut(key);
+                }
+                BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+
+                ((ISupportInitialize)ribbonControl1).BeginInit();
+                ribbonControl1.Items.Add(BBI);
+                ((ISupportInitialize)ribbonControl1).EndInit();
+
+                BBI.ItemClick += (sender, e) =>
+                {
+                    DcReport dcReport = report.DcReport;
+
+                    string filter = "";
+                    if (trPaymentHeader is not null)
+                        filter = "[PaymentHeaderId] = '" + trPaymentHeader.PaymentHeaderId + "' ";
+                    else
+                    {
+                        List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_PaymentLine).ToList();
+                        string combined = "";
+                        foreach (DataRowView rowView in mydata)
+                            combined += "'" + rowView["PaymentHeaderId"].ToString() + "',";
+
+                        combined = combined.Substring(0, combined.Length - 1);
+                        filter = "[PaymentHeaderId] in ( " + combined + ")";
+                    }
+
+                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                    string query = dcReport.ReportQuery;
+                    if (query.Contains("{PaymentHeaderId}"))
+                        query = query.Replace("{PaymentHeaderId}", " and " + filter); // filter sorgunun icinde temsilci ile deyisdirilir
+
+                    if (dcReport.ReportTypeId == 1)
+                    {
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
+                        formGrid.Show();
+                    }
+                    else if (dcReport.ReportTypeId == 2)
+                    {
+                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
+                        form.WindowState = FormWindowState.Maximized;
+                        form.Show();
+                    }
+                };
+            }
+
+            BBI = new();
+            BBI.Caption = "Əlavə Et";
+            BBI.ImageOptions.SvgImage = svgImageCollection1["add"];
+            BBI.Name = "Add";
+
+            BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+            ((ISupportInitialize)ribbonControl1).BeginInit();
+            ribbonControl1.Items.Add(BBI);
+            ((ISupportInitialize)ribbonControl1).EndInit();
+
+            BBI.ItemClick += (sender, e) =>
+            {
+                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", "Products");
+                try
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                        efMethods.InsertFormReport("Products", Convert.ToInt32(form.Value_Id));
+                    AddReports();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            };
+        }
+
+        public static List<T> GetFilteredData<T>(ColumnView view)
+        {
+            List<T> resp = new List<T>();
+            for (int i = 0; i < view.DataRowCount; i++)
+                resp.Add((T)view.GetRow(i));
+
+            return resp;
         }
 
         private void trPaymentHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
