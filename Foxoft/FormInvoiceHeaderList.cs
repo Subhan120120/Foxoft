@@ -236,22 +236,8 @@ namespace Foxoft
             }
         }
 
-        // AutoFocus FindPanel
-        //bool isFirstPaint = true;
         private void gC_InvoiceHeaderList_Paint(object sender, PaintEventArgs e)
         {
-            //GridControl gC = sender as GridControl;
-            //GridView gV = gC.MainView as GridView;
-
-            //if (isFirstPaint)
-            //{
-            //    if (!gV.FindPanelVisible)
-            //        gV.ShowFindPanel();
-            //    gV.ShowFindPanel();
-
-            //    gV_InvoiceHeaderList.OptionsFind.FindMode = FindMode.Always;
-            //}
-            //isFirstPaint = false;
         }
 
         private void gV_InvoiceHeaderList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)

@@ -37,10 +37,10 @@ namespace Foxoft
         public T Entity { get; set; }
         private bool IsNew;
         string ProcessCode = "0";
-        string Value_Id;
-        string FieldName_Id;
-        string Value_2;
-        string FieldName_2;
+        public string Value_Id;
+        public string FieldName_Id;
+        public string Value_2;
+        public string FieldName_2;
         string[] SpecialColumnsHide = new string[] { };
         LayoutControlItem Control_Id = new();
         LayoutControlItem Control_2 = new();
@@ -122,6 +122,9 @@ namespace Foxoft
                                 item.Visibility = LayoutVisibility.OnlyInCustomization;
                             else if (SpecialColumnsHide is not null && SpecialColumnsHide.Contains(itemFieldName))
                                 item.Visibility = LayoutVisibility.OnlyInCustomization;
+
+                            if (item.Control is BaseEdit baseEdit)
+                                baseEdit.EditValueChanged += BaseEdit_EditValueChanged;
                         }
 
                         int loc = item.Location.Y + item.Size.Height;
@@ -129,27 +132,6 @@ namespace Foxoft
                         if (loc > lastLoc)
                             lastLoc = loc;
                     }
-
-                    //if (item.Control.DataBindings[0].BindingMemberInfo.BindingField == "Description")
-                    //{
-                    //dataLayoutControl1.BeginUpdate();
-                    //Control prevControl = item.Control;
-                    //Binding binding = prevControl.DataBindings[0];
-                    //prevControl.DataBindings.Clear();
-                    //dataLayoutControl1.Controls.Remove(prevControl);
-                    //Control newControl = new MemoEdit();
-                    //newControl.Name = "myMemoEdit";
-                    //// Bind the new control to the same field as the previous control.
-                    //newControl.DataBindings.Add(new Binding(binding.PropertyName, binding.DataSource,
-                    //    binding.BindingMemberInfo.BindingField, binding.FormattingEnabled));
-                    //dataLayoutControl1.Controls.Add(newControl);
-                    //item.Control = newControl;
-                    //prevControl.Dispose();
-                    //dataLayoutControl1.EndUpdate();
-                    //// Change the item's size after the EndUpdate method.
-                    //item.Size = new Size(100, 50);
-                    //break;
-                    //}
                 }
             }
 
@@ -160,6 +142,19 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(btn_Cancel);
 
             Root.Items.AddRange(new BaseLayoutItem[] { LCI_Ok, LCI_Cancel });
+        }
+
+        private void BaseEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            BaseEdit editor = sender as BaseEdit;
+            if (editor != null)
+            {
+                string fieldName = editor.DataBindings[0].BindingMemberInfo.BindingField;
+                if (fieldName == FieldName_Id)
+                    Value_Id = editor.EditValue?.ToString();
+                if (fieldName == FieldName_2)
+                    Value_2 = editor.EditValue?.ToString();
+            }
         }
 
         private void FillDataLayout()
@@ -332,7 +327,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string currAccCode = editor.EditValue?.ToString();
 
-            using FormCurrAccList form = new(new byte[] { 1, 2, 3}, currAccCode);
+            using FormCurrAccList form = new(new byte[] { 1, 2, 3 }, currAccCode);
 
             try
             {

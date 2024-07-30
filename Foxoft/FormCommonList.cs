@@ -34,6 +34,7 @@ namespace Foxoft
         T Entity { get; set; }
         subContext dbContext;
         public string Value_Id;
+        public string FocusToValue_Id;
         public string Value_2;
         string ProcessCode;
         string[] SpecialColumnsHide;
@@ -63,6 +64,7 @@ namespace Foxoft
             : this(processCode, fieldName_Id)
         {
             this.Value_Id = value_Id;
+            this.FocusToValue_Id = value_Id;
             this.SpecialColumnsHide = specialColumnsHide;
         }
 
@@ -75,13 +77,19 @@ namespace Foxoft
 
         private void FormCommonList_Load(object sender, EventArgs e)
         {
-            int rowHandle = gridView1.LocateByValue(0, Col_Id, Value_Id);
-            if (rowHandle != GridControl.InvalidRowHandle)
-                gridView1.FocusedRowHandle = rowHandle;
+            FocusValue(Value_Id);
         }
 
         private void FormCommonList_Activated(object sender, EventArgs e)
         {
+            //AutoFocus FindPanel
+            if (gridView1 is not null)
+            {
+                gridView1.FindPanelVisible = false;
+                if (!gridView1.FindPanelVisible)
+                    gridControl1.BeginInvoke(new Action(gridView1.ShowFindPanel));
+            }
+
             UpdateGridViewData();
         }
 
@@ -95,20 +103,22 @@ namespace Foxoft
 
         private void UpdateGridViewData()
         {
-            int fr = gridView1.FocusedRowHandle;
-
             LoadData();
-
-            if (fr > 0)
-                gridView1.FocusedRowHandle = fr;
-            //else
-            //    gridView1.MoveLast();
 
             if (gridView1.FocusedRowHandle >= 0)
             {
-                Value_Id = gridView1.GetFocusedRowCellValue(Col_Id)?.ToString();
-                if (Value_Id is not null)
+                if (!string.IsNullOrEmpty(Value_Id))
+                {
+                    FocusValue(Value_Id);
                     Entity = gridView1.GetFocusedRow() as T;
+                }
+                else
+                {
+                    Value_Id = gridView1.GetFocusedRowCellValue(Col_Id)?.ToString();
+                    if (Value_Id is not null)
+                        Entity = gridView1.GetFocusedRow() as T;
+                }
+
             }
             else
             {
@@ -126,17 +136,17 @@ namespace Foxoft
 
         private void LoadData()
         {
+            gridView1.FocusedRowChanged -= gridView1_FocusedRowChanged;
             dbContext = new subContext();
 
             Func<T, bool> pred = String.IsNullOrEmpty(Col_2.FieldName) ? _ => true : ConvertToPredicate(Col_2.FieldName, Value_2);
-
-            //dbContext.Set<T>().Where(pred).AsQueryable().Load();
-            //bindingSource1.DataSource = dbContext.Set<T>().Local.ToBindingList();
 
             IList<T> data = dbContext.Set<T>().Where(pred).ToList();
             bindingSource1.DataSource = data;
 
             gridView1.BestFitColumns();
+
+            gridView1.FocusedRowChanged += gridView1_FocusedRowChanged;
         }
 
         private void InvisibleSomeColumns(GridColumn column)
@@ -295,7 +305,17 @@ namespace Foxoft
 
             FormCommon<T> formProduct = new(ProcessCode, true, Col_Id.FieldName, "", Col_2.FieldName, Value_2);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
+            {
                 UpdateGridViewData();
+                FocusValue(formProduct.Value_Id?.ToString());
+            }
+        }
+
+        private void FocusValue(string value)
+        {
+            int rowHandle = gridView1.LocateByValue(0, Col_Id, value);
+            if (rowHandle != GridControl.InvalidRowHandle)
+                gridView1.FocusedRowHandle = rowHandle;
         }
 
         private void BBI_Edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

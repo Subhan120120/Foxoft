@@ -421,19 +421,6 @@ namespace Foxoft
         bool isFirstPaint = true;
         private void gC_CurrAccList_Paint(object sender, PaintEventArgs e)
         {
-            //GridControl gC = sender as GridControl;
-            //GridView gV = gC.MainView as GridView;
-
-            //if (isFirstPaint)
-            //{
-            //   if (!gV.FindPanelVisible)
-            //      gV.ShowFindPanel();
-            //   gV.ShowFindPanel();
-
-            //   gV.OptionsFind.FindFilterColumns = "CurrAccDesc";
-            //   gV.OptionsFind.FindNullPrompt = "Axtarın...";
-            //}
-            //isFirstPaint = false;
         }
 
         private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
