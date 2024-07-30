@@ -708,7 +708,10 @@ namespace Foxoft
                     product = efMethods.SelectProductBySerialNumber(eValue);
                 }
                 if (column == col_ProductCode)
+                {
                     product = efMethods.SelectProduct(eValue);
+                    view.SetFocusedRowCellValue(colSerialNumberCode, null);
+                }
 
                 if (product is not null)
                 {

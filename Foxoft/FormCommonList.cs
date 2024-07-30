@@ -118,7 +118,6 @@ namespace Foxoft
                     if (Value_Id is not null)
                         Entity = gridView1.GetFocusedRow() as T;
                 }
-
             }
             else
             {
