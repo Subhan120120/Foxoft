@@ -120,7 +120,7 @@ namespace Foxoft
 
                 string[] txtLisence = result.Split(new string[] { " ", "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
-                if (txtLisence is not null && txtLisence.Length > 0)
+                if (txtLisence is not null && txtLisence.Length % 3 == 0)
                 {
                     for (int i = 0; i < txtLisence.Length; i = i + 3)
                     {
