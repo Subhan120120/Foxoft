@@ -496,7 +496,7 @@ namespace Foxoft
 
             if (gV.SelectedRowsCount > 0)
             {
-                if (e.KeyCode == Keys.Delete)
+                if (e.KeyCode == Keys.Delete && gV.ActiveEditor == null)
                 {
                     if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return;
