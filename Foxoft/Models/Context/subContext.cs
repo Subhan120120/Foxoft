@@ -84,7 +84,6 @@ namespace Foxoft.Models
         public DbSet<ProductBalance> ProductBalances { get; set; } // view
         public virtual DbSet<SlugifyResult> Slugify { get; set; } // function
 
-        Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
