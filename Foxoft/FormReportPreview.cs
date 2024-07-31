@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormReportPreview : XtraForm
+    public partial class FormReportPreview : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         private XtraReport xReport;
         private EfMethods efMethods = new();
