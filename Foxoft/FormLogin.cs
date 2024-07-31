@@ -250,9 +250,9 @@ namespace Foxoft
             Settings.Default.SubConnString = constr;
             Settings.Default.Save();
 
-            config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = Settings.Default.SubConnString;
-            config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
-            config.Save(ConfigurationSaveMode.Modified); // Save permenantly
+            //config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = Settings.Default.SubConnString;
+            //config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
+            //config.Save(ConfigurationSaveMode.Modified); // Save permenantly
         }
 
         private void btn_ConStr(object sender, EventArgs e)
