@@ -392,14 +392,6 @@ namespace Foxoft
                                     .LoadAsync()
                                     .ContinueWith(loadTask =>
                                     {
-                                        //LocalView<TrInvoiceLine> lV_invoiceLine = dbContext.TrInvoiceLines.Local;
-                                        //
-                                        //lV_invoiceLine.ForEach(x =>
-                                        //{
-                                        //    x.ProductDesc = GetProductDescWide(x.DcProduct);
-                                        //});
-                                        //
-                                        //trInvoiceLinesBindingSource.DataSource = lV_invoiceLine.ToBindingList();
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
 
                                         gV_InvoiceLine.BestFitColumns();
@@ -421,7 +413,7 @@ namespace Foxoft
 
         private void CalcPaidAmount()
         {
-            decimal paidSum = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+            decimal paidSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
             lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
 
@@ -728,7 +720,10 @@ namespace Foxoft
 
         private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
         {
-            decimal balanceBefore = (-1) * efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentNumber);
+            decimal currAccBalance = (-1) * efMethods.SelectCurrAccBalance(currAccCode);
+            decimal invoiceSum = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
+
+            decimal balanceBefore = currAccBalance - invoiceSum;
 
             decimal summaryValue = CalculateSum();
             decimal balanceAfter = balanceBefore + summaryValue;
@@ -746,7 +741,6 @@ namespace Foxoft
         {
             decimal sum = 0;
 
-            // Loop through all rows in the GridView
             for (int i = 0; i < gV_InvoiceLine.RowCount; i++)
             {
                 object value = gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc);

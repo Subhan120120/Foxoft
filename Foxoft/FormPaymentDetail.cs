@@ -277,11 +277,11 @@ namespace Foxoft
                                         LocalView<TrPaymentLine> lV_paymentLine = dbContext.TrPaymentLines.Local;
                                         trPaymentLinesBindingSource.DataSource = lV_paymentLine.ToBindingList();
 
+                                        CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -309,7 +309,7 @@ namespace Foxoft
                     trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                     lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
 
-                    CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
+                    CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
                 }
             }
         }
@@ -380,14 +380,34 @@ namespace Foxoft
         {
             if (!String.IsNullOrEmpty(CurrAccCode))
             {
-                decimal Balance = efMethods.SelectCurrAccBalance(CurrAccCode, dateTime);
+                decimal balanceBefore = efMethods.SelectCurrAccBalance(CurrAccCode, dateTime);
 
-                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Balance.ToString();
+                //decimal paymentSum = efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
+                //decimal balanceBefore = currAccBalance - paymentSum;
 
-                decimal CurrentBalance = efMethods.SelectPaymentSum(CurrAccCode, trPaymentHeader.DocumentNumber);
-                Balance = Balance - CurrentBalance;
-                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Balance.ToString();
+                decimal summaryValue = CalculateSum();
+
+                decimal balanceAfter = balanceBefore - summaryValue;
+
+                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + balanceAfter.ToString();
+                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + balanceBefore.ToString();
             }
+        }
+
+        private decimal CalculateSum()
+        {
+            decimal sum = 0;
+
+            // Loop through all rows in the GridView
+            for (int i = 0; i < gV_PaymentLine.RowCount; i++)
+            {
+                object value = gV_PaymentLine.GetRowCellValue(i, colPaymentLoc);
+
+                if (value != null && value != DBNull.Value)
+                    sum += Convert.ToDecimal(value);
+            }
+
+            return sum;
         }
 
         //private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
@@ -418,9 +438,12 @@ namespace Foxoft
         {
             GridView gV = (GridView)sender;
 
-            decimal balanceAfter = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
-            decimal invoiceSum = efMethods.SelectPaymentSum(trPaymentHeader.CurrAccCode, trPaymentHeader.DocumentNumber);
-            decimal balanceBefore = balanceAfter - invoiceSum;
+            decimal balanceBefore = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
+            //decimal invoiceSum = efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
+
+            decimal summaryValue = CalculateSum();
+
+            decimal balanceAfter = balanceBefore - summaryValue;
 
             gV.SetFocusedRowCellValue(colBalanceBefor, balanceBefore);
             gV.SetFocusedRowCellValue(colBalanceAfter, balanceAfter);
@@ -435,7 +458,7 @@ namespace Foxoft
                 XtraMessageBox.Show(combinedString);
             }
 
-            CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate);
+            CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
         }
 
         private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)
@@ -626,6 +649,39 @@ namespace Foxoft
         private void gV_PaymentLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             //MessageBox.Show("FocusedRowChanged");
+        }
+
+        private void gV_PaymentLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+        {
+
+            if (e.Column == colRunningTotal && e.IsGetData)
+            {
+                decimal balanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+
+                GridView view = sender as GridView;
+                decimal runningTotal = balanceBefore;
+                for (int i = 0; i <= e.ListSourceRowIndex; i++)
+                {
+                    decimal value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
+                    runningTotal -= value;
+                }
+                e.Value = runningTotal;
+            }
+
+            if (e.Column == colRunningTotalBefore && e.IsGetData)
+            {
+                decimal balanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+
+                GridView view = sender as GridView;
+                decimal runningTotal = balanceBefore;
+                for (int i = 0; i <= e.ListSourceRowIndex; i++)
+                {
+                    decimal value = 0;
+                    runningTotal -= value;
+                    value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
+                }
+                e.Value = runningTotal;
+            }
         }
     }
 }

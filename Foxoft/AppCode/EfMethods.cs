@@ -1081,7 +1081,7 @@ namespace Foxoft
                                     .ToList();
         }
 
-        public decimal SelectPaymentLinesSum(Guid invoiceHeaderId)
+        public decimal SelectPaymentLinesSumByInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();
 
@@ -1179,39 +1179,31 @@ namespace Foxoft
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
                                        .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
-                                       .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) <= documentDate)
-                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
+                                       .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) < documentDate)
+                                       .Sum(x => x.NetAmountLoc);
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                        .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
                                        .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
-                                       .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) <= documentDate)
+                                       .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) < documentDate)
                                        .Sum(x => x.PaymentLoc);
 
-            return invoiceSum + paymentSum;
+            return invoiceSum - paymentSum;
         }
 
-        public decimal SelectCurrAccBalance(string currAccCode, string documentNumber)
+        public decimal SelectCurrAccBalance(string currAccCode)
         {
             using subContext db = new();
 
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
-                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
-                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
-
-            decimal DocumentInvoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                       .Where(x => x.TrInvoiceHeader.DocumentNumber == documentNumber)
-                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
+                                       .Sum(x => x.NetAmountLoc);
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                        .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
                                        .Sum(x => x.PaymentLoc);
 
-
-
-            return invoiceSum - DocumentInvoiceSum + paymentSum;
+            return invoiceSum + paymentSum;
         }
 
         public decimal SelectCashRegBalance(string cashRegCode, DateTime documentDate)
@@ -1225,12 +1217,12 @@ namespace Foxoft
             return paymentSum;
         }
 
-        public decimal SelectPaymentSum(string currAccCode, string docNum)
+        public decimal SelectPaymentLinesSum(Guid paymentHeaderId)
         {
             using subContext db = new();
 
             return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.DocumentNumber == docNum)
+                                    .Where(x => x.PaymentHeaderId == paymentHeaderId)
                                     .Sum(x => x.PaymentLoc);
         }
 
@@ -1240,7 +1232,7 @@ namespace Foxoft
 
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                     .Where(x => x.TrInvoiceHeader.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc * (100 - x.PosDiscount)));
+                                    .Sum(x => x.NetAmountLoc);
         }
 
         public List<DcOffice> SelectOffices()

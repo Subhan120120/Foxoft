@@ -77,6 +77,7 @@ namespace Foxoft
             colBalanceBefor = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalanceAfter = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRunningTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -97,6 +98,7 @@ namespace Foxoft
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            colRunningTotalBefore = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
@@ -322,7 +324,7 @@ namespace Foxoft
             // 
             // gV_PaymentLine
             // 
-            gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentLineId, colPaymentHeaderId, colPaymentTypeCode, colReceivePayment, colMakePayment, colPayment, colPaymentLoc, colCurrencyCode, colLineDescription, colExchangeRate, colCashRegisterCode, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colBalanceBefor, colBalanceAfter, colPaymentMethodId });
+            gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentLineId, colPaymentHeaderId, colPaymentTypeCode, colReceivePayment, colMakePayment, colPayment, colPaymentLoc, colCurrencyCode, colLineDescription, colExchangeRate, colCashRegisterCode, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colBalanceBefor, colBalanceAfter, colPaymentMethodId, colRunningTotal, colRunningTotalBefore });
             gV_PaymentLine.CustomizationFormBounds = new Rectangle(760, 390, 264, 272);
             gV_PaymentLine.GridControl = gC_PaymentLine;
             gV_PaymentLine.Name = "gV_PaymentLine";
@@ -336,6 +338,7 @@ namespace Foxoft
             gV_PaymentLine.CellValueChanging += gV_PaymentLine_CellValueChanging;
             gV_PaymentLine.RowDeleted += gV_PaymentLine_RowDeleted;
             gV_PaymentLine.RowUpdated += gV_PaymentLine_RowUpdated;
+            gV_PaymentLine.CustomUnboundColumnData += gV_PaymentLine_CustomUnboundColumnData;
             // 
             // colPaymentLineId
             // 
@@ -512,6 +515,15 @@ namespace Foxoft
             colPaymentMethodId.Caption = "PaymentMethodCode";
             colPaymentMethodId.FieldName = "PaymentMethodId";
             colPaymentMethodId.Name = "colPaymentMethodId";
+            // 
+            // colRunningTotal
+            // 
+            colRunningTotal.Caption = "Yekun Borc";
+            colRunningTotal.FieldName = "colRunningTotal";
+            colRunningTotal.Name = "colRunningTotal";
+            colRunningTotal.UnboundDataType = typeof(decimal);
+            colRunningTotal.Visible = true;
+            colRunningTotal.VisibleIndex = 9;
             // 
             // OperationDateDateEdit
             // 
@@ -724,6 +736,15 @@ namespace Foxoft
             svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             svgImageCollection1.Add("add", "image://svgimages/icon builder/actions_add.svg");
             // 
+            // colRunningTotalBefore
+            // 
+            colRunningTotalBefore.Caption = "Əvvəlki Borc";
+            colRunningTotalBefore.FieldName = "colRunningTotalBefore";
+            colRunningTotalBefore.Name = "colRunningTotalBefore";
+            colRunningTotalBefore.UnboundDataType = typeof(decimal);
+            colRunningTotalBefore.Visible = true;
+            colRunningTotalBefore.VisibleIndex = 10;
+            // 
             // FormPaymentDetail
             // 
             AllowFormGlass = DevExpress.Utils.DefaultBoolean.True;
@@ -843,5 +864,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodId;
         private DevExpress.XtraBars.BarSubItem BSI_Report;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraGrid.Columns.GridColumn colRunningTotal;
+        private DevExpress.XtraGrid.Columns.GridColumn colRunningTotalBefore;
     }
 }

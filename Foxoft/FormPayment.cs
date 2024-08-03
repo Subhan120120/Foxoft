@@ -47,7 +47,7 @@ namespace Foxoft
             if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
                 invoiceSumLoc *= (-1);
 
-            decimal prePaid = efMethods.SelectPaymentLinesSum(trInvoiceHeader.InvoiceHeaderId);
+            decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
             decimal mustPaid = Math.Round(invoiceSumLoc - prePaid, 4);
 
             if (mustPaid < 0)
