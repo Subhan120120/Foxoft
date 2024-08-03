@@ -725,7 +725,7 @@ namespace Foxoft
 
             decimal balanceBefore = currAccBalance - invoiceSum;
 
-            decimal summaryValue = CalculateSum();
+            decimal summaryValue = CalcSummmaryValue();
             decimal balanceAfter = balanceBefore + summaryValue;
 
             object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
@@ -737,7 +737,7 @@ namespace Foxoft
             return balanceAfter;
         }
 
-        private decimal CalculateSum()
+        private decimal CalcSummmaryValue()
         {
             decimal sum = 0;
 

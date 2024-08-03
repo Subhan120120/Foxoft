@@ -383,10 +383,7 @@ namespace Foxoft
             {
                 decimal balanceBefore = efMethods.SelectCurrAccBalance(CurrAccCode, dateTime);
 
-                //decimal paymentSum = efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
-                //decimal balanceBefore = currAccBalance - paymentSum;
-
-                decimal summaryValue = CalculateSum();
+                decimal summaryValue = CalcSummmaryValue();
 
                 decimal balanceAfter = balanceBefore - summaryValue;
 
@@ -395,11 +392,10 @@ namespace Foxoft
             }
         }
 
-        private decimal CalculateSum()
+        private decimal CalcSummmaryValue()
         {
             decimal sum = 0;
 
-            // Loop through all rows in the GridView
             for (int i = 0; i < gV_PaymentLine.RowCount; i++)
             {
                 object value = gV_PaymentLine.GetRowCellValue(i, colPaymentLoc);
@@ -499,7 +495,7 @@ namespace Foxoft
 
         private string PaymentText(string newLine)
         {
-            string paid = "";
+            string paidTxt = "";
             for (int i = 0; i < gV_PaymentLine.DataRowCount; i++)
             {
                 TrPaymentLine trPaymentLine = gV_PaymentLine.GetRow(i) as TrPaymentLine;
@@ -510,20 +506,17 @@ namespace Foxoft
 
                 decimal payment = Math.Abs(Math.Round(pay, 2));
 
-                string currency = trPaymentLine.CurrencyCode;
+                string lineDesc = String.IsNullOrEmpty(trPaymentLine.LineDescription) ? "" : " (" + trPaymentLine.LineDescription + ")";
 
-                string lineDesc = trPaymentLine.LineDescription;
-
-                if (!String.IsNullOrEmpty(lineDesc))
-                    lineDesc = " (" + lineDesc + ")";
-
-                paid += txtPay + payment.ToString() + " " + currency + lineDesc + newLine;
+                paidTxt += txtPay + payment.ToString() + " " + trPaymentLine.CurrencyCode + lineDesc + newLine;
             }
 
-            decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
-            string balanceTxt = "Qalıq: " + balance.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            decimal balanceBefore = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
+            decimal summaryValue = CalcSummmaryValue();
+            decimal balanceAfter = Math.Round(balanceBefore - summaryValue, 2);
+            string balanceTxt = "Qalıq: " + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
-            return paid + balanceTxt;
+            return paidTxt + balanceTxt;
         }
 
         private void sendWhatsApp(string number, string message)
