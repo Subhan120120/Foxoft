@@ -322,7 +322,7 @@ namespace Foxoft
             // 
             // gV_PaymentLine
             // 
-            gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentLineId, colPaymentHeaderId, colPaymentTypeCode, colReceivePayment, colMakePayment, colPayment, colPaymentLoc, colCurrencyCode, colLineDescription, colExchangeRate, colCashRegisterCode, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colPaymentMethodId, colRunningTotal, colRunningTotalBefore });
+            gV_PaymentLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colPaymentLineId, colPaymentHeaderId, colPaymentTypeCode, colReceivePayment, colMakePayment, colPayment, colPaymentLoc, colCurrencyCode, colLineDescription, colExchangeRate, colCashRegisterCode, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colPaymentMethodId, colRunningTotalBefore, colRunningTotal });
             gV_PaymentLine.CustomizationFormBounds = new Rectangle(760, 390, 264, 272);
             gV_PaymentLine.GridControl = gC_PaymentLine;
             gV_PaymentLine.Name = "gV_PaymentLine";
@@ -501,7 +501,7 @@ namespace Foxoft
             colRunningTotal.Name = "colRunningTotal";
             colRunningTotal.UnboundDataType = typeof(decimal);
             colRunningTotal.Visible = true;
-            colRunningTotal.VisibleIndex = 7;
+            colRunningTotal.VisibleIndex = 8;
             // 
             // colRunningTotalBefore
             // 
@@ -510,7 +510,7 @@ namespace Foxoft
             colRunningTotalBefore.Name = "colRunningTotalBefore";
             colRunningTotalBefore.UnboundDataType = typeof(decimal);
             colRunningTotalBefore.Visible = true;
-            colRunningTotalBefore.VisibleIndex = 8;
+            colRunningTotalBefore.VisibleIndex = 7;
             // 
             // OperationDateDateEdit
             // 

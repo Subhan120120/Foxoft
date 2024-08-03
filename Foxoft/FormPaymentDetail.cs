@@ -390,8 +390,8 @@ namespace Foxoft
 
                 decimal balanceAfter = balanceBefore - summaryValue;
 
-                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + balanceAfter.ToString();
-                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + balanceBefore.ToString();
+                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Math.Round(balanceAfter, 2).ToString();
+                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Math.Round(balanceBefore, 2).ToString();
             }
         }
 
