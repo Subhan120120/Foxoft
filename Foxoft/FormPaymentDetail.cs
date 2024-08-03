@@ -1,28 +1,19 @@
 ﻿using DevExpress.Data;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Controls.Ribbon;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -44,7 +35,6 @@ namespace Foxoft
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
 
             ClearControlsAddNew();
-
 
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
             if (!currAccHasClaims)
@@ -96,8 +86,8 @@ namespace Foxoft
             paymentHeader.PaymentHeaderId = paymentHeaderId;
             string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
             paymentHeader.DocumentNumber = NewDocNum;
-            paymentHeader.DocumentDate = DateTime.Now;
-            paymentHeader.OperationDate = DateTime.Now;
+            paymentHeader.DocumentDate = DateTime.Now.Date;
+            paymentHeader.OperationDate = DateTime.Now.Date;
             paymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
             paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
             paymentHeader.OfficeCode = Authorization.OfficeCode;
@@ -518,7 +508,7 @@ namespace Foxoft
                 paid += txtPay + payment.ToString() + " " + currency + lineDesc + newLine;
             }
 
-            decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate), 2);
+            decimal balance = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
             string balanceTxt = "Qalıq: " + balance.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             return paid + balanceTxt;
@@ -538,7 +528,7 @@ namespace Foxoft
 
             string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
 
-            Process myProcess = new Process();
+            Process myProcess = new();
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = link;
             myProcess.Start();
@@ -583,35 +573,6 @@ namespace Foxoft
         {
             if (!String.IsNullOrEmpty(trPaymentHeader.CurrAccCode))
             {
-                string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
-                string CopyText2 = PaymentText("\n");
-
-                //TwilioClass twilioClass = new();
-                //TwilioResponce responce = twilioClass.SendWhatsapp(phoneNum, "chat", CopyText2);
-
-                //if (responce.message == "ok")
-                //{
-                //    efMethods.UpdatePaymentIsSent(trPaymentHeader.PaymentHeaderId);
-                //    checkEdit_IsSent.EditValue = true;
-                //    MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //}
-                //else
-                //    MessageBox.Show(responce.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
-                //MetaWhatsapp meta = new();
-                //var metaResponce = meta.SendWhatsapp(phoneNum, CopyText2);
-
-                //if (metaResponce.error is not null)
-                //    MessageBox.Show(metaResponce.error.message, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //else //(!string.IsNullOrEmpty(metaResponce.messages.FirstOrDefault().id))
-                //{
-                //    efMethods.UpdatePaymentIsSent(trPaymentHeader.PaymentHeaderId);
-                //    checkEdit_IsSent.EditValue = true;
-                //    MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //}
-
-
             }
             else
                 MessageBox.Show("Cari Hesab qeyd olunmayıb.");

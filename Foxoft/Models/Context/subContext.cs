@@ -493,6 +493,7 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "SBO", ProcessDesc = "Toptan Alış Sifarişi", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "WSO", ProcessDesc = "Toptan Satış Sifarişi", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "EX", ProcessDesc = "Xərc", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "EI", ProcessDesc = "Faktura Xərci", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "PE", ProcessDesc = "Dovr", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma", ProcessDir = 2 },
@@ -555,6 +556,7 @@ namespace Foxoft.Models
                 new DcVariable { VariableCode = "SBO", VariableDesc = "Toptan Alış Sifarişi" },
                 new DcVariable { VariableCode = "WSO", VariableDesc = "Topdan Satış Sifarişi" },
                 new DcVariable { VariableCode = "EX", VariableDesc = "Xərclər" },
+                new DcVariable { VariableCode = "EI", VariableDesc = "Xərclər" },
                 new DcVariable { VariableCode = "IT", VariableDesc = "Mal Transferi" },
                 new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" }
                 );

@@ -10,14 +10,9 @@ using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -54,25 +49,6 @@ namespace Foxoft
         private void LoadInvoiveHeaders()
         {
             dbContext = new subContext();
-
-            //filteredData
-            //            .Include(x => x.DcCurrAcc)
-            //            .Include(x => x.TrInvoiceLines)
-            //            .Where(x => x.ProcessCode == processCode)
-            //            .OrderByDescending(x => x.DocumentDate)
-            //            .LoadAsync()
-            //            .ContinueWith(loadTask =>
-            //            {
-            //                LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-
-            //                lV_invoiceHeader.ForEach(x =>
-            //                {
-            //                    x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
-            //                });
-
-            //                trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
-
-            //            }, TaskScheduler.FromCurrentSynchronizationContext());
 
             IQueryable<TrInvoiceHeader> trInvoiceHeaders = dbContext.TrInvoiceHeaders;
             CriteriaToExpressionConverter converter = new();
@@ -126,8 +102,6 @@ namespace Foxoft
             this.gV_InvoiceHeaderList.ActiveFilterString = "[StoreCode] = \'" + storeCode + "\'";
 
             gV_InvoiceHeaderList.BestFitColumns();
-
-            //gC_InvoiceHeaderList.DataSource = efMethods.SelectInvoiceHeadersByProcessCode(processCode);
         }
 
         private void gV_TrInvoiceHeaderList_DoubleClick(object sender, EventArgs e)
@@ -161,9 +135,6 @@ namespace Foxoft
                         isOpen = true;
                         XtraMessageBox.Show("Qaimə açıqdır.");
                     }
-
-                    // Close the window if necessary
-                    // CloseWindow(window.Handle);
                 }
             }
 
@@ -201,14 +172,10 @@ namespace Foxoft
                 trInvoiceHeader = view.GetFocusedRow() as TrInvoiceHeader;
             else
                 trInvoiceHeader = null;
-
-            //LoadInvoiveHeaders();
         }
 
         private void gV_InvoiceHeaderList_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
-            //if ((sender as GridView).IsFilterRow(e.RowHandle))
-            //    LoadInvoiveHeaders();
         }
 
         private void gV_InvoiceHeaderList_RowStyle(object sender, RowStyleEventArgs e)
@@ -217,7 +184,6 @@ namespace Foxoft
 
             if (e.RowHandle >= 0)
             {
-                //string col = view.GetRowCellDisplayText(e.RowHandle, isre);
                 object isReturn = view.GetRowCellValue(e.RowHandle, colIsReturn);
                 bool bIsReturn = (bool)isReturn;
                 if (bIsReturn)

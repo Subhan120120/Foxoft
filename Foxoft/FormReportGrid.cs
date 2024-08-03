@@ -376,6 +376,7 @@ namespace Foxoft
                     "RS" => "RetailSaleInvoice",
                     "WS" => "WholesaleInvoice",
                     "EX" => "Expense",
+                    "EI" => "Expense of Invoice",
                     _ => ""
                 };
 
@@ -396,6 +397,7 @@ namespace Foxoft
                     "RS" => new byte[] { 1, 3 },
                     "WS" => new byte[] { 1, 3 },
                     "EX" => new byte[] { 2, 3 },
+                    "EI" => new byte[] { 2, 3 },
                     _ => new byte[] { }
                 };
 

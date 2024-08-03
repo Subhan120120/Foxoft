@@ -1,20 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Foxoft.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
-using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Reflection.Metadata.Ecma335;
-using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
-using Microsoft.Data.SqlClient;
-using DevExpress.XtraRichEdit.Import.Html;
+using Foxoft.Models;
 using Foxoft.Models.Entity;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Data;
 
 namespace Foxoft
 {
@@ -649,7 +643,7 @@ namespace Foxoft
         public bool ExpensesExistByInvoiceId(Guid invoiceHeaderId)
         {
             using subContext db = new();
-            return db.TrInvoiceHeaders.Where(x => x.ProcessCode == "EX")
+            return db.TrInvoiceHeaders.Where(x => x.ProcessCode == "EI")
                                       .Any(x => x.RelatedInvoiceId == invoiceHeaderId);
         }
 
@@ -657,7 +651,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            var expences = db.TrInvoiceHeaders.Where(x => x.ProcessCode == "EX")
+            var expences = db.TrInvoiceHeaders.Where(x => x.ProcessCode == "EI")
                                               .Where(x => x.RelatedInvoiceId == invoiceHeaderId);
 
             expences.ForEach(x =>
@@ -819,7 +813,7 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public bool PaymentHeaderExistByInvoice(Guid invoiceHeaderId)
+        public bool PaymentExistByInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();
             return db.TrPaymentHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
@@ -1183,11 +1177,15 @@ namespace Foxoft
             using subContext db = new();
 
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode && x.TrInvoiceHeader.DocumentDate <= documentDate)
+                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
+                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
+                                       .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) <= documentDate)
                                        .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode && x.TrPaymentHeader.OperationDate <= documentDate)
+                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
+                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
+                                       .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) <= documentDate)
                                        .Sum(x => x.PaymentLoc);
 
             return invoiceSum + paymentSum;

@@ -18,7 +18,7 @@ namespace Foxoft.Migrations
                                     BEGIN
                                         INSERT INTO trInvoiceLineExts (InvoiceLineId, PriceDiscounted) (SELECT InvoiceLineId, PriceLoc * (100 - PosDiscount) / 100  FROM inserted)
                                     
-                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EX' then ih.InvoiceHeaderId 
+                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EI' then ih.InvoiceHeaderId 
                                     															when ihEx.ProcessCode = 'RP' then ihEx.InvoiceHeaderId end 
                                     																from inserted  
                                     																left join TrInvoiceHeaders ihEx on ihEx.InvoiceHeaderId = inserted.InvoiceHeaderId
@@ -28,7 +28,7 @@ namespace Foxoft.Migrations
                                     	set LineExpences = (select sum(NetAmountLoc)
                                     						from TrInvoiceLines  rl 
                                     						left join TrInvoiceHeaders rh on rh.InvoiceHeaderId = rl.InvoiceHeaderId
-                                    						where rh.ProcessCode = 'EX' and RelatedInvoiceId = @invoiceheader)
+                                    						where rh.ProcessCode = 'EI' and RelatedInvoiceId = @invoiceheader)
                                     						/ (select sum(NetAmountLoc) from TrInvoiceLines where TrInvoiceLines.InvoiceHeaderId = @invoiceheader) * TrInvoiceLineExts.PriceDiscounted
                                     						From inserted
                                     						WHERE TrInvoiceLineExts.InvoiceLineId in (select InvoiceLineId from TrInvoiceLines where InvoiceHeaderId = @invoiceheader)
@@ -44,7 +44,7 @@ namespace Foxoft.Migrations
                                     	UPDATE trInvoiceLineExts	SET PriceDiscounted = (SELECT PriceLoc * (100 - PosDiscount) / 100  FROM inserted) 
                                     	WHERE InvoiceLineId in (SELECT InvoiceLineId FROM inserted)
                                     
-                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EX' then ih.InvoiceHeaderId 
+                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EI' then ih.InvoiceHeaderId 
                                     															when ihEx.ProcessCode = 'RP' then ihEx.InvoiceHeaderId end 
                                     																from inserted  
                                     																left join TrInvoiceHeaders ihEx on ihEx.InvoiceHeaderId = inserted.InvoiceHeaderId
@@ -54,7 +54,7 @@ namespace Foxoft.Migrations
                                     	set LineExpences = (select sum(NetAmountLoc)
                                     						from TrInvoiceLines  rl 
                                     						left join TrInvoiceHeaders rh on rh.InvoiceHeaderId = rl.InvoiceHeaderId
-                                    						where rh.ProcessCode = 'EX' and RelatedInvoiceId = @invoiceheader)
+                                    						where rh.ProcessCode = 'EI' and RelatedInvoiceId = @invoiceheader)
                                     						/ (select sum(NetAmountLoc) from TrInvoiceLines where TrInvoiceLines.InvoiceHeaderId = @invoiceheader) * TrInvoiceLineExts.PriceDiscounted
                                     						From inserted
                                     						WHERE TrInvoiceLineExts.InvoiceLineId in (select InvoiceLineId from TrInvoiceLines where InvoiceHeaderId = @invoiceheader)
@@ -69,7 +69,7 @@ namespace Foxoft.Migrations
                                     	DELETE FROM trInvoiceLineExts 
                                     	WHERE InvoiceLineId in (SELECT InvoiceLineId FROM deleted)
                                     
-                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EX' then ih.InvoiceHeaderId 
+                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EI' then ih.InvoiceHeaderId 
                                     															when ihEx.ProcessCode = 'RP' then ihEx.InvoiceHeaderId end 
                                     																from deleted  
                                     																left join TrInvoiceHeaders ihEx on ihEx.InvoiceHeaderId = deleted.InvoiceHeaderId
@@ -79,7 +79,7 @@ namespace Foxoft.Migrations
                                     	set LineExpences = (select sum(NetAmountLoc)
                                     						from TrInvoiceLines  rl 
                                     						left join TrInvoiceHeaders rh on rh.InvoiceHeaderId = rl.InvoiceHeaderId
-                                    						where rh.ProcessCode = 'EX' and RelatedInvoiceId = @invoiceheader)
+                                    						where rh.ProcessCode = 'EI' and RelatedInvoiceId = @invoiceheader)
                                     						/ (select sum(NetAmountLoc) from TrInvoiceLines where TrInvoiceLines.InvoiceHeaderId = @invoiceheader) * TrInvoiceLineExts.PriceDiscounted
                                     						From deleted
                                     						WHERE TrInvoiceLineExts.InvoiceLineId in (select InvoiceLineId from TrInvoiceLines where InvoiceHeaderId = @invoiceheader)

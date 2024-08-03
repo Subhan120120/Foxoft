@@ -184,6 +184,7 @@ namespace Foxoft
                     "WS" => new byte[] { 1, 3 },
                     "RP" => new byte[] { 1, 3 },
                     "EX" => new byte[] { 2, 3 },
+                    "EI" => new byte[] { 2, 3 },
                     _ => new byte[] { }
                 };
 

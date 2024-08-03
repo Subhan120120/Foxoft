@@ -42,7 +42,7 @@ namespace Foxoft
                     {
                         Process process = Process.GetProcessById(session.PID);
 
-                        if (process is not null && session.CurrAccCode == user)
+                        if (process is not null && session.CurrAccCode.Equals(user, StringComparison.InvariantCultureIgnoreCase))
                         {
                             XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
                             return false;

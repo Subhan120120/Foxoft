@@ -89,7 +89,6 @@ namespace Foxoft
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
 
-
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
             if (!currAccHasClaims)
                 RPG_Payment.Visible = false;
@@ -125,21 +124,6 @@ namespace Foxoft
             }
         }
 
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == WM_GETTAG)
-            {
-                string tagValue = this.Tag?.ToString() ?? string.Empty;
-                byte[] tagBytes = Encoding.UTF8.GetBytes(tagValue);
-                IntPtr tagPointer = Marshal.AllocHGlobal(tagBytes.Length + 1);
-                Marshal.Copy(tagBytes, 0, tagPointer, tagBytes.Length);
-                Marshal.WriteByte(tagPointer, tagBytes.Length, 0); // Null-terminate the string
-                m.Result = tagPointer;
-                return;
-            }
-            base.WndProc(ref m);
-        }
-
         public FormInvoice(string processCode, byte[] productTypeArr, Guid relatedInvoiceId, Guid invoiceHeaderId)
             : this(processCode, productTypeArr, relatedInvoiceId)
         {
@@ -155,6 +139,21 @@ namespace Foxoft
         private void FormInvoice_Shown(object sender, EventArgs e)
         {
             gC_InvoiceLine.Focus();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_GETTAG)
+            {
+                string tagValue = this.Tag?.ToString() ?? string.Empty;
+                byte[] tagBytes = Encoding.UTF8.GetBytes(tagValue);
+                IntPtr tagPointer = Marshal.AllocHGlobal(tagBytes.Length + 1);
+                Marshal.Copy(tagBytes, 0, tagPointer, tagBytes.Length);
+                Marshal.WriteByte(tagPointer, tagBytes.Length, 0); // Null-terminate the string
+                m.Result = tagPointer;
+                return;
+            }
+            base.WndProc(ref m);
         }
 
         private void InitializeColumnName()
@@ -238,7 +237,6 @@ namespace Foxoft
                 };
             }
         }
-
 
         private void ChangeQtyByProcessDir()
         {
@@ -354,7 +352,7 @@ namespace Foxoft
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
+                //efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
 
                 trInvoiceHeader = form.trInvoiceHeader;
 
@@ -717,7 +715,7 @@ namespace Foxoft
                 {
                     FillRow(view.FocusedRowHandle, product);
                     view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-                    if (dcProcess.ProcessCode == "EX")
+                    if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                         view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
                 }
                 else
@@ -730,21 +728,21 @@ namespace Foxoft
 
         private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
         {
-            decimal invoiceSumLoc = (-1) * efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentDate);
+            decimal currAccBalance = (-1) * efMethods.SelectCurrAccBalance(currAccCode, DateTime.MaxValue);
 
             object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
             Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
             TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
             decimal currentNetAmountLoc = currTrInvoLine is null ? 0 : currTrInvoLine.NetAmountLoc;
 
-            decimal sumInvoExpectLine = invoiceSumLoc - currentNetAmountLoc;
+            decimal currAccBalanceBefore = currAccBalance - currentNetAmountLoc;
 
             object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
 
             decimal sumLineNet = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
 
-            decimal sumInvo = sumInvoExpectLine + sumLineNet;
-            return sumInvo;
+            decimal currAccBalanceAfter = currAccBalanceBefore + sumLineNet;
+            return currAccBalanceAfter;
         }
 
         private int CalcProductBalance(string productCode, string wareHouse, string serialNumberCode)
@@ -990,7 +988,7 @@ namespace Foxoft
                 MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
             }
 
-            if (trInvoiceHeader.ProcessCode == "EX")
+            if (new string[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
             {
                 SavePayment();
             }
@@ -1015,7 +1013,7 @@ namespace Foxoft
             if (invoiceSumLoc < 0)
                 isNegativ = true;
 
-            bool paymentHeadExist = efMethods.PaymentHeaderExistByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            bool paymentHeadExist = efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId);
             if (paymentHeadExist)
                 trPaymentHeader = efMethods.SelectPaymentHeaderByInvoice(trInvoiceHeader.InvoiceHeaderId);
             else
@@ -1062,7 +1060,7 @@ namespace Foxoft
 
             trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
             trPaymentHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
-            trPaymentHeader.ProcessCode = "EX";
+            trPaymentHeader.ProcessCode = dcProcess.ProcessCode;
             trPaymentHeader.CreatedUserName = Authorization.CurrAccCode;
             trPaymentHeader.OfficeCode = Authorization.OfficeCode;
             trPaymentHeader.StoreCode = Authorization.StoreCode;
@@ -1280,8 +1278,8 @@ namespace Foxoft
                 {
                     bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
 
-                    if (efMethods.PaymentHeaderExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
-                        if (dcProcess.ProcessCode == "EX")
+                    if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
+                        if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                         else if (currAccHasClaims && MessageBox.Show("Qaimə üzrə olan ödənişləri də silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
@@ -1566,13 +1564,13 @@ namespace Foxoft
         private void LoadLayout()
         {
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
-            if (dcProcess.ProcessCode != "EX")
+            if (!new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
             {
                 RPG_Control.Visible = true;
                 RPG_Payment.Visible = true;
             }
 
-            if (new string[] { "EX", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
                 btnEdit_CurrAccCode.Enabled = false;
                 colBalance.Visible = false;
@@ -1580,8 +1578,11 @@ namespace Foxoft
                 colProductCost.Visible = false;
                 colBenefit.Visible = false;
 
-                if (dcProcess.ProcessCode == "EX")
+                if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+                {
                     colQty.Visible = false;
+                    colQty.OptionsColumn.ReadOnly = true;
+                }
 
                 if (dcProcess.ProcessCode == "IT")
                 {
@@ -1671,7 +1672,7 @@ namespace Foxoft
 
         private void FormInvoice_FormClosing(object sender, FormClosingEventArgs e)
         {
-            efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
+            //efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
         }
 
         private void BBI_ReportPriceList_ItemClick(object sender, ItemClickEventArgs e)
@@ -2161,8 +2162,8 @@ namespace Foxoft
 
         private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormInvoice formInvoice = new("EX", new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId);
-            formInvoice.WindowState = FormWindowState.Normal; ;
+            FormInvoice formInvoice = new("EI", new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId);
+            formInvoice.WindowState = FormWindowState.Normal;
             formInvoice.ShowDialog();
         }
 
