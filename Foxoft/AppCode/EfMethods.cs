@@ -1191,6 +1191,29 @@ namespace Foxoft
             return invoiceSum + paymentSum;
         }
 
+        public decimal SelectCurrAccBalance(string currAccCode, string documentNumber)
+        {
+            using subContext db = new();
+
+            decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
+                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
+                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
+
+            decimal DocumentInvoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                       .Where(x => x.TrInvoiceHeader.DocumentNumber == documentNumber)
+                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
+
+            decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
+                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
+                                       .Sum(x => x.PaymentLoc);
+
+
+
+            return invoiceSum - DocumentInvoiceSum + paymentSum;
+        }
+
         public decimal SelectCashRegBalance(string cashRegCode, DateTime documentDate)
         {
             using subContext db = new();

@@ -728,21 +728,34 @@ namespace Foxoft
 
         private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
         {
-            decimal currAccBalance = (-1) * efMethods.SelectCurrAccBalance(currAccCode, DateTime.MaxValue);
+            decimal balanceBefore = (-1) * efMethods.SelectCurrAccBalance(currAccCode, trInvoiceHeader.DocumentNumber);
 
-            object colInvoiceLineId = view.GetFocusedRowCellValue(col_InvoiceLineId);
-            Guid invoiceLineId = (Guid)(colInvoiceLineId ??= Guid.Empty);
-            TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
-            decimal currentNetAmountLoc = currTrInvoLine is null ? 0 : currTrInvoLine.NetAmountLoc;
-
-            decimal currAccBalanceBefore = currAccBalance - currentNetAmountLoc;
+            decimal summaryValue = CalculateSum();
+            decimal balanceAfter = balanceBefore + summaryValue;
 
             object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
+            decimal newValue = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
+            decimal oldValue = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc));
 
-            decimal sumLineNet = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
+            decimal balanceAfterWithoutLine = balanceAfter - oldValue;
+            balanceAfter = balanceAfterWithoutLine + newValue;
+            return balanceAfter;
+        }
 
-            decimal currAccBalanceAfter = currAccBalanceBefore + sumLineNet;
-            return currAccBalanceAfter;
+        private decimal CalculateSum()
+        {
+            decimal sum = 0;
+
+            // Loop through all rows in the GridView
+            for (int i = 0; i < gV_InvoiceLine.RowCount; i++)
+            {
+                object value = gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc);
+
+                if (value != null && value != DBNull.Value)
+                    sum += Convert.ToDecimal(value);
+            }
+
+            return sum;
         }
 
         private int CalcProductBalance(string productCode, string wareHouse, string serialNumberCode)
