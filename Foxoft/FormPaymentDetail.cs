@@ -5,6 +5,7 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
@@ -436,18 +437,6 @@ namespace Foxoft
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            GridView gV = (GridView)sender;
-
-            decimal balanceBefore = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
-            //decimal invoiceSum = efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
-
-            decimal summaryValue = CalculateSum();
-
-            decimal balanceAfter = balanceBefore - summaryValue;
-
-            gV.SetFocusedRowCellValue(colBalanceBefor, balanceBefore);
-            gV.SetFocusedRowCellValue(colBalanceAfter, balanceAfter);
-
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 SavePayment();
@@ -653,22 +642,7 @@ namespace Foxoft
 
         private void gV_PaymentLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-
-            if (e.Column == colRunningTotal && e.IsGetData)
-            {
-                decimal balanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
-
-                GridView view = sender as GridView;
-                decimal runningTotal = balanceBefore;
-                for (int i = 0; i <= e.ListSourceRowIndex; i++)
-                {
-                    decimal value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
-                    runningTotal -= value;
-                }
-                e.Value = runningTotal;
-            }
-
-            if (e.Column == colRunningTotalBefore && e.IsGetData)
+            if (new GridColumn[] { colRunningTotal, colRunningTotalBefore }.Contains(e.Column) && e.IsGetData)
             {
                 decimal balanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
 
@@ -677,8 +651,12 @@ namespace Foxoft
                 for (int i = 0; i <= e.ListSourceRowIndex; i++)
                 {
                     decimal value = 0;
+                    if (e.Column == colRunningTotal)
+                        value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
+                    else if (e.Column == colRunningTotalBefore)
+                        value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i - 1, colPaymentLoc)), 2);
+
                     runningTotal -= value;
-                    value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
                 }
                 e.Value = runningTotal;
             }
