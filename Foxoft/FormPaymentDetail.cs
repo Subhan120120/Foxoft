@@ -24,6 +24,8 @@ namespace Foxoft
         private EfMethods efMethods = new();
         private subContext dbContext;
         private Guid paymentHeaderId;
+        private decimal BalanceBefore;
+
 
         public FormPaymentDetail()
         {
@@ -278,11 +280,12 @@ namespace Foxoft
                                         LocalView<TrPaymentLine> lV_paymentLine = dbContext.TrPaymentLines.Local;
                                         trPaymentLinesBindingSource.DataSource = lV_paymentLine.ToBindingList();
 
-                                        CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
+                                        CalcCurrAccBalance();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
+            BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -310,7 +313,8 @@ namespace Foxoft
                     trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
                     lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
 
-                    CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
+                    BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+                    CalcCurrAccBalance();
                 }
             }
         }
@@ -377,17 +381,13 @@ namespace Foxoft
             //CalcRowLocNetAmount(e);
         }
 
-        private void CalcCurrAccBalance(string CurrAccCode, DateTime dateTime)
+        private void CalcCurrAccBalance()
         {
-            if (!String.IsNullOrEmpty(CurrAccCode))
-            {
-                decimal balanceBefore = efMethods.SelectCurrAccBalance(CurrAccCode, dateTime);
-                decimal summaryValue = CalcSummmaryValue();
-                decimal balanceAfter = balanceBefore + summaryValue;
+            decimal summaryValue = CalcSummmaryValue();
+            decimal balanceAfter = BalanceBefore + summaryValue;
 
-                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Math.Round(balanceAfter, 2).ToString();
-                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Math.Round(balanceBefore, 2).ToString();
-            }
+            lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Math.Round(balanceAfter, 2).ToString();
+            lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Math.Round(BalanceBefore, 2).ToString();
         }
 
         private decimal CalcSummmaryValue()
@@ -441,7 +441,7 @@ namespace Foxoft
                 XtraMessageBox.Show(combinedString);
             }
 
-            CalcCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
+            CalcCurrAccBalance();
         }
 
         private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)
@@ -509,9 +509,8 @@ namespace Foxoft
                 paidTxt += txtPay + payment.ToString() + " " + trPaymentLine.CurrencyCode + lineDesc + newLine;
             }
 
-            decimal balanceBefore = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
             decimal summaryValue = CalcSummmaryValue();
-            decimal balanceAfter = Math.Round(balanceBefore + summaryValue, 2);
+            decimal balanceAfter = Math.Round(BalanceBefore + summaryValue, 2);
             string balanceTxt = "Qalıq: " + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             return paidTxt + balanceTxt;
@@ -635,10 +634,8 @@ namespace Foxoft
         {
             if (new GridColumn[] { colRunningTotal, colRunningTotalBefore }.Contains(e.Column) && e.IsGetData)
             {
-                decimal balanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
-
                 GridView view = sender as GridView;
-                decimal runningTotal = balanceBefore;
+                decimal runningTotal = BalanceBefore;
                 for (int i = 0; i <= e.ListSourceRowIndex; i++)
                 {
                     decimal value = 0;

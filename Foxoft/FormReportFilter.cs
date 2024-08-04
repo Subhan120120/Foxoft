@@ -277,7 +277,7 @@ namespace Foxoft
 
         private void bBI_ReportNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormReportEditor formQueryEditor = new(1);
+            FormReportEditor formQueryEditor = new(0);
             if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
             {
             }
