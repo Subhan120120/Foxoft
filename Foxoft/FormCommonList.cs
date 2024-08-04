@@ -166,23 +166,32 @@ namespace Foxoft
             gridColumn.OptionsColumn.AllowEdit = false;
             gridColumn.OptionsColumn.ReadOnly = true;
 
-            if (column.FieldName == "ProductCode")
+            if (column.FieldName == nameof(DcProduct.ProductCode))
             {
-                if (gridView1.Columns["ProductDesc"] is null)
+                if (gridView1.Columns[nameof(DcProduct.ProductDesc)] is null)
                 {
                     gridColumn.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
-                    gridColumn.FieldName = "ProductDesc";
+                    gridColumn.FieldName = nameof(DcProduct.ProductDesc);
                     gridColumn.UnboundDataType = typeof(string);
                     gridView1.Columns.Add(gridColumn);
                 }
             }
-
-            else if (column.FieldName == "DiscountId")
+            else if (column.FieldName == nameof(DcDiscount.DiscountId))
             {
-                if (gridView1.Columns["DiscountDesc"] is null)
+                if (gridView1.Columns[nameof(DcDiscount.DiscountDesc)] is null)
                 {
                     gridColumn.Caption = ReflectionExt.GetDisplayName<DcDiscount>(x => x.DiscountDesc);
-                    gridColumn.FieldName = "DiscountDesc";
+                    gridColumn.FieldName = nameof(DcDiscount.DiscountDesc);
+                    gridColumn.UnboundDataType = typeof(string);
+                    gridView1.Columns.Add(gridColumn);
+                }
+            }
+            else if (column.FieldName == nameof(DcReport.ReportId))
+            {
+                if (gridView1.Columns[nameof(DcReport.ReportName)] is null)
+                {
+                    gridColumn.Caption = ReflectionExt.GetDisplayName<DcReport>(x => x.ReportName);
+                    gridColumn.FieldName = nameof(DcReport.ReportName);
                     gridColumn.UnboundDataType = typeof(string);
                     gridView1.Columns.Add(gridColumn);
                 }
@@ -201,38 +210,6 @@ namespace Foxoft
             if (tableNames.Contains(column.FieldName) || typeNames.Contains(column.FieldName)) // relation table adlari silinsin
                 gridView1.Columns.Remove(column);
         }
-
-        //private void LoadDataByQuery()
-        //{
-        //    object dataSource = null;
-
-        //    DcReport dcReport = efMethods.SelectReportByName(typeof(T).Name);
-        //    if (dcReport is not null)
-        //    {
-        //        if (!String.IsNullOrEmpty(dcReport.ReportQuery))
-        //        {
-        //            string query = CustomExtensions.AddTop(dcReport.ReportQuery);
-        //            DataTable dt = adoMethods.SqlGetDt(query);
-        //            if (dt.Rows.Count > 0)
-        //                dataSource = dt;
-        //        }
-        //    }
-
-        //    bindingSource1.DataSource = dataSource;
-
-        //    if (gridView1.FocusedRowHandle >= 0)
-        //    {
-        //        object idValue = gridView1.GetFocusedRowCellValue(col_Id);
-        //        if (idValue is not null)
-        //            entity = gridView1.GetFocusedRow() as T;
-        //    }
-        //    else
-        //        entity = null;
-
-        //    gridView1.BestFitColumns();
-        //    gridView1.MakeRowVisible(gridView1.FocusedRowHandle);
-        //}
-
 
         private void gridView1_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
@@ -405,9 +382,9 @@ namespace Foxoft
             GridView view = sender as GridView;
             int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
 
-            if (e.Column.FieldName == "DiscountDesc" && e.IsGetData)
+            if (e.Column.FieldName == nameof(DcDiscount.DiscountDesc) && e.IsGetData)
             {
-                object value = view.GetRowCellValue(rowInd, "DiscountId");
+                object value = view.GetRowCellValue(rowInd, nameof(DcDiscount.DiscountId));
 
                 if (value is not null)
                 {
@@ -415,14 +392,24 @@ namespace Foxoft
                     e.Value = dcDiscount?.DiscountDesc;
                 }
             }
-            else if (e.Column.FieldName == "ProductDesc" && e.IsGetData)
+            else if (e.Column.FieldName == nameof(DcProduct.ProductDesc) && e.IsGetData)
             {
-                object value = view.GetRowCellValue(rowInd, "ProductCode");
+                object value = view.GetRowCellValue(rowInd, nameof(DcProduct.ProductCode));
 
                 if (value is not null)
                 {
                     DcProduct dcProduct = efMethods.SelectProduct(value.ToString());
                     e.Value = dcProduct?.ProductDesc;
+                }
+            }
+            else if (e.Column.FieldName == nameof(DcReport.ReportName) && e.IsGetData)
+            {
+                object value = view.GetRowCellValue(rowInd, nameof(DcReport.ReportId));
+
+                if (value is not null)
+                {
+                    DcReport report = efMethods.SelectReport(Convert.ToInt32(value));
+                    e.Value = report?.ReportName;
                 }
             }
         }

@@ -178,11 +178,11 @@ namespace Foxoft
 
             BBI.ItemClick += (sender, e) =>
             {
-                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", "Products");
+                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", "PaymentDetails");
                 try
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
-                        efMethods.InsertFormReport("Products", Convert.ToInt32(form.Value_Id));
+                        efMethods.InsertFormReport("PaymentDetails", Convert.ToInt32(form.Value_Id));
                     AddReports();
                 }
                 catch (Exception ex)
