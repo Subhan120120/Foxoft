@@ -278,6 +278,13 @@ namespace Foxoft.Models
                    .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<TrCurrAccRole>(entity =>
+            {
+                entity.HasOne(x => x.DcCurrAcc)
+                   .WithMany(x => x.TrCurrAccRoles)
+                   .OnDelete(DeleteBehavior.Cascade);
+            });
+
             modelBuilder.Entity<trInvoiceLineExt>(entity =>
             {
                 entity.HasOne(x => x.TrInvoiceLine)

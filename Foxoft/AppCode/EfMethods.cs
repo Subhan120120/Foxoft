@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
+using static DevExpress.Skins.SolidColorHelper;
 
 namespace Foxoft
 {
@@ -1180,7 +1181,7 @@ namespace Foxoft
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
                                        .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
                                        .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) < documentDate)
-                                       .Sum(x => x.NetAmountLoc);
+                                       .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                        .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
@@ -1188,7 +1189,7 @@ namespace Foxoft
                                        .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) < documentDate)
                                        .Sum(x => x.PaymentLoc);
 
-            return invoiceSum - paymentSum;
+            return paymentSum + invoiceSum;
         }
 
         public decimal SelectCurrAccBalance(string currAccCode)
@@ -1211,7 +1212,7 @@ namespace Foxoft
             using subContext db = new();
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                       .Where(x => x.CashRegisterCode == cashRegCode && x.TrPaymentHeader.OperationDate <= documentDate)
+                                       .Where(x => x.CashRegisterCode == cashRegCode && x.TrPaymentHeader.OperationDate < documentDate)
                                        .Sum(x => x.PaymentLoc);
 
             return paymentSum;
@@ -1853,6 +1854,15 @@ namespace Foxoft
             using subContext db = new();
             SettingStore settingStore = new() { Id = 1, PrinterName = printerName };
             db.Entry(settingStore).Property(x => x.PrinterName).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateStoreSettingSalesmanContinuity(string storeCode, bool salesmanContinuity)
+        {
+            using subContext db = new();
+            SettingStore settingStore = db.SettingStores.FirstOrDefault(x => x.StoreCode == storeCode);
+            settingStore.SalesmanContinuity = salesmanContinuity;
+            db.Entry(settingStore).Property(x => x.SalesmanContinuity).IsModified = true;
             return db.SaveChanges();
         }
 

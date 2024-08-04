@@ -701,19 +701,19 @@ namespace Foxoft
 
         DXMenuCheckItem CreateCheckItem(string caption, GridColumn column, Image image)
         {
-            DXMenuCheckItem item = new DXMenuCheckItem(caption, gV_ProductList.OptionsFind.FindFilterColumns.Contains(column.FieldName), image, new EventHandler(OnCanMoveItemClick));
+            DXMenuCheckItem item = new DXMenuCheckItem(caption, gV_ProductList.OptionsFind.FindFilterColumns.Contains(column.FieldName), image, new EventHandler(MenuCheckItem_Click));
             item.Tag = new MenuColumnInfo(column);
             return item;
         }
 
         DXMenuItem CreateMenuItem(string caption, GridColumn column, Image image)
         {
-            DXMenuItem item = new(caption, new EventHandler(DXMenuItem_ItemClick), image);
+            DXMenuItem item = new(caption, new EventHandler(DXMenuItem_Click), image);
             item.Tag = new MenuColumnInfo(column);
             return item;
         }
 
-        void OnCanMoveItemClick(object sender, EventArgs e)
+        void MenuCheckItem_Click(object sender, EventArgs e)
         {
             DXMenuCheckItem item = sender as DXMenuCheckItem;
             MenuColumnInfo info = item.Tag as MenuColumnInfo;
@@ -727,8 +727,7 @@ namespace Foxoft
                 gV_ProductList.OptionsFind.FindFilterColumns = gV_ProductList.OptionsFind.FindFilterColumns.Replace(fieldName, "");
         }
 
-        // Menu item click handler.
-        void DXMenuItem_ItemClick(object sender, EventArgs e)
+        void DXMenuItem_Click(object sender, EventArgs e)
         {
             DXMenuItem item = sender as DXMenuItem;
             MenuColumnInfo info = item.Tag as MenuColumnInfo;

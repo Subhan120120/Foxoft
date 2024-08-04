@@ -382,10 +382,8 @@ namespace Foxoft
             if (!String.IsNullOrEmpty(CurrAccCode))
             {
                 decimal balanceBefore = efMethods.SelectCurrAccBalance(CurrAccCode, dateTime);
-
                 decimal summaryValue = CalcSummmaryValue();
-
-                decimal balanceAfter = balanceBefore - summaryValue;
+                decimal balanceAfter = balanceBefore + summaryValue;
 
                 lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Math.Round(balanceAfter, 2).ToString();
                 lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Math.Round(balanceBefore, 2).ToString();
@@ -513,7 +511,7 @@ namespace Foxoft
 
             decimal balanceBefore = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
             decimal summaryValue = CalcSummmaryValue();
-            decimal balanceAfter = Math.Round(balanceBefore - summaryValue, 2);
+            decimal balanceAfter = Math.Round(balanceBefore + summaryValue, 2);
             string balanceTxt = "Qalıq: " + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             return paidTxt + balanceTxt;
@@ -521,7 +519,7 @@ namespace Foxoft
 
         private void sendWhatsApp(string number, string message)
         {
-            number = number.Trim();
+            number = number?.Trim();
 
             if (String.IsNullOrEmpty(number))
             {
@@ -649,7 +647,7 @@ namespace Foxoft
                     else if (e.Column == colRunningTotalBefore)
                         value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i - 1, colPaymentLoc)), 2);
 
-                    runningTotal -= value;
+                    runningTotal += value;
                 }
                 e.Value = runningTotal;
             }

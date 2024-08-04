@@ -159,7 +159,7 @@ namespace Foxoft.Models
         public virtual ICollection<TrPaymentHeader> DcStoreTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> ToCashRegTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
-        public virtual ICollection<TrCurrAccRole> TrCurrAccRole { get; set; }
+        public virtual ICollection<TrCurrAccRole> TrCurrAccRoles { get; set; }
         public virtual ICollection<DcPaymentMethod> DcPaymentMethods { get; set; }
     }
 }

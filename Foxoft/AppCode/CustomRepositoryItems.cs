@@ -37,6 +37,7 @@ namespace Foxoft
                 "CashRegisterCode" => MyCashRegisterCode(),
                 "WarehouseCode" => MyWarehouseCode(),
                 "HierarchyCode" => MyHierarchyCode(),
+                "SalesPersonCode" => MySalesPersonCode(),
                 _ => null,
             };
         }
@@ -62,6 +63,14 @@ namespace Foxoft
             RepositoryItemButtonEdit repoBtnEdit = new();
             repoBtnEdit.AutoHeight = false;
             repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, new byte[] { 4 }); };
+            return repoBtnEdit;
+        }
+
+        private static RepositoryItem MySalesPersonCode()
+        {
+            RepositoryItemButtonEdit repoBtnEdit = new();
+            repoBtnEdit.AutoHeight = false;
+            repoBtnEdit.ButtonPressed += (sender, e) => { SelectCurrAcc(sender, new byte[] { 3 }); };
             return repoBtnEdit;
         }
 

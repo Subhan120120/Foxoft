@@ -29,6 +29,8 @@ namespace Foxoft.Models
         [Display(Name = "Printer Adı")]
         public string? PrinterName { get; set; }
 
+        [Display(Name = "Satıcı Sətiri Kopyala")]
+        public bool SalesmanContinuity { get; set; }
 
         [ForeignKey("StoreCode")]
         public virtual DcCurrAcc DcStore { get; set; }

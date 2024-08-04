@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240804082438_AppSetting.SalesmanContinuity2")]
+    partial class AppSettingSalesmanContinuity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3953,9 +3956,9 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrCurrAccRole", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
-                        .WithMany("TrCurrAccRoles")
+                        .WithMany("TrCurrAccRole")
                         .HasForeignKey("CurrAccCode")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.DcRole", "DcRole")
@@ -4404,7 +4407,7 @@ namespace Foxoft.Migrations
 
                     b.Navigation("ToCashRegTrPaymentHeaders");
 
-                    b.Navigation("TrCurrAccRoles");
+                    b.Navigation("TrCurrAccRole");
 
                     b.Navigation("TrInvoiceHeaders");
 

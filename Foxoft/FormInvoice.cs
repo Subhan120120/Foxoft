@@ -4,11 +4,9 @@ using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
-using DevExpress.DataProcessing.InMemoryDataProcessor;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
-using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -24,29 +22,20 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Claims;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using WaitForm_SetDescription;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
@@ -473,8 +462,16 @@ namespace Foxoft
                 gv.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
                 gv.SetRowCellValue(e.RowHandle, colExchangeRate, currency.ExchangeRate);
             }
-            //GridColumn qty = CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut;
-            //gv.SetRowCellValue(e.RowHandle, qty, 1);
+
+            if (settingStore.SalesmanContinuity)
+            {
+                int lastRowHandle = gv.GetRowHandle(gv.DataRowCount - 1);
+                if (lastRowHandle >= 0)
+                {
+                    object lastValue = gv.GetRowCellValue(lastRowHandle, col_SalesPersonCode);
+                    gv.SetRowCellValue(e.RowHandle, col_SalesPersonCode, lastValue);
+                }
+            }
         }
 
         private void gC_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
@@ -713,6 +710,18 @@ namespace Foxoft
                 else
                 {
                     e.ErrorText = "Belə bir məhsul yoxdur";
+                    e.Valid = false;
+                }
+            }
+
+            if (column == col_SalesPersonCode)
+            {
+                string eValue = (e.Value ??= String.Empty).ToString();
+
+                DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(eValue);
+                if (dcCurrAcc is null || dcCurrAcc?.CurrAccTypeCode != 3)
+                {
+                    e.ErrorText = "Belə bir satıcı yoxdur";
                     e.Valid = false;
                 }
             }
@@ -1646,26 +1655,51 @@ namespace Foxoft
                 //menu.Items.Clear();
                 if (menu.Column != null)
                     menu.Items.Add(CreateItem("Save Layout", menu.Column, null));
+
+                if (menu.Column == col_SalesPersonCode)
+                {
+                    string columnName = ReflectionExt.GetDisplayName<SettingStore>(x => x.SalesmanContinuity);
+                    menu.Items.Add(CreateCheckItem(columnName, menu.Column, null));
+                }
             }
         }
 
-        DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+        DXMenuCheckItem CreateCheckItem(string caption, GridColumn column, Image image)
         {
-            DXMenuItem item = new(caption, new EventHandler(DXMenuCheckItem_ItemClick), image);
+            DXMenuCheckItem item = new DXMenuCheckItem(caption, settingStore.SalesmanContinuity, image, new EventHandler(MenuCheckItem_Click));
             item.Tag = new MenuColumnInfo(column);
             return item;
         }
 
-        // Menu item click handler.
-        void DXMenuCheckItem_ItemClick(object sender, EventArgs e)
+        void MenuCheckItem_Click(object sender, EventArgs e)
+        {
+            DXMenuCheckItem item = sender as DXMenuCheckItem;
+            MenuColumnInfo info = item.Tag as MenuColumnInfo;
+            if (info == null) return;
+
+            if (item.Checked)
+                settingStore.SalesmanContinuity = true;
+
+            else
+                settingStore.SalesmanContinuity = false;
+
+            efMethods.UpdateStoreSettingSalesmanContinuity(settingStore.StoreCode, settingStore.SalesmanContinuity);
+        }
+
+        DXMenuItem CreateItem(string caption, GridColumn column, Image image)
+        {
+            DXMenuItem item = new(caption, new EventHandler(DXMenuItem_Click), image);
+            item.Tag = new MenuColumnInfo(column);
+            return item;
+        }
+
+        void DXMenuItem_Click(object sender, EventArgs e)
         {
             DXMenuItem item = sender as DXMenuItem;
             MenuColumnInfo info = item.Tag as MenuColumnInfo;
             if (info == null) return;
 
             SaveLayout();
-
-            //GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
         }
 
         class MenuColumnInfo

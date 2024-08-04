@@ -336,12 +336,12 @@ namespace Foxoft
         {
             if (!String.IsNullOrEmpty(cashReg))
             {
-                decimal Balance = efMethods.SelectCashRegBalance(cashReg, dateTime);
-                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + Balance.ToString();
+                decimal balanceBefore = efMethods.SelectCashRegBalance(cashReg, dateTime);
+                decimal summaryValue = CalcSummaryValue();
+                decimal balanceAfter = balanceBefore + summaryValue;
 
-                decimal CurrentBalance = efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
-                Balance = Balance - CurrentBalance;
-                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + Balance.ToString();
+                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + balanceAfter.ToString();
+                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + balanceBefore.ToString();
             }
         }
 
@@ -474,7 +474,7 @@ namespace Foxoft
 
         private void sendWhatsApp(string number, string message)
         {
-            number = number.Trim();
+            number = number?.Trim();
 
             if (String.IsNullOrEmpty(number))
             {
@@ -573,6 +573,28 @@ namespace Foxoft
                         gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
                     }
                 }
+            }
+        }
+
+        private void gV_PaymentLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+        {
+            if (new GridColumn[] { colRunningTotal, colRunningTotalBefore }.Contains(e.Column) && e.IsGetData)
+            {
+                GridView view = sender as GridView;
+                decimal balanceBefore = Math.Round(efMethods.SelectCashRegBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+
+                decimal runningTotal = balanceBefore;
+                for (int i = 0; i <= e.ListSourceRowIndex; i++)
+                {
+                    decimal value = 0;
+                    if (e.Column == colRunningTotal)
+                        value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i, colPaymentLoc)), 2);
+                    else if (e.Column == colRunningTotalBefore)
+                        value = Math.Round(Convert.ToDecimal(view.GetListSourceRowCellValue(i - 1, colPaymentLoc)), 2);
+
+                    runningTotal -= value;
+                }
+                e.Value = runningTotal;
             }
         }
     }
