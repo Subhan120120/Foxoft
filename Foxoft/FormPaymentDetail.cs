@@ -31,22 +31,13 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            AddReports();
+            AddReports("PaymentDetails");
 
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
 
             ClearControlsAddNew();
-
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-            else
-                this.Show();
         }
 
         public FormPaymentDetail(Guid paymentHeaderId)
@@ -55,9 +46,7 @@ namespace Foxoft
             trPaymentHeader = efMethods.SelectPaymentHeader(paymentHeaderId);
 
             if (trPaymentHeader is not null)
-            {
                 LoadPayment(trPaymentHeader.PaymentHeaderId);
-            }
         }
 
         private void ClearControlsAddNew()
@@ -91,22 +80,22 @@ namespace Foxoft
             paymentHeader.DocumentNumber = NewDocNum;
             paymentHeader.DocumentDate = DateTime.Now.Date;
             paymentHeader.OperationDate = DateTime.Now.Date;
+            paymentHeader.ProcessCode = "PA";
             paymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
             paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
             paymentHeader.OfficeCode = Authorization.OfficeCode;
             paymentHeader.StoreCode = Authorization.StoreCode;
-            paymentHeader.ProcessCode = "PA";
             paymentHeader.CreatedUserName = Authorization.CurrAccCode;
             paymentHeader.IsMainTF = true;
 
             e.NewObject = paymentHeader;
         }
 
-        private void AddReports()
+        private void AddReports(string formCode)
         {
             BSI_Report.LinksPersistInfo.Clear();
 
-            List<TrFormReport> trFormReports = efMethods.SelectFormReports("PaymentDetails");
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports(formCode);
 
             BarButtonItem BBI;
 
@@ -122,7 +111,8 @@ namespace Foxoft
                     Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
                     BBI.ItemShortcut = new BarShortcut(key);
                 }
-                BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+
+                BSI_Report.AddItem(BBI);
 
                 ((ISupportInitialize)ribbonControl1).BeginInit();
                 ribbonControl1.Items.Add(BBI);
@@ -132,18 +122,25 @@ namespace Foxoft
                 {
                     DcReport dcReport = report.DcReport;
 
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString());
+                    if (!currAccHasClaims)
+                    {
+                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        return;
+                    }
+
                     string filter = "";
                     if (trPaymentHeader is not null)
-                        filter = "[PaymentHeaderId] = '" + trPaymentHeader.PaymentHeaderId + "' ";
+                        filter = $"[PaymentHeaderId] = '{trPaymentHeader.PaymentHeaderId}' ";
                     else
                     {
                         List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_PaymentLine).ToList();
                         string combined = "";
                         foreach (DataRowView rowView in mydata)
-                            combined += "'" + rowView["PaymentHeaderId"].ToString() + "',";
+                            combined += $"'{rowView["PaymentHeaderId"].ToString()}',";
 
                         combined = combined.Substring(0, combined.Length - 1);
-                        filter = "[PaymentHeaderId] in ( " + combined + ")";
+                        filter = $"[PaymentHeaderId] in ( {combined})";
                     }
 
                     string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
@@ -167,23 +164,23 @@ namespace Foxoft
             }
 
             BBI = new();
-            BBI.Caption = "Əlavə Et";
+            BBI.Caption = "İdarə Et";
             BBI.ImageOptions.SvgImage = svgImageCollection1["add"];
-            BBI.Name = "Add";
+            BBI.Name = "Manage";
+            BSI_Report.AddItem(BBI).BeginGroup = true;
 
-            BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
             ((ISupportInitialize)ribbonControl1).BeginInit();
             ribbonControl1.Items.Add(BBI);
             ((ISupportInitialize)ribbonControl1).EndInit();
 
             BBI.ItemClick += (sender, e) =>
             {
-                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", "PaymentDetails");
+                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", formCode);
                 try
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
-                        efMethods.InsertFormReport("PaymentDetails", Convert.ToInt32(form.Value_Id));
-                    AddReports();
+                        efMethods.InsertFormReport(formCode, Convert.ToInt32(form.Value_Id));
+                    AddReports(formCode);
                 }
                 catch (Exception ex)
                 {
@@ -255,7 +252,8 @@ namespace Foxoft
             dbContext = new subContext();
 
             dbContext.TrPaymentHeaders.Include(x => x.DcCurrAcc)
-                                      .Where(x => x.PaymentHeaderId == paymentHeaderId).Load();
+                                      .Where(x => x.PaymentHeaderId == paymentHeaderId)
+                                      .Load();
 
             LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
 

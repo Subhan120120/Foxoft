@@ -12,14 +12,9 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -29,6 +24,7 @@ namespace Foxoft
         private EfMethods efMethods = new();
         private subContext dbContext;
         private Guid paymentHeaderId;
+        private decimal BalanceBefore;
 
         public FormMoneyTransfer()
         {
@@ -45,7 +41,8 @@ namespace Foxoft
         {
             trPaymentHeader = efMethods.SelectPaymentHeader(paymentHeaderId);
 
-            LoadPayment(trPaymentHeader.PaymentHeaderId);
+            if (trPaymentHeader is not null)
+                LoadPayment(trPaymentHeader.PaymentHeaderId);
         }
 
         private void ClearControlsAddNew()
@@ -68,6 +65,8 @@ namespace Foxoft
             lbl_FromCashRegDesc.Text = trPaymentHeader.CurrAccDesc;
 
             dataLayoutControl1.IsValid(out List<string> errorList);
+
+            gV_PaymentLine.Focus();
         }
 
         private void trPaymentHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -76,8 +75,8 @@ namespace Foxoft
             paymentHeader.PaymentHeaderId = paymentHeaderId;
             string NewDocNum = efMethods.GetNextDocNum(true, "CT", "DocumentNumber", "TrPaymentHeaders", 6);
             paymentHeader.DocumentNumber = NewDocNum;
-            paymentHeader.DocumentDate = DateTime.Now;
-            paymentHeader.OperationDate = DateTime.Now;
+            paymentHeader.DocumentDate = DateTime.Now.Date;
+            paymentHeader.OperationDate = DateTime.Now.Date;
             paymentHeader.ProcessCode = "CT";
             paymentHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
             paymentHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
@@ -241,12 +240,12 @@ namespace Foxoft
                                     {
                                         LocalView<TrPaymentLine> lV_paymentLine = dbContext.TrPaymentLines.Local;
                                         trPaymentLinesBindingSource.DataSource = lV_paymentLine.ToBindingList();
-
+                                        CalcCashRegBalance();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            CalcCurrAccBalance(trPaymentHeader.FromCashRegCode, trPaymentHeader.OperationDate);
+            BalanceBefore = Math.Round(efMethods.SelectCashRegBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -332,36 +331,46 @@ namespace Foxoft
             //CalcRowLocNetAmount(e);
         }
 
-        private void CalcCurrAccBalance(string cashReg, DateTime dateTime)
+        private void CalcCashRegBalance()
         {
-            if (!String.IsNullOrEmpty(cashReg))
-            {
-                decimal balanceBefore = efMethods.SelectCashRegBalance(cashReg, dateTime);
-                decimal summaryValue = CalcSummaryValue();
-                decimal balanceAfter = balanceBefore + summaryValue;
+            decimal summaryValue = CalcSummaryValue();
+            decimal balanceAfter = BalanceBefore + summaryValue;
 
-                lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + balanceAfter.ToString();
-                lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + balanceBefore.ToString();
+            lbl_CurrAccBalansAfter.Text = "Cari Hesab Sonrakı Borc: " + balanceAfter.ToString();
+            lbl_CurrAccBalansBefore.Text = "Cari Hesab Əvvəlki Borc: " + BalanceBefore.ToString();
+        }
+
+        private decimal CalcSummmaryValue()
+        {
+            decimal sum = 0;
+
+            for (int i = 0; i < gV_PaymentLine.RowCount; i++)
+            {
+                object value = gV_PaymentLine.GetRowCellValue(i, colPaymentLoc);
+
+                if (value != null && value != DBNull.Value)
+                    sum += Convert.ToDecimal(value);
             }
+
+            return sum;
         }
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            GridView gV = (GridView)sender;
+            //GridView gV = (GridView)sender;
 
-            if (gV is not null)
-            {
-                string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-                gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
-                gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
-            }
+            //if (gV is not null)
+            //{
+            //    string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
+            //    gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
+            //    gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
+            //}
 
-            decimal balanceAfter = efMethods.SelectCashRegBalance(trPaymentHeader.FromCashRegCode, trPaymentHeader.OperationDate);
-            decimal invoiceSum = (-1) * efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
-            decimal balanceBefore = balanceAfter - invoiceSum;
+            //decimal invoiceSum = (-1) * efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
+            //decimal balanceBefore = colBalanceAfter - invoiceSum;
 
-            gV_PaymentLine.SetFocusedRowCellValue(colBalanceBefor, balanceBefore);
-            gV_PaymentLine.SetFocusedRowCellValue(colBalanceAfter, balanceAfter);
+            //gV_PaymentLine.SetFocusedRowCellValue(colBalanceBefor, BalanceBefore);
+            //gV_PaymentLine.SetFocusedRowCellValue(colBalanceAfter, balanceAfter);
 
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
@@ -373,7 +382,7 @@ namespace Foxoft
                 XtraMessageBox.Show(combinedString);
             }
 
-            CalcCurrAccBalance(trPaymentHeader.FromCashRegCode, trPaymentHeader.OperationDate);
+            CalcCashRegBalance();
         }
 
         private void gV_PaymentLine_RowDeleted(object sender, RowDeletedEventArgs e)
@@ -418,9 +427,6 @@ namespace Foxoft
                 if (string.IsNullOrEmpty(phoneNum))
                 {
                     string copyText = PaymentText("%0A");
-                    string CopyText2 = PaymentText("\n");
-
-                    Clipboard.SetText(CopyText2);
 
                     sendWhatsApp(phoneNum, copyText);
                 }
@@ -449,9 +455,8 @@ namespace Foxoft
                 paidTxt += txtPay + payment.ToString() + " " + trPaymentLine.CurrencyCode + lineDesc + newLine;
             }
 
-            decimal balanceBefore = efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime));
             decimal summaryValue = CalcSummaryValue();
-            decimal balanceAfter = Math.Round(balanceBefore - summaryValue, 2);
+            decimal balanceAfter = Math.Round(BalanceBefore - summaryValue, 2);
             string balanceTxt = "Qalıq: " + balanceAfter.ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
             return paidTxt + balanceTxt;
@@ -520,7 +525,7 @@ namespace Foxoft
                 trPaymentHeader.FromCashRegCode = dcCurrAcc.CurrAccCode;
                 lbl_FromCashRegDesc.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
 
-                CalcCurrAccBalance(dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
+                CalcCashRegBalance();
             }
         }
 
@@ -535,7 +540,8 @@ namespace Foxoft
                 trPaymentHeader.ToCashRegCode = dcCurrAcc.CurrAccCode;
                 lbl_ToCashRegDesc.Text = dcCurrAcc.CurrAccDesc + " " + dcCurrAcc.FirstName + " " + dcCurrAcc.LastName;
 
-                CalcCurrAccBalance(dcCurrAcc.CurrAccCode, trPaymentHeader.OperationDate);
+                BalanceBefore = Math.Round(efMethods.SelectCashRegBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+                CalcCashRegBalance();
             }
         }
 

@@ -88,7 +88,8 @@ namespace Foxoft
             //lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
-            AddReports();
+            AddReports(BSI_ReportProduct, "Products");
+            AddReports(BSI_ReportInvoice, "Invoice");
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
                 repoCBE_PrinterName.Items.Add(printer);
@@ -154,13 +155,16 @@ namespace Foxoft
             checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
         }
 
-        private void AddReports()
+        private void AddReports(BarSubItem barSubItem, string formCode)
         {
-            List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
+            barSubItem.LinksPersistInfo.Clear();
 
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports(formCode);
+
+            BarButtonItem BBI;
             foreach (TrFormReport report in trFormReports)
             {
-                BarButtonItem BBI = new();
+                BBI = new();
                 BBI.Caption = report.DcReport.ReportName;
                 BBI.Id = 57;
                 BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
@@ -172,7 +176,7 @@ namespace Foxoft
                     Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
                     BBI.ItemShortcut = new BarShortcut(key);
                 }
-                BSI_Reports.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+                barSubItem.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
 
                 ((ISupportInitialize)ribbonControl1).BeginInit();
                 ribbonControl1.Items.Add(BBI);
@@ -195,17 +199,18 @@ namespace Foxoft
                     {
                         string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
 
-                        string filter = "";
+                        string filter = $"[InvoiceHeaderId] = '{trInvoiceHeader.InvoiceHeaderId}' AND ";
+
                         if (!string.IsNullOrEmpty(productCode))
-                            filter = "[ProductCode] = '" + productCode + "' ";
+                            filter += $" [ProductCode] = '{productCode}' ";
                         else
                         {
                             var combined = "";
                             foreach (TrInvoiceLine rowView in mydata)
-                                combined += "'" + rowView.ProductCode.ToString() + "',";
+                                combined += $"'{rowView.ProductCode.ToString()}',";
 
                             combined = combined.Substring(0, combined.Length - 1);
-                            filter = "[ProductCode] in ( " + combined + ")";
+                            filter += $" [ProductCode] in ( {combined})";
                         }
 
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
@@ -225,6 +230,31 @@ namespace Foxoft
                     else XtraMessageBox.Show("Qeydə alınmış məlumat yoxdur");
                 };
             }
+
+            BBI = new();
+            BBI.Caption = "İdarə Et";
+            BBI.ImageOptions.SvgImage = svgImageCollection1["setting"];
+            BBI.Name = "Manage";
+            barSubItem.LinksPersistInfo.Add(new LinkPersistInfo(BBI, true));
+
+            ((ISupportInitialize)ribbonControl1).BeginInit();
+            ribbonControl1.Items.Add(BBI);
+            ((ISupportInitialize)ribbonControl1).EndInit();
+
+            BBI.ItemClick += (sender, e) =>
+            {
+                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", formCode);
+                try
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                        efMethods.InsertFormReport(formCode, Convert.ToInt32(form.Value_Id));
+                    AddReports(barSubItem, formCode);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            };
         }
 
         private void ChangeQtyByProcessDir()

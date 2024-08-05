@@ -75,8 +75,8 @@ namespace Foxoft
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
-            colRunningTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             colRunningTotalBefore = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRunningTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -138,7 +138,7 @@ namespace Foxoft
             ribbonControl1.ExpandCollapseItem.Id = 0;
             ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Report });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 12;
+            ribbonControl1.MaxItemId = 14;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(899, 158);
@@ -194,12 +194,12 @@ namespace Foxoft
             BBI_Info.Name = "BBI_Info";
             BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
-            // BSI_Report
+            // BSI_ReportProduct
             // 
             BSI_Report.Caption = "Hesabat";
             BSI_Report.Id = 11;
-            BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
-            BSI_Report.Name = "BSI_Report";
+            BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_ReportProduct.ImageOptions.SvgImage");
+            BSI_Report.Name = "BSI_ReportProduct";
             // 
             // ribbonPage1
             // 
@@ -494,15 +494,6 @@ namespace Foxoft
             colPaymentMethodId.FieldName = "PaymentMethodId";
             colPaymentMethodId.Name = "colPaymentMethodId";
             // 
-            // colRunningTotal
-            // 
-            colRunningTotal.Caption = "Yekun Borc";
-            colRunningTotal.FieldName = "colRunningTotal";
-            colRunningTotal.Name = "colRunningTotal";
-            colRunningTotal.UnboundDataType = typeof(decimal);
-            colRunningTotal.Visible = true;
-            colRunningTotal.VisibleIndex = 8;
-            // 
             // colRunningTotalBefore
             // 
             colRunningTotalBefore.Caption = "Əvvəlki Borc";
@@ -511,6 +502,15 @@ namespace Foxoft
             colRunningTotalBefore.UnboundDataType = typeof(decimal);
             colRunningTotalBefore.Visible = true;
             colRunningTotalBefore.VisibleIndex = 7;
+            // 
+            // colRunningTotal
+            // 
+            colRunningTotal.Caption = "Yekun Borc";
+            colRunningTotal.FieldName = "colRunningTotal";
+            colRunningTotal.Name = "colRunningTotal";
+            colRunningTotal.UnboundDataType = typeof(decimal);
+            colRunningTotal.Visible = true;
+            colRunningTotal.VisibleIndex = 8;
             // 
             // OperationDateDateEdit
             // 
