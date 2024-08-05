@@ -27,7 +27,7 @@ namespace Foxoft.Models
         public byte ClaimTypeId { get; set; }
 
 
-        public virtual dcClaimType DcClaimType { get; set; }
+        public virtual DcClaimType DcClaimType { get; set; }
         public virtual ICollection<TrRoleClaim> TrRoleClaims { get; set; }
         public virtual ICollection<TrClaimReport> TrClaimReports { get; set; }
     }

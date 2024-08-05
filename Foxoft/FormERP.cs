@@ -403,7 +403,7 @@ namespace Foxoft
 
         private void aCE_CurrAccRole_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormCurrAccRole>();
+            ShowExistForm<FormCurrAccClaim>();
         }
     }
 }

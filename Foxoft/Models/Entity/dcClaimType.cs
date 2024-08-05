@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
 {
-    public partial class dcClaimType
+    public partial class DcClaimType
     {
-        public dcClaimType()
+        public DcClaimType()
         {
             //DcClaims = new HashSet<DcClaim>();
            // TrRoleClaims = new HashSet<TrRoleClaim>();

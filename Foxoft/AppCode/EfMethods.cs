@@ -502,6 +502,16 @@ namespace Foxoft
             return currAccRoles;
         }
 
+        public List<TrRoleClaim> SelectRoleClaim(string roleCode)
+        {
+            using subContext db = new();
+
+            List<TrRoleClaim> roleClaims = db.TrRoleClaims.Include(x => x.DcRole)
+                                                                  .Where(x => x.RoleCode == roleCode)
+                                                                  .ToList();
+            return roleClaims;
+        }
+
         public List<TrHierarchyFeatureType> SelectHierarchyFeatureTypes(int featureTypeId)
         {
             using subContext db = new();
@@ -1604,10 +1614,17 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int DeleteCurrAccRole(string currAccCode, string roleCode)
+        public int DeleteCurrAccRole(int currAccRolId)
         {
             using subContext db = new();
-            db.TrCurrAccRoles.Remove(db.TrCurrAccRoles.FirstOrDefault(x => x.CurrAccCode == currAccCode && x.RoleCode == roleCode));
+            db.TrCurrAccRoles.Remove(db.TrCurrAccRoles.Find(currAccRolId));
+            return db.SaveChanges();
+        }
+
+        public int DeleteRoleClaim(int colRoleClaimId)
+        {
+            using subContext db = new();
+            db.TrRoleClaims.Remove(db.TrRoleClaims.Find(colRoleClaimId));
             return db.SaveChanges();
         }
 

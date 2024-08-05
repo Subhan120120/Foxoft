@@ -27,7 +27,7 @@ namespace Foxoft.Models
             : base(options) { }
 
         public DbSet<DcClaim> DcClaims { get; set; }
-        public DbSet<dcClaimType> DcClaimTypes { get; set; }
+        public DbSet<DcClaimType> DcClaimTypes { get; set; }
         public DbSet<TrClaimReport> TrClaimReports { get; set; }
         public DbSet<DcCurrAcc> DcCurrAccs { get; set; }
         public DbSet<DcCurrAccType> DcCurrAccTypes { get; set; }
@@ -375,10 +375,10 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1 }
                 );
 
-            modelBuilder.Entity<dcClaimType>().HasData(
-                new dcClaimType { ClaimTypeId = 1, ClaimTypeDesc = "Embaded" },
-                new dcClaimType { ClaimTypeId = 2, ClaimTypeDesc = "Report" },
-                new dcClaimType { ClaimTypeId = 3, ClaimTypeDesc = "Column" }
+            modelBuilder.Entity<DcClaimType>().HasData(
+                new DcClaimType { ClaimTypeId = 1, ClaimTypeDesc = "Embaded" },
+                new DcClaimType { ClaimTypeId = 2, ClaimTypeDesc = "Report" },
+                new DcClaimType { ClaimTypeId = 3, ClaimTypeDesc = "Column" }
                 );
 
             modelBuilder.Entity<SettingStore>().HasData(

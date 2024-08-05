@@ -1,4 +1,5 @@
-﻿using DevExpress.Mvvm.Native;
+﻿using DevExpress.DocumentServices.ServiceModel.DataContracts;
+using DevExpress.Mvvm.Native;
 using DevExpress.Mvvm.POCO;
 using DevExpress.Utils;
 using DevExpress.Utils.Svg;
@@ -247,14 +248,15 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
-            if (e.FieldName == "ProductCode") e.EditorType = typeof(ButtonEdit);
-            if (e.FieldName == "CurrAccCode") e.EditorType = typeof(ButtonEdit);
-            else if (e.FieldName == "DiscountId") e.EditorType = typeof(ButtonEdit);
-            else if (e.FieldName == "ReportId") e.EditorType = typeof(ButtonEdit);
-            else if (e.FieldName == "RoleCode") e.EditorType = typeof(ButtonEdit);
-            else if (e.FieldName == "FormCode") e.EditorType = typeof(ButtonEdit);
-            else if (e.FieldName == "HierarchyCode") e.EditorType = typeof(ButtonEdit);
-            else if (e.FieldName == "FeatureTypeId") e.EditorType = typeof(ButtonEdit);
+            if (e.FieldName == nameof(DcProduct.ProductCode)) e.EditorType = typeof(ButtonEdit);
+            if (e.FieldName == nameof(DcCurrAcc.CurrAccCode)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcDiscount.DiscountId)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcReport.ReportId)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcRole.RoleCode)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcForm.FormCode)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcHierarchy.HierarchyCode)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcFeatureType.FeatureTypeId)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcClaim.ClaimCode)) e.EditorType = typeof(ButtonEdit);
 
             e.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             e.Handled = true;
@@ -262,45 +264,50 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieved(object sender, FieldRetrievedEventArgs e)
         {
-            if (e.FieldName == "ProductCode") // add FieldRetrieving too
+            if (e.FieldName == nameof(DcProduct.ProductCode)) // add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ProductCode_ButtonPressed);
             }
-            if (e.FieldName == "CurrAccCode") // add FieldRetrieving too
+            if (e.FieldName == nameof(DcCurrAcc.CurrAccCode)) // add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_CurrAccCode_ButtonPressed);
             }
-            if (e.FieldName == "DiscountId")// add FieldRetrieving too
+            if (e.FieldName == nameof(DcDiscount.DiscountId))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_DiscountId_ButtonPressed);
             }
-            if (e.FieldName == "FormCode")// add FieldRetrieving too
+            if (e.FieldName == nameof(DcForm.FormCode))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FormCode_ButtonPressed);
             }
-            if (e.FieldName == "ReportId")// add FieldRetrieving too
+            if (e.FieldName == nameof(DcReport.ReportId))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ReportId_ButtonPressed);
             }
-            if (e.FieldName == "RoleCode")// add FieldRetrieving too
+            if (e.FieldName == nameof(DcRole.RoleCode))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_RoleCode_ButtonPressed);
             }
-            if (e.FieldName == "HierarchyCode")// add FieldRetrieving too
+            if (e.FieldName == nameof(DcHierarchy.HierarchyCode))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_HierarchyCode_ButtonPressed);
             }
-            if (e.FieldName == "FeatureTypeId")// add FieldRetrieving too
+            if (e.FieldName == nameof(DcFeatureType.FeatureTypeId))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FeatureTypeId_ButtonPressed);
+            }
+            if (e.FieldName == nameof(DcClaim.ClaimCode))// add FieldRetrieving too
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCode_ButtonPressed);
             }
         }
 
@@ -436,6 +443,24 @@ namespace Foxoft
             string value = editor.EditValue?.ToString();
 
             using FormCommonList<DcFeatureType> form = new("", "FeatureTypeId", value);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.Value_Id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_ClaimCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+            string value = editor.EditValue?.ToString();
+
+            using FormCommonList<DcClaim> form = new("", nameof(DcClaim.ClaimCode), value);
 
             try
             {
