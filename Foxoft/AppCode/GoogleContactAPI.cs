@@ -47,27 +47,27 @@ namespace Foxoft.AppCode
             Person newContact = new Person
             {
                 Names = new List<Name>
-            {
-                new Name
-                {
-                    GivenName = "John",
-                    FamilyName = "Doe"
-                }
-            },
+                    {
+                        new Name
+                        {
+                            GivenName = "Abdulla",
+                            FamilyName = "Abgul"
+                        }
+                    },
                 EmailAddresses = new List<EmailAddress>
-            {
-                new EmailAddress
-                {
-                    Value = "johndoe@example.com"
-                }
-            },
+                    {
+                        new EmailAddress
+                        {
+                            Value = "nadir@gmail.com"
+                        }
+                    },
                 PhoneNumbers = new List<PhoneNumber>
-            {
-                new PhoneNumber
-                {
-                    Value = "+1234567890"
-                }
-            }
+                    {
+                        new PhoneNumber
+                        {
+                            Value = "+1234567890"
+                        }
+                    }
             };
 
             try

@@ -71,21 +71,58 @@ namespace Foxoft
 
         public static string ProcessDir(string processCode)
         {
-            switch (processCode)
+            return processCode switch
             {
-                case "RP": return "In";
-                case "EX": return "In";
-                case "EI": return "In";
-                case "SB": return "In";
-                case "CI": return "In";
-                case "IT": return "Out";
-                case "RS": return "Out";
-                case "WS": return "Out";
-                case "CO": return "Out";
-                default: return "";
-            }
+                "RP" => "In",
+                "EX" => "In",
+                "EI" => "In",
+                "SB" => "In",
+                "CI" => "In",
+                "WI" => "In",
+                "IT" => "Out",
+                "RS" => "Out",
+                "WS" => "Out",
+                "CO" => "Out",
+                "WO" => "Out",
+                _ => ""
+            };
         }
 
+        public static string GetClaim(string processCode)
+        {
+            return processCode switch
+            {
+                "IT" => "InventoryTransfer",
+                "CI" => "CountIn",
+                "CO" => "CountOut",
+                "WI" => "WaybillIn",
+                "WO" => "WaybillOut",
+                "RP" => "RetailPurchaseInvoice",
+                "RS" => "RetailSaleInvoice",
+                "WS" => "WholesaleInvoice",
+                "EX" => "Expense",
+                "EI" => "Expense of Invoice",
+                _ => ""
+            };
+        }
+
+        public static byte[] GetProductTypeArray(string processCode)
+        {
+            return processCode switch
+            {
+                "IT" => new byte[] { 1 },
+                "CI" => new byte[] { 1 },
+                "CO" => new byte[] { 1 },
+                "WI" => new byte[] { 1 },
+                "WO" => new byte[] { 1 },
+                "RP" => new byte[] { 1, 3 },
+                "RS" => new byte[] { 1, 3 },
+                "WS" => new byte[] { 1, 3 },
+                "EX" => new byte[] { 2, 3 },
+                "EI" => new byte[] { 2, 3 },
+                _ => new byte[] { }
+            };
+        }
 
         public static bool DirectoryExist(string path)
         {
@@ -123,7 +160,21 @@ namespace Foxoft
             return ipHost;
         }
 
+        public static string GetPhiscalAdress()
+        {
+            string fiscal = String.Empty;
+            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
 
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet && nic.Name.StartsWith("Ethernet"))
+                    fiscal = nic.Id + pInterfaceProperties;
+
+                else if (nic.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 && nic.Name.StartsWith("Wi-Fi"))
+                    fiscal = nic.Id + pInterfaceProperties;
+            }
+
+            return fiscal;
+        }
     }
-
 }

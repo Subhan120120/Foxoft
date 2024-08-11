@@ -1,8 +1,4 @@
-﻿using DevExpress.DocumentServices.ServiceModel.DataContracts;
-using DevExpress.Mvvm.Native;
-using DevExpress.Mvvm.POCO;
-using DevExpress.Utils;
-using DevExpress.Utils.Svg;
+﻿using DevExpress.Mvvm.Native;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -12,21 +8,10 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -309,7 +294,37 @@ namespace Foxoft
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCode_ButtonPressed);
             }
+            //if (e.FieldName == nameof(TrInvoiceLine.SerialNumberCode))// add FieldRetrieving too
+            //{
+            //    RepositoryItemTextEdit txtEdit = e.RepositoryItem as RepositoryItemTextEdit;
+            //    txtEdit.KeyDown += new KeyEventHandler(txtEdit_SerialNumberCode_KeyDown);
+            //    txtEdit.KeyPress += new KeyPressEventHandler(txtEdit_SerialNumberCode_KeyPress);
+            //}
         }
+
+        //private DateTime _lastKeyPressTime;
+        //private void txtEdit_SerialNumberCode_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //}
+
+
+        //private void txtEdit_SerialNumberCode_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    TextEdit editor = (TextEdit)sender;
+
+        //    DateTime currentTime = DateTime.Now;
+        //    TimeSpan timeDiff = currentTime - _lastKeyPressTime;
+
+        //    // Check if the scanner is detected based on timing or other logic
+        //    if (timeDiff.TotalMilliseconds > 50)
+        //    {
+        //        // Process character input, assuming it’s from manual input or scanner input
+        //        editor.EditValue += e.KeyChar.ToString();
+        //    }
+
+        //    // Store the time of the last key press
+        //    _lastKeyPressTime = currentTime;
+        //}
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {

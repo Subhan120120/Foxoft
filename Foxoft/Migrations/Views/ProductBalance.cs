@@ -20,6 +20,7 @@ namespace Foxoft.Migrations
                 								, Balance = SUM(ISNULL(QtyIn,0) - ISNULL(QtyOut,0))  
                 				from TrInvoiceLines il
                 				left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId
+							    where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )
                 				group by ProductCode
                 								, WarehouseCode
                 ) AS SourceTable  
@@ -40,6 +41,7 @@ namespace Foxoft.Migrations
                                                 , SerialNumberCode
                 				from TrInvoiceLines il
                 				left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId
+                                where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )
                 				group by ProductCode
                 								, WarehouseCode
                                                 , SerialNumberCode

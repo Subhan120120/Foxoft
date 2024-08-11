@@ -20,6 +20,7 @@ namespace Foxoft.Models
         [ForeignKey("TrInvoiceHeader")]
         public Guid InvoiceHeaderId { get; set; }
 
+        [ForeignKey("RelatedLine")]
         public Guid? RelatedLineId { get; set; }
 
 
@@ -170,5 +171,9 @@ namespace Foxoft.Models
         public virtual DcCurrency DcCurrency { get; set; }
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }
+
+        public virtual TrInvoiceLine RelatedLine { get; set; } // Navigation property to the related line
+        public virtual ICollection<TrInvoiceLine> InverseRelatedLines { get; set; } // Navigation property for the inverse relationship
+
     }
 }

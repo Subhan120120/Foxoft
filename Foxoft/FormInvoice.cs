@@ -55,7 +55,7 @@ namespace Foxoft
         readonly SettingStore settingStore;
         private TrInvoiceHeader trInvoiceHeader;
         Guid invoiceHeaderId;
-        Guid relatedInvoiceId;
+        Guid? relatedInvoiceId;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
 
@@ -63,7 +63,7 @@ namespace Foxoft
 
         //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
-        public FormInvoice(string processCode, byte[] productTypeArr, Guid relatedInvoiceId)
+        public FormInvoice(string processCode, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             dcProcess = efMethods.SelectProcess(processCode);
@@ -198,8 +198,10 @@ namespace Foxoft
                     if (mydata.Count > 0)
                     {
                         string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
+                        string filter = "";
 
-                        string filter = $"[InvoiceHeaderId] = '{trInvoiceHeader.InvoiceHeaderId}' AND ";
+                        if (barSubItem == BSI_ReportInvoice)
+                            filter = $"[InvoiceHeaderId] = '{trInvoiceHeader.InvoiceHeaderId}' AND ";
 
                         if (!string.IsNullOrEmpty(productCode))
                             filter += $" [ProductCode] = '{productCode}' ";
@@ -956,6 +958,23 @@ namespace Foxoft
                 SaveInvoice();
         }
 
+        private void gV_InvoiceLine_RowDeleting(object sender, RowDeletingEventArgs e)
+        {
+            GridView view = sender as GridView;
+            Guid invoiceLineId = (Guid)view.GetRowCellValue(e.RowHandle, col_InvoiceLineId);
+
+            if (efMethods.ReturnExistByInvoiceLine(invoiceLineId))
+            {
+                e.Cancel = true; // Cancel the deletion if validation fails
+                XtraMessageBox.Show("Bu məhsul üzrə geri qaytarma mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (efMethods.WaybillExistByInvoiceLine(invoiceLineId))
+            {
+                e.Cancel = true; // Cancel the deletion if validation fails
+                XtraMessageBox.Show("Bu məhsul üzrə təhvil mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         Guid quidHead;
         private void SaveInvoice()
         {
@@ -1320,6 +1339,26 @@ namespace Foxoft
         {
             if (efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
             {
+                List<TrInvoiceLine> invoicelines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+
+                foreach (var invoiceline in invoicelines)
+                {
+                    if (efMethods.ReturnExistByInvoiceLine(invoiceline.InvoiceLineId))
+                    {
+                        XtraMessageBox.Show("Bu məhsul üzrə geri qaytarma mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    if (efMethods.WaybillExistByInvoiceLine(invoiceline.InvoiceLineId))
+                    {
+                        XtraMessageBox.Show("Bu məhsul üzrə təhvil mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+
+
+
+
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
@@ -2210,7 +2249,10 @@ namespace Foxoft
 
                 if (dcProduct is not null && e.IsGetData)
                 {
-                    dcProduct.Balance = subContext.TrInvoiceLines.Where(x => x.ProductCode == productCode).Sum(x => x.QtyIn - x.QtyOut);
+                    dcProduct.Balance = subContext.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                                                 .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                                                 .Where(x => x.ProductCode == productCode)
+                                                                 .Sum(x => x.QtyIn - x.QtyOut);
 
                     if (e.Column == col_ProductDesc)
                     {
@@ -2222,11 +2264,6 @@ namespace Foxoft
                     {
                         e.Value = dcProduct.Balance;
                     }
-
-                    //if (e.Column == colLastPurchasePrice)
-                    //{
-                    //    e.Value = dcProduct.LastPurchasePrice;
-                    //}
                 }
             }
         }

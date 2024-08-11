@@ -81,7 +81,7 @@ namespace Foxoft
             OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
             StoreCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            CurrAccCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
+            btnEdit_CurrAccCode = new DevExpress.XtraEditors.ButtonEdit();
             btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -115,7 +115,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)OperationTimeTimeSpanEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)StoreCodeLookUpEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)CurrAccCodeButtonEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
@@ -194,12 +194,12 @@ namespace Foxoft
             BBI_Info.Name = "BBI_Info";
             BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
-            // BSI_ReportProduct
+            // BSI_Report
             // 
             BSI_Report.Caption = "Hesabat";
             BSI_Report.Id = 11;
-            BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_ReportProduct.ImageOptions.SvgImage");
-            BSI_Report.Name = "BSI_ReportProduct";
+            BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
+            BSI_Report.Name = "BSI_Report";
             // 
             // ribbonPage1
             // 
@@ -253,12 +253,13 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(OperationTimeTimeSpanEdit);
             dataLayoutControl1.Controls.Add(DescriptionTextEdit);
             dataLayoutControl1.Controls.Add(StoreCodeLookUpEdit);
-            dataLayoutControl1.Controls.Add(CurrAccCodeButtonEdit);
+            dataLayoutControl1.Controls.Add(btnEdit_CurrAccCode);
             dataLayoutControl1.Controls.Add(btnEdit_DocNum);
             dataLayoutControl1.DataSource = trPaymentHeadersBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.Location = new Point(0, 158);
             dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(947, 263, 650, 400);
             dataLayoutControl1.Root = Root;
             dataLayoutControl1.Size = new Size(899, 396);
             dataLayoutControl1.TabIndex = 2;
@@ -568,18 +569,21 @@ namespace Foxoft
             StoreCodeLookUpEdit.TabIndex = 7;
             StoreCodeLookUpEdit.KeyDown += dataLayout_KeyDown;
             // 
-            // CurrAccCodeButtonEdit
+            // btnEdit_CurrAccCode
             // 
-            CurrAccCodeButtonEdit.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "CurrAccCode", true));
-            CurrAccCodeButtonEdit.Location = new Point(537, 12);
-            CurrAccCodeButtonEdit.MenuManager = ribbonControl1;
-            CurrAccCodeButtonEdit.Name = "CurrAccCodeButtonEdit";
-            CurrAccCodeButtonEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            CurrAccCodeButtonEdit.Size = new Size(74, 20);
-            CurrAccCodeButtonEdit.StyleController = dataLayoutControl1;
-            CurrAccCodeButtonEdit.TabIndex = 2;
-            CurrAccCodeButtonEdit.ButtonClick += CurrAccCodeButtonEdit_ButtonClick;
-            CurrAccCodeButtonEdit.KeyDown += dataLayout_KeyDown;
+            btnEdit_CurrAccCode.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "CurrAccCode", true));
+            btnEdit_CurrAccCode.Location = new Point(537, 12);
+            btnEdit_CurrAccCode.MenuManager = ribbonControl1;
+            btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
+            btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_CurrAccCode.Size = new Size(74, 20);
+            btnEdit_CurrAccCode.StyleController = dataLayoutControl1;
+            btnEdit_CurrAccCode.TabIndex = 2;
+            btnEdit_CurrAccCode.ButtonClick += CurrAccCodeButtonEdit_ButtonClick;
+            btnEdit_CurrAccCode.InvalidValue += btnEdit_CurrAccCode_InvalidValue;
+            btnEdit_CurrAccCode.EditValueChanged += btnEdit_CurrAccCode_EditValueChanged;
+            btnEdit_CurrAccCode.KeyDown += dataLayout_KeyDown;
+            btnEdit_CurrAccCode.Validating += btnEdit_CurrAccCode_Validating;
             // 
             // btnEdit_DocNum
             // 
@@ -624,7 +628,7 @@ namespace Foxoft
             // 
             // ItemForCurrAccCode
             // 
-            ItemForCurrAccCode.Control = CurrAccCodeButtonEdit;
+            ItemForCurrAccCode.Control = btnEdit_CurrAccCode;
             ItemForCurrAccCode.Location = new Point(439, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
             ItemForCurrAccCode.Size = new Size(164, 24);
@@ -754,7 +758,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)OperationTimeTimeSpanEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)StoreCodeLookUpEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)CurrAccCodeButtonEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
@@ -809,7 +813,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_DeletePayment;
         private DevExpress.XtraEditors.LookUpEdit StoreCodeLookUpEdit;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraEditors.ButtonEdit CurrAccCodeButtonEdit;
+        private DevExpress.XtraEditors.ButtonEdit btnEdit_CurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentLoc;
         private DevExpress.XtraGrid.Columns.GridColumn colCashRegisterCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_PaymentTypeCode;

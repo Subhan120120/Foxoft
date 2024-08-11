@@ -303,6 +303,7 @@ namespace Foxoft
             gV_InvoiceLine.CellValueChanged += gV_InvoiceLine_CellValueChanged;
             gV_InvoiceLine.CellValueChanging += gV_InvoiceLine_CellValueChanging;
             gV_InvoiceLine.InvalidRowException += gV_InvoiceLine_InvalidRowException;
+            gV_InvoiceLine.RowDeleting += gV_InvoiceLine_RowDeleting;
             gV_InvoiceLine.RowDeleted += gV_InvoiceLine_RowDeleted;
             gV_InvoiceLine.ValidateRow += gV_InvoiceLine_ValidateRow;
             gV_InvoiceLine.RowUpdated += gV_InvoiceLine_RowUpdated;

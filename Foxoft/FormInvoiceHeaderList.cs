@@ -20,7 +20,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         public TrInvoiceHeader trInvoiceHeader { get; set; }
-        public Guid RelatedInvoiceId { get; set; }
+        public Guid? RelatedInvoiceId { get; set; }
         subContext dbContext;
         public string processCode { get; set; }
 
@@ -37,7 +37,7 @@ namespace Foxoft
             gV_InvoiceHeaderList.OptionsFind.FindMode = FindMode.Always;
         }
 
-        public FormInvoiceHeaderList(string processCode, Guid relatedInvoiceId)
+        public FormInvoiceHeaderList(string processCode, Guid? relatedInvoiceId)
             : this()
         {
             this.processCode = processCode;
@@ -56,7 +56,7 @@ namespace Foxoft
 
             List<TrInvoiceHeader> headerList = filteredData.Include(x => x.TrInvoiceLines)
                         .Include(x => x.DcCurrAcc)
-                        .Where(x => RelatedInvoiceId == Guid.Empty ? true : x.RelatedInvoiceId == RelatedInvoiceId)
+                        .Where(x => RelatedInvoiceId == null ? true : x.RelatedInvoiceId == RelatedInvoiceId)
                         .Where(x => x.ProcessCode == processCode && x.IsMainTF == true)
                         .OrderByDescending(x => x.DocumentDate).ThenByDescending(x => x.DocumentTime)
                         .Select(x => new TrInvoiceHeader

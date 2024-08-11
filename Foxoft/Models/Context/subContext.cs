@@ -93,11 +93,6 @@ namespace Foxoft.Models
             if (!optionsBuilder.IsConfigured)
             {
                 string subConnString = Properties.Settings.Default.SubConnString;
-                //string conf = config
-                //                    .ConnectionStrings
-                //                    .ConnectionStrings["subConnString"]
-                //                    .ConnectionString;
-
                 optionsBuilder.UseSqlServer(subConnString);
             }
         }
@@ -355,6 +350,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "Column_ProductCost", ClaimDesc = "Son Alış Qiyməti", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CountIn", ClaimDesc = "Sayım Artırma", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CountOut", ClaimDesc = "Sayım Azaltma", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "WaybillIn", ClaimDesc = "Təhvil Alma", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "WaybillOut", ClaimDesc = "Təhvil Vermə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CurrAccs", ClaimDesc = "Cari Hesablar", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DiscountList", ClaimDesc = "Endirim Siyahısı", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "Expense", ClaimDesc = "Xərc", ClaimTypeId = 1 },
@@ -372,6 +369,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "WholesaleReturn", ClaimDesc = "Topdan Satışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəlliyi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "HierarchyFeatureType", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1 }
                 );
 
@@ -423,8 +421,10 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 21, RoleCode = "Admin", ClaimCode = "WholesaleReturn" },
                 new TrRoleClaim { RoleClaimId = 22, RoleCode = "Admin", ClaimCode = "ProductFeatureType" },
                 new TrRoleClaim { RoleClaimId = 23, RoleCode = "Admin", ClaimCode = "HierarchyFeatureType" },
-                new TrRoleClaim { RoleClaimId = 24, RoleCode = "Admin", ClaimCode = "CurrAccRole" },
-                new TrRoleClaim { RoleClaimId = 25, RoleCode = "Admin", ClaimCode = "Session" }
+                new TrRoleClaim { RoleClaimId = 24, RoleCode = "Admin", ClaimCode = "CurrAccClaim" },
+                new TrRoleClaim { RoleClaimId = 25, RoleCode = "Admin", ClaimCode = "Session" },
+                new TrRoleClaim { RoleClaimId = 26, RoleCode = "Admin", ClaimCode = "WaybillIn" },
+                new TrRoleClaim { RoleClaimId = 27, RoleCode = "Admin", ClaimCode = "WaybillOut" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -494,16 +494,18 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "RS", ProcessDesc = "Satış", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "RPO", ProcessDesc = "Alış Sifarişi", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "RSO", ProcessDesc = "Satış Sifarişi", ProcessDir = 2 },
-                new DcProcess { ProcessCode = "PA", ProcessDesc = "Ödəmə", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "SB", ProcessDesc = "Toptan Alış", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "WS", ProcessDesc = "Toptan Satış", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "SBO", ProcessDesc = "Toptan Alış Sifarişi", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "WSO", ProcessDesc = "Toptan Satış Sifarişi", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "WI", ProcessDesc = "Təhvil Alma", ProcessDir = 1 },
+                new DcProcess { ProcessCode = "WO", ProcessDesc = "Təhvil Vermə", ProcessDir = 2 },
+                new DcProcess { ProcessCode = "PA", ProcessDesc = "Ödəmə", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "EX", ProcessDesc = "Xərc", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "EI", ProcessDesc = "Faktura Xərci", ProcessDir = 1 },
                 new DcProcess { ProcessCode = "PE", ProcessDesc = "Dovr", ProcessDir = 1 },
-                new DcProcess { ProcessCode = "CI", ProcessDesc = "Sayım Artırma", ProcessDir = 1 },
-                new DcProcess { ProcessCode = "CO", ProcessDesc = "Sayım Azaltma", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "TF", ProcessDesc = "Transfer", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "IT", ProcessDesc = "Mal Transferi", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "CT", ProcessDesc = "Pul Transferi", ProcessDir = 2 },
@@ -552,6 +554,8 @@ namespace Foxoft.Models
                 new DcVariable { VariableCode = "C", VariableDesc = "Cari" },
                 new DcVariable { VariableCode = "CI", VariableDesc = "Sayım Artırma" },
                 new DcVariable { VariableCode = "CO", VariableDesc = "Sayım Azaltma" },
+                new DcVariable { VariableCode = "WI", VariableDesc = "Təhvil Alma" },
+                new DcVariable { VariableCode = "WO", VariableDesc = "Təhvil Vermə" },
                 new DcVariable { VariableCode = "P", VariableDesc = "Məhsul" },
                 new DcVariable { VariableCode = "RS", VariableDesc = "Pərakəndə Satış" },
                 new DcVariable { VariableCode = "RP", VariableDesc = "Pərakəndə Alış" },

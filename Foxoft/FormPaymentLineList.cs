@@ -175,18 +175,7 @@ namespace Foxoft
                 Guid invoiceHeaderId = Guid.Parse(obj.ToString());
                 TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-                byte[] bytes = trInvoiceHeader.ProcessCode switch
-                {
-                    "IT" => new byte[] { 1 },
-                    "CI" => new byte[] { 1 },
-                    "CO" => new byte[] { 1 },
-                    "RS" => new byte[] { 1, 3 },
-                    "WS" => new byte[] { 1, 3 },
-                    "RP" => new byte[] { 1, 3 },
-                    "EX" => new byte[] { 2, 3 },
-                    "EI" => new byte[] { 2, 3 },
-                    _ => new byte[] { }
-                };
+                byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
                 FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, Guid.Empty, invoiceHeaderId);
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;

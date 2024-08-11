@@ -138,7 +138,7 @@ namespace Foxoft
 
                     subContext db = new();
                     return databaseName == db.Database.GetDbConnection().Database &&
-                        localAddress == GetPhiscalAdress() &&
+                        localAddress == CustomExtensions.GetPhiscalAdress() &&
                         dateTime > DateTime.Now;
                 }
                 catch (Exception)
@@ -148,21 +148,6 @@ namespace Foxoft
 
             }
         }
-        string GetPhiscalAdress()
-        {
-            string fiscal = String.Empty;
-            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
-
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet && nic.Name.StartsWith("Ethernet"))
-                    fiscal = nic.Id + pInterfaceProperties;
-            }
-
-            return fiscal;
-        }
-
-
 
         private static void SessionSave(string user, string password, bool Checked, int terminalId, string companyCode)
         {

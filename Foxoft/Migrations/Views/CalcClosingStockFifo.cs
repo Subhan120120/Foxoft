@@ -35,7 +35,7 @@ FROM
                    --, ProcessCode
             FROM TrInvoiceLines 
             LEFT JOIN TrInvoiceHeaders ON TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId
-            WHERE ProcessCode = 'WS' --and ProductCode = 'P-000484'
+            WHERE ProcessCode IN ('RS', 'WS', 'CO') --and ProductCode = 'P-000484'
             UNION ALL
             SELECT ROW_NUMBER() OVER (PARTITION BY ProductCode ORDER BY DocumentDate) AS srl
                    , ProductCode
@@ -45,7 +45,7 @@ FROM
                    --, ProcessCode
             FROM TrInvoiceLines 
             LEFT JOIN TrInvoiceHeaders ON TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId
-            WHERE (ProcessCode = 'RP' OR ProcessCode = 'CI')  --and ProductCode = 'P-000484'
+            WHERE ProcessCode IN ('RP', 'WP', 'CI') --and ProductCode = 'P-000484'
         ) AS tab
     ) AS maintab
     --ORDER BY item_code, srl

@@ -27,9 +27,10 @@ namespace Foxoft.Migrations
                             SET @invoiceSum = ISNULL(
                                 (
                                     SELECT SUM((QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)))
-                                    FROM TrInvoiceLines il
+                                    FROM TrInvoiceLines il  
                                     LEFT JOIN TrInvoiceHeaders ih ON il.InvoiceHeaderId = ih.InvoiceHeaderId
                                     WHERE ih.CurrAccCode = @CurrAccCode
+                                      and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )
                                       AND (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <= @DateTime
                                 ), 
                                 0

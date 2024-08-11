@@ -128,7 +128,7 @@ namespace Foxoft
                         string localAddress = txtLisence[i + 1];
                         string date = txtLisence[i + 2];
 
-                        if (localAddress == GetPhiscalAdress())
+                        if (localAddress == CustomExtensions.GetPhiscalAdress())
                         {
                             string license = databaseName + "+" + localAddress + "+" + date;
                             string key = "FoxoftIsTheBestP";
@@ -169,20 +169,6 @@ namespace Foxoft
                 {
                     return false;
                 }
-            }
-
-            string GetPhiscalAdress()
-            {
-                string fiscal = String.Empty;
-                foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
-
-                    if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet && nic.Name.StartsWith("Ethernet"))
-                        fiscal = nic.Id + pInterfaceProperties;
-                }
-
-                return fiscal;
             }
 
             //void RegistryWriteValue(string keyName, string valueName, object value)

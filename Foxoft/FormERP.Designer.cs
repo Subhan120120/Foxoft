@@ -77,8 +77,13 @@ namespace Foxoft
             aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            accordionControlSeparator9 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_RetailPurchaseOrder = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_RetailSaleOrder = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            accordionControlSeparator4 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            ACE_Waybill = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_WaybillIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_WaybillOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Operation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_PriceList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator8 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
@@ -419,7 +424,7 @@ namespace Foxoft
             // 
             // aCE_Acounting
             // 
-            aCE_Acounting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CountIn, aCE_CountOut, ACE_RetailPurchaseOrder, ACE_RetailSaleOrder });
+            aCE_Acounting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CountIn, aCE_CountOut, accordionControlSeparator9, ACE_RetailPurchaseOrder, ACE_RetailSaleOrder, accordionControlSeparator4, ACE_Waybill, ACE_WaybillIn, ACE_WaybillOut });
             aCE_Acounting.Expanded = true;
             aCE_Acounting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Acounting.ImageOptions.SvgImage");
             aCE_Acounting.Name = "aCE_Acounting";
@@ -441,6 +446,10 @@ namespace Foxoft
             aCE_CountOut.Text = "Sayım Azaltma";
             aCE_CountOut.Click += aCE_CountOut_Click;
             // 
+            // accordionControlSeparator9
+            // 
+            accordionControlSeparator9.Name = "accordionControlSeparator9";
+            // 
             // ACE_RetailPurchaseOrder
             // 
             ACE_RetailPurchaseOrder.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailPurchaseOrder.ImageOptions.SvgImage");
@@ -456,6 +465,34 @@ namespace Foxoft
             ACE_RetailSaleOrder.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_RetailSaleOrder.Text = "Satış Sifarişi";
             ACE_RetailSaleOrder.Click += ACE_RetailSaleOrder_Click;
+            // 
+            // accordionControlSeparator4
+            // 
+            accordionControlSeparator4.Name = "accordionControlSeparator4";
+            // 
+            // ACE_Waybill
+            // 
+            ACE_Waybill.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Delivery.ImageOptions.SvgImage");
+            ACE_Waybill.Name = "ACE_Waybill";
+            ACE_Waybill.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Waybill.Text = "Təhvil Təslim";
+            ACE_Waybill.Click += ACE_Delivery_Click;
+            // 
+            // ACE_WaybillIn
+            // 
+            ACE_WaybillIn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WaybillIn.ImageOptions.SvgImage");
+            ACE_WaybillIn.Name = "ACE_WaybillIn";
+            ACE_WaybillIn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WaybillIn.Text = "Təhvil Alma";
+            ACE_WaybillIn.Click += ACE_WaybillIn_Click;
+            // 
+            // ACE_WaybillOut
+            // 
+            ACE_WaybillOut.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WaybillOut.ImageOptions.SvgImage");
+            ACE_WaybillOut.Name = "ACE_WaybillOut";
+            ACE_WaybillOut.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WaybillOut.Text = "Təhvil Vermə";
+            ACE_WaybillOut.Click += ACE_WaybillOut_Click;
             // 
             // aCE_Operation
             // 
@@ -510,7 +547,7 @@ namespace Foxoft
             // 
             // aCE_CurrAccRole
             // 
-            aCE_CurrAccRole.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccAll.ImageOptions.SvgImage");
+            aCE_CurrAccRole.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccRole.ImageOptions.SvgImage");
             aCE_CurrAccRole.Name = "aCE_CurrAccRole";
             aCE_CurrAccRole.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             aCE_CurrAccRole.Text = "İstifadəçilər";
@@ -618,12 +655,15 @@ namespace Foxoft
         private DevExpress.XtraBars.BarStaticItem bSI_TerminalName;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailPurchaseOrder;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailSaleOrder;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Waybill;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ProductFeatureType;
         private DevExpress.XtraBars.BarStaticItem BSI_CompanyDesc;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_WholesaleInvoice;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_WholesaleReturn;
         private DevExpress.XtraBars.BarButtonItem bBI_Session;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_HierarchyFeatureType;
+        private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator9;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WaybillIn;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WaybillOut;
     }
 }

@@ -36,7 +36,8 @@ from (
 	, Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il 
 								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId
 								where il.ProductCode = prdcts.ProductCode
-								and ih.WarehouseCode = 'depo-01')
+								and ih.WarehouseCode = 'depo-01'
+								and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT'))
 	from DcProducts prdcts
 	left join TrProductFeatures on TrProductFeatures.ProductCode = prdcts.ProductCode
 

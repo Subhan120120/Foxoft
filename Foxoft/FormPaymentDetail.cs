@@ -12,9 +12,11 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -64,8 +66,6 @@ namespace Foxoft
             dbContext.TrPaymentLines.Where(x => x.PaymentHeaderId == trPaymentHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trPaymentLinesBindingSource.DataSource = dbContext.TrPaymentLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-
-            lbl_CurrAccDesc.Text = trPaymentHeader.CurrAccDesc;
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
@@ -257,15 +257,14 @@ namespace Foxoft
 
             LocalView<TrPaymentHeader> lV_paymentHeader = dbContext.TrPaymentHeaders.Local;
 
-            lV_paymentHeader.ForEach(x =>
-            {
-                string fullName = "";
-                if (!lV_paymentHeader.Any(x => x.DcCurrAcc is null))
-                    fullName = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
+            //lV_paymentHeader.ForEach(x =>
+            //{
+            //    string fullName = "";
+            //    if (!lV_paymentHeader.Any(x => x.DcCurrAcc is null))
+            //        fullName = x.DcCurrAcc.CurrAccDesc + " " + x.DcCurrAcc.FirstName + " " + x.DcCurrAcc.LastName;
 
-                x.CurrAccDesc = fullName;
-                lbl_CurrAccDesc.Text = fullName;
-            });
+            //    x.CurrAccDesc = fullName;
+            //});
 
             trPaymentHeadersBindingSource.DataSource = lV_paymentHeader.ToBindingList();
             trPaymentHeader = trPaymentHeadersBindingSource.Current as TrPaymentHeader;
@@ -283,7 +282,7 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+            //BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -307,12 +306,11 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    CurrAccCodeButtonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
+                    btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
                     trPaymentHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-                    lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
 
-                    BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
-                    CalcCurrAccBalance();
+                    //BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+                    //CalcCurrAccBalance();
                 }
             }
         }
@@ -645,6 +643,46 @@ namespace Foxoft
                     runningTotal += value;
                 }
                 e.Value = runningTotal;
+            }
+        }
+
+        private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
+        {
+            object eValue = trPaymentHeader?.CurrAccCode;
+
+            if (eValue is not null)
+            {
+                DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+
+                if (curr is null)
+                    e.Cancel = true;
+            }
+        }
+
+        private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ErrorText = "Belə bir cari yoxdur";
+            e.ExceptionMode = ExceptionMode.DisplayError;
+        }
+
+        private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
+        {
+            string eValueStr = btnEdit_CurrAccCode.EditValue?.ToString();
+            lbl_CurrAccDesc.Text = "";
+            BalanceBefore = 0;
+
+            if (!string.IsNullOrEmpty(eValueStr))
+            {
+                DcCurrAcc curr = efMethods.SelectCurrAcc(eValueStr);
+                trPaymentHeader.CurrAccCode = curr?.CurrAccCode;
+
+                if (curr != null)
+                {
+                    lbl_CurrAccDesc.Text = $"{curr.CurrAccDesc} {curr.FirstName} {curr.LastName}";
+                    BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+                }
+
+                CalcCurrAccBalance();
             }
         }
     }

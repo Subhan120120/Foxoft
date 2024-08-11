@@ -46,21 +46,42 @@ namespace Foxoft
                 InvoiceLines.ForEach(x =>
                 {
                     x.ProductDesc = x.DcProduct.ProductDesc;
-                    x.ReturnQty = db.TrInvoiceLines.Include(y => y.TrInvoiceHeader).Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
-                    x.RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines.Include(y => y.TrInvoiceHeader).Where(y => y.RelatedLineId == x.InvoiceLineId).Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
+                    x.ReturnQty = db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
+                                                   .Where(y => y.TrInvoiceHeader.IsReturn)
+                                                   .Where(y => y.RelatedLineId == x.InvoiceLineId)
+                                                   .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
+                    x.RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
+                                                                                     .Where(y => y.TrInvoiceHeader.IsReturn)
+                                                                                     .Where(y => y.RelatedLineId == x.InvoiceLineId)
+                                                                                     .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
                 });
 
-                #region Comment
-                //List<TrInvoiceLine> linqInvoiceLine = (from i in db.TrInvoiceLines
-                //                   join p in db.DcProducts on i.ProductCode equals p.ProductCode
-                //                   where i.InvoiceHeaderId == invoiceHeaderId
-                //                   orderby i.CreatedDate
-                //                   select new TrInvoiceLine
-                //                   {                                       
-                //                       ReturnQty = db.TrInvoiceLines.Where(x => x.RelatedLineId == i.InvoiceLineId).Sum(x => x.Qty),
-                //                       RemainingQty = i.Qty + db.TrInvoiceLines.Where(x => x.RelatedLineId == i.InvoiceLineId).Sum(x => x.Qty),
-                //                   }).ToList(); 
-                #endregion
+                return InvoiceLines;
+            }
+        }
+
+        public List<TrInvoiceLine> SelectInvoiceLinesForDelivery(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            {
+                List<TrInvoiceLine> InvoiceLines = db.TrInvoiceLines.Include(x => x.DcProduct)
+                                                                  .Include(x => x.TrInvoiceHeader)
+                                                                  .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                                  .OrderBy(x => x.CreatedDate)
+                                                                  .ToList();
+
+
+                InvoiceLines.ForEach(x =>
+                {
+                    x.ReturnQty = db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
+                                                   .Where(y => new string[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                                                   .Where(y => y.RelatedLineId == x.InvoiceLineId)
+                                                   .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
+                    x.RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
+                                                                                     .Where(y => y.RelatedLineId == x.InvoiceLineId)
+                                                                                     .Where(y => new string[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                                                                                     .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
+                });
 
                 return InvoiceLines;
             }
@@ -285,7 +306,8 @@ namespace Foxoft
                                 .Include(x => x.DcSerialNumbers)
                                 .Select(x => new DcProduct
                                 {
-                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
+                                    Balance = x.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                                              .Sum(l => l.QtyIn - l.QtyOut),
                                     ProductCost = SqlFunctions.GetProductCost(x.ProductCode, null),
                                     ProductCode = x.ProductCode,
                                     ProductDesc = x.ProductDesc,
@@ -401,7 +423,9 @@ namespace Foxoft
             using subContext db = new();
 
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .Where(x => x.ProductCode == productCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                    .Where(x => x.ProductCode == productCode)
+                                    .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                    .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 
@@ -410,7 +434,10 @@ namespace Foxoft
             using subContext db = new();
 
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .Where(x => x.ProductCode == productCode && x.SerialNumberCode == serialNumberCode && x.TrInvoiceHeader.WarehouseCode == warehouseCode)
+                                    .Where(x => x.ProductCode == productCode)
+                                    .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                    .Where(x => x.SerialNumberCode == serialNumberCode)
+                                    .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 
@@ -588,6 +615,24 @@ namespace Foxoft
                                     .FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
         }
 
+        public bool ReturnExistByInvoiceLine(Guid relatedLineId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.TrInvoiceHeader.IsReturn)
+                                    .Any(x => x.RelatedLineId == relatedLineId);
+        }
+
+        public bool WaybillExistByInvoiceLine(Guid relatedLineId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => new string[] { "WI", "WO" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                    .Any(x => x.RelatedLineId == relatedLineId);
+        }
+
         public List<TrInvoiceLine> SelectInvoiceLineForReport(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -636,13 +681,6 @@ namespace Foxoft
             using subContext db = new();
             db.TrInvoiceLines.Add(TrInvoiceLine);
             return db.SaveChanges();
-        }
-
-        public bool InvoiceLineExistByRelatedLine(Guid invoicecHeaderId, Guid relatedLineId)
-        {
-            using subContext db = new();
-            return db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoicecHeaderId)
-                           .Any(x => x.RelatedLineId == relatedLineId);
         }
 
         public bool InvoiceHeaderExist(Guid invoiceHeaderId)
@@ -1128,6 +1166,7 @@ namespace Foxoft
                            LastUpdatedDate = x.LastUpdatedDate,
                            LastUpdatedUserName = x.LastUpdatedUserName,
                            Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader)
+                                                     .Where(l => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(l.TrInvoiceHeader.ProcessCode))
                                                      .Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode)
                                                      .Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
                                   + db.TrPaymentLines.Include(l => l.TrPaymentHeader)
@@ -1189,6 +1228,7 @@ namespace Foxoft
 
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
+                                       .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                        .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
                                        .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) < documentDate)
                                        .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
@@ -1206,13 +1246,13 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                       .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
-                                       .Sum(x => x.NetAmountLoc);
+            decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader).Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
+                                                  .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                                  .Sum(x => x.NetAmountLoc);
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                       .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                       .Sum(x => x.PaymentLoc);
+                                                  .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
+                                                  .Sum(x => x.PaymentLoc);
 
             return invoiceSum + paymentSum;
         }

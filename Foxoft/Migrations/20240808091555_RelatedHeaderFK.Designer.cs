@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240808091555_RelatedHeaderFK")]
+    partial class RelatedHeaderFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2772,8 +2775,6 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("ProductCode");
 
-                    b.HasIndex("RelatedLineId");
-
                     b.HasIndex("SalesPersonCode");
 
                     b.HasIndex("SerialNumberCode");
@@ -4081,7 +4082,7 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "RelatedHeader")
-                        .WithMany("InverseRelatedHeaders")
+                        .WithMany("InverseRelatedHeader")
                         .HasForeignKey("RelatedInvoiceId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -4112,11 +4113,6 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Foxoft.Models.TrInvoiceLine", "RelatedLine")
-                        .WithMany("InverseRelatedLines")
-                        .HasForeignKey("RelatedLineId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
                         .WithMany("TrInvoiceLines")
                         .HasForeignKey("SalesPersonCode")
@@ -4134,8 +4130,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
 
                     b.Navigation("DcSerialNumber");
-
-                    b.Navigation("RelatedLine");
 
                     b.Navigation("TrInvoiceHeader");
                 });
@@ -4642,7 +4636,7 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
                 {
-                    b.Navigation("InverseRelatedHeaders");
+                    b.Navigation("InverseRelatedHeader");
 
                     b.Navigation("TrInvoiceLines");
 
@@ -4651,8 +4645,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
                 {
-                    b.Navigation("InverseRelatedLines");
-
                     b.Navigation("TrInvoiceLineExt")
                         .IsRequired();
                 });

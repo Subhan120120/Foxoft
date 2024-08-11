@@ -47,7 +47,7 @@ namespace Foxoft
 
         private void SelectDocNum()
         {
-            using (FormInvoiceLineList form = new(processCode))
+            using (FormInvoiceLineList form = new(new string[] { processCode }))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -124,7 +124,7 @@ namespace Foxoft
                             efMethods.InsertInvoiceHeader(returnInvoHeader);
                         }
 
-                        if (!efMethods.InvoiceLineExistByRelatedLine(returnInvoiceHeaderId, invoiceLineID))
+                        if (!efMethods.ReturnExistByInvoiceLine(invoiceLineID))
                         {
                             TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
 
@@ -207,17 +207,7 @@ namespace Foxoft
 
             if (trInvoiceHeader is not null)
             {
-                string claim = trInvoiceHeader.ProcessCode switch
-                {
-                    "IT" => "InventoryTransfer",
-                    "CI" => "CountIn",
-                    "CO" => "CountOut",
-                    "RP" => "RetailPurchaseInvoice",
-                    "RS" => "RetailSaleInvoice",
-                    "WS" => "WholesaleInvoice",
-                    "EX" => "Expense",
-                    _ => ""
-                };
+                string claim = CustomExtensions.GetClaim(trInvoiceHeader.ProcessCode);
 
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                 if (!currAccHasClaims)
@@ -226,17 +216,7 @@ namespace Foxoft
                     return;
                 }
 
-                byte[] bytes = trInvoiceHeader.ProcessCode switch
-                {
-                    "IT" => new byte[] { 1 },
-                    "CI" => new byte[] { 1 },
-                    "CO" => new byte[] { 1 },
-                    "RP" => new byte[] { 1, 3 },
-                    "RS" => new byte[] { 1, 3 },
-                    "WS" => new byte[] { 1, 3 },
-                    "EX" => new byte[] { 2, 3 },
-                    _ => new byte[] { }
-                };
+                byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
                 FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, Guid.Empty, trInvoiceHeader.InvoiceHeaderId);
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;

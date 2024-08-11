@@ -1,4 +1,5 @@
-﻿using DevExpress.DataAccess.ConnectionParameters;
+﻿using DevExpress.Data.Filtering;
+using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
 using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
@@ -35,36 +36,21 @@ namespace Foxoft
 
             InitComponentName();
 
-            foreach (AccordionControlElement parentElements in aC_Root.Elements)
-            {
-                foreach (AccordionControlElement? childElement in parentElements.Elements)
-                {
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, childElement.Name);
-                    if (!currAccHasClaims)
-                        childElement.Visible = false;
-                }
-            }
+            foreach (AccordionControlElement ACE_Groups in aC_Root.Elements)
+                foreach (AccordionControlElement? ACE_Element in ACE_Groups.Elements)
+                    HideClaimlesElements(ACE_Element);
 
             foreach (BarItem bbi in parentRibbonControl.Items)
-            {
                 if (bbi is BarButtonItem barButtonItem)
-                {
                     if (new string[] { "Session" }.Contains(bbi.Name))
                     {
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, bbi.Name);
                         if (!currAccHasClaims)
                             bbi.Visibility = BarItemVisibility.Never;
                     }
-                }
-            }
 
             DcTerminal dcTerminal = efMethods.SelectTerminal(Settings.Default.TerminalId);
-            if (dcTerminal is not null)
-            {
-                if (dcTerminal.TouchUIMode == true)
-                    aC_Root.ItemHeight = 24 + (dcTerminal.TouchScaleFactor * 8);
-                else aC_Root.ItemHeight = 0;
-            }
+            UIMode(dcTerminal.TouchUIMode);
 
             string path = Path.Combine(AppContext.BaseDirectory, "backgroundImage.png");
 
@@ -88,6 +74,38 @@ namespace Foxoft
             //adornerUIManager1 = new AdornerUIManager(this.components);
         }
 
+        private void UIMode(bool toucUIMode)
+        {
+            int TerminalId = Settings.Default.TerminalId;
+            DcTerminal dcTerminal = efMethods.SelectTerminal(TerminalId);
+            if (dcTerminal is not null)
+            {
+                if (toucUIMode == true)
+                {
+                    efMethods.UpdateTerminalTouchUIMode(TerminalId, true);
+
+                    WindowsFormsSettings.TouchUIMode = TouchUIMode.True;
+                    WindowsFormsSettings.TouchScaleFactor = dcTerminal.TouchScaleFactor;
+                    aC_Root.Padding = new Padding(10);
+                    aC_Root.ItemHeight = 24 + (dcTerminal.TouchScaleFactor * 8);
+                }
+                else
+                {
+                    efMethods.UpdateTerminalTouchUIMode(TerminalId, false);
+                    WindowsFormsSettings.TouchUIMode = TouchUIMode.False;
+                    aC_Root.Padding = new Padding(0);
+                    aC_Root.ItemHeight = 0;
+                }
+            }
+        }
+
+        private void HideClaimlesElements(AccordionControlElement? childElement)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, childElement.Name);
+            if (!currAccHasClaims)
+                childElement.Visible = false;
+        }
+
         private void InitComponentName()
         {
             this.aCE_Invoices.Name = "Invoices";
@@ -109,6 +127,9 @@ namespace Foxoft
             this.aCE_Acounting.Name = "Acounting";
             this.aCE_CountIn.Name = "CountIn";
             this.aCE_CountOut.Name = "CountOut";
+            this.ACE_Waybill.Name = "Waybill";
+            this.ACE_WaybillIn.Name = "WaybillIn";
+            this.ACE_WaybillOut.Name = "WaybillOut";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
             this.ACE_PriceList.Name = "PriceList";
@@ -214,20 +235,12 @@ namespace Foxoft
 
         private void BBI_ModeMouse_ItemClick(object sender, ItemClickEventArgs e)
         {
-            int TerminalId = Settings.Default.TerminalId;
-            efMethods.UpdateTerminalTouchUIMode(TerminalId, false);
-            WindowsFormsSettings.TouchUIMode = TouchUIMode.False;
-            aC_Root.ItemHeight = 0;
+            UIMode(false);
         }
 
         private void BBI_ModeTouch_ItemClick(object sender, ItemClickEventArgs e)
         {
-            int TerminalId = Settings.Default.TerminalId;
-            DcTerminal dcTerminal = efMethods.SelectTerminal(TerminalId);
-            efMethods.UpdateTerminalTouchUIMode(TerminalId, true);
-            WindowsFormsSettings.TouchUIMode = TouchUIMode.True;
-            WindowsFormsSettings.TouchScaleFactor = 2;
-            aC_Root.ItemHeight = 24 + (dcTerminal.TouchScaleFactor * 8);
+            UIMode(true);
         }
 
         private void FormERP_MdiChildActivate(object sender, EventArgs e)
@@ -242,7 +255,28 @@ namespace Foxoft
 
             try
             {
-                var constructor = typeof(T).GetConstructor(args.Select(a => a.GetType()).ToArray());
+                var constructors = typeof(T).GetConstructors();
+                var constructor = constructors.FirstOrDefault(c =>
+                {
+                    var parameters = c.GetParameters();
+                    if (parameters.Length != args.Length)
+                        return false;
+
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        if (args[i] == null)
+                        {
+                            // Allow nulls for reference types and Nullable<> types
+                            if (parameters[i].ParameterType.IsValueType && Nullable.GetUnderlyingType(parameters[i].ParameterType) == null)
+                                return false;
+                        }
+                        else if (!parameters[i].ParameterType.IsInstanceOfType(args[i]))
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
 
                 if (constructor == null)
                     throw new ArgumentException($"No matching constructor found for {typeof(T).Name}");
@@ -288,22 +322,22 @@ namespace Foxoft
 
         private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("RP", new byte[] { 1, 3 }, Guid.Empty);
+            ShowNewForm<FormInvoice>("RP", new byte[] { 1, 3 }, null);
         }
 
         private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("RS", new byte[] { 1, 3 }, Guid.Empty);
+            ShowNewForm<FormInvoice>("RS", new byte[] { 1, 3 }, null);
         }
 
         private void ACE_WholesaleInvoice_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("WS", new byte[] { 1, 3 }, Guid.Empty);
+            ShowNewForm<FormInvoice>("WS", new byte[] { 1, 3 }, null);
         }
 
         private void aCE_Expense_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormInvoice>("EX", new byte[] { 2, 3 }, Guid.Empty);
+            ShowExistForm<FormInvoice>("EX", new byte[] { 2, 3 }, null);
         }
 
         private void aCE_Payments_Click(object sender, EventArgs e)
@@ -313,12 +347,12 @@ namespace Foxoft
 
         private void aCE_CountIn_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("CI", new byte[] { 1 }, Guid.Empty);
+            ShowNewForm<FormInvoice>("CI", new byte[] { 1 }, null);
         }
 
         private void aCE_CountOut_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("CO", new byte[] { 1 }, Guid.Empty);
+            ShowNewForm<FormInvoice>("CO", new byte[] { 1 }, null);
         }
 
         private void aCE_PaymentDetail_Click(object sender, EventArgs e)
@@ -328,7 +362,7 @@ namespace Foxoft
 
         private void aCE_InventoryTransfer_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("IT", new byte[] { 1 }, Guid.Empty);
+            ShowNewForm<FormInvoice>("IT", new byte[] { 1 }, null);
         }
 
         private void ACE_CashTransfer_Click(object sender, EventArgs e)
@@ -378,7 +412,7 @@ namespace Foxoft
 
         private void ACE_RetailSaleOrder_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("RSO", new byte[] { 1, 3 }, Guid.Empty);
+            ShowNewForm<FormInvoice>("RSO", new byte[] { 1, 3 }, null);
         }
 
         private void ACE_ProductFeatureTypes_Click(object sender, EventArgs e)
@@ -404,6 +438,21 @@ namespace Foxoft
         private void aCE_CurrAccRole_Click(object sender, EventArgs e)
         {
             ShowExistForm<FormCurrAccClaim>();
+        }
+
+        private void ACE_Delivery_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormWaybill>("WO");
+        }
+
+        private void ACE_WaybillIn_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("WI", new byte[] { 1 }, null);
+        }
+
+        private void ACE_WaybillOut_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("WO", new byte[] { 1 }, null);
         }
     }
 }

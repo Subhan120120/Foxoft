@@ -14,14 +14,14 @@ using System.Text;
 
 namespace Foxoft
 {
-    public partial class FormInvoiceLineList : XtraForm
+    public partial class FormInvoiceLineUndeliveredList : XtraForm
     {
         EfMethods efMethods = new();
         public TrInvoiceLine trInvoiceLine { get; set; }
         subContext dbContext;
         public string[] processCode { get; set; }
 
-        public FormInvoiceLineList()
+        public FormInvoiceLineUndeliveredList()
         {
             InitializeComponent();
 
@@ -34,7 +34,7 @@ namespace Foxoft
         }
 
 
-        public FormInvoiceLineList(string[] processCode)
+        public FormInvoiceLineUndeliveredList(string[] processCode)
             : this()
         {
             this.processCode = processCode;
@@ -50,32 +50,13 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            //filteredData
-            //            .Include(x => x.DcCurrAcc)
-            //            .Include(x => x.TrInvoiceLines)
-            //            .Where(x => x.ProcessCode == processCode)
-            //            .OrderByDescending(x => x.DocumentDate)
-            //            .LoadAsync()
-            //            .ContinueWith(loadTask =>
-            //            {
-            //                LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
-
-            //                lV_invoiceHeader.ForEach(x =>
-            //                {
-            //                    x.TotalNetAmount = x.TrInvoiceLines.Sum(x => x.NetAmount);
-            //                });
-
-            //                trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
-
-            //            }, TaskScheduler.FromCurrentSynchronizationContext());
-
             IQueryable<TrInvoiceLine> trInvoiceLines = dbContext.TrInvoiceLines;
             IQueryable<TrInvoiceLine> filteredData = trInvoiceLines.AppendWhere(new CriteriaToExpressionConverter(), gV_InvoiceLineList.ActiveFilterCriteria) as IQueryable<TrInvoiceLine>;
 
 
             var headerList = filteredData.Include(x => x.TrInvoiceHeader)
                         .ThenInclude(x => x.DcCurrAcc)
-                        .Where(x => processCode.Contains(x.TrInvoiceHeader.ProcessCode) && x.TrInvoiceHeader.IsReturn == false)
+                        .Where(x => processCode.Contains(x.TrInvoiceHeader.ProcessCode))
                         .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate).ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
                         .Select(x => new
                         {
@@ -111,7 +92,9 @@ namespace Foxoft
                             x.TrInvoiceHeader.RelatedInvoiceId,
                             x.TrInvoiceHeader.StoreCode,
                             x.TrInvoiceHeader.WarehouseCode,
+                            QtyRelated = x.InverseRelatedLines.Sum(x => x.QtyIn - x.QtyOut),
                         })
+                        .Where(x => (x.Qty - x.QtyRelated) > 0)
                         .ToList();
 
             trInvoiceHeadersBindingSource.DataSource = headerList;
