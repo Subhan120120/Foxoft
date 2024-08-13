@@ -26,6 +26,7 @@ namespace Foxoft.Models
 
         [Key]
         [StringLength(30)]
+        [Required(AllowEmptyStrings = false)]
         [Display(Name = "Cari Hesab Kodu")]
         public string CurrAccCode { get; set; }
 

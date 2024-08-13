@@ -16,23 +16,26 @@ namespace Foxoft
     {
         public static bool IsValid(this DataLayoutControl dataLayoutControl, out List<string> errorList)
         {
-            DXErrorProvider dXErrorProvider = new DXErrorProvider();
-
-            List<string> list = new List<string>();
+            errorList = new();
 
             foreach (Control ctrl in dataLayoutControl.Controls)
             {
-                BaseEdit edit = ctrl as BaseEdit;
-                if (edit != null)
+                BaseEdit baseEdit = ctrl as BaseEdit;
+                if (baseEdit != null)
                 {
-                    edit.IsModified = true;
-                    edit.DoValidate();
-                    if (edit.ErrorText != string.Empty)
-                        list.Add(edit.ErrorText);
+                    baseEdit.IsModified = true;
+
+                    //if (baseEdit is LookUpEdit && ((LookUpEdit)baseEdit).EditValue?.ToString() == "depo-06")
+                    //{
+                        bool validated = baseEdit.DoValidate();
+                        if (baseEdit.ErrorText != string.Empty)
+                            errorList.Add(baseEdit.ErrorText);
+
+                    //}
                 }
             }
-            errorList = list;
-            if (list.Count == 0)
+
+            if (errorList.Count == 0)
                 return true;
             else
                 return false;

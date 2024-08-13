@@ -42,9 +42,19 @@ namespace Foxoft
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
             bBI_Quit = new DevExpress.XtraBars.BarButtonItem();
             BBI_AddColumn = new DevExpress.XtraBars.BarButtonItem();
+            popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
+            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
             BBI_PrintPreview = new DevExpress.XtraBars.BarButtonItem();
+            barSubItem1 = new DevExpress.XtraBars.BarSubItem();
+            BBI_AddColumnString = new DevExpress.XtraBars.BarButtonItem();
+            BBI_AddColumnInt32 = new DevExpress.XtraBars.BarButtonItem();
+            BBI_AddColumnBoolean = new DevExpress.XtraBars.BarButtonItem();
+            BBI_AddColumnDateTime = new DevExpress.XtraBars.BarButtonItem();
+            BBI_AddColumnTimeSpan = new DevExpress.XtraBars.BarButtonItem();
+            BBI_AddColumnDecimal = new DevExpress.XtraBars.BarButtonItem();
+            BBI_AddColumnObject = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -55,49 +65,44 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_Report).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_Report).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             SuspendLayout();
             // 
             // gC_Report
             // 
-            gC_Report.Dock = System.Windows.Forms.DockStyle.Fill;
-            gC_Report.Location = new System.Drawing.Point(0, 158);
+            gC_Report.Dock = DockStyle.Fill;
+            gC_Report.Location = new Point(0, 158);
             gC_Report.MainView = gV_Report;
             gC_Report.Name = "gC_Report";
-            gC_Report.Size = new System.Drawing.Size(820, 420);
+            gC_Report.Size = new Size(820, 420);
             gC_Report.TabIndex = 0;
             gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Report });
             gC_Report.ProcessGridKey += gC_Report_ProcessGridKey;
             // 
-            // gV_Report
+            // gridView1
             // 
             gV_Report.GridControl = gC_Report;
-            gV_Report.Name = "gV_Report";
-            gV_Report.RowStyle += gV_Report_RowStyle;
-            gV_Report.PopupMenuShowing += gV_Report_PopupMenuShowing;
-            gV_Report.CalcRowHeight += gV_Report_CalcRowHeight;
-            gV_Report.ShowingEditor += gV_Report_ShowingEditor;
-            gV_Report.CustomUnboundColumnData += gV_Report_CustomUnboundColumnData;
-            gV_Report.PrintInitialize += gV_Report_PrintInitialize;
+            gV_Report.Name = "gridView1";
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, ribbonControl1.SearchEditItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, BBI_AddColumn, barButtonItem2, BBI_ExportExcel, BBI_PrintPreview });
-            ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            ribbonControl1.MaxItemId = 13;
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, BBI_AddColumn, barButtonItem2, BBI_ExportExcel, BBI_PrintPreview, barButtonItem1, barSubItem1, BBI_AddColumnString, BBI_AddColumnInt32, BBI_AddColumnBoolean, BBI_AddColumnDateTime, BBI_AddColumnTimeSpan, BBI_AddColumnDecimal, BBI_AddColumnObject });
+            ribbonControl1.Location = new Point(0, 0);
+            ribbonControl1.MaxItemId = 25;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.PageHeaderItemLinks.Add(bBI_Quit);
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
-            ribbonControl1.Size = new System.Drawing.Size(820, 158);
+            ribbonControl1.Size = new Size(820, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             // 
             // bBI_LayoutSave
             // 
             bBI_LayoutSave.Caption = "Dizaynı Saxla";
             bBI_LayoutSave.Id = 1;
-            bBI_LayoutSave.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("bBI_LayoutSave.ImageOptions.Image");
-            bBI_LayoutSave.ImageOptions.LargeImage = (System.Drawing.Image)resources.GetObject("bBI_LayoutSave.ImageOptions.LargeImage");
+            bBI_LayoutSave.ImageOptions.Image = (Image)resources.GetObject("bBI_LayoutSave.ImageOptions.Image");
+            bBI_LayoutSave.ImageOptions.LargeImage = (Image)resources.GetObject("bBI_LayoutSave.ImageOptions.LargeImage");
             bBI_LayoutSave.Name = "bBI_LayoutSave";
             bBI_LayoutSave.ItemClick += bBI_LayoutSave_ItemClick;
             // 
@@ -105,8 +110,8 @@ namespace Foxoft
             // 
             bBI_LayoutLoad.Caption = "Dizaynı Al";
             bBI_LayoutLoad.Id = 2;
-            bBI_LayoutLoad.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("bBI_LayoutLoad.ImageOptions.Image");
-            bBI_LayoutLoad.ImageOptions.LargeImage = (System.Drawing.Image)resources.GetObject("bBI_LayoutLoad.ImageOptions.LargeImage");
+            bBI_LayoutLoad.ImageOptions.Image = (Image)resources.GetObject("bBI_LayoutLoad.ImageOptions.Image");
+            bBI_LayoutLoad.ImageOptions.LargeImage = (Image)resources.GetObject("bBI_LayoutLoad.ImageOptions.LargeImage");
             bBI_LayoutLoad.Name = "bBI_LayoutLoad";
             bBI_LayoutLoad.ItemClick += bBI_LayoutLoad_ItemClick;
             // 
@@ -146,17 +151,32 @@ namespace Foxoft
             // 
             bBI_Quit.Id = 8;
             bBI_Quit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Quit.ImageOptions.SvgImage");
-            bBI_Quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Escape);
+            bBI_Quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Escape);
             bBI_Quit.Name = "bBI_Quit";
             bBI_Quit.ItemClick += bBI_Quit_ItemClick;
             // 
             // BBI_AddColumn
             // 
+            BBI_AddColumn.ActAsDropDown = true;
+            BBI_AddColumn.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
             BBI_AddColumn.Caption = "Kolon Əlavə Et";
+            BBI_AddColumn.DropDownControl = popupMenu1;
             BBI_AddColumn.Id = 9;
             BBI_AddColumn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_AddColumn.ImageOptions.SvgImage");
             BBI_AddColumn.Name = "BBI_AddColumn";
             BBI_AddColumn.ItemClick += barButtonItem1_ItemClick;
+            // 
+            // popupMenu1
+            // 
+            popupMenu1.ItemLinks.Add(barButtonItem1);
+            popupMenu1.Name = "popupMenu1";
+            popupMenu1.Ribbon = ribbonControl1;
+            // 
+            // barButtonItem1
+            // 
+            barButtonItem1.Caption = "barButtonItem1";
+            barButtonItem1.Id = 14;
+            barButtonItem1.Name = "barButtonItem1";
             // 
             // barButtonItem2
             // 
@@ -181,6 +201,63 @@ namespace Foxoft
             BBI_PrintPreview.Name = "BBI_PrintPreview";
             BBI_PrintPreview.ItemClick += BBI_PrintPreview_ItemClick;
             // 
+            // barSubItem1
+            // 
+            barSubItem1.Caption = "BSI_AddColumn";
+            barSubItem1.Id = 16;
+            barSubItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barSubItem1.ImageOptions.SvgImage");
+            barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnString), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnInt32), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnBoolean), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDateTime), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnTimeSpan), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDecimal), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnObject) });
+            barSubItem1.Name = "barSubItem1";
+            // 
+            // BBI_AddColumnString
+            // 
+            BBI_AddColumnString.Caption = "String";
+            BBI_AddColumnString.Id = 17;
+            BBI_AddColumnString.Name = "BBI_AddColumnString";
+            BBI_AddColumnString.ItemClick += AddColumn_ItemClick;
+            // 
+            // BBI_AddColumnInt32
+            // 
+            BBI_AddColumnInt32.Caption = "Int32";
+            BBI_AddColumnInt32.Id = 18;
+            BBI_AddColumnInt32.Name = "BBI_AddColumnInt32";
+            BBI_AddColumnInt32.ItemClick += AddColumn_ItemClick;
+            // 
+            // BBI_AddColumnBoolean
+            // 
+            BBI_AddColumnBoolean.Caption = "Boolean";
+            BBI_AddColumnBoolean.Id = 19;
+            BBI_AddColumnBoolean.Name = "BBI_AddColumnBoolean";
+            BBI_AddColumnBoolean.ItemClick += AddColumn_ItemClick;
+            // 
+            // BBI_AddColumnDateTime
+            // 
+            BBI_AddColumnDateTime.Caption = "DateTime";
+            BBI_AddColumnDateTime.Id = 20;
+            BBI_AddColumnDateTime.Name = "BBI_AddColumnDateTime";
+            BBI_AddColumnDateTime.ItemClick += AddColumn_ItemClick;
+            // 
+            // BBI_AddColumnTimeSpan
+            // 
+            BBI_AddColumnTimeSpan.Caption = "TimeSpan";
+            BBI_AddColumnTimeSpan.Id = 21;
+            BBI_AddColumnTimeSpan.Name = "BBI_AddColumnTimeSpan";
+            BBI_AddColumnTimeSpan.ItemClick += AddColumn_ItemClick;
+            // 
+            // BBI_AddColumnDecimal
+            // 
+            BBI_AddColumnDecimal.Caption = "Decimal";
+            BBI_AddColumnDecimal.Id = 23;
+            BBI_AddColumnDecimal.Name = "BBI_AddColumnDecimal";
+            BBI_AddColumnDecimal.ItemClick += AddColumn_ItemClick;
+            // 
+            // BBI_AddColumnObject
+            // 
+            BBI_AddColumnObject.Caption = "Object";
+            BBI_AddColumnObject.Id = 24;
+            BBI_AddColumnObject.Name = "BBI_AddColumnObject";
+            BBI_AddColumnObject.ItemClick += AddColumn_ItemClick;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup3, ribbonPageGroup1, ribbonPageGroup2 });
@@ -200,6 +277,7 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_GridOptions);
             ribbonPageGroup1.ItemLinks.Add(bBI_DesignClear);
             ribbonPageGroup1.ItemLinks.Add(BBI_AddColumn);
+            ribbonPageGroup1.ItemLinks.Add(barSubItem1);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Dizayn";
             // 
@@ -214,10 +292,10 @@ namespace Foxoft
             // 
             // ribbonStatusBar1
             // 
-            ribbonStatusBar1.Location = new System.Drawing.Point(0, 578);
+            ribbonStatusBar1.Location = new Point(0, 578);
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
-            ribbonStatusBar1.Size = new System.Drawing.Size(820, 24);
+            ribbonStatusBar1.Size = new Size(820, 24);
             // 
             // ribbonPage2
             // 
@@ -231,20 +309,21 @@ namespace Foxoft
             // 
             // FormReportGrid
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(820, 602);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(820, 602);
             Controls.Add(gC_Report);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
             Name = "FormReportGrid";
             Ribbon = ribbonControl1;
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)gC_Report).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Report).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -273,5 +352,15 @@ namespace Foxoft
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.BarButtonItem BBI_ExportExcel;
         private DevExpress.XtraBars.BarButtonItem BBI_PrintPreview;
+        private DevExpress.XtraBars.PopupMenu popupMenu1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarSubItem barSubItem1;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumnString;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumnInt32;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumnBoolean;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumnDateTime;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumnTimeSpan;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumnDecimal;
+        private DevExpress.XtraBars.BarButtonItem BBI_AddColumnObject;
     }
 }

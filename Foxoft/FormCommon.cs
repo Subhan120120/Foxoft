@@ -210,9 +210,8 @@ namespace Foxoft
                 Func<T, bool> predicate_id = ConvertToPredicate(FieldName_Id, id);
                 Func<T, bool> predicate_2 = string.IsNullOrEmpty(FieldName_2) ? _ => true : ConvertToPredicate(FieldName_2, Value_2);
 
-                if (IsNew) //if invoiceHeader doesnt exist
-                    if (!dbContext.Set<T>().Where(predicate_id)
-                                           .Any(predicate_2))
+                if (IsNew) 
+                    if (!dbContext.Set<T>().Where(predicate_id).Any(predicate_2))
                     {
                         dbContext.Set<T>().Add(Entity);
                         dbContext.SaveChanges();

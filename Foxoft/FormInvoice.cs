@@ -4,6 +4,7 @@ using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
+using DevExpress.DataAccess.UI.Native.Sql.DataConnectionControls;
 using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
@@ -344,16 +345,15 @@ namespace Foxoft
         private void item_Leave(object sender, EventArgs e)
         {
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
             ChangeQtyByProcessDir();
-
 
             if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                int count = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).Count;
-                if (count > 0)
-                    if (Settings.Default.AppSetting.AutoSave)
+                if (Settings.Default.AppSetting.AutoSave)
+                {
+                    if (gV_InvoiceLine.DataRowCount > 0)
                         SaveInvoice();
+                }
             }
         }
 
@@ -667,36 +667,30 @@ namespace Foxoft
 
             if (column == colQty)
             {
-                int eValue = Convert.ToInt32(e.Value ??= 0);
                 if ((!trInvoiceHeader.IsReturn) && new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
                 {
+                    int eValue = Convert.ToInt32(e.Value ??= 0);
                     object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
                     string productCode = (objProductCode ??= "").ToString();
-                    object objSerialNumberCode = view.GetFocusedRowCellValue(colSerialNumberCode);
-                    string serialNumber = (objSerialNumberCode ??= "").ToString();
 
-                    string wareHouse = lUE_WarehouseCode.EditValue.ToString();
-                    if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
-                        wareHouse = lUE_ToWarehouseCode.EditValue.ToString();
+                    if (efMethods.SelectProduct(productCode)?.ProductTypeCode != 3) // product is not service product
+                    {
+                        string wareHouse = lUE_WarehouseCode.EditValue.ToString();
+                        if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
+                            wareHouse = lUE_ToWarehouseCode.EditValue.ToString();
 
-                    int balance = CalcProductBalance(productCode, wareHouse, serialNumber);
+                        bool permitNegativeStock = (bool)lUE_WarehouseCode.GetColumnValue("PermitNegativeStock");
 
-                    DcProduct product = efMethods.SelectProduct(productCode);
+                        int balance = CalcProductBalance(view.FocusedRowHandle, wareHouse);
 
-                    bool isServis = false;
-                    if (product is not null)
-                        isServis = product.ProductTypeCode == 3;
+                        if (permitNegativeStock)
+                            if (eValue > balance)
+                            {
+                                e.ErrorText = "Stokda miqdar yoxdur";
+                                e.Valid = false;
+                            }
+                    }
 
-                    if (!isServis)
-                        if (eValue > balance)
-                        {
-                            e.ErrorText = "Stokda miqdar yoxdur";
-                            e.Valid = false;
-                        }
-                }
-
-                if (!trInvoiceHeader.IsReturn && new string[] { "RS", "WS" }.Contains(trInvoiceHeader.ProcessCode))
-                {
                     string currAccCode = trInvoiceHeader.CurrAccCode;
                     if (!String.IsNullOrEmpty(currAccCode))
                     {
@@ -793,21 +787,16 @@ namespace Foxoft
             return sum;
         }
 
-        private int CalcProductBalance(string productCode, string wareHouse, string serialNumberCode)
+        private int CalcProductBalance(int rowHandle, string wareHouse)
         {
-            object objInvoiceLineId = gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
+            TrInvoiceLine trInvoiceLine = gV_InvoiceLine.GetRow(rowHandle) as TrInvoiceLine;
 
-            if (!String.IsNullOrEmpty(productCode))
+            if (trInvoiceLine is not null && !String.IsNullOrEmpty(trInvoiceLine.ProductCode))
             {
-                Guid invoiceLineId = (Guid)(objInvoiceLineId ??= Guid.Empty);
-
-                TrInvoiceLine currTrInvoLine = efMethods.SelectInvoiceLine(invoiceLineId);
-                int currentQty = currTrInvoLine is null ? 0 : currTrInvoLine.Qty;
-
-                if (!String.IsNullOrEmpty(serialNumberCode))
-                    return efMethods.SelectProductBalanceSerialNumber(productCode, wareHouse, serialNumberCode) + currentQty;
+                if (!String.IsNullOrEmpty(trInvoiceLine.SerialNumberCode))
+                    return efMethods.SelectProductBalanceSerialNumber(trInvoiceLine.ProductCode, wareHouse, trInvoiceLine.SerialNumberCode) + trInvoiceLine.Qty;
                 else
-                    return efMethods.SelectProductBalance(productCode, wareHouse) + currentQty;
+                    return efMethods.SelectProductBalance(trInvoiceLine.ProductCode, wareHouse) + trInvoiceLine.Qty;
             }
             else return 0;
         }
@@ -984,7 +973,6 @@ namespace Foxoft
             {
                 dbContext.SaveChanges(false);
 
-                //List<EntityEntry> entityEntry = new();
                 IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
 
                 if (trInvoiceHeader.ProcessCode == "IT")
@@ -2295,6 +2283,32 @@ namespace Foxoft
             string storeCode = btnEdit_CurrAccCode.EditValue.ToString();
             var asd = efMethods.SelectWarehousesByStore(storeCode);
             lUE_ToWarehouseCode.Properties.DataSource = asd;
+        }
+
+        private void lUE_WarehouseCode_Validating(object sender, CancelEventArgs e)
+        {
+            LookUpEdit lookUpEdit = sender as LookUpEdit;
+
+            for (int i = 0; i < gV_InvoiceLine.RowCount; i++)
+            {
+                var trInvoiceLine = gV_InvoiceLine.GetRow(i) as TrInvoiceLine;
+                if (trInvoiceLine != null)
+                {
+                    int productBalance = CalcProductBalance(i, lookUpEdit.EditValue?.ToString());
+
+                    if (productBalance < trInvoiceLine.Qty)
+                    {
+                        e.Cancel = true;
+                        lookUpEdit.ErrorText = "Please select a valid value.";
+                    }
+                }
+            }
+        }
+
+        private void lUE_WarehouseCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ExceptionMode = ExceptionMode.DisplayError;
+            e.ErrorText = "duz deyil";
         }
     }
 }

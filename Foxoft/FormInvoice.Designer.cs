@@ -711,7 +711,9 @@ namespace Foxoft
             lUE_WarehouseCode.StyleController = dataLayoutControl1;
             lUE_WarehouseCode.TabIndex = 8;
             lUE_WarehouseCode.PopupFilter += lUE_WarehouseCode_PopupFilter;
+            lUE_WarehouseCode.InvalidValue += lUE_WarehouseCode_InvalidValue;
             lUE_WarehouseCode.KeyDown += dataLayoutControls_KeyDown;
+            lUE_WarehouseCode.Validating += lUE_WarehouseCode_Validating;
             // 
             // lUE_ToWarehouseCode
             // 

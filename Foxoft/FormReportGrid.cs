@@ -35,6 +35,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Identity.Client;
+using Microsoft.VisualBasic;
 #endregion
 
 namespace Foxoft
@@ -518,8 +520,6 @@ namespace Foxoft
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            GridColumn col = gV_Report.Columns.AddVisible("Unbound" + gV_Report.Columns.Count);
-            col.UnboundDataType = typeof(string);
         }
 
         private void TrimNumbersFormat()
@@ -764,6 +764,17 @@ namespace Foxoft
             //pb.PageSettings.BottomMarginF = 0.75f;
             //pb.PageSettings.RightMarginF = 0.75f;
             //pb.PageSettings.LeftMarginF = 0.75f;
+        }
+
+        private void AddColumn_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            BarButtonItem clickedItem = e.Item as BarButtonItem;
+            if (clickedItem != null)
+            {
+                string input = Interaction.InputBox(clickedItem.Caption, "Kolon Əlavə Et", "Kolon" + gV_Report.Columns.Count);
+                GridColumn col = gV_Report.Columns.AddVisible(input);
+                col.UnboundDataType = Type.GetType(clickedItem.Caption);
+            }
         }
     }
 }

@@ -1939,7 +1939,7 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateAppSettingLicense(string license, string databaseName)
+        public void UpdateAppSettingLicense(string license, string databaseName)
         {
             subContext db = new();
             string connString = db.Database.GetConnectionString();
@@ -1947,11 +1947,16 @@ namespace Foxoft
             var builder = new SqlConnectionStringBuilder(connString);
             builder.InitialCatalog = databaseName;
 
+
+
             using (db = new subContext(new DbContextOptionsBuilder<subContext>().UseSqlServer(builder.ConnectionString).Options))
             {
-                AppSetting appSetting = new() { Id = 1, License = license };
-                db.Entry(appSetting).Property(x => x.License).IsModified = true;
-                return db.SaveChanges();
+                if (db.Database.CanConnect())
+                {
+                    AppSetting appSetting = new() { Id = 1, License = license };
+                    db.Entry(appSetting).Property(x => x.License).IsModified = true;
+                    db.SaveChanges();
+                }
             }
         }
 

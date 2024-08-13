@@ -27,6 +27,7 @@ namespace Foxoft.Models
 
         [Key]
         [Display(Name = "Məhsul Kodu")]
+        [Required(AllowEmptyStrings = false)]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string ProductCode { get; set; }
 
