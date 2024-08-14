@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Form Hesabatı")]
     public partial class TrFormReport
     {
         [Key, Column(Order = 0)]

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Məzənnə")]
     public partial class DcCurrency
     {
         public DcCurrency()

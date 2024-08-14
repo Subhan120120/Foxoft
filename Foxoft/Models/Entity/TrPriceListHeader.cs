@@ -12,6 +12,7 @@ using System.Linq;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Qiymət Cədvəli Başlığı")]
     public partial class TrPriceListHeader : BaseEntity
     {
         public TrPriceListHeader()

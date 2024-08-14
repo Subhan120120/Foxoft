@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "İyerarxiya")]
     public partial class DcHierarchy : BaseEntity
     {
         public DcHierarchy()

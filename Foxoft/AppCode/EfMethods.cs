@@ -624,6 +624,16 @@ namespace Foxoft
                                     .Any(x => x.RelatedLineId == relatedLineId);
         }
 
+        public bool ReturnExistByInvoiceLine(Guid invoiceHeaderId, Guid relatedLineId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                    .Where(x => x.TrInvoiceHeader.IsReturn)
+                                    .Any(x => x.RelatedLineId == relatedLineId);
+        }
+
         public bool WaybillExistByInvoiceLine(Guid relatedLineId)
         {
             using subContext db = new();

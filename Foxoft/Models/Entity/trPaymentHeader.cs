@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Ödəmə Başlığı")]
     public partial class TrPaymentHeader : BaseEntity
     {
         public TrPaymentHeader()

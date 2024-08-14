@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Endirim")]
     public partial class DcDiscount : BaseEntity
     {
         public DcDiscount()

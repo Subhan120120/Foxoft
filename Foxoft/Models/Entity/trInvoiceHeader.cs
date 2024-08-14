@@ -13,6 +13,7 @@ using System.Linq;
 namespace Foxoft.Models
 {
     [Microsoft.EntityFrameworkCore.Index(nameof(DocumentNumber), nameof(ProcessCode), nameof(CurrAccCode))]
+    [Display(Name = "Faktura Başlığı")]
     public partial class TrInvoiceHeader : BaseEntity
     {
         public TrInvoiceHeader()

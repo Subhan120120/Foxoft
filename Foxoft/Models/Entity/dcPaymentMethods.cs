@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Ödəmə Metodu")]
     public partial class DcPaymentMethod
     {
         public DcPaymentMethod()

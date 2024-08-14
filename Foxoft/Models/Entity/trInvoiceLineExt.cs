@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Faktura Detalı Ekstrası")]
     public partial class trInvoiceLineExt : BaseEntity
     {
         [Key]

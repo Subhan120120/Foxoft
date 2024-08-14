@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Barkod Tipi")]
     public partial class DcBarcodeType
     {
         public DcBarcodeType()

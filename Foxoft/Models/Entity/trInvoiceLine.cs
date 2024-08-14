@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Foxoft.Models
 {
     [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
+    [Display(Name = "Faktura Detalı")]
     public partial class TrInvoiceLine : BaseEntity
     {
         [Key]

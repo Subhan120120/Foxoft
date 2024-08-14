@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Sorğu Parametri")]
     public partial class DcQueryParam
     {
         public DcQueryParam()

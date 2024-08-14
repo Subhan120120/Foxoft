@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Ödəmə Metodu Endirimi")]
     public partial class TrPaymentMethodDiscount
     {
 

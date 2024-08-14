@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Foxoft.Models
 {
     //[Index(nameof(CurrAccTypeCode))]
+    [Display(Name = "Cari Hesab")]
     public partial class DcCurrAcc : BaseEntity
     {
         public DcCurrAcc()

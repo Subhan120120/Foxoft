@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Qiymət Tipləri")]
+    [Display(Name = "Seria Nömrəsi")]
     public partial class DcSerialNumber
     {
         public DcSerialNumber()

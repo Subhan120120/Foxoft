@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Qiymət")]
     public partial class TrPrice : BaseEntity
     {
         [Key]

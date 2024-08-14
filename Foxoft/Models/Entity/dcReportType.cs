@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Hesabat Tipi")]
     public partial class DcReportType
     {
         public DcReportType()

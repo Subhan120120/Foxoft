@@ -12,6 +12,7 @@ using System.Linq;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Sayt Məhsulu")]
     public partial class SiteProduct : BaseEntity
     {
         public SiteProduct()

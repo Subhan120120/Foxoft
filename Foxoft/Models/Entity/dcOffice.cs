@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Ofis")]
     public partial class DcOffice : BaseEntity
     {
         [Key]

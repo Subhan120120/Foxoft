@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Sessiya")]
     public partial class TrSession : BaseEntity
     {
         public TrSession()

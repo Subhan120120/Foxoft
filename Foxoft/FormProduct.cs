@@ -91,7 +91,7 @@ namespace Foxoft
 
                 dbContext.DcProducts.Where(x => x.ProductCode == dcProduct.ProductCode)
                                     .Include(x => x.DcProductType)
-                                    .Include(x => x.TrInvoiceLines).ThenInclude(x=>x.TrInvoiceHeader)
+                                    .Include(x => x.TrInvoiceLines).ThenInclude(x => x.TrInvoiceHeader)
                                     .Include(x => x.SiteProduct)
                                     .Load();
 
@@ -195,11 +195,6 @@ namespace Foxoft
 
             string outPutImage = Path.Combine(imageFolder, dcProduct.ProductCode + ".jpg");
 
-            //pictureEdit.Image.Save(imagePath);
-            //pictureEdit.Image.Dispose();
-
-            //using (FileStream fs = new(outPutImage, FileMode.Open, FileAccess.ReadWrite))
-            //{
             try
             {
                 //bitmap = pictureEdit.Image
@@ -299,15 +294,9 @@ namespace Foxoft
 
         private void btnEdit_Hierarchy_EditValueChanged(object sender, EventArgs e)
         {
-            ButtonEdit buttonEdit = (ButtonEdit)sender;
-            //string hierarchy = buttonEdit.EditValue?.ToString();
-
-            //if (!string.IsNullOrEmpty(hierarchy))
-            //    if (efMethods.HierarchyExist(hierarchy))
             if (!isNew)
                 BBI_ProductFeature.Enabled = true;
             else BBI_ProductFeature.Enabled = false;
-
         }
 
         private void BBI_ProductFeature_ItemClick(object sender, ItemClickEventArgs e)

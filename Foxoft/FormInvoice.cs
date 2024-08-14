@@ -1575,7 +1575,7 @@ namespace Foxoft
             GridControl gc = sender as GridControl;
             GridView gv = gc.FocusedView as GridView;
 
-            if (gv.FocusedColumn.ColumnType == typeof(decimal))
+            if (new Type[] { typeof(decimal), typeof(float), typeof(Single) }.Contains(gv.FocusedColumn.ColumnType))
                 if (e.KeyChar == '.')
                     e.KeyChar = Convert.ToChar(",");
 

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Məhsul Özəlliyi")]
     public partial class TrProductFeature
     {
         [Key, Column(Order = 0)]

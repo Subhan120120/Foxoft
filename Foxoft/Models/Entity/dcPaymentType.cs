@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Ödəmə Tipi")]
     public partial class DcPaymentType
     {
         public DcPaymentType()

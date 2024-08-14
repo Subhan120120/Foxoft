@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Qiymət Cədvəli Detalı")]
     public partial class TrPriceListLine : BaseEntity
     {
         [Key]

@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Cari Hesab Tipi")]
     public partial class DcCurrAccType
     {
         public DcCurrAccType()

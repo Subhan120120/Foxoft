@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Hesabat Yetkisi")]
     public partial class TrClaimReport : BaseEntity
     {
         [Key]

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Məhsul İyerarxiyası")]
     public partial class TrProductHierarchy
     {
         public TrProductHierarchy()

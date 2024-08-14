@@ -5,6 +5,7 @@ using System.Security.Policy;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Məhsul Barkodu")]
     public partial class TrProductBarcode : BaseEntity
     {
         public TrProductBarcode()

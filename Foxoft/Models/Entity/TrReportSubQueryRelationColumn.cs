@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Hesabat Alt Sorğusu Əlaqəli Kolonu")]
     public partial class TrReportSubQueryRelationColumn : BaseEntity
     {
         public TrReportSubQueryRelationColumn()

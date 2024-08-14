@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Hesabat Dəyişən Tipi")]
     public partial class DcReportVariableType
     {
         public DcReportVariableType()

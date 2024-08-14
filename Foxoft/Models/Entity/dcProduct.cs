@@ -13,6 +13,7 @@ using System.Linq;
 namespace Foxoft.Models
 {
     [Microsoft.EntityFrameworkCore.Index(nameof(ProductTypeCode))]
+    [Display(Name = "Məhsul")]
     public partial class DcProduct : BaseEntity
     {
         public DcProduct()

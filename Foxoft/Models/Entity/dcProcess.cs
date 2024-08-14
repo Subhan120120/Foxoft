@@ -10,7 +10,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-   public partial class DcProcess
+    [Display(Name = "Proses")]
+    public partial class DcProcess
    {
       public DcProcess()
       {

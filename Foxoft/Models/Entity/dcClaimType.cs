@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Yetki Tipi")]
     public partial class DcClaimType
     {
         public DcClaimType()

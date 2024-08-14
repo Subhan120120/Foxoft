@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Yetki")]
     public partial class DcClaim
     {
         public DcClaim()

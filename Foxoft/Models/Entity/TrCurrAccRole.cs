@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Cari Hesab Yetkisi")]
     public partial class TrCurrAccRole : BaseEntity
     {
         [Key]

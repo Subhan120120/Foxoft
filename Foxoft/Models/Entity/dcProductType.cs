@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Məhsul Tipi")]
     public partial class DcProductType
     {
         public DcProductType()

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Hesabat")]
     public partial class DcReport : BaseEntity
     {
         public DcReport()

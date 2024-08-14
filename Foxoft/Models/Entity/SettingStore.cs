@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Mağaza Parametr")]
     public partial class SettingStore
     {
         public SettingStore()

@@ -5,6 +5,7 @@ using System.Security.Policy;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Proses Qiymət Tipi")]
     public partial class TrProcessPriceType : BaseEntity
     {
         public TrProcessPriceType()

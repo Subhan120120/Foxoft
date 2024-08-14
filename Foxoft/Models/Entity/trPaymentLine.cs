@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Ödəmə Detalı")]
     public partial class TrPaymentLine : BaseEntity
     {
         [Key]

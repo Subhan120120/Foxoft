@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Terminal")]
     public partial class DcTerminal : BaseEntity
     {
         [Key]

@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "İyerarxiya Özəllik Tipi")]
     public partial class TrHierarchyFeatureType
     {
         [Key, Column(Order = 0)]

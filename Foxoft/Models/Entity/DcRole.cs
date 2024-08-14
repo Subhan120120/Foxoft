@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Rol")]
     public partial class DcRole : BaseEntity
     {
         public DcRole()

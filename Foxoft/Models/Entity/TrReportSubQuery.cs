@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
+    [Display(Name = "Hesabat Alt Sorğusu")]
     public partial class TrReportSubQuery
     {
         public TrReportSubQuery()
