@@ -77,7 +77,7 @@ namespace Foxoft
             this.relatedInvoiceId = relatedInvoiceId;
             this.Text = dcProcess.ProcessDesc;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
-            lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
+            lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
 
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
             if (!currAccHasClaims)
@@ -973,64 +973,67 @@ namespace Foxoft
             {
                 dbContext.SaveChanges(false);
 
-                IEnumerable<EntityEntry> entityEntry = dbContext.ChangeTracker.Entries();
+                IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
 
                 if (trInvoiceHeader.ProcessCode == "IT")
                 {
-                    foreach (var entry in entityEntry)
+                    //foreach (var entry in entityEntry)
+                    //{
+                    EntityEntry? entryHeader = entityEntries.FirstOrDefault(x => x.Entity.GetType().Name == nameof(TrInvoiceHeader));
+
+                    if (entryHeader is not null)
                     {
-                        if (entry.Entity.GetType().Name == nameof(TrInvoiceHeader))
+                        TrInvoiceHeader trIH = (TrInvoiceHeader)entryHeader.CurrentValues.ToObject();
+
+                        string invoHeadStr = trIH.InvoiceHeaderId.ToString();
+
+                        quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                        using subContext context2 = new();
+
+                        TrInvoiceHeader copyTrIH = trIH;
+                        copyTrIH.InvoiceHeaderId = quidHead;
+                        string temp = trIH.WarehouseCode;
+                        copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
+                        copyTrIH.ToWarehouseCode = temp;
+                        copyTrIH.StoreCode = trIH.CurrAccCode ??= trIH.StoreCode;
+                        copyTrIH.IsMainTF = false;
+
+                        switch (entryHeader.State)
                         {
-                            TrInvoiceHeader trIH = (TrInvoiceHeader)entry.CurrentValues.ToObject();
-
-                            string invoHeadStr = trIH.InvoiceHeaderId.ToString();
-
-                            quidHead = Guid.Parse(invoHeadStr.Replace(invoHeadStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
-
-                            using subContext context2 = new();
-
-                            TrInvoiceHeader copyTrIH = trIH;
-                            copyTrIH.InvoiceHeaderId = quidHead;
-                            string temp = trIH.WarehouseCode;
-                            copyTrIH.WarehouseCode = trIH.ToWarehouseCode;
-                            copyTrIH.ToWarehouseCode = temp;
-                            copyTrIH.StoreCode = trIH.CurrAccCode ??= trIH.StoreCode;
-                            copyTrIH.IsMainTF = false;
-
-                            switch (entry.State)
-                            {
-                                case EntityState.Added: context2.TrInvoiceHeaders.Add(copyTrIH); break;
-                                case EntityState.Modified: context2.TrInvoiceHeaders.Update(copyTrIH); break;
-                                case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(copyTrIH); break;
-                                default: break;
-                            }
-                            context2.SaveChanges();
+                            case EntityState.Added: context2.TrInvoiceHeaders.Add(copyTrIH); break;
+                            case EntityState.Modified: context2.TrInvoiceHeaders.Update(copyTrIH); break;
+                            case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(copyTrIH); break;
+                            default: break;
                         }
+                        context2.SaveChanges();
+                    }
 
-                        if (entry.Entity.GetType().Name == nameof(TrInvoiceLine))
+                    EntityEntry? entryLine = entityEntries.FirstOrDefault(x => x.Entity.GetType().Name == nameof(TrInvoiceLine));
+
+                    if (entryLine is not null)
+                    {
+                        TrInvoiceLine trIL = (TrInvoiceLine)entryLine.CurrentValues.ToObject();
+
+                        string invoLineStr = trIL.InvoiceLineId.ToString();
+                        Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
+
+                        using subContext context2 = new();
+
+                        TrInvoiceLine newTrIL = trIL;
+                        newTrIL.InvoiceHeaderId = quidHead;
+                        newTrIL.InvoiceLineId = quidLine;
+                        newTrIL.QtyIn = trIL.QtyOut;
+                        newTrIL.QtyOut -= trIL.QtyOut;
+
+                        switch (entryLine.State)
                         {
-                            TrInvoiceLine trIL = (TrInvoiceLine)entry.CurrentValues.ToObject();
-
-                            string invoLineStr = trIL.InvoiceLineId.ToString();
-                            Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
-
-                            using subContext context2 = new();
-
-                            TrInvoiceLine newTrIL = trIL;
-                            newTrIL.InvoiceHeaderId = quidHead;
-                            newTrIL.InvoiceLineId = quidLine;
-                            newTrIL.QtyIn = trIL.QtyOut;
-                            newTrIL.QtyOut -= trIL.QtyOut;
-
-                            switch (entry.State)
-                            {
-                                case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
-                                case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
-                                case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
-                                default: break;
-                            }
-                            context2.SaveChanges();
+                            case EntityState.Added: context2.TrInvoiceLines.Add(newTrIL); break;
+                            case EntityState.Modified: context2.TrInvoiceLines.Update(newTrIL); break;
+                            case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
+                            default: break;
                         }
+                        context2.SaveChanges();
                     }
                 }
 
@@ -2271,18 +2274,21 @@ namespace Foxoft
             bBI_CopyInvoice.Visibility = BCI_ShowCopy.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
         }
 
+        private void lUE_StoreCode_PopupFilter(object sender, PopupFilterEventArgs e)
+        {
+            lUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
+        }
+
         private void lUE_WarehouseCode_PopupFilter(object sender, PopupFilterEventArgs e)
         {
-            string storeCode = lUE_StoreCode.EditValue.ToString();
-            var asd = efMethods.SelectWarehousesByStore(storeCode);
-            lUE_WarehouseCode.Properties.DataSource = asd;
+            string storeCode = lUE_StoreCode.EditValue?.ToString();
+            lUE_WarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStore(storeCode);
         }
 
         private void lUE_ToWarehouseCode_PopupFilter(object sender, PopupFilterEventArgs e)
         {
-            string storeCode = btnEdit_CurrAccCode.EditValue.ToString();
-            var asd = efMethods.SelectWarehousesByStore(storeCode);
-            lUE_ToWarehouseCode.Properties.DataSource = asd;
+            string storeCode = btnEdit_CurrAccCode.EditValue?.ToString();
+            lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehousesByStore(storeCode);
         }
 
         private void lUE_WarehouseCode_Validating(object sender, CancelEventArgs e)

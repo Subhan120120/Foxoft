@@ -41,12 +41,10 @@ namespace Foxoft
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
             bBI_Quit = new DevExpress.XtraBars.BarButtonItem();
-            BBI_AddColumn = new DevExpress.XtraBars.BarButtonItem();
-            popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
-            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
             BBI_PrintPreview = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             BBI_AddColumnString = new DevExpress.XtraBars.BarButtonItem();
             BBI_AddColumnInt32 = new DevExpress.XtraBars.BarButtonItem();
@@ -60,6 +58,7 @@ namespace Foxoft
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)gC_Report).BeginInit();
@@ -80,15 +79,15 @@ namespace Foxoft
             gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Report });
             gC_Report.ProcessGridKey += gC_Report_ProcessGridKey;
             // 
-            // gridView1
+            // gV_Report
             // 
             gV_Report.GridControl = gC_Report;
-            gV_Report.Name = "gridView1";
+            gV_Report.Name = "gV_Report";
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, BBI_AddColumn, barButtonItem2, BBI_ExportExcel, BBI_PrintPreview, barButtonItem1, barSubItem1, BBI_AddColumnString, BBI_AddColumnInt32, BBI_AddColumnBoolean, BBI_AddColumnDateTime, BBI_AddColumnTimeSpan, BBI_AddColumnDecimal, BBI_AddColumnObject });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, barButtonItem2, BBI_ExportExcel, BBI_PrintPreview, barButtonItem1, barSubItem1, BBI_AddColumnString, BBI_AddColumnInt32, BBI_AddColumnBoolean, BBI_AddColumnDateTime, BBI_AddColumnTimeSpan, BBI_AddColumnDecimal, BBI_AddColumnObject });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 25;
             ribbonControl1.Name = "ribbonControl1";
@@ -155,29 +154,6 @@ namespace Foxoft
             bBI_Quit.Name = "bBI_Quit";
             bBI_Quit.ItemClick += bBI_Quit_ItemClick;
             // 
-            // BBI_AddColumn
-            // 
-            BBI_AddColumn.ActAsDropDown = true;
-            BBI_AddColumn.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
-            BBI_AddColumn.Caption = "Kolon Əlavə Et";
-            BBI_AddColumn.DropDownControl = popupMenu1;
-            BBI_AddColumn.Id = 9;
-            BBI_AddColumn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_AddColumn.ImageOptions.SvgImage");
-            BBI_AddColumn.Name = "BBI_AddColumn";
-            BBI_AddColumn.ItemClick += barButtonItem1_ItemClick;
-            // 
-            // popupMenu1
-            // 
-            popupMenu1.ItemLinks.Add(barButtonItem1);
-            popupMenu1.Name = "popupMenu1";
-            popupMenu1.Ribbon = ribbonControl1;
-            // 
-            // barButtonItem1
-            // 
-            barButtonItem1.Caption = "barButtonItem1";
-            barButtonItem1.Id = 14;
-            barButtonItem1.Name = "barButtonItem1";
-            // 
             // barButtonItem2
             // 
             barButtonItem2.Caption = "Test";
@@ -201,9 +177,15 @@ namespace Foxoft
             BBI_PrintPreview.Name = "BBI_PrintPreview";
             BBI_PrintPreview.ItemClick += BBI_PrintPreview_ItemClick;
             // 
+            // barButtonItem1
+            // 
+            barButtonItem1.Caption = "barButtonItem1";
+            barButtonItem1.Id = 14;
+            barButtonItem1.Name = "barButtonItem1";
+            // 
             // barSubItem1
             // 
-            barSubItem1.Caption = "BSI_AddColumn";
+            barSubItem1.Caption = "Kolon Əlavə Et";
             barSubItem1.Id = 16;
             barSubItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barSubItem1.ImageOptions.SvgImage");
             barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnString), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnInt32), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnBoolean), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDateTime), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnTimeSpan), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnDecimal), new DevExpress.XtraBars.LinkPersistInfo(BBI_AddColumnObject) });
@@ -276,7 +258,6 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_LayoutLoad);
             ribbonPageGroup1.ItemLinks.Add(bBI_GridOptions);
             ribbonPageGroup1.ItemLinks.Add(bBI_DesignClear);
-            ribbonPageGroup1.ItemLinks.Add(BBI_AddColumn);
             ribbonPageGroup1.ItemLinks.Add(barSubItem1);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Dizayn";
@@ -296,6 +277,12 @@ namespace Foxoft
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
             ribbonStatusBar1.Size = new Size(820, 24);
+            // 
+            // popupMenu1
+            // 
+            popupMenu1.ItemLinks.Add(barButtonItem1);
+            popupMenu1.Name = "popupMenu1";
+            popupMenu1.Ribbon = ribbonControl1;
             // 
             // ribbonPage2
             // 

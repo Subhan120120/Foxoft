@@ -685,13 +685,14 @@ namespace Foxoft
             lUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             lUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             lUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Mağaza Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Mağaza Adı") });
+            lUE_StoreCode.Properties.ValueMember = "CurrAccCode";
             lUE_StoreCode.Properties.DisplayMember = "CurrAccDesc";
             lUE_StoreCode.Properties.NullText = "";
             lUE_StoreCode.Properties.ShowHeader = false;
-            lUE_StoreCode.Properties.ValueMember = "CurrAccCode";
             lUE_StoreCode.Size = new Size(450, 20);
             lUE_StoreCode.StyleController = dataLayoutControl1;
             lUE_StoreCode.TabIndex = 6;
+            lUE_StoreCode.PopupFilter += lUE_StoreCode_PopupFilter;
             lUE_StoreCode.EditValueChanged += lUE_StoreCode_EditValueChanged;
             lUE_StoreCode.KeyDown += dataLayoutControls_KeyDown;
             // 

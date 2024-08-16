@@ -357,21 +357,6 @@ namespace Foxoft
 
         private void gV_PaymentLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            //GridView gV = (GridView)sender;
-
-            //if (gV is not null)
-            //{
-            //    string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
-            //    gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
-            //    gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
-            //}
-
-            //decimal invoiceSum = (-1) * efMethods.SelectPaymentLinesSum(trPaymentHeader.PaymentHeaderId);
-            //decimal balanceBefore = colBalanceAfter - invoiceSum;
-
-            //gV_PaymentLine.SetFocusedRowCellValue(colBalanceBefor, BalanceBefore);
-            //gV_PaymentLine.SetFocusedRowCellValue(colBalanceAfter, balanceAfter);
-
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 SavePayment();

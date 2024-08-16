@@ -71,6 +71,8 @@ namespace Foxoft
             repoBtnEdit_CashregisterCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             colReceivePayment = new DevExpress.XtraGrid.Columns.GridColumn();
             colPaymentMethodId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRunningTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRunningTotalBefore = new DevExpress.XtraGrid.Columns.GridColumn();
             OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             trPaymentHeadersBindingSource = new BindingSource(components);
             OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
@@ -93,8 +95,6 @@ namespace Foxoft
             ItemForOperationDate = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            colRunningTotal = new DevExpress.XtraGrid.Columns.GridColumn();
-            colRunningTotalBefore = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
@@ -459,6 +459,24 @@ namespace Foxoft
             colPaymentMethodId.FieldName = "PaymentMethodId";
             colPaymentMethodId.Name = "colPaymentMethodId";
             // 
+            // colRunningTotal
+            // 
+            colRunningTotal.Caption = "Yekun Borc";
+            colRunningTotal.FieldName = "colRunningTotal";
+            colRunningTotal.Name = "colRunningTotal";
+            colRunningTotal.UnboundDataType = typeof(decimal);
+            colRunningTotal.Visible = true;
+            colRunningTotal.VisibleIndex = 6;
+            // 
+            // colRunningTotalBefore
+            // 
+            colRunningTotalBefore.Caption = "Əvvəlki Borc";
+            colRunningTotalBefore.FieldName = "colRunningTotalBefore";
+            colRunningTotalBefore.Name = "colRunningTotalBefore";
+            colRunningTotalBefore.UnboundDataType = typeof(decimal);
+            colRunningTotalBefore.Visible = true;
+            colRunningTotalBefore.VisibleIndex = 5;
+            // 
             // OperationDateDateEdit
             // 
             OperationDateDateEdit.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "OperationDate", true));
@@ -688,24 +706,6 @@ namespace Foxoft
             layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem3.TextSize = new Size(0, 0);
             layoutControlItem3.TextVisible = false;
-            // 
-            // colRunningTotal
-            // 
-            colRunningTotal.Caption = "Yekun Borc";
-            colRunningTotal.FieldName = "colRunningTotal";
-            colRunningTotal.Name = "colRunningTotal";
-            colRunningTotal.UnboundDataType = typeof(decimal);
-            colRunningTotal.Visible = true;
-            colRunningTotal.VisibleIndex = 5;
-            // 
-            // colRunningTotalBefore
-            // 
-            colRunningTotalBefore.Caption = "Əvvəlki Borc";
-            colRunningTotalBefore.FieldName = "colRunningTotalBefore";
-            colRunningTotalBefore.Name = "colRunningTotalBefore";
-            colRunningTotalBefore.UnboundDataType = typeof(decimal);
-            colRunningTotalBefore.Visible = true;
-            colRunningTotalBefore.VisibleIndex = 6;
             // 
             // FormMoneyTransfer
             // 

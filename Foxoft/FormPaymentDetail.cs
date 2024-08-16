@@ -35,7 +35,7 @@ namespace Foxoft
 
             AddReports("PaymentDetails");
 
-            StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
+            LUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
 
@@ -684,6 +684,11 @@ namespace Foxoft
 
                 CalcCurrAccBalance();
             }
+        }
+
+        private void LUE_StoreCode_PopupFilter(object sender, PopupFilterEventArgs e)
+        {
+            LUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
         }
     }
 }

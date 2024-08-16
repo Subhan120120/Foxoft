@@ -1,14 +1,21 @@
-﻿using DevExpress.Data.Filtering;
+﻿using DevExpress.ClipboardSource.SpreadsheetML;
+using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
 using DevExpress.Mvvm.Native;
 using Foxoft.Models;
+using DevExpress.Spreadsheet;
+using DevExpress.XtraSpreadsheet;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Foxoft.Models.Entity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
+using System.Windows.Controls;
 using static DevExpress.Skins.SolidColorHelper;
 
 namespace Foxoft
@@ -1272,7 +1279,9 @@ namespace Foxoft
             using subContext db = new();
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                       .Where(x => x.CashRegisterCode == cashRegCode && x.TrPaymentHeader.OperationDate < documentDate)
+                                       .Where(x => x.CashRegisterCode == cashRegCode)
+                                       .ToList() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
+                                       .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) < documentDate)
                                        .Sum(x => x.PaymentLoc);
 
             return paymentSum;
@@ -1457,6 +1466,14 @@ namespace Foxoft
                        .Where(x => x.CurrAccTypeCode == 4)
                        .OrderBy(x => x.CreatedDate)
                        .ToList();
+        }
+
+        public List<DcCurrAcc> SelectStoresIncludeDisabled()
+        {
+            using subContext db = new();
+            return db.DcCurrAccs.Where(x => x.CurrAccTypeCode == 4)
+                                .OrderBy(x => x.CreatedDate)
+                                .ToList();
         }
 
         public List<DcWarehouse> SelectWarehouses()

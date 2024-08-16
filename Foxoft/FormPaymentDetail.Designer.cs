@@ -80,7 +80,7 @@ namespace Foxoft
             OperationDateDateEdit = new DevExpress.XtraEditors.DateEdit();
             OperationTimeTimeSpanEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
-            StoreCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            LUE_StoreCode = new DevExpress.XtraEditors.LookUpEdit();
             btnEdit_CurrAccCode = new DevExpress.XtraEditors.ButtonEdit();
             btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -114,7 +114,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)OperationTimeTimeSpanEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)StoreCodeLookUpEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_StoreCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
@@ -252,7 +252,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(OperationDateDateEdit);
             dataLayoutControl1.Controls.Add(OperationTimeTimeSpanEdit);
             dataLayoutControl1.Controls.Add(DescriptionTextEdit);
-            dataLayoutControl1.Controls.Add(StoreCodeLookUpEdit);
+            dataLayoutControl1.Controls.Add(LUE_StoreCode);
             dataLayoutControl1.Controls.Add(btnEdit_CurrAccCode);
             dataLayoutControl1.Controls.Add(btnEdit_DocNum);
             dataLayoutControl1.DataSource = trPaymentHeadersBindingSource;
@@ -552,22 +552,23 @@ namespace Foxoft
             DescriptionTextEdit.TabIndex = 4;
             DescriptionTextEdit.KeyDown += dataLayout_KeyDown;
             // 
-            // StoreCodeLookUpEdit
+            // LUE_StoreCode
             // 
-            StoreCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "StoreCode", true));
-            StoreCodeLookUpEdit.Location = new Point(537, 36);
-            StoreCodeLookUpEdit.MenuManager = ribbonControl1;
-            StoreCodeLookUpEdit.Name = "StoreCodeLookUpEdit";
-            StoreCodeLookUpEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            StoreCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            StoreCodeLookUpEdit.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Mağaza Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Mağaza Adı") });
-            StoreCodeLookUpEdit.Properties.DisplayMember = "CurrAccDesc";
-            StoreCodeLookUpEdit.Properties.NullText = "";
-            StoreCodeLookUpEdit.Properties.ValueMember = "CurrAccCode";
-            StoreCodeLookUpEdit.Size = new Size(350, 20);
-            StoreCodeLookUpEdit.StyleController = dataLayoutControl1;
-            StoreCodeLookUpEdit.TabIndex = 7;
-            StoreCodeLookUpEdit.KeyDown += dataLayout_KeyDown;
+            LUE_StoreCode.DataBindings.Add(new Binding("EditValue", trPaymentHeadersBindingSource, "StoreCode", true));
+            LUE_StoreCode.Location = new Point(537, 36);
+            LUE_StoreCode.MenuManager = ribbonControl1;
+            LUE_StoreCode.Name = "LUE_StoreCode";
+            LUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            LUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Mağaza Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Mağaza Adı") });
+            LUE_StoreCode.Properties.DisplayMember = "CurrAccDesc";
+            LUE_StoreCode.Properties.NullText = "";
+            LUE_StoreCode.Properties.ValueMember = "CurrAccCode";
+            LUE_StoreCode.Size = new Size(350, 20);
+            LUE_StoreCode.StyleController = dataLayoutControl1;
+            LUE_StoreCode.TabIndex = 7;
+            LUE_StoreCode.PopupFilter += LUE_StoreCode_PopupFilter;
+            LUE_StoreCode.KeyDown += dataLayout_KeyDown;
             // 
             // btnEdit_CurrAccCode
             // 
@@ -706,7 +707,7 @@ namespace Foxoft
             // 
             // layoutControlItem2
             // 
-            layoutControlItem2.Control = StoreCodeLookUpEdit;
+            layoutControlItem2.Control = LUE_StoreCode;
             layoutControlItem2.Location = new Point(439, 24);
             layoutControlItem2.Name = "ItemForStoreCode";
             layoutControlItem2.Size = new Size(440, 24);
@@ -757,7 +758,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)OperationDateDateEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)OperationTimeTimeSpanEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)StoreCodeLookUpEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_StoreCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
@@ -811,7 +812,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraBars.BarButtonItem bBI_DeletePayment;
-        private DevExpress.XtraEditors.LookUpEdit StoreCodeLookUpEdit;
+        private DevExpress.XtraEditors.LookUpEdit LUE_StoreCode;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_CurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentLoc;

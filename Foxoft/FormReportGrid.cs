@@ -65,6 +65,8 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            InitializeGVReportEvents();
+
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                 imageFolder = settingStore.ImageFolder;
@@ -78,6 +80,15 @@ namespace Foxoft
             adornerUIManager1.Elements.Add(badge2);
             //badge1.TargetElement = barButtonItem1;
             badge2.TargetElement = ribbonPage1;
+        }
+
+        private void InitializeGVReportEvents()
+        {
+            gV_Report.RowStyle += gV_Report_RowStyle;
+            gV_Report.PopupMenuShowing += gV_Report_PopupMenuShowing;
+            gV_Report.CalcRowHeight += gV_Report_CalcRowHeight;
+            gV_Report.ShowingEditor += gV_Report_ShowingEditor;
+            gV_Report.CustomUnboundColumnData += gV_Report_CustomUnboundColumnData;
         }
 
         public FormReportGrid(string query, string filter, DcReport dcReport)
