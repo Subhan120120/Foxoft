@@ -51,7 +51,7 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            FormCommonList<DcFeature> frm = new("F", "FeatureCode", "", "FeatureTypeId", Convert.ToInt32(editor.Name).ToString());
+            FormCommonList<DcFeature> frm = new("F", "FeatureCode", "", "FeatureTypeId", Convert.ToInt32(editor.Name));
             if (DialogResult.OK == frm.ShowDialog())
                 editor.EditValue = frm.Value_Id;
 
@@ -68,13 +68,12 @@ namespace Foxoft
             foreach (Control ctrl in layoutControl1.Controls)
             {
                 BaseEdit edit = ctrl as BaseEdit;
-                if (edit is ButtonEdit)
-                    if (edit is not null)
-                        if (edit.EditValue is not null)
-                        {
-                            efMethods.UpdateDcFeature_Value(Convert.ToByte(edit.Name), dcProduct.ProductCode, edit.EditValue.ToString());
-                            DialogResult = DialogResult.OK;
-                        }
+
+                if (edit is ButtonEdit && edit is not null && edit.EditValue is not null)
+                {
+                    efMethods.UpdateDcFeature_Value(Convert.ToByte(edit.Name), dcProduct.ProductCode, edit.EditValue.ToString().Trim());
+                    DialogResult = DialogResult.OK;
+                }
             }
         }
     }

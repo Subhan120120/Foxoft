@@ -1,26 +1,13 @@
 ﻿using DevExpress.Export;
 using DevExpress.XtraEditors;
-using DevExpress.XtraRichEdit.Import.Html;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Win32;
-using System;
 using Microsoft.Data.SqlClient;
-using System.Diagnostics;
-using System.DirectoryServices.ActiveDirectory;
-using System.Drawing;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace Foxoft
 {

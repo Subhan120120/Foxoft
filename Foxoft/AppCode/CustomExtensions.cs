@@ -104,7 +104,9 @@ namespace Foxoft
                 "RS" => "RetailSaleInvoice",
                 "WS" => "WholesaleInvoice",
                 "EX" => "Expense",
-                "EI" => "Expense of Invoice",
+                "EI" => "ExpenseOfInvoice",
+                "PA" => "PaymentDetail",
+                "CT" => "CashTransfer",
                 _ => ""
             };
         }

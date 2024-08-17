@@ -1,5 +1,4 @@
-﻿using DevExpress.ClipboardSource.SpreadsheetML;
-using DevExpress.Utils;
+﻿using DevExpress.Utils;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
@@ -9,20 +8,12 @@ using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -33,9 +24,9 @@ namespace Foxoft
         AdoMethods adoMethods = new();
         T Entity { get; set; }
         subContext dbContext;
-        public string Value_Id;
-        public string FocusToValue_Id;
-        public string Value_2;
+        public object Value_Id;
+        public object FocusToValue_Id;
+        public object Value_2;
         string ProcessCode;
         string[] SpecialColumnsHide;
         GridColumn Col_Id = new();
@@ -60,7 +51,7 @@ namespace Foxoft
             this.ProcessCode = processCode;
         }
 
-        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string[] specialColumnsHide = null)
+        public FormCommonList(string processCode, string fieldName_Id, object value_Id, string[] specialColumnsHide = null)
             : this(processCode, fieldName_Id)
         {
             this.Value_Id = value_Id;
@@ -68,7 +59,7 @@ namespace Foxoft
             this.SpecialColumnsHide = specialColumnsHide;
         }
 
-        public FormCommonList(string processCode, string fieldName_Id, string value_Id, string fieldName_2, string value_2, string[] specialColumnsHide = null) // 2 eded deyisen olanlar ucun
+        public FormCommonList(string processCode, string fieldName_Id, object value_Id, string fieldName_2, object value_2, string[] specialColumnsHide = null) // 2 eded deyisen olanlar ucun
             : this(processCode, fieldName_Id, value_Id, specialColumnsHide)
         {
             this.Col_2.FieldName = fieldName_2;
@@ -107,7 +98,7 @@ namespace Foxoft
 
             if (gridView1.FocusedRowHandle >= 0)
             {
-                if (!string.IsNullOrEmpty(Value_Id))
+                if (Value_Id != null)
                 {
                     FocusValue(Value_Id);
                     Entity = gridView1.GetFocusedRow() as T;
@@ -287,7 +278,7 @@ namespace Foxoft
             }
         }
 
-        private void FocusValue(string value)
+        private void FocusValue(object value)
         {
             int rowHandle = gridView1.LocateByValue(0, Col_Id, value);
             if (rowHandle != GridControl.InvalidRowHandle)
@@ -335,16 +326,26 @@ namespace Foxoft
             return obj?.ToString();
         }
 
-        private Func<T, bool> ConvertToPredicate(string propName, string value)
+        private Func<T, bool> ConvertToPredicate(string propName, object value)
         {
-            var param = Expression.Parameter(typeof(T));
+            //var param = Expression.Parameter(typeof(T));
+            //MemberExpression member = Expression.Property(param, propName);
+            //var asString = this.GetType().GetMethod("AsString");
+            //var stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
+            //ConstantExpression constant = Expression.Constant(value);
+            //var expression = Expression.Equal(stringMember, constant);
+            //var lambda = Expression.Lambda(expression, param);
+            //var predicate = (Func<T, bool>)lambda.Compile();
+            //return predicate;
+
+            var param = Expression.Parameter(typeof(T), "x");
             MemberExpression member = Expression.Property(param, propName);
-            var asString = this.GetType().GetMethod("AsString");
-            var stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
-            ConstantExpression constant = Expression.Constant(value);
-            var expression = Expression.Equal(stringMember, constant);
-            var lambda = Expression.Lambda(expression, param);
-            var predicate = (Func<T, bool>)lambda.Compile();
+            UnaryExpression memberAsObject = Expression.Convert(member, typeof(object));
+            var convertedValue = Convert.ChangeType(value, member.Type);
+            ConstantExpression constant = Expression.Constant(convertedValue, member.Type);
+            var expression = Expression.Equal(member, constant);
+            var lambda = Expression.Lambda<Func<T, bool>>(expression, param);
+            var predicate = lambda.Compile();
             return predicate;
         }
 

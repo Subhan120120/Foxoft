@@ -12,6 +12,7 @@ using Microsoft.Identity.Client;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using DevExpress.XtraReports.Templates;
 using System.Reflection.Emit;
+using Foxoft.Migrations;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -41,6 +42,7 @@ namespace Foxoft.Models
         public DbSet<TrProductBarcode> TrProductBarcodes { get; set; }
         public DbSet<DcBarcodeType> DcBarcodeTypes { get; set; }
         public DbSet<DcSerialNumber> DcSerialNumbers { get; set; }
+        public DbSet<DcUnitOfMeasure> DcUnitOfMeasures { get; set; }
         public DbSet<DcDiscount> DcDiscounts { get; set; }
         public DbSet<TrProductDiscount> TrProductDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
@@ -517,6 +519,11 @@ namespace Foxoft.Models
                 new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDesc = "Test Məhsul 01", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
                 new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xərci", CreatedDate = new DateTime(1901, 01, 01) },
                 new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "İşıq Pulu", CreatedDate = new DateTime(1901, 01, 01) }
+            );
+
+            modelBuilder.Entity<DcUnitOfMeasure>().HasData(
+                new DcUnitOfMeasure { UnitOfMeasureCode = "Ədəd", Level = 1 },
+                new DcUnitOfMeasure { UnitOfMeasureCode = "Qutu", Level = 1 }
             );
 
             modelBuilder.Entity<DcBarcodeType>().HasData(

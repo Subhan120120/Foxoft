@@ -23,9 +23,9 @@ namespace Foxoft
         public T Entity { get; set; }
         private bool IsNew;
         string ProcessCode = "0";
-        public string Value_Id;
+        public object Value_Id;
         public string FieldName_Id;
-        public string Value_2;
+        public object Value_2;
         public string FieldName_2;
         string[] SpecialColumnsHide = new string[] { };
         LayoutControlItem Control_Id = new();
@@ -45,14 +45,14 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
-        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string[] specialColumnsHide = null)
+        public FormCommon(string processCode, bool isNew, string fieldName_Id, object value_Id, string[] specialColumnsHide = null)
             : this(processCode, isNew, fieldName_Id)
         {
             this.Value_Id = value_Id;
             this.SpecialColumnsHide = specialColumnsHide;
         }
 
-        public FormCommon(string processCode, bool isNew, string fieldName_Id, string value_Id, string fieldName_2, string value_2, string[] specialColumnsHide = null)
+        public FormCommon(string processCode, bool isNew, string fieldName_Id, object value_Id, string fieldName_2, object value_2, string[] specialColumnsHide = null)
             : this(processCode, isNew, fieldName_Id, value_Id, specialColumnsHide)
         {
             this.FieldName_2 = fieldName_2;
@@ -139,7 +139,7 @@ namespace Foxoft
                 if (fieldName == FieldName_Id)
                     Value_Id = editor.EditValue?.ToString();
                 if (fieldName == FieldName_2)
-                    Value_2 = editor.EditValue?.ToString();
+                    Value_2 = editor.EditValue;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            if (string.IsNullOrEmpty(Value_Id))
+            if (IsNew)
                 ClearControlsAddNew();
             else
             {
@@ -167,35 +167,49 @@ namespace Foxoft
             return obj?.ToString();
         }
 
-        private Func<T, bool> ConvertToPredicate(string propName, string value)
+        private Func<T, bool> ConvertToPredicate(string propName, object value)
         {
-            ParameterExpression? param = Expression.Parameter(typeof(T));
-            MemberExpression? member = Expression.Property(param, propName);
-            MethodInfo? asString = this.GetType().GetMethod("AsString");
-            MethodCallExpression? stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
-            ConstantExpression? constant = Expression.Constant(value);
-            BinaryExpression? expression = Expression.Equal(stringMember, constant);
-            LambdaExpression? lambda = Expression.Lambda(expression, param);
-            Func<T, bool> predicate = (Func<T, bool>)lambda.Compile();
+            //ParameterExpression? param = Expression.Parameter(typeof(T));
+            //MemberExpression? member = Expression.Property(param, propName);
+            //MethodInfo? asString = this.GetType().GetMethod("AsString");
+            //MethodCallExpression? stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
+            //ConstantExpression? constant = Expression.Constant(value);
+            //BinaryExpression? expression = Expression.Equal(stringMember, constant);
+            //LambdaExpression? lambda = Expression.Lambda(expression, param);
+            //Func<T, bool> predicate = (Func<T, bool>)lambda.Compile();
+            //return predicate;
+
+            var param = Expression.Parameter(typeof(T), "x");
+            MemberExpression member = Expression.Property(param, propName);
+            UnaryExpression memberAsObject = Expression.Convert(member, typeof(object));
+            var convertedValue = Convert.ChangeType(value, member.Type);
+            ConstantExpression constant = Expression.Constant(convertedValue, member.Type);
+            var expression = Expression.Equal(member, constant);
+            var lambda = Expression.Lambda<Func<T, bool>>(expression, param);
+            var predicate = lambda.Compile();
             return predicate;
         }
 
         private void ClearControlsAddNew()
         {
+            object value_2 = Value_2; //get value_2 before AddNew() fires editvalue_changed event and clears value_2 to 0
+
             Entity = bindingSource1.AddNew() as T;
+
+            PropertyInfo? property_2 = typeof(T).GetProperty(FieldName_2);
+            if (property_2 != null && property_2.CanWrite)
+                property_2.SetValue(Entity, value_2);
 
             string tableName = dbContext.Model.FindEntityType(typeof(T)).GetTableName();
 
             string NewDocNum = efMethods.GetNextDocNum(false, ProcessCode, FieldName_Id, tableName, 4);
 
+            //dataLayoutControl1.SetCurrentRecordFieldValue(FieldName_2, value_2);
+
             bindingSource1.DataSource = Entity;
 
             Control_Id.Control.Text = NewDocNum;
 
-            if (Control_2.Control is not null)
-                Control_2.Control.Text = Value_2;
-
-            dataLayoutControl1.SetCurrentRecordFieldValue(FieldName_2, Value_2);
         }
 
 
@@ -210,7 +224,7 @@ namespace Foxoft
                 Func<T, bool> predicate_id = ConvertToPredicate(FieldName_Id, id);
                 Func<T, bool> predicate_2 = string.IsNullOrEmpty(FieldName_2) ? _ => true : ConvertToPredicate(FieldName_2, Value_2);
 
-                if (IsNew) 
+                if (IsNew)
                     if (!dbContext.Set<T>().Where(predicate_id).Any(predicate_2))
                     {
                         dbContext.Set<T>().Add(Entity);

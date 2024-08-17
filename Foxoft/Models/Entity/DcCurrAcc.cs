@@ -101,6 +101,12 @@ namespace Foxoft.Models
         [Display(Name = "Tədarikçi Tipi")]
         public byte? VendorTypeCode { get; set; }
 
+        [Display(Name = "Personal Tipi")]
+        public byte? PersonalTypeCode { get; set; }
+
+        [Display(Name = "Kassanın Ödəmə Tipi")]
+        public byte? CashRegPaymentTypeCode { get; set; }
+
         [DefaultValue("0")]
         [Display(Name = "Müştəri Endirim Dərəcəsi")]
         public double CustomerPosDiscountRate { get; set; }
@@ -137,14 +143,10 @@ namespace Foxoft.Models
         [Display(Name = "Tema")]
         public string? Theme { get; set; }
 
-        [Display(Name = "Kassanın Ödəmə Tipi")]
-        public byte? CashRegPaymentTypeCode { get; set; }
-
 
         [NotMapped]
         [Display(Name = "Qalıq")]
         public decimal Balance { get; set; }
-
 
 
 

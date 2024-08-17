@@ -1239,6 +1239,12 @@ namespace Foxoft
                                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
+        public DcCurrAcc SelectCurrAccIncludeDisabled(string currAccCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == currAccCode);
+        }
+
         public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate)
         {
             using subContext db = new();

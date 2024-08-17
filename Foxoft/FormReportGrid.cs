@@ -400,6 +400,15 @@ namespace Foxoft
             }
             else if (trPaymentHeader is not null)
             {
+                string claim = CustomExtensions.GetClaim(trPaymentHeader.ProcessCode);
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+
                 if (trPaymentHeader.ProcessCode == "PA")
                 {
                     FormPaymentDetail frm = new(trPaymentHeader.PaymentHeaderId);

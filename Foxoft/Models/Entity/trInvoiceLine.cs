@@ -88,6 +88,10 @@ namespace Foxoft.Models
         public decimal Price { get; set; }
 
         [Display(Name = "Valyuta")]
+        [ForeignKey("DcUnitOfMeasure")]
+        public string? UnitOfMeasure { get; set; } 
+
+        [Display(Name = "Valyuta")]
         [ForeignKey("DcCurrency")]
         public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting.LocalCurrencyCode;
 
@@ -169,6 +173,7 @@ namespace Foxoft.Models
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
         public virtual DcSerialNumber DcSerialNumber { get; set; }
+        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }
