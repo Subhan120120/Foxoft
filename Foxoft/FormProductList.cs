@@ -557,8 +557,6 @@ namespace Foxoft
             }
             else
                 dcProduct = null;
-
-            //LoadProducts(productTypeCode);
         }
 
         private void barButtonItem1_ItemClick_1(object sender, ItemClickEventArgs e)

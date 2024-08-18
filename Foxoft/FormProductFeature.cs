@@ -54,13 +54,6 @@ namespace Foxoft
             FormCommonList<DcFeature> frm = new("F", "FeatureCode", "", "FeatureTypeId", Convert.ToInt32(editor.Name));
             if (DialogResult.OK == frm.ShowDialog())
                 editor.EditValue = frm.Value_Id;
-
-            //FormFeatureList formFeatureList = new(Convert.ToInt32(editor.Name));
-            //if (DialogResult.OK == formFeatureList.ShowDialog())
-            //    editor.EditValue = formFeatureList.dcFeature.FeatureCode;
-
-            //ButtonEdit textEdit = sender as ButtonEdit;
-            //efMethods.UpdateDcFeature_Value(Convert.ToInt32(textEdit.Name), dcProduct.ProductCode, textEdit.EditValue.ToString());
         }
 
         private void simpleButtonOk_Click(object sender, EventArgs e)

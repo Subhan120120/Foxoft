@@ -137,6 +137,8 @@ namespace Foxoft
             repo = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             txtEdit_PrintCount = new DevExpress.XtraEditors.TextEdit();
+            btnEdit_SalesPerson = new DevExpress.XtraEditors.ButtonEdit();
+            LCI_SalesPerson = new DevExpress.XtraLayout.LayoutControlItem();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForIsReturn = new DevExpress.XtraLayout.LayoutControlItem();
@@ -192,6 +194,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_PrintCount.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_SalesPerson.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_SalesPerson).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForIsReturn).BeginInit();
@@ -236,8 +240,10 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(lUE_WarehouseCode);
             dataLayoutControl1.Controls.Add(lUE_ToWarehouseCode);
             dataLayoutControl1.Controls.Add(txtEdit_PrintCount);
+            dataLayoutControl1.Controls.Add(btnEdit_SalesPerson);
             dataLayoutControl1.DataSource = trInvoiceHeadersBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
+            dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_SalesPerson });
             dataLayoutControl1.Location = new Point(0, 158);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(415, 175, 650, 400);
@@ -685,10 +691,10 @@ namespace Foxoft
             lUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             lUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             lUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Mağaza Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Mağaza Adı") });
-            lUE_StoreCode.Properties.ValueMember = "CurrAccCode";
             lUE_StoreCode.Properties.DisplayMember = "CurrAccDesc";
             lUE_StoreCode.Properties.NullText = "";
             lUE_StoreCode.Properties.ShowHeader = false;
+            lUE_StoreCode.Properties.ValueMember = "CurrAccCode";
             lUE_StoreCode.Size = new Size(450, 20);
             lUE_StoreCode.StyleController = dataLayoutControl1;
             lUE_StoreCode.TabIndex = 6;
@@ -1139,6 +1145,27 @@ namespace Foxoft
             txtEdit_PrintCount.StyleController = dataLayoutControl1;
             txtEdit_PrintCount.TabIndex = 13;
             // 
+            // btnEdit_SalesPerson
+            // 
+            btnEdit_SalesPerson.Location = new Point(667, 60);
+            btnEdit_SalesPerson.MenuManager = ribbonControl1;
+            btnEdit_SalesPerson.Name = "btnEdit_SalesPerson";
+            btnEdit_SalesPerson.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_SalesPerson.Size = new Size(450, 20);
+            btnEdit_SalesPerson.StyleController = dataLayoutControl1;
+            btnEdit_SalesPerson.TabIndex = 14;
+            btnEdit_SalesPerson.ButtonPressed += btnEdit_SalesPerson_ButtonPressed;
+            btnEdit_SalesPerson.EditValueChanged += btnEdit_SalesPerson_EditValueChanged;
+            // 
+            // LCI_SalesPerson
+            // 
+            LCI_SalesPerson.Control = btnEdit_SalesPerson;
+            LCI_SalesPerson.Location = new Point(545, 48);
+            LCI_SalesPerson.Name = "LCI_SalesPerson";
+            LCI_SalesPerson.Size = new Size(564, 24);
+            LCI_SalesPerson.Text = "Satıcı";
+            LCI_SalesPerson.TextSize = new Size(50, 20);
+            // 
             // Root
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -1380,6 +1407,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repo).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_PrintCount.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_SalesPerson.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_SalesPerson).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForIsReturn).EndInit();
@@ -1539,5 +1568,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SerialNumberCode;
         private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
         private DevExpress.XtraBars.BarSubItem BSI_ReportInvoice;
+        private DevExpress.XtraEditors.ButtonEdit btnEdit_SalesPerson;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPerson;
     }
 }

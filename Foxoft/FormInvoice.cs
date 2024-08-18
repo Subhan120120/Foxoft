@@ -495,7 +495,9 @@ namespace Foxoft
                 gv.SetRowCellValue(e.RowHandle, colExchangeRate, currency.ExchangeRate);
             }
 
-            if (settingStore.SalesmanContinuity)
+            if (btnEdit_SalesPerson.EditValue != null)
+                gv.SetRowCellValue(e.RowHandle, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
+            else if (settingStore.SalesmanContinuity)
             {
                 int lastRowHandle = gv.GetRowHandle(gv.DataRowCount - 1);
                 if (lastRowHandle >= 0)
@@ -580,9 +582,9 @@ namespace Foxoft
             {
                 if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
                 {
-                    Object oldvalue = gV.ActiveEditor?.OldEditValue;
+                    object oldValue = gV.ActiveEditor?.OldEditValue;
 
-                    if (!Object.Equals(e.Value, oldvalue))
+                    if (gV.ActiveEditor is not null && !Equals(e.Value, oldValue))
                     {
                         string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
 
@@ -1667,9 +1669,13 @@ namespace Foxoft
                 }
             }
 
-            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "Invoice" + dcProcess.ProcessCode + "Layout.xml");
-            if (File.Exists(layoutFilePath))
-                gV_InvoiceLine.RestoreLayoutFromXml(layoutFilePath);
+            string layoutHeaderPath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
+            if (File.Exists(layoutHeaderPath))
+                dataLayoutControl1.RestoreLayoutFromXml(layoutHeaderPath);
+
+            string layoutLineFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml");
+            if (File.Exists(layoutLineFilePath))
+                gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
 
             colProductCost = gV_InvoiceLine.Columns[nameof(DcProduct.ProductCost)];
             if (colProductCost != null)
@@ -1698,7 +1704,7 @@ namespace Foxoft
 
         private void SaveLayout()
         {
-            string fileName = "Invoice" + dcProcess.ProcessCode + "Layout.xml";
+            string fileName = "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml";
             string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
@@ -2193,7 +2199,7 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            MessageBox.Show(settingStore.PrinterName);
+
         }
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
@@ -2304,8 +2310,8 @@ namespace Foxoft
 
                     if (productBalance < trInvoiceLine.Qty)
                     {
-                        e.Cancel = true;
-                        lookUpEdit.ErrorText = "Please select a valid value.";
+                        //e.Cancel = true;
+                        //lookUpEdit.ErrorText = "Please select a valid value.";
                     }
                 }
             }
@@ -2313,8 +2319,26 @@ namespace Foxoft
 
         private void lUE_WarehouseCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
-            e.ExceptionMode = ExceptionMode.DisplayError;
-            e.ErrorText = "Qaimədə məhsulların bəzisi anbarda yoxdu";
+            //e.ExceptionMode = ExceptionMode.DisplayError;
+            //e.ErrorText = "Qaimədə məhsulların bəzisi anbarda yoxdu";
+        }
+
+        private void btnEdit_SalesPerson_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            FormCurrAccList form = new(new byte[] { 3 }, trInvoiceHeader.CurrAccCode);
+
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                btnEdit_SalesPerson.EditValue = form.dcCurrAcc.CurrAccCode;
+            }
+        }
+
+        private void btnEdit_SalesPerson_EditValueChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            {
+                gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
+            }
         }
     }
 }
