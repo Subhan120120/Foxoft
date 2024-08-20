@@ -1,6 +1,9 @@
 ﻿
 
 
+
+
+
 select 	CurrAccDesc
 	--, ProductDesc
 	, NetAmountLoc
@@ -21,39 +24,39 @@ from (
 	select FirstName
 	, CurrAccDesc
 	--, ProductDesc
-	, TrInvoiceHeaders.InvoiceHeaderId
+	, ih.InvoiceHeaderId
 	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)
 	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd
 	, PaymentLoc= 0
 	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd
 	, ProcessDesc = ProcessDesc
 	, DocumentNumber
-	, TrInvoiceHeaders.StoreCode
-	, TrInvoiceHeaders.CurrAccCode
-	, TrInvoiceHeaders.DocumentDate
-	, TrInvoiceHeaders.DocumentTime
-	, LineDescription = TrInvoiceHeaders.Description
-	, TrInvoiceHeaders.ProcessCode
+	, ih.StoreCode
+	, ih.CurrAccCode
+	, ih.DocumentDate
+	, ih.DocumentTime
+	, LineDescription = ih.Description
+	, ih.ProcessCode
 	, IsReturn
 	--, LineId = InvoiceLineId
 	from TrInvoiceLines 
-	left join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId
-	left join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode
-	left join DcProcesses on DcProcesses.ProcessCode = TrInvoiceHeaders.ProcessCode
+	left join TrInvoiceHeaders ih on TrInvoiceLines.InvoiceHeaderId = ih.InvoiceHeaderId
+	left join DcCurrAccs on ih.CurrAccCode = DcCurrAccs.CurrAccCode
+	left join DcProcesses on DcProcesses.ProcessCode = ih.ProcessCode
 	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode
 	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )
 	group by FirstName
 			, CurrAccDesc
 			, ProcessDesc
 			, DocumentNumber
-			, TrInvoiceHeaders.InvoiceHeaderId
-			, TrInvoiceHeaders.CurrAccCode
-			, TrInvoiceHeaders.DocumentDate	
-			, TrInvoiceHeaders.DocumentTime
-			, TrInvoiceHeaders.Description
-			, TrInvoiceHeaders.StoreCode
-	, TrInvoiceHeaders.ProcessCode
-	, IsReturn
+			, ih.InvoiceHeaderId
+			, ih.CurrAccCode
+			, ih.DocumentDate	
+			, ih.DocumentTime
+			, ih.Description
+			, ih.StoreCode
+			, ih.ProcessCode
+			, IsReturn
 	
 	UNION ALL 
 	

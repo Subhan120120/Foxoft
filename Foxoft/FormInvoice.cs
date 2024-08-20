@@ -115,7 +115,7 @@ namespace Foxoft
             }
         }
 
-        public FormInvoice(string processCode, byte[] productTypeArr, Guid relatedInvoiceId, Guid invoiceHeaderId)
+        public FormInvoice(string processCode, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
             : this(processCode, productTypeArr, relatedInvoiceId)
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);

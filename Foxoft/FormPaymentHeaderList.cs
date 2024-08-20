@@ -206,7 +206,7 @@ namespace Foxoft
                 TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
                 byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
-                FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, Guid.Empty, invoiceHeaderId);
+                FormInvoice formInvoice = new(trInvoiceHeader.ProcessCode, bytes, null, invoiceHeaderId);
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                 formInvoice.MdiParent = formERP;
                 formInvoice.WindowState = FormWindowState.Maximized;
