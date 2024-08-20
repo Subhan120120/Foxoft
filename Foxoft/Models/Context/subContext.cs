@@ -372,6 +372,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəlliyi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "HierarchyFeatureType", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "ExpenseOfInvoice", ClaimDesc = "Faktura Xərci", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1 }
                 );
 
@@ -426,7 +427,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 24, RoleCode = "Admin", ClaimCode = "CurrAccClaim" },
                 new TrRoleClaim { RoleClaimId = 25, RoleCode = "Admin", ClaimCode = "Session" },
                 new TrRoleClaim { RoleClaimId = 26, RoleCode = "Admin", ClaimCode = "WaybillIn" },
-                new TrRoleClaim { RoleClaimId = 27, RoleCode = "Admin", ClaimCode = "WaybillOut" }
+                new TrRoleClaim { RoleClaimId = 27, RoleCode = "Admin", ClaimCode = "WaybillOut" },
+                new TrRoleClaim { RoleClaimId = 28, RoleCode = "Admin", ClaimCode = "ExpenseOfInvoice" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

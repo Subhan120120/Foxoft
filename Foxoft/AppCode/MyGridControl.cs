@@ -105,8 +105,7 @@ namespace Foxoft
         private void ExcelBtnFilterControl_ExcelBtnClick(object sender, ExcelBtnEventArgs e)
         {
             XtraOpenFileDialog dialog = new();
-            dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|" +
-                            "All files (*.*)|*.*";
+            dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*";
             dialog.Title = "Yalnız ilk sütünda olan məlumatlar daxil edilir.";
 
             DialogResult dr = dialog.ShowDialog();
@@ -150,9 +149,9 @@ namespace Foxoft
             List<PropertyDescriptor> props = dataView.Columns.ToList<PropertyDescriptor>();
 
             DataTable table = new();
-            for (int i = 0; i < props.Count; i++)
+
+            foreach (var prop in props)
             {
-                PropertyDescriptor prop = props[i];
                 table.Columns.Add(prop.Name, prop.PropertyType);
             }
             object[] values = new object[props.Count];
@@ -200,8 +199,7 @@ namespace Foxoft
             ComponentResourceManager resources = new(typeof(FormProductList));
             SvgImage ımage = ((SvgImage)(resources.GetObject("bBI_ExportExcel.ImageOptions.SvgImage")));
             SvgBitmap bm = new SvgBitmap(ımage);
-            Image img = bm.Render(null, 0.5);
-            MyIcon = img;
+            MyIcon = bm.Render(null, 0.5);
 
             base.OnMouseDown(e);
             FilterControlLabelInfo li = Model.GetLabelInfoByCoordinates(e.X - _Icon.Width - 1, e.Y);
