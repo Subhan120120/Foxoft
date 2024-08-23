@@ -746,7 +746,7 @@ namespace Foxoft
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
 
-                DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(eValue);
+                DcCurrAcc dcCurrAcc = efMethods.SelectSalesPerson(eValue);
                 if (dcCurrAcc is null || dcCurrAcc?.CurrAccTypeCode != 3)
                 {
                     e.ErrorText = "Belə bir satıcı yoxdur";
