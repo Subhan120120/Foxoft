@@ -219,9 +219,9 @@ namespace Foxoft
             {
                 Entity = bindingSource1.Current as T;
 
-                string id = Control_Id.Control.Text;
+                //string id = Control_Id.Control.value;
 
-                Func<T, bool> predicate_id = ConvertToPredicate(FieldName_Id, id);
+                Func<T, bool> predicate_id = ConvertToPredicate(FieldName_Id, Value_Id);
                 Func<T, bool> predicate_2 = string.IsNullOrEmpty(FieldName_2) ? _ => true : ConvertToPredicate(FieldName_2, Value_2);
 
                 if (IsNew)
@@ -307,37 +307,7 @@ namespace Foxoft
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCode_ButtonPressed);
             }
-            //if (e.FieldName == nameof(TrInvoiceLine.SerialNumberCode))// add FieldRetrieving too
-            //{
-            //    RepositoryItemTextEdit txtEdit = e.RepositoryItem as RepositoryItemTextEdit;
-            //    txtEdit.KeyDown += new KeyEventHandler(txtEdit_SerialNumberCode_KeyDown);
-            //    txtEdit.KeyPress += new KeyPressEventHandler(txtEdit_SerialNumberCode_KeyPress);
-            //}
         }
-
-        //private DateTime _lastKeyPressTime;
-        //private void txtEdit_SerialNumberCode_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //}
-
-
-        //private void txtEdit_SerialNumberCode_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    TextEdit editor = (TextEdit)sender;
-
-        //    DateTime currentTime = DateTime.Now;
-        //    TimeSpan timeDiff = currentTime - _lastKeyPressTime;
-
-        //    // Check if the scanner is detected based on timing or other logic
-        //    if (timeDiff.TotalMilliseconds > 50)
-        //    {
-        //        // Process character input, assuming it’s from manual input or scanner input
-        //        editor.EditValue += e.KeyChar.ToString();
-        //    }
-
-        //    // Store the time of the last key press
-        //    _lastKeyPressTime = currentTime;
-        //}
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
@@ -380,7 +350,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string value = editor.EditValue?.ToString();
 
-            using FormCommonList<DcDiscount> form = new("", "DiscountId", value);
+            using FormCommonList<DcDiscount> form = new("", nameof(DcDiscount.DiscountId), value);
 
             try
             {
@@ -398,7 +368,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string value = editor.EditValue?.ToString();
 
-            using FormCommonList<DcReport> form = new("", "ReportId", value, new string[] { "ReportQuery", "ReportTypeId", "ReportLayout", "ReportFilter" });
+            using FormCommonList<DcReport> form = new("", nameof(DcReport.ReportId), value, new string[] { "ReportQuery", "ReportTypeId", "ReportLayout", "ReportFilter" });
 
             try
             {
@@ -416,7 +386,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string value = editor.EditValue?.ToString();
 
-            using FormCommonList<DcRole> form = new("", "RoleCode", value);
+            using FormCommonList<DcRole> form = new("", nameof(DcRole.RoleCode), value);
 
             try
             {
@@ -434,7 +404,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string value = editor.EditValue?.ToString();
 
-            using FormCommonList<DcForm> form = new("", "FormCode", value);
+            using FormCommonList<DcForm> form = new("", nameof(DcForm.FormCode), value);
 
             try
             {
@@ -452,7 +422,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string value = editor.EditValue?.ToString();
 
-            using FormCommonList<DcHierarchy> form = new("", "HierarchyCode", value);
+            using FormCommonList<DcHierarchy> form = new("", nameof(DcHierarchy.HierarchyCode), value);
 
             try
             {
@@ -470,7 +440,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
             string value = editor.EditValue?.ToString();
 
-            using FormCommonList<DcFeatureType> form = new("", "FeatureTypeId", value);
+            using FormCommonList<DcFeatureType> form = new("", nameof(DcFeatureType.FeatureTypeId), value);
 
             try
             {

@@ -49,7 +49,6 @@ namespace Foxoft.Models
         public string OfficeCode { get; set; }
 
         [Display(Name = "Mağaza Kodu")]
-        //[ForeignKey("TrPaymentHeadersForStore")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string StoreCode { get; set; }
@@ -101,6 +100,7 @@ namespace Foxoft.Models
         [Display(Name = "Tədarikçi Tipi")]
         public byte? VendorTypeCode { get; set; }
 
+        [ForeignKey("DcPersonalType")]
         [Display(Name = "Personal Tipi")]
         public byte? PersonalTypeCode { get; set; }
 
@@ -151,6 +151,7 @@ namespace Foxoft.Models
 
 
         public virtual DcCurrAccType DcCurrAccType { get; set; }
+        public virtual DcPersonalType DcPersonalType { get; set; }
         [ForeignKey("CashRegPaymentTypeCode")]
         public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual TrSession TrSession { get; set; }
@@ -158,8 +159,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
-
-        //[ForeignKey("StoreCode")]
         public virtual ICollection<TrPaymentHeader> DcStoreTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> ToCashRegTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }

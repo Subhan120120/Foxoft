@@ -77,6 +77,7 @@ namespace Foxoft
             return processCode switch
             {
                 "RP" => "In",
+                "WP" => "In",
                 "EX" => "In",
                 "EI" => "In",
                 "SB" => "In",

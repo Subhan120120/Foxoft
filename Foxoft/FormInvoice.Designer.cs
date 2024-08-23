@@ -37,6 +37,7 @@ namespace Foxoft
             behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(components);
             trInvoiceLinesBindingSource = new BindingSource(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            LBL_SalesPersonDesc = new DevExpress.XtraEditors.LabelControl();
             lbl_CurrAccDesc = new DevExpress.XtraEditors.LabelControl();
             lbl_InvoicePaidSum = new DevExpress.XtraEditors.LabelControl();
             gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
@@ -144,7 +145,7 @@ namespace Foxoft
             ItemForIsReturn = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_GvProductList = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCustomsDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
@@ -152,12 +153,13 @@ namespace Foxoft
             ItemForWarehouseCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
             lbl_Payment = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForToWarehouseCode = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             lCI_printCount = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_IsSent = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
+            LCI_CurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_SalesPersonDesc = new DevExpress.XtraLayout.LayoutControlItem();
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
@@ -201,7 +203,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForIsReturn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_GvProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCustomsDocumentNumber).BeginInit();
@@ -209,12 +211,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForWarehouseCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDescription).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lbl_Payment).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForToWarehouseCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_printCount).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_CurrAccDesc).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             SuspendLayout();
@@ -225,6 +228,7 @@ namespace Foxoft
             // 
             // dataLayoutControl1
             // 
+            dataLayoutControl1.Controls.Add(LBL_SalesPersonDesc);
             dataLayoutControl1.Controls.Add(lbl_CurrAccDesc);
             dataLayoutControl1.Controls.Add(lbl_InvoicePaidSum);
             dataLayoutControl1.Controls.Add(gC_InvoiceLine);
@@ -246,17 +250,25 @@ namespace Foxoft
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_SalesPerson });
             dataLayoutControl1.Location = new Point(0, 158);
             dataLayoutControl1.Name = "dataLayoutControl1";
-            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(415, 175, 650, 400);
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1187, 260, 650, 400);
             dataLayoutControl1.Root = Root;
             dataLayoutControl1.Size = new Size(1129, 389);
             dataLayoutControl1.TabIndex = 4;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
+            // LBL_SalesPersonDesc
+            // 
+            LBL_SalesPersonDesc.Location = new Point(839, 36);
+            LBL_SalesPersonDesc.Name = "LBL_SalesPersonDesc";
+            LBL_SalesPersonDesc.Size = new Size(278, 20);
+            LBL_SalesPersonDesc.StyleController = dataLayoutControl1;
+            LBL_SalesPersonDesc.TabIndex = 14;
+            // 
             // lbl_CurrAccDesc
             // 
-            lbl_CurrAccDesc.Location = new Point(763, 12);
+            lbl_CurrAccDesc.Location = new Point(768, 12);
             lbl_CurrAccDesc.Name = "lbl_CurrAccDesc";
-            lbl_CurrAccDesc.Size = new Size(354, 20);
+            lbl_CurrAccDesc.Size = new Size(349, 20);
             lbl_CurrAccDesc.StyleController = dataLayoutControl1;
             lbl_CurrAccDesc.TabIndex = 1;
             // 
@@ -673,7 +685,7 @@ namespace Foxoft
             btnEdit_CurrAccCode.Location = new Point(667, 12);
             btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
             btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CurrAccCode.Size = new Size(92, 20);
+            btnEdit_CurrAccCode.Size = new Size(97, 20);
             btnEdit_CurrAccCode.StyleController = dataLayoutControl1;
             btnEdit_CurrAccCode.TabIndex = 2;
             btnEdit_CurrAccCode.ButtonClick += btnEdit_CurrAccCode_ButtonClick;
@@ -733,7 +745,7 @@ namespace Foxoft
             lUE_ToWarehouseCode.Properties.DisplayMember = "WarehouseDesc";
             lUE_ToWarehouseCode.Properties.NullText = "";
             lUE_ToWarehouseCode.Properties.ValueMember = "WarehouseCode";
-            lUE_ToWarehouseCode.Size = new Size(450, 20);
+            lUE_ToWarehouseCode.Size = new Size(168, 20);
             lUE_ToWarehouseCode.StyleController = dataLayoutControl1;
             lUE_ToWarehouseCode.TabIndex = 4;
             lUE_ToWarehouseCode.PopupFilter += lUE_ToWarehouseCode_PopupFilter;
@@ -1153,7 +1165,7 @@ namespace Foxoft
             btnEdit_SalesPerson.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_SalesPerson.Size = new Size(450, 20);
             btnEdit_SalesPerson.StyleController = dataLayoutControl1;
-            btnEdit_SalesPerson.TabIndex = 14;
+            btnEdit_SalesPerson.TabIndex = 1;
             btnEdit_SalesPerson.ButtonPressed += btnEdit_SalesPerson_ButtonPressed;
             btnEdit_SalesPerson.EditValueChanged += btnEdit_SalesPerson_EditValueChanged;
             // 
@@ -1179,7 +1191,7 @@ namespace Foxoft
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForIsReturn, ItemForDocumentDate, ItemForDocumentTime, layoutControlItem1, ItemForDocumentNumber, ItemForCurrAccCode, ItemForCustomsDocumentNumber, ItemForStoreCode, ItemForWarehouseCode, ItemForDescription, lbl_Payment, layoutControlItem2, ItemForToWarehouseCode, emptySpaceItem1, lCI_printCount, lCI_IsSent, splitterItem1 });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForIsReturn, ItemForDocumentDate, ItemForDocumentTime, LCI_GvProductList, ItemForDocumentNumber, ItemForCurrAccCode, ItemForCustomsDocumentNumber, ItemForStoreCode, ItemForWarehouseCode, ItemForDescription, lbl_Payment, ItemForToWarehouseCode, emptySpaceItem1, lCI_printCount, lCI_IsSent, splitterItem1, LCI_CurrAccDesc, LCI_SalesPersonDesc });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new Size(1109, 369);
@@ -1212,14 +1224,14 @@ namespace Foxoft
             ItemForDocumentTime.Text = "Sənəd Vaxtı";
             ItemForDocumentTime.TextSize = new Size(98, 13);
             // 
-            // layoutControlItem1
+            // LCI_GvProductList
             // 
-            layoutControlItem1.Control = gC_InvoiceLine;
-            layoutControlItem1.Location = new Point(0, 120);
-            layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(1109, 225);
-            layoutControlItem1.TextSize = new Size(0, 0);
-            layoutControlItem1.TextVisible = false;
+            LCI_GvProductList.Control = gC_InvoiceLine;
+            LCI_GvProductList.Location = new Point(0, 120);
+            LCI_GvProductList.Name = "LCI_GvProductList";
+            LCI_GvProductList.Size = new Size(1109, 225);
+            LCI_GvProductList.TextSize = new Size(0, 0);
+            LCI_GvProductList.TextVisible = false;
             // 
             // ItemForDocumentNumber
             // 
@@ -1235,7 +1247,7 @@ namespace Foxoft
             ItemForCurrAccCode.Control = btnEdit_CurrAccCode;
             ItemForCurrAccCode.Location = new Point(545, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new Size(206, 24);
+            ItemForCurrAccCode.Size = new Size(211, 24);
             ItemForCurrAccCode.Text = "Cari Hesab";
             ItemForCurrAccCode.TextSize = new Size(98, 13);
             // 
@@ -1286,23 +1298,12 @@ namespace Foxoft
             lbl_Payment.TextSize = new Size(0, 0);
             lbl_Payment.TextVisible = false;
             // 
-            // layoutControlItem2
-            // 
-            layoutControlItem2.Control = lbl_CurrAccDesc;
-            layoutControlItem2.Location = new Point(751, 0);
-            layoutControlItem2.MinSize = new Size(67, 17);
-            layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new Size(358, 24);
-            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new Size(0, 0);
-            layoutControlItem2.TextVisible = false;
-            // 
             // ItemForToWarehouseCode
             // 
             ItemForToWarehouseCode.Control = lUE_ToWarehouseCode;
             ItemForToWarehouseCode.Location = new Point(545, 24);
             ItemForToWarehouseCode.Name = "ItemForToWarehouseCode";
-            ItemForToWarehouseCode.Size = new Size(564, 24);
+            ItemForToWarehouseCode.Size = new Size(282, 24);
             ItemForToWarehouseCode.Text = "Depoya";
             ItemForToWarehouseCode.TextSize = new Size(98, 13);
             // 
@@ -1341,6 +1342,29 @@ namespace Foxoft
             splitterItem1.Location = new Point(95, 345);
             splitterItem1.Name = "splitterItem1";
             splitterItem1.Size = new Size(10, 24);
+            // 
+            // LCI_CurrAccDesc
+            // 
+            LCI_CurrAccDesc.Control = lbl_CurrAccDesc;
+            LCI_CurrAccDesc.Location = new Point(756, 0);
+            LCI_CurrAccDesc.MinSize = new Size(67, 17);
+            LCI_CurrAccDesc.Name = "LCI_CurrAccDesc";
+            LCI_CurrAccDesc.Size = new Size(353, 24);
+            LCI_CurrAccDesc.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            LCI_CurrAccDesc.Text = "CurrAccDesc";
+            LCI_CurrAccDesc.TextSize = new Size(0, 0);
+            LCI_CurrAccDesc.TextVisible = false;
+            // 
+            // LCI_SalesPersonDesc
+            // 
+            LCI_SalesPersonDesc.Control = LBL_SalesPersonDesc;
+            LCI_SalesPersonDesc.Location = new Point(827, 24);
+            LCI_SalesPersonDesc.MinSize = new Size(4, 17);
+            LCI_SalesPersonDesc.Name = "LCI_SalesPersonDesc";
+            LCI_SalesPersonDesc.Size = new Size(282, 24);
+            LCI_SalesPersonDesc.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            LCI_SalesPersonDesc.TextSize = new Size(0, 0);
+            LCI_SalesPersonDesc.TextVisible = false;
             // 
             // adorneruıManager1
             // 
@@ -1414,7 +1438,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForIsReturn).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_GvProductList).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCustomsDocumentNumber).EndInit();
@@ -1422,12 +1446,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForWarehouseCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDescription).EndInit();
             ((System.ComponentModel.ISupportInitialize)lbl_Payment).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForToWarehouseCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_printCount).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_IsSent).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_CurrAccDesc).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ResumeLayout(false);
@@ -1464,7 +1489,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_PosDiscount;
         private DevExpress.XtraGrid.Columns.GridColumn col_NetAmount;
         private DevExpress.XtraGrid.Columns.GridColumn col_LineDesc;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_GvProductList;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_DocNum;
         private DevExpress.XtraEditors.MemoEdit memoEdit_Desc;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
@@ -1505,7 +1530,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colCreatedUserName;
         private DevExpress.XtraGrid.Columns.GridColumn colQty;
         private DevExpress.XtraEditors.LabelControl lbl_CurrAccDesc;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_CurrAccDesc;
         private DevExpress.Utils.VisualEffects.AdornerUIManager adorneruıManager1;
         private DevExpress.XtraGrid.Columns.GridColumn colBalance;
         private DevExpress.XtraGrid.Columns.GridColumn colBenefit;
@@ -1515,7 +1540,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForToWarehouseCode;
         private DevExpress.XtraEditors.LookUpEdit lUE_ToWarehouseCode;
         private DevExpress.XtraEditors.LabelControl lbl_PrintCount;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraBars.BarButtonItem BBI_ModifyInvoice;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
@@ -1570,5 +1594,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarSubItem BSI_ReportInvoice;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_SalesPerson;
         private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPerson;
+        private DevExpress.XtraEditors.LabelControl LBL_SalesPersonDesc;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPersonDesc;
     }
 }

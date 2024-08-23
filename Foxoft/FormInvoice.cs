@@ -594,7 +594,7 @@ namespace Foxoft
                 }
             }
 
-            if (e.Column == colSerialNumberCode)
+            if (e.Column == col_SalesPersonCode)
             {
             }
         }
@@ -669,13 +669,13 @@ namespace Foxoft
 
             if (column == colQty)
             {
-                if ((!trInvoiceHeader.IsReturn) && new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
-                {
-                    int eValue = Convert.ToInt32(e.Value ??= 0);
-                    object objProductCode = view.GetFocusedRowCellValue(col_ProductCode);
-                    string productCode = (objProductCode ??= "").ToString();
+                int eValue = Convert.ToInt32(e.Value ??= 0);
 
-                    if (efMethods.SelectProduct(productCode)?.ProductTypeCode != 3) // product is not service product
+                if (new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
+                {
+                    TrInvoiceLine trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
+
+                    if (efMethods.SelectProduct(trInvoiceLine?.ProductCode)?.ProductTypeCode != 3) // product is not service product
                     {
                         string wareHouse = lUE_WarehouseCode.EditValue.ToString();
                         if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
@@ -683,7 +683,7 @@ namespace Foxoft
 
                         bool permitNegativeStock = (bool)lUE_WarehouseCode.GetColumnValue("PermitNegativeStock");
 
-                        int balance = CalcProductBalance(view.FocusedRowHandle, wareHouse);
+                        int balance = CalcProductBalance(trInvoiceLine, wareHouse);
 
                         if (permitNegativeStock)
                             if (eValue > balance)
@@ -692,19 +692,22 @@ namespace Foxoft
                                 e.Valid = false;
                             }
                     }
+                }
 
-                    string currAccCode = trInvoiceHeader.CurrAccCode;
-                    if (!String.IsNullOrEmpty(currAccCode))
+                string currAccCode = trInvoiceHeader.CurrAccCode;
+                if (!String.IsNullOrEmpty(currAccCode)
+                    && ((!trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "OUT")
+                    || (trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "IN"))
+                    )
+                {
+                    DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
+                    decimal creditLimit = dcCurrAcc.CreditLimit;
+                    decimal sumInvo = CalcCurrAccCreditBalance(eValue, view, currAccCode);
+
+                    if (sumInvo > creditLimit && creditLimit != 0)
                     {
-                        DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
-                        decimal creditLimit = dcCurrAcc.CreditLimit;
-                        decimal sumInvo = CalcCurrAccCreditBalance(eValue, view, currAccCode);
-
-                        if (sumInvo > creditLimit && creditLimit != 0)
-                        {
-                            e.ErrorText = "Müştəri Kredit Limitini Aşır!";
-                            e.Valid = false;
-                        }
+                        e.ErrorText = "Müştəri Kredit Limitini Aşır!";
+                        e.Valid = false;
                     }
                 }
             }
@@ -746,11 +749,18 @@ namespace Foxoft
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
 
-                DcCurrAcc dcCurrAcc = efMethods.SelectSalesPerson(eValue);
-                if (dcCurrAcc is null || dcCurrAcc?.CurrAccTypeCode != 3)
+                if (!String.IsNullOrEmpty(eValue))
                 {
-                    e.ErrorText = "Belə bir satıcı yoxdur";
-                    e.Valid = false;
+                    DcCurrAcc dcCurrAcc = efMethods.SelectSalesPerson(eValue);
+                    if (dcCurrAcc is null || dcCurrAcc?.CurrAccTypeCode != 3)
+                    {
+                        e.ErrorText = "Belə bir satıcı yoxdur";
+                        e.Valid = false;
+                    }
+                }
+                else
+                {
+                    e.Value = null;
                 }
             }
         }
@@ -789,10 +799,8 @@ namespace Foxoft
             return sum;
         }
 
-        private int CalcProductBalance(int rowHandle, string wareHouse)
+        private int CalcProductBalance(TrInvoiceLine trInvoiceLine, string wareHouse)
         {
-            TrInvoiceLine trInvoiceLine = gV_InvoiceLine.GetRow(rowHandle) as TrInvoiceLine;
-
             if (trInvoiceLine is not null && !String.IsNullOrEmpty(trInvoiceLine.ProductCode))
             {
                 if (!String.IsNullOrEmpty(trInvoiceLine.SerialNumberCode))
@@ -894,7 +902,7 @@ namespace Foxoft
 
             string value = editor.EditValue?.ToString();
 
-            using FormCurrAccList form = new(new byte[] { 3 }, value);
+            using FormCurrAccList form = new(new byte[] { 3 }, value, new byte[] { 1 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -2055,34 +2063,35 @@ namespace Foxoft
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
         {
             DcCurrAcc curr = efMethods.SelectCurrAcc(btnEdit_CurrAccCode.EditValue?.ToString());
-
-            if (curr is not null && trInvoiceHeader is not null)
+            if (trInvoiceHeader is not null)
             {
-                if (Settings.Default.AppSetting.AutoSave)
-                    efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr.CurrAccCode);
+                trInvoiceHeader.CurrAccCode = curr?.CurrAccCode;
+                lbl_CurrAccDesc.Text = curr?.CurrAccDesc + " " + curr?.FirstName + " " + curr?.LastName;
 
-                trInvoiceHeader.CurrAccCode = curr.CurrAccCode;
-                lbl_CurrAccDesc.Text = curr.CurrAccDesc + " " + curr.FirstName + " " + curr.LastName;
-
-                string storeCode = trInvoiceHeader.CurrAccCode;
-                List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
-                lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
-
-                if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
-                    trInvoiceHeader.ToWarehouseCode = null;
-
-                if (dcWarehouses is not null)
+                if (curr is not null)
                 {
-                    DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
+                    if (Settings.Default.AppSetting.AutoSave)
+                        efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
 
-                    if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
+                    string storeCode = trInvoiceHeader.CurrAccCode;
+                    List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
+                    lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
+
+                    if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
+                        trInvoiceHeader.ToWarehouseCode = null;
+
+                    if (dcWarehouses is not null)
                     {
-                        trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
-                        lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                        DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
+
+                        if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
+                        {
+                            trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
+                            lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                        }
                     }
                 }
             }
-
         }
 
         //private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
@@ -2299,14 +2308,14 @@ namespace Foxoft
 
         private void lUE_WarehouseCode_Validating(object sender, CancelEventArgs e)
         {
-            LookUpEdit lookUpEdit = sender as LookUpEdit;
+            LookUpEdit warehouse = sender as LookUpEdit;
 
             for (int i = 0; i < gV_InvoiceLine.RowCount; i++)
             {
                 var trInvoiceLine = gV_InvoiceLine.GetRow(i) as TrInvoiceLine;
                 if (trInvoiceLine != null)
                 {
-                    int productBalance = CalcProductBalance(i, lookUpEdit.EditValue?.ToString());
+                    int productBalance = CalcProductBalance(trInvoiceLine, warehouse.EditValue?.ToString());
 
                     if (productBalance < trInvoiceLine.Qty)
                     {
@@ -2325,7 +2334,7 @@ namespace Foxoft
 
         private void btnEdit_SalesPerson_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            FormCurrAccList form = new(new byte[] { 3 }, trInvoiceHeader.CurrAccCode);
+            FormCurrAccList form = new(new byte[] { 3 }, trInvoiceHeader.CurrAccCode, new byte[] { 1 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -2335,9 +2344,20 @@ namespace Foxoft
 
         private void btnEdit_SalesPerson_EditValueChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            DcCurrAcc salesMan = efMethods.SelectSalesPerson(btnEdit_SalesPerson.EditValue?.ToString());
+            if (salesMan is not null)
             {
-                gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
+                LBL_SalesPersonDesc.Text = salesMan.CurrAccDesc + " " + salesMan.FirstName + " " + salesMan.LastName;
+
+                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                    gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
+            }
+            else
+            {
+                LBL_SalesPersonDesc.Text = string.Empty;
+
+                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                    gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, null);
             }
         }
     }

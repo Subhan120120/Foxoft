@@ -5,24 +5,24 @@
 namespace Foxoft.Migrations
 {
     /// <inheritdoc />
-    public partial class ExpencesInvoice2 : Migration
+    public partial class DcForm_ERP : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
-                table: "DcVariables",
-                columns: new[] { "VariableCode", "LastNumber", "VariableDesc" },
-                values: new object[] { "EI", null, "Xərclər" });
+                table: "DcForms",
+                columns: new[] { "FormCode", "FormDesc" },
+                values: new object[] { "ERP", "ERP" });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "DcVariables",
-                keyColumn: "VariableCode",
-                keyValue: "EI");
+                table: "DcForms",
+                keyColumn: "FormCode",
+                keyValue: "ERP");
         }
     }
 }

@@ -1239,6 +1239,14 @@ namespace Foxoft
                                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
+        public DcCurrAcc SelectSalesPerson(string currAccCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                                .Where(x => x.PersonalTypeCode == 1)
+                                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+        }
+
         public DcCurrAcc SelectCurrAccIncludeDisabled(string currAccCode)
         {
             using subContext db = new();

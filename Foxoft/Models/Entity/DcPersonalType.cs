@@ -10,26 +10,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Cari Hesab Tipi")]
-    public partial class DcCurrAccType
+    [Display(Name = "Cari Hesab Alt Tipi")]
+    public partial class DcPersonalType
     {
-        public DcCurrAccType()
+        public DcPersonalType()
         {
             DcCurrAccs = new HashSet<DcCurrAcc>();
         }
 
         [Key]
-        [Display(Name = "Cari Hesab Tipi Kodu")]
-        public byte CurrAccTypeCode { get; set; }
+        [Display(Name = "Personal Tipi Kodu")]
+        public byte PersonalTypeCode { get; set; }
 
-
-        [Display(Name = "Cari Hesab Tipi Açıqlaması")]
+        [Display(Name = "Personal Tipi Açıqlaması")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string CurrAccTypeDesc { get; set; }
+        public string PersonalTypeDesc { get; set; }
 
         [Display(Name = "Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }
+
+
 
         public virtual ICollection<DcCurrAcc> DcCurrAccs { get; set; }
     }

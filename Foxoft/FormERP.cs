@@ -8,6 +8,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
@@ -19,6 +20,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -35,6 +37,8 @@ namespace Foxoft
             InitializeComponent();
 
             InitComponentName();
+
+            AddRibbonReports(BSI_Report, "ERP");
 
             foreach (AccordionControlElement ACE_Groups in aC_Root.Elements)
                 foreach (AccordionControlElement? ACE_Element in ACE_Groups.Elements)
@@ -72,6 +76,89 @@ namespace Foxoft
             InitializeReports();
             //adorners1 = new List<AdornerElement>();
             //adornerUIManager1 = new AdornerUIManager(this.components);
+        }
+
+
+        private void AddRibbonReports(BarSubItem barSubItem, string formCode)
+        {
+            barSubItem.LinksPersistInfo.Clear();
+
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports(formCode);
+
+            BarButtonItem BBI;
+            foreach (TrFormReport report in trFormReports)
+            {
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, report.ReportId.ToString());
+                if (!currAccHasClaims)
+                {
+                    //MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+
+                BBI = new();
+                BBI.Caption = report.DcReport.ReportName;
+                BBI.Id = 57;
+                BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
+                BBI.Name = report.DcReport.ReportId.ToString();
+
+                if (!string.IsNullOrEmpty(report.Shortcut))
+                {
+                    KeysConverter cvt = new();
+                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    BBI.ItemShortcut = new BarShortcut(key);
+                }
+                barSubItem.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
+
+                ((ISupportInitialize)parentRibbonControl).BeginInit();
+                parentRibbonControl.Items.Add(BBI);
+                ((ISupportInitialize)parentRibbonControl).EndInit();
+
+                BBI.ItemClick += (sender, e) =>
+                {
+                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+
+
+                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                    if (dcReport.ReportTypeId == 1)
+                    {
+                        FormReportGrid formGrid = new(dcReport.ReportQuery, null, dcReport, activeFilterStr);
+                        formGrid.Show();
+                    }
+                    else if (dcReport.ReportTypeId == 2)
+                    {
+                        FormReportPreview form = new(dcReport.ReportQuery, null, dcReport);
+                        form.WindowState = FormWindowState.Maximized;
+                        form.Show();
+                    }
+                };
+            }
+
+            BBI = new();
+            BBI.Caption = "İdarə Et";
+            BBI.ImageOptions.SvgImage = svgImageCollection1["properties"];
+            BBI.Name = "Manage";
+            barSubItem.LinksPersistInfo.Add(new LinkPersistInfo(BBI, true));
+
+            ((ISupportInitialize)parentRibbonControl).BeginInit();
+            parentRibbonControl.Items.Add(BBI);
+            ((ISupportInitialize)parentRibbonControl).EndInit();
+
+            BBI.ItemClick += (sender, e) =>
+            {
+                using FormCommonList<TrFormReport> form = new("", nameof(TrFormReport.ReportId), "", nameof(DcForm.FormCode), formCode);
+                try
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                        efMethods.InsertFormReport(formCode, Convert.ToInt32(form.Value_Id));
+                    AddRibbonReports(barSubItem, formCode);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            };
         }
 
         private void UIMode(bool toucUIMode)
@@ -148,7 +235,7 @@ namespace Foxoft
             {
                 AccordionControlElement aCE = new();
 
-                aCE.ImageOptions.SvgImage = svgImageCollection1[0];
+                aCE.ImageOptions.SvgImage = svgImageCollection1["report"];
                 aCE.Name = dcReport.ReportId.ToString();
                 aCE.Style = ElementStyle.Item;
                 aCE.Text = dcReport.ReportName;

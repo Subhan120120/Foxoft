@@ -300,6 +300,7 @@ namespace Foxoft
 
         private void BBI_Delete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+
             var redicate = ConvertToPredicate(Col_Id.FieldName, Value_Id);
 
             if (dbContext.Set<T>().Any(redicate))
@@ -328,20 +329,22 @@ namespace Foxoft
 
         private Func<T, bool> ConvertToPredicate(string propName, object value)
         {
-            //var param = Expression.Parameter(typeof(T));
-            //MemberExpression member = Expression.Property(param, propName);
-            //var asString = this.GetType().GetMethod("AsString");
-            //var stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
-            //ConstantExpression constant = Expression.Constant(value);
-            //var expression = Expression.Equal(stringMember, constant);
-            //var lambda = Expression.Lambda(expression, param);
-            //var predicate = (Func<T, bool>)lambda.Compile();
-            //return predicate;
-
             var param = Expression.Parameter(typeof(T), "x");
             MemberExpression member = Expression.Property(param, propName);
             UnaryExpression memberAsObject = Expression.Convert(member, typeof(object));
-            var convertedValue = Convert.ChangeType(value, member.Type);
+            //var convertedValue = Convert.ChangeType(value, member.Type);
+
+            object convertedValue;
+            if (string.IsNullOrEmpty(value?.ToString()))
+            {
+                if (member.Type.IsValueType && Nullable.GetUnderlyingType(member.Type) == null)
+                    convertedValue = Activator.CreateInstance(member.Type);
+                else
+                    convertedValue = null;
+            }
+            else
+                convertedValue = Convert.ChangeType(value, member.Type);
+
             ConstantExpression constant = Expression.Constant(convertedValue, member.Type);
             var expression = Expression.Equal(member, constant);
             var lambda = Expression.Lambda<Func<T, bool>>(expression, param);

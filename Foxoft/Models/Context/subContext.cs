@@ -32,6 +32,7 @@ namespace Foxoft.Models
         public DbSet<TrClaimReport> TrClaimReports { get; set; }
         public DbSet<DcCurrAcc> DcCurrAccs { get; set; }
         public DbSet<DcCurrAccType> DcCurrAccTypes { get; set; }
+        public DbSet<DcPersonalType> DcPersonalTypes { get; set; }
         public DbSet<DcOffice> DcOffices { get; set; }
         public DbSet<DcPaymentType> DcPaymentTypes { get; set; }
         public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
@@ -320,7 +321,8 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcForm>().HasData(
                 new DcForm { FormCode = "CurrAccs", FormDesc = "CurrAccs" },
                 new DcForm { FormCode = "Products", FormDesc = "Products" },
-                new DcForm { FormCode = "PaymentDetails", FormDesc = "Payment Details" }
+                new DcForm { FormCode = "PaymentDetails", FormDesc = "Payment Details" },
+                new DcForm { FormCode = "ERP", FormDesc = "ERP" }
                 );
 
             modelBuilder.Entity<DcTerminal>().HasData(
@@ -343,6 +345,10 @@ namespace Foxoft.Models
                 new DcCurrAccType { CurrAccTypeCode = 3, CurrAccTypeDesc = "Personal" },
                 new DcCurrAccType { CurrAccTypeCode = 4, CurrAccTypeDesc = "Mağaza" },
                 new DcCurrAccType { CurrAccTypeCode = 5, CurrAccTypeDesc = "Kassa" }
+                );
+
+            modelBuilder.Entity<DcPersonalType>().HasData(
+                new DcPersonalType { PersonalTypeCode = 1, PersonalTypeDesc = "Satıcı" }
                 );
 
             modelBuilder.Entity<DcClaim>().HasData(

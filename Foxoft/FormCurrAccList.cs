@@ -14,19 +14,15 @@ using DevExpress.XtraGrid.Views.Grid;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
-using System;
-using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 using System.ComponentModel;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
-using System.Security.Principal;
 using System.Text;
-using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Foxoft
 {
@@ -37,6 +33,7 @@ namespace Foxoft
         CustomMethods cM = new();
         public DcCurrAcc dcCurrAcc { get; set; }
         public byte[] currAccTypeArr;
+        public byte[] personalTypes;
         public byte cashRegPaymentTypeCode;
         public string currAccCode;
 
@@ -63,6 +60,13 @@ namespace Foxoft
             : this(currAccTypeArr)
         {
             this.currAccCode = currAccCode;
+            this.personalTypes = personalTypes;
+        }
+
+        public FormCurrAccList(byte[] currAccTypeArr, string currAccCode, byte[] personalTypes)
+            : this(currAccTypeArr, currAccCode)
+        {
+            this.personalTypes = personalTypes;
         }
 
         public FormCurrAccList(byte[] currAccTypeArr, string currAccCode, byte cashRegPaymentTypeCode)
@@ -104,22 +108,31 @@ namespace Foxoft
 
             if (currAccTypeArr.Contains((byte)5))
                 dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
-            else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3) || currAccTypeArr.Contains((byte)4))
+            else if (currAccTypeArr.Any(x => new byte[] { 1, 2, 3, 4 }.Contains(x)))
                 dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)
             {
                 if (!String.IsNullOrEmpty(dcReport.ReportQuery))
                 {
-                    string ts = String.Join(",", currAccTypeArr);
-                    string where = " Where CurrAccTypeCode in (" + ts + ") ";
+                    string typeArr = String.Join(",", currAccTypeArr);
+                    string clause = " Where CurrAccTypeCode in (" + typeArr + ") ";
+
+                    string pattern = @"(?i)\bselect\b[\s\S]*?\bPersonalTypeCode\b";
+                    bool columnExists = Regex.IsMatch(dcReport.ReportQuery, pattern);
+
+                    if (columnExists && personalTypes is not null && personalTypes.Length > 0)
+                    {
+                        string subTypeArr = String.Join(",", personalTypes);
+                        clause += " AND PersonalTypeCode in (" + subTypeArr + ") ";
+                    }
 
                     string query = cM.AddTop(dcReport.ReportQuery, int.MaxValue);
 
                     query = cM.AddFilters(query, dcReport);
                     SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
 
-                    string qryMaster = "select * from (" + query + " \n) as Master " + where + " order by RowNumber";
+                    string qryMaster = "select * from (" + query + " \n) as Master " + clause + " order by RowNumber";
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
@@ -690,7 +703,7 @@ namespace Foxoft
 
             if (currAccTypeArr.Contains((byte)5))
                 dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
-            else if (currAccTypeArr.Contains((byte)1) || currAccTypeArr.Contains((byte)2) || currAccTypeArr.Contains((byte)3))
+            else if (currAccTypeArr.Any(x => new byte[] { 1, 2, 3 }.Contains(x)))
                 dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)

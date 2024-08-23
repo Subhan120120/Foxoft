@@ -97,7 +97,7 @@ namespace Foxoft
             repoBtnEdit.ButtonPressed += (sender, e) =>
             {
                 ButtonEdit editor = (ButtonEdit)sender;
-                using (FormWarehouseList form = new()) 
+                using (FormWarehouseList form = new())
                 {
                     if (form.ShowDialog(parentForm) == DialogResult.OK)
                         editor.EditValue = form.dcWarehouse.WarehouseCode;

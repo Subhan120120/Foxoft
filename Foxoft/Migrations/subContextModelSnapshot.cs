@@ -481,6 +481,8 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("CurrAccTypeCode");
 
+                    b.HasIndex("PersonalTypeCode");
+
                     b.ToTable("DcCurrAccs");
 
                     b.HasData(
@@ -626,9 +628,6 @@ namespace Foxoft.Migrations
                     b.Property<bool>("IsDisabled")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("RowGuid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("CurrAccTypeCode");
 
                     b.ToTable("DcCurrAccTypes");
@@ -638,36 +637,31 @@ namespace Foxoft.Migrations
                         {
                             CurrAccTypeCode = (byte)1,
                             CurrAccTypeDesc = "Müştəri",
-                            IsDisabled = false,
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            IsDisabled = false
                         },
                         new
                         {
                             CurrAccTypeCode = (byte)2,
                             CurrAccTypeDesc = "Tədarikçi",
-                            IsDisabled = false,
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            IsDisabled = false
                         },
                         new
                         {
                             CurrAccTypeCode = (byte)3,
                             CurrAccTypeDesc = "Personal",
-                            IsDisabled = false,
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            IsDisabled = false
                         },
                         new
                         {
                             CurrAccTypeCode = (byte)4,
                             CurrAccTypeDesc = "Mağaza",
-                            IsDisabled = false,
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            IsDisabled = false
                         },
                         new
                         {
                             CurrAccTypeCode = (byte)5,
                             CurrAccTypeDesc = "Kassa",
-                            IsDisabled = false,
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000")
+                            IsDisabled = false
                         });
                 });
 
@@ -821,6 +815,11 @@ namespace Foxoft.Migrations
                         {
                             FormCode = "PaymentDetails",
                             FormDesc = "Payment Details"
+                        },
+                        new
+                        {
+                            FormCode = "ERP",
+                            FormDesc = "ERP"
                         });
                 });
 
@@ -1028,6 +1027,32 @@ namespace Foxoft.Migrations
                         {
                             PaymentTypeCode = (byte)2,
                             PaymentTypeDesc = "Nağdsız"
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcPersonalType", b =>
+                {
+                    b.Property<byte>("PersonalTypeCode")
+                        .HasColumnType("tinyint");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PersonalTypeDesc")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("PersonalTypeCode");
+
+                    b.ToTable("DcPersonalTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            PersonalTypeCode = (byte)1,
+                            IsDisabled = false,
+                            PersonalTypeDesc = "Satıcı"
                         });
                 });
 
@@ -1535,7 +1560,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Cari Hesab ilə Əməliyatlar",
-                            ReportQuery = "\r\n\r\n\r\nselect 	CurrAccDesc\r\n	--, ProductDesc\r\n	, NetAmountLoc\r\n	, PaymentLoc\r\n	, [Ara Toplam] = sum(Summary) OVER (ORDER BY DocumentDate, DocumentTime )\r\n	, ProcessDesc\r\n	, DocumentNumber\r\n	, CurrAccCode\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, InvoiceHeaderId\r\n	, PaymentHeaderId\r\n	, LineDescription\r\n	, IsReturn\r\n	, StoreCode\r\n	--, LineId\r\nfrom (\r\n	select FirstName\r\n	, CurrAccDesc\r\n	--, ProductDesc\r\n	, TrInvoiceHeaders.InvoiceHeaderId\r\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, PaymentLoc= 0\r\n	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, ProcessDesc = ProcessDesc\r\n	, DocumentNumber\r\n	, TrInvoiceHeaders.StoreCode\r\n	, TrInvoiceHeaders.CurrAccCode\r\n	, TrInvoiceHeaders.DocumentDate\r\n	, TrInvoiceHeaders.DocumentTime\r\n	, LineDescription = TrInvoiceHeaders.Description\r\n	, TrInvoiceHeaders.ProcessCode\r\n	, IsReturn\r\n	--, LineId = InvoiceLineId\r\n	from TrInvoiceLines \r\n	left join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\n	left join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = TrInvoiceHeaders.ProcessCode\r\n	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )\r\n	group by FirstName\r\n			, CurrAccDesc\r\n			, ProcessDesc\r\n			, DocumentNumber\r\n			, TrInvoiceHeaders.InvoiceHeaderId\r\n			, TrInvoiceHeaders.CurrAccCode\r\n			, TrInvoiceHeaders.DocumentDate	\r\n			, TrInvoiceHeaders.DocumentTime\r\n			, TrInvoiceHeaders.Description\r\n			, TrInvoiceHeaders.StoreCode\r\n	, TrInvoiceHeaders.ProcessCode\r\n	, IsReturn\r\n	\r\n	UNION ALL \r\n	\r\n	select FirstName\r\n	--, ProductCode = ''\r\n	, CurrAccDesc = CurrAccDesc\r\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, TrPaymentHeaders.PaymentHeaderId\r\n	, NetAmountLoc = 0\r\n	, PaymentLoc\r\n	, Summary = PaymentLoc\r\n	, ProcessDesc = N'Ödəniş'\r\n	, DocumentNumber\r\n	, TrPaymentHeaders.StoreCode\r\n	, TrPaymentHeaders.CurrAccCode\r\n	, DocumentDate = TrPaymentHeaders.OperationDate\r\n	, DocumentTime = TrPaymentHeaders.OperationTime\r\n	, LineDescription\r\n	, ProcessCode = 'PA'\r\n	, IsReturn = CAST(0 as bit)\r\n	--, LineId = PaymentLineId\r\n	from TrPaymentLines\r\n	left join TrPaymentHeaders on TrPaymentLines.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\r\n	left join DcCurrAccs  on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode	\r\n\r\n) as CurrAccExtra where 1=1 {CurrAccCode}\r\n\r\norder by DocumentDate, DocumentTime",
+                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\nselect 	CurrAccDesc\r\n	--, ProductDesc\r\n	, NetAmountLoc\r\n	, PaymentLoc\r\n	, [Ara Toplam] = sum(Summary) OVER (ORDER BY DocumentDate, DocumentTime )\r\n	, ProcessDesc\r\n	, DocumentNumber\r\n	, CurrAccCode\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, InvoiceHeaderId\r\n	, PaymentHeaderId\r\n	, LineDescription\r\n	, IsReturn\r\n	, StoreCode\r\n	--, LineId\r\nfrom (\r\n	select FirstName\r\n	, CurrAccDesc\r\n	--, ProductDesc\r\n	, ih.InvoiceHeaderId\r\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, PaymentLoc= 0\r\n	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, ProcessDesc = ProcessDesc\r\n	, DocumentNumber\r\n	, ih.StoreCode\r\n	, ih.CurrAccCode\r\n	, ih.DocumentDate\r\n	, ih.DocumentTime\r\n	, LineDescription = ih.Description\r\n	, ih.ProcessCode\r\n	, IsReturn\r\n	--, LineId = InvoiceLineId\r\n	from TrInvoiceLines \r\n	left join TrInvoiceHeaders ih on TrInvoiceLines.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	left join DcCurrAccs on ih.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ih.ProcessCode\r\n	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )\r\n	group by FirstName\r\n			, CurrAccDesc\r\n			, ProcessDesc\r\n			, DocumentNumber\r\n			, ih.InvoiceHeaderId\r\n			, ih.CurrAccCode\r\n			, ih.DocumentDate	\r\n			, ih.DocumentTime\r\n			, ih.Description\r\n			, ih.StoreCode\r\n			, ih.ProcessCode\r\n			, IsReturn\r\n	\r\n	UNION ALL \r\n	\r\n	select FirstName\r\n	--, ProductCode = ''\r\n	, CurrAccDesc = CurrAccDesc\r\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, TrPaymentHeaders.PaymentHeaderId\r\n	, NetAmountLoc = 0\r\n	, PaymentLoc\r\n	, Summary = PaymentLoc\r\n	, ProcessDesc = N'Ödəniş'\r\n	, DocumentNumber\r\n	, TrPaymentHeaders.StoreCode\r\n	, TrPaymentHeaders.CurrAccCode\r\n	, DocumentDate = TrPaymentHeaders.OperationDate\r\n	, DocumentTime = TrPaymentHeaders.OperationTime\r\n	, LineDescription\r\n	, ProcessCode = 'PA'\r\n	, IsReturn = CAST(0 as bit)\r\n	--, LineId = PaymentLineId\r\n	from TrPaymentLines\r\n	left join TrPaymentHeaders on TrPaymentLines.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\r\n	left join DcCurrAccs  on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode	\r\n\r\n) as CurrAccExtra where 1=1 {CurrAccCode}\r\n\r\norder by DocumentDate, DocumentTime",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -3903,9 +3928,16 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Foxoft.Models.DcPersonalType", "DcPersonalType")
+                        .WithMany("DcCurrAccs")
+                        .HasForeignKey("PersonalTypeCode")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("DcCurrAccType");
 
                     b.Navigation("DcPaymentType");
+
+                    b.Navigation("DcPersonalType");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcFeature", b =>
@@ -4618,6 +4650,11 @@ namespace Foxoft.Migrations
                     b.Navigation("DcPaymentMethods");
 
                     b.Navigation("TrPaymentLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcPersonalType", b =>
+                {
+                    b.Navigation("DcCurrAccs");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcPriceType", b =>
