@@ -20,11 +20,11 @@ namespace Foxoft.Models
         [ForeignKey("TrInvoiceLine")]
         public Guid InvoiceLineId { get; set; }
 
-        [Display(Name = "Ödəmə")]
+        [Display(Name = "Endrimli Qiy.")]
         [Column(TypeName = "money")]
         public decimal PriceDiscounted { get; set; }
 
-        [Display(Name = "Ödəmə")]
+        [Display(Name = "Sətir Xərci")]
         [Column(TypeName = "money")]
         public decimal? LineExpences { get; set; }
 

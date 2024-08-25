@@ -56,7 +56,7 @@ namespace Foxoft
             DcTerminal dcTerminal = efMethods.SelectTerminal(Settings.Default.TerminalId);
             UIMode(dcTerminal.TouchUIMode);
 
-            string path = Path.Combine(AppContext.BaseDirectory, "backgroundImage.png");
+            string path = Path.Combine(AppContext.BaseDirectory, $"backgroundImage-{Settings.Default.CompanyCode}.png");
 
             if (File.Exists(path))
             {
@@ -74,8 +74,6 @@ namespace Foxoft
             bSI_TerminalName.Caption = "| " + efMethods.SelectTerminal(Settings.Default.TerminalId).TerminalDesc;
 
             InitializeReports();
-            //adorners1 = new List<AdornerElement>();
-            //adornerUIManager1 = new AdornerUIManager(this.components);
         }
 
 

@@ -48,7 +48,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            Events();
+            RegisterEvents();
 
             AddReports();
 
@@ -97,7 +97,7 @@ namespace Foxoft
             FocusValue(productCode);
         }
 
-        private void Events()
+        private void RegisterEvents()
         {
             Load += FormProductList_Load;
             Activated += FormProductList_Activated;

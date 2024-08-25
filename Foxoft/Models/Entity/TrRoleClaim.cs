@@ -12,14 +12,17 @@ namespace Foxoft.Models
     public partial class TrRoleClaim : BaseEntity
     {
         [Key]
+        [Display(Name = "Rol Yetki Id")]
         public int RoleClaimId { get; set; }
 
         [Required]
         [ForeignKey("DcRole")]
+        [Display(Name = "Rol Kodu")]
         public string RoleCode { get; set; }
 
         [Required]
         [ForeignKey("DcClaim")]
+        [Display(Name = "Yetki Kodu")]
         public string ClaimCode { get; set; }
 
 

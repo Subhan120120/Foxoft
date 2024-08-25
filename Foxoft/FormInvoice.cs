@@ -669,9 +669,9 @@ namespace Foxoft
 
             if (column == colQty)
             {
-                int eValue = Convert.ToInt32(e.Value ??= 0);
-
-                if (new string[] { "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode))
+                if (new string[] { "RP", "WP", "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode) &&
+                    ((!trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "OUT")
+                    || (trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "IN")))
                 {
                     TrInvoiceLine trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
 
@@ -686,7 +686,7 @@ namespace Foxoft
                         int balance = CalcProductBalance(trInvoiceLine, wareHouse);
 
                         if (permitNegativeStock)
-                            if (eValue > balance)
+                            if ((int)e.Value > balance)
                             {
                                 e.ErrorText = "Stokda miqdar yoxdur";
                                 e.Valid = false;
@@ -694,17 +694,14 @@ namespace Foxoft
                     }
                 }
 
-                string currAccCode = trInvoiceHeader.CurrAccCode;
-                if (!String.IsNullOrEmpty(currAccCode)
+                if (!String.IsNullOrEmpty(trInvoiceHeader.CurrAccCode) && new string[] { "RP", "WP", "RS", "WS" }.Contains(trInvoiceHeader.ProcessCode)
                     && ((!trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "OUT")
-                    || (trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "IN"))
-                    )
+                    || (trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "IN")))
                 {
-                    DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
-                    decimal creditLimit = dcCurrAcc.CreditLimit;
-                    decimal sumInvo = CalcCurrAccCreditBalance(eValue, view, currAccCode);
+                    DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
+                    decimal sumInvo = CalcCurrAccCreditBalance((int)e.Value, view, trInvoiceHeader.CurrAccCode);
 
-                    if (sumInvo > creditLimit && creditLimit != 0)
+                    if (sumInvo > dcCurrAcc.CreditLimit && dcCurrAcc.CreditLimit != 0)
                     {
                         e.ErrorText = "Müştəri Kredit Limitini Aşır!";
                         e.Valid = false;
@@ -886,13 +883,9 @@ namespace Foxoft
             if (info.InRow || info.InRowCell)
             {
                 if (info.Column == col_ProductCode)
-                {
                     SelectProduct(sender);
-                }
                 else if (info.Column == col_SalesPersonCode)
-                {
                     SelectSalesPerson(sender);
-                }
             }
         }
 
@@ -1685,16 +1678,25 @@ namespace Foxoft
             if (File.Exists(layoutLineFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
 
-            colProductCost = gV_InvoiceLine.Columns[nameof(DcProduct.ProductCost)];
             if (colProductCost != null)
             {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Column_ProductCost");
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, $"Column_{nameof(TrInvoiceLine.ProductCost)}");
                 if (!currAccHasClaims)
                 {
                     colProductCost.OptionsColumn.ShowInCustomizationForm = false;
                     colProductCost.Visible = false;
                     colBenefit.OptionsColumn.ShowInCustomizationForm = false;
                     colBenefit.Visible = false;
+                }
+            }
+
+            if (col_PosDiscount != null)
+            {
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, nameof(TrInvoiceLine.PosDiscount));
+                if (!currAccHasClaims)
+                {
+                    col_PosDiscount.OptionsColumn.ShowInCustomizationForm = false;
+                    col_PosDiscount.Visible = false;
                 }
             }
 

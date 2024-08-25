@@ -51,7 +51,7 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            FormCommonList<DcFeature> frm = new("F", "FeatureCode", "", "FeatureTypeId", Convert.ToInt32(editor.Name));
+            FormCommonList<DcFeature> frm = new("F", "FeatureCode", editor.EditValue, "FeatureTypeId", Convert.ToInt32(editor.Name));
             if (DialogResult.OK == frm.ShowDialog())
                 editor.EditValue = frm.Value_Id;
         }

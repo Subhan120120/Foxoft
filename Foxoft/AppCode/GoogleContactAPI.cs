@@ -31,7 +31,7 @@ namespace Foxoft.AppCode
             {
                 string credPath = "token2.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
+                    GoogleClientSecrets.FromStream(stream).Secrets,
                     new string[] { PeopleServiceService.Scope.Contacts },
                     "user",
                     CancellationToken.None,

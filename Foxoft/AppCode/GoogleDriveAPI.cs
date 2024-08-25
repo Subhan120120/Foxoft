@@ -29,7 +29,7 @@ namespace Foxoft.AppCode
             {
                 string credPath = "token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
+                    GoogleClientSecrets.FromStream(stream).Secrets,
                     new string[] { DriveService.Scope.Drive },
                     "user",
                     CancellationToken.None,
