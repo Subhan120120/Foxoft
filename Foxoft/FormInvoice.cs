@@ -1987,23 +1987,15 @@ namespace Foxoft
 
             decimal priceProduct = 0;
 
-            if (dcProcess.ProcessCode == "RP")
-                if (Settings.Default.AppSetting.UsePriceList)
-                    priceProduct = efMethods.SelectPrice("RP", product.ProductCode);
-                else
-                    priceProduct = product.PurchasePrice;
-
-            if (dcProcess.ProcessCode == "RS")
-                if (Settings.Default.AppSetting.UsePriceList)
-                    priceProduct = efMethods.SelectPrice("RS", product.ProductCode);
-                else
-                    priceProduct = product.RetailPrice;
-
-            if (dcProcess.ProcessCode == "WS")
-                if (Settings.Default.AppSetting.UsePriceList)
-                    priceProduct = efMethods.SelectPrice("WS", product.ProductCode);
-                else
-                    priceProduct = product.WholesalePrice;
+            priceProduct = Settings.Default.AppSetting.UsePriceList
+                ? efMethods.SelectPrice(dcProcess.ProcessCode, product.ProductCode)
+                : dcProcess.ProcessCode switch
+                {
+                    "RP" => product.PurchasePrice,
+                    "RS" => product.RetailPrice,
+                    "WS" => product.WholesalePrice,
+                    _ => 0
+                };
 
             decimal priceInvoice = Convert.ToInt32(gV_InvoiceLine.GetRowCellValue(rowHandle, col_Price));
             if (priceInvoice == 0)

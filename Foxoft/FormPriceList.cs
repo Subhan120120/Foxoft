@@ -14,16 +14,10 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -44,15 +38,6 @@ namespace Foxoft
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
             ClearControlsAddNew();
-
-            //bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PriceListDetail");
-            //if (!currAccHasClaims)
-            //{
-            //    MessageBox.Show("Yetkiniz yoxdur! ");
-            //    return;
-            //}
-            //else
-            //    this.Show();
         }
 
         public FormPriceListDetail(Guid PriceListHeaderId)
@@ -133,10 +118,6 @@ namespace Foxoft
             SelectDocNum();
         }
 
-        private void CurrAccCodeButtonEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
-        {
-        }
-
         private void SelectDocNum()
         {
             using (FormPriceListHeaderList form = new())
@@ -199,21 +180,6 @@ namespace Foxoft
                 XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
         }
 
-        //private void SelectCurrAcc()
-        //{
-        //    using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, trPriceListHeader.CurrAccCode))
-        //    {
-        //        if (form.ShowDialog(this) == DialogResult.OK)
-        //        {
-        //            CurrAccCodeButtonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
-        //            trPriceListHeader.CurrAccCode = form.dcCurrAcc.CurrAccCode;
-        //            lbl_CurrAccDesc.Text = form.dcCurrAcc.CurrAccDesc + " " + form.dcCurrAcc.FirstName + " " + form.dcCurrAcc.LastName;
-
-        //            CalcCurrAccBalance(form.dcCurrAcc.CurrAccCode, trPriceListHeader.OperationDate);
-        //        }
-        //    }
-        //}
-
         private void gV_PriceListLine_InitNewRow(object sender, InitNewRowEventArgs e)
         {
             gV_PriceListLine.SetRowCellValue(e.RowHandle, colPriceListHeaderId, trPriceListHeader.PriceListHeaderId);
@@ -247,11 +213,6 @@ namespace Foxoft
             }
         }
 
-        private void gV_PriceListLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
-        {
-            //CalcRowLocNetAmount(e);
-        }
-
         private void gV_PriceListLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
@@ -278,10 +239,6 @@ namespace Foxoft
             }
         }
 
-        private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
-        {
-        }
-
         private void bBI_SaveAndClose_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (trPriceListHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
@@ -293,25 +250,9 @@ namespace Foxoft
             this.Close();
         }
 
-        private void bBI_SendWhatsapp_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
-        private void sendWhatsApp(string number, string message)
-        {
-        }
-
         private void bBI_NewPriceList_ItemClick(object sender, ItemClickEventArgs e)
         {
             ClearControlsAddNew();
-        }
-
-        private void dataLayout_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void bBI_CopyPriceList_ItemClick(object sender, ItemClickEventArgs e)
-        {
         }
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -340,29 +281,9 @@ namespace Foxoft
             }
         }
 
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
-        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //TwilioClass twilio = new TwilioClass();
-            //twilio.AlmaDolmasi();
-        }
-
-        private void BBI_Info_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
         private void gV_PriceListLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            if (e.Column.FieldName == "DcProduct.ProductDesc" && e.IsGetData)
+            if (e.Column.FieldName == $"{nameof(DcProduct)}.{nameof(DcProduct.ProductDesc)}" && e.IsGetData)
             {
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
@@ -373,7 +294,7 @@ namespace Foxoft
                 e.Value = dcProduct?.ProductDesc;
             }
 
-            if (e.Column.FieldName == "DcProduct.ProductCost" && e.IsGetData)
+            if (e.Column.FieldName == $"{nameof(DcProduct)}.{nameof(DcProduct.ProductCost)}" && e.IsGetData)
             {
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
@@ -392,7 +313,7 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
 
             //using FormPriceTypeList form = new(priceTypeCode);
-            using FormCommonList<DcPriceType> form = new("", "PriceTypeCode", priceTypeCode);
+            using FormCommonList<DcPriceType> form = new("", nameof(DcPriceType.PriceTypeCode), priceTypeCode);
 
             try
             {
