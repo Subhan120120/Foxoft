@@ -28,8 +28,8 @@ namespace Foxoft.Models
         [Display(Name = "Yerli Valyuta Kodu")]
         public string? LocalCurrencyCode { get; set; }
 
-        [Display(Name = "Twilio Instance Id")]
-        public string? TwilioInstanceId { get; set; }
+        [Display(Name = "Whatsapp Chrome Profil Adı")]
+        public string? WhatsappChromeProfileName { get; set; }
 
         [Display(Name = "Twilio Token")]
         public string? TwilioToken { get; set; }

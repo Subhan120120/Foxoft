@@ -554,9 +554,7 @@ namespace Foxoft
             {
                 if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName)
                 {
-                    Object oldvalue1 = gV.ActiveEditor?.OldEditValue;
-
-                    if (!Object.Equals(e.Value, oldvalue1))
+                    if (gV.ActiveEditor is not null && !Equals(e.Value, gV.ActiveEditor.OldEditValue))
                     {
                         string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
 
@@ -572,9 +570,8 @@ namespace Foxoft
             if (new GridColumn[] { colRunningTotal, colRunningTotalBefore }.Contains(e.Column) && e.IsGetData)
             {
                 GridView view = sender as GridView;
-                decimal balanceBefore = Math.Round(efMethods.SelectCashRegBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
 
-                decimal runningTotal = balanceBefore;
+                decimal runningTotal = BalanceBefore;
                 for (int i = 0; i <= e.ListSourceRowIndex; i++)
                 {
                     decimal value = 0;

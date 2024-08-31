@@ -122,9 +122,9 @@ namespace Foxoft
                             deliveryInvoiceLine.ProductCode = invoiceLine.ProductCode;
                             deliveryInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
 
-                            if (CustomExtensions.ProcessDir(processCode) == "In")
+                            if ((bool)CustomExtensions.DirectionIsIn(processCode))
                                 deliveryInvoiceLine.QtyIn = formQty.qty * (-1);
-                            else if (CustomExtensions.ProcessDir(processCode) == "Out")
+                            else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
                                 deliveryInvoiceLine.QtyOut = formQty.qty * (-1);
 
                             efMethods.InsertInvoiceLine(deliveryInvoiceLine);

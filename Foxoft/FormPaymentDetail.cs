@@ -4,6 +4,7 @@ using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Mask;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
@@ -16,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -689,6 +691,22 @@ namespace Foxoft
         private void LUE_StoreCode_PopupFilter(object sender, PopupFilterEventArgs e)
         {
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStores();
+        }
+
+        private void gV_PaymentLine_ShownEditor(object sender, EventArgs e)
+        {
+            CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+            if (gV_PaymentLine.FocusedColumn == colExchangeRate)
+            {
+                var editor = gV_PaymentLine.ActiveEditor as TextEdit;
+                if (editor != null)
+                {
+                    editor.Properties.Mask.MaskType = MaskType.Numeric;
+                    editor.Properties.Mask.Culture = customCulture; // Ensure '.' is used
+                }
+            }
         }
     }
 }

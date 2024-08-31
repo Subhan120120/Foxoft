@@ -44,7 +44,7 @@ namespace Foxoft
 
             PaymentDefaults(paymentType, trInvoiceHeader);
 
-            if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
+            if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
                 invoiceSumLoc *= (-1);
 
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
@@ -263,7 +263,7 @@ namespace Foxoft
                     dxErrorProvider1.SetError(lUE_PaymentMethod, "Boş buraxıla bilməz!");
                     return;
                 }
-                
+
                 if (lUE_CashlessCurrency.EditValue == null)
                 {
                     dxErrorProvider1.SetError(lUE_CashlessCurrency, "Boş buraxıla bilməz!");

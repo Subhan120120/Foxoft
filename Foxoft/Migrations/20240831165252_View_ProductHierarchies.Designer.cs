@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240831165252_View_ProductHierarchies")]
+    partial class View_ProductHierarchies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3431,6 +3434,23 @@ namespace Foxoft.Migrations
                     b.ToTable("TrProductFeatures");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrProductHierarchy", b =>
+                {
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("HierarchyCode")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(0);
+
+                    b.HasKey("ProductCode", "HierarchyCode");
+
+                    b.HasIndex("HierarchyCode");
+
+                    b.ToTable("TrProductHierarchies");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
                 {
                     b.Property<int>("SubQueryId")
@@ -4447,6 +4467,25 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrProductHierarchy", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
+                        .WithMany("TrProductHierarchies")
+                        .HasForeignKey("HierarchyCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+                        .WithMany("TrProductHierarchies")
+                        .HasForeignKey("ProductCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcHierarchy");
+
+                    b.Navigation("DcProduct");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
                 {
                     b.HasOne("Foxoft.Models.DcReport", "DcReport")
@@ -4599,6 +4638,8 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProducts");
 
                     b.Navigation("TrHierarchyFeatureTypes");
+
+                    b.Navigation("TrProductHierarchies");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcPaymentMethod", b =>
@@ -4655,6 +4696,8 @@ namespace Foxoft.Migrations
                     b.Navigation("TrProductDiscounts");
 
                     b.Navigation("TrProductFeatures");
+
+                    b.Navigation("TrProductHierarchies");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductType", b =>

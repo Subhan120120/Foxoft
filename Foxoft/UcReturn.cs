@@ -138,9 +138,9 @@ namespace Foxoft
                             returnInvoiceLine.ProductCode = invoiceLine.ProductCode;
                             returnInvoiceLine.ProductCost = invoiceLine.ProductCost;
 
-                            if (CustomExtensions.ProcessDir(processCode) == "In")
+                            if ((bool)CustomExtensions.DirectionIsIn(processCode))
                                 returnInvoiceLine.QtyIn = formQty.qty * (-1);
-                            else if (CustomExtensions.ProcessDir(processCode) == "Out")
+                            else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
                                 returnInvoiceLine.QtyOut = formQty.qty * (-1);
 
                             returnInvoiceLine.Price = invoiceLine.Price;

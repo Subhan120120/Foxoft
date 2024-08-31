@@ -40,12 +40,12 @@ namespace Foxoft.Models
             {
                 if (TrInvoiceHeader is not null)
                 {
-                    if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
+                    if ((bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
                         if (TrInvoiceHeader.IsReturn)
                             return QtyIn * (-1);
                         else return QtyIn;
 
-                    else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
+                    else if (!(bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
                         if (TrInvoiceHeader.IsReturn)
                             return QtyOut * (-1);
                         else return QtyOut;
@@ -60,12 +60,12 @@ namespace Foxoft.Models
             {
                 if (TrInvoiceHeader is not null)
                 {
-                    if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "In")
+                    if ((bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
                         if (TrInvoiceHeader.IsReturn)
                             QtyIn = value * (-1);
                         else QtyIn = value;
 
-                    else if (CustomExtensions.ProcessDir(TrInvoiceHeader.ProcessCode) == "Out")
+                    else if (!(bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
                         if (TrInvoiceHeader.IsReturn)
                             QtyOut = value * (-1);
                         else QtyOut = value;
@@ -89,7 +89,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Valyuta")]
         [ForeignKey("DcUnitOfMeasure")]
-        public string? UnitOfMeasure { get; set; } 
+        public string? UnitOfMeasure { get; set; }
 
         [Display(Name = "Valyuta")]
         [ForeignKey("DcCurrency")]

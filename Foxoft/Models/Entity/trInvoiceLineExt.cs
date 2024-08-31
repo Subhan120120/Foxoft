@@ -24,6 +24,10 @@ namespace Foxoft.Models
         [Column(TypeName = "money")]
         public decimal PriceDiscounted { get; set; }
 
+        [Display(Name = "Endrimli Qiy.(YPV)")]
+        [Column(TypeName = "money")]
+        public decimal PriceDiscountedLoc { get; set; }
+
         [Display(Name = "Sətir Xərci")]
         [Column(TypeName = "money")]
         public decimal? LineExpences { get; set; }

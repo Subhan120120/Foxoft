@@ -313,7 +313,7 @@ namespace Foxoft
             gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
             gV_InvoiceLine.RowCellStyle += gV_InvoiceLine_RowCellStyle;
             gV_InvoiceLine.RowStyle += gV_InvoiceLine_RowStyle;
-            gV_InvoiceLine.PopupMenuShowing += gV_Report_PopupMenuShowing;
+            gV_InvoiceLine.PopupMenuShowing += gV_InvoiceLine_PopupMenuShowing;
             gV_InvoiceLine.InitNewRow += gV_InvoiceLine_InitNewRow;
             gV_InvoiceLine.HiddenEditor += gV_InvoiceLine_HiddenEditor;
             gV_InvoiceLine.ShownEditor += gV_InvoiceLine_ShownEditor;

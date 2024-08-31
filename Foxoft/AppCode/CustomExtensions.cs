@@ -72,23 +72,23 @@ namespace Foxoft
             gridView.OptionsBehavior.Editable = false;
         }
 
-        public static string ProcessDir(string processCode)
+        public static bool? DirectionIsIn(string processCode)
         {
             return processCode switch
             {
-                "RP" => "In",
-                "WP" => "In",
-                "EX" => "In",
-                "EI" => "In",
-                "SB" => "In",
-                "CI" => "In",
-                "WI" => "In",
-                "IT" => "Out",
-                "RS" => "Out",
-                "WS" => "Out",
-                "CO" => "Out",
-                "WO" => "Out",
-                _ => ""
+                "RP" => true,
+                "WP" => true,
+                "EX" => true,
+                "EI" => true,
+                "SB" => true,
+                "CI" => true,
+                "WI" => true,
+                "IT" => false,
+                "RS" => false,
+                "WS" => false,
+                "CO" => false,
+                "WO" => false,
+                _ => null
             };
         }
 

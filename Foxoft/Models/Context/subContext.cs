@@ -73,7 +73,6 @@ namespace Foxoft.Models
         public DbSet<TrPrice> TrPrices { get; set; }
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<DcHierarchy> DcHierarchies { get; set; }
-        public DbSet<TrProductHierarchy> TrProductHierarchies { get; set; }
         public DbSet<TrHierarchyFeatureType> TrHierarchyFeatureTypes { get; set; }
         public DbSet<TrPaymentMethodDiscount> TrPaymentMethodDiscounts { get; set; }
         public DbSet<DcFeature> DcFeatures { get; set; }
@@ -173,9 +172,6 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<TrFormReport>()
                        .HasKey(bc => new { bc.FormCode, bc.ReportId });
-
-            modelBuilder.Entity<TrProductHierarchy>()
-                        .HasKey(bc => new { bc.ProductCode, bc.HierarchyCode });
 
             modelBuilder.Entity<TrHierarchyFeatureType>()
                         .HasKey(bc => new { bc.HierarchyCode, bc.FeatureTypeId });

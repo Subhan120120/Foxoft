@@ -351,7 +351,6 @@ namespace Foxoft
                     {
                         if (args[i] == null)
                         {
-                            // Allow nulls for reference types and Nullable<> types
                             if (parameters[i].ParameterType.IsValueType && Nullable.GetUnderlyingType(parameters[i].ParameterType) == null)
                                 return false;
                         }
@@ -366,7 +365,6 @@ namespace Foxoft
                 if (constructor == null)
                     throw new ArgumentException($"No matching constructor found for {typeof(T).Name}");
 
-                // Create an instance of the form using the matched constructor
                 form = (T)constructor.Invoke(args);
                 form.MdiParent = this;
                 form.Show();

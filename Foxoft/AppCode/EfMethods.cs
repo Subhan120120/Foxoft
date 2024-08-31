@@ -491,13 +491,6 @@ namespace Foxoft
             return db.TrPriceListHeaders.FirstOrDefault(x => x.PriceListHeaderId == priceListHeaderId);
         }
 
-        public List<TrProductHierarchy> SelectProductHierarchies()
-        {
-            using subContext db = new();
-
-            return db.TrProductHierarchies.Include(x => x.DcHierarchy).ToList();
-        }
-
         public List<TrHierarchyFeatureType> SelectHierarchyFeatureTypes()
         {
             using subContext db = new();
@@ -1964,13 +1957,13 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateAppSettingTwilioInstance(string instanceId)
-        {
-            using subContext db = new();
-            AppSetting appSetting = new() { Id = 1, TwilioInstanceId = instanceId };
-            db.Entry(appSetting).Property(x => x.TwilioInstanceId).IsModified = true;
-            return db.SaveChanges();
-        }
+        //public int UpdateAppSettingTwilioInstance(string instanceId)
+        //{
+        //    //using subContext db = new();
+        //    //AppSetting appSetting = new() { Id = 1, TwilioInstanceId = instanceId };
+        //    //db.Entry(appSetting).Property(x => x.TwilioInstanceId).IsModified = true;
+        //    //return db.SaveChanges();
+        //}
 
         public int UpdateAppSettingDueDate(string dueDate)
         {

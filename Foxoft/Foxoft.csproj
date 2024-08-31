@@ -17,6 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="FormDiscountCompaniesDetail.cs" />
+    <Compile Remove="FormDiscountCompaniesDetail.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="FormDiscountCompaniesDetail.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="AppCode\client_secret.json" />
     <None Remove="AppCode\GvListDefaultLayout.xml" />
     <None Remove="AppCode\Report\Report_Detail_ProductCard.sql" />

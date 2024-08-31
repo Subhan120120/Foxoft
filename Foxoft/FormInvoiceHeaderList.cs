@@ -160,7 +160,7 @@ namespace Foxoft
                 if (e.KeyCode == Keys.C && e.Control)
                 {
                     object cellValue = view.GetFocusedValue();
-                    Clipboard.SetText(cellValue.ToString());
+                    Clipboard.SetText(cellValue?.ToString());
                 }
             }
         }

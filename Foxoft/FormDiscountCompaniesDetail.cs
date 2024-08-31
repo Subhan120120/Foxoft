@@ -21,14 +21,14 @@ using System.Diagnostics;
 
 namespace Foxoft
 {
-    public partial class FormPriceListDetail : RibbonForm
+    public partial class FormDiscountCompaniesDetail : RibbonForm
     {
-        private TrPriceListHeader trPriceListHeader;
+        private TrDiscountCompaniesHeader trDiscountCompaniesHeader;
         private EfMethods efMethods = new();
         private subContext dbContext;
-        private Guid PriceListHeaderId;
+        private Guid DiscountCompaniesHeaderId;
 
-        public FormPriceListDetail()
+        public FormDiscountCompaniesDetail()
         {
             InitializeComponent();
             colProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
@@ -40,14 +40,14 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
-        public FormPriceListDetail(Guid PriceListHeaderId)
+        public FormDiscountCompaniesDetail(Guid DiscountCompaniesHeaderId)
             : this()
         {
-            trPriceListHeader = efMethods.SelectPriceListHeader(PriceListHeaderId);
+            trDiscountCompaniesHeader = efMethods.SelectDiscountCompaniesHeader(DiscountCompaniesHeaderId);
 
-            if (trPriceListHeader is not null)
+            if (trDiscountCompaniesHeader is not null)
             {
-                LoadPriceList(trPriceListHeader.PriceListHeaderId);
+                LoadDiscountCompanies(trDiscountCompaniesHeader.DiscountCompaniesHeaderId);
             }
         }
 
@@ -55,53 +55,53 @@ namespace Foxoft
         {
             dbContext = new subContext();
 
-            PriceListHeaderId = Guid.NewGuid();
+            DiscountCompaniesHeaderId = Guid.NewGuid();
 
-            dbContext.TrPriceListHeaders.Where(x => x.PriceListHeaderId == PriceListHeaderId)
+            dbContext.TrDiscountCompaniesHeaders.Where(x => x.DiscountCompaniesHeaderId == DiscountCompaniesHeaderId)
                                       .Load();
-            trPriceListHeadersBindingSource.DataSource = dbContext.TrPriceListHeaders.Local.ToBindingList();
+            trDiscountCompaniesHeadersBindingSource.DataSource = dbContext.TrDiscountCompaniesHeaders.Local.ToBindingList();
 
-            trPriceListHeader = trPriceListHeadersBindingSource.AddNew() as TrPriceListHeader;
+            trDiscountCompaniesHeader = trDiscountCompaniesHeadersBindingSource.AddNew() as TrDiscountCompaniesHeader;
 
-            dbContext.TrPriceListLines.Include(x => x.DcProduct)
-                                    .Where(x => x.PriceListHeaderId == trPriceListHeader.PriceListHeaderId)
+            dbContext.TrDiscountCompaniesLines.Include(x => x.DcProduct)
+                                    .Where(x => x.DiscountCompaniesHeaderId == trDiscountCompaniesHeader.DiscountCompaniesHeaderId)
                                     .LoadAsync()
-                                    .ContinueWith(loadTask => trPriceListLinesBindingSource.DataSource = dbContext.TrPriceListLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+                                    .ContinueWith(loadTask => trDiscountCompaniesLinesBindingSource.DataSource = dbContext.TrDiscountCompaniesLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
-            gV_PriceListLine.Focus();
+            gV_DiscountCompaniesLine.Focus();
         }
 
-        private void trPriceListHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
+        private void trDiscountCompaniesHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
         {
-            TrPriceListHeader PriceListHeader = new();
-            PriceListHeader.PriceListHeaderId = PriceListHeaderId;
-            string NewDocNum = efMethods.GetNextDocNum(true, "PL", "DocumentNumber", "TrPriceListHeaders", 6);
-            PriceListHeader.DocumentNumber = NewDocNum;
-            PriceListHeader.DocumentDate = DateTime.Now;
-            PriceListHeader.OperationDate = DateTime.Now;
-            PriceListHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-            PriceListHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-            PriceListHeader.OfficeCode = Authorization.OfficeCode;
-            PriceListHeader.CreatedUserName = Authorization.CurrAccCode;
+            TrDiscountCompaniesHeader DiscountCompaniesHeader = new();
+            DiscountCompaniesHeader.DiscountCompaniesHeaderId = DiscountCompaniesHeaderId;
+            string NewDocNum = efMethods.GetNextDocNum(true, "PL", "DocumentNumber", "TrDiscountCompaniesHeaders", 6);
+            DiscountCompaniesHeader.DocumentNumber = NewDocNum;
+            DiscountCompaniesHeader.DocumentDate = DateTime.Now;
+            DiscountCompaniesHeader.OperationDate = DateTime.Now;
+            DiscountCompaniesHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+            DiscountCompaniesHeader.OperationTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+            DiscountCompaniesHeader.OfficeCode = Authorization.OfficeCode;
+            DiscountCompaniesHeader.CreatedUserName = Authorization.CurrAccCode;
 
-            e.NewObject = PriceListHeader;
+            e.NewObject = DiscountCompaniesHeader;
         }
 
-        private void trPriceListHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
+        private void trDiscountCompaniesHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
-            trPriceListHeader = trPriceListHeadersBindingSource.Current as TrPriceListHeader;
+            trDiscountCompaniesHeader = trDiscountCompaniesHeadersBindingSource.Current as TrDiscountCompaniesHeader;
 
-            if (trPriceListHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
+            if (trDiscountCompaniesHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                int count = efMethods.SelectPriceListLines(trPriceListHeader.PriceListHeaderId).Count;
+                int count = efMethods.SelectDiscountCompaniesLines(trDiscountCompaniesHeader.DiscountCompaniesHeaderId).Count;
                 if (count > 0)
-                    SavePriceList();
+                    SaveDiscountCompanies();
             }
         }
 
-        private void SavePriceList()
+        private void SaveDiscountCompanies()
         {
             try
             {
@@ -120,39 +120,39 @@ namespace Foxoft
 
         private void SelectDocNum()
         {
-            using (FormPriceListHeaderList form = new())
+            using (FormDiscountCompaniesHeaderList form = new())
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    trPriceListHeader = form.trPriceListHeader;
-                    if (trPriceListHeader is not null)
+                    trDiscountCompaniesHeader = form.trDiscountCompaniesHeader;
+                    if (trDiscountCompaniesHeader is not null)
                     {
-                        LoadPriceList(trPriceListHeader.PriceListHeaderId);
+                        LoadDiscountCompanies(trDiscountCompaniesHeader.DiscountCompaniesHeaderId);
                     }
                 }
             }
         }
 
-        private void LoadPriceList(Guid PriceListHeaderId)
+        private void LoadDiscountCompanies(Guid DiscountCompaniesHeaderId)
         {
             dbContext = new subContext();
 
-            dbContext.TrPriceListHeaders
-                                      .Where(x => x.PriceListHeaderId == PriceListHeaderId).Load();
+            dbContext.TrDiscountCompaniesHeaders
+                                      .Where(x => x.DiscountCompaniesHeaderId == DiscountCompaniesHeaderId).Load();
 
-            LocalView<TrPriceListHeader> lV_PriceListHeader = dbContext.TrPriceListHeaders.Local;
+            LocalView<TrDiscountCompaniesHeader> lV_DiscountCompaniesHeader = dbContext.TrDiscountCompaniesHeaders.Local;
 
-            trPriceListHeadersBindingSource.DataSource = lV_PriceListHeader.ToBindingList();
-            trPriceListHeader = trPriceListHeadersBindingSource.Current as TrPriceListHeader;
+            trDiscountCompaniesHeadersBindingSource.DataSource = lV_DiscountCompaniesHeader.ToBindingList();
+            trDiscountCompaniesHeader = trDiscountCompaniesHeadersBindingSource.Current as TrDiscountCompaniesHeader;
 
-            dbContext.TrPriceListLines.Include(x => x.DcProduct)
-                                    .Where(x => x.PriceListHeaderId == PriceListHeaderId)
+            dbContext.TrDiscountCompaniesLines.Include(x => x.DcProduct)
+                                    .Where(x => x.DiscountCompaniesHeaderId == DiscountCompaniesHeaderId)
                                     .OrderBy(x => x.CreatedDate)
                                     .LoadAsync()
                                     .ContinueWith(loadTask =>
                                     {
-                                        LocalView<TrPriceListLine> lV_PriceListLine = dbContext.TrPriceListLines.Local;
-                                        trPriceListLinesBindingSource.DataSource = lV_PriceListLine.ToBindingList();
+                                        LocalView<TrDiscountCompaniesLine> lV_DiscountCompaniesLine = dbContext.TrDiscountCompaniesLines.Local;
+                                        trDiscountCompaniesLinesBindingSource.DataSource = lV_DiscountCompaniesLine.ToBindingList();
 
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -160,13 +160,13 @@ namespace Foxoft
 
         }
 
-        private void bBI_DeletePriceList_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_DeleteDiscountCompanies_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.PriceListHeaderExist(trPriceListHeader.PriceListHeaderId))
+            if (efMethods.DiscountCompaniesHeaderExist(trDiscountCompaniesHeader.DiscountCompaniesHeaderId))
             {
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeletePriceList(trPriceListHeader.PriceListHeaderId);
+                    efMethods.DeleteDiscountCompanies(trDiscountCompaniesHeader.DiscountCompaniesHeaderId);
 
                     ClearControlsAddNew();
                 }
@@ -175,10 +175,10 @@ namespace Foxoft
                 XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
         }
 
-        private void gV_PriceListLine_InitNewRow(object sender, InitNewRowEventArgs e)
+        private void gV_DiscountCompaniesLine_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            gV_PriceListLine.SetRowCellValue(e.RowHandle, colPriceListHeaderId, trPriceListHeader.PriceListHeaderId);
-            gV_PriceListLine.SetRowCellValue(e.RowHandle, colPriceListLineId, Guid.NewGuid());
+            gV_DiscountCompaniesLine.SetRowCellValue(e.RowHandle, colDiscountCompaniesHeaderId, trDiscountCompaniesHeader.DiscountCompaniesHeaderId);
+            gV_DiscountCompaniesLine.SetRowCellValue(e.RowHandle, colDiscountCompaniesLineId, Guid.NewGuid());
 
             string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             DcProcess dcProcess = efMethods.SelectProcess("PL");
@@ -187,14 +187,14 @@ namespace Foxoft
             DcCurrency currency = efMethods.SelectCurrency(currencyCode);
             if (currency is not null)
             {
-                gV_PriceListLine.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
+                gV_DiscountCompaniesLine.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
             }
 
-            //gV_PriceListLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
-            //gV_PriceListLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
+            //gV_DiscountCompaniesLine.SetRowCellValue(e.RowHandle, colCreatedDate, DateTime.Now);
+            //gV_DiscountCompaniesLine.SetRowCellValue(e.RowHandle, colCreatedUserName, Authorization.CurrAccCode);
         }
 
-        private void gC_PriceListLine_KeyDown(object sender, KeyEventArgs e)
+        private void gC_DiscountCompaniesLine_KeyDown(object sender, KeyEventArgs e)
         {
             GridControl gC = sender as GridControl;
             GridView gV = gC.MainView as GridView;
@@ -208,11 +208,11 @@ namespace Foxoft
             }
         }
 
-        private void gV_PriceListLine_RowUpdated(object sender, RowObjectEventArgs e)
+        private void gV_DiscountCompaniesLine_RowUpdated(object sender, RowObjectEventArgs e)
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                SavePriceList();
+                SaveDiscountCompanies();
             }
             else
             {
@@ -221,11 +221,11 @@ namespace Foxoft
             }
         }
 
-        private void gV_PriceListLine_RowDeleted(object sender, RowDeletedEventArgs e)
+        private void gV_DiscountCompaniesLine_RowDeleted(object sender, RowDeletedEventArgs e)
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                SavePriceList();
+                SaveDiscountCompanies();
             }
             else
             {
@@ -236,23 +236,23 @@ namespace Foxoft
 
         private void bBI_SaveAndClose_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (trPriceListHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
+            if (trDiscountCompaniesHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                int count = efMethods.SelectPriceListLines(trPriceListHeader.PriceListHeaderId).Count;
+                int count = efMethods.SelectDiscountCompaniesLines(trDiscountCompaniesHeader.DiscountCompaniesHeaderId).Count;
                 if (count > 0)
-                    SavePriceList();
+                    SaveDiscountCompanies();
             }
             this.Close();
         }
 
-        private void bBI_NewPriceList_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_NewDiscountCompanies_ItemClick(object sender, ItemClickEventArgs e)
         {
             ClearControlsAddNew();
         }
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            string productCode = gV_PriceListLine.GetFocusedRowCellValue("ProductCode")?.ToString();
+            string productCode = gV_DiscountCompaniesLine.GetFocusedRowCellValue("ProductCode")?.ToString();
 
             ButtonEdit editor = (ButtonEdit)sender;
 
@@ -263,11 +263,11 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
-                    gV_PriceListLine.CloseEditor();
-                    gV_PriceListLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+                    gV_DiscountCompaniesLine.CloseEditor();
+                    gV_DiscountCompaniesLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
 
-                    gV_PriceListLine.BestFitColumns();
-                    gV_PriceListLine.FocusedColumn = colPrice;
+                    gV_DiscountCompaniesLine.BestFitColumns();
+                    gV_DiscountCompaniesLine.FocusedColumn = colPrice;
                 }
             }
             catch (Exception ex)
@@ -276,7 +276,7 @@ namespace Foxoft
             }
         }
 
-        private void gV_PriceListLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
+        private void gV_DiscountCompaniesLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
             if (e.Column.FieldName == $"{nameof(DcProduct)}.{nameof(DcProduct.ProductDesc)}" && e.IsGetData)
             {
@@ -315,11 +315,11 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     editor.EditValue = form.Value_Id;
-                    gV_PriceListLine.CloseEditor();
-                    gV_PriceListLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+                    gV_DiscountCompaniesLine.CloseEditor();
+                    gV_DiscountCompaniesLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
 
-                    gV_PriceListLine.BestFitColumns();
-                    gV_PriceListLine.FocusedColumn = colPrice;
+                    gV_DiscountCompaniesLine.BestFitColumns();
+                    gV_DiscountCompaniesLine.FocusedColumn = colPrice;
                 }
             }
             catch (Exception ex)
@@ -389,11 +389,11 @@ namespace Foxoft
                     DcProduct product = efMethods.SelectProduct(productCode);
                     if (product is not null)
                     {
-                        object objInvoiceHeadId = gV_PriceListLine.GetRowCellValue(GridControl.NewItemRowHandle, colPriceListHeaderId);
+                        object objInvoiceHeadId = gV_DiscountCompaniesLine.GetRowCellValue(GridControl.NewItemRowHandle, colDiscountCompaniesHeaderId);
                         if (objInvoiceHeadId is null) // Check InitNewRow
-                            gV_PriceListLine.AddNewRow();
+                            gV_DiscountCompaniesLine.AddNewRow();
 
-                        gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colProductCode, product.ProductCode);
+                        gV_DiscountCompaniesLine.SetRowCellValue(GridControl.NewItemRowHandle, colProductCode, product.ProductCode);
 
                         foreach (DataColumn column in dt.Columns)
                         {
@@ -401,11 +401,11 @@ namespace Foxoft
                             {
                                 //string captionLineDesc = ReflectionExtensions.GetPropertyDisplayName<TrInvoiceLine>(x => x.LineDescription);
                                 //if (column.ColumnName == captionLineDesc)
-                                //    gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
+                                //    gV_DiscountCompaniesLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
 
                                 string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
                                 if (column.ColumnName == captionPrice)
-                                    gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colPrice, row[captionPrice].ToString());
+                                    gV_DiscountCompaniesLine.SetRowCellValue(GridControl.NewItemRowHandle, colPrice, row[captionPrice].ToString());
 
                                 string captionCurrency = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
                                 if (column.ColumnName == captionCurrency)
@@ -417,7 +417,7 @@ namespace Foxoft
                                             currency = efMethods.SelectCurrencyByName(row[captionCurrency].ToString());
 
                                         if (currency is not null)
-                                            gV_PriceListLine.SetRowCellValue(GridControl.NewItemRowHandle, colCurrencyCode, currency.CurrencyCode);
+                                            gV_DiscountCompaniesLine.SetRowCellValue(GridControl.NewItemRowHandle, colCurrencyCode, currency.CurrencyCode);
                                         else
                                             errorCodes += captionCurrency + ": " + row[captionCurrency].ToString() + "\n";
                                     }
@@ -429,7 +429,7 @@ namespace Foxoft
                             }
                         }
 
-                        gV_PriceListLine.UpdateCurrentRow();
+                        gV_DiscountCompaniesLine.UpdateCurrentRow();
                     }
                     else
                         errorCodes += captionProductCode + ": " + row[captionProductCode].ToString() + "\n";
@@ -464,7 +464,7 @@ namespace Foxoft
             return dt;
         }
 
-        private void gV_PriceListLine_RowCellStyle(object sender, RowCellStyleEventArgs e)
+        private void gV_DiscountCompaniesLine_RowCellStyle(object sender, RowCellStyleEventArgs e)
         {
             GridView gridView = sender as GridView;
 

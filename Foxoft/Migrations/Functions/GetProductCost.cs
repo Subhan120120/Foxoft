@@ -22,7 +22,7 @@ namespace Foxoft.Migrations
                                 
                                     SELECT @result = CAST(
                                         (
-                                            SELECT TOP 1 AVG(ISNULL(PriceDiscounted, 0)) + SUM(ISNULL(LineExpences, 0))
+                                            SELECT TOP 1 AVG(ISNULL(PriceDiscountedLoc, 0)) + SUM(ISNULL(LineExpences, 0))
                                             FROM TrInvoiceLines il
                                             JOIN TrInvoiceHeaders ih ON ih.InvoiceHeaderId = il.InvoiceHeaderId
                                             LEFT JOIN trInvoiceLineExts ilE ON ilE.InvoiceLineId = il.InvoiceLineId

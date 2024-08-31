@@ -13,6 +13,7 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
+using DevExpress.XtraEditors.Mask;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
@@ -27,12 +28,14 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -59,6 +62,7 @@ namespace Foxoft
         Guid? relatedInvoiceId;
         public DcProcess dcProcess;
         private byte[] productTypeArr;
+        private decimal CurrAccBalanceBefore;
 
         private const int WM_GETTAG = 0x0400 + 1; // for acccess to tag via Windows API
 
@@ -266,7 +270,7 @@ namespace Foxoft
             {
                 for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                 {
-                    int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut);
+                    int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode) ? colQtyIn : colQtyOut);
                     int qtyInAbs = Math.Abs(qtyIn);
                     gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
                 }
@@ -469,7 +473,6 @@ namespace Foxoft
                     if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
                     {
                         btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-                        //FillCurrAccCode(form.dcCurrAcc);
                     }
                     else
                         XtraMessageBox.Show("Müştəri Kredit Limitin Aşır", "Diqqət");
@@ -582,9 +585,7 @@ namespace Foxoft
             {
                 if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
                 {
-                    object oldValue = gV.ActiveEditor?.OldEditValue;
-
-                    if (gV.ActiveEditor is not null && !Equals(e.Value, oldValue))
+                    if (gV.ActiveEditor is not null && !Equals(e.Value, gV.ActiveEditor.OldEditValue))
                     {
                         string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
 
@@ -669,9 +670,9 @@ namespace Foxoft
 
             if (column == colQty)
             {
-                if (new string[] { "RP", "WP", "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode) &&
-                    ((!trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "OUT")
-                    || (trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "IN")))
+                if (new string[] { "RP", "WP", "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
+                    && (!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)
+                    || trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)))
                 {
                     TrInvoiceLine trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
 
@@ -686,7 +687,7 @@ namespace Foxoft
                         int balance = CalcProductBalance(trInvoiceLine, wareHouse);
 
                         if (permitNegativeStock)
-                            if ((int)e.Value > balance)
+                            if (Convert.ToInt32(e.Value) > balance)
                             {
                                 e.ErrorText = "Stokda miqdar yoxdur";
                                 e.Valid = false;
@@ -694,14 +695,15 @@ namespace Foxoft
                     }
                 }
 
-                if (!String.IsNullOrEmpty(trInvoiceHeader.CurrAccCode) && new string[] { "RP", "WP", "RS", "WS" }.Contains(trInvoiceHeader.ProcessCode)
-                    && ((!trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "OUT")
-                    || (trInvoiceHeader.IsReturn && CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "IN")))
+                if (!String.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
+                    && new string[] { "RP", "WP", "RS", "WS" }.Contains(trInvoiceHeader.ProcessCode)
+                    && (!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)
+                    || trInvoiceHeader.IsReturn && (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)))
                 {
                     DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
-                    decimal sumInvo = CalcCurrAccCreditBalance((int)e.Value, view, trInvoiceHeader.CurrAccCode);
+                    decimal currAccBalance = CalcCurrAccCreditBalance(Convert.ToInt32(e.Value), view, trInvoiceHeader.CurrAccCode);
 
-                    if (sumInvo > dcCurrAcc.CreditLimit && dcCurrAcc.CreditLimit != 0)
+                    if (Math.Abs(currAccBalance) > dcCurrAcc.CreditLimit && dcCurrAcc.CreditLimit != 0 && Convert.ToInt32(e.Value) != 0)
                     {
                         e.ErrorText = "Müştəri Kredit Limitini Aşır!";
                         e.Valid = false;
@@ -764,20 +766,15 @@ namespace Foxoft
 
         private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
         {
-            decimal currAccBalance = (-1) * efMethods.SelectCurrAccBalance(currAccCode);
-            decimal invoiceSum = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
-
-            decimal balanceBefore = currAccBalance - invoiceSum;
-
-            decimal summaryValue = CalcSummmaryValue();
-            decimal balanceAfter = balanceBefore + summaryValue;
-
             object objPriceLoc = view.GetFocusedRowCellValue(colPriceLoc);
             decimal newValue = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
             decimal oldValue = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc));
 
-            decimal balanceAfterWithoutLine = balanceAfter - oldValue;
-            balanceAfter = balanceAfterWithoutLine + newValue;
+            decimal oldSummaryValue = CalcSummmaryValue();
+            decimal newSummaryValue = oldSummaryValue - oldValue + newValue;
+
+            decimal balanceAfter = CurrAccBalanceBefore - newSummaryValue;
+
             return balanceAfter;
         }
 
@@ -785,7 +782,7 @@ namespace Foxoft
         {
             decimal sum = 0;
 
-            for (int i = 0; i < gV_InvoiceLine.RowCount; i++)
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
             {
                 object value = gV_InvoiceLine.GetRowCellValue(i, colNetAmountLoc);
 
@@ -847,6 +844,18 @@ namespace Foxoft
         BaseEdit editorCustom;
         private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
         {
+            if (new Type[] { typeof(decimal), typeof(float), typeof(Single) }.Contains(gV_InvoiceLine.FocusedColumn.ColumnType))
+            {
+                TextEdit? editor = gV_InvoiceLine.ActiveEditor as TextEdit;
+                if (editor != null)
+                {
+                    CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                    customCulture.NumberFormat.NumberDecimalSeparator = ".";
+                    editor.Properties.Mask.MaskType = MaskType.Numeric;
+                    editor.Properties.Mask.Culture = customCulture; // Ensure '.' is used
+                }
+            }
+
             GridView view = sender as GridView;
             editorCustom = view.ActiveEditor;
             editorCustom.DoubleClick += editor_DoubleClick;
@@ -983,7 +992,6 @@ namespace Foxoft
                 if (entryHeader is not null)
                 {
                     TrInvoiceHeader trIH = (TrInvoiceHeader)entryHeader.CurrentValues.ToObject();
-                    //TrInvoiceHeader trIH = (TrInvoiceHeader)entryHeader.Entity;
 
                     string invoHeadStr = trIH.InvoiceHeaderId.ToString();
 
@@ -1014,7 +1022,6 @@ namespace Foxoft
                 if (entryLine is not null)
                 {
                     TrInvoiceLine trIL = (TrInvoiceLine)entryLine.CurrentValues.ToObject();
-                    //TrInvoiceLine trIL = (TrInvoiceLine)entryLine.Entity;
 
                     string invoLineStr = trIL.InvoiceLineId.ToString();
                     Guid quidLine = Guid.Parse(invoLineStr.Replace(invoLineStr.Substring(0, 8), "00000000")); // 00000000-ED42-11CE-BACD-00AA0057B223
@@ -1062,7 +1069,7 @@ namespace Foxoft
 
             decimal invoiceSumLoc = Math.Abs(efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId));
 
-            if (CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In")
+            if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
                 invoiceSumLoc *= (-1);
 
             bool isNegativ = false;
@@ -1349,8 +1356,6 @@ namespace Foxoft
                 }
 
 
-
-
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
@@ -1488,30 +1493,85 @@ namespace Foxoft
             Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-            //byte[] AsBytes = memoryStream.ToArray();
-            //string AsBase64String = Convert.ToBase64String(AsBytes);
-
             SendWhatsApp(phoneNum, "");
         }
 
         private void SendWhatsApp(string number, string message)
         {
-            if (String.IsNullOrEmpty(number))
+            if (string.IsNullOrEmpty(number))
             {
                 MessageBox.Show("Nömrə qeyd olunmayıb.");
                 return;
             }
 
-            number = number.Trim();
-            number = "+994" + number;
+            number = "+994" + number.Trim();
 
-            string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
+            string link = $"https://web.whatsapp.com/send?phone={number}&text={Uri.EscapeDataString(message)}";
 
-            Process myProcess = new();
-            myProcess.StartInfo.UseShellExecute = true;
-            myProcess.StartInfo.FileName = link;
-            myProcess.Start();
+            string profileName = Settings.Default.AppSetting.WhatsappChromeProfileName;
+
+            ProcessStartInfo startInfo;
+
+            if (!string.IsNullOrEmpty(profileName))
+            {
+                string profileCode = GetChromeProfileCodeByName(profileName);
+                if (profileCode == null)
+                {
+                    MessageBox.Show($"Chrome profil '{profileName}' tapılmadı."); // Chrome profil couldn't find
+                    return;
+                }
+                else
+                {
+                    startInfo = new ProcessStartInfo
+                    {
+                        FileName = @"C:\Program Files\Google\Chrome\Application\chrome.exe",
+                        Arguments = $"--profile-directory=\"{profileCode}\" \"{link}\"",
+                        UseShellExecute = false
+                    };
+                }
+            }
+            else
+            {
+                startInfo = new ProcessStartInfo
+                {
+                    FileName = link,
+                    UseShellExecute = true // UseShellExecute = true opens the URL in the default web browser
+                };
+            }
+
+            try
+            {
+                Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open link: {ex.Message}");
+            }
         }
+
+
+        private string GetChromeProfileCodeByName(string profileName)
+        {
+            string localStateFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Google\Chrome\User Data", "Local State");
+
+            if (!File.Exists(localStateFile))
+                return null;
+
+            string json = File.ReadAllText(localStateFile);
+            JObject localState = JObject.Parse(json);
+            var profileInfoCache = localState["profile"]["info_cache"];
+
+            foreach (var profile in profileInfoCache)
+            {
+                var profileCode = ((JProperty)profile).Name;
+                var visibleName = profile.First["name"]?.ToString();
+                if (visibleName == profileName)
+                    return profileCode;
+            }
+
+            return null;
+        }
+
 
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
         {
@@ -1524,10 +1584,6 @@ namespace Foxoft
                 if (curr is null)
                 {
                     e.Cancel = true;
-                }
-                else
-                {
-                    //FillCurrAccCode(curr);
                 }
             }
         }
@@ -1579,10 +1635,6 @@ namespace Foxoft
             GridControl gc = sender as GridControl;
             GridView gv = gc.FocusedView as GridView;
 
-            if (new Type[] { typeof(decimal), typeof(float), typeof(Single) }.Contains(gv.FocusedColumn.ColumnType))
-                if (e.KeyChar == '.')
-                    e.KeyChar = Convert.ToChar(",");
-
             if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
                 e.Handled = true;
         }
@@ -1591,10 +1643,6 @@ namespace Foxoft
         {
             if (e.KeyCode == Keys.Return) // Barcode Scan Device 
             {
-                //gV_InvoiceLine.SetFocusedRowCellValue(colQty, 1);
-
-                //gV_InvoiceLine.FocusedColumn = colBarcode;
-                //gV_InvoiceLine.MoveNext();
             }
         }
 
@@ -1603,27 +1651,16 @@ namespace Foxoft
             GridView view = sender as GridView;
             if (e.KeyCode == Keys.Enter)
             {
-                // Check if we are in a cell
                 if (view.FocusedColumn != null && view.IsEditing)
                 {
-                    // Perform your custom action if needed
-                    // Example: move to the next row
                     view.CloseEditor();
                     if (view.FocusedRowHandle == GridControl.NewItemRowHandle)
-                    {
-                        //view.SetFocusedRowCellValue(col_ProductCode, "P-002087");
-                        //view.UpdateCurrentRow();
-                        //view.AddNewRow(); // Add a new row if at the last row
                         view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
-                    }
                     else
                     {
                         view.MoveNext();
                         view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
                     }
-
-                    // Prevent the default behavior of moving to the next column
-                    //e.SuppressKeyPress = true;
                 }
             }
         }
@@ -1721,7 +1758,7 @@ namespace Foxoft
             gV_InvoiceLine.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
         }
 
-        private void gV_Report_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        private void gV_InvoiceLine_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.MenuType == GridMenuType.Column)
             {
@@ -1919,7 +1956,7 @@ namespace Foxoft
                                     string captionQty = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Qty);
                                     if (column.ColumnName == captionQty)
                                     {
-                                        GridColumn qty = CustomExtensions.ProcessDir(trInvoiceHeader.ProcessCode) == "In" ? colQtyIn : colQtyOut;
+                                        GridColumn qty = (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode) ? colQtyIn : colQtyOut;
                                         gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, qty, row[captionQty].ToString());
                                     }
 
@@ -2004,9 +2041,9 @@ namespace Foxoft
 
         private static string GetProductDescWide(DcProduct product)
         {
-            var idList = new[] { 4, 5 };
+            int[] featureTypeIds = new[] { 4, 5 };
             string arr = "";
-            foreach (var item in product?.TrProductFeatures.Where(f => idList.Contains(f.FeatureTypeId)))
+            foreach (var item in product?.TrProductFeatures.Where(f => featureTypeIds.Contains(f.FeatureTypeId)))
                 arr += " " + item.FeatureCode;
             string productDescWide = product.HierarchyCode + " " + product.ProductDesc + arr;
             return productDescWide;
@@ -2064,6 +2101,8 @@ namespace Foxoft
 
                 if (curr is not null)
                 {
+                    CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.OperationDate.Add(trInvoiceHeader.OperationTime)), 2);
+
                     if (Settings.Default.AppSetting.AutoSave)
                         efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
 
@@ -2235,19 +2274,19 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            GridView view = sender as GridView;
-            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
-            object obj = view.GetRowCellValue(rowInd, col_ProductCode);
+            //GridView view = sender as GridView;
+            int rowInd = gV_InvoiceLine.GetRowHandle(e.ListSourceRowIndex);
+            object obj = gV_InvoiceLine.GetRowCellValue(rowInd, col_ProductCode);
 
-            if (obj is not null)
+            if (obj is not null && new GridColumn[] { col_ProductDesc, colBalance }.Contains(e.Column) && e.IsGetData)
             {
-                string productCode = obj?.ToString();
+                string productCode = obj.ToString();
                 DcProduct dcProduct = subContext.DcProducts // more fast query
                                         .Include(x => x.DcHierarchy)
                                         .Include(x => x.TrProductFeatures)
                                         .FirstOrDefault(x => x.ProductCode == productCode);
 
-                if (dcProduct is not null && e.IsGetData)
+                if (dcProduct is not null)
                 {
                     dcProduct.Balance = subContext.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                                                  .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
@@ -2255,15 +2294,10 @@ namespace Foxoft
                                                                  .Sum(x => x.QtyIn - x.QtyOut);
 
                     if (e.Column == col_ProductDesc)
-                    {
-                        string productDescWide = GetProductDescWide(dcProduct);
-                        e.Value = productDescWide;
-                    }
+                        e.Value = GetProductDescWide(dcProduct);
 
                     if (e.Column == colBalance)
-                    {
                         e.Value = dcProduct.Balance;
-                    }
                 }
             }
         }

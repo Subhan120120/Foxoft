@@ -21,7 +21,6 @@ namespace Foxoft.Models
             TrInvoiceLines = new HashSet<TrInvoiceLine>();
             TrPrices = new HashSet<TrPrice>();
             TrProductFeatures = new HashSet<TrProductFeature>();
-            TrProductHierarchies = new HashSet<TrProductHierarchy>();
             TrProductDiscounts = new HashSet<TrProductDiscount>();
             TrPriceListLines = new HashSet<TrPriceListLine>();
         }
@@ -112,7 +111,7 @@ namespace Foxoft.Models
         public int Balance { get; set; }
 
         [NotMapped]
-        [Display(Name = "Son Alış Qiy.")]
+        [Display(Name = "Maya Dəyəri.")]
         public decimal? ProductCost { get; set; }
 
         [NotMapped]
@@ -129,7 +128,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrPrice> TrPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
-        public virtual ICollection<TrProductHierarchy> TrProductHierarchies { get; set; }
         public virtual ICollection<TrProductDiscount> TrProductDiscounts { get; set; }
         public virtual ICollection<TrPriceListLine> TrPriceListLines { get; set; }
         public virtual ICollection<TrProductBarcode> TrProductBarcodes { get; set; }

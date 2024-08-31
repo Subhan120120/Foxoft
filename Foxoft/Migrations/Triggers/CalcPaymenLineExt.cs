@@ -16,23 +16,33 @@ namespace Foxoft.Migrations
                                     AS
                                     
                                     BEGIN
-                                        INSERT INTO trInvoiceLineExts (InvoiceLineId, PriceDiscounted) (SELECT InvoiceLineId, PriceLoc * (100 - PosDiscount) / 100  FROM inserted)
-                                    
-                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EI' then ih.InvoiceHeaderId 
-                                    															when ihEx.ProcessCode = 'RP' then ihEx.InvoiceHeaderId end 
-                                    																from inserted  
-                                    																left join TrInvoiceHeaders ihEx on ihEx.InvoiceHeaderId = inserted.InvoiceHeaderId
-                                    																left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = ihEx.RelatedInvoiceId)
-                                    
-                                    	UPDATE TrInvoiceLineExts
-                                    	set LineExpences = (select sum(NetAmountLoc)
-                                    						from TrInvoiceLines  rl 
-                                    						left join TrInvoiceHeaders rh on rh.InvoiceHeaderId = rl.InvoiceHeaderId
-                                    						where rh.ProcessCode = 'EI' and RelatedInvoiceId = @invoiceheader)
-                                    						/ (select sum(NetAmountLoc) from TrInvoiceLines where TrInvoiceLines.InvoiceHeaderId = @invoiceheader) * TrInvoiceLineExts.PriceDiscounted
-                                    						From inserted
-                                    						WHERE TrInvoiceLineExts.InvoiceLineId in (select InvoiceLineId from TrInvoiceLines where InvoiceHeaderId = @invoiceheader)
-                                    
+                                        INSERT INTO trInvoiceLineExts (InvoiceLineId, PriceDiscounted, PriceDiscountedLoc)
+										   SELECT InvoiceLineId, Price * (1 - PosDiscount / 100), PriceLoc * (1 - PosDiscount / 100)
+										   FROM inserted;
+										   
+										   -- Declare @invoiceheader to capture unique invoice header based on condition
+										   Declare @invoiceheader uniqueidentifier = (SELECT TOP 1 
+										                                                 CASE 
+										                                                     WHEN ihEx.ProcessCode = 'EI' THEN ih.InvoiceHeaderId 
+										                                                     WHEN ihEx.ProcessCode = 'RP' THEN ihEx.InvoiceHeaderId 
+										                                                 END 
+										                                              FROM inserted  
+										                                              LEFT JOIN TrInvoiceHeaders ihEx ON ihEx.InvoiceHeaderId = inserted.InvoiceHeaderId
+										                                              LEFT JOIN TrInvoiceHeaders ih ON ih.InvoiceHeaderId = ihEx.RelatedInvoiceId);
+										
+										   -- Calculate LineExpences for each relevant InvoiceLineId
+										   UPDATE TrInvoiceLineExts
+										   SET LineExpences = (SELECT SUM(NetAmountLoc)
+										                       FROM TrInvoiceLines rl
+										                       LEFT JOIN TrInvoiceHeaders rh ON rh.InvoiceHeaderId = rl.InvoiceHeaderId
+										                       WHERE rh.ProcessCode = 'EI' AND RelatedInvoiceId = @invoiceheader)
+										                       / (SELECT SUM(NetAmountLoc) 
+										                          FROM TrInvoiceLines 
+										                          WHERE TrInvoiceLines.InvoiceHeaderId = @invoiceheader) 
+										                       * TrInvoiceLineExts.PriceDiscountedLoc
+										   WHERE TrInvoiceLineExts.InvoiceLineId IN (SELECT DISTINCT InvoiceLineId 
+										                                             FROM TrInvoiceLines 
+										                                             WHERE InvoiceHeaderId = @invoiceheader);
                                     END");
 
             migrationBuilder.Sql(@"CREATE OR ALTER TRIGGER [dbo].[CalcPaymenLineExt_UPDATE]
@@ -41,23 +51,34 @@ namespace Foxoft.Migrations
                                     AS
                                     
                                     BEGIN
-                                    	UPDATE trInvoiceLineExts	SET PriceDiscounted = (SELECT PriceLoc * (100 - PosDiscount) / 100  FROM inserted) 
-                                    	WHERE InvoiceLineId in (SELECT InvoiceLineId FROM inserted)
-                                    
-                                    	Declare @invoiceheader uniqueidentifier = (select top 1 case when ihEx.ProcessCode = 'EI' then ih.InvoiceHeaderId 
-                                    															when ihEx.ProcessCode = 'RP' then ihEx.InvoiceHeaderId end 
-                                    																from inserted  
-                                    																left join TrInvoiceHeaders ihEx on ihEx.InvoiceHeaderId = inserted.InvoiceHeaderId
-                                    																left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = ihEx.RelatedInvoiceId)
-                                    
-                                    	UPDATE TrInvoiceLineExts
-                                    	set LineExpences = (select sum(NetAmountLoc)
-                                    						from TrInvoiceLines  rl 
-                                    						left join TrInvoiceHeaders rh on rh.InvoiceHeaderId = rl.InvoiceHeaderId
-                                    						where rh.ProcessCode = 'EI' and RelatedInvoiceId = @invoiceheader)
-                                    						/ (select sum(NetAmountLoc) from TrInvoiceLines where TrInvoiceLines.InvoiceHeaderId = @invoiceheader) * TrInvoiceLineExts.PriceDiscounted
-                                    						From inserted
-                                    						WHERE TrInvoiceLineExts.InvoiceLineId in (select InvoiceLineId from TrInvoiceLines where InvoiceHeaderId = @invoiceheader)
+                                            -- Update PriceDiscounted with correlated subquery
+                                            UPDATE trInvoiceLineExts	
+                                            SET PriceDiscountedLoc = (SELECT PriceLoc * (1 - PosDiscount / 100) FROM inserted WHERE inserted.InvoiceLineId = trInvoiceLineExts.InvoiceLineId)
+                                            , PriceDiscounted = (SELECT Price * (1 - PosDiscount / 100) FROM inserted WHERE inserted.InvoiceLineId = trInvoiceLineExts.InvoiceLineId)
+                                            WHERE InvoiceLineId IN (SELECT InvoiceLineId FROM inserted)
+
+                                            -- Get the appropriate @invoiceheader
+                                            DECLARE @invoiceheader uniqueidentifier = 
+                                                (SELECT TOP 1 
+                                                    CASE WHEN ihEx.ProcessCode = 'EI' THEN ih.InvoiceHeaderId 
+                                                         WHEN ihEx.ProcessCode = 'RP' THEN ihEx.InvoiceHeaderId 
+                                                    END 
+                                                FROM inserted  
+                                                LEFT JOIN TrInvoiceHeaders ihEx ON ihEx.InvoiceHeaderId = inserted.InvoiceHeaderId
+                                                LEFT JOIN TrInvoiceHeaders ih ON ih.InvoiceHeaderId = ihEx.RelatedInvoiceId)
+
+                                            -- Update LineExpences with correlated subquery
+                                            UPDATE TrInvoiceLineExts
+                                            SET LineExpences = 
+                                                (SELECT SUM(NetAmountLoc)
+                                                 FROM TrInvoiceLines rl 
+                                                 LEFT JOIN TrInvoiceHeaders rh ON rh.InvoiceHeaderId = rl.InvoiceHeaderId
+                                                 WHERE rh.ProcessCode = 'EI' AND RelatedInvoiceId = @invoiceheader)
+                                                 / 
+                                                 (SELECT SUM(NetAmountLoc) FROM TrInvoiceLines WHERE TrInvoiceLines.InvoiceHeaderId = @invoiceheader) 
+                                                 * TrInvoiceLineExts.PriceDiscountedLoc
+                                            WHERE TrInvoiceLineExts.InvoiceLineId IN 
+                                                (SELECT InvoiceLineId FROM TrInvoiceLines WHERE InvoiceHeaderId = @invoiceheader)
                                     END");
 
             migrationBuilder.Sql(@"CREATE OR ALTER TRIGGER [dbo].[CalcPaymenLineExt_DELETE]
@@ -76,14 +97,17 @@ namespace Foxoft.Migrations
                                     																left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = ihEx.RelatedInvoiceId)
                                     
                                     	UPDATE TrInvoiceLineExts
-                                    	set LineExpences = (select sum(NetAmountLoc)
-                                    						from TrInvoiceLines  rl 
-                                    						left join TrInvoiceHeaders rh on rh.InvoiceHeaderId = rl.InvoiceHeaderId
-                                    						where rh.ProcessCode = 'EI' and RelatedInvoiceId = @invoiceheader)
-                                    						/ (select sum(NetAmountLoc) from TrInvoiceLines where TrInvoiceLines.InvoiceHeaderId = @invoiceheader) * TrInvoiceLineExts.PriceDiscounted
-                                    						From deleted
-                                    						WHERE TrInvoiceLineExts.InvoiceLineId in (select InvoiceLineId from TrInvoiceLines where InvoiceHeaderId = @invoiceheader)
-                                    				
+										SET LineExpences = 
+										    (SELECT SUM(NetAmountLoc)
+										     FROM TrInvoiceLines rl 
+										     LEFT JOIN TrInvoiceHeaders rh ON rh.InvoiceHeaderId = rl.InvoiceHeaderId
+										     WHERE rh.ProcessCode = 'EI' AND RelatedInvoiceId = @invoiceheader)
+										     / 
+										     (SELECT SUM(NetAmountLoc) FROM TrInvoiceLines WHERE TrInvoiceLines.InvoiceHeaderId = @invoiceheader) 
+										     * TrInvoiceLineExts.PriceDiscountedLoc
+										WHERE TrInvoiceLineExts.InvoiceLineId IN 
+										    (SELECT InvoiceLineId FROM TrInvoiceLines WHERE InvoiceHeaderId = @invoiceheader)
+										         				
                                     END
                                 ");
         }

@@ -15,6 +15,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace Foxoft
 {
@@ -60,7 +61,8 @@ namespace Foxoft
             : this(productTypeCode, false)
         {
             this.dcProduct.ProductCode = productCode;
-            ItemForProductCode.Enabled = false;
+            ProductCodeTextEdit.Properties.ReadOnly = true;
+            ProductCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
         private void InitializeControlText()
