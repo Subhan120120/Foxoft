@@ -69,19 +69,23 @@ namespace Foxoft.AppCode
         {
             string queryTop = AddTop(query, int.MaxValue);
 
-            string userQuery = @$" SELECT *, ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS RowNum FROM ({queryTop}) AS UserQuery";
-
-            filter = !string.IsNullOrEmpty(filter) ? "WHERE " + filter : filter;
-
-            string queryMaster = $@"select * from ({userQuery}) as queryMaster {filter} ORDER BY queryMaster.RowNum";
+            string queryMaster = AddFilter(filter, queryTop);
 
             string queryReady = ReplaceFilters(queryMaster, dcReport);
 
             sqlParameters = GetParameters(dcReport);
 
-            //query = AddFilterInsideQuery(query, filter);
-
             return queryReady;
+        }
+
+        private static string AddFilter(string queryTop, string filter)
+        {
+            string userQuery = @$" SELECT *, ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS RowNum FROM ({queryTop}) AS UserQuery";
+
+            filter = !string.IsNullOrEmpty(filter) ? "WHERE " + filter : filter;
+
+            string queryMaster = $@"select * from ({userQuery}) as queryMaster {filter} ORDER BY queryMaster.RowNum";
+            return queryMaster;
         }
 
         public List<QueryParameter> ConvertSqlParametersToQueryParameters(SqlParameter[] sqlParameters)
