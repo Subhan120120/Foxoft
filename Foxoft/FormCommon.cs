@@ -317,9 +317,9 @@ namespace Foxoft
             using FormProductList form = new(new byte[] { 1, 3 }, productCode);
 
             try
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.dcProduct.ProductCode;
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                        editor.EditValue = form.dcProduct.ProductCode;
             }
             catch (Exception ex)
             {

@@ -66,17 +66,12 @@ namespace Foxoft
 
             if (!String.IsNullOrEmpty(dcReport?.ReportQuery))
             {
-                string query = cM.AddTop(dcReport.ReportQuery, 1);
-
-                string qryMaster = "select * from (" + query + " \n) as Master " + " order by RowNumber";
-
                 try
                 {
-                    //string qry = cM.ClearVariablesFromQuery(qryMaster);
-                    string qry = cM.AddFilters(qryMaster, dcReport);
-                    SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
+                    SqlParameter[] sqlParameters;
+                    string query = cM.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters); ;
 
-                    DataTable dt = adoMethods.SqlGetDt(qry, sqlParameters); // if query is correct 
+                    DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // if query is correct 
 
                     if (!efMethods.ReportExist(dcReport.ReportId)) //if doesnt exist
                         efMethods.InsertReport(dcReport);

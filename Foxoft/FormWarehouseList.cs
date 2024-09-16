@@ -188,31 +188,32 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraSaveFileDialog sFD = new();
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = $@"\{Text}.xlsx";
-            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            sFD.DefaultExt = "*.xlsx";
+            CustomExtensions.ExportToExcel(this, Text, gC_WarehouseList);
+            //XtraSaveFileDialog sFD = new();
+            //sFD.Filter = "Excel Faylı|*.xlsx";
+            //sFD.Title = "Excel Faylı Yadda Saxla";
+            //sFD.FileName = $@"\{Text}.xlsx";
+            //sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //sFD.DefaultExt = "*.xlsx";
 
-            var fileName = Invoke((Func<string>)(() =>
-            {
-                if (sFD.ShowDialog() == DialogResult.OK)
-                {
-                    gC_WarehouseList.ExportToXlsx(sFD.FileName);
+            //var fileName = Invoke((Func<string>)(() =>
+            //{
+            //    if (sFD.ShowDialog() == DialogResult.OK)
+            //    {
+            //        gC_WarehouseList.ExportToXlsx(sFD.FileName);
 
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        Process p = new Process();
-                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                        p.Start();
-                    }
+            //        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            //        {
+            //            Process p = new Process();
+            //            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+            //            p.Start();
+            //        }
 
-                    return "Ok";
-                }
-                else
-                    return "Fail";
-            }));
+            //        return "Ok";
+            //    }
+            //    else
+            //        return "Fail";
+            //}));
         }
 
         private void bBI_WarehouseDelete_ItemClick(object sender, ItemClickEventArgs e)

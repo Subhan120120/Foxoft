@@ -14,7 +14,7 @@ namespace Foxoft
 {
    public static class ReflectionExt
    {
-      public static T GetAttribute<T>(this MemberInfo member, bool isRequired)
+      private static T GetAttribute<T>(this MemberInfo member, bool isRequired)
       where T : Attribute
       {
          var attribute = member.GetCustomAttributes(typeof(T), false).SingleOrDefault();
@@ -51,7 +51,7 @@ namespace Foxoft
          return attr.Name;
       }
 
-      public static MemberInfo GetPropertyInformation(Expression expression)
+        private static MemberInfo GetPropertyInformation(Expression expression)
       {
          Debug.Assert(expression != null, "propertyExpression != null");
          MemberExpression memberExpr = expression as MemberExpression;

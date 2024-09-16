@@ -1,13 +1,10 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraRichEdit.Import.Html;
+using DevExpress.XtraLayout;
+using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -19,6 +16,7 @@ namespace Foxoft
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private TrPaymentLine trPaymentLineCash = new();
         private TrPaymentLine trPaymentLineCashless = new();
+        private TrPaymentPlan TrPaymentPlan = new();
         private EfMethods efMethods = new();
 
         private bool isNegativ = false;
@@ -31,6 +29,15 @@ namespace Foxoft
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+
+            LUE_PaymentPlan.Properties.ValueMember = nameof(DcPaymentPlan.PaymentPlanCode);
+            LUE_PaymentPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
+            LUE_PaymentPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
+            {
+                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
+            });
 
             lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
             lUE_CashlessCurrency.Properties.DataSource = efMethods.SelectCurrencies();
@@ -218,10 +225,6 @@ namespace Foxoft
         {
         }
 
-        private void simpleButtonUpdateBonus_Click(object sender, EventArgs e)
-        {
-        }
-
         private void lUE_CashlessCurrency_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit editor = sender as LookUpEdit;
@@ -271,7 +274,6 @@ namespace Foxoft
                 }
             }
 
-
             if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
                 EfMethods efMethods = new();
@@ -298,7 +300,6 @@ namespace Foxoft
                 }
                 else
                 {
-
                     efMethods.InsertPaymentHeader(trPaymentHeader);
 
                     if (trPaymentLineCash.PaymentLoc > 0)
@@ -313,6 +314,12 @@ namespace Foxoft
                         trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
                         trPaymentLineCashless.Payment = isNegativ ? trPaymentLineCashless.Payment * (-1) : trPaymentLineCashless.Payment;
                         efMethods.InsertPaymentLine(trPaymentLineCashless);
+
+                        if (!string.IsNullOrEmpty(TrPaymentPlan.PaymentPlanCode))
+                        {
+                            TrPaymentPlan.PaymentLineId = trPaymentLineCashless.PaymentLineId;
+                            efMethods.InsertTrPaymentPlan(TrPaymentPlan);
+                        }
                     }
                 }
 
@@ -355,12 +362,29 @@ namespace Foxoft
             }
         }
 
+
         private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit editor = sender as LookUpEdit;
             trPaymentLineCashless.PaymentMethodId = Convert.ToInt32(editor.EditValue);
             object value = editor.GetColumnValue("DefaultCashRegCode");
             btnEdit_BankAccout.EditValue = value;
+
+            List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(trPaymentLineCashless.PaymentMethodId);
+            if (paymentPlans.Count > 0)
+            {
+                LUE_PaymentPlan.Properties.DataSource = paymentPlans;
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Always);
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Always);
+            }
+            else
+            {
+                LUE_PaymentPlan.Properties.DataSource = null;
+                txt_Commission.EditValue = null;
+                //LUE_PaymentPlan.EditValue = null;
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Never);
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Never);
+            }
         }
 
         private void btnEdit_CashRegister_EditValueChanged(object sender, EventArgs e)
@@ -372,7 +396,21 @@ namespace Foxoft
         private void btnEdit_BankAccout_EditValueChanged(object sender, EventArgs e)
         {
             ButtonEdit buttonEdit = sender as ButtonEdit;
-            trPaymentLineCashless.CashRegisterCode = buttonEdit.EditValue.ToString();
+            trPaymentLineCashless.CashRegisterCode = buttonEdit.EditValue?.ToString();
+        }
+
+        private void LUE_PaymentPlan_EditValueChanged(object sender, EventArgs e)
+        {
+            string paymentPlan = LUE_PaymentPlan.EditValue?.ToString();
+            TrPaymentPlan.PaymentPlanCode = paymentPlan;
+            //txtEdit_Cashless.DoValidate();
+        }
+
+        private void txt_Commission_EditValueChanged(object sender, EventArgs e)
+        {
+            decimal commission = Convert.ToDecimal(txt_Commission.EditValue);
+            TrPaymentPlan.Commission = commission;
+            //txtEdit_Cashless.DoValidate();
         }
     }
 }

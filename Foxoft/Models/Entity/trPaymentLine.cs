@@ -121,6 +121,7 @@ namespace Foxoft.Models
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual DcPaymentMethod DcPaymentMethod { get; set; }
+        public virtual TrPaymentPlan TrPaymentPlan { get; set; }
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
 

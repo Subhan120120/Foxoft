@@ -158,16 +158,6 @@ namespace Foxoft
                 }
             }
 
-            //void RegistryWriteValue(string keyName, string valueName, object value)
-            //{
-            //    using (RegistryKey key = Registry.LocalMachine.CreateSubKey(keyName))
-            //    {
-            //        if (key != null)
-            //        {
-            //            key.SetValue(valueName, value);
-            //        }
-            //    }
-            //}
         }
     }
 }

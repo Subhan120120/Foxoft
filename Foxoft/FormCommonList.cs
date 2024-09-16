@@ -354,31 +354,33 @@ namespace Foxoft
 
         private void bBI_ExportExcel_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            XtraSaveFileDialog sFD = new();
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = $@"\{Text}.xlsx";
-            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            sFD.DefaultExt = "*.xlsx";
+            CustomExtensions.ExportToExcel(this, Text, gridControl1);
 
-            var fileName = Invoke((Func<string>)(() =>
-            {
-                if (sFD.ShowDialog() == DialogResult.OK)
-                {
-                    gridView1.ExportToXlsx(sFD.FileName);
+            //XtraSaveFileDialog sFD = new();
+            //sFD.Filter = "Excel Faylı|*.xlsx";
+            //sFD.Title = "Excel Faylı Yadda Saxla";
+            //sFD.FileName = $@"\{Text}.xlsx";
+            //sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //sFD.DefaultExt = "*.xlsx";
 
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        Process p = new Process();
-                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                        p.Start();
-                    }
+            //var fileName = Invoke((Func<string>)(() =>
+            //{
+            //    if (sFD.ShowDialog() == DialogResult.OK)
+            //    {
+            //        gridView1.ExportToXlsx(sFD.FileName);
 
-                    return "Ok";
-                }
-                else
-                    return "Fail";
-            }));
+            //        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            //        {
+            //            Process p = new Process();
+            //            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+            //            p.Start();
+            //        }
+
+            //        return "Ok";
+            //    }
+            //    else
+            //        return "Fail";
+            //}));
         }
 
         private void gridView1_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)

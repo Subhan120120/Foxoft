@@ -56,15 +56,10 @@ namespace Foxoft
             this.dcReport = efMethods.SelectReport(Report.ReportId); // reload dcReport
             this.Text = Report.ReportName;
 
-            dcReport.ReportQuery = cM.AddFilters(dcReport.ReportQuery, dcReport);
+            SqlParameter[] sqlParameters;
+            string qry = cM.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters, 1);
 
-            if (!String.IsNullOrEmpty(dcReport.ReportQuery))
-            {
-                SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
-                string qry = cM.AddTop(dcReport.ReportQuery, 1);
-                filterControl_Outer.SourceControl = adoMethods.SqlGetDt(qry, sqlParameters);
-            }
-
+            filterControl_Outer.SourceControl = adoMethods.SqlGetDt(qry, sqlParameters);
             filterControl_Outer.FilterString = dcReport.ReportFilter;
 
             filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types

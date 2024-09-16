@@ -1,25 +1,18 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.DataAccess.Sql;
-using DevExpress.Mvvm.Native;
+﻿using DevExpress.DataAccess.Sql;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
-using DevExpress.XtraEditors;
 using DevExpress.XtraPrinting;
-using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.UserDesigner;
 using Foxoft.AppCode;
 using Foxoft.Models;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+using Microsoft.Data.SqlClient;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormReportPreview : DevExpress.XtraBars.Ribbon.RibbonForm
+    public partial class FormReportPreview : RibbonForm
     {
         private XtraReport xReport;
         private EfMethods efMethods = new();
@@ -38,35 +31,28 @@ namespace Foxoft
         {
             dcReport = efMethods.SelectReport(dcReport.ReportId);
 
-            query = cM.AddTop(query, int.MaxValue);
+            SqlParameter[] sqlParameters;
+            string qryMaster = "";
 
-            string qryMaster = $"Select TOP {int.MaxValue} * from ( " + query + " \n) as master"; // 'TOP' daha sonraki 'ORDER BY' ucundur
+            query = cM.ApplyFilter(dcReport, query, filter, out sqlParameters);
 
-            if (!string.IsNullOrEmpty(filter))
-                qryMaster += " where " + filter;
+            List<QueryParameter> qryParams = cM.ConvertSqlParametersToQueryParameters(sqlParameters);
 
-            qryMaster += " order by RowNumber";
-
-            qryMaster = cM.AddFilters(qryMaster, dcReport);
-
-            CustomSqlQuery mainQuery = new("Main", qryMaster);
-
-            mainQuery = cM.AddParameters(mainQuery, dcReport);
-
+            CustomSqlQuery mainQuery = new("Main", query);
+            mainQuery.Parameters.AddRange(qryParams);
 
             List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
 
             foreach (TrReportSubQuery reportSubQuery in dcReport.TrReportSubQueries)
             {
-                reportSubQuery.SubQueryText = cM.AddTop(reportSubQuery.SubQueryText, int.MaxValue);
-
                 reportSubQuery.SubQueryText = cM.AddRelation(qryMaster, reportSubQuery);
 
-                reportSubQuery.SubQueryText = cM.AddFilters(reportSubQuery.SubQueryText, dcReport);
+                SqlParameter[] sqlParameters1;
+                string qry = cM.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
 
+                List<QueryParameter> qryParams1 = cM.ConvertSqlParametersToQueryParameters(sqlParameters1);
                 CustomSqlQuery subQuery = new(reportSubQuery.SubQueryName, reportSubQuery.SubQueryText);
-
-                subQuery = cM.AddParameters(subQuery, dcReport);
+                subQuery.Parameters.AddRange(qryParams1);
 
                 sqlQueries.Add(subQuery);
             }
@@ -82,6 +68,9 @@ namespace Foxoft
                 Show();
             }
         }
+
+
+
 
         private BarButtonItem CreateItem()
         {

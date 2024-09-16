@@ -116,7 +116,7 @@ namespace Foxoft
                 if (!String.IsNullOrEmpty(dcReport.ReportQuery))
                 {
                     string typeArr = String.Join(",", currAccTypeArr);
-                    string clause = " Where CurrAccTypeCode in (" + typeArr + ") ";
+                    string clause = " CurrAccTypeCode in (" + typeArr + ") ";
 
                     string pattern = @"(?i)\bselect\b[\s\S]*?\bPersonalTypeCode\b";
                     bool columnExists = Regex.IsMatch(dcReport.ReportQuery, pattern);
@@ -124,15 +124,11 @@ namespace Foxoft
                     if (columnExists && personalTypes is not null && personalTypes.Length > 0)
                     {
                         string subTypeArr = String.Join(",", personalTypes);
-                        clause += " AND PersonalTypeCode in (" + subTypeArr + ") ";
+                        clause += "[PersonalTypeCode] in (" + subTypeArr + ") ";
                     }
 
-                    string query = cM.AddTop(dcReport.ReportQuery, int.MaxValue);
-
-                    query = cM.AddFilters(query, dcReport);
-                    SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
-
-                    string qryMaster = "select * from (" + query + " \n) as Master " + clause + " order by RowNumber";
+                    SqlParameter[] sqlParameters;
+                    string qryMaster = cM.ApplyFilter(dcReport, dcReport.ReportQuery, clause, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
@@ -154,7 +150,6 @@ namespace Foxoft
             gV_CurrAccList.BestFitColumns();
             gV_CurrAccList.MakeRowVisible(gV_CurrAccList.FocusedRowHandle);
         }
-
 
         private void AddReports()
         {
@@ -515,31 +510,32 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraSaveFileDialog sFD = new();
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            sFD.Title = "Excel Faylı Yadda Saxla";
-            sFD.FileName = this.Text;
-            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            sFD.DefaultExt = "*.xlsx";
+            CustomExtensions.ExportToExcel(this, Text, gC_CurrAccList);
+            //XtraSaveFileDialog sFD = new();
+            //sFD.Filter = "Excel Faylı|*.xlsx";
+            //sFD.Title = "Excel Faylı Yadda Saxla";
+            //sFD.FileName = this.Text;
+            //sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //sFD.DefaultExt = "*.xlsx";
 
-            var fileName = Invoke((Func<string>)(() =>
-            {
-                if (sFD.ShowDialog() == DialogResult.OK)
-                {
-                    gC_CurrAccList.ExportToXlsx(sFD.FileName);
+            //var fileName = Invoke((Func<string>)(() =>
+            //{
+            //    if (sFD.ShowDialog() == DialogResult.OK)
+            //    {
+            //        gC_CurrAccList.ExportToXlsx(sFD.FileName);
 
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        Process p = new Process();
-                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                        p.Start();
-                    }
+            //        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            //        {
+            //            Process p = new Process();
+            //            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+            //            p.Start();
+            //        }
 
-                    return "Ok";
-                }
-                else
-                    return "Fail";
-            }));
+            //        return "Ok";
+            //    }
+            //    else
+            //        return "Fail";
+            //}));
         }
 
         private void bBI_CurrAccDelete_ItemClick(object sender, ItemClickEventArgs e)

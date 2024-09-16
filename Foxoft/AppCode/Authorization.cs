@@ -32,39 +32,51 @@ namespace Foxoft
 
         public static bool Login(string user, string password, bool Checked)
         {
-            if (efMethods.Login(user, password))
+            DcCurrAcc userCurrAcc = efMethods.Login(user, password);
+
+            if (userCurrAcc != null)
             {
-                List<TrSession> trSessions = efMethods.SelectSessions();
+                DcCurrAcc store = efMethods.SelectStore(userCurrAcc.StoreCode);
 
-                foreach (var session in trSessions)
+                if (store != null)
                 {
-                    try
-                    {
-                        Process process = Process.GetProcessById(session.PID);
+                    List<TrSession> trSessions = efMethods.SelectSessions();
 
-                        if (process is not null && session.CurrAccCode.Equals(user, StringComparison.InvariantCultureIgnoreCase))
+                    foreach (var session in trSessions)
+                    {
+                        try
                         {
-                            XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
-                            return false;
+                            Process process = Process.GetProcessById(session.PID);
+
+                            if (process is not null && session.CurrAccCode.Equals(user, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
+                                return false;
+                            }
+                        }
+                        catch (ArgumentException)
+                        {
+                            efMethods.DeleteSession(session);
                         }
                     }
-                    catch (ArgumentException)
-                    {
-                        efMethods.DeleteSession(session);
-                    }
+
+                    TrSession trSession = new();
+                    trSession.CurrAccCode = user;
+                    trSession.PID = Process.GetCurrentProcess().Id;
+                    trSession.CreatedDate = DateTime.Now;
+
+                    efMethods.InsertTrSession(trSession);
+
+                    Authorization.CurrAccCode = user;
+                    Authorization.DcRoles = efMethods.SelectRoles(user);
+                    Authorization.StoreCode = efMethods.SelectStoreCode(user);
+                    Authorization.OfficeCode = efMethods.SelectOfficeCode(user);
                 }
-
-                TrSession trSession = new();
-                trSession.CurrAccCode = user;
-                trSession.PID = Process.GetCurrentProcess().Id;
-                trSession.CreatedDate = DateTime.Now;
-
-                efMethods.InsertTrSession(trSession);
-
-                Authorization.CurrAccCode = user;
-                Authorization.DcRoles = efMethods.SelectRoles(user);
-                Authorization.StoreCode = efMethods.SelectStoreCode(user);
-                Authorization.OfficeCode = efMethods.SelectOfficeCode(user);
+                else
+                {
+                    XtraMessageBox.Show("Mağaza Aktiv Deyil");
+                    return false;
+                }
             }
             else
             {

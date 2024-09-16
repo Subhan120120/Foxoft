@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
 using System.Windows.Controls;
 using static DevExpress.Skins.SolidColorHelper;
+using Foxoft.Migrations;
 
 namespace Foxoft
 {
@@ -1109,6 +1110,13 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int InsertTrPaymentPlan(TrPaymentPlan trPaymentPlan)
+        {
+            using subContext db = new();
+            db.TrPaymentPlans.Add(trPaymentPlan);
+            return db.SaveChanges();
+        }
+
         public bool PaymentHeaderExist(Guid paymentHeaderId)
         {
             using subContext db = new();
@@ -1384,6 +1392,12 @@ namespace Foxoft
             return db.DcPaymentMethods.ToList();
         }
 
+        public List<DcPaymentPlan> SelectPaymentPlans(int paymentMethodId)
+        {
+            using subContext db = new();
+            return db.DcPaymentPlans.Where(x => x.PaymentMethodId == paymentMethodId).ToList();
+        }
+
         public DcPaymentMethod SelectPaymentMethod(int paymentMethodId)
         {
             using subContext db = new();
@@ -1473,6 +1487,15 @@ namespace Foxoft
                        .Where(x => x.CurrAccTypeCode == 4)
                        .OrderBy(x => x.CreatedDate)
                        .ToList();
+        }
+
+        public DcCurrAcc SelectStore(string storeCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                       .Where(x => x.CurrAccTypeCode == 4)
+                       .Where(x => x.CurrAccCode == storeCode)
+                       .FirstOrDefault();
         }
 
         public List<DcCurrAcc> SelectStoresIncludeDisabled()
@@ -1565,16 +1588,17 @@ namespace Foxoft
             return defCustomer;
         }
 
-        public bool Login(string CurrAccCode, string Password)
+        public DcCurrAcc Login(string CurrAccCode, string Password)
         {
             if (string.IsNullOrEmpty(Password.Trim()))
-                return false;
+                return null;
             else
             {
                 using subContext db = new();
                 return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                         .Where(x => x.CurrAccCode == CurrAccCode)
-                        .Any(x => x.NewPassword == Password);
+                        .Where(x => x.NewPassword == Password)
+                        .FirstOrDefault();
             }
         }
 

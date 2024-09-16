@@ -40,6 +40,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using WaitForm_SetDescription;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
@@ -87,10 +88,6 @@ namespace Foxoft
             if (!currAccHasClaims)
                 RPG_Payment.Visible = false;
 
-            //string storeCode = lUE_StoreCode.EditValue?.ToString();
-            //List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
-
-            //lUE_ToWarehouseCode.Properties.DataSource = efMethods.SelectWarehouses();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
 
             AddReports(BSI_ReportProduct, "Products");
@@ -178,7 +175,8 @@ namespace Foxoft
                 if (!string.IsNullOrEmpty(report.Shortcut))
                 {
                     KeysConverter cvt = new();
-                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    //Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    Keys key = ConvertToKeys(report.Shortcut);
                     BBI.ItemShortcut = new BarShortcut(key);
                 }
                 barSubItem.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
@@ -209,7 +207,7 @@ namespace Foxoft
                             filter = $"[InvoiceHeaderId] = '{trInvoiceHeader.InvoiceHeaderId}' AND ";
 
                         if (!string.IsNullOrEmpty(productCode))
-                            filter += $" [ProductCode] = '{productCode}' ";
+                            filter += $"[ProductCode] = '{productCode}' ";
                         else
                         {
                             var combined = "";
@@ -217,7 +215,7 @@ namespace Foxoft
                                 combined += $"'{rowView.ProductCode.ToString()}',";
 
                             combined = combined.Substring(0, combined.Length - 1);
-                            filter += $" [ProductCode] in ( {combined})";
+                            filter += $"[ProductCode] in ( {combined})";
                         }
 
                         string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
@@ -262,6 +260,39 @@ namespace Foxoft
                     MessageBox.Show(ex.ToString());
                 }
             };
+        }
+        public static Keys ConvertToKeys(string shortcut)
+        {
+            KeysConverter converter = new KeysConverter();
+            Keys key = Keys.None;
+
+            // Split the shortcut by '+'
+            string[] keys = shortcut.Split('+');
+
+            foreach (string keyPart in keys)
+            {
+                string trimmedKeyPart = keyPart.Trim().ToUpper();
+
+                switch (trimmedKeyPart)
+                {
+                    case "CTRL":
+                    case "CONTROL":
+                        key |= Keys.Control;
+                        break;
+                    case "SHIFT":
+                        key |= Keys.Shift;
+                        break;
+                    case "ALT":
+                        key |= Keys.Alt;
+                        break;
+                    default:
+                        // Convert the main key (like G) using the converter
+                        key |= (Keys)converter.ConvertFromString(trimmedKeyPart);
+                        break;
+                }
+            }
+
+            return key;
         }
 
         private void ChangeQtyByProcessDir()
@@ -600,61 +631,6 @@ namespace Foxoft
             }
         }
 
-        #region CalcRowLocNetAmount
-
-        //private void CalcRowLocNetAmount(CellValueChangedEventArgs e)
-        //{
-        //    object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut);
-        //    object objExRate = gV_InvoiceLine.GetFocusedRowCellValue(colExchangeRate);
-        //    object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, col_Price);
-        //    object objPriceLoc = gV_InvoiceLine.GetFocusedRowCellValue(colPriceLoc);
-
-        //    decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
-        //    decimal exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
-        //    decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
-        //    decimal PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
-
-        //    if (e.Value != null && e.Column == col_Price)
-        //    {
-        //        objPrice = e.Value;
-        //        Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice, CultureInfo.InvariantCulture) : 0;
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Math.Round(Price * exRate, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * Price, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * Price, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * Price * exRate, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * Price * exRate, 2));
-
-        //    }
-        //    else if (e.Value != null && e.Column == colPriceLoc)
-        //    {
-        //        objPriceLoc = e.Value;
-        //        PriceLoc = objPriceLoc.IsNumeric() ? Convert.ToDecimal(objPriceLoc, CultureInfo.InvariantCulture) : 0;
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Price, Math.Round(PriceLoc / exRate, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * PriceLoc / exRate, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * PriceLoc / exRate, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * PriceLoc, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * PriceLoc, 2));
-        //    }
-        //    else if (e.Value != null && e.Column == (CustomExtensions.ProcessDir(processCode) == "In" ? colQtyIn : colQtyOut))
-        //    {
-        //        objQty = e.Value;
-        //        Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty, CultureInfo.InvariantCulture) : 0;
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_Amount, Math.Round(Qty * Price, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, col_NetAmount, Math.Round(Qty * Price, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * PriceLoc, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * PriceLoc, 2));
-        //    }
-        //    else if (e.Value != null && e.Column == colExchangeRate)
-        //    {
-        //        objExRate = e.Value;
-        //        exRate = objExRate.IsNumeric() ? Convert.ToDecimal(objExRate, CultureInfo.InvariantCulture) : 1;
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colPriceLoc, Math.Round(Price * exRate, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colAmountLoc, Math.Round(Qty * Price * exRate, 2));
-        //        gV_InvoiceLine.SetRowCellValue(e.RowHandle, colNetAmountLoc, Math.Round(Qty * Price * exRate, 2));
-        //    }
-        //} 
-        #endregion
-
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
         {
         }
@@ -715,32 +691,39 @@ namespace Foxoft
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
 
-                DcProduct product = null;
+                if (!string.IsNullOrEmpty(eValue))
+                {
+                    DcProduct product = null;
 
-                if (column == colBarcode)
-                    product = efMethods.SelectProductByBarcode(eValue);
-                if (column == colSerialNumberCode)
-                {
-                    gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, eValue);
-                    product = efMethods.SelectProductBySerialNumber(eValue);
-                }
-                if (column == col_ProductCode)
-                {
-                    product = efMethods.SelectProduct(eValue);
-                    view.SetFocusedRowCellValue(colSerialNumberCode, null);
-                }
+                    if (column == colBarcode)
+                        product = efMethods.SelectProductByBarcode(eValue);
+                    if (column == colSerialNumberCode)
+                    {
+                        gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, eValue);
+                        product = efMethods.SelectProductBySerialNumber(eValue);
+                    }
+                    if (column == col_ProductCode)
+                    {
+                        product = efMethods.SelectProduct(eValue);
+                        view.SetFocusedRowCellValue(colSerialNumberCode, null);
+                    }
 
-                if (product is not null)
-                {
-                    FillRow(view.FocusedRowHandle, product);
-                    view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-                    if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                        view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
+                    if (product is not null)
+                    {
+                        FillRow(view.FocusedRowHandle, product);
+                        view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+                        if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+                            view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
+                    }
+                    else
+                    {
+                        e.ErrorText = "Belə bir məhsul yoxdur";
+                        e.Valid = false;
+                    }
                 }
                 else
                 {
-                    e.ErrorText = "Belə bir məhsul yoxdur";
-                    e.Valid = false;
+                    e.Value = null;
                 }
             }
 
@@ -1853,45 +1836,46 @@ namespace Foxoft
 
         private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
         {
-            try
-            {
-                XtraSaveFileDialog sFD = new();
-                sFD.Filter = "Excel Faylı|*.xlsx";
-                sFD.Title = "Excel Faylı Yadda Saxla";
-                sFD.FileName = dcProcess.ProcessDesc;
-                sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                sFD.DefaultExt = "*.xlsx";
+            CustomExtensions.ExportToExcel(this, dcProcess.ProcessDesc, gC_InvoiceLine);
+            //try
+            //{
+            //    XtraSaveFileDialog sFD = new();
+            //    sFD.Filter = "Excel Faylı|*.xlsx";
+            //    sFD.Title = "Excel Faylı Yadda Saxla";
+            //    sFD.FileName = dcProcess.ProcessDesc;
+            //    sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //    sFD.DefaultExt = "*.xlsx";
 
-                var fileName = Invoke((Func<string>)(() =>
-                {
-                    if (sFD.ShowDialog() == DialogResult.OK)
-                    {
-                        XlsxExportOptionsEx expOpt = new()
-                        {
-                            ExportMode = XlsxExportMode.SingleFile,
-                            TextExportMode = TextExportMode.Value,
-                            AllowLookupValues = DefaultBoolean.True,
-                        };
+            //    var fileName = Invoke((Func<string>)(() =>
+            //    {
+            //        if (sFD.ShowDialog() == DialogResult.OK)
+            //        {
+            //            XlsxExportOptionsEx expOpt = new()
+            //            {
+            //                ExportMode = XlsxExportMode.SingleFile,
+            //                TextExportMode = TextExportMode.Value,
+            //                AllowLookupValues = DefaultBoolean.True,
+            //            };
 
-                        gC_InvoiceLine.ExportToXlsx(sFD.FileName, expOpt);
+            //            gC_InvoiceLine.ExportToXlsx(sFD.FileName, expOpt);
 
-                        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                        {
-                            Process p = new();
-                            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                            p.Start();
-                        }
+            //            if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            //            {
+            //                Process p = new();
+            //                p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+            //                p.Start();
+            //            }
 
-                        return "Ok";
-                    }
-                    else
-                        return "Fail";
-                }));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            //            return "Ok";
+            //        }
+            //        else
+            //            return "Fail";
+            //    }));
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
         }
 
         private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
@@ -2126,32 +2110,6 @@ namespace Foxoft
                 }
             }
         }
-
-        //private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
-        //{
-        //    MemoryStream memoryStream = GetInvoiceReportImg(reportFileNameInvoice);
-
-        //    string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
-        //    string address = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).Address;
-
-        //    byte[] imageBytes = memoryStream.ToArray();
-        //    string AsBase64String = Convert.ToBase64String(imageBytes);
-
-        //    if (!string.IsNullOrEmpty(address))
-        //        phoneNum = address;
-
-        //    UltramsgClass twilioClass = new();
-        //    UltramsgResponce responce = twilioClass.SendWhatsapp(phoneNum, "image", AsBase64String);
-
-        //    if (responce.message == "ok")
-        //    {
-        //        efMethods.UpdateInvoiceIsSent(trInvoiceHeader.InvoiceHeaderId);
-        //        checkEdit_IsSent.EditValue = true;
-        //        MessageBox.Show("Göndərildi", "İnfo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //    else
-        //        MessageBox.Show(responce.message + "\n" + responce.error, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //}
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
         {

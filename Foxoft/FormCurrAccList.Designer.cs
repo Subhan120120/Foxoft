@@ -269,6 +269,7 @@ namespace Foxoft
             bBI_CurrAccNew.Caption = "Yeni";
             bBI_CurrAccNew.Id = 1;
             bBI_CurrAccNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccNew.ImageOptions.SvgImage");
+            bBI_CurrAccNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
             bBI_CurrAccNew.Name = "bBI_CurrAccNew";
             bBI_CurrAccNew.ItemClick += bBI_CurrAccNew_ItemClick;
             // 
@@ -277,6 +278,7 @@ namespace Foxoft
             bBI_CurAccEdit.Caption = "Dəyiş";
             bBI_CurAccEdit.Id = 2;
             bBI_CurAccEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccEdit.ImageOptions.SvgImage");
+            bBI_CurAccEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
             bBI_CurAccEdit.Name = "bBI_CurAccEdit";
             bBI_CurAccEdit.ItemClick += bBI_CurrAccEdit_ItemClick;
             // 
@@ -301,6 +303,7 @@ namespace Foxoft
             bBI_CurrAccDelete.Caption = "Sil";
             bBI_CurrAccDelete.Id = 7;
             bBI_CurrAccDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurrAccDelete.ImageOptions.SvgImage");
+            bBI_CurrAccDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
             bBI_CurrAccDelete.Name = "bBI_CurrAccDelete";
             bBI_CurrAccDelete.ItemClick += bBI_CurrAccDelete_ItemClick;
             // 
@@ -309,6 +312,7 @@ namespace Foxoft
             bBI_CurAccRefresh.Caption = "Yenilə";
             bBI_CurAccRefresh.Id = 8;
             bBI_CurAccRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_CurAccRefresh.ImageOptions.SvgImage");
+            bBI_CurAccRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
             bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
             bBI_CurAccRefresh.ItemClick += bBI_CurAccRefresh_ItemClick;
             // 

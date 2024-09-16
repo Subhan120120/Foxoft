@@ -1,10 +1,14 @@
-﻿using DevExpress.Xpo;
+﻿using DevExpress.Utils;
+using DevExpress.Xpo;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraPrinting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
@@ -27,9 +31,9 @@ namespace Foxoft
 
                     //if (baseEdit is LookUpEdit && ((LookUpEdit)baseEdit).EditValue?.ToString() == "depo-06")
                     //{
-                        bool validated = baseEdit.DoValidate();
-                        if (baseEdit.ErrorText != string.Empty)
-                            errorList.Add(baseEdit.ErrorText);
+                    bool validated = baseEdit.DoValidate();
+                    if (baseEdit.ErrorText != string.Empty)
+                        errorList.Add(baseEdit.ErrorText);
 
                     //}
                 }
@@ -181,6 +185,51 @@ namespace Foxoft
             }
 
             return fiscal;
+        }
+
+        public static string ExportToExcel(Form form, string fileNameText, GridControl gridControl)
+        {
+            try
+            {
+                using (XtraSaveFileDialog sFD = new())
+                {
+                    sFD.Filter = "Excel Faylı|*.xlsx";
+                    sFD.Title = "Excel Faylı Yadda Saxla";
+                    sFD.FileName = fileNameText;
+                    sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    sFD.DefaultExt = "*.xlsx";
+
+                    if (sFD.ShowDialog() == DialogResult.OK)
+                    {
+                        XlsxExportOptionsEx expOpt = new()
+                        {
+                            ExportMode = XlsxExportMode.SingleFile,
+                            TextExportMode = TextExportMode.Value,
+                            AllowLookupValues = DefaultBoolean.True,
+                        };
+
+                        gridControl.ExportToXlsx(sFD.FileName);
+
+                        if (XtraMessageBox.Show(form, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        {
+                            Process p = new();
+                            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                            p.Start();
+                        }
+
+                        return "Ok";
+                    }
+                    else
+                    {
+                        return "Fail";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
     }
 }

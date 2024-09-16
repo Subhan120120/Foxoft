@@ -16,9 +16,9 @@ using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.Data.SqlClient;
 using System.ComponentModel;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
@@ -42,7 +42,6 @@ namespace Foxoft
         GridColumn colProductCode = new();
         GridColumn colProductCost = new();
         GridColumn colBalance = new();
-
 
         public FormProductList()
         {
@@ -160,7 +159,8 @@ namespace Foxoft
                 if (!string.IsNullOrEmpty(report.Shortcut))
                 {
                     KeysConverter cvt = new();
-                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    //Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
+                    Keys key = ConvertToKeys(report.Shortcut);
                     BBI.ItemShortcut = new BarShortcut(key);
                 }
                 BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
@@ -232,6 +232,41 @@ namespace Foxoft
                 }
             };
         }
+
+        public static Keys ConvertToKeys(string shortcut)
+        {
+            KeysConverter converter = new KeysConverter();
+            Keys key = Keys.None;
+
+            // Split the shortcut by '+'
+            string[] keys = shortcut.Split('+');
+
+            foreach (string keyPart in keys)
+            {
+                string trimmedKeyPart = keyPart.Trim().ToUpper();
+
+                switch (trimmedKeyPart)
+                {
+                    case "CTRL":
+                    case "CONTROL":
+                        key |= Keys.Control;
+                        break;
+                    case "SHIFT":
+                        key |= Keys.Shift;
+                        break;
+                    case "ALT":
+                        key |= Keys.Alt;
+                        break;
+                    default:
+                        // Convert the main key (like G) using the converter
+                        key |= (Keys)converter.ConvertFromString(trimmedKeyPart);
+                        break;
+                }
+            }
+
+            return key;
+        }
+
 
         private void SaveLayout()
         {
@@ -335,14 +370,12 @@ namespace Foxoft
                 if (!String.IsNullOrEmpty(dcReport.ReportQuery))
                 {
                     string ts = String.Join(",", productTypeArr);
-                    string where = " Where ProductTypeCode in (" + ts + ") ";
-                    string query = cM.AddTop(dcReport.ReportQuery, int.MaxValue);
+                    string filter = "[ProductTypeCode] in (" + ts + ") ";
 
-                    query = cM.AddFilters(query, dcReport);
-                    SqlParameter[] sqlParameters = cM.AddParameters(dcReport);
+                    SqlParameter[] sqlParameters;
+                    string sql = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
 
-                    string qryMaster = "select * from (" + query + " \n) as Master " + where + " order by RowNumber";
-                    DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
+                    DataTable dt = adoMethods.SqlGetDt(sql, sqlParameters);
                     if (dt.Rows.Count > 0)
                         dataSource = dt;
                 }
@@ -507,37 +540,7 @@ namespace Foxoft
 
         private void bBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Trace.Write("\n Before 'SaveFileDialog saveFileDialog1 = new();' ");
-            XtraSaveFileDialog sFD = new();
-            Trace.Write("\n Before ' saveFileDialog1.Filter = 'Excel Faylı | *.xlsx';' ");
-            sFD.Filter = "Excel Faylı|*.xlsx";
-            Trace.Write("\n Before 'saveFileDialog1.Title = 'Excel Faylı Yadda Saxla';' ");
-            sFD.Title = "Excel Faylı Yadda Saxla";
-            Trace.Write("\n Before 'saveFileDialog1.FileName = this.Text");
-            sFD.FileName = this.Text;
-            Trace.Write("\n Before 'saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);' ");
-            sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            Trace.Write("\n Before 'saveFileDialog1.DefaultExt = ' *.xlsx';' ");
-            sFD.DefaultExt = "*.xlsx";
-
-            var fileName = Invoke((Func<string>)(() =>
-            {
-                if (sFD.ShowDialog() == DialogResult.OK)
-                {
-                    gC_ProductList.ExportToXlsx(sFD.FileName);
-
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        Process p = new Process();
-                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                        p.Start();
-                    }
-
-                    return "Ok";
-                }
-                else
-                    return "Fail";
-            }));
+            CustomExtensions.ExportToExcel(this, Text, gC_ProductList);
         }
 
         private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)

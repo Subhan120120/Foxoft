@@ -11,6 +11,7 @@ namespace Foxoft.Models
         {
             TrPaymentLines = new HashSet<TrPaymentLine>();
             TrPaymentMethodDiscounts = new HashSet<TrPaymentMethodDiscount>();
+            DcPaymentPlans = new HashSet<DcPaymentPlan>();
         }
 
         [Key]
@@ -37,5 +38,6 @@ namespace Foxoft.Models
         public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
         public virtual ICollection<TrPaymentMethodDiscount> TrPaymentMethodDiscounts { get; set; }
+        public virtual ICollection<DcPaymentPlan> DcPaymentPlans { get; set; }
     }
 }

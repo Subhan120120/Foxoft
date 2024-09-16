@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
-using System;
-using System.IO;
-using System.Reflection;
-using System.Drawing;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.Sql;
 using Foxoft.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Threading;
-using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Foxoft.AppCode
 {
@@ -69,22 +65,122 @@ namespace Foxoft.AppCode
             }
         }
 
-        public string AddTop(string query, int count)
+        public string ApplyFilter(DcReport dcReport, string query, string filter, out SqlParameter[] sqlParameters, int topCount = int.MaxValue)
         {
-            query = query.Trim();
+            string queryTop = AddTop(query, int.MaxValue);
 
-            int selectIndx = query.IndexOf("Select", StringComparison.OrdinalIgnoreCase);
+            string userQuery = @$" SELECT *, ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS RowNum FROM ({queryTop}) AS UserQuery";
 
-            string top = query.Substring(selectIndx + 7, 3);
+            filter = !string.IsNullOrEmpty(filter) ? "WHERE " + filter : filter;
 
-            bool topExist = top.Contains("Top", StringComparison.OrdinalIgnoreCase);
+            string queryMaster = $@"select * from ({userQuery}) as queryMaster {filter} ORDER BY queryMaster.RowNum";
 
-            if (topExist)
-                query = query.Substring(0, selectIndx) + "Select Top " + count.ToString() + query.Substring(selectIndx + 6);
-            else
-                query = query.Substring(0, selectIndx) + "Select Top " + count.ToString() + " ROW_NUMBER() OVER (Order by (select null)) as RowNumber, " + query.Substring(selectIndx + 6);
+            string queryReady = ReplaceFilters(queryMaster, dcReport);
+
+            sqlParameters = GetParameters(dcReport);
+
+            //query = AddFilterInsideQuery(query, filter);
+
+            return queryReady;
+        }
+
+        public List<QueryParameter> ConvertSqlParametersToQueryParameters(SqlParameter[] sqlParameters)
+        {
+            List<QueryParameter> queryParameters = new List<QueryParameter>();
+
+            foreach (var sqlParam in sqlParameters)
+            {
+                QueryParameter queryParam = new QueryParameter
+                {
+                    Name = sqlParam.ParameterName,
+                    Type = ConvertSqlDbTypeToType(sqlParam.SqlDbType), // This maps SQL type from SqlParameter
+                    Value = sqlParam.Value
+                };
+
+                queryParameters.Add(queryParam);
+            }
+
+            return queryParameters;
+        }
+
+        public string AddTop(string query, int topCount)
+        {
+            string trimmedQuery = query.Trim();
+            int selectIndex = trimmedQuery.ToUpper().IndexOf("SELECT");
+
+            if (selectIndex != -1 && trimmedQuery.ToUpper().Contains("ORDER BY"))
+            {
+                int orderByIndex = trimmedQuery.ToUpper().LastIndexOf("ORDER BY");
+
+                if (orderByIndex != -1 && trimmedQuery.Substring(orderByIndex).Trim().ToUpper().StartsWith("ORDER BY"))// Ensure the "ORDER BY" is at the end of the query or followed by only valid SQL syntax
+                {
+                    string modifiedQuery = trimmedQuery.Insert(selectIndex + 6, $" TOP ({topCount})");
+                    return modifiedQuery;
+                }
+            }
 
             return query;
+        }
+
+        public string AddFilterInsideQuery(string reportQuery, string filter)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+                return reportQuery;
+
+            reportQuery = RemoveComments(reportQuery);
+
+            // Find the last occurrences of FROM, WHERE, GROUP BY, and ORDER BY
+            int fromIndex = reportQuery.LastIndexOf("from", StringComparison.OrdinalIgnoreCase);
+            int whereIndex = reportQuery.LastIndexOf("where", StringComparison.OrdinalIgnoreCase);
+            int groupByIndex = reportQuery.LastIndexOf("group by", StringComparison.OrdinalIgnoreCase);
+            int orderByIndex = reportQuery.LastIndexOf("order by", StringComparison.OrdinalIgnoreCase);
+
+            string queryWithFilter;
+
+            // Check if GROUP BY exists after both FROM and WHERE (if WHERE exists)
+            bool groupByExistsAfterFrom = groupByIndex > fromIndex;
+            bool groupByExistsAfterWhere = whereIndex < 0 || (groupByIndex > whereIndex); // if WHERE doesn't exist, ignore its position
+
+            if (orderByIndex >= 0)
+            {
+                string queryBeforeOrderBy = reportQuery.Substring(0, orderByIndex).TrimEnd();
+
+                if (groupByExistsAfterFrom && groupByExistsAfterWhere)
+                {
+                    // If GROUP BY exists after both FROM and WHERE, insert filter before GROUP BY
+                    string queryBeforeGroupBy = reportQuery.Substring(0, groupByIndex).TrimEnd();
+                    bool hasWhereAfterFrom = queryBeforeGroupBy.IndexOf("where", fromIndex, StringComparison.OrdinalIgnoreCase) >= 0;
+                    string adjustedFilter = (hasWhereAfterFrom ? " AND " : " WHERE ") + filter.Trim();
+                    queryWithFilter = queryBeforeGroupBy + adjustedFilter + "\n" + reportQuery.Substring(groupByIndex);
+                }
+                else
+                {
+                    // If GROUP BY doesn't exist, or is wrongly placed, insert filter before ORDER BY
+                    bool hasWhereAfterFrom = queryBeforeOrderBy.IndexOf("where", fromIndex, StringComparison.OrdinalIgnoreCase) >= 0;
+                    string adjustedFilter = (hasWhereAfterFrom ? " AND " : " WHERE ") + filter.Trim();
+                    queryWithFilter = queryBeforeOrderBy + adjustedFilter + "\n" + reportQuery.Substring(orderByIndex);
+                }
+            }
+            else
+            {
+                // If no ORDER BY exists, check for WHERE and insert filter at the end of the query
+                bool hasWhereAfterFrom = reportQuery.IndexOf("where", fromIndex, StringComparison.OrdinalIgnoreCase) >= 0;
+                string adjustedFilter = (hasWhereAfterFrom ? " AND " : " WHERE ") + filter.Trim();
+                queryWithFilter = reportQuery.TrimEnd() + adjustedFilter;
+            }
+
+            return queryWithFilter;
+        }
+
+
+
+
+
+        public string RemoveComments(string sql)
+        {
+            // Remove single-line comments (--) and multi-line comments (/* */)
+            string noComments = Regex.Replace(sql, @"(--[^\r\n]*|/\*.*?\*/)", string.Empty, RegexOptions.Singleline);
+            return noComments;
         }
 
         public CustomSqlQuery AddParameters(CustomSqlQuery sqlQuery, DcReport report)
@@ -93,35 +189,17 @@ namespace Foxoft.AppCode
             {
                 if (rf.VariableTypeId == 1)
                 {
-                    //string typeName = typeof(DateTime).FullName;
                     object value = Convert.ChangeType(rf.VariableValue, Type.GetType(rf.VariableValueType));
                     QueryParameter queryParameter = new(rf.VariableProperty, Type.GetType(rf.VariableValueType), value);
                     sqlQuery.Parameters.Add(queryParameter);
-
-                    //QueryParameter queryParameter2 = new();
-                    //queryParameter2.Name = "EndDate";
-                    //queryParameter.Type = typeof(DateTime);
-                    //queryParameter2.ValueInfo = EndDate.ToString("yyyy-MM-dd");
                 }
             }
             return sqlQuery;
         }
 
-        public string AddParameters(string sqlQuery, DcReport report)
+        public SqlParameter[] GetParameters(DcReport report)
         {
-            foreach (DcReportVariable rf in report.DcReportVariables)
-            {
-                if (rf.VariableTypeId == 1)
-                {
-                    sqlQuery = sqlQuery.Replace(rf.Representative, rf.VariableValue); //parametr sorgunun icinde temsilci ile deyisdirilir
-                }
-            }
-            return sqlQuery;
-        }
-
-        public SqlParameter[] AddParameters(DcReport report)
-        {
-            List<SqlParameter> sqlParameterList = new(); ;
+            List<SqlParameter> sqlParameterList = new();
             foreach (DcReportVariable rf in report.DcReportVariables)
             {
                 if (rf.VariableTypeId == 1)
@@ -136,7 +214,7 @@ namespace Foxoft.AppCode
             return sqlParameterList.ToArray();
         }
 
-        public string AddFilters(string sqlQuery, DcReport report)
+        public string ReplaceFilters(string sqlQuery, DcReport report)
         {
             CriteriaOperator[] criteriaOperators = new CriteriaOperator[report.DcReportVariables.Count];
             int index = 0;
@@ -175,6 +253,38 @@ namespace Foxoft.AppCode
         }
 
 
+        private Type ConvertSqlDbTypeToType(SqlDbType sqlDbType)
+        {
+            switch (sqlDbType)
+            {
+                case SqlDbType.Int:
+                    return typeof(int);
+                case SqlDbType.VarChar:
+                case SqlDbType.NVarChar:
+                case SqlDbType.Char:
+                case SqlDbType.NChar:
+                    return typeof(string);
+                case SqlDbType.Decimal:
+                case SqlDbType.Money:
+                case SqlDbType.SmallMoney:
+                    return typeof(decimal);
+                case SqlDbType.Bit:
+                    return typeof(bool);
+                case SqlDbType.DateTime:
+                case SqlDbType.SmallDateTime:
+                case SqlDbType.Date:
+                case SqlDbType.Time:
+                    return typeof(DateTime);
+                case SqlDbType.Float:
+                    return typeof(double);
+                case SqlDbType.Binary:
+                case SqlDbType.VarBinary:
+                    return typeof(byte[]);
+                // Add more mappings as needed
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(sqlDbType), $"No mapping exists for SqlDbType {sqlDbType}");
+            }
+        }
 
         private DbType GetDbType(string type)
         {

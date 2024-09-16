@@ -228,6 +228,7 @@ namespace Foxoft
             else
                 MessageBox.Show("Belə bir sənəd yoxdur.");
         }
+
         private void MakePayment(decimal summaryInvoice, bool autoPayment)
         {
             using FormPayment formPayment = new(1, summaryInvoice, returnInvoHeader, autoPayment);

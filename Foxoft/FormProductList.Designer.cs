@@ -106,11 +106,6 @@ namespace Foxoft
             gC_ProductList.TabIndex = 0;
             gC_ProductList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ProductList });
             // 
-            // gV_ProductList
-            // 
-            gV_ProductList.GridControl = gC_ProductList;
-            gV_ProductList.Name = "gV_ProductList";
-            // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
@@ -129,6 +124,7 @@ namespace Foxoft
             BBI_ProductNew.Caption = "Yeni";
             BBI_ProductNew.Id = 1;
             BBI_ProductNew.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductNew.ImageOptions.SvgImage");
+            BBI_ProductNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
             BBI_ProductNew.Name = "BBI_ProductNew";
             // 
             // btn_ProductEdit
@@ -136,6 +132,7 @@ namespace Foxoft
             btn_ProductEdit.Caption = "Dəyiş";
             btn_ProductEdit.Id = 2;
             btn_ProductEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductEdit.ImageOptions.SvgImage");
+            btn_ProductEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
             btn_ProductEdit.Name = "btn_ProductEdit";
             // 
             // bBI_ExportExcel
@@ -158,6 +155,7 @@ namespace Foxoft
             bBI_ProductDelete.Caption = "Sil";
             bBI_ProductDelete.Id = 8;
             bBI_ProductDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ProductDelete.ImageOptions.SvgImage");
+            bBI_ProductDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
             bBI_ProductDelete.Name = "bBI_ProductDelete";
             // 
             // bBI_ProductRefresh
@@ -165,6 +163,7 @@ namespace Foxoft
             bBI_ProductRefresh.Caption = "Yenilə";
             bBI_ProductRefresh.Id = 9;
             bBI_ProductRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ProductRefresh.ImageOptions.SvgImage");
+            bBI_ProductRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
             bBI_ProductRefresh.Name = "bBI_ProductRefresh";
             // 
             // barButtonItem2

@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20240906203138_fix2525a")]
+    partial class fix2525a
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1014,9 +1017,6 @@ namespace Foxoft.Migrations
                     b.Property<string>("PaymentPlanCode")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("Commission")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("DurationInMonths")
                         .HasColumnType("int");
 
@@ -1038,7 +1038,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M3",
-                            Commission = 0m,
                             DurationInMonths = 3,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "3 AY"
@@ -1046,7 +1045,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M6",
-                            Commission = 0m,
                             DurationInMonths = 6,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "6 AY"
@@ -1054,7 +1052,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M9",
-                            Commission = 0m,
                             DurationInMonths = 9,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "9 AY"
@@ -1062,7 +1059,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M12",
-                            Commission = 0m,
                             DurationInMonths = 12,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "12 AY"
@@ -1070,7 +1066,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M18",
-                            Commission = 0m,
                             DurationInMonths = 18,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "18 AY"
@@ -1078,7 +1073,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M24",
-                            Commission = 0m,
                             DurationInMonths = 24,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "24 AY"
@@ -3158,37 +3152,6 @@ namespace Foxoft.Migrations
                     b.ToTable("TrPaymentMethodDiscounts");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrPaymentPlan", b =>
-                {
-                    b.Property<int>("PaymentPlanId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentPlanId"));
-
-                    b.Property<decimal>("Commission")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("MonthlyPayment")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("PaymentLineId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PaymentPlanCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PaymentPlanId");
-
-                    b.HasIndex("PaymentLineId")
-                        .IsUnique();
-
-                    b.HasIndex("PaymentPlanCode");
-
-                    b.ToTable("TrPaymentPlans");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrPrice", b =>
                 {
                     b.Property<int>("PriceCode")
@@ -4438,25 +4401,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcPaymentMethod");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrPaymentPlan", b =>
-                {
-                    b.HasOne("Foxoft.Models.TrPaymentLine", "TrPaymentLine")
-                        .WithOne("TrPaymentPlan")
-                        .HasForeignKey("Foxoft.Models.TrPaymentPlan", "PaymentLineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Foxoft.Models.DcPaymentPlan", "DcPaymentPlan")
-                        .WithMany("TrPaymentPlans")
-                        .HasForeignKey("PaymentPlanCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcPaymentPlan");
-
-                    b.Navigation("TrPaymentLine");
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrPrice", b =>
                 {
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
@@ -4753,11 +4697,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrPaymentMethodDiscounts");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcPaymentPlan", b =>
-                {
-                    b.Navigation("TrPaymentPlans");
-                });
-
             modelBuilder.Entity("Foxoft.Models.DcPaymentType", b =>
                 {
                     b.Navigation("DcCurrAccs");
@@ -4870,12 +4809,6 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
                 {
                     b.Navigation("TrPaymentLines");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrPaymentLine", b =>
-                {
-                    b.Navigation("TrPaymentPlan")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>

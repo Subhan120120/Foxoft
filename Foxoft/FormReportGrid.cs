@@ -55,7 +55,7 @@ namespace Foxoft
         DcReport dcReport = new();
         SqlParameter[] sqlParameters;
 
-        string qry = "select 0 Nothing";
+        string ReportQuery = "select 0 Nothing";
         string imageFolder;
 
         RepositoryItemPictureEdit riPictureEdit = new();
@@ -92,19 +92,9 @@ namespace Foxoft
         }
 
         public FormReportGrid(string query, string filter, DcReport dcReport)
-        : this()
+            : this()
         {
-            query = cM.AddTop(query, int.MaxValue);
-
-            string qryMaster = "Select * from ( " + query + " \n) as master";
-
-            if (!string.IsNullOrEmpty(filter))
-                qryMaster = qryMaster + " where " + filter;
-
-            query = qryMaster + " order by RowNumber";
-
-            qry = cM.AddFilters(query, dcReport);
-            sqlParameters = cM.AddParameters(dcReport);
+            ReportQuery = cM.ApplyFilter(dcReport, query, filter, out sqlParameters);
 
             this.dcReport = dcReport;
             Text = dcReport.ReportName;
@@ -177,7 +167,7 @@ namespace Foxoft
 
         private void LoadData()
         {
-            DataTable dt = adoMethods.SqlGetDt(qry, sqlParameters);
+            DataTable dt = adoMethods.SqlGetDt(ReportQuery, sqlParameters);
             gC_Report.DataSource = dt;
             gV_Report.MoveLast();
             gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
@@ -453,33 +443,34 @@ namespace Foxoft
 
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraSaveFileDialog sFD = new()
-            {
-                Filter = "Excel Faylı|*.xlsx",
-                Title = "Excel Faylı Yadda Saxla",
-                FileName = dcReport.ReportName,
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                DefaultExt = "*.xlsx",
-            };
+            CustomExtensions.ExportToExcel(this, dcReport.ReportName, gC_Report);
+            //    XtraSaveFileDialog sFD = new()
+            //    {
+            //        Filter = "Excel Faylı|*.xlsx",
+            //        Title = "Excel Faylı Yadda Saxla",
+            //        FileName = dcReport.ReportName,
+            //        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            //        DefaultExt = "*.xlsx",
+            //    };
 
-            String fileName = Invoke((Func<string>)(() =>
-            {
-                if (sFD.ShowDialog() == DialogResult.OK)
-                {
-                    gC_Report.ExportToXlsx(sFD.FileName);
+            //    String fileName = Invoke((Func<string>)(() =>
+            //    {
+            //        if (sFD.ShowDialog() == DialogResult.OK)
+            //        {
+            //            gC_Report.ExportToXlsx(sFD.FileName);
 
-                    if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-                    {
-                        Process p = new();
-                        p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-                        p.Start();
-                    }
+            //            if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            //            {
+            //                Process p = new();
+            //                p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+            //                p.Start();
+            //            }
 
-                    return "Ok";
-                }
-                else
-                    return "Fail";
-            }));
+            //            return "Ok";
+            //        }
+            //        else
+            //            return "Fail";
+            //    }));
         }
 
         private void BBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
@@ -495,7 +486,7 @@ namespace Foxoft
 
             if (sFD.ShowDialog() == DialogResult.OK)
             {
-                gC_Report.ExportToXlsx(sFD.FileName);
+                gV_Report.ExportToXlsx(sFD.FileName);
 
                 if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {

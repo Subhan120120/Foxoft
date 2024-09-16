@@ -1,18 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Reflection;
-using System.ComponentModel;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System.Configuration;
-using System.IO;
+﻿using Foxoft.AppCode;
 using Foxoft.Models.Entity;
-using Foxoft.AppCode;
-using Microsoft.Identity.Client;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using DevExpress.XtraReports.Templates;
-using System.Reflection.Emit;
-using Foxoft.Migrations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.ComponentModel;
+using System.Reflection;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -36,6 +27,9 @@ namespace Foxoft.Models
         public DbSet<DcOffice> DcOffices { get; set; }
         public DbSet<DcPaymentType> DcPaymentTypes { get; set; }
         public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
+        public DbSet<DcPaymentPlan> DcPaymentPlans { get; set; }
+        public DbSet<TrPaymentPlan> TrPaymentPlans { get; set; }
+
         //public DbSet<TrInvoiceHeaderDeleted> TrInvoiceHeaderDeleteds { get; set; }
         public DbSet<DcProcess> DcProcesses { get; set; }
         public DbSet<DcProduct> DcProducts { get; set; }
@@ -248,6 +242,13 @@ namespace Foxoft.Models
             {
                 entity.HasOne(x => x.TrPaymentHeader)
                     .WithMany(x => x.TrPaymentLines)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrPaymentPlan>(entity =>
+            {
+                entity.HasOne(x => x.TrPaymentLine)
+                    .WithOne(x => x.TrPaymentPlan)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -494,6 +495,16 @@ namespace Foxoft.Models
                 new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart" },
                 new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = 1, PaymentMethodDesc = "Çatdırılma zamanı nağd ödə" },
                 new DcPaymentMethod { PaymentMethodId = 5, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" }
+                );
+
+
+            modelBuilder.Entity<DcPaymentPlan>().HasData(
+                new DcPaymentPlan { PaymentPlanCode = "M3", PaymentPlanDesc = "3 AY", PaymentMethodId = 2, DurationInMonths = 3, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M6", PaymentPlanDesc = "6 AY", PaymentMethodId = 2, DurationInMonths = 6, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M9", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M12", PaymentPlanDesc = "12 AY", PaymentMethodId = 2, DurationInMonths = 12, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M18", PaymentPlanDesc = "18 AY", PaymentMethodId = 2, DurationInMonths = 18, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M24", PaymentPlanDesc = "24 AY", PaymentMethodId = 2, DurationInMonths = 24, Commission = 0 }
                 );
 
             modelBuilder.Entity<DcProcess>().HasData(

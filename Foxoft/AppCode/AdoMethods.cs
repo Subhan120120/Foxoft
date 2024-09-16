@@ -71,6 +71,10 @@ namespace Foxoft
             DataTable dt = new();
             da.Fill(dt);
 
+            if (dt.Columns.Contains("RowNum"))
+                dt.Columns.Remove("RowNum");
+            else MessageBox.Show("RowNum kolonu mövcud deyil");
+
             ReflectionExt.SetCaptionName(dt);
 
             return dt;
