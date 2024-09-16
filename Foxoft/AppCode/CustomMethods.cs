@@ -69,7 +69,7 @@ namespace Foxoft.AppCode
         {
             string queryTop = AddTop(query, int.MaxValue);
 
-            string queryMaster = AddFilter(filter, queryTop);
+            string queryMaster = AddFilter(queryTop, filter);
 
             string queryReady = ReplaceFilters(queryMaster, dcReport);
 
@@ -84,7 +84,7 @@ namespace Foxoft.AppCode
 
             filter = !string.IsNullOrEmpty(filter) ? "WHERE " + filter : filter;
 
-            string queryMaster = $@"select * from ({userQuery}) as queryMaster {filter} ORDER BY queryMaster.RowNum";
+            string queryMaster = $@"SELECT * FROM ({userQuery}) AS queryMaster {filter} ORDER BY queryMaster.RowNum";
             return queryMaster;
         }
 
