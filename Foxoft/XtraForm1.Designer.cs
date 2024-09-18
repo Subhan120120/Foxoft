@@ -31,34 +31,45 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            filterControl1 = new FilterControl();
+            gc = new DevExpress.XtraBars.Ribbon.GalleryControl();
+            galleryControlClient1 = new DevExpress.XtraBars.Ribbon.GalleryControlClient();
+            ((System.ComponentModel.ISupportInitialize)gc).BeginInit();
+            gc.SuspendLayout();
             SuspendLayout();
             // 
-            // filterControl1
+            // gc
             // 
-            filterControl1.Location = new System.Drawing.Point(199, 137);
-            filterControl1.Name = "filterControl1";
-            filterControl1.NodeSeparatorHeight = 2;
-            filterControl1.ShowActionButtonMode = DevExpress.XtraEditors.ShowActionButtonMode.Default;
-            filterControl1.Size = new System.Drawing.Size(515, 210);
-            filterControl1.TabIndex = 0;
-            filterControl1.Text = "filterControl1";
+            gc.Controls.Add(galleryControlClient1);
+            gc.Location = new Point(0, 0);
+            gc.Name = "gc";
+            gc.Size = new Size(276, 94);
+            gc.TabIndex = 0;
+            gc.Text = "galleryControl1";
+            // 
+            // galleryControlClient1
+            // 
+            galleryControlClient1.GalleryControl = gc;
+            galleryControlClient1.Location = new Point(2, 2);
+            galleryControlClient1.Size = new Size(255, 90);
             // 
             // XtraForm1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(946, 491);
-            Controls.Add(filterControl1);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(946, 491);
+            Controls.Add(gc);
             Name = "XtraForm1";
             Text = "XtraForm1";
             Load += XtraForm1_Load;
+            ((System.ComponentModel.ISupportInitialize)gc).EndInit();
+            gc.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private FilterControl filterControl1;
+        private DevExpress.XtraBars.Ribbon.GalleryControl gc;
+        private DevExpress.XtraBars.Ribbon.GalleryControlClient galleryControlClient1;
     }
 }

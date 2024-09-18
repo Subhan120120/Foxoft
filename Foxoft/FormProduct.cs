@@ -1,21 +1,18 @@
-﻿
-using DevExpress.Utils.Extensions;
+﻿using DevExpress.Utils.Extensions;
+using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraBars.Ribbon.ViewInfo;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace Foxoft
 {
@@ -27,14 +24,17 @@ namespace Foxoft
         public DcProduct dcProduct = new();
         private byte productTypeCode;
         private bool isNew;
+        GalleryItemGroup galleryItemGroup1 = new GalleryItemGroup();
 
         public FormProduct(byte productTypeCode, bool isNew)
         {
             InitializeComponent();
 
-            tabbedControlGroup1.SelectedTabPage = autoGroupForQiymətlər;
-
             InitializeControlText();
+
+            InitializeGallery();
+
+            tabbedControlGroup1.SelectedTabPage = autoGroupForQiymətlər;
 
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;
@@ -57,6 +57,12 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
+        private void InitializeGallery()
+        {
+            galleryItemGroup1.Caption = "Product Images";
+            galleryControl1.Gallery.Groups.AddRange(new GalleryItemGroup[] { galleryItemGroup1 });
+        }
+
         public FormProduct(byte productTypeCode, string productCode)
             : this(productTypeCode, false)
         {
@@ -64,6 +70,7 @@ namespace Foxoft
             ProductCodeTextEdit.Properties.ReadOnly = true;
             ProductCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
+
 
         private void InitializeControlText()
         {
@@ -122,6 +129,8 @@ namespace Foxoft
                     }
                 }
             }
+
+            LoadGalleryImages();
         }
 
         private void ClearControlsAddNew()
@@ -274,11 +283,6 @@ namespace Foxoft
             openFileDialog();
         }
 
-        private void btn_SaveImage_Click(object sender, EventArgs e)
-        {
-            SaveImage();
-        }
-
         private void btnEdit_Hierarchy_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
@@ -324,6 +328,232 @@ namespace Foxoft
 
         private void pictureEdit_EditValueChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void galleryControl1_MouseDown(object sender, MouseEventArgs e) // select with right click
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                RibbonHitInfo hitInfo = galleryControl1.Gallery.CalcHitInfo(e.Location);
+
+                if (hitInfo.GalleryItem != null)
+                {
+                    galleryControl1.Gallery.SetItemCheck(hitInfo.GalleryItem, true);
+                }
+                else
+                {
+                    galleryControl1.Gallery.SetItemCheck(new GalleryItem(), true);
+                }
+
+                popupMenu_Gallery.ShowPopup(Control.MousePosition);
+            }
+        }
+
+        private void LoadGalleryImages()
+        {
+            galleryItemGroup1.Items.Clear();
+
+            if (dcProduct == null)
+                return;
+
+            string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
+
+            if (!Directory.Exists(productFolder))
+                return;
+
+            for (int i = 1; i <= 10; i++)
+            {
+                string fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                string filePath = Path.Combine(productFolder, fileName);
+
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        using (FileStream fs = new(filePath, FileMode.Open, FileAccess.Read))
+                        {
+                            using (Image img = Image.FromStream(fs, true, false))
+                            {
+                                Bitmap myBitmap = new(img);
+                                var item = new GalleryItem(myBitmap, fileName, "");
+                                item.Tag = filePath; // Store the file path in the Tag property
+                                galleryItemGroup1.Items.Add(item);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error loading image {fileName}: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+        private void GalleryControl1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            RibbonHitInfo hitInfo = galleryControl1.CalcHitInfo(e.Location);
+            if (hitInfo.InGalleryItem) // Check if the double-click was on an item
+            {
+                GalleryItem clickedItem = hitInfo.GalleryItem;
+                string filePath = clickedItem.Tag as string; 
+
+                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+                {
+                    try
+                    {
+                        ProcessStartInfo startInfo = new(filePath)
+                        {
+                            UseShellExecute = true
+                        };
+                        Process.Start(startInfo);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error opening image: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+
+
+        private void BBI_GalleryLoad_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new();
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+            openFileDialog.Title = "Select an Image";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Image loadedImage = Image.FromFile(openFileDialog.FileName);
+
+                string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
+                if (!Directory.Exists(productFolder))
+                    Directory.CreateDirectory(productFolder);
+
+                string fileName = "";
+                for (int i = 1; i <= 50; i++)
+                {
+                    fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                    string filePath = Path.Combine(productFolder, fileName);
+                    if (!File.Exists(filePath))
+                        break;
+                }
+
+                string savePath = Path.Combine(productFolder, fileName);
+
+                loadedImage.Save(savePath, ImageFormat.Jpeg);
+
+                LoadGalleryImages();
+            }
+        }
+
+        private void BBI_GalleryPaste_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (Clipboard.ContainsImage())
+            {
+                Image clipboardImage = Clipboard.GetImage();
+
+                if (clipboardImage != null)
+                {
+
+                    string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
+
+                    if (!Directory.Exists(productFolder))
+                        Directory.CreateDirectory(productFolder);
+
+                    string fileName = "";
+                    for (int i = 1; i <= 50; i++)
+                    {
+                        fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                        string filePath = Path.Combine(productFolder, fileName);
+                        if (!File.Exists(filePath))
+                            break;
+                    }
+
+                    string savePath = Path.Combine(productFolder, fileName);
+
+                    clipboardImage.Save(savePath, ImageFormat.Jpeg);
+
+                    LoadGalleryImages();
+                }
+            }
+            else
+            {
+                Console.WriteLine("No image in the clipboard.");
+            }
+        }
+
+        private void BBI_GalleryDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (XtraMessageBox.Show("Silmek Isteyirsiz? \n ", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
+                string caption = galleryControl1.Gallery.GetCheckedItem().Caption;
+                string imagePath = Path.Combine(productFolder, caption);
+
+                try
+                {
+                    if (File.Exists(imagePath))
+                    {
+                        File.Delete(imagePath);
+                        LoadGalleryImages();
+                    }
+                    else
+                        MessageBox.Show("File does not exist.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting file: {ex.Message}");
+                }
+            }
+        }
+
+        private void pictureEdit_PopupMenuShowing(object sender, DevExpress.XtraEditors.Events.PopupMenuShowingEventArgs e)
+        {
+            DXMenuItem oldSaveItem = null;
+            DXMenuItem cutItem = null;
+
+            foreach (DXMenuItem item in e.PopupMenu.Items)
+            {
+                if (item.Tag != null)
+                {
+                    if ((StringId)item.Tag == StringId.PictureEditMenuSave)
+                        oldSaveItem = item;
+                    else if ((StringId)item.Tag == StringId.PictureEditMenuCut)
+                        cutItem = item;
+                }
+            }
+
+            DXMenuItem newSaveItem = new(oldSaveItem.Caption, CustomSaveItem_Click, oldSaveItem.GetImage());
+            newSaveItem.Tag = StringId.PictureEditMenuSave;
+            e.PopupMenu.Items.Add(newSaveItem);
+
+            if (cutItem != null)
+                e.PopupMenu.Items.Remove(cutItem);
+
+            if (oldSaveItem != null)
+                e.PopupMenu.Items.Remove(oldSaveItem);
+        }
+
+        private void CustomSaveItem_Click(object sender, EventArgs e)
+        {
+            SaveImage();
+        }
+
+        private void popupMenu_Gallery_BeforePopup(object sender, CancelEventArgs e)
+        {
+            if (Clipboard.ContainsImage())
+                BBI_GalleryPaste.Enabled = true;
+            else
+                BBI_GalleryPaste.Enabled = false;
+
+
+            if (galleryControl1.Gallery.GetCheckedItemsCount() > 0)
+                BBI_GalleryDelete.Enabled = true;
+            else
+                BBI_GalleryDelete.Enabled = false;
 
         }
     }

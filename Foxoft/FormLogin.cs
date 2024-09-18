@@ -165,8 +165,8 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            GoogleContactAPI googleContactAPI = new GoogleContactAPI();
-            googleContactAPI.Contact();
+            XtraForm1 xtraForm1 = new XtraForm1();
+            xtraForm1.ShowDialog();
         }
 
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)

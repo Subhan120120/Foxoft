@@ -73,7 +73,6 @@ namespace Foxoft
 
             if (dt.Columns.Contains("RowNum"))
                 dt.Columns.Remove("RowNum");
-            else MessageBox.Show("RowNum kolonu mövcud deyil");
 
             ReflectionExt.SetCaptionName(dt);
 
