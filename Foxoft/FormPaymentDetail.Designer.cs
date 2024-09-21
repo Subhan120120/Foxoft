@@ -38,7 +38,8 @@ namespace Foxoft
             bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
             bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
             BBI_Info = new DevExpress.XtraBars.BarButtonItem();
-            BSI_Report = new DevExpress.XtraBars.BarSubItem();
+            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
+            BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -98,6 +99,7 @@ namespace Foxoft
             layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).BeginInit();
@@ -136,9 +138,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Report });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 14;
+            ribbonControl1.MaxItemId = 16;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(899, 158);
@@ -194,12 +196,18 @@ namespace Foxoft
             BBI_Info.Name = "BBI_Info";
             BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
-            // BSI_Report
+            // popupMenuReports
             // 
-            BSI_Report.Caption = "Hesabat";
-            BSI_Report.Id = 11;
-            BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
-            BSI_Report.Name = "BSI_Report";
+            popupMenuReports.Name = "popupMenuReports";
+            popupMenuReports.Ribbon = ribbonControl1;
+            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
+            // 
+            // BSI_Reports
+            // 
+            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Id = 15;
+            BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
+            BSI_Reports.Name = "BSI_Reports";
             // 
             // ribbonPage1
             // 
@@ -224,7 +232,7 @@ namespace Foxoft
             // 
             // RPG_Report
             // 
-            RPG_Report.ItemLinks.Add(BSI_Report);
+            RPG_Report.ItemLinks.Add(BSI_Reports);
             RPG_Report.Name = "RPG_Report";
             RPG_Report.Text = "Hesabat";
             // 
@@ -743,6 +751,7 @@ namespace Foxoft
             StatusBar = ribbonStatusBar;
             Text = "Ödəmə";
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuReports).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
             dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).EndInit();
@@ -844,9 +853,11 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem BBI_Info;
         private DevExpress.XtraGrid.Columns.GridColumn colPaymentMethodId;
-        private DevExpress.XtraBars.BarSubItem BSI_Report;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraGrid.Columns.GridColumn colRunningTotal;
         private DevExpress.XtraGrid.Columns.GridColumn colRunningTotalBefore;
+        private DevExpress.XtraBars.PopupMenu popupMenuReports;
+        private DevExpress.XtraBars.BarSubItem barSubItem1;
+        private DevExpress.XtraBars.BarSubItem BSI_Reports;
     }
 }

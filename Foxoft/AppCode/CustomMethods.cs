@@ -1,18 +1,26 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.Sql;
+using DevExpress.Utils;
+using DevExpress.XtraBars;
 using Foxoft.Models;
 using Microsoft.Data.SqlClient;
+using DevExpress.XtraBars.Ribbon;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace Foxoft.AppCode
 {
     public class CustomMethods
     {
+        EfMethods efMethods = new EfMethods();
         public string EncryptString(string plainText, string key, string iv)
         {
             byte[] keyBytes = Encoding.UTF8.GetBytes(key);
@@ -410,5 +418,161 @@ namespace Foxoft.AppCode
 
             return filesFound;
         }
+
+        public void AddReports(BarSubItem BSI, string formCode, string columnName, GridView gV, string activeFilterStr = null)
+        {
+            SvgImageCollection svg = new();
+            svg.Add("report", "image://svgimages/business objects/bo_report.svg");
+            svg.Add("setting", "image://svgimages/dashboards/scatterchartlabeloptions.svg");
+
+            BSI.AddItem(new BarHeaderItem { Caption = formCode });
+
+            List<TrFormReport> trFormReports = efMethods.SelectFormReports(formCode);
+
+            foreach (TrFormReport report in trFormReports)
+            {
+                BarButtonItem BBI = new BarButtonItem
+                {
+                    Caption = report.DcReport.ReportName,
+                    Id = 57,
+                    ImageOptions = { SvgImage = svg["report"] },
+                    Name = report.DcReport.ReportId.ToString(),
+                    ItemShortcut = ConvertToShortCut(report.Shortcut)
+                };
+
+                BBI.ItemClick += (sender, e) =>
+                {
+                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+                    if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString()))
+                    {
+                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        return;
+                    }
+
+                    string columnValue = gV.GetFocusedRowCellValue(columnName)?.ToString();
+
+                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+                    string filter = "";
+                    if (!string.IsNullOrEmpty(columnValue))
+                        filter = $"{columnName} = '{columnValue}'";
+                    else
+                    {
+                        int rowCount = gV.DataRowCount;
+                        if (rowCount > 0)
+                        {
+                            string[] columnValueArr = new string[rowCount];
+
+                            for (int i = 0; i < rowCount; i++)
+                            {
+                                object value = gV.GetRowCellValue(i, columnName);
+                                if (value != null)
+                                    columnValueArr[i] = value.ToString();
+                            }
+
+                            string combinedValues = string.Join(",", columnValueArr.Select(value => $"'{value}'"));
+                            filter = $"{columnName} IN ({combinedValues})";
+                        }
+                    }
+
+                    foreach (var item in report.DcReport.DcReportVariables.Where(x => x.ReportId == Convert.ToInt32(BBI.Name)))
+                    {
+                        if (item.VariableProperty == columnName)
+                        {
+                            efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, columnValue);
+                        }
+                    }
+
+                    ShowReportForm(dcReport, filter, activeFilterStr);
+                };
+                BSI.ItemLinks.Add(BBI);
+            }
+
+            BarButtonItem BBI_manage = new BarButtonItem
+            {
+                Caption = "İdarə Et",
+                ImageOptions = { SvgImage = svg["setting"] },
+                Name = "Manage"
+            };
+
+            BBI_manage.ItemClick += (sender, e) =>
+            {
+                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", formCode);
+                try
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        efMethods.InsertFormReport(formCode, Convert.ToInt32(form.Value_Id));
+                        AddReports(BSI, formCode, columnName, gV, activeFilterStr);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            };
+
+            BSI.ItemLinks.Add(BBI_manage, true);
+        }
+
+        private void ShowReportForm(DcReport dcReport, string filter, string activeFilterStr)
+        {
+            if (dcReport.ReportTypeId == 1)
+            {
+                FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
+                formGrid.Show();
+            }
+            else if (dcReport.ReportTypeId == 2)
+            {
+                FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport)
+                {
+                    WindowState = FormWindowState.Maximized
+                };
+                form.Show();
+            }
+        }
+
+
+        private static BarShortcut ConvertToShortCut(string shortCut)
+        {
+            if (!string.IsNullOrEmpty(shortCut))
+            {
+                KeysConverter converter = new();
+                Keys key = Keys.None;
+
+                // Split the shortcut by '+'
+                string[] keys = shortCut.Split('+');
+
+                foreach (string keyPart in keys)
+                {
+                    string trimmedKeyPart = keyPart.Trim().ToUpper();
+
+                    switch (trimmedKeyPart)
+                    {
+                        case "CTRL":
+                        case "CONTROL":
+                            key |= Keys.Control;
+                            break;
+                        case "SHIFT":
+                            key |= Keys.Shift;
+                            break;
+                        case "ALT":
+                            key |= Keys.Alt;
+                            break;
+                        default:
+                            // Convert the main key (like G) using the converter
+                            key |= (Keys)converter.ConvertFromString(trimmedKeyPart);
+                            break;
+                    }
+                }
+
+                return new BarShortcut(key);
+            }
+
+            return null;
+        }
+
+
+
     }
 }

@@ -49,11 +49,12 @@ namespace Foxoft
 
             RegisterEvents();
 
-            AddReports();
-
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+
+            string activeFilterStr = "[StoreCode] = \'" + settingStore.StoreCode + "\'";
+            cM.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
 
             AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore?.ImageFolder);
 
@@ -141,132 +142,6 @@ namespace Foxoft
 
             LoadProducts(productTypeArr);
         }
-
-        private void AddReports()
-        {
-            BSI_Report.LinksPersistInfo.Clear();
-
-            List<TrFormReport> trFormReports = efMethods.SelectFormReports("Products");
-
-            BarButtonItem BBI;
-
-            foreach (TrFormReport report in trFormReports)
-            {
-                BBI = new();
-                BBI.Caption = report.DcReport.ReportName;
-                BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
-                BBI.Name = report.DcReport.ReportId.ToString();
-                if (!string.IsNullOrEmpty(report.Shortcut))
-                {
-                    KeysConverter cvt = new();
-                    //Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
-                    Keys key = ConvertToKeys(report.Shortcut);
-                    BBI.ItemShortcut = new BarShortcut(key);
-                }
-                BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
-
-                ((ISupportInitialize)ribbonControl1).BeginInit();
-                ribbonControl1.Items.Add(BBI);
-                ((ISupportInitialize)ribbonControl1).EndInit();
-
-                BBI.ItemClick += (sender, e) =>
-                {
-                    DcReport dcReport = report.DcReport;
-
-                    string filter = "";
-                    if (dcProduct is not null)
-                        filter = "[ProductCode] = '" + dcProduct.ProductCode + "' ";
-                    else
-                    {
-                        List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_ProductList).ToList();
-                        string combined = "";
-                        foreach (DataRowView rowView in mydata)
-                            combined += "'" + rowView["ProductCode"].ToString() + "',";
-
-                        combined = combined.Substring(0, combined.Length - 1);
-                        filter = "[ProductCode] in ( " + combined + ")";
-                    }
-
-                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
-                    string query = dcReport.ReportQuery;
-                    if (query.Contains("{ProductCode}"))
-                        query = query.Replace("{ProductCode}", " and " + filter); // filter sorgunun icinde temsilci ile deyisdirilir
-
-                    if (dcReport.ReportTypeId == 1)
-                    {
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                        formGrid.Show();
-                    }
-                    else if (dcReport.ReportTypeId == 2)
-                    {
-                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
-                        form.WindowState = FormWindowState.Maximized;
-                        form.Show();
-                    }
-                };
-            }
-
-            BBI = new();
-            BBI.Caption = "Əlavə Et";
-            BBI.ImageOptions.SvgImage = svgImageCollection1["add"];
-            BBI.Name = "Add";
-
-            BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
-            ((ISupportInitialize)ribbonControl1).BeginInit();
-            ribbonControl1.Items.Add(BBI);
-            ((ISupportInitialize)ribbonControl1).EndInit();
-
-            BBI.ItemClick += (sender, e) =>
-            {
-                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", "Products");
-                try
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                        efMethods.InsertFormReport("Products", Convert.ToInt32(form.Value_Id));
-                    AddReports();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            };
-        }
-
-        public static Keys ConvertToKeys(string shortcut)
-        {
-            KeysConverter converter = new KeysConverter();
-            Keys key = Keys.None;
-
-            // Split the shortcut by '+'
-            string[] keys = shortcut.Split('+');
-
-            foreach (string keyPart in keys)
-            {
-                string trimmedKeyPart = keyPart.Trim().ToUpper();
-
-                switch (trimmedKeyPart)
-                {
-                    case "CTRL":
-                    case "CONTROL":
-                        key |= Keys.Control;
-                        break;
-                    case "SHIFT":
-                        key |= Keys.Shift;
-                        break;
-                    case "ALT":
-                        key |= Keys.Alt;
-                        break;
-                    default:
-                        // Convert the main key (like G) using the converter
-                        key |= (Keys)converter.ConvertFromString(trimmedKeyPart);
-                        break;
-                }
-            }
-
-            return key;
-        }
-
 
         private void SaveLayout()
         {
@@ -776,5 +651,10 @@ namespace Foxoft
         {
             MessageBox.Show(gV_ProductList.OptionsFind.FindFilterColumns);
         }
+
+        private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
+        {
+        }
+
     }
 }

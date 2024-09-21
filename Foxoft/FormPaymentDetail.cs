@@ -1,6 +1,7 @@
 ﻿using DevExpress.Data;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Commands;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -9,6 +10,7 @@ using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +28,8 @@ namespace Foxoft
     {
         private TrPaymentHeader trPaymentHeader;
         private EfMethods efMethods = new();
+        private CustomMethods cM = new();
+
         private subContext dbContext;
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
@@ -35,7 +39,9 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            AddReports("PaymentDetails");
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+            cM.AddReports(BSI_Reports, "PaymentDetails", nameof(trPaymentHeader.PaymentHeaderId), gV_PaymentLine, activeFilterStr);
 
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
@@ -91,104 +97,6 @@ namespace Foxoft
             paymentHeader.IsMainTF = true;
 
             e.NewObject = paymentHeader;
-        }
-
-        private void AddReports(string formCode)
-        {
-            BSI_Report.LinksPersistInfo.Clear();
-
-            List<TrFormReport> trFormReports = efMethods.SelectFormReports(formCode);
-
-            BarButtonItem BBI;
-
-            foreach (TrFormReport report in trFormReports)
-            {
-                BBI = new();
-                BBI.Caption = report.DcReport.ReportName;
-                BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
-                BBI.Name = report.DcReport.ReportId.ToString();
-                if (!string.IsNullOrEmpty(report.Shortcut))
-                {
-                    KeysConverter cvt = new();
-                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
-                    BBI.ItemShortcut = new BarShortcut(key);
-                }
-
-                BSI_Report.AddItem(BBI);
-
-                ((ISupportInitialize)ribbonControl1).BeginInit();
-                ribbonControl1.Items.Add(BBI);
-                ((ISupportInitialize)ribbonControl1).EndInit();
-
-                BBI.ItemClick += (sender, e) =>
-                {
-                    DcReport dcReport = report.DcReport;
-
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString());
-                    if (!currAccHasClaims)
-                    {
-                        MessageBox.Show("Yetkiniz yoxdur! ");
-                        return;
-                    }
-
-                    string filter = "";
-                    if (trPaymentHeader is not null)
-                        filter = $"[PaymentHeaderId] = '{trPaymentHeader.PaymentHeaderId}' ";
-                    else
-                    {
-                        List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_PaymentLine).ToList();
-                        string combined = "";
-                        foreach (DataRowView rowView in mydata)
-                            combined += $"'{rowView["PaymentHeaderId"].ToString()}',";
-
-                        combined = combined.Substring(0, combined.Length - 1);
-                        filter = $"[PaymentHeaderId] in ( {combined})";
-                    }
-
-                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
-                    string query = dcReport.ReportQuery;
-                    if (query.Contains("{PaymentHeaderId}"))
-                        query = query.Replace("{PaymentHeaderId}", " and " + filter); // filter sorgunun icinde temsilci ile deyisdirilir
-
-                    if (dcReport.ReportTypeId == 1)
-                    {
-                        FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                        formGrid.Show();
-                    }
-                    else if (dcReport.ReportTypeId == 2)
-                    {
-                        FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
-                        form.WindowState = FormWindowState.Maximized;
-                        form.Show();
-                    }
-                };
-            }
-
-            BBI = new();
-            BBI.Caption = "İdarə Et";
-            BBI.ImageOptions.SvgImage = svgImageCollection1["add"];
-            BBI.Name = "Manage";
-            BSI_Report.AddItem(BBI).BeginGroup = true;
-
-            ((ISupportInitialize)ribbonControl1).BeginInit();
-            ribbonControl1.Items.Add(BBI);
-            ((ISupportInitialize)ribbonControl1).EndInit();
-
-            BBI.ItemClick += (sender, e) =>
-            {
-                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", formCode);
-                try
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                        efMethods.InsertFormReport(formCode, Convert.ToInt32(form.Value_Id));
-                    AddReports(formCode);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            };
         }
 
         public static List<T> GetFilteredData<T>(ColumnView view)
@@ -707,6 +615,11 @@ namespace Foxoft
                     editor.Properties.Mask.Culture = customCulture; // Ensure '.' is used
                 }
             }
+        }
+
+        private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

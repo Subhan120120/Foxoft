@@ -553,7 +553,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.TrFormReports.Include(x => x.DcReport)
+            return db.TrFormReports.Include(x => x.DcReport).ThenInclude(x => x.DcReportVariables)
                                    .Where(x => x.FormCode == formCode)
                                    .ToList();
         }

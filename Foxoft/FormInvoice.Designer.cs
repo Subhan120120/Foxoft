@@ -1,4 +1,5 @@
 ﻿
+using DevExpress.XtraBars;
 using Foxoft.Models;
 using System;
 
@@ -88,39 +89,39 @@ namespace Foxoft
             lUE_WarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
             lUE_ToWarehouseCode = new DevExpress.XtraEditors.LookUpEdit();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            bBI_Save = new DevExpress.XtraBars.BarButtonItem();
-            bBI_SaveAndNew = new DevExpress.XtraBars.BarButtonItem();
-            bBI_reportDesign = new DevExpress.XtraBars.BarButtonItem();
-            bBI_Payment = new DevExpress.XtraBars.BarButtonItem();
-            bBI_New = new DevExpress.XtraBars.BarButtonItem();
-            bBI_reportPreview = new DevExpress.XtraBars.BarButtonItem();
-            bBI_DeleteInvoice = new DevExpress.XtraBars.BarButtonItem();
-            bBI_DeletePayment = new DevExpress.XtraBars.BarButtonItem();
-            bBI_SaveAndQuit = new DevExpress.XtraBars.BarButtonItem();
-            bBI_CopyInvoice = new DevExpress.XtraBars.BarButtonItem();
-            bBI_Whatsapp = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ModifyInvoice = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ReportPriceList = new DevExpress.XtraBars.BarButtonItem();
-            BBI_exportXLSX = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ImportExcel = new DevExpress.XtraBars.BarButtonItem();
-            BBI_ReportPrintFast = new DevExpress.XtraBars.BarButtonItem();
-            BBI_PrintSettingSave = new DevExpress.XtraBars.BarButtonItem();
-            BEI_PrinterName = new DevExpress.XtraBars.BarEditItem();
+            bBI_Save = new BarButtonItem();
+            bBI_SaveAndNew = new BarButtonItem();
+            bBI_reportDesign = new BarButtonItem();
+            bBI_Payment = new BarButtonItem();
+            bBI_New = new BarButtonItem();
+            bBI_reportPreview = new BarButtonItem();
+            bBI_DeleteInvoice = new BarButtonItem();
+            bBI_DeletePayment = new BarButtonItem();
+            bBI_SaveAndQuit = new BarButtonItem();
+            bBI_CopyInvoice = new BarButtonItem();
+            bBI_Whatsapp = new BarButtonItem();
+            BBI_ModifyInvoice = new BarButtonItem();
+            barButtonItem1 = new BarButtonItem();
+            BBI_ReportPriceList = new BarButtonItem();
+            BBI_exportXLSX = new BarButtonItem();
+            BBI_ImportExcel = new BarButtonItem();
+            BBI_ReportPrintFast = new BarButtonItem();
+            BBI_PrintSettingSave = new BarButtonItem();
+            BEI_PrinterName = new BarEditItem();
             repoCBE_PrinterName = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
-            btn_info = new DevExpress.XtraBars.BarButtonItem();
-            BBI_picture = new DevExpress.XtraBars.BarButtonItem();
-            BBI_Print = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
-            popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
-            BSI_ReportProduct = new DevExpress.XtraBars.BarSubItem();
-            BBI_InvoiceExpenses = new DevExpress.XtraBars.BarButtonItem();
-            BCI_ShowPicture = new DevExpress.XtraBars.BarCheckItem();
-            BCI_ShowPrint = new DevExpress.XtraBars.BarCheckItem();
-            BCI_ShowCopy = new DevExpress.XtraBars.BarCheckItem();
-            BSI_ReportInvoice = new DevExpress.XtraBars.BarSubItem();
+            barButtonItem3 = new BarButtonItem();
+            btn_info = new BarButtonItem();
+            BBI_picture = new BarButtonItem();
+            BBI_Print = new BarButtonItem();
+            barButtonItem2 = new BarButtonItem();
+            barButtonItem4 = new BarButtonItem();
+            BBI_InvoiceExpenses = new BarButtonItem();
+            BCI_ShowPicture = new BarCheckItem();
+            BCI_ShowPrint = new BarCheckItem();
+            BCI_ShowCopy = new BarCheckItem();
+            barButtonItem6 = new BarButtonItem();
+            popupMenuReports = new PopupMenu(components);
+            BSI_Reports = new BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -160,9 +161,9 @@ namespace Foxoft
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             LCI_CurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_SalesPersonDesc = new DevExpress.XtraLayout.LayoutControlItem();
+            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
-            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -190,7 +191,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_ToWarehouseCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
@@ -218,8 +219,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_CurrAccDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
             SuspendLayout();
             // 
             // trInvoiceLinesBindingSource
@@ -753,9 +754,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2, barButtonItem4, BSI_ReportProduct, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, BSI_ReportInvoice });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2, barButtonItem4, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 54;
+            ribbonControl1.MaxItemId = 59;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -800,7 +801,7 @@ namespace Foxoft
             bBI_New.Caption = "Yeni";
             bBI_New.Id = 9;
             bBI_New.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_New.ImageOptions.SvgImage");
-            bBI_New.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
+            bBI_New.ItemShortcut = new BarShortcut(Keys.Control | Keys.N);
             bBI_New.Name = "bBI_New";
             bBI_New.ItemClick += bBI_New_ItemClick;
             // 
@@ -833,7 +834,7 @@ namespace Foxoft
             bBI_SaveAndQuit.Caption = "Yadda Saxla Bağla";
             bBI_SaveAndQuit.Id = 13;
             bBI_SaveAndQuit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_SaveAndQuit.ImageOptions.SvgImage");
-            bBI_SaveAndQuit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F12);
+            bBI_SaveAndQuit.ItemShortcut = new BarShortcut(Keys.F12);
             bBI_SaveAndQuit.Name = "bBI_SaveAndQuit";
             bBI_SaveAndQuit.ItemClick += bBI_SaveAndQuit_ItemClick;
             // 
@@ -965,26 +966,12 @@ namespace Foxoft
             // barButtonItem4
             // 
             barButtonItem4.ActAsDropDown = true;
-            barButtonItem4.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            barButtonItem4.ButtonStyle = BarButtonStyle.DropDown;
             barButtonItem4.Caption = "test02";
-            barButtonItem4.DropDownControl = popupMenu1;
             barButtonItem4.Id = 43;
             barButtonItem4.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem4.ImageOptions.SvgImage");
             barButtonItem4.Name = "barButtonItem4";
             barButtonItem4.ItemClick += barButtonItem4_ItemClick;
-            // 
-            // popupMenu1
-            // 
-            popupMenu1.Name = "popupMenu1";
-            popupMenu1.Ribbon = ribbonControl1;
-            popupMenu1.BeforePopup += popupMenuPrinters_BeforePopup;
-            // 
-            // BSI_ReportProduct
-            // 
-            BSI_ReportProduct.Caption = "Hesabat Məhsul";
-            BSI_ReportProduct.Id = 44;
-            BSI_ReportProduct.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_ReportProduct.ImageOptions.SvgImage");
-            BSI_ReportProduct.Name = "BSI_ReportProduct";
             // 
             // BBI_InvoiceExpenses
             // 
@@ -997,7 +984,7 @@ namespace Foxoft
             // BCI_ShowPicture
             // 
             BCI_ShowPicture.Caption = "Rəsim Göstər";
-            BCI_ShowPicture.CheckBoxVisibility = DevExpress.XtraBars.CheckBoxVisibility.BeforeText;
+            BCI_ShowPicture.CheckBoxVisibility = CheckBoxVisibility.BeforeText;
             BCI_ShowPicture.Id = 46;
             BCI_ShowPicture.Name = "BCI_ShowPicture";
             BCI_ShowPicture.CheckedChanged += BCI_CheckedChanged;
@@ -1005,7 +992,7 @@ namespace Foxoft
             // BCI_ShowPrint
             // 
             BCI_ShowPrint.Caption = "Printer Göstər";
-            BCI_ShowPrint.CheckBoxVisibility = DevExpress.XtraBars.CheckBoxVisibility.BeforeText;
+            BCI_ShowPrint.CheckBoxVisibility = CheckBoxVisibility.BeforeText;
             BCI_ShowPrint.Id = 47;
             BCI_ShowPrint.Name = "BCI_ShowPrint";
             BCI_ShowPrint.CheckedChanged += BCI_CheckedChanged;
@@ -1013,17 +1000,29 @@ namespace Foxoft
             // BCI_ShowCopy
             // 
             BCI_ShowCopy.Caption = "Kopya Göstər";
-            BCI_ShowCopy.CheckBoxVisibility = DevExpress.XtraBars.CheckBoxVisibility.BeforeText;
+            BCI_ShowCopy.CheckBoxVisibility = CheckBoxVisibility.BeforeText;
             BCI_ShowCopy.Id = 49;
             BCI_ShowCopy.Name = "BCI_ShowCopy";
             BCI_ShowCopy.CheckedChanged += BCI_CheckedChanged;
             // 
-            // BSI_ReportInvoice
+            // barButtonItem6
             // 
-            BSI_ReportInvoice.Caption = "Hesabat Faktura";
-            BSI_ReportInvoice.Id = 51;
-            BSI_ReportInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_ReportInvoice.ImageOptions.SvgImage");
-            BSI_ReportInvoice.Name = "BSI_ReportInvoice";
+            barButtonItem6.Caption = "barButtonItem6";
+            barButtonItem6.Id = 55;
+            barButtonItem6.Name = "barButtonItem6";
+            // 
+            // popupMenuReports
+            // 
+            popupMenuReports.Name = "popupMenuReports";
+            popupMenuReports.Ribbon = ribbonControl1;
+            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
+            // 
+            // BSI_Reports
+            // 
+            BSI_Reports.Caption = "Hesabat";
+            BSI_Reports.Id = 58;
+            BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
+            BSI_Reports.Name = "BSI_Reports";
             // 
             // ribbonPage1
             // 
@@ -1054,10 +1053,9 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
             ribbonPageGroup2.ItemLinks.Add(BBI_Print);
             ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
-            ribbonPageGroup2.ItemLinks.Add(BSI_ReportProduct);
-            ribbonPageGroup2.ItemLinks.Add(BSI_ReportInvoice);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyInvoice);
             ribbonPageGroup2.ItemLinks.Add(BBI_picture, true);
+            ribbonPageGroup2.ItemLinks.Add(BSI_Reports);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Print";
             // 
@@ -1366,6 +1364,12 @@ namespace Foxoft
             LCI_SalesPersonDesc.TextSize = new Size(0, 0);
             LCI_SalesPersonDesc.TextVisible = false;
             // 
+            // svgImageCollection1
+            // 
+            svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
+            svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
+            svgImageCollection1.Add("setting", "image://svgimages/dashboards/scatterchartlabeloptions.svg");
+            // 
             // adorneruıManager1
             // 
             adorneruıManager1.Owner = this;
@@ -1374,12 +1378,6 @@ namespace Foxoft
             // 
             alertControl1.AutoFormDelay = 3000;
             alertControl1.FormDisplaySpeed = DevExpress.XtraBars.Alerter.AlertFormDisplaySpeed.Fast;
-            // 
-            // svgImageCollection1
-            // 
-            svgImageCollection1.Add("print", "image://svgimages/print/print.svg");
-            svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
-            svgImageCollection1.Add("setting", "image://svgimages/dashboards/scatterchartlabeloptions.svg");
             // 
             // FormInvoice
             // 
@@ -1425,7 +1423,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_ToWarehouseCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).EndInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuReports).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
@@ -1453,8 +1451,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_CurrAccDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).EndInit();
-            ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1577,9 +1575,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
         private DevExpress.XtraBars.PopupMenu popupMenuPrinters;
-        private DevExpress.XtraBars.PopupMenu popupMenu1;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
-        private DevExpress.XtraBars.BarSubItem BSI_ReportProduct;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
         private DevExpress.XtraBars.BarButtonItem BBI_InvoiceExpenses;
@@ -1591,10 +1587,13 @@ namespace Foxoft
         private DevExpress.XtraBars.BarCheckItem BCI_ShowCopy;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_SerialNumberCode;
         private DevExpress.XtraGrid.Columns.GridColumn colSerialNumberCode;
-        private DevExpress.XtraBars.BarSubItem BSI_ReportInvoice;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_SalesPerson;
         private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPerson;
         private DevExpress.XtraEditors.LabelControl LBL_SalesPersonDesc;
         private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPersonDesc;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem6;
+        private DevExpress.XtraBars.BarButtonItem BBI_Reports;
+        private DevExpress.XtraBars.PopupMenu popupMenuReports;
+        private BarSubItem BSI_Reports;
     }
 }

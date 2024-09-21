@@ -4,8 +4,6 @@ using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
-using DevExpress.DataAccess.UI.Native.Sql.DataConnectionControls;
-using DevExpress.Utils;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -24,6 +22,7 @@ using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
+using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +39,6 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 using WaitForm_SetDescription;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
@@ -84,14 +82,17 @@ namespace Foxoft
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
 
+            CustomMethods cM = new();
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+
+            cM.AddReports(BSI_Reports, "Invoice", nameof(TrInvoiceLine.InvoiceHeaderId), gV_InvoiceLine, activeFilterStr);
+            cM.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_InvoiceLine, activeFilterStr);
+
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
             if (!currAccHasClaims)
                 RPG_Payment.Visible = false;
 
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
-
-            AddReports(BSI_ReportProduct, "Products");
-            AddReports(BSI_ReportInvoice, "Invoice");
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
                 repoCBE_PrinterName.Items.Add(printer);
@@ -155,144 +156,6 @@ namespace Foxoft
             col_ProductDesc.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductDesc);
             checkEdit_IsSent.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsSent);
             checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
-        }
-
-        private void AddReports(BarSubItem barSubItem, string formCode)
-        {
-            barSubItem.LinksPersistInfo.Clear();
-
-            List<TrFormReport> trFormReports = efMethods.SelectFormReports(formCode);
-
-            BarButtonItem BBI;
-            foreach (TrFormReport report in trFormReports)
-            {
-                BBI = new();
-                BBI.Caption = report.DcReport.ReportName;
-                BBI.Id = 57;
-                BBI.ImageOptions.SvgImage = svgImageCollection1["report"];
-                BBI.Name = report.DcReport.ReportId.ToString();
-
-                if (!string.IsNullOrEmpty(report.Shortcut))
-                {
-                    KeysConverter cvt = new();
-                    //Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
-                    Keys key = ConvertToKeys(report.Shortcut);
-                    BBI.ItemShortcut = new BarShortcut(key);
-                }
-                barSubItem.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
-
-                ((ISupportInitialize)ribbonControl1).BeginInit();
-                ribbonControl1.Items.Add(BBI);
-                ((ISupportInitialize)ribbonControl1).EndInit();
-
-                BBI.ItemClick += (sender, e) =>
-                {
-                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
-
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString());
-                    if (!currAccHasClaims)
-                    {
-                        MessageBox.Show("Yetkiniz yoxdur! ");
-                        return;
-                    }
-
-                    List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(gV_InvoiceLine).ToList();
-
-                    if (mydata.Count > 0)
-                    {
-                        string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
-                        string filter = "";
-
-                        if (barSubItem == BSI_ReportInvoice)
-                            filter = $"[InvoiceHeaderId] = '{trInvoiceHeader.InvoiceHeaderId}' AND ";
-
-                        if (!string.IsNullOrEmpty(productCode))
-                            filter += $"[ProductCode] = '{productCode}' ";
-                        else
-                        {
-                            var combined = "";
-                            foreach (TrInvoiceLine rowView in mydata)
-                                combined += $"'{rowView.ProductCode.ToString()}',";
-
-                            combined = combined.Substring(0, combined.Length - 1);
-                            filter += $"[ProductCode] in ( {combined})";
-                        }
-
-                        string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
-                        if (dcReport.ReportTypeId == 1)
-                        {
-                            FormReportGrid formGrid = new(dcReport.ReportQuery, filter, dcReport, activeFilterStr);
-                            formGrid.Show();
-                        }
-                        else if (dcReport.ReportTypeId == 2)
-                        {
-                            FormReportPreview form = new(dcReport.ReportQuery, filter, dcReport);
-                            form.WindowState = FormWindowState.Maximized;
-                            form.Show();
-                        }
-                    }
-                    else XtraMessageBox.Show("Qeydə alınmış məlumat yoxdur");
-                };
-            }
-
-            BBI = new();
-            BBI.Caption = "İdarə Et";
-            BBI.ImageOptions.SvgImage = svgImageCollection1["setting"];
-            BBI.Name = "Manage";
-            barSubItem.LinksPersistInfo.Add(new LinkPersistInfo(BBI, true));
-
-            ((ISupportInitialize)ribbonControl1).BeginInit();
-            ribbonControl1.Items.Add(BBI);
-            ((ISupportInitialize)ribbonControl1).EndInit();
-
-            BBI.ItemClick += (sender, e) =>
-            {
-                using FormCommonList<TrFormReport> form = new("", "ReportId", "", "FormCode", formCode);
-                try
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                        efMethods.InsertFormReport(formCode, Convert.ToInt32(form.Value_Id));
-                    AddReports(barSubItem, formCode);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            };
-        }
-        public static Keys ConvertToKeys(string shortcut)
-        {
-            KeysConverter converter = new KeysConverter();
-            Keys key = Keys.None;
-
-            // Split the shortcut by '+'
-            string[] keys = shortcut.Split('+');
-
-            foreach (string keyPart in keys)
-            {
-                string trimmedKeyPart = keyPart.Trim().ToUpper();
-
-                switch (trimmedKeyPart)
-                {
-                    case "CTRL":
-                    case "CONTROL":
-                        key |= Keys.Control;
-                        break;
-                    case "SHIFT":
-                        key |= Keys.Shift;
-                        break;
-                    case "ALT":
-                        key |= Keys.Alt;
-                        break;
-                    default:
-                        // Convert the main key (like G) using the converter
-                        key |= (Keys)converter.ConvertFromString(trimmedKeyPart);
-                        break;
-                }
-            }
-
-            return key;
         }
 
         private void ChangeQtyByProcessDir()
@@ -2345,6 +2208,11 @@ namespace Foxoft
                 for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                     gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, null);
             }
+        }
+
+        private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
+        {
+           
         }
     }
 }

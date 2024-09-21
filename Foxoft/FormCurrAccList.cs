@@ -3,6 +3,7 @@ using DevExpress.Data.Mask;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Commands;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
@@ -11,6 +12,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraReports;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -40,9 +42,11 @@ namespace Foxoft
         public FormCurrAccList()
         {
             InitializeComponent();
-            colCurrAccCode = gV_CurrAccList.Columns["CurrAccCode"];
 
-            AddReports();
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            cM.AddReports(barSubItem1, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
+
+            colCurrAccCode = gV_CurrAccList.Columns["CurrAccCode"];
 
             bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
         }
@@ -149,79 +153,6 @@ namespace Foxoft
 
             gV_CurrAccList.BestFitColumns();
             gV_CurrAccList.MakeRowVisible(gV_CurrAccList.FocusedRowHandle);
-        }
-
-        private void AddReports()
-        {
-            ComponentResourceManager resources = new(typeof(FormCurrAccList));
-
-            List<TrFormReport> trFormReports = efMethods.SelectFormReports("CurrAccs");
-
-            foreach (TrFormReport report in trFormReports)
-            {
-
-                BarButtonItem BBI = new();
-                BBI.Caption = report.DcReport.ReportName;
-                BBI.Id = 57;
-                BBI.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
-                BBI.Name = report.DcReport.ReportId.ToString();
-                if (!string.IsNullOrEmpty(report.Shortcut))
-                {
-                    KeysConverter cvt = new();
-                    Keys key = (Keys)cvt.ConvertFrom(report.Shortcut);
-                    BBI.ItemShortcut = new BarShortcut(key);
-                }
-                BSI_Report.LinksPersistInfo.Add(new LinkPersistInfo(BBI));
-
-                ((ISupportInitialize)ribbonControl1).BeginInit();
-                ribbonControl1.Items.Add(BBI);
-                ((ISupportInitialize)ribbonControl1).EndInit();
-
-                BBI.ItemClick += (sender, e) =>
-                {
-                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
-
-                    string columnName = "[CurrAccCode]";
-                    string dateFilter = "";
-                    if (currAccTypeArr.Contains((byte)5))
-                    {
-                        columnName = "[CashRegisterCode]";
-                        dateFilter = $" AND [OperationDate] Between(#{DateTime.Now.ToString("yyyy-MM-dd")}#, #{DateTime.Now.ToString("yyyy-MM-dd")}#) ";
-                    }
-
-                    string filter = "";
-                    if (dcCurrAcc is not null)
-                        filter = columnName + " = '" + dcCurrAcc.CurrAccCode + "' ";
-                    else
-                    {
-                        List<DataRowView> mydata = GetFilteredData<DataRowView>(gV_CurrAccList).ToList();
-                        string combined = "";
-                        foreach (DataRowView rowView in mydata)
-                            combined += "'" + rowView["CurrAccCode"].ToString() + "',";
-
-                        combined = combined.Substring(0, combined.Length - 1);
-                        filter = columnName + " in (" + combined + ")";
-                    }
-
-                    string activeFilterStr = dateFilter;
-
-                    string query = dcReport.ReportQuery;
-                    if (query.Contains("{CurrAccCode}"))
-                        query = query.Replace("{CurrAccCode}", " and " + filter); // filter sorgunun icinde temsilci ile deyisdirilir
-
-                    if (dcReport.ReportTypeId == 1)
-                    {
-                        FormReportGrid formGrid = new(query, filter, dcReport, activeFilterStr);
-                        formGrid.Show();
-                    }
-                    else if (dcReport.ReportTypeId == 2)
-                    {
-                        FormReportPreview form = new(query, filter, dcReport);
-                        form.WindowState = FormWindowState.Maximized;
-                        form.Show();
-                    }
-                };
-            }
         }
 
         public static List<T> GetFilteredData<T>(ColumnView view)
@@ -709,6 +640,10 @@ namespace Foxoft
                 if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
                     UpdateGridViewData();
             }
+        }
+
+        private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
+        {
         }
     }
 }

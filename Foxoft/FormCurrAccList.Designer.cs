@@ -67,11 +67,12 @@ namespace Foxoft
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
-            BSI_Report = new DevExpress.XtraBars.BarSubItem();
             barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             BBI_test = new DevExpress.XtraBars.BarButtonItem();
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
+            BBI_Report = new DevExpress.XtraBars.BarButtonItem();
+            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -79,11 +80,13 @@ namespace Foxoft
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             SuspendLayout();
             // 
             // gC_CurrAccList
@@ -255,9 +258,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_quit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, BSI_Report, barButtonItem3, barButtonItem4, BBI_test, BBI_query });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_quit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BBI_Report, barSubItem1 });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 29;
+            ribbonControl1.MaxItemId = 31;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.PageHeaderItemLinks.Add(bBI_quit);
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage3 });
@@ -316,13 +319,6 @@ namespace Foxoft
             bBI_CurAccRefresh.Name = "bBI_CurAccRefresh";
             bBI_CurAccRefresh.ItemClick += bBI_CurAccRefresh_ItemClick;
             // 
-            // BSI_Report
-            // 
-            BSI_Report.Caption = "Hesabat";
-            BSI_Report.Id = 24;
-            BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
-            BSI_Report.Name = "BSI_Report";
-            // 
             // barButtonItem3
             // 
             barButtonItem3.Caption = "Musteri ile Haqq Hesab";
@@ -352,6 +348,22 @@ namespace Foxoft
             BBI_query.Name = "BBI_query";
             BBI_query.ItemClick += BBI_query_ItemClick;
             // 
+            // BBI_Report
+            // 
+            BBI_Report.ActAsDropDown = true;
+            BBI_Report.ButtonStyle = DevExpress.XtraBars.BarButtonStyle.DropDown;
+            BBI_Report.Caption = "Hesabat";
+            BBI_Report.DropDownControl = popupMenuReports;
+            BBI_Report.Id = 29;
+            BBI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Report.ImageOptions.SvgImage");
+            BBI_Report.Name = "BBI_Report";
+            // 
+            // popupMenuReports
+            // 
+            popupMenuReports.Name = "popupMenuReports";
+            popupMenuReports.Ribbon = ribbonControl1;
+            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
+            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup3 });
@@ -370,7 +382,8 @@ namespace Foxoft
             // ribbonPageGroup3
             // 
             ribbonPageGroup3.ItemLinks.Add(bBI_ExportXlsx);
-            ribbonPageGroup3.ItemLinks.Add(BSI_Report);
+            ribbonPageGroup3.ItemLinks.Add(BBI_Report);
+            ribbonPageGroup3.ItemLinks.Add(barSubItem1);
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = "Hesabat";
             // 
@@ -398,6 +411,12 @@ namespace Foxoft
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "ribbonPage2";
             // 
+            // barSubItem1
+            // 
+            barSubItem1.Caption = "barSubItem1";
+            barSubItem1.Id = 30;
+            barSubItem1.Name = "barSubItem1";
+            // 
             // FormCurrAccList
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -419,6 +438,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuReports).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -463,7 +483,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colBalance;
         private DevExpress.XtraBars.BarButtonItem bBI_CurrAccDelete;
         private DevExpress.XtraBars.BarButtonItem bBI_CurAccRefresh;
-        private DevExpress.XtraBars.BarSubItem BSI_Report;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
         private DevExpress.XtraBars.BarButtonItem BBI_test;
@@ -471,5 +490,8 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem BBI_query;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
+        private DevExpress.XtraBars.BarButtonItem BBI_Report;
+        private DevExpress.XtraBars.PopupMenu popupMenuReports;
+        private DevExpress.XtraBars.BarSubItem barSubItem1;
     }
 }
