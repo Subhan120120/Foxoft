@@ -43,8 +43,6 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-            cM.AddReports(barSubItem1, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
 
             colCurrAccCode = gV_CurrAccList.Columns["CurrAccCode"];
 
@@ -55,6 +53,13 @@ namespace Foxoft
             : this()
         {
             this.currAccTypeArr = currAccTypeArr;
+
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            if (currAccTypeArr.Contains((byte)5))
+                cM.AddReports(BSI_Reports, "CurrAccs", nameof(TrPaymentLine.CashRegisterCode), gV_CurrAccList);
+            else
+                cM.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
+
             UpdateGridViewData();
             gV_CurrAccList.PopulateColumns();
             LoadLayout();
@@ -383,38 +388,6 @@ namespace Foxoft
 
         private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //DcReport dcReport = efMethods.SelectReport(1003);
-            //object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
-
-            //if (currAccCode is not null)
-            //{
-            //    efMethods.UpdateDcReportVariable_Value(dcReport.ReportId, "CurrAccCode", currAccCode.ToString());
-
-            //    dcReport = efMethods.SelectReport(dcReport.ReportId);
-
-            //    string reportQuery = dcReport.ReportQuery;
-
-            //    ICollection<dcReportVariable> dcReportVariables = dcReport.DcReportFilters;
-            //    CriteriaOperator[] criteriaOperators = new CriteriaOperator[dcReportVariables.Count];
-            //    int index = 0;
-            //    foreach (dcReportVariable rf in dcReportVariables)
-            //    {
-            //        BinaryOperatorType operatorType = ConvertOperatorType(rf.FilterOperatorType);
-
-            //        criteriaOperators[index] = new BinaryOperator(rf.FilterProperty, rf.FilterValue, operatorType);
-
-            //        string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
-            //        reportQuery = reportQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
-
-            //        index++;
-            //    }
-            //    //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
-
-            //    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
-            //    FormReportGrid formGrid = new(reportQuery, "", dcReport, activeFilterStr);
-            //    formGrid.Show();
-            //}
         }
 
         private BinaryOperatorType ConvertOperatorType(string filterOperatorType)

@@ -419,7 +419,7 @@ namespace Foxoft.AppCode
             return filesFound;
         }
 
-        public void AddReports(BarSubItem BSI, string formCode, string columnName, GridView gV, string activeFilterStr = null)
+        public void AddReports(BarSubItem BSI, string formCode, string columnName = null, GridView gV = null, string activeFilterStr = null)
         {
             SvgImageCollection svg = new();
             svg.Add("report", "image://svgimages/business objects/bo_report.svg");
@@ -449,38 +449,40 @@ namespace Foxoft.AppCode
                         return;
                     }
 
-                    string columnValue = gV.GetFocusedRowCellValue(columnName)?.ToString();
-
-                    string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-
                     string filter = "";
-                    if (!string.IsNullOrEmpty(columnValue))
-                        filter = $"{columnName} = '{columnValue}'";
-                    else
+                    if (gV != null)
                     {
-                        int rowCount = gV.DataRowCount;
-                        if (rowCount > 0)
-                        {
-                            string[] columnValueArr = new string[rowCount];
+                        string columnValue = gV.GetFocusedRowCellValue(columnName)?.ToString();
 
-                            for (int i = 0; i < rowCount; i++)
+                        if (!string.IsNullOrEmpty(columnValue))
+                            filter = $"{columnName} = '{columnValue}'";
+                        else
+                        {
+                            int rowCount = gV.DataRowCount;
+                            if (rowCount > 0)
                             {
-                                object value = gV.GetRowCellValue(i, columnName);
-                                if (value != null)
-                                    columnValueArr[i] = value.ToString();
+                                string[] columnValueArr = new string[rowCount];
+
+                                for (int i = 0; i < rowCount; i++)
+                                {
+                                    object value = gV.GetRowCellValue(i, columnName);
+                                    if (value != null)
+                                        columnValueArr[i] = value.ToString();
+                                }
+
+                                string combinedValues = string.Join(",", columnValueArr.Select(value => $"'{value}'"));
+                                filter = $"{columnName} IN ({combinedValues})";
                             }
-
-                            string combinedValues = string.Join(",", columnValueArr.Select(value => $"'{value}'"));
-                            filter = $"{columnName} IN ({combinedValues})";
                         }
-                    }
 
-                    foreach (var item in report.DcReport.DcReportVariables.Where(x => x.ReportId == Convert.ToInt32(BBI.Name)))
-                    {
-                        if (item.VariableProperty == columnName)
+                        foreach (var item in report.DcReport.DcReportVariables.Where(x => x.ReportId == Convert.ToInt32(BBI.Name)))
                         {
-                            efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, columnValue);
+                            if (item.VariableProperty == columnName)
+                            {
+                                efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, columnValue);
+                            }
                         }
+
                     }
 
                     ShowReportForm(dcReport, filter, activeFilterStr);
@@ -531,7 +533,6 @@ namespace Foxoft.AppCode
                 form.Show();
             }
         }
-
 
         private static BarShortcut ConvertToShortCut(string shortCut)
         {
