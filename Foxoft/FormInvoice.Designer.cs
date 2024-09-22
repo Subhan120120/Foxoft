@@ -113,7 +113,6 @@ namespace Foxoft
             barButtonItem3 = new BarButtonItem();
             btn_info = new BarButtonItem();
             BBI_picture = new BarButtonItem();
-            BBI_Print = new BarButtonItem();
             barButtonItem2 = new BarButtonItem();
             barButtonItem4 = new BarButtonItem();
             BBI_InvoiceExpenses = new BarButtonItem();
@@ -754,7 +753,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, BBI_Print, barButtonItem2, barButtonItem4, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_reportDesign, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_DeletePayment, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_ModifyInvoice, barButtonItem1, BBI_ReportPriceList, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, barButtonItem2, barButtonItem4, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 59;
             ribbonControl1.Name = "ribbonControl1";
@@ -955,14 +954,6 @@ namespace Foxoft
             BBI_picture.Name = "BBI_picture";
             BBI_picture.ItemClick += BBI_picture_ItemClick;
             // 
-            // BBI_Print
-            // 
-            BBI_Print.Caption = "Çap";
-            BBI_Print.Id = 41;
-            BBI_Print.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Print.ImageOptions.SvgImage");
-            BBI_Print.Name = "BBI_Print";
-            BBI_Print.ItemClick += BBI_Print_ItemClick;
-            // 
             // barButtonItem2
             // 
             barButtonItem2.Caption = "test";
@@ -1053,7 +1044,6 @@ namespace Foxoft
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
-            ribbonPageGroup2.ItemLinks.Add(BBI_Print);
             ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyInvoice);
             ribbonPageGroup2.ItemLinks.Add(BBI_picture, true);
@@ -1571,7 +1561,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem btn_info;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup8;
         private DevExpress.XtraBars.BarButtonItem BBI_picture;
-        private DevExpress.XtraBars.BarButtonItem BBI_Print;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup9;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
