@@ -1057,20 +1057,6 @@ namespace Foxoft
             }
         }
 
-        private void GetPrintToWarehouse(Guid invoiceHeader, string printerName)
-        {
-            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
-            report.PrinterName = printerName;
-
-            if (report is not null)
-            {
-                ReportPrintTool printTool = new(report);
-
-                printTool.Print();
-                efMethods.UpdateInvoicePrintCount(invoiceHeader);
-            }
-        }
-
         private XtraReport GetInvoiceReport(string fileName)
         {
             ReportClass reportClass = new();
@@ -1992,6 +1978,25 @@ namespace Foxoft
             alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
         }
 
+        private void GetPrintToWarehouse(Guid invoiceHeader, string printerName)
+        {
+            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
+            report.PrinterName = printerName;
+
+            if (report is not null)
+            {
+                ReportPrintTool printTool = new(report);
+                //printTool.PrintingSystem.EndPrint += PrintingSystem_EndPrint;
+                printTool.Print();
+                efMethods.UpdateInvoicePrintCount(invoiceHeader);
+            }
+        }
+
+        //private void PrintingSystem_EndPrint(object sender, EventArgs e)
+        //{
+        //    alertControl1.Show(this, "Print Göndərildi.", "Printer: Printer Adı" , "", (Image)null, null);
+        //}
+
         private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)
         {
             ComboBoxEdit comboBox = (ComboBoxEdit)sender;
@@ -2068,29 +2073,6 @@ namespace Foxoft
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
 
-        }
-
-        private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)
-        {
-            PopupMenu menu = (sender as PopupMenu);
-
-            menu.ItemLinks.Clear();
-
-            foreach (string printer in PrinterSettings.InstalledPrinters)
-            {
-                BarButtonItem BBI = new();
-                BBI.Caption = printer;
-                BBI.Name = printer;
-                BBI.ImageOptions.SvgImage = svgImageCollection1["print"]; ;
-                BBI.ItemClick += async (sender, e) =>
-                {
-                    await PrintFast(printer);
-                };
-
-                menu.AddItem(BBI);
-
-            }
-            e.Cancel = false;
         }
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
@@ -2212,7 +2194,25 @@ namespace Foxoft
 
         private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
         {
-           
+            PopupMenu menu = (sender as PopupMenu);
+
+            menu.ItemLinks.Clear();
+
+            foreach (string printer in PrinterSettings.InstalledPrinters)
+            {
+                BarButtonItem BBI = new();
+                BBI.Caption = printer;
+                BBI.Name = printer;
+                BBI.ImageOptions.SvgImage = svgImageCollection1["print"]; ;
+                BBI.ItemClick += async (sender, e) =>
+                {
+                    await PrintFast(printer);
+                };
+
+                menu.AddItem(BBI);
+
+            }
+            e.Cancel = false;
         }
     }
 }

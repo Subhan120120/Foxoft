@@ -119,11 +119,11 @@ namespace Foxoft.Models
 
         [Column(TypeName = "money")]
         [Display(Name = "Net Tutar")]
-        public decimal NetAmount { get { return (QtyIn + QtyOut) * (Price - (Price * PosDiscount / 100)); } set { } }
+        public decimal NetAmount { get { return (QtyIn + QtyOut) * Price * (1 - PosDiscount / 100); } set { } }
 
         [Column(TypeName = "money")]
         [Display(Name = "Net Tutar (YPV)")]
-        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)); } set { } }
+        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * Price * (1 - PosDiscount / 100); } set { } }
 
         [DefaultValue("0")]
         [Column(TypeName = "money")]

@@ -1,27 +1,13 @@
-﻿using DevExpress.Data.Filtering;
-using DevExpress.DataAccess.ConnectionParameters;
-using DevExpress.DataAccess.Sql;
-using DevExpress.LookAndFeel;
-using DevExpress.Mvvm.Native;
-using DevExpress.Utils.Svg;
+﻿using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraReports;
-using DevExpress.XtraReports.UI;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Drawing;
 using System.IO;
-using System.Windows.Controls.Ribbon;
-using System.Windows.Forms;
 
 namespace Foxoft
 {

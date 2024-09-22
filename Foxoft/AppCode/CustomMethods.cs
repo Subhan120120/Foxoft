@@ -477,12 +477,11 @@ namespace Foxoft.AppCode
 
                         foreach (var item in report.DcReport.DcReportVariables.Where(x => x.ReportId == Convert.ToInt32(BBI.Name)))
                         {
-                            if (item.VariableProperty == columnName)
+                            if (item.VariableProperty == columnName && !string.IsNullOrEmpty(columnValue))
                             {
                                 efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, columnValue);
                             }
                         }
-
                     }
 
                     ShowReportForm(dcReport, filter, activeFilterStr);

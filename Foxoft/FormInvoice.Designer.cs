@@ -106,6 +106,7 @@ namespace Foxoft
             BBI_exportXLSX = new BarButtonItem();
             BBI_ImportExcel = new BarButtonItem();
             BBI_ReportPrintFast = new BarButtonItem();
+            popupMenuPrinters = new PopupMenu(components);
             BBI_PrintSettingSave = new BarButtonItem();
             BEI_PrinterName = new BarEditItem();
             repoCBE_PrinterName = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
@@ -120,7 +121,6 @@ namespace Foxoft
             BCI_ShowPrint = new BarCheckItem();
             BCI_ShowCopy = new BarCheckItem();
             barButtonItem6 = new BarButtonItem();
-            popupMenuReports = new PopupMenu(components);
             BSI_Reports = new BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -190,8 +190,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_WarehouseCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lUE_ToWarehouseCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
@@ -807,7 +807,7 @@ namespace Foxoft
             // 
             // bBI_reportPreview
             // 
-            bBI_reportPreview.Caption = "Report Görünüş";
+            bBI_reportPreview.Caption = "Faktura Görünüş";
             bBI_reportPreview.Id = 10;
             bBI_reportPreview.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_reportPreview.ImageOptions.SvgImage");
             bBI_reportPreview.Name = "bBI_reportPreview";
@@ -896,11 +896,19 @@ namespace Foxoft
             // 
             // BBI_ReportPrintFast
             // 
+            BBI_ReportPrintFast.ButtonStyle = BarButtonStyle.DropDown;
             BBI_ReportPrintFast.Caption = "Sürətli Çap Et";
+            BBI_ReportPrintFast.DropDownControl = popupMenuPrinters;
             BBI_ReportPrintFast.Id = 30;
             BBI_ReportPrintFast.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportPrintFast.ImageOptions.SvgImage");
             BBI_ReportPrintFast.Name = "BBI_ReportPrintFast";
             BBI_ReportPrintFast.ItemClick += BBI_ReportPrintFast_ItemClick;
+            // 
+            // popupMenuPrinters
+            // 
+            popupMenuPrinters.Name = "popupMenuPrinters";
+            popupMenuPrinters.Ribbon = ribbonControl1;
+            popupMenuPrinters.BeforePopup += popupMenuReports_BeforePopup;
             // 
             // BBI_PrintSettingSave
             // 
@@ -1010,12 +1018,6 @@ namespace Foxoft
             barButtonItem6.Caption = "barButtonItem6";
             barButtonItem6.Id = 55;
             barButtonItem6.Name = "barButtonItem6";
-            // 
-            // popupMenuReports
-            // 
-            popupMenuReports.Name = "popupMenuReports";
-            popupMenuReports.Ribbon = ribbonControl1;
-            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
             // 
             // BSI_Reports
             // 
@@ -1422,8 +1424,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_WarehouseCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)lUE_ToWarehouseCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenuPrinters).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).EndInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenuReports).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
@@ -1574,7 +1576,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup9;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
         private DevExpress.XtraBars.Alerter.AlertControl alertControl1;
-        private DevExpress.XtraBars.PopupMenu popupMenuPrinters;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedDate;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdatedUserName;
@@ -1593,7 +1594,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem LCI_SalesPersonDesc;
         private DevExpress.XtraBars.BarButtonItem barButtonItem6;
         private DevExpress.XtraBars.BarButtonItem BBI_Reports;
-        private DevExpress.XtraBars.PopupMenu popupMenuReports;
         private BarSubItem BSI_Reports;
+        private PopupMenu popupMenuPrinters;
     }
 }

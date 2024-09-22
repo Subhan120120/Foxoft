@@ -30,7 +30,6 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -48,13 +47,14 @@ namespace Foxoft
             BSI_CompanyDesc = new DevExpress.XtraBars.BarStaticItem();
             bBI_Session = new DevExpress.XtraBars.BarButtonItem();
             BSI_Report = new DevExpress.XtraBars.BarSubItem();
-            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            popupMenu2 = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
             aCE_Invoices = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -97,9 +97,10 @@ namespace Foxoft
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
             SuspendLayout();
@@ -109,7 +110,7 @@ namespace Foxoft
             parentRibbonControl.ExpandCollapseItem.Id = 0;
             parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName, BSI_CompanyDesc, bBI_Session, BSI_Report });
             parentRibbonControl.Location = new Point(0, 0);
-            parentRibbonControl.MaxItemId = 36;
+            parentRibbonControl.MaxItemId = 37;
             parentRibbonControl.Name = "parentRibbonControl";
             parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage_Home });
             parentRibbonControl.QuickToolbarItemLinks.Add(skinRibbonGalleryBarItem);
@@ -233,10 +234,10 @@ namespace Foxoft
             BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
             BSI_Report.Name = "BSI_Report";
             // 
-            // svgImageCollection1
+            // popupMenu2
             // 
-            svgImageCollection1.Add("properties", "image://svgimages/setup/properties.svg");
-            svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
+            popupMenu2.Name = "popupMenu2";
+            popupMenu2.Ribbon = parentRibbonControl;
             // 
             // ribbonPage_Home
             // 
@@ -281,6 +282,11 @@ namespace Foxoft
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = parentRibbonControl;
             ribbonStatusBar.Size = new Size(1023, 24);
+            // 
+            // svgImageCollection1
+            // 
+            svgImageCollection1.Add("properties", "image://svgimages/setup/properties.svg");
+            svgImageCollection1.Add("report", "image://svgimages/business objects/bo_report.svg");
             // 
             // popupMenu1
             // 
@@ -592,9 +598,10 @@ namespace Foxoft
             FormClosing += FormERP_FormClosing;
             MdiChildActivate += FormERP_MdiChildActivate;
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).EndInit();
-            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu2).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).EndInit();
             ResumeLayout(false);
@@ -673,5 +680,6 @@ namespace Foxoft
         private DevExpress.XtraBars.PopupMenu popupMenu1;
         private DevExpress.XtraBars.BarSubItem BSI_Report;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraBars.PopupMenu popupMenu2;
     }
 }
