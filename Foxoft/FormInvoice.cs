@@ -1512,7 +1512,7 @@ namespace Foxoft
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
             if (!new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
             {
-                RPG_Control.Visible = true;
+                BBI_InvoiceExpenses.Visibility = BarItemVisibility.Always;
                 RPG_Payment.Visible = true;
             }
 
@@ -2115,7 +2115,6 @@ namespace Foxoft
         private void BCI_CheckedChanged(object sender, ItemClickEventArgs e)
         {
             BBI_picture.Visibility = BCI_ShowPicture.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
-            BBI_Print.Visibility = BCI_ShowPrint.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
             BBI_ReportPrintFast.Visibility = BCI_ShowPrint.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
             bBI_CopyInvoice.Visibility = BCI_ShowCopy.Checked ? BarItemVisibility.Always : BarItemVisibility.Never;
         }

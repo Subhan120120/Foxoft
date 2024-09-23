@@ -20,11 +20,13 @@ namespace Foxoft
     {
         subContext dbContext = new();
         EfMethods efMethods = new();
-        string imageFolder;
+        SettingStore settingStore;
+        string productFolder;
+        string imageFilePath;
         public DcProduct dcProduct = new();
         private byte productTypeCode;
         private bool isNew;
-        GalleryItemGroup galleryItemGroup1 = new GalleryItemGroup();
+        GalleryItemGroup galleryItemGroup1 = new GalleryItemGroup(); // designtime yaratmaq olmur
 
         public FormProduct(byte productTypeCode, bool isNew)
         {
@@ -46,8 +48,9 @@ namespace Foxoft
             }
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-                imageFolder = settingStore.ImageFolder;
+            settingStore = settingStore;
+            if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
+                Directory.CreateDirectory(settingStore?.ImageFolder);
 
             ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectProductTypes();
             ProductTypeCodeLookUpEdit.Properties.ValueMember = "ProductTypeCode";
@@ -60,7 +63,7 @@ namespace Foxoft
         private void InitializeGallery()
         {
             galleryItemGroup1.Caption = "Product Images";
-            galleryControl1.Gallery.Groups.AddRange(new GalleryItemGroup[] { galleryItemGroup1 });
+            galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
         }
 
         public FormProduct(byte productTypeCode, string productCode)
@@ -84,6 +87,12 @@ namespace Foxoft
         {
             FillDataLayout();
             dataLayoutControl1.IsValid(out List<string> errorList);
+
+            productFolder = Path.Combine(settingStore.ImageFolder, dcProduct.ProductCode);
+            imageFilePath = Path.Combine(productFolder, dcProduct.ProductCode + ".jpg");
+
+            LoadPictureBoxImage();
+            LoadGalleryImages();
         }
 
         private void FillDataLayout()
@@ -108,29 +117,22 @@ namespace Foxoft
                                                                                     .Sum(l => l.QtyIn - l.QtyOut));
 
                 dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
+            }
+        }
 
-                //var file = Path.ChangeExtension(table[8], ".jpg");
-                string fullPath = imageFolder + @"\" + dcProduct.ProductCode + ".jpg";
-                if (!File.Exists(fullPath))
+        private void LoadPictureBoxImage()
+        {
+            if (File.Exists(imageFilePath))
+            {
+                using (var alma = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    //MessageBox.Show("No image!");
-                }
-                else
-                {
-                    using (var alma = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    try
                     {
-                        try
-                        {
-                            pictureEdit.Image = Image.FromStream(alma);
-                        }
-                        catch (Exception)
-                        {
-                        }
+                        pictureEdit.Image = Image.FromStream(alma);
                     }
+                    catch (Exception) { }
                 }
             }
-
-            LoadGalleryImages();
         }
 
         private void ClearControlsAddNew()
@@ -188,34 +190,19 @@ namespace Foxoft
 
         private void SaveImage()
         {
-            if (imageFolder is null)
-            {
-                FolderBrowserDialog folderDlg = new();
-                folderDlg.ShowNewFolderButton = true;
-
-                DialogResult result = folderDlg.ShowDialog();
-                if (result == DialogResult.OK)
-                    efMethods.UpdateSettingStoreImagePath(Authorization.StoreCode, folderDlg.SelectedPath);
-
-                if (imageFolder is null)
-                    return;
-            }
-
-            if (!Directory.Exists(imageFolder))
-                Directory.CreateDirectory(imageFolder);
-
-            string outPutImage = Path.Combine(imageFolder, dcProduct.ProductCode + ".jpg");
+            if (!Directory.Exists(productFolder))
+                Directory.CreateDirectory(productFolder);
 
             try
             {
                 //bitmap = pictureEdit.Image
                 if (pictureEdit.Image is not null)
                 {
-                    pictureEdit.Image.Save(outPutImage);
+                    pictureEdit.Image.Save(imageFilePath);
                     GC.Collect();
                 }
                 else
-                    File.Delete(outPutImage);
+                    File.Delete(imageFilePath);
 
             }
             catch (Exception ex)
@@ -250,6 +237,8 @@ namespace Foxoft
                             {
                                 Bitmap myBitmap = new(img);
                                 pictureEdit.Image = myBitmap;
+
+                                SaveImage();
                             }
                         }
                     }
@@ -267,12 +256,9 @@ namespace Foxoft
 
         private void pictureEdit_DoubleClick(object sender, EventArgs e)
         {
-            string outPutImage = imageFolder + @"\" + dcProduct.ProductCode + ".jpg";
-            //Process.Start(outPutImage);
-
-            if (File.Exists(outPutImage))
+            if (File.Exists(imageFilePath))
             {
-                ProcessStartInfo startInfo = new(outPutImage);
+                ProcessStartInfo startInfo = new(imageFilePath);
                 startInfo.UseShellExecute = true;
                 Process.Start(startInfo);
             }
@@ -280,7 +266,6 @@ namespace Foxoft
 
         private void btn_loadImage_Click(object sender, EventArgs e)
         {
-            openFileDialog();
         }
 
         private void btnEdit_Hierarchy_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -357,8 +342,6 @@ namespace Foxoft
             if (dcProduct == null)
                 return;
 
-            string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
-
             if (!Directory.Exists(productFolder))
                 return;
 
@@ -396,7 +379,7 @@ namespace Foxoft
             if (hitInfo.InGalleryItem) // Check if the double-click was on an item
             {
                 GalleryItem clickedItem = hitInfo.GalleryItem;
-                string filePath = clickedItem.Tag as string; 
+                string filePath = clickedItem.Tag as string;
 
                 if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
                 {
@@ -417,7 +400,6 @@ namespace Foxoft
         }
 
 
-
         private void BBI_GalleryLoad_ItemClick(object sender, ItemClickEventArgs e)
         {
             OpenFileDialog openFileDialog = new();
@@ -428,24 +410,46 @@ namespace Foxoft
             {
                 Image loadedImage = Image.FromFile(openFileDialog.FileName);
 
-                string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
                 if (!Directory.Exists(productFolder))
-                    Directory.CreateDirectory(productFolder);
-
-                string fileName = "";
-                for (int i = 1; i <= 50; i++)
                 {
-                    fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
-                    string filePath = Path.Combine(productFolder, fileName);
-                    if (!File.Exists(filePath))
-                        break;
+                    string fileName = "";
+                    for (int i = 1; i <= 50; i++)
+                    {
+                        fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                        string filePath = Path.Combine(productFolder, fileName);
+                        if (!File.Exists(filePath))
+                            break;
+                    }
+
+                    string savePath = Path.Combine(productFolder, fileName);
+
+                    loadedImage.Save(savePath, ImageFormat.Jpeg);
+
+                    LoadGalleryImages();
                 }
+            }
+        }
 
-                string savePath = Path.Combine(productFolder, fileName);
+        private void BBI_GalleryCopy_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string caption = galleryControl1.Gallery.GetCheckedItem().Caption;
+            string imagePath = Path.Combine(productFolder, caption);
 
-                loadedImage.Save(savePath, ImageFormat.Jpeg);
-
-                LoadGalleryImages();
+            try
+            {
+                GalleryItem galleryItem = galleryControl1.Gallery.GetCheckedItem();
+                if (galleryItem != null && galleryItem.Image != null)
+                {
+                    Clipboard.SetImage(galleryItem.Image);
+                }
+                else
+                {
+                    MessageBox.Show("No image found in the selected gallery item.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting file: {ex.Message}");
             }
         }
 
@@ -457,9 +461,6 @@ namespace Foxoft
 
                 if (clipboardImage != null)
                 {
-
-                    string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
-
                     if (!Directory.Exists(productFolder))
                         Directory.CreateDirectory(productFolder);
 
@@ -489,7 +490,6 @@ namespace Foxoft
         {
             if (XtraMessageBox.Show("Silmek Isteyirsiz? \n ", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                string productFolder = Path.Combine(imageFolder, dcProduct.ProductCode);
                 string caption = galleryControl1.Gallery.GetCheckedItem().Caption;
                 string imagePath = Path.Combine(productFolder, caption);
 
@@ -512,33 +512,54 @@ namespace Foxoft
 
         private void pictureEdit_PopupMenuShowing(object sender, DevExpress.XtraEditors.Events.PopupMenuShowingEventArgs e)
         {
-            DXMenuItem oldSaveItem = null;
+            //DXMenuItem oldSaveItem = null;
             DXMenuItem cutItem = null;
+            DXMenuItem loadItem = null;
+            DXMenuItem pasteItem = null;
 
             foreach (DXMenuItem item in e.PopupMenu.Items)
             {
                 if (item.Tag != null)
                 {
-                    if ((StringId)item.Tag == StringId.PictureEditMenuSave)
-                        oldSaveItem = item;
-                    else if ((StringId)item.Tag == StringId.PictureEditMenuCut)
+                    if ((StringId)item.Tag == StringId.PictureEditMenuCut)
                         cutItem = item;
+                    else if ((StringId)item.Tag == StringId.PictureEditMenuLoad)
+                        loadItem = item;
+                    else if ((StringId)item.Tag == StringId.PictureEditMenuPaste)
+                        pasteItem = item;
                 }
             }
 
-            DXMenuItem newSaveItem = new(oldSaveItem.Caption, CustomSaveItem_Click, oldSaveItem.GetImage());
-            newSaveItem.Tag = StringId.PictureEditMenuSave;
-            e.PopupMenu.Items.Add(newSaveItem);
+            DXMenuItem newLoadItem = new(loadItem.Caption, PictureEdit_LoadItem_Click, loadItem.GetImage());
+            newLoadItem.Tag = StringId.PictureEditMenuLoad;
+            e.PopupMenu.Items.Add(newLoadItem);
+
+            DXMenuItem newPasteItem = new(pasteItem.Caption, PictureEdit_PasteItem_Click, pasteItem.GetImage());
+            if (Clipboard.ContainsImage())
+                newPasteItem.Enabled = true;
+            else
+                newPasteItem.Enabled = false;
+            newPasteItem.Tag = StringId.PictureEditMenuPaste;
+            e.PopupMenu.Items.Add(newPasteItem);
 
             if (cutItem != null)
                 e.PopupMenu.Items.Remove(cutItem);
 
-            if (oldSaveItem != null)
-                e.PopupMenu.Items.Remove(oldSaveItem);
+            if (loadItem != null)
+                e.PopupMenu.Items.Remove(loadItem);
+
+            if (pasteItem != null)
+                e.PopupMenu.Items.Remove(pasteItem);
         }
 
-        private void CustomSaveItem_Click(object sender, EventArgs e)
+        private void PictureEdit_LoadItem_Click(object sender, EventArgs e)
         {
+            openFileDialog();
+            SaveImage();
+        }
+        private void PictureEdit_PasteItem_Click(object sender, EventArgs e)
+        {
+            pictureEdit.Image = Clipboard.GetImage();
             SaveImage();
         }
 
@@ -551,9 +572,15 @@ namespace Foxoft
 
 
             if (galleryControl1.Gallery.GetCheckedItemsCount() > 0)
+            {
+                BBI_GalleryCopy.Enabled = true;
                 BBI_GalleryDelete.Enabled = true;
+            }
             else
+            {
+                BBI_GalleryCopy.Enabled = false;
                 BBI_GalleryDelete.Enabled = false;
+            }
 
         }
     }

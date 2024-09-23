@@ -109,6 +109,7 @@ namespace Foxoft
             BBI_GalleryLoad = new DevExpress.XtraBars.BarButtonItem();
             BBI_GalleryDelete = new DevExpress.XtraBars.BarButtonItem();
             BBI_GalleryPaste = new DevExpress.XtraBars.BarButtonItem();
+            BBI_GalleryCopy = new DevExpress.XtraBars.BarButtonItem();
             layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             popupMenu_Gallery = new DevExpress.XtraBars.PopupMenu(components);
             svgImageCollection1 = new SvgImageCollection(components);
@@ -806,8 +807,8 @@ namespace Foxoft
             barManager1.DockControls.Add(barDockControlLeft);
             barManager1.DockControls.Add(barDockControlRight);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste });
-            barManager1.MaxItemId = 7;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy });
+            barManager1.MaxItemId = 8;
             barManager1.StatusBar = bar3;
             // 
             // bar1
@@ -920,6 +921,15 @@ namespace Foxoft
             BBI_GalleryPaste.Name = "BBI_GalleryPaste";
             BBI_GalleryPaste.ItemClick += BBI_GalleryPaste_ItemClick;
             // 
+            // BBI_GalleryCopy
+            // 
+            BBI_GalleryCopy.Caption = "Kopyala";
+            BBI_GalleryCopy.Id = 7;
+            BBI_GalleryCopy.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryCopy.ImageOptions.SvgImage");
+            BBI_GalleryCopy.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.C);
+            BBI_GalleryCopy.Name = "BBI_GalleryCopy";
+            BBI_GalleryCopy.ItemClick += BBI_GalleryCopy_ItemClick;
+            // 
             // layoutControlItem8
             // 
             layoutControlItem8.Location = new Point(102, 335);
@@ -930,7 +940,7 @@ namespace Foxoft
             // 
             // popupMenu_Gallery
             // 
-            popupMenu_Gallery.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryLoad), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryDelete), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryPaste) });
+            popupMenu_Gallery.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryLoad), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryDelete), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryPaste), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryCopy) });
             popupMenu_Gallery.Manager = barManager1;
             popupMenu_Gallery.Name = "popupMenu_Gallery";
             popupMenu_Gallery.BeforePopup += popupMenu_Gallery_BeforePopup;
@@ -1103,5 +1113,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_GalleryLoad;
         private DevExpress.XtraBars.BarButtonItem BBI_GalleryPaste;
         private SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraBars.BarButtonItem BBI_GalleryCopy;
     }
 }

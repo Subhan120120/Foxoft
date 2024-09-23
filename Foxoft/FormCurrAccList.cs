@@ -133,7 +133,7 @@ namespace Foxoft
                     if (columnExists && personalTypes is not null && personalTypes.Length > 0)
                     {
                         string subTypeArr = String.Join(",", personalTypes);
-                        clause += "[PersonalTypeCode] in (" + subTypeArr + ") ";
+                        clause += "AND PersonalTypeCode in (" + subTypeArr + ") ";
                     }
 
                     SqlParameter[] sqlParameters;

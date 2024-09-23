@@ -201,7 +201,7 @@ namespace Foxoft
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
-                fileName += ".jpg";
+                fileName += @"/" + fileName + ".jpg";
                 if (CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
                 {
                     string path = settingStore.ImageFolder + @"\" + fileName;
@@ -352,7 +352,7 @@ namespace Foxoft
 
                     if (CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
                     {
-                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + ".jpg";
+                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
                         imageCache.Remove(path);
                     }
 
@@ -502,7 +502,7 @@ namespace Foxoft
 
                     if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     {
-                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + ".jpg";
+                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
                         imageCache.Remove(path);
                     }
 

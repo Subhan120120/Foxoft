@@ -615,7 +615,7 @@ namespace Foxoft
             checkEdit_IsReturn.Location = new Point(12, 36);
             checkEdit_IsReturn.Name = "checkEdit_IsReturn";
             checkEdit_IsReturn.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            checkEdit_IsReturn.Size = new Size(119, 20);
+            checkEdit_IsReturn.Size = new Size(108, 20);
             checkEdit_IsReturn.StyleController = dataLayoutControl1;
             checkEdit_IsReturn.TabIndex = 3;
             // 
@@ -978,6 +978,7 @@ namespace Foxoft
             BBI_InvoiceExpenses.Id = 45;
             BBI_InvoiceExpenses.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_InvoiceExpenses.ImageOptions.SvgImage");
             BBI_InvoiceExpenses.Name = "BBI_InvoiceExpenses";
+            BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
             BBI_InvoiceExpenses.ItemClick += BBI_InvoiceExpenses_ItemClick;
             // 
             // BCI_ShowPicture
@@ -1046,19 +1047,18 @@ namespace Foxoft
             ribbonPageGroup2.ItemLinks.Add(bBI_reportPreview);
             ribbonPageGroup2.ItemLinks.Add(BBI_ReportPrintFast);
             ribbonPageGroup2.ItemLinks.Add(bBI_CopyInvoice);
-            ribbonPageGroup2.ItemLinks.Add(BBI_picture, true);
-            ribbonPageGroup2.ItemLinks.Add(BSI_Reports);
+            ribbonPageGroup2.ItemLinks.Add(bBI_Whatsapp);
+            ribbonPageGroup2.ItemLinks.Add(BSI_Reports, true);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Print";
             // 
             // RPG_Control
             // 
-            RPG_Control.ItemLinks.Add(bBI_Whatsapp);
+            RPG_Control.ItemLinks.Add(BBI_picture);
             RPG_Control.ItemLinks.Add(BBI_ModifyInvoice, true);
             RPG_Control.ItemLinks.Add(BBI_InvoiceExpenses);
             RPG_Control.Name = "RPG_Control";
             RPG_Control.Text = "Nəzarət";
-            RPG_Control.Visible = false;
             // 
             // ribbonPageGroup8
             // 
@@ -1191,7 +1191,7 @@ namespace Foxoft
             ItemForIsReturn.Control = checkEdit_IsReturn;
             ItemForIsReturn.Location = new Point(0, 24);
             ItemForIsReturn.Name = "ItemForIsReturn";
-            ItemForIsReturn.Size = new Size(123, 24);
+            ItemForIsReturn.Size = new Size(112, 24);
             ItemForIsReturn.Text = "Qaytarılmadır";
             ItemForIsReturn.TextSize = new Size(0, 0);
             ItemForIsReturn.TextVisible = false;
@@ -1300,9 +1300,9 @@ namespace Foxoft
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new Point(123, 24);
+            emptySpaceItem1.Location = new Point(112, 24);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(422, 24);
+            emptySpaceItem1.Size = new Size(433, 24);
             emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // lCI_printCount

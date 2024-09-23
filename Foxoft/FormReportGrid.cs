@@ -654,9 +654,9 @@ namespace Foxoft
             subMenu.ImageOptions.SvgImage = svgImageCollection1[0];
 
             List<TrFormReport> trFormReports = new List<TrFormReport>();
-            if (gridColumn.FieldName == "ProductCode")
+            if (gridColumn?.FieldName == "ProductCode")
                 trFormReports = efMethods.SelectFormReports("Products");
-            else if (gridColumn.FieldName == "CurrAccCode")
+            else if (gridColumn?.FieldName == "CurrAccCode")
                 trFormReports = efMethods.SelectFormReports("CurrAccs");
 
             foreach (TrFormReport report in trFormReports)
