@@ -20,13 +20,12 @@ namespace Foxoft
     {
         subContext dbContext = new();
         EfMethods efMethods = new();
-        SettingStore settingStore;
+        public DcProduct dcProduct = new();
+        GalleryItemGroup galleryItemGroup1 = new(); // designtime yaratmaq olmur
         string productFolder;
         string imageFilePath;
-        public DcProduct dcProduct = new();
         private byte productTypeCode;
         private bool isNew;
-        GalleryItemGroup galleryItemGroup1 = new GalleryItemGroup(); // designtime yaratmaq olmur
 
         public FormProduct(byte productTypeCode, bool isNew)
         {
@@ -47,23 +46,12 @@ namespace Foxoft
                 BBI_ProductBarcode.Enabled = true;
             }
 
-            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            settingStore = settingStore;
-            if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
-                Directory.CreateDirectory(settingStore?.ImageFolder);
-
             ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectProductTypes();
             ProductTypeCodeLookUpEdit.Properties.ValueMember = "ProductTypeCode";
             ProductTypeCodeLookUpEdit.Properties.DisplayMember = "ProductTypeDesc";
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
-        }
-
-        private void InitializeGallery()
-        {
-            galleryItemGroup1.Caption = "Product Images";
-            galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
         }
 
         public FormProduct(byte productTypeCode, string productCode)
@@ -74,6 +62,11 @@ namespace Foxoft
             ProductCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
+        private void InitializeGallery()
+        {
+            galleryItemGroup1.Caption = "Product Images";
+            galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
+        }
 
         private void InitializeControlText()
         {
@@ -87,6 +80,11 @@ namespace Foxoft
         {
             FillDataLayout();
             dataLayoutControl1.IsValid(out List<string> errorList);
+
+            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+
+            if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
+                Directory.CreateDirectory(settingStore?.ImageFolder);
 
             productFolder = Path.Combine(settingStore.ImageFolder, dcProduct.ProductCode);
             imageFilePath = Path.Combine(productFolder, dcProduct.ProductCode + ".jpg");
