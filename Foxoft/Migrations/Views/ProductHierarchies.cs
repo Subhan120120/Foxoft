@@ -13,19 +13,19 @@ namespace Foxoft.Migrations
             migrationBuilder.Sql(@"
 									CREATE OR ALTER   VIEW [dbo].[ProductHierarchies] AS
 									SELECT p.ProductCode
-										, Level0 = COALESCE(lv0.HierarchyCode, lv1.HierarchyCode, lv2.HierarchyCode, lv3.HierarchyCode)
-										, Level1 = CASE 
+										, HierarchyLevel0 = COALESCE(lv0.HierarchyCode, lv1.HierarchyCode, lv2.HierarchyCode, lv3.HierarchyCode)
+										, HierarchyLevel1 = CASE 
 														WHEN lv0.HierarchyCode IS NOT NULL THEN lv1.HierarchyCode
 														WHEN lv1.HierarchyCode IS NOT NULL THEN lv2.HierarchyCode
 														WHEN lv2.HierarchyCode IS NOT NULL THEN lv3.HierarchyCode
 														ELSE NULL
 													END
-										, Level2 = CASE 
+										, HierarchyLevel2 = CASE 
 														WHEN lv0.HierarchyCode IS NOT NULL THEN lv2.HierarchyCode
 														WHEN lv1.HierarchyCode IS NOT NULL THEN lv3.HierarchyCode
 														ELSE NULL
 													END 
-										, Level3 = CASE 
+										, HierarchyLevel3 = CASE 
 														WHEN lv0.HierarchyCode IS NOT NULL THEN lv3.HierarchyCode
 														ELSE NULL
 													END  

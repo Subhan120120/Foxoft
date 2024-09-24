@@ -940,7 +940,7 @@ namespace Foxoft
             // 
             // popupMenu_Gallery
             // 
-            popupMenu_Gallery.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryLoad), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryDelete), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryPaste), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryCopy) });
+            popupMenu_Gallery.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryCopy), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryPaste), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryLoad), new DevExpress.XtraBars.LinkPersistInfo(BBI_GalleryDelete) });
             popupMenu_Gallery.Manager = barManager1;
             popupMenu_Gallery.Name = "popupMenu_Gallery";
             popupMenu_Gallery.BeforePopup += popupMenu_Gallery_BeforePopup;

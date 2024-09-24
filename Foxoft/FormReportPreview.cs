@@ -50,9 +50,9 @@ namespace Foxoft
                 SqlParameter[] sqlParameters1;
                 string qry = cM.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
 
-                List<QueryParameter> qryParams1 = cM.ConvertSqlParametersToQueryParameters(sqlParameters1);
+                List<QueryParameter> subQryParams = cM.ConvertSqlParametersToQueryParameters(sqlParameters1);
                 CustomSqlQuery subQuery = new(reportSubQuery.SubQueryName, reportSubQuery.SubQueryText);
-                subQuery.Parameters.AddRange(qryParams1);
+                subQuery.Parameters.AddRange(subQryParams);
 
                 sqlQueries.Add(subQuery);
             }
@@ -69,9 +69,6 @@ namespace Foxoft
             }
         }
 
-
-
-
         private BarButtonItem CreateItem()
         {
             BarButtonItem item = new();
@@ -87,15 +84,16 @@ namespace Foxoft
 
         private void BBI_EditDesign_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XRDesignRibbonForm FormDesignRibbon = new();
+            using (XRDesignRibbonForm FormDesignRibbon = new XRDesignRibbonForm())
+            {
+                // Customize the ribbon form as needed
+                RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
+                BarButtonItem bbi_Design = CreateItem();
+                pageGroup.ItemLinks.Add(bbi_Design);
 
-            //FormDesignRibbon.RibbonControl.Pages[0].Groups.Add(new RibbonPageGroup() { Name = "Design", Text = "Dizayn"});
-            RibbonPageGroup pageGroup = FormDesignRibbon.RibbonControl.Pages[0].GetGroupByName("Report");
-            BarButtonItem bbi_Design = CreateItem();
-            pageGroup.ItemLinks.Add(bbi_Design);
-
-            FormDesignRibbon.OpenReport(xReport);
-            FormDesignRibbon.Show();
+                FormDesignRibbon.OpenReport(xReport);
+                FormDesignRibbon.ShowDialog();  // Blocks until the form is closed
+            }
         }
 
         private void BBI_CopyToClipboard_ItemClick(object sender, ItemClickEventArgs e)
@@ -116,6 +114,18 @@ namespace Foxoft
             }
             else
                 return null;
+        }
+
+        private void FormReportPreview_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (xReport is not null)
+            {
+                xReport.Dispose();
+                xReport = null;
+            }
+
+            documentViewer1.DocumentSource = null;
+            documentViewer1.Dispose();
         }
     }
 }

@@ -55,12 +55,6 @@ namespace Foxoft
                 XtraReport report = new();
                 report.LoadLayoutFromXml(designPath);
 
-                //string styleSheetFilePath = @"C:\Temp\ReportStyleSheet1.repss";
-                //if (File.Exists(styleSheetFilePath))
-                //    report.StyleSheet.LoadFromXml(styleSheetFilePath);
-                //else
-                //    XtraMessageBox.Show("The source file does not exist.");
-
                 report.DataSource = datasource;
                 report.ShowPrintMarginsWarning = false;
 
@@ -74,12 +68,14 @@ namespace Foxoft
 
         public XtraReport GetReport(string dataSourceName, string repxFileName, IEnumerable<SqlQuery> sqlQueries)
         {
-            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
-            dataSource.Name = dataSourceName;
-            dataSource.Queries.AddRange(sqlQueries);
-            dataSource.Fill();
+            using (SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString)))
+            {
+                dataSource.Name = dataSourceName;
+                dataSource.Queries.AddRange(sqlQueries);
+                dataSource.Fill();
 
-            return CreateReport(dataSource, repxFileName);
+                return CreateReport(dataSource, repxFileName);
+            }
         }
     }
 }

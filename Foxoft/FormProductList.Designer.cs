@@ -70,7 +70,6 @@ namespace Foxoft
             repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             BBI_Save = new DevExpress.XtraBars.BarButtonItem();
             BBI_Show = new DevExpress.XtraBars.BarButtonItem();
-            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -80,6 +79,7 @@ namespace Foxoft
             ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             svgImageCollection1 = new SvgImageCollection(components);
@@ -162,7 +162,7 @@ namespace Foxoft
             bBI_ProductDelete.Caption = "Sil";
             bBI_ProductDelete.Id = 8;
             bBI_ProductDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ProductDelete.ImageOptions.SvgImage");
-            bBI_ProductDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
+            bBI_ProductDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.Delete);
             bBI_ProductDelete.Name = "bBI_ProductDelete";
             // 
             // bBI_ProductRefresh
@@ -216,12 +216,6 @@ namespace Foxoft
             BBI_Show.Caption = "Show";
             BBI_Show.Id = 36;
             BBI_Show.Name = "BBI_Show";
-            // 
-            // popupMenuReports
-            // 
-            popupMenuReports.Name = "popupMenuReports";
-            popupMenuReports.Ribbon = ribbonControl1;
-            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
             // 
             // BSI_Reports
             // 
@@ -284,6 +278,12 @@ namespace Foxoft
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
             ribbonStatusBar1.Size = new Size(865, 24);
+            // 
+            // popupMenuReports
+            // 
+            popupMenuReports.Name = "popupMenuReports";
+            popupMenuReports.Ribbon = ribbonControl1;
+            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
             // 
             // popupMenu1
             // 

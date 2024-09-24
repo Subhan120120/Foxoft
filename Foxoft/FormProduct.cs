@@ -175,7 +175,7 @@ namespace Foxoft
                 else
                     dbContext.SaveChanges();
 
-                //SaveImage();
+                SaveImage();
 
                 DialogResult = DialogResult.OK;
             }
@@ -235,8 +235,6 @@ namespace Foxoft
                             {
                                 Bitmap myBitmap = new(img);
                                 pictureEdit.Image = myBitmap;
-
-                                SaveImage();
                             }
                         }
                     }
@@ -510,55 +508,52 @@ namespace Foxoft
 
         private void pictureEdit_PopupMenuShowing(object sender, DevExpress.XtraEditors.Events.PopupMenuShowingEventArgs e)
         {
-            //DXMenuItem oldSaveItem = null;
-            DXMenuItem cutItem = null;
-            DXMenuItem loadItem = null;
-            DXMenuItem pasteItem = null;
-
-            foreach (DXMenuItem item in e.PopupMenu.Items)
+            void RemoveMenuItem(StringId tag)
             {
-                if (item.Tag != null)
-                {
-                    if ((StringId)item.Tag == StringId.PictureEditMenuCut)
-                        cutItem = item;
-                    else if ((StringId)item.Tag == StringId.PictureEditMenuLoad)
-                        loadItem = item;
-                    else if ((StringId)item.Tag == StringId.PictureEditMenuPaste)
-                        pasteItem = item;
-                }
+                var itemToRemove = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == tag);
+                if (itemToRemove != null)
+                    e.PopupMenu.Items.Remove(itemToRemove);
             }
 
-            DXMenuItem newLoadItem = new(loadItem.Caption, PictureEdit_LoadItem_Click, loadItem.GetImage());
-            newLoadItem.Tag = StringId.PictureEditMenuLoad;
-            e.PopupMenu.Items.Add(newLoadItem);
+            void AddMenuItem(string caption, DXMenuItem oldItem, EventHandler clickHandler, bool enabled = true)
+            {
+                if (oldItem == null) return;
+                var newItem = new DXMenuItem(caption, clickHandler, oldItem.GetImage()) { Enabled = enabled, Tag = oldItem.Tag };
+                e.PopupMenu.Items.Add(newItem);
+            }
 
-            DXMenuItem newPasteItem = new(pasteItem.Caption, PictureEdit_PasteItem_Click, pasteItem.GetImage());
-            if (Clipboard.ContainsImage())
-                newPasteItem.Enabled = true;
-            else
-                newPasteItem.Enabled = false;
-            newPasteItem.Tag = StringId.PictureEditMenuPaste;
-            e.PopupMenu.Items.Add(newPasteItem);
+            var cutItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuCut);
+            var saveItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuSave);
+            var loadItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuLoad);
+            var pasteItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuPaste);
+            var deleteItem = e.PopupMenu.Items.FirstOrDefault(item => item.Tag != null && (StringId)item.Tag == StringId.PictureEditMenuDelete);
 
-            if (cutItem != null)
-                e.PopupMenu.Items.Remove(cutItem);
+            AddMenuItem("Yapışdır", pasteItem, PictureEdit_PasteItem_Click, Clipboard.ContainsImage());
+            AddMenuItem("Yüklə", loadItem, PictureEdit_LoadItem_Click);
+            AddMenuItem("Sil", deleteItem, PictureEdit_DeleteItem_Click, pictureEdit.Image != null);
 
-            if (loadItem != null)
-                e.PopupMenu.Items.Remove(loadItem);
-
-            if (pasteItem != null)
-                e.PopupMenu.Items.Remove(pasteItem);
+            RemoveMenuItem(StringId.PictureEditMenuCut);
+            RemoveMenuItem(StringId.PictureEditMenuSave);
+            RemoveMenuItem(StringId.PictureEditMenuLoad);
+            RemoveMenuItem(StringId.PictureEditMenuPaste);
+            RemoveMenuItem(StringId.PictureEditMenuDelete);
         }
 
         private void PictureEdit_LoadItem_Click(object sender, EventArgs e)
         {
             openFileDialog();
-            SaveImage();
+            //SaveImage();
+        }
+
+        private void PictureEdit_DeleteItem_Click(object sender, EventArgs e)
+        {
+            pictureEdit.Image = null;
+            //SaveImage();
         }
         private void PictureEdit_PasteItem_Click(object sender, EventArgs e)
         {
             pictureEdit.Image = Clipboard.GetImage();
-            SaveImage();
+            //SaveImage();
         }
 
         private void popupMenu_Gallery_BeforePopup(object sender, CancelEventArgs e)
