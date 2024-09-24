@@ -307,6 +307,7 @@ namespace Foxoft
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
             Text = "Form1";
+            FormClosing += FormReportGrid_FormClosing;
             ((System.ComponentModel.ISupportInitialize)gC_Report).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_Report).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();

@@ -1467,8 +1467,8 @@ namespace Foxoft
             GridControl gc = sender as GridControl;
             GridView gv = gc.FocusedView as GridView;
 
-            if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
-                e.Handled = true;
+            //if (e.KeyChar == (char)Keys.Return && gv.FocusedColumn == colBarcode)
+            //    e.Handled = true;
         }
 
         private void gC_InvoiceLine_EditorKeyUp(object sender, KeyEventArgs e)
@@ -1485,13 +1485,27 @@ namespace Foxoft
             {
                 if (view.FocusedColumn != null && view.IsEditing)
                 {
-                    view.CloseEditor();
-                    if (view.FocusedRowHandle == GridControl.NewItemRowHandle)
-                        view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
-                    else
+                    if (view.FocusedColumn == colSerialNumberCode)
                     {
-                        view.MoveNext();
-                        view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
+                        view.CloseEditor();
+                        if (view.FocusedRowHandle == GridControl.NewItemRowHandle)
+                            view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
+                        else
+                        {
+                            view.MoveNext();
+                            view.FocusedColumn = colSerialNumberCode; // Optionally move to the first column
+                        }
+                    }
+                    else if (view.FocusedColumn == colBarcode)
+                    {
+                        view.CloseEditor();
+                        if (view.FocusedRowHandle == GridControl.NewItemRowHandle)
+                            view.FocusedColumn = colBarcode; // Optionally move to the first column
+                        else
+                        {
+                            view.MoveNext();
+                            view.FocusedColumn = colBarcode; // Optionally move to the first column
+                        }
                     }
                 }
             }

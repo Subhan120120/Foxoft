@@ -123,9 +123,6 @@ namespace Foxoft
                 xReport.Dispose();
                 xReport = null;
             }
-
-            documentViewer1.DocumentSource = null;
-            documentViewer1.Dispose();
         }
     }
 }

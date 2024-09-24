@@ -43,12 +43,6 @@ namespace Foxoft
 {
     public partial class FormReportGrid : RibbonForm
     {
-        Badge badge1;
-        Badge badge2;
-        AdornerUIManager adornerUIManager1;
-
-        //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
-
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
         CustomMethods cM = new();
@@ -72,14 +66,6 @@ namespace Foxoft
                 imageFolder = settingStore.ImageFolder;
 
             GridLocalizer.Active = new MyGridLocalizer();
-
-            adornerUIManager1 = new AdornerUIManager(components);
-            badge1 = new Badge();
-            badge2 = new Badge();
-            adornerUIManager1.Elements.Add(badge1);
-            adornerUIManager1.Elements.Add(badge2);
-            //badge1.TargetElement = barButtonItem1;
-            badge2.TargetElement = ribbonPage1;
         }
 
         private void InitializeGVReportEvents()
@@ -786,6 +772,10 @@ namespace Foxoft
                 GridColumn col = gV_Report.Columns.AddVisible(input);
                 col.UnboundDataType = Type.GetType(clickedItem.Caption);
             }
+        }
+
+        private void FormReportGrid_FormClosing(object sender, FormClosingEventArgs e)
+        { 
         }
     }
 }
