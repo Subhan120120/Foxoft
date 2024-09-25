@@ -2205,7 +2205,7 @@ namespace Foxoft
             }
         }
 
-        private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
+        private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)
         {
             PopupMenu menu = (sender as PopupMenu);
 

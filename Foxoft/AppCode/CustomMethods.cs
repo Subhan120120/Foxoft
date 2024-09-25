@@ -429,20 +429,20 @@ namespace Foxoft.AppCode
 
             List<TrFormReport> trFormReports = efMethods.SelectFormReports(formCode);
 
-            foreach (TrFormReport report in trFormReports)
+            foreach (TrFormReport formReport in trFormReports)
             {
                 BarButtonItem BBI = new BarButtonItem
                 {
-                    Caption = report.DcReport.ReportName,
+                    Caption = formReport.DcReport.ReportName,
                     Id = 57,
                     ImageOptions = { SvgImage = svg["report"] },
-                    Name = report.DcReport.ReportId.ToString(),
-                    ItemShortcut = ConvertToShortCut(report.Shortcut)
+                    Name = formReport.DcReport.ReportId.ToString(),
+                    ItemShortcut = ConvertToShortCut(formReport.Shortcut)
                 };
 
                 BBI.ItemClick += (sender, e) =>
                 {
-                    DcReport dcReport = efMethods.SelectReport(report.DcReport.ReportId);
+                    DcReport dcReport = formReport.DcReport;
                     if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString()))
                     {
                         MessageBox.Show("Yetkiniz yoxdur! ");
@@ -475,11 +475,12 @@ namespace Foxoft.AppCode
                             }
                         }
 
-                        foreach (var item in report.DcReport.DcReportVariables.Where(x => x.ReportId == Convert.ToInt32(BBI.Name)))
+                        foreach (var item in dcReport.DcReportVariables.Where(x => x.ReportId == Convert.ToInt32(BBI.Name)))
                         {
                             if (item.VariableProperty == columnName && !string.IsNullOrEmpty(columnValue))
                             {
-                                efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, columnValue);
+                                item.VariableValue = columnValue;
+                                //efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, item.VariableValue);
                             }
                         }
                     }

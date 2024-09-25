@@ -80,10 +80,10 @@ namespace Foxoft
         public FormReportGrid(string query, string filter, DcReport dcReport)
             : this()
         {
-            ReportQuery = cM.ApplyFilter(dcReport, query, filter, out sqlParameters);
-
             this.dcReport = dcReport;
             Text = dcReport.ReportName;
+
+            ReportQuery = cM.ApplyFilter(dcReport, query, filter, out sqlParameters);
 
             LoadData();
             HyperLinkColumns();

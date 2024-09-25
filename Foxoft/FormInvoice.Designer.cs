@@ -907,7 +907,7 @@ namespace Foxoft
             // 
             popupMenuPrinters.Name = "popupMenuPrinters";
             popupMenuPrinters.Ribbon = ribbonControl1;
-            popupMenuPrinters.BeforePopup += popupMenuReports_BeforePopup;
+            popupMenuPrinters.BeforePopup += popupMenuPrinters_BeforePopup;
             // 
             // BBI_PrintSettingSave
             // 
