@@ -13,7 +13,7 @@ namespace Foxoft
     public partial class FormImage : RibbonForm
     {
         EfMethods efMethods = new();
-        string imageFolder;
+        string InvoiceFolder;
         string code;
 
         GalleryItemGroup galleryItemGroup1 = new();
@@ -24,7 +24,7 @@ namespace Foxoft
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-                imageFolder = settingStore.ImageFolder;
+                InvoiceFolder = Path.Combine(settingStore.ImageFolder, "Invoices");
 
             galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
         }
@@ -66,7 +66,7 @@ namespace Foxoft
         {
             CustomMethods cm = new();
 
-            string folderPath = Path.Combine(imageFolder, code);
+            string folderPath = Path.Combine(InvoiceFolder, code);
 
             var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
             List<Image> images = cm.GetImagesFrom(folderPath, filters, SearchOption.TopDirectoryOnly);
@@ -75,13 +75,6 @@ namespace Foxoft
 
             foreach (var img in images)
                 AddImageToGallary(img);
-        }
-
-
-
-        private void btn_Add_Click(object sender, EventArgs e)
-        {
-            openFileDialog();
         }
 
         private void openFileDialog()
@@ -108,8 +101,8 @@ namespace Foxoft
                     if (img is not null)
                     {
                         string name = Path.GetFileName(fullPath);
-                        string folderPath = Path.Combine(imageFolder, code);
-                        string filePath = Path.Combine(imageFolder, code, name);
+                        string folderPath = Path.Combine(InvoiceFolder, code);
+                        string filePath = Path.Combine(InvoiceFolder, code, name);
 
                         if (!Directory.Exists(folderPath))
                             Directory.CreateDirectory(folderPath);

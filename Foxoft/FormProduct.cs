@@ -44,6 +44,7 @@ namespace Foxoft
             {
                 BBI_ProductDiscount.Enabled = true;
                 BBI_ProductBarcode.Enabled = true;
+                BBI_ProductStaticPriceList.Enabled = true;
             }
 
             ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectProductTypes();
@@ -86,7 +87,7 @@ namespace Foxoft
             if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
                 Directory.CreateDirectory(settingStore?.ImageFolder);
 
-            productFolder = Path.Combine(settingStore.ImageFolder, dcProduct.ProductCode);
+            productFolder = Path.Combine(settingStore.ImageFolder, "Products", dcProduct.ProductCode);
             imageFilePath = Path.Combine(productFolder, dcProduct.ProductCode + ".jpg");
 
             LoadPictureBoxImage();
@@ -122,11 +123,15 @@ namespace Foxoft
         {
             if (File.Exists(imageFilePath))
             {
-                using (var alma = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var fs = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     try
                     {
-                        pictureEdit.Image = Image.FromStream(alma);
+                        using (Image img = Image.FromStream(fs, true, false))
+                        {
+                            Bitmap myBitmap = new(img);
+                            pictureEdit.Image = myBitmap;
+                        }
                     }
                     catch (Exception) { }
                 }
@@ -205,7 +210,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("error code 154484: " + ex.Message);
             }
         }
 
@@ -428,7 +433,7 @@ namespace Foxoft
 
         private void BBI_GalleryCopy_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string caption = galleryControl1.Gallery.GetCheckedItem().Caption;
+            string caption = galleryControl1.Gallery.GetCheckedItem()?.Caption;
             string imagePath = Path.Combine(productFolder, caption);
 
             try
@@ -575,6 +580,12 @@ namespace Foxoft
                 BBI_GalleryDelete.Enabled = false;
             }
 
+        }
+
+        private void BBI_ProductStaticPriceList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormProductStaticPrice frm = new(dcProduct.ProductCode);
+            frm.ShowDialog();
         }
     }
 }

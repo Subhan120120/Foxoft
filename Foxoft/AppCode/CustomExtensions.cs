@@ -191,7 +191,7 @@ namespace Foxoft
         {
             try
             {
-                using (XtraSaveFileDialog sFD = new())
+                using (SaveFileDialog sFD = new())
                 {
                     sFD.Filter = "Excel Faylı|*.xlsx";
                     sFD.Title = "Excel Faylı Yadda Saxla";

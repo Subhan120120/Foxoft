@@ -123,7 +123,7 @@ namespace Foxoft.Models
 
         [Column(TypeName = "money")]
         [Display(Name = "Net Tutar (YPV)")]
-        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * Price * (1 - PosDiscount / 100); } set { } }
+        public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc * (1 - PosDiscount / 100); } set { } }
 
         [DefaultValue("0")]
         [Column(TypeName = "money")]

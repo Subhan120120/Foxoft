@@ -430,33 +430,6 @@ namespace Foxoft
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
             CustomExtensions.ExportToExcel(this, dcReport.ReportName, gC_Report);
-            //    XtraSaveFileDialog sFD = new()
-            //    {
-            //        Filter = "Excel Faylı|*.xlsx",
-            //        Title = "Excel Faylı Yadda Saxla",
-            //        FileName = dcReport.ReportName,
-            //        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-            //        DefaultExt = "*.xlsx",
-            //    };
-
-            //    String fileName = Invoke((Func<string>)(() =>
-            //    {
-            //        if (sFD.ShowDialog() == DialogResult.OK)
-            //        {
-            //            gC_Report.ExportToXlsx(sFD.FileName);
-
-            //            if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //            {
-            //                Process p = new();
-            //                p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-            //                p.Start();
-            //            }
-
-            //            return "Ok";
-            //        }
-            //        else
-            //            return "Fail";
-            //    }));
         }
 
         private void BBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
@@ -575,7 +548,6 @@ namespace Foxoft
             GridColumn gridColumn = eMenu.HitInfo.Column;
 
             DXMenuItem menuItem = new("Dəyiş");
-            //menuItem.Tag = new RowInfo(view, rowHandle);
             menuItem.ImageOptions.SvgImage = svgImageCollection1[1];
 
             object objCellValue = gV_Report.GetRowCellValue(rowHandle, gridColumn);
@@ -661,7 +633,7 @@ namespace Foxoft
 
                     string filter = "";
 
-                    if (rowHandle > 0)
+                    if (rowHandle >= 0)
                         filter = gridColumn.FieldName + " = '" + gV_Report.GetRowCellValue(rowHandle, gridColumn) + "' ";
                     else
                     {

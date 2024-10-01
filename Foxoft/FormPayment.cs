@@ -11,7 +11,6 @@ namespace Foxoft
     public partial class FormPayment : XtraForm
     {
         private Guid PaymentHeaderId;
-        //private bool autoMakePayment;
         private TrPaymentHeader trPaymentHeader = new();
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private TrPaymentLine trPaymentLineCash = new();
@@ -126,8 +125,8 @@ namespace Foxoft
 
         private void FillControls()
         {
-            txtEdit_Cash.EditValue = trPaymentLineCash.Payment;
-            txtEdit_Cashless.EditValue = trPaymentLineCashless.Payment;
+            txtEdit_Cash.EditValue = trPaymentLineCash.PaymentLoc;
+            txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
 
             dateEdit_Date.EditValue = DateTime.Now.ToString("yyyy-MM-dd");
             btnEdit_CashRegister.EditValue = trPaymentLineCash.CashRegisterCode;
@@ -169,10 +168,9 @@ namespace Foxoft
 
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
         {
-            LookUpEdit editor = sender as LookUpEdit;
             trPaymentLineCash.CurrencyCode = lUE_cashCurrency.EditValue.ToString();
-            trPaymentLineCash.ExchangeRate = (float)editor.GetColumnValue("ExchangeRate");
-            FillControls();
+            trPaymentLineCash.ExchangeRate = (float)lUE_cashCurrency.GetColumnValue("ExchangeRate");
+            //FillControls();
         }
 
         private void SelectCashRegister(object sender, byte paymentTypeCode)
@@ -230,7 +228,7 @@ namespace Foxoft
             LookUpEdit editor = sender as LookUpEdit;
             trPaymentLineCashless.CurrencyCode = lUE_CashlessCurrency.EditValue.ToString();
             trPaymentLineCashless.ExchangeRate = (float)editor.GetColumnValue("ExchangeRate");
-            FillControls();
+            //FillControls();
         }
 
         private void btn_Num_Click(object sender, EventArgs e)
@@ -315,6 +313,14 @@ namespace Foxoft
                         trPaymentLineCashless.Payment = isNegativ ? trPaymentLineCashless.Payment * (-1) : trPaymentLineCashless.Payment;
                         efMethods.InsertPaymentLine(trPaymentLineCashless);
 
+                        trPaymentHeader.PaymentHeaderId = Guid.NewGuid();
+                        efMethods.InsertPaymentHeader(trPaymentHeader);
+
+                        trPaymentLineCashless.PaymentHeaderId = trPaymentHeader.PaymentHeaderId;
+                        trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
+                        trPaymentLineCashless.Payment = trPaymentLineCashless.Payment * (-1);
+                        efMethods.InsertPaymentLine(trPaymentLineCashless);
+
                         if (!string.IsNullOrEmpty(TrPaymentPlan.PaymentPlanCode))
                         {
                             TrPaymentPlan.PaymentLineId = trPaymentLineCashless.PaymentLineId;
@@ -389,27 +395,23 @@ namespace Foxoft
 
         private void btnEdit_CashRegister_EditValueChanged(object sender, EventArgs e)
         {
-            ButtonEdit buttonEdit = sender as ButtonEdit;
-            trPaymentLineCash.CashRegisterCode = buttonEdit.EditValue.ToString();
+            trPaymentLineCash.CashRegisterCode = btnEdit_CashRegister.EditValue.ToString();
         }
 
         private void btnEdit_BankAccout_EditValueChanged(object sender, EventArgs e)
         {
-            ButtonEdit buttonEdit = sender as ButtonEdit;
-            trPaymentLineCashless.CashRegisterCode = buttonEdit.EditValue?.ToString();
+            trPaymentLineCashless.CashRegisterCode = btnEdit_BankAccout.EditValue?.ToString();
         }
 
         private void LUE_PaymentPlan_EditValueChanged(object sender, EventArgs e)
         {
-            string paymentPlan = LUE_PaymentPlan.EditValue?.ToString();
-            TrPaymentPlan.PaymentPlanCode = paymentPlan;
+            TrPaymentPlan.PaymentPlanCode = LUE_PaymentPlan.EditValue?.ToString();
             //txtEdit_Cashless.DoValidate();
         }
 
         private void txt_Commission_EditValueChanged(object sender, EventArgs e)
         {
-            decimal commission = Convert.ToDecimal(txt_Commission.EditValue);
-            TrPaymentPlan.Commission = commission;
+            TrPaymentPlan.Commission = Convert.ToDecimal(txt_Commission.EditValue);
             //txtEdit_Cashless.DoValidate();
         }
     }

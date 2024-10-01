@@ -1872,7 +1872,7 @@ namespace Foxoft
             decimal priceProduct = 0;
 
             priceProduct = Settings.Default.AppSetting.UsePriceList
-                ? efMethods.SelectPrice(dcProcess.ProcessCode, product.ProductCode)
+                ? efMethods.SelectPriceByProcess(dcProcess.ProcessCode, product.ProductCode)
                 : dcProcess.ProcessCode switch
                 {
                     "RP" => product.PurchasePrice,
@@ -2223,7 +2223,6 @@ namespace Foxoft
                 };
 
                 menu.AddItem(BBI);
-
             }
             e.Cancel = false;
         }

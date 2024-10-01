@@ -32,7 +32,6 @@ namespace Foxoft
             dcReport = efMethods.SelectReport(dcReport.ReportId);
 
             SqlParameter[] sqlParameters;
-            string qryMaster = "";
 
             query = cM.ApplyFilter(dcReport, query, filter, out sqlParameters);
 
@@ -45,7 +44,7 @@ namespace Foxoft
 
             foreach (TrReportSubQuery reportSubQuery in dcReport.TrReportSubQueries)
             {
-                reportSubQuery.SubQueryText = cM.AddRelation(qryMaster, reportSubQuery);
+                reportSubQuery.SubQueryText = cM.AddRelation(query, reportSubQuery);
 
                 SqlParameter[] sqlParameters1;
                 string qry = cM.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);

@@ -28,7 +28,6 @@ namespace Foxoft
 {
     public partial class FormProductList : RibbonForm
     {
-        SettingStore settingStore = new();
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
         CustomMethods cM = new();
@@ -43,6 +42,8 @@ namespace Foxoft
         GridColumn colProductCost = new();
         GridColumn colBalance = new();
 
+        string productsFolder;
+
         public FormProductList()
         {
             InitializeComponent();
@@ -51,7 +52,8 @@ namespace Foxoft
 
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
-            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            productsFolder = Path.Combine(settingStore.ImageFolder, "Products");
 
             string activeFilterStr = "[StoreCode] = \'" + settingStore.StoreCode + "\'";
             cM.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
@@ -202,14 +204,13 @@ namespace Foxoft
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
                 fileName += @"/" + fileName + ".jpg";
-                if (CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
+                if (CustomExtensions.DirectoryExist(productsFolder))
                 {
-                    string path = settingStore.ImageFolder + @"\" + fileName;
+                    string path = productsFolder + @"\" + fileName;
                     if (!imageCache.ContainsKey(path))
                     {
                         Image img = GetImage(path);
                         imageCache.Add(path, img);
-                        //img.Dispose();
                     }
                     e.Value = imageCache[path];
                 }
@@ -350,9 +351,9 @@ namespace Foxoft
                 {
                     int fr = gV_ProductList.FocusedRowHandle;
 
-                    if (CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
+                    if (CustomExtensions.DirectoryExist(productsFolder))
                     {
-                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
+                        string path = productsFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
                         imageCache.Remove(path);
                     }
 
@@ -379,11 +380,6 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.C && e.Control)
                 {
-                    //if (view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn) != null && view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString() != String.Empty)
-                    //   Clipboard.SetText(view.GetRowCellValue(view.FocusedRowHandle, view.FocusedColumn).ToString());
-                    //else
-                    //   MessageBox.Show("The value in the selected cell is null or empty!");
-
                     object cellValue = view.GetFocusedValue();
                     if (view.FocusedColumn == colImage)
                         Clipboard.SetImage((Image)cellValue);
@@ -395,11 +391,18 @@ namespace Foxoft
 
                 if (e.KeyCode == Keys.B && e.Control)
                 {
-                    List<DcProduct> dcProducts = new();
-                    dcProducts.Add(dcProduct);
+                    DcReport dcReport = efMethods.SelectReport(1032);
+                    string filter = "";
+
+                    if (!string.IsNullOrEmpty(dcProduct.ProductCode))
+                        filter = $"{nameof(DcProduct.ProductCode)} = '{dcProduct.ProductCode}'";
+
+                    SqlParameter[] sqlParameters;
+                    dcReport.ReportQuery = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
+                    var data = adoMethods.SqlGetDt(dcReport.ReportQuery);
 
                     ReportClass reportClass = new();
-                    XtraReport xtraReport = reportClass.CreateReport(dcProducts, "PriceList_OneProduct.repx");
+                    XtraReport xtraReport = reportClass.CreateReport(data, dcReport.ReportName + ".repx");
 
                     using (MemoryStream ms = new())
                     {
@@ -500,9 +503,9 @@ namespace Foxoft
                 {
                     efMethods.DeleteProduct(dcProduct);
 
-                    if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                    if (CustomExtensions.DirectoryExist(productsFolder))
                     {
-                        string path = settingStore.ImageFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
+                        string path = productsFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
                         imageCache.Remove(path);
                     }
 

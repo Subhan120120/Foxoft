@@ -64,7 +64,7 @@ namespace Foxoft.Models
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<SettingStore> SettingStores { get; set; }
         public DbSet<DcVariable> DcVariables { get; set; }
-        public DbSet<TrPrice> TrPrices { get; set; }
+        public DbSet<DcProductStaticPrice> DcProductStaticPrices { get; set; }
         public DbSet<DcCurrency> DcCurrencies { get; set; }
         public DbSet<DcHierarchy> DcHierarchies { get; set; }
         public DbSet<TrHierarchyFeatureType> TrHierarchyFeatureTypes { get; set; }
@@ -149,6 +149,9 @@ namespace Foxoft.Models
 
             modelBuilder.Entity<DcFeature>()
                         .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
+
+            modelBuilder.Entity<DcProductStaticPrice>()
+                        .HasKey(bc => new { bc.ProductCode, bc.PriceTypeCode });
 
             modelBuilder.Entity<TrProductDiscount>()
                         .HasKey(bc => new { bc.ProductCode, bc.DiscountId });
@@ -497,11 +500,10 @@ namespace Foxoft.Models
                 new DcPaymentMethod { PaymentMethodId = 5, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" }
                 );
 
-
             modelBuilder.Entity<DcPaymentPlan>().HasData(
-                new DcPaymentPlan { PaymentPlanCode = "M3", PaymentPlanDesc = "3 AY", PaymentMethodId = 2, DurationInMonths = 3, Commission = 0 },
-                new DcPaymentPlan { PaymentPlanCode = "M6", PaymentPlanDesc = "6 AY", PaymentMethodId = 2, DurationInMonths = 6, Commission = 0 },
-                new DcPaymentPlan { PaymentPlanCode = "M9", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M03", PaymentPlanDesc = "3 AY", PaymentMethodId = 2, DurationInMonths = 3, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M06", PaymentPlanDesc = "6 AY", PaymentMethodId = 2, DurationInMonths = 6, Commission = 0 },
+                new DcPaymentPlan { PaymentPlanCode = "M09", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9, Commission = 0 },
                 new DcPaymentPlan { PaymentPlanCode = "M12", PaymentPlanDesc = "12 AY", PaymentMethodId = 2, DurationInMonths = 12, Commission = 0 },
                 new DcPaymentPlan { PaymentPlanCode = "M18", PaymentPlanDesc = "18 AY", PaymentMethodId = 2, DurationInMonths = 18, Commission = 0 },
                 new DcPaymentPlan { PaymentPlanCode = "M24", PaymentPlanDesc = "24 AY", PaymentMethodId = 2, DurationInMonths = 24, Commission = 0 }

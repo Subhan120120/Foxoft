@@ -28,6 +28,7 @@ namespace Foxoft.Models
         public string PriceTypeDesc { get; set; }
 
         public virtual ICollection<TrPriceListHeader> TrPriceListHeaders { get; set; }
+        public virtual ICollection<DcProductStaticPrice> TrStaticPrices { get; set; }
 
     }
 }

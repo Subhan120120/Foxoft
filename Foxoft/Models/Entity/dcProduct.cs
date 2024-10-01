@@ -19,7 +19,7 @@ namespace Foxoft.Models
         public DcProduct()
         {
             TrInvoiceLines = new HashSet<TrInvoiceLine>();
-            TrPrices = new HashSet<TrPrice>();
+            TrStaticPrices= new HashSet<DcProductStaticPrice>();
             TrProductFeatures = new HashSet<TrProductFeature>();
             TrProductDiscounts = new HashSet<TrProductDiscount>();
             TrPriceListLines = new HashSet<TrPriceListLine>();
@@ -125,7 +125,7 @@ namespace Foxoft.Models
         public virtual DcHierarchy DcHierarchy { get; set; }
         public virtual ProductBalance ProductBalance { get; set; }
         public virtual ICollection<DcSerialNumber> DcSerialNumbers{ get; set; }
-        public virtual ICollection<TrPrice> TrPrices { get; set; }
+        public virtual ICollection<DcProductStaticPrice> TrStaticPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }
         public virtual ICollection<TrProductDiscount> TrProductDiscounts { get; set; }

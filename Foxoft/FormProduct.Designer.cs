@@ -34,7 +34,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges1 = new DevExpress.Skins.SkinPaddingEdges();
+            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges3 = new DevExpress.Skins.SkinPaddingEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProduct));
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             galleryControl1 = new GalleryControl();
@@ -101,6 +101,7 @@ namespace Foxoft
             BBI_ProductFeature = new DevExpress.XtraBars.BarButtonItem();
             BBI_ProductDiscount = new DevExpress.XtraBars.BarButtonItem();
             BBI_ProductBarcode = new DevExpress.XtraBars.BarButtonItem();
+            BBI_ProductStaticPriceList = new DevExpress.XtraBars.BarButtonItem();
             bar3 = new DevExpress.XtraBars.Bar();
             barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -225,12 +226,12 @@ namespace Foxoft
             galleryControl1.Gallery.ImageSize = new Size(90, 60);
             galleryControl1.Gallery.ItemCheckMode = DevExpress.XtraBars.Ribbon.Gallery.ItemCheckMode.SingleCheck;
             galleryControl1.Gallery.ItemImageLayout = ImageLayoutMode.ZoomInside;
-            skinPaddingEdges1.All = -5;
-            skinPaddingEdges1.Bottom = -5;
-            skinPaddingEdges1.Left = -5;
-            skinPaddingEdges1.Right = -5;
-            skinPaddingEdges1.Top = -5;
-            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges1;
+            skinPaddingEdges3.All = -5;
+            skinPaddingEdges3.Bottom = -5;
+            skinPaddingEdges3.Left = -5;
+            skinPaddingEdges3.Right = -5;
+            skinPaddingEdges3.Top = -5;
+            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges3;
             galleryControl1.Gallery.Orientation = Orientation.Horizontal;
             galleryControl1.Gallery.ShowGroupCaption = false;
             galleryControl1.Location = new Point(262, 227);
@@ -807,8 +808,8 @@ namespace Foxoft
             barManager1.DockControls.Add(barDockControlLeft);
             barManager1.DockControls.Add(barDockControlRight);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy });
-            barManager1.MaxItemId = 8;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_ProductFeature, BBI_ProductDiscount, BBI_ProductBarcode, BBI_GalleryLoad, BBI_GalleryDelete, BBI_GalleryPaste, BBI_GalleryCopy, BBI_ProductStaticPriceList });
+            barManager1.MaxItemId = 10;
             barManager1.StatusBar = bar3;
             // 
             // bar1
@@ -817,7 +818,7 @@ namespace Foxoft
             bar1.DockCol = 0;
             bar1.DockRow = 1;
             bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
-            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductFeature), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductDiscount), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductBarcode) });
+            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductFeature), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductDiscount), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductBarcode), new DevExpress.XtraBars.LinkPersistInfo(BBI_ProductStaticPriceList) });
             bar1.Text = "Tools";
             // 
             // BBI_ProductFeature
@@ -849,6 +850,16 @@ namespace Foxoft
             BBI_ProductBarcode.Name = "BBI_ProductBarcode";
             BBI_ProductBarcode.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             BBI_ProductBarcode.ItemClick += BBI_ProductBarcode_ItemClick;
+            // 
+            // BBI_ProductStaticPriceList
+            // 
+            BBI_ProductStaticPriceList.Caption = "Qiymət";
+            BBI_ProductStaticPriceList.Enabled = false;
+            BBI_ProductStaticPriceList.Id = 9;
+            BBI_ProductStaticPriceList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ProductStaticPriceList.ImageOptions.SvgImage");
+            BBI_ProductStaticPriceList.Name = "BBI_ProductStaticPriceList";
+            BBI_ProductStaticPriceList.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            BBI_ProductStaticPriceList.ItemClick += BBI_ProductStaticPriceList_ItemClick;
             // 
             // bar3
             // 
@@ -899,7 +910,6 @@ namespace Foxoft
             BBI_GalleryLoad.Caption = "Yüklə";
             BBI_GalleryLoad.Id = 4;
             BBI_GalleryLoad.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryLoad.ImageOptions.SvgImage");
-            BBI_GalleryLoad.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.O);
             BBI_GalleryLoad.Name = "BBI_GalleryLoad";
             BBI_GalleryLoad.ShowItemShortcut = DefaultBoolean.True;
             BBI_GalleryLoad.ItemClick += BBI_GalleryLoad_ItemClick;
@@ -917,7 +927,6 @@ namespace Foxoft
             BBI_GalleryPaste.Caption = "Yapıştır";
             BBI_GalleryPaste.Id = 6;
             BBI_GalleryPaste.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryPaste.ImageOptions.SvgImage");
-            BBI_GalleryPaste.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.V);
             BBI_GalleryPaste.Name = "BBI_GalleryPaste";
             BBI_GalleryPaste.ItemClick += BBI_GalleryPaste_ItemClick;
             // 
@@ -926,7 +935,6 @@ namespace Foxoft
             BBI_GalleryCopy.Caption = "Kopyala";
             BBI_GalleryCopy.Id = 7;
             BBI_GalleryCopy.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_GalleryCopy.ImageOptions.SvgImage");
-            BBI_GalleryCopy.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.C);
             BBI_GalleryCopy.Name = "BBI_GalleryCopy";
             BBI_GalleryCopy.ItemClick += BBI_GalleryCopy_ItemClick;
             // 
@@ -1114,5 +1122,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_GalleryPaste;
         private SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.BarButtonItem BBI_GalleryCopy;
+        private DevExpress.XtraBars.BarButtonItem BBI_StaticPriceList;
+        private DevExpress.XtraBars.BarButtonItem BBI_ProductStaticPriceList;
     }
 }

@@ -1045,7 +1045,7 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public decimal SelectPrice(string processCode, string productCode)
+        public decimal SelectPriceByProcess(string processCode, string productCode)
         {
             using subContext db = new();
 
@@ -1058,6 +1058,23 @@ namespace Foxoft
                                            .FirstOrDefault().Price;
 
             return price;
+        }
+
+        public DcProductStaticPrice SelectStaticPrices(string productCode, string priceTypeCode)
+        {
+            using subContext db = new();
+
+            var price = db.DcProductStaticPrices.Where(x => x.ProductCode == productCode && x.PriceTypeCode == priceTypeCode)
+                                           .FirstOrDefault();
+
+            return price;
+        }
+
+        public List<DcPriceType> SelectPriceTypes()
+        {
+            using subContext db = new();
+
+            return db.DcPriceTypes.ToList();
         }
 
         public int UpdateInvoiceSalesPerson(Guid invoiceLineId, string currAccCode)
@@ -1864,6 +1881,35 @@ namespace Foxoft
                                                         .FirstOrDefault(x => x.ReportId == ReportId);
             reportVariable.VariableValue = filterValue;
             db.Entry(reportVariable).Property(x => x.VariableValue).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdateDcProductStaticPrice_Value(string priceTypeCode, string productCode, decimal value)
+        {
+            using subContext db = new();
+            DcProductStaticPrice pp = db.DcProductStaticPrices.FirstOrDefault(x => x.PriceTypeCode == priceTypeCode && x.ProductCode == productCode);
+
+            if (pp is not null) // update
+            {
+                if (pp.Price != value)
+                {
+                    //3u de composite key olduguna gore update alinmadi
+                    db.DcProductStaticPrices.Remove(pp);
+                    db.SaveChanges();
+                }
+            }
+
+            if (pp?.Price != value)
+            {
+                pp = new DcProductStaticPrice()
+                {
+                    PriceTypeCode = priceTypeCode,
+                    ProductCode = productCode,
+                    Price = value
+                };
+                db.DcProductStaticPrices.Add(pp);
+            }
+
             return db.SaveChanges();
         }
 
