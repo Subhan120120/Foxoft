@@ -167,30 +167,6 @@ namespace Foxoft
             }
         }
 
-        private void btn_Ok_Click(object sender, EventArgs e)
-        {
-            if (dataLayoutControl1.IsValid(out List<string> errorList))
-            {
-                dcProduct = dcProductsBindingSource.Current as DcProduct;
-                if (isNew) //if invoiceHeader doesnt exist
-                    if (!efMethods.ProductExist(dcProduct.ProductCode))
-                        efMethods.InsertProduct(dcProduct);
-                    else
-                        MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
-                else
-                    dbContext.SaveChanges();
-
-                SaveImage();
-
-                DialogResult = DialogResult.OK;
-            }
-            else
-            {
-                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
-                XtraMessageBox.Show(combinedString);
-            }
-        }
-
         private void SaveImage()
         {
             if (!Directory.Exists(productFolder))
@@ -586,6 +562,59 @@ namespace Foxoft
         {
             FormProductStaticPrice frm = new(dcProduct.ProductCode);
             frm.ShowDialog();
+        }
+
+
+        private void btn_Ok_Click(object sender, EventArgs e)
+        {
+            if (dataLayoutControl1.IsValid(out List<string> errorList))
+            {
+                dcProduct = dcProductsBindingSource.Current as DcProduct;
+                if (isNew) //if invoiceHeader doesnt exist
+                    if (!efMethods.ProductExist(dcProduct.ProductCode))
+                        efMethods.InsertProduct(dcProduct);
+                    else
+                        MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
+                else
+                    dbContext.SaveChanges();
+
+                SaveImage();
+
+                DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(combinedString);
+            }
+        }
+
+        private void btn_Apply_Click(object sender, EventArgs e)
+        {
+            if (dataLayoutControl1.IsValid(out List<string> errorList))
+            {
+                dcProduct = dcProductsBindingSource.Current as DcProduct;
+                if (isNew) //if invoiceHeader doesnt exist
+                    if (!efMethods.ProductExist(dcProduct.ProductCode))
+                        efMethods.InsertProduct(dcProduct);
+                    else
+                        MessageBox.Show("Bu Kodda Məhsul Artıq Mövcuddur!");
+                else
+                    dbContext.SaveChanges();
+
+                SaveImage();
+
+                isNew = false;
+                BBI_ProductFeature.Enabled = true;
+                BBI_ProductDiscount.Enabled = true;
+                BBI_ProductBarcode.Enabled = true;
+                BBI_ProductStaticPriceList.Enabled = true;
+            }
+            else
+            {
+                string combinedString = errorList.Aggregate((x, y) => x + "" + y);
+                XtraMessageBox.Show(combinedString);
+            }
         }
     }
 }

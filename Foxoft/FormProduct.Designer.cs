@@ -64,6 +64,7 @@ namespace Foxoft
             txtEdit_Desc = new DevExpress.XtraEditors.TextEdit();
             txtEdit_Rating = new DevExpress.XtraEditors.TextEdit();
             btnEdit_Slug = new DevExpress.XtraEditors.ButtonEdit();
+            btn_Apply = new DevExpress.XtraEditors.SimpleButton();
             ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPromotionCode2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -88,12 +89,13 @@ namespace Foxoft
             layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
-            emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+            emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             barManager1 = new DevExpress.XtraBars.BarManager(components);
@@ -165,12 +167,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem11).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseInternet).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)barManager1).BeginInit();
@@ -205,6 +208,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(txtEdit_Desc);
             dataLayoutControl1.Controls.Add(txtEdit_Rating);
             dataLayoutControl1.Controls.Add(btnEdit_Slug);
+            dataLayoutControl1.Controls.Add(btn_Apply);
             dataLayoutControl1.DataSource = dcProductsBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForUsePos, ItemForPromotionCode, ItemForPromotionCode2, ItemForTaxRate });
@@ -238,7 +242,7 @@ namespace Foxoft
             galleryControl1.Name = "galleryControl1";
             galleryControl1.Size = new Size(216, 92);
             galleryControl1.StyleController = dataLayoutControl1;
-            galleryControl1.TabIndex = 19;
+            galleryControl1.TabIndex = 12;
             galleryControl1.Text = "galleryControl1";
             galleryControl1.MouseDoubleClick += GalleryControl1_MouseDoubleClick;
             galleryControl1.MouseDown += galleryControl1_MouseDown;
@@ -317,7 +321,7 @@ namespace Foxoft
             IsDisabledCheckEdit.Properties.GlyphAlignment = HorzAlignment.Default;
             IsDisabledCheckEdit.Size = new Size(78, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
-            IsDisabledCheckEdit.TabIndex = 15;
+            IsDisabledCheckEdit.TabIndex = 13;
             // 
             // ProductDescTextEdit
             // 
@@ -333,11 +337,11 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(401, 323);
+            btn_Ok.Location = new Point(404, 323);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(77, 62);
+            btn_Ok.Size = new Size(74, 62);
             btn_Ok.StyleController = dataLayoutControl1;
-            btn_Ok.TabIndex = 18;
+            btn_Ok.TabIndex = 17;
             btn_Ok.Text = "simpleButton1";
             btn_Ok.Click += btn_Ok_Click;
             // 
@@ -345,11 +349,11 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(321, 323);
+            btn_Cancel.Location = new Point(326, 323);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(76, 62);
+            btn_Cancel.Size = new Size(74, 62);
             btn_Cancel.StyleController = dataLayoutControl1;
-            btn_Cancel.TabIndex = 17;
+            btn_Cancel.TabIndex = 16;
             btn_Cancel.Text = "simpleButton2";
             // 
             // ProductTypeCodeLookUpEdit
@@ -377,7 +381,7 @@ namespace Foxoft
             PurchasePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             PurchasePriceTextEdit.Size = new Size(111, 20);
             PurchasePriceTextEdit.StyleController = dataLayoutControl1;
-            PurchasePriceTextEdit.TabIndex = 1;
+            PurchasePriceTextEdit.TabIndex = 9;
             // 
             // WholesalePriceTextEdit
             // 
@@ -391,7 +395,7 @@ namespace Foxoft
             WholesalePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             WholesalePriceTextEdit.Size = new Size(111, 20);
             WholesalePriceTextEdit.StyleController = dataLayoutControl1;
-            WholesalePriceTextEdit.TabIndex = 1;
+            WholesalePriceTextEdit.TabIndex = 10;
             // 
             // RetailPriceTextEdit
             // 
@@ -405,7 +409,7 @@ namespace Foxoft
             RetailPriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             RetailPriceTextEdit.Size = new Size(111, 20);
             RetailPriceTextEdit.StyleController = dataLayoutControl1;
-            RetailPriceTextEdit.TabIndex = 1;
+            RetailPriceTextEdit.TabIndex = 11;
             // 
             // PosDiscountTextEdit
             // 
@@ -430,7 +434,7 @@ namespace Foxoft
             UseInternetCheckEdit.Properties.GlyphAlignment = HorzAlignment.Default;
             UseInternetCheckEdit.Size = new Size(164, 20);
             UseInternetCheckEdit.StyleController = dataLayoutControl1;
-            UseInternetCheckEdit.TabIndex = 16;
+            UseInternetCheckEdit.TabIndex = 14;
             // 
             // BalanceTextEdit
             // 
@@ -476,7 +480,7 @@ namespace Foxoft
             btnEdit_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_Hierarchy.Size = new Size(135, 20);
             btnEdit_Hierarchy.StyleController = dataLayoutControl1;
-            btnEdit_Hierarchy.TabIndex = 8;
+            btnEdit_Hierarchy.TabIndex = 7;
             btnEdit_Hierarchy.ButtonPressed += btnEdit_Hierarchy_ButtonPressed;
             btnEdit_Hierarchy.EditValueChanged += btnEdit_Hierarchy_EditValueChanged;
             // 
@@ -487,7 +491,7 @@ namespace Foxoft
             txtEdit_Price.Name = "txtEdit_Price";
             txtEdit_Price.Size = new Size(111, 20);
             txtEdit_Price.StyleController = dataLayoutControl1;
-            txtEdit_Price.TabIndex = 10;
+            txtEdit_Price.TabIndex = 1;
             // 
             // txtEdit_Desc
             // 
@@ -496,7 +500,7 @@ namespace Foxoft
             txtEdit_Desc.Name = "txtEdit_Desc";
             txtEdit_Desc.Size = new Size(111, 20);
             txtEdit_Desc.StyleController = dataLayoutControl1;
-            txtEdit_Desc.TabIndex = 11;
+            txtEdit_Desc.TabIndex = 1;
             // 
             // txtEdit_Rating
             // 
@@ -505,7 +509,7 @@ namespace Foxoft
             txtEdit_Rating.Name = "txtEdit_Rating";
             txtEdit_Rating.Size = new Size(111, 20);
             txtEdit_Rating.StyleController = dataLayoutControl1;
-            txtEdit_Rating.TabIndex = 13;
+            txtEdit_Rating.TabIndex = 1;
             // 
             // btnEdit_Slug
             // 
@@ -515,8 +519,20 @@ namespace Foxoft
             btnEdit_Slug.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus) });
             btnEdit_Slug.Size = new Size(111, 20);
             btnEdit_Slug.StyleController = dataLayoutControl1;
-            btnEdit_Slug.TabIndex = 12;
+            btnEdit_Slug.TabIndex = 1;
             btnEdit_Slug.ButtonPressed += BtnEdit_Slug_ButtonPressed;
+            // 
+            // btn_Apply
+            // 
+            btn_Apply.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_Apply.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Apply.ImageOptions.SvgImage");
+            btn_Apply.Location = new Point(248, 323);
+            btn_Apply.Name = "btn_Apply";
+            btn_Apply.Size = new Size(74, 62);
+            btn_Apply.StyleController = dataLayoutControl1;
+            btn_Apply.TabIndex = 15;
+            btn_Apply.Text = "Yadda saxla";
+            btn_Apply.Click += btn_Apply_Click;
             // 
             // ItemForUsePos
             // 
@@ -568,7 +584,7 @@ namespace Foxoft
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPosDiscount, ItemForBalance, layoutControlItem4, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ProductCode2, lCI_hierarchyCode, tabbedControlGroup1, emptySpaceItem2, layoutControlItem2, layoutControlItem1, ItemForUseInternet, ItemForIsDisabled, layoutControlItem3 });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPosDiscount, ItemForBalance, layoutControlItem4, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ProductCode2, lCI_hierarchyCode, tabbedControlGroup1, layoutControlItem2, layoutControlItem1, ItemForUseInternet, ItemForIsDisabled, layoutControlItem3, layoutControlItem10, emptySpaceItem2 });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new Size(470, 377);
@@ -726,21 +742,14 @@ namespace Foxoft
             layoutControlItem11.Size = new Size(226, 24);
             layoutControlItem11.TextSize = new Size(99, 13);
             // 
-            // emptySpaceItem2
-            // 
-            emptySpaceItem2.AllowHotTrack = false;
-            emptySpaceItem2.Location = new Point(0, 311);
-            emptySpaceItem2.Name = "emptySpaceItem2";
-            emptySpaceItem2.Size = new Size(309, 66);
-            emptySpaceItem2.TextSize = new Size(0, 0);
-            // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_Cancel;
-            layoutControlItem2.Location = new Point(309, 311);
-            layoutControlItem2.MinSize = new Size(78, 26);
+            layoutControlItem2.Location = new Point(314, 311);
+            layoutControlItem2.MaxSize = new Size(78, 66);
+            layoutControlItem2.MinSize = new Size(78, 66);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new Size(80, 66);
+            layoutControlItem2.Size = new Size(78, 66);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
@@ -748,10 +757,11 @@ namespace Foxoft
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Ok;
-            layoutControlItem1.Location = new Point(389, 311);
-            layoutControlItem1.MinSize = new Size(78, 26);
+            layoutControlItem1.Location = new Point(392, 311);
+            layoutControlItem1.MaxSize = new Size(78, 66);
+            layoutControlItem1.MinSize = new Size(78, 66);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(81, 66);
+            layoutControlItem1.Size = new Size(78, 66);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
@@ -784,6 +794,26 @@ namespace Foxoft
             layoutControlItem3.Size = new Size(220, 96);
             layoutControlItem3.TextSize = new Size(0, 0);
             layoutControlItem3.TextVisible = false;
+            // 
+            // layoutControlItem10
+            // 
+            layoutControlItem10.Control = btn_Apply;
+            layoutControlItem10.Location = new Point(236, 311);
+            layoutControlItem10.MaxSize = new Size(78, 66);
+            layoutControlItem10.MinSize = new Size(78, 66);
+            layoutControlItem10.Name = "layoutControlItem10";
+            layoutControlItem10.Size = new Size(78, 66);
+            layoutControlItem10.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem10.TextSize = new Size(0, 0);
+            layoutControlItem10.TextVisible = false;
+            // 
+            // emptySpaceItem2
+            // 
+            emptySpaceItem2.AllowHotTrack = false;
+            emptySpaceItem2.Location = new Point(0, 311);
+            emptySpaceItem2.Name = "emptySpaceItem2";
+            emptySpaceItem2.Size = new Size(236, 66);
+            emptySpaceItem2.TextSize = new Size(0, 0);
             // 
             // gridControl1
             // 
@@ -1021,12 +1051,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem9).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem11).EndInit();
-            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseInternet).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForIsDisabled).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
             ((System.ComponentModel.ISupportInitialize)barManager1).EndInit();
@@ -1124,5 +1155,7 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_GalleryCopy;
         private DevExpress.XtraBars.BarButtonItem BBI_StaticPriceList;
         private DevExpress.XtraBars.BarButtonItem BBI_ProductStaticPriceList;
+        private DevExpress.XtraEditors.SimpleButton btn_Apply;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
     }
 }
