@@ -50,7 +50,7 @@ namespace Foxoft
         SqlParameter[] sqlParameters;
 
         string ReportQuery = "select 0 Nothing";
-        string imageFolder;
+        string ProductsFolder;
 
         RepositoryItemPictureEdit riPictureEdit = new();
         GridColumn colImage = new();
@@ -62,8 +62,10 @@ namespace Foxoft
             InitializeGVReportEvents();
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-                imageFolder = settingStore.ImageFolder;
+            if (!CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                Directory.CreateDirectory(settingStore.ImageFolder);
+
+            ProductsFolder = Path.Combine(settingStore.ImageFolder, "Products");
 
             GridLocalizer.Active = new MyGridLocalizer();
         }
@@ -103,9 +105,9 @@ namespace Foxoft
             {
                 GridView gV = sender as GridView;
                 int rowInd = gV.GetRowHandle(e.ListSourceRowIndex);
-                string fileName = gV.GetRowCellValue(rowInd, "ProductCode") as string ?? string.Empty;
-                fileName += ".jpg";
-                string path = imageFolder + @"\" + fileName;
+                string fileName = gV.GetRowCellValue(rowInd, nameof(DcProduct.ProductCode)) as string ?? string.Empty;
+                fileName += @"\" + fileName + ".jpg";
+                string path = ProductsFolder + @"\" + fileName;
                 if (!imageCache.ContainsKey(path))
                 {
                     Image img = GetImage(path);
@@ -598,7 +600,7 @@ namespace Foxoft
             FormProduct formProduct = new(0, productCode);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
-                string path = imageFolder + @"\" + productCode + ".jpg";
+                string path = ProductsFolder + @"\" + productCode + @"\" + productCode + ".jpg";
                 imageCache.Remove(path);
 
                 LoadData();
@@ -747,7 +749,7 @@ namespace Foxoft
         }
 
         private void FormReportGrid_FormClosing(object sender, FormClosingEventArgs e)
-        { 
+        {
         }
     }
 }
