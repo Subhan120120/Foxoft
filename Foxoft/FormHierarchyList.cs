@@ -65,7 +65,7 @@ namespace Foxoft
 
         private void treeList1_FocusedNodeChanged(object sender, FocusedNodeChangedEventArgs e)
         {
-            object HierarchyCode = e.Node.GetValue(treeListCol_HierarchyCode);
+            object HierarchyCode = e.Node?.GetValue(treeListCol_HierarchyCode);
 
             if (HierarchyCode is not null)
                 DcHierarchy = efMethods.SelectHierarchy(HierarchyCode.ToString());

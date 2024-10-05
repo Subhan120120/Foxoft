@@ -88,7 +88,7 @@ namespace Foxoft.AppCode
 
         private static string AddFilter(string queryTop, string filter)
         {
-            string userQuery = @$" SELECT *, ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS RowNum FROM ({queryTop}) AS UserQuery";
+            string userQuery = @$" SELECT *, ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS RowNum FROM ({queryTop + Environment.NewLine}) AS UserQuery";
 
             filter = !string.IsNullOrEmpty(filter) ? "WHERE " + filter : filter;
 
