@@ -31,7 +31,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Say")]
         [DefaultValue(1)]
-        public int Qty { get; set; }
+        public decimal Qty { get; set; }
 
 
         [ForeignKey("BarcodeTypeCode")]

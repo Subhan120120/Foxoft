@@ -471,7 +471,7 @@ namespace Foxoft
             return products;
         }
 
-        public int SelectProductBalance(string productCode, string warehouseCode)
+        public decimal SelectProductBalance(string productCode, string warehouseCode)
         {
             using subContext db = new();
 
@@ -482,7 +482,7 @@ namespace Foxoft
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 
-        public int SelectProductBalanceSerialNumber(string productCode, string warehouseCode, string serialNumberCode)
+        public decimal SelectProductBalanceSerialNumber(string productCode, string warehouseCode, string serialNumberCode)
         {
             using subContext db = new();
 

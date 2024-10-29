@@ -34,7 +34,7 @@ namespace Foxoft.Models
         [NotMapped]
         [Display(Name = "Say")]
         [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        public int Qty
+        public decimal Qty
         {
             get
             {
@@ -76,12 +76,12 @@ namespace Foxoft.Models
         [DefaultValue("0")]
         [Display(Name = "Say Giriş")]
         [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        public int QtyIn { get; set; }
+        public decimal QtyIn { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = "Say Çıxış")]
         [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        public int QtyOut { get; set; }
+        public decimal QtyOut { get; set; }
 
         [Display(Name = "Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
@@ -160,10 +160,10 @@ namespace Foxoft.Models
         public int Balance { get; set; }
 
         [NotMapped]
-        public int ReturnQty { get; set; }
+        public decimal ReturnQty { get; set; }
 
         [NotMapped]
-        public int RemainingQty { get; set; }
+        public decimal RemainingQty { get; set; }
 
         [NotMapped]
         [Display(Name = "Məhsul Adı")]

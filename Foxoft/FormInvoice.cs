@@ -520,10 +520,10 @@ namespace Foxoft
 
                         bool permitNegativeStock = (bool)lUE_WarehouseCode.GetColumnValue("PermitNegativeStock");
 
-                        int balance = CalcProductBalance(trInvoiceLine, wareHouse);
+                        decimal balance = CalcProductBalance(trInvoiceLine, wareHouse);
 
                         if (permitNegativeStock)
-                            if (Convert.ToInt32(e.Value) > balance)
+                            if (Convert.ToDecimal(e.Value) > balance)
                             {
                                 e.ErrorText = "Stokda miqdar yoxdur";
                                 e.Valid = false;
@@ -636,7 +636,7 @@ namespace Foxoft
             return sum;
         }
 
-        private int CalcProductBalance(TrInvoiceLine trInvoiceLine, string wareHouse)
+        private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string wareHouse)
         {
             if (trInvoiceLine is not null && !String.IsNullOrEmpty(trInvoiceLine.ProductCode))
             {
@@ -2153,7 +2153,7 @@ namespace Foxoft
                 var trInvoiceLine = gV_InvoiceLine.GetRow(i) as TrInvoiceLine;
                 if (trInvoiceLine != null)
                 {
-                    int productBalance = CalcProductBalance(trInvoiceLine, warehouse.EditValue?.ToString());
+                    decimal productBalance = CalcProductBalance(trInvoiceLine, warehouse.EditValue?.ToString());
 
                     if (productBalance < trInvoiceLine.Qty)
                     {

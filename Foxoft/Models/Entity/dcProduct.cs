@@ -6,10 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
-
 namespace Foxoft.Models
 {
     [Index(nameof(ProductTypeCode))]
@@ -107,10 +103,9 @@ namespace Foxoft.Models
 
 
 
-
         [NotMapped]
         [Display(Name = "Qalıq")]
-        public int Balance { get; set; }
+        public decimal Balance { get; set; }
 
         [NotMapped]
         [Display(Name = "Maya Dəyəri.")]
