@@ -87,10 +87,10 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal Price { get; set; }
 
-        [DefaultValue(1)]
+        //[DefaultValue(1)]
         [Display(Name = "Ölçü Vahidi")]
-        [ForeignKey("DcUnitOfMeasure")]
-        public int UnitOfMeasureId { get; set; }
+        [ForeignKey("TrProductUnitOfMeasure")]
+        public int? ProductUnitOfMeasureId { get; set; }
 
         [Display(Name = "Valyuta")]
         [ForeignKey("DcCurrency")]
@@ -153,11 +153,11 @@ namespace Foxoft.Models
         public decimal? ProductCost { get; set; }
 
         [Display(Name = "Mənfəət")]
-        public decimal? Benefit => (decimal?)PriceLoc - ProductCost;
+        public decimal? Benefit => PriceLoc - ProductCost;
 
         [NotMapped]
         [Display(Name = "Qalıq")]
-        public int Balance { get; set; }
+        public decimal Balance { get; set; }
 
         [NotMapped]
         public decimal ReturnQty { get; set; }
@@ -174,7 +174,7 @@ namespace Foxoft.Models
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
         public virtual DcSerialNumber DcSerialNumber { get; set; }
-        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
+        public virtual TrProductUnitOfMeasure TrProductUnitOfMeasure { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }

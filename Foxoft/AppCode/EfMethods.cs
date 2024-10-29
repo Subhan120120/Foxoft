@@ -1023,7 +1023,7 @@ namespace Foxoft
                 return 0;
         }
 
-        public int UpdateInvoiceLineQtyOut(object invoiceLineId, int qtyOut)
+        public int UpdateInvoiceLineQtyOut(object invoiceLineId, decimal qtyOut)
         {
             Guid variable = Guid.Parse(invoiceLineId.ToString());
 
@@ -1041,7 +1041,7 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateInvoiceLineQtyOut(Guid invoiceHeaderId, Guid relatedLineId, int qtyOut)
+        public int UpdateInvoiceLineQtyOut(Guid invoiceHeaderId, Guid relatedLineId, decimal qtyOut)
         {
             using subContext db = new();
 

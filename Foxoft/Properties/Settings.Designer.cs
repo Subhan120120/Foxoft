@@ -151,17 +151,13 @@ namespace Foxoft.Properties {
             get {
                 return ((string)(this["MainConnString"]));
             }
-            set
-            {
-                this["MainConnString"] = value;
-            }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServer" +
-            "Certificate=True;User ID=sa;Password=sql123_")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServe" +
+            "rCertificate=True;User ID=sa;Password=sql123_")]
         public string SubConnString {
             get {
                 return ((string)(this["SubConnString"]));
@@ -181,6 +177,18 @@ namespace Foxoft.Properties {
             }
             set {
                 this["CompanyCode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string CompanyId {
+            get {
+                return ((string)(this["CompanyId"]));
+            }
+            set {
+                this["CompanyId"] = value;
             }
         }
     }

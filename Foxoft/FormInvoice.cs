@@ -165,8 +165,8 @@ namespace Foxoft
             {
                 for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                 {
-                    int qtyIn = (int)gV_InvoiceLine.GetRowCellValue(i, (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode) ? colQtyIn : colQtyOut);
-                    int qtyInAbs = Math.Abs(qtyIn);
+                    decimal qtyIn = (decimal)gV_InvoiceLine.GetRowCellValue(i, (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode) ? colQtyIn : colQtyOut);
+                    decimal qtyInAbs = Math.Abs(qtyIn);
                     gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
                 }
             }
@@ -2175,9 +2175,7 @@ namespace Foxoft
             FormCurrAccList form = new(new byte[] { 3 }, trInvoiceHeader.CurrAccCode, new byte[] { 1 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
-            {
                 btnEdit_SalesPerson.EditValue = form.dcCurrAcc.CurrAccCode;
-            }
         }
 
         private void btnEdit_SalesPerson_EditValueChanged(object sender, EventArgs e)
@@ -2252,6 +2250,12 @@ namespace Foxoft
                 }
 
             }
+        }
+
+        private void gV_InvoiceLine_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
+        {
+            if (e.Column == colQty && e.Value is decimal decimalValue)
+                e.DisplayText = decimalValue.ToString("0.##");// Display without ".00" if there are no decimals
         }
     }
 }

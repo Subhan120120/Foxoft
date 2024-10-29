@@ -38,6 +38,7 @@ namespace Foxoft.Models
         public DbSet<DcBarcodeType> DcBarcodeTypes { get; set; }
         public DbSet<DcSerialNumber> DcSerialNumbers { get; set; }
         public DbSet<DcUnitOfMeasure> DcUnitOfMeasures { get; set; }
+        public DbSet<TrProductUnitOfMeasure> TrProductUnitOfMeasures { get; set; }
         public DbSet<DcDiscount> DcDiscounts { get; set; }
         public DbSet<TrProductDiscount> TrProductDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }

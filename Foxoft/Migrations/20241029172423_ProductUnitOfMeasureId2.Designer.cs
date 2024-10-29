@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20241029172423_ProductUnitOfMeasureId2")]
+    partial class ProductUnitOfMeasureId2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2909,6 +2912,9 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int?>("DcUnitOfMeasureUnitOfMeasureId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("DiscountCampaign")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
@@ -2993,6 +2999,8 @@ namespace Foxoft.Migrations
                     b.HasKey("InvoiceLineId");
 
                     b.HasIndex("CurrencyCode");
+
+                    b.HasIndex("DcUnitOfMeasureUnitOfMeasureId");
 
                     b.HasIndex("ProductCode");
 
@@ -4396,6 +4404,11 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", null)
+                        .WithMany("TrInvoiceLines")
+                        .HasForeignKey("DcUnitOfMeasureUnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrInvoiceLines")
                         .HasForeignKey("InvoiceHeaderId")
@@ -4970,6 +4983,8 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProducts");
 
                     b.Navigation("SettingStores");
+
+                    b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrProductUnitOfMeasures");
                 });

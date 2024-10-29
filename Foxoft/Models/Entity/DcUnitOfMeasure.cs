@@ -15,9 +15,10 @@ namespace Foxoft.Models
     {
         public DcUnitOfMeasure()
         {
-            TrInvoiceLines = new HashSet<TrInvoiceLine>();
+            //TrInvoiceLines = new HashSet<TrInvoiceLine>();
             DcProducts = new HashSet<DcProduct>();
             SettingStores = new HashSet<SettingStore>();
+            TrProductUnitOfMeasures = new HashSet<TrProductUnitOfMeasure>();
         }
 
         [Key]
@@ -38,9 +39,10 @@ namespace Foxoft.Models
         public byte Level { get; set; }
 
 
-        public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
+        //public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<DcProduct> DcProducts { get; set; }
         public virtual ICollection<SettingStore> SettingStores { get; set; }
+        public virtual ICollection<TrProductUnitOfMeasure> TrProductUnitOfMeasures { get; set; }
 
     }
 }

@@ -42,12 +42,15 @@
     <Setting Name="SubConnString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;ConnectionString&gt;Data Source=.\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServerCertificate=True;User ID=sa;Password=sql123_&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=.\SUBSQL;Initial Catalog=Tokla2;Persist Security Info=True;TrustServerCertificate=True;User ID=sa;Password=sql123_&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=.\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServerCertificate=True;User ID=sa;Password=sql123_</Value>
+      <Value Profile="(Default)">Data Source=.\SUBSQL;Initial Catalog=Tokla2;Persist Security Info=True;TrustServerCertificate=True;User ID=sa;Password=sql123_</Value>
     </Setting>
     <Setting Name="CompanyCode" Type="System.String" Scope="User">
-      <Value Profile="(Default)"></Value>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CompanyId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

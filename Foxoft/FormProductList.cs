@@ -488,7 +488,7 @@ namespace Foxoft
 
             if (view.GetRowCellValue(e.RowHandle, colBalance) is not null)
             {
-                int balance = (int)view.GetRowCellValue(e.RowHandle, colBalance);
+                decimal balance = Convert.ToDecimal(view.GetRowCellValue(e.RowHandle, colBalance));
 
                 if (balance == 0)
                     e.Appearance.ForeColor = Color.Gray;

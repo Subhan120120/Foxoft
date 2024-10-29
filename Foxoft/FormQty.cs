@@ -8,8 +8,8 @@ namespace Foxoft
 {
     public partial class FormQty : XtraForm
     {
-        public int maxQty { get; set; }
-        public int qty { get; set; }
+        public decimal maxQty { get; set; }
+        public decimal qty { get; set; }
 
         public FormQty()
         {
@@ -18,7 +18,7 @@ namespace Foxoft
             CancelButton = btn_Cancel;
         }
 
-        public FormQty(int maxQty)
+        public FormQty(decimal maxQty)
             : this()
         {
             this.maxQty = maxQty;

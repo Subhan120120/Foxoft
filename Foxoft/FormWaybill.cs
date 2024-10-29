@@ -83,7 +83,7 @@ namespace Foxoft
         private void repobtn_DeliveryLine_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
-            int maxDelivery = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
+            decimal maxDelivery = (decimal)(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
 
             if (maxDelivery > 0)
             {
