@@ -143,6 +143,7 @@ namespace Foxoft
                             else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
                                 returnInvoiceLine.QtyOut = formQty.qty * (-1);
 
+                            returnInvoiceLine.UnitOfMeasureId = invoiceLine.UnitOfMeasureId;
                             returnInvoiceLine.Price = invoiceLine.Price;
                             returnInvoiceLine.PriceLoc = invoiceLine.PriceLoc;
                             returnInvoiceLine.CurrencyCode = invoiceLine.CurrencyCode;

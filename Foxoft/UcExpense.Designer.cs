@@ -29,479 +29,447 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            this.gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
-            this.trInvoiceLinesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colInvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colRelatedLineId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.repoBtnEdit_ProductCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            this.colQty = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDiscountCampaign = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colVatRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colReturnQty = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colRemainingQty = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colTrInvoiceHeader = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDcProduct = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btn_Save = new DevExpress.XtraEditors.SimpleButton();
-            this.btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
-            this.trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dateEdit_DocDate = new DevExpress.XtraEditors.DateEdit();
-            this.dateEdit_DocTime = new DevExpress.XtraEditors.TimeSpanEdit();
-            this.memoEdit_InvoiceDesc = new DevExpress.XtraEditors.MemoEdit();
-            this.btnEdit_CurrAccCode = new DevExpress.XtraEditors.ButtonEdit();
-            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
-            this.ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
-            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
-            this.dataLayoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DocDate.Properties.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DocDate.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DocTime.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_InvoiceDesc.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_CurrAccCode.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentDate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentTime)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
+            trInvoiceLinesBindingSource = new BindingSource(components);
+            gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
+            colInvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRelatedLineId = new DevExpress.XtraGrid.Columns.GridColumn();
+            colProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoBtnEdit_ProductCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            colQty = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+            colPosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
+            colDiscountCampaign = new DevExpress.XtraGrid.Columns.GridColumn();
+            colNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
+            colVatRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
+            colSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colReturnQty = new DevExpress.XtraGrid.Columns.GridColumn();
+            colRemainingQty = new DevExpress.XtraGrid.Columns.GridColumn();
+            colTrInvoiceHeader = new DevExpress.XtraGrid.Columns.GridColumn();
+            colDcProduct = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
+            colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            btn_Save = new DevExpress.XtraEditors.SimpleButton();
+            btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
+            trInvoiceHeadersBindingSource = new BindingSource(components);
+            dateEdit_DocDate = new DevExpress.XtraEditors.DateEdit();
+            dateEdit_DocTime = new DevExpress.XtraEditors.TimeSpanEdit();
+            memoEdit_InvoiceDesc = new DevExpress.XtraEditors.MemoEdit();
+            btnEdit_CurrAccCode = new DevExpress.XtraEditors.ButtonEdit();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
+            colUnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
+            dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dateEdit_DocDate.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dateEdit_DocDate.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dateEdit_DocTime.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)memoEdit_InvoiceDesc.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).BeginInit();
+            SuspendLayout();
             // 
             // dataLayoutControl1
             // 
-            this.dataLayoutControl1.AutoRetrieveFields = true;
-            this.dataLayoutControl1.Controls.Add(this.gC_InvoiceLine);
-            this.dataLayoutControl1.Controls.Add(this.btn_Save);
-            this.dataLayoutControl1.Controls.Add(this.btnEdit_DocNum);
-            this.dataLayoutControl1.Controls.Add(this.dateEdit_DocDate);
-            this.dataLayoutControl1.Controls.Add(this.dateEdit_DocTime);
-            this.dataLayoutControl1.Controls.Add(this.memoEdit_InvoiceDesc);
-            this.dataLayoutControl1.Controls.Add(this.btnEdit_CurrAccCode);
-            this.dataLayoutControl1.DataSource = this.trInvoiceHeadersBindingSource;
-            this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
-            this.dataLayoutControl1.Name = "dataLayoutControl1";
-            this.dataLayoutControl1.Root = this.Root;
-            this.dataLayoutControl1.Size = new System.Drawing.Size(1018, 561);
-            this.dataLayoutControl1.TabIndex = 0;
-            this.dataLayoutControl1.Text = "dataLayoutControl1";
+            dataLayoutControl1.AutoRetrieveFields = true;
+            dataLayoutControl1.Controls.Add(gC_InvoiceLine);
+            dataLayoutControl1.Controls.Add(btn_Save);
+            dataLayoutControl1.Controls.Add(btnEdit_DocNum);
+            dataLayoutControl1.Controls.Add(dateEdit_DocDate);
+            dataLayoutControl1.Controls.Add(dateEdit_DocTime);
+            dataLayoutControl1.Controls.Add(memoEdit_InvoiceDesc);
+            dataLayoutControl1.Controls.Add(btnEdit_CurrAccCode);
+            dataLayoutControl1.DataSource = trInvoiceHeadersBindingSource;
+            dataLayoutControl1.Dock = DockStyle.Fill;
+            dataLayoutControl1.Location = new Point(0, 0);
+            dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.Root = Root;
+            dataLayoutControl1.Size = new Size(1018, 561);
+            dataLayoutControl1.TabIndex = 0;
+            dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // gC_InvoiceLine
             // 
-            this.gC_InvoiceLine.DataSource = this.trInvoiceLinesBindingSource;
-            this.gC_InvoiceLine.Location = new System.Drawing.Point(12, 84);
-            this.gC_InvoiceLine.MainView = this.gV_InvoiceLine;
-            this.gC_InvoiceLine.Name = "gC_InvoiceLine";
-            this.gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repoBtnEdit_ProductCode});
-            this.gC_InvoiceLine.Size = new System.Drawing.Size(994, 372);
-            this.gC_InvoiceLine.TabIndex = 11;
-            this.gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gV_InvoiceLine});
+            gC_InvoiceLine.DataSource = trInvoiceLinesBindingSource;
+            gC_InvoiceLine.Location = new Point(12, 90);
+            gC_InvoiceLine.MainView = gV_InvoiceLine;
+            gC_InvoiceLine.Name = "gC_InvoiceLine";
+            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode });
+            gC_InvoiceLine.Size = new Size(994, 366);
+            gC_InvoiceLine.TabIndex = 11;
+            gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
             // 
             // trInvoiceLinesBindingSource
             // 
-            this.trInvoiceLinesBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceLine);
+            trInvoiceLinesBindingSource.DataSource = typeof(Models.TrInvoiceLine);
             // 
             // gV_InvoiceLine
             // 
-            this.gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colInvoiceLineId,
-            this.colInvoiceHeaderId,
-            this.colRelatedLineId,
-            this.colProductCode,
-            this.colQty,
-            this.colPrice,
-            this.colAmount,
-            this.colPosDiscount,
-            this.colDiscountCampaign,
-            this.colNetAmount,
-            this.colVatRate,
-            this.colLineDescription,
-            this.colSalesPersonCode,
-            this.colCurrencyCode,
-            this.colExchangeRate,
-            this.colReturnQty,
-            this.colRemainingQty,
-            this.colTrInvoiceHeader,
-            this.colDcProduct,
-            this.colCreatedUserName,
-            this.colCreatedDate,
-            this.colLastUpdatedUserName,
-            this.colLastUpdatedDate});
-            this.gV_InvoiceLine.CustomizationFormBounds = new System.Drawing.Rectangle(1167, 397, 264, 272);
-            this.gV_InvoiceLine.GridControl = this.gC_InvoiceLine;
-            this.gV_InvoiceLine.Name = "gV_InvoiceLine";
-            this.gV_InvoiceLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-            this.gV_InvoiceLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-            this.gV_InvoiceLine.InitNewRow += new DevExpress.XtraGrid.Views.Grid.InitNewRowEventHandler(this.gV_InvoiceLine_InitNewRow);
-            this.gV_InvoiceLine.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gV_InvoiceLine_CellValueChanging);
-            this.gV_InvoiceLine.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gV_InvoiceLine_KeyDown);
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colPrice, colAmount, colPosDiscount, colDiscountCampaign, colNetAmount, colVatRate, colLineDescription, colSalesPersonCode, colCurrencyCode, colExchangeRate, colReturnQty, colRemainingQty, colTrInvoiceHeader, colDcProduct, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colUnitOfMeasureId });
+            gV_InvoiceLine.CustomizationFormBounds = new Rectangle(1167, 397, 264, 272);
+            gV_InvoiceLine.GridControl = gC_InvoiceLine;
+            gV_InvoiceLine.Name = "gV_InvoiceLine";
+            gV_InvoiceLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            gV_InvoiceLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            gV_InvoiceLine.InitNewRow += gV_InvoiceLine_InitNewRow;
+            gV_InvoiceLine.CellValueChanging += gV_InvoiceLine_CellValueChanging;
+            gV_InvoiceLine.KeyDown += gV_InvoiceLine_KeyDown;
             // 
             // colInvoiceLineId
             // 
-            this.colInvoiceLineId.FieldName = "InvoiceLineId";
-            this.colInvoiceLineId.Name = "colInvoiceLineId";
+            colInvoiceLineId.FieldName = "InvoiceLineId";
+            colInvoiceLineId.Name = "colInvoiceLineId";
             // 
             // colInvoiceHeaderId
             // 
-            this.colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
-            this.colInvoiceHeaderId.Name = "colInvoiceHeaderId";
+            colInvoiceHeaderId.FieldName = "InvoiceHeaderId";
+            colInvoiceHeaderId.Name = "colInvoiceHeaderId";
             // 
             // colRelatedLineId
             // 
-            this.colRelatedLineId.FieldName = "RelatedLineId";
-            this.colRelatedLineId.Name = "colRelatedLineId";
+            colRelatedLineId.FieldName = "RelatedLineId";
+            colRelatedLineId.Name = "colRelatedLineId";
             // 
             // colProductCode
             // 
-            this.colProductCode.ColumnEdit = this.repoBtnEdit_ProductCode;
-            this.colProductCode.FieldName = "ProductCode";
-            this.colProductCode.Name = "colProductCode";
-            this.colProductCode.Visible = true;
-            this.colProductCode.VisibleIndex = 0;
+            colProductCode.ColumnEdit = repoBtnEdit_ProductCode;
+            colProductCode.FieldName = "ProductCode";
+            colProductCode.Name = "colProductCode";
+            colProductCode.Visible = true;
+            colProductCode.VisibleIndex = 0;
             // 
             // repoBtnEdit_ProductCode
             // 
-            this.repoBtnEdit_ProductCode.AutoHeight = false;
-            this.repoBtnEdit_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
-            this.repoBtnEdit_ProductCode.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repoBtnEdit_ProductCode_ButtonPressed);
+            repoBtnEdit_ProductCode.AutoHeight = false;
+            repoBtnEdit_ProductCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_ProductCode.Name = "repoBtnEdit_ProductCode";
+            repoBtnEdit_ProductCode.ButtonPressed += repoBtnEdit_ProductCode_ButtonPressed;
             // 
             // colQty
             // 
-            this.colQty.FieldName = "Qty";
-            this.colQty.Name = "colQty";
-            this.colQty.Visible = true;
-            this.colQty.VisibleIndex = 1;
+            colQty.FieldName = "Qty";
+            colQty.Name = "colQty";
+            colQty.Visible = true;
+            colQty.VisibleIndex = 1;
             // 
             // colPrice
             // 
-            this.colPrice.FieldName = "Price";
-            this.colPrice.Name = "colPrice";
-            this.colPrice.Visible = true;
-            this.colPrice.VisibleIndex = 2;
+            colPrice.FieldName = "Price";
+            colPrice.Name = "colPrice";
+            colPrice.Visible = true;
+            colPrice.VisibleIndex = 2;
             // 
             // colAmount
             // 
-            this.colAmount.FieldName = "Amount";
-            this.colAmount.Name = "colAmount";
-            this.colAmount.Visible = true;
-            this.colAmount.VisibleIndex = 3;
+            colAmount.FieldName = "Amount";
+            colAmount.Name = "colAmount";
+            colAmount.Visible = true;
+            colAmount.VisibleIndex = 3;
             // 
             // colPosDiscount
             // 
-            this.colPosDiscount.FieldName = "PosDiscount";
-            this.colPosDiscount.Name = "colPosDiscount";
+            colPosDiscount.FieldName = "PosDiscount";
+            colPosDiscount.Name = "colPosDiscount";
             // 
             // colDiscountCampaign
             // 
-            this.colDiscountCampaign.FieldName = "DiscountCampaign";
-            this.colDiscountCampaign.Name = "colDiscountCampaign";
+            colDiscountCampaign.FieldName = "DiscountCampaign";
+            colDiscountCampaign.Name = "colDiscountCampaign";
             // 
             // colNetAmount
             // 
-            this.colNetAmount.FieldName = "NetAmount";
-            this.colNetAmount.Name = "colNetAmount";
+            colNetAmount.FieldName = "NetAmount";
+            colNetAmount.Name = "colNetAmount";
             // 
             // colVatRate
             // 
-            this.colVatRate.FieldName = "VatRate";
-            this.colVatRate.Name = "colVatRate";
+            colVatRate.FieldName = "VatRate";
+            colVatRate.Name = "colVatRate";
             // 
             // colLineDescription
             // 
-            this.colLineDescription.FieldName = "LineDescription";
-            this.colLineDescription.Name = "colLineDescription";
-            this.colLineDescription.Visible = true;
-            this.colLineDescription.VisibleIndex = 4;
+            colLineDescription.FieldName = "LineDescription";
+            colLineDescription.Name = "colLineDescription";
+            colLineDescription.Visible = true;
+            colLineDescription.VisibleIndex = 4;
             // 
             // colSalesPersonCode
             // 
-            this.colSalesPersonCode.FieldName = "SalesPersonCode";
-            this.colSalesPersonCode.Name = "colSalesPersonCode";
+            colSalesPersonCode.FieldName = "SalesPersonCode";
+            colSalesPersonCode.Name = "colSalesPersonCode";
             // 
             // colCurrencyCode
             // 
-            this.colCurrencyCode.FieldName = "CurrencyCode";
-            this.colCurrencyCode.Name = "colCurrencyCode";
+            colCurrencyCode.FieldName = "CurrencyCode";
+            colCurrencyCode.Name = "colCurrencyCode";
             // 
             // colExchangeRate
             // 
-            this.colExchangeRate.FieldName = "ExchangeRate";
-            this.colExchangeRate.Name = "colExchangeRate";
+            colExchangeRate.FieldName = "ExchangeRate";
+            colExchangeRate.Name = "colExchangeRate";
             // 
             // colReturnQty
             // 
-            this.colReturnQty.FieldName = "ReturnQty";
-            this.colReturnQty.Name = "colReturnQty";
+            colReturnQty.FieldName = "ReturnQty";
+            colReturnQty.Name = "colReturnQty";
             // 
             // colRemainingQty
             // 
-            this.colRemainingQty.FieldName = "RemainingQty";
-            this.colRemainingQty.Name = "colRemainingQty";
+            colRemainingQty.FieldName = "RemainingQty";
+            colRemainingQty.Name = "colRemainingQty";
             // 
             // colTrInvoiceHeader
             // 
-            this.colTrInvoiceHeader.FieldName = "TrInvoiceHeader";
-            this.colTrInvoiceHeader.Name = "colTrInvoiceHeader";
+            colTrInvoiceHeader.FieldName = "TrInvoiceHeader";
+            colTrInvoiceHeader.Name = "colTrInvoiceHeader";
             // 
             // colDcProduct
             // 
-            this.colDcProduct.FieldName = "DcProduct";
-            this.colDcProduct.Name = "colDcProduct";
+            colDcProduct.FieldName = "DcProduct";
+            colDcProduct.Name = "colDcProduct";
             // 
             // colCreatedUserName
             // 
-            this.colCreatedUserName.FieldName = "CreatedUserName";
-            this.colCreatedUserName.Name = "colCreatedUserName";
+            colCreatedUserName.FieldName = "CreatedUserName";
+            colCreatedUserName.Name = "colCreatedUserName";
             // 
             // colCreatedDate
             // 
-            this.colCreatedDate.FieldName = "CreatedDate";
-            this.colCreatedDate.Name = "colCreatedDate";
+            colCreatedDate.FieldName = "CreatedDate";
+            colCreatedDate.Name = "colCreatedDate";
             // 
             // colLastUpdatedUserName
             // 
-            this.colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
-            this.colLastUpdatedUserName.Name = "colLastUpdatedUserName";
+            colLastUpdatedUserName.FieldName = "LastUpdatedUserName";
+            colLastUpdatedUserName.Name = "colLastUpdatedUserName";
             // 
             // colLastUpdatedDate
             // 
-            this.colLastUpdatedDate.FieldName = "LastUpdatedDate";
-            this.colLastUpdatedDate.Name = "colLastUpdatedDate";
+            colLastUpdatedDate.FieldName = "LastUpdatedDate";
+            colLastUpdatedDate.Name = "colLastUpdatedDate";
             // 
             // btn_Save
             // 
-            this.btn_Save.Location = new System.Drawing.Point(12, 460);
-            this.btn_Save.Name = "btn_Save";
-            this.btn_Save.Size = new System.Drawing.Size(994, 89);
-            this.btn_Save.StyleController = this.dataLayoutControl1;
-            this.btn_Save.TabIndex = 10;
-            this.btn_Save.Text = "simpleButton1";
-            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
+            btn_Save.Location = new Point(12, 460);
+            btn_Save.Name = "btn_Save";
+            btn_Save.Size = new Size(994, 89);
+            btn_Save.StyleController = dataLayoutControl1;
+            btn_Save.TabIndex = 10;
+            btn_Save.Text = "simpleButton1";
+            btn_Save.Click += btn_Save_Click;
             // 
             // btnEdit_DocNum
             // 
-            this.btnEdit_DocNum.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "DocumentNumber", true));
-            this.btnEdit_DocNum.Location = new System.Drawing.Point(112, 12);
-            this.btnEdit_DocNum.Name = "btnEdit_DocNum";
-            this.btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnEdit_DocNum.Size = new System.Drawing.Size(395, 20);
-            this.btnEdit_DocNum.StyleController = this.dataLayoutControl1;
-            this.btnEdit_DocNum.TabIndex = 4;
-            this.btnEdit_DocNum.ButtonPressed += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_DocNum_ButtonPressed);
+            btnEdit_DocNum.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentNumber", true));
+            btnEdit_DocNum.Location = new Point(112, 12);
+            btnEdit_DocNum.Name = "btnEdit_DocNum";
+            btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_DocNum.Size = new Size(395, 22);
+            btnEdit_DocNum.StyleController = dataLayoutControl1;
+            btnEdit_DocNum.TabIndex = 4;
+            btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
             // 
             // trInvoiceHeadersBindingSource
             // 
-            this.trInvoiceHeadersBindingSource.DataSource = typeof(Foxoft.Models.TrInvoiceHeader);
+            trInvoiceHeadersBindingSource.DataSource = typeof(Models.TrInvoiceHeader);
             // 
             // dateEdit_DocDate
             // 
-            this.dateEdit_DocDate.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "DocumentDate", true));
-            this.dateEdit_DocDate.EditValue = null;
-            this.dateEdit_DocDate.Location = new System.Drawing.Point(611, 36);
-            this.dateEdit_DocDate.Name = "dateEdit_DocDate";
-            this.dateEdit_DocDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit_DocDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit_DocDate.Size = new System.Drawing.Size(395, 20);
-            this.dateEdit_DocDate.StyleController = this.dataLayoutControl1;
-            this.dateEdit_DocDate.TabIndex = 12;
+            dateEdit_DocDate.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentDate", true));
+            dateEdit_DocDate.EditValue = null;
+            dateEdit_DocDate.Location = new Point(611, 38);
+            dateEdit_DocDate.Name = "dateEdit_DocDate";
+            dateEdit_DocDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dateEdit_DocDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dateEdit_DocDate.Size = new Size(395, 22);
+            dateEdit_DocDate.StyleController = dataLayoutControl1;
+            dateEdit_DocDate.TabIndex = 12;
             // 
             // dateEdit_DocTime
             // 
-            this.dateEdit_DocTime.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "DocumentTime", true));
-            this.dateEdit_DocTime.EditValue = System.TimeSpan.Parse("00:00:00");
-            this.dateEdit_DocTime.Location = new System.Drawing.Point(611, 60);
-            this.dateEdit_DocTime.Name = "dateEdit_DocTime";
-            this.dateEdit_DocTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.dateEdit_DocTime.Size = new System.Drawing.Size(395, 20);
-            this.dateEdit_DocTime.StyleController = this.dataLayoutControl1;
-            this.dateEdit_DocTime.TabIndex = 13;
+            dateEdit_DocTime.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentTime", true));
+            dateEdit_DocTime.EditValue = TimeSpan.Parse("00:00:00");
+            dateEdit_DocTime.Location = new Point(611, 64);
+            dateEdit_DocTime.Name = "dateEdit_DocTime";
+            dateEdit_DocTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            dateEdit_DocTime.Size = new Size(395, 22);
+            dateEdit_DocTime.StyleController = dataLayoutControl1;
+            dateEdit_DocTime.TabIndex = 13;
             // 
             // memoEdit_InvoiceDesc
             // 
-            this.memoEdit_InvoiceDesc.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "Description", true));
-            this.memoEdit_InvoiceDesc.Location = new System.Drawing.Point(112, 36);
-            this.memoEdit_InvoiceDesc.Name = "memoEdit_InvoiceDesc";
-            this.memoEdit_InvoiceDesc.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            this.memoEdit_InvoiceDesc.Properties.LinesCount = 2;
-            this.memoEdit_InvoiceDesc.Size = new System.Drawing.Size(395, 44);
-            this.memoEdit_InvoiceDesc.StyleController = this.dataLayoutControl1;
-            this.memoEdit_InvoiceDesc.TabIndex = 7;
+            memoEdit_InvoiceDesc.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
+            memoEdit_InvoiceDesc.Location = new Point(112, 38);
+            memoEdit_InvoiceDesc.Name = "memoEdit_InvoiceDesc";
+            memoEdit_InvoiceDesc.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            memoEdit_InvoiceDesc.Properties.LinesCount = 2;
+            memoEdit_InvoiceDesc.Size = new Size(395, 48);
+            memoEdit_InvoiceDesc.StyleController = dataLayoutControl1;
+            memoEdit_InvoiceDesc.TabIndex = 7;
             // 
             // btnEdit_CurrAccCode
             // 
-            this.btnEdit_CurrAccCode.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.trInvoiceHeadersBindingSource, "CurrAccCode", true));
-            this.btnEdit_CurrAccCode.Location = new System.Drawing.Point(611, 12);
-            this.btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
-            this.btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.btnEdit_CurrAccCode.Size = new System.Drawing.Size(395, 20);
-            this.btnEdit_CurrAccCode.StyleController = this.dataLayoutControl1;
-            this.btnEdit_CurrAccCode.TabIndex = 8;
-            this.btnEdit_CurrAccCode.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEdit_CurrAccCode_ButtonClick);
+            btnEdit_CurrAccCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "CurrAccCode", true));
+            btnEdit_CurrAccCode.Location = new Point(611, 12);
+            btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
+            btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_CurrAccCode.Size = new Size(395, 22);
+            btnEdit_CurrAccCode.StyleController = dataLayoutControl1;
+            btnEdit_CurrAccCode.TabIndex = 8;
+            btnEdit_CurrAccCode.ButtonClick += btnEdit_CurrAccCode_ButtonClick;
             // 
             // Root
             // 
-            this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.Root.GroupBordersVisible = false;
-            this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlGroup1});
-            this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1018, 561);
-            this.Root.TextVisible = false;
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Name = "Root";
+            Root.Size = new Size(1018, 561);
+            Root.TextVisible = false;
             // 
             // layoutControlGroup1
             // 
-            this.layoutControlGroup1.AllowDrawBackground = false;
-            this.layoutControlGroup1.GroupBordersVisible = false;
-            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.ItemForDocumentNumber,
-            this.ItemForDescription,
-            this.layoutControlItem2,
-            this.layoutControlItem1,
-            this.ItemForCurrAccCode,
-            this.ItemForDocumentDate,
-            this.ItemForDocumentTime});
-            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroup1.Name = "autoGeneratedGroup0";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(998, 541);
+            layoutControlGroup1.AllowDrawBackground = false;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForDocumentNumber, ItemForDescription, layoutControlItem2, layoutControlItem1, ItemForCurrAccCode, ItemForDocumentDate, ItemForDocumentTime });
+            layoutControlGroup1.Location = new Point(0, 0);
+            layoutControlGroup1.Name = "autoGeneratedGroup0";
+            layoutControlGroup1.Size = new Size(998, 541);
             // 
             // ItemForDocumentNumber
             // 
-            this.ItemForDocumentNumber.Control = this.btnEdit_DocNum;
-            this.ItemForDocumentNumber.Location = new System.Drawing.Point(0, 0);
-            this.ItemForDocumentNumber.Name = "ItemForDocumentNumber";
-            this.ItemForDocumentNumber.Size = new System.Drawing.Size(499, 24);
-            this.ItemForDocumentNumber.Text = "Document Number";
-            this.ItemForDocumentNumber.TextSize = new System.Drawing.Size(88, 13);
+            ItemForDocumentNumber.Control = btnEdit_DocNum;
+            ItemForDocumentNumber.Location = new Point(0, 0);
+            ItemForDocumentNumber.Name = "ItemForDocumentNumber";
+            ItemForDocumentNumber.Size = new Size(499, 26);
+            ItemForDocumentNumber.Text = "Document Number";
+            ItemForDocumentNumber.TextSize = new Size(88, 13);
             // 
             // ItemForDescription
             // 
-            this.ItemForDescription.Control = this.memoEdit_InvoiceDesc;
-            this.ItemForDescription.Location = new System.Drawing.Point(0, 24);
-            this.ItemForDescription.Name = "ItemForDescription";
-            this.ItemForDescription.Size = new System.Drawing.Size(499, 48);
-            this.ItemForDescription.Text = "Description";
-            this.ItemForDescription.TextSize = new System.Drawing.Size(88, 13);
+            ItemForDescription.Control = memoEdit_InvoiceDesc;
+            ItemForDescription.Location = new Point(0, 26);
+            ItemForDescription.Name = "ItemForDescription";
+            ItemForDescription.Size = new Size(499, 52);
+            ItemForDescription.Text = "Description";
+            ItemForDescription.TextSize = new Size(88, 13);
             // 
             // layoutControlItem2
             // 
-            this.layoutControlItem2.Control = this.btn_Save;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 448);
-            this.layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(998, 93);
-            this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem2.TextVisible = false;
+            layoutControlItem2.Control = btn_Save;
+            layoutControlItem2.Location = new Point(0, 448);
+            layoutControlItem2.MinSize = new Size(78, 26);
+            layoutControlItem2.Name = "layoutControlItem2";
+            layoutControlItem2.Size = new Size(998, 93);
+            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem2.TextSize = new Size(0, 0);
+            layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem1
             // 
-            this.layoutControlItem1.Control = this.gC_InvoiceLine;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 72);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(998, 376);
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem1.TextVisible = false;
+            layoutControlItem1.Control = gC_InvoiceLine;
+            layoutControlItem1.Location = new Point(0, 78);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new Size(998, 370);
+            layoutControlItem1.TextSize = new Size(0, 0);
+            layoutControlItem1.TextVisible = false;
             // 
             // ItemForCurrAccCode
             // 
-            this.ItemForCurrAccCode.Control = this.btnEdit_CurrAccCode;
-            this.ItemForCurrAccCode.Location = new System.Drawing.Point(499, 0);
-            this.ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            this.ItemForCurrAccCode.Size = new System.Drawing.Size(499, 24);
-            this.ItemForCurrAccCode.Text = "Curr Acc Code";
-            this.ItemForCurrAccCode.TextSize = new System.Drawing.Size(88, 13);
+            ItemForCurrAccCode.Control = btnEdit_CurrAccCode;
+            ItemForCurrAccCode.Location = new Point(499, 0);
+            ItemForCurrAccCode.Name = "ItemForCurrAccCode";
+            ItemForCurrAccCode.Size = new Size(499, 26);
+            ItemForCurrAccCode.Text = "Curr Acc Code";
+            ItemForCurrAccCode.TextSize = new Size(88, 13);
             // 
             // ItemForDocumentDate
             // 
-            this.ItemForDocumentDate.Control = this.dateEdit_DocDate;
-            this.ItemForDocumentDate.Location = new System.Drawing.Point(499, 24);
-            this.ItemForDocumentDate.Name = "ItemForDocumentDate";
-            this.ItemForDocumentDate.Size = new System.Drawing.Size(499, 24);
-            this.ItemForDocumentDate.Text = "Document Date";
-            this.ItemForDocumentDate.TextSize = new System.Drawing.Size(88, 13);
+            ItemForDocumentDate.Control = dateEdit_DocDate;
+            ItemForDocumentDate.Location = new Point(499, 26);
+            ItemForDocumentDate.Name = "ItemForDocumentDate";
+            ItemForDocumentDate.Size = new Size(499, 26);
+            ItemForDocumentDate.Text = "Document Date";
+            ItemForDocumentDate.TextSize = new Size(88, 13);
             // 
             // ItemForDocumentTime
             // 
-            this.ItemForDocumentTime.Control = this.dateEdit_DocTime;
-            this.ItemForDocumentTime.Location = new System.Drawing.Point(499, 48);
-            this.ItemForDocumentTime.Name = "ItemForDocumentTime";
-            this.ItemForDocumentTime.Size = new System.Drawing.Size(499, 24);
-            this.ItemForDocumentTime.Text = "Document Time";
-            this.ItemForDocumentTime.TextSize = new System.Drawing.Size(88, 13);
+            ItemForDocumentTime.Control = dateEdit_DocTime;
+            ItemForDocumentTime.Location = new Point(499, 52);
+            ItemForDocumentTime.Name = "ItemForDocumentTime";
+            ItemForDocumentTime.Size = new Size(499, 26);
+            ItemForDocumentTime.Text = "Document Time";
+            ItemForDocumentTime.TextSize = new Size(88, 13);
+            // 
+            // colUnitOfMeasureId
+            // 
+            colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
+            colUnitOfMeasureId.MinWidth = 25;
+            colUnitOfMeasureId.Name = "colUnitOfMeasureId";
+            colUnitOfMeasureId.Width = 94;
             // 
             // UcExpense
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.dataLayoutControl1);
-            this.Name = "UcExpense";
-            this.Size = new System.Drawing.Size(1018, 561);
-            this.Load += new System.EventHandler(this.UcExpense_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
-            this.dataLayoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gC_InvoiceLine)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceLinesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gV_InvoiceLine)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repoBtnEdit_ProductCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_DocNum.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trInvoiceHeadersBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DocDate.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DocDate.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DocTime.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memoEdit_InvoiceDesc.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnEdit_CurrAccCode.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentNumber)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDescription)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForCurrAccCode)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentDate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemForDocumentTime)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(dataLayoutControl1);
+            Name = "UcExpense";
+            Size = new Size(1018, 561);
+            Load += UcExpense_Load;
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
+            dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dateEdit_DocDate.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dateEdit_DocDate.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dateEdit_DocTime.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)memoEdit_InvoiceDesc.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentTime).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -550,5 +518,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.MemoEdit memoEdit_InvoiceDesc;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_CurrAccCode;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_ProductCode;
+        private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
     }
 }

@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20241020071625_UnitOfMeasure_deleted3")]
+    partial class UnitOfMeasure_deleted3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1327,9 +1330,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
-                    b.Property<int>("DefaultUnitOfMeasureId")
-                        .HasColumnType("int");
-
                     b.Property<string>("HierarchyCode")
                         .HasColumnType("nvarchar(450)");
 
@@ -1414,8 +1414,6 @@ namespace Foxoft.Migrations
 
                     b.HasKey("ProductCode");
 
-                    b.HasIndex("DefaultUnitOfMeasureId");
-
                     b.HasIndex("HierarchyCode");
 
                     b.HasIndex("ProductTypeCode");
@@ -1427,7 +1425,6 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "test01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -1444,7 +1441,6 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "test02",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -1461,7 +1457,6 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "xerc01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -1478,7 +1473,6 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "xerc02",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -2049,51 +2043,6 @@ namespace Foxoft.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
-                {
-                    b.Property<int>("UnitOfMeasureId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UnitOfMeasureId"));
-
-                    b.Property<decimal>("ConversionRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<byte>("Level")
-                        .HasColumnType("tinyint");
-
-                    b.Property<int>("ParentUnitOfMeasureId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UnitOfMeasureDesc")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.HasKey("UnitOfMeasureId");
-
-                    b.ToTable("DcUnitOfMeasures");
-
-                    b.HasData(
-                        new
-                        {
-                            UnitOfMeasureId = 1,
-                            ConversionRate = 0m,
-                            Level = (byte)1,
-                            ParentUnitOfMeasureId = 0,
-                            UnitOfMeasureDesc = "Ədəd"
-                        },
-                        new
-                        {
-                            UnitOfMeasureId = 2,
-                            ConversionRate = 0m,
-                            Level = (byte)1,
-                            ParentUnitOfMeasureId = 0,
-                            UnitOfMeasureDesc = "Qutu"
-                        });
-                });
-
             modelBuilder.Entity("Foxoft.Models.DcVariable", b =>
                 {
                     b.Property<string>("VariableCode")
@@ -2384,9 +2333,6 @@ namespace Foxoft.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DefaultUnitOfMeasureId")
-                        .HasColumnType("int");
-
                     b.Property<string>("DesignFileFolder")
                         .HasColumnType("nvarchar(max)");
 
@@ -2406,8 +2352,6 @@ namespace Foxoft.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DefaultUnitOfMeasureId");
-
                     b.HasIndex("StoreCode");
 
                     b.ToTable("SettingStores");
@@ -2416,7 +2360,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             Id = 1,
-                            DefaultUnitOfMeasureId = 1,
                             DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
                             ImageFolder = "C:\\Foxoft\\Foxoft Images",
                             SalesmanContinuity = false,
@@ -2982,11 +2925,6 @@ namespace Foxoft.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("UnitOfMeasureId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("1");
-
                     b.Property<float>("VatRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
@@ -3003,8 +2941,6 @@ namespace Foxoft.Migrations
                     b.HasIndex("SalesPersonCode");
 
                     b.HasIndex("SerialNumberCode");
-
-                    b.HasIndex("UnitOfMeasureId");
 
                     b.HasIndex("InvoiceHeaderId", "ProductCode");
 
@@ -4137,12 +4073,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcProduct", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
-                        .WithMany("DcProducts")
-                        .HasForeignKey("DefaultUnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
                         .WithMany("DcProducts")
                         .HasForeignKey("HierarchyCode")
@@ -4157,8 +4087,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcHierarchy");
 
                     b.Navigation("DcProductType");
-
-                    b.Navigation("DcUnitOfMeasure");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
@@ -4234,12 +4162,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.SettingStore", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
-                        .WithMany("SettingStores")
-                        .HasForeignKey("DefaultUnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
                         .WithMany("SettingStores")
                         .HasForeignKey("StoreCode")
@@ -4247,8 +4169,6 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.Navigation("DcStore");
-
-                    b.Navigation("DcUnitOfMeasure");
                 });
 
             modelBuilder.Entity("Foxoft.Models.SiteProduct", b =>
@@ -4398,12 +4318,6 @@ namespace Foxoft.Migrations
                         .HasForeignKey("SerialNumberCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
-                        .WithMany("TrInvoiceLines")
-                        .HasForeignKey("UnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("DcCurrency");
@@ -4411,8 +4325,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
 
                     b.Navigation("DcSerialNumber");
-
-                    b.Navigation("DcUnitOfMeasure");
 
                     b.Navigation("RelatedLine");
 
@@ -4917,15 +4829,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcSerialNumber", b =>
                 {
-                    b.Navigation("TrInvoiceLines");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
-                {
-                    b.Navigation("DcProducts");
-
-                    b.Navigation("SettingStores");
-
                     b.Navigation("TrInvoiceLines");
                 });
 

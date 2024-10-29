@@ -80,6 +80,85 @@ namespace Foxoft.Models
         public DbSet<ProductBalance> ProductBalances { get; set; } // view
         public virtual DbSet<SlugifyResult> Slugify { get; set; } // function
 
+        public int SaveChanges(string currAccCode)
+        {
+            var modifiedEntries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified)
+                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine);
+
+            foreach (var entry in modifiedEntries)
+            {
+                if (entry.Entity is TrInvoiceHeader header)
+                {
+                    header.LastUpdatedUserName = currAccCode;
+                    header.LastUpdatedDate = DateTime.Now;
+                }
+                else if (entry.Entity is TrInvoiceLine line)
+                {
+                    line.LastUpdatedUserName = currAccCode;
+                    line.LastUpdatedDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
+        public int SaveChanges(bool acceptAllChangesOnSuccess, string currAccCode)
+        {
+            var modifiedEntries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified)
+                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine);
+
+            foreach (var entry in modifiedEntries)
+            {
+                if (entry.Entity is TrInvoiceHeader header)
+                {
+                    header.LastUpdatedUserName = currAccCode;
+                    header.LastUpdatedDate = DateTime.Now;
+                }
+                else if (entry.Entity is TrInvoiceLine line)
+                {
+                    line.LastUpdatedUserName = currAccCode;
+                    line.LastUpdatedDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override int SaveChanges()
+        {
+            var modifiedEntries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified)
+                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine);
+
+            foreach (var entry in modifiedEntries)
+            {
+                if (entry.Entity is TrInvoiceHeader header)
+                    header.LastUpdatedDate = DateTime.Now;
+                else if (entry.Entity is TrInvoiceLine line)
+                    line.LastUpdatedDate = DateTime.Now;
+            }
+
+            return base.SaveChanges();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            var modifiedEntries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified)
+                .Where(e => e.Entity is TrInvoiceHeader || e.Entity is TrInvoiceLine);
+
+            foreach (var entry in modifiedEntries)
+            {
+                if (entry.Entity is TrInvoiceHeader header)
+                    header.LastUpdatedDate = DateTime.Now;
+                else if (entry.Entity is TrInvoiceLine line)
+                    line.LastUpdatedDate = DateTime.Now;
+            }
+
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -95,6 +174,7 @@ namespace Foxoft.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             //for DefaultValue Attribute for Entity propertires.
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
                 foreach (IMutableProperty property in entityType.GetProperties())
@@ -140,6 +220,20 @@ namespace Foxoft.Models
                 e.HasOne(field => field.ToCashReg)
                  .WithMany(fk => fk.ToCashRegTrPaymentHeaders)
                  .HasForeignKey(fk => fk.ToCashRegCode)
+                 .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // more foreign key same table configure
+            modelBuilder.Entity<DcPaymentMethod>(e =>
+            {
+                e.HasOne(field => field.DcCurrAcc)
+                 .WithMany(fk => fk.CurrAccDcPaymentMethods)
+                 .HasForeignKey(fk => fk.DefaultCurrAccCode)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasOne(field => field.DcCashReg)
+                 .WithMany(fk => fk.CashRegDcPaymentMethods)
+                 .HasForeignKey(fk => fk.DefaultCashRegCode)
                  .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -198,6 +292,20 @@ namespace Foxoft.Models
                 entity.Property(e => e.InvoiceLineId)
                       .ValueGeneratedNever();
             });
+
+            modelBuilder.Entity<TrProductFeature>(entity =>
+            {
+                entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta vermesin deye
+            });
+
+            modelBuilder.Entity<DcPriceType>(entity =>
+            {
+                entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta vermesin deye
+            });
+
+            //modelBuilder.Entity<TrProductFeature>()
+            //            .Property(bc => bc.ProductCode)
+            //            .ValueGeneratedNever();
 
             //modelBuilder.Entity<TrInvoiceLine>()
             //.Property(a => a.ProductCost)
@@ -389,7 +497,7 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<SettingStore>().HasData(
-               new SettingStore { Id = 1, StoreCode = "mgz01", DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
+               new SettingStore { Id = 1, StoreCode = "mgz01", DefaultUnitOfMeasureId = 1, DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
                 );
 
             modelBuilder.Entity<DcCurrency>().HasData(
@@ -533,15 +641,15 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcProduct>().HasData(
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", ProductDesc = "Test Məhsul 01", RetailPrice = 4.5m, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", ProductDesc = "Test Məhsul 01", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", ProductDesc = "Yol Xərci", CreatedDate = new DateTime(1901, 01, 01) },
-                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", ProductDesc = "İşıq Pulu", CreatedDate = new DateTime(1901, 01, 01) }
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test01", DefaultUnitOfMeasureId = 1, ProductDesc = "Test Məhsul 01", RetailPrice = 4.5m, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 1, ProductCode = "test02", DefaultUnitOfMeasureId = 1, ProductDesc = "Test Məhsul 01", RetailPrice = 2.5m, CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc01", DefaultUnitOfMeasureId = 1, ProductDesc = "Yol Xərci", CreatedDate = new DateTime(1901, 01, 01) },
+                new DcProduct { ProductTypeCode = 2, ProductCode = "xerc02", DefaultUnitOfMeasureId = 1, ProductDesc = "İşıq Pulu", CreatedDate = new DateTime(1901, 01, 01) }
             );
 
             modelBuilder.Entity<DcUnitOfMeasure>().HasData(
-                new DcUnitOfMeasure { UnitOfMeasureCode = "Ədəd", Level = 1 },
-                new DcUnitOfMeasure { UnitOfMeasureCode = "Qutu", Level = 1 }
+                new DcUnitOfMeasure { UnitOfMeasureId = 1, UnitOfMeasureDesc = "Ədəd", Level = 1 },
+                new DcUnitOfMeasure { UnitOfMeasureId = 2, UnitOfMeasureDesc = "Qutu", Level = 1 }
             );
 
             modelBuilder.Entity<DcBarcodeType>().HasData(

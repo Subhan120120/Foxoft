@@ -287,7 +287,7 @@ namespace Foxoft
 
         private void BBI_Edit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (Value_Id is not null)
+            if (!String.IsNullOrEmpty(Value_Id?.ToString()))
             {
                 FormCommon<T> formProduct = new(ProcessCode, false, Col_Id.FieldName, Value_Id, Col_2.FieldName, Value_2);
 

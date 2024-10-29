@@ -20,6 +20,12 @@ namespace Foxoft.Models
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string BarcodeTypeDesc { get; set; }
 
+        [Display(Name = "Default Barkod Tipi")]
+        public bool? DefaultBarcodeType{ get; set; }
+
+
+
+
         public virtual ICollection<TrProductBarcode> TrProductBarcodes { get; set; }
     }
 }

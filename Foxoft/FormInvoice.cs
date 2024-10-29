@@ -93,6 +93,7 @@ namespace Foxoft
                 RPG_Payment.Visible = false;
 
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
+            repoLUE_UnitOfMeasure.DataSource = efMethods.SelectUnitOfMeasures();
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
                 repoCBE_PrinterName.Items.Add(printer);
@@ -111,8 +112,8 @@ namespace Foxoft
                 {
                     LayoutControlItem controlItem = item as LayoutControlItem;
                     if (controlItem != null)
-                        if (controlItem.Control is BaseEdit)
-                            (controlItem.Control as BaseEdit).Leave += item_Leave;
+                        if (controlItem.Control is BaseEdit baseEdit)
+                            baseEdit.Leave += item_Leave;
                 }
             }
         }
@@ -186,7 +187,6 @@ namespace Foxoft
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-            //lbl_InvoicePaidSum.Text = "Ödənilib: 0.00 " + Settings.Default.AppSetting.LocalCurrencyCode;
             CalcPaidAmount();
 
             lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
@@ -195,7 +195,7 @@ namespace Foxoft
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
-                              .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+                                    .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
@@ -235,8 +235,10 @@ namespace Foxoft
             gV_InvoiceLine.Focus();
         }
 
-        private void item_EditValueChanged(object sender, EventArgs e)
+        private void item_EditValueChanging(object sender, ChangingEventArgs e)
         {
+            if (e.OldValue != e.NewValue)
+                MessageBox.Show("EditValueChanging");
             //SaveInvoiceHeader();
         }
 
@@ -332,7 +334,7 @@ namespace Foxoft
 
         private void CalcPaidAmount()
         {
-            decimal paidSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+            decimal paidSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
             lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
 
@@ -473,25 +475,20 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
-            GridView gV = (GridView)sender;
+            //GridView gV = (GridView)sender;
 
-            if (gV is not null)
-            {
-                if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
-                {
-                    if (gV.ActiveEditor is not null && !Equals(e.Value, gV.ActiveEditor.OldEditValue))
-                    {
-                        string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
+            //if (gV is not null)
+            //{
+            //    if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
+            //    {
+            //        if (gV.ActiveEditor is not null && !Equals(e.Value, gV.ActiveEditor.OldEditValue))
+            //        {
+            //            string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
 
-                        gV.SetRowCellValue(e.RowHandle, colLastUpdatedDate, DateTime.Now);
-                        gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
-                    }
-                }
-            }
-
-            if (e.Column == col_SalesPersonCode)
-            {
-            }
+            //            gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
+            //        }
+            //    }
+            //}
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -774,6 +771,7 @@ namespace Foxoft
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
                     gV_InvoiceLine.SetFocusedRowCellValue(colProductCost, form.dcProduct.ProductCost);
+                    gV_InvoiceLine.SetFocusedRowCellValue(colUnitOfMeasureId, form.dcProduct.DefaultUnitOfMeasureId);
 
                     gV_InvoiceLine.CloseEditor();
                     gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
@@ -827,7 +825,7 @@ namespace Foxoft
         {
             //try
             //{
-            dbContext.SaveChanges(false);
+            dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
             IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
 
@@ -860,7 +858,7 @@ namespace Foxoft
                         case EntityState.Deleted: context2.TrInvoiceHeaders.Remove(copyTrIH); break;
                         default: break;
                     }
-                    context2.SaveChanges();
+                    context2.SaveChanges(Authorization.CurrAccCode);
                 }
 
                 EntityEntry? entryLine = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceLine);
@@ -887,7 +885,7 @@ namespace Foxoft
                         case EntityState.Deleted: context2.TrInvoiceLines.Remove(newTrIL); break;
                         default: break;
                     }
-                    context2.SaveChanges();
+                    context2.SaveChanges(Authorization.CurrAccCode);
                 }
             }
 
@@ -2048,15 +2046,13 @@ namespace Foxoft
         private void Btn_info_ItemClick(object sender, ItemClickEventArgs e)
         {
             DcCurrAcc createdCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CreatedUserName);
-            DcCurrAcc updatedCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.LastUpdatedUserName);
-
-            string lastUpdatedDate = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault()?.LastUpdatedDate.ToString();
-            string lastUpdatedUserName = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId).OrderByDescending(x => x.LastUpdatedDate).FirstOrDefault()?.LastUpdatedUserName.ToString();
+            DcCurrAcc updatedCurrAcc = efMethods.SelectCurrAcc(efMethods.SelectInvoiceLastUpdatedUserName(trInvoiceHeader.InvoiceHeaderId));
+            DateTime lastUpdatedDate = efMethods.SelectInvoiceLastModifiedDate();
 
             string createdUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedUserName) + ": " + createdCurrAcc.CurrAccDesc + " " + createdCurrAcc.FirstName;
             string createdDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.CreatedDate) + ": " + trInvoiceHeader.CreatedDate.ToString();
-            string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + lastUpdatedUserName;
-            string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate;
+            string updatedUserName = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedUserName) + ": " + updatedCurrAcc?.CurrAccDesc + " " + updatedCurrAcc?.FirstName;
+            string updatedDate = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.LastUpdatedDate) + ": " + lastUpdatedDate.ToString();
 
             XtraMessageBox.Show(createdUserName + "\n\n" + createdDate + "\n\n" + updatedUserName + "\n\n" + updatedDate, "Məlumat", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -2091,7 +2087,6 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            //GridView view = sender as GridView;
             int rowInd = gV_InvoiceLine.GetRowHandle(e.ListSourceRowIndex);
             object obj = gV_InvoiceLine.GetRowCellValue(rowInd, col_ProductCode);
 
@@ -2112,8 +2107,7 @@ namespace Foxoft
 
                     if (e.Column == col_ProductDesc)
                         e.Value = GetProductDescWide(dcProduct);
-
-                    if (e.Column == colBalance)
+                    else if (e.Column == colBalance)
                         e.Value = dcProduct.Balance;
                 }
             }
@@ -2225,6 +2219,39 @@ namespace Foxoft
                 menu.AddItem(BBI);
             }
             e.Cancel = false;
+        }
+
+        private void dataLayoutControl1_Changed(object sender, EventArgs e)
+        {
+            //MessageBox.Show("Changed");
+        }
+
+        private void repoBtnEdit_UnitOfMeasure_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            FormCommonList<DcUnitOfMeasure> formCommon = new("", nameof(DcUnitOfMeasure.UnitOfMeasureId));
+            formCommon.ShowDialog();
+        }
+
+        private void repoLUE_UnitOfMeasure_Popup(object sender, EventArgs e)
+        {
+        }
+
+        private void repoLUE_UnitOfMeasure_PopupFilter(object sender, PopupFilterEventArgs e)
+        {
+            var lookupEdit = sender as LookUpEdit;
+            if (lookupEdit != null)
+            {
+                string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
+
+                DcProduct product = efMethods.SelectProduct(productCode);
+                if (product is not null)
+                {
+                    List<DcUnitOfMeasure> unitOfMeasure = efMethods.SelectUnitOfMeasuresByParentId(product.DefaultUnitOfMeasureId);
+
+                    lookupEdit.Properties.DataSource = unitOfMeasure;
+                }
+
+            }
         }
     }
 }

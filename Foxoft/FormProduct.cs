@@ -27,6 +27,8 @@ namespace Foxoft
         private byte productTypeCode;
         private bool isNew;
 
+        SettingStore settingStore;
+
         public FormProduct(byte productTypeCode, bool isNew)
         {
             InitializeComponent();
@@ -39,6 +41,8 @@ namespace Foxoft
 
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;
+
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
             if (!isNew)
             {
@@ -81,8 +85,6 @@ namespace Foxoft
         {
             FillDataLayout();
             dataLayoutControl1.IsValid(out List<string> errorList);
-
-            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
             if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
                 Directory.CreateDirectory(settingStore?.ImageFolder);
@@ -146,6 +148,7 @@ namespace Foxoft
             dcProduct.ProductCode = NewDocNum;
             dcProduct.ProductTypeCode = productTypeCode;
             dcProduct.CreatedUserName = Authorization.CurrAccCode;
+            dcProduct.DefaultUnitOfMeasureId = settingStore.DefaultUnitOfMeasureId;
 
             dcProductsBindingSource.DataSource = dcProduct;
         }

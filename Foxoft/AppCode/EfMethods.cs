@@ -124,6 +124,15 @@ namespace Foxoft
             return db.DcProductTypes.ToList();
         }
 
+        public DateTime SelectInvoiceLastModifiedDate()
+        {
+            using subContext db = new();
+            return db.TrInvoiceHeaders
+                    .Select(h => h.LastUpdatedDate)
+                    .Concat(db.TrInvoiceLines.Select(l => l.LastUpdatedDate))
+                    .Max();
+        }
+
         public List<DcReportType> SelectReportTypes()
         {
             using subContext db = new();
@@ -146,6 +155,25 @@ namespace Foxoft
         {
             using mainContext db = new();
             return db.DcCompanies.ToList();
+        }
+
+        public string SelectInvoiceLastUpdatedUserName(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            var latestUserNameFromHeader = db.TrInvoiceHeaders
+                .OrderByDescending(h => h.LastUpdatedDate)
+                .Select(h => new { h.LastUpdatedDate, h.LastUpdatedUserName })
+                .FirstOrDefault();
+
+            var latestUserNameFromLine = db.TrInvoiceLines
+                .OrderByDescending(l => l.LastUpdatedDate)
+                .Select(l => new { l.LastUpdatedDate, l.LastUpdatedUserName })
+                .FirstOrDefault();
+
+            return (latestUserNameFromHeader == null ||
+                (latestUserNameFromLine != null && latestUserNameFromLine.LastUpdatedDate > latestUserNameFromHeader.LastUpdatedDate))
+                ? latestUserNameFromLine?.LastUpdatedUserName
+                : latestUserNameFromHeader?.LastUpdatedUserName;
         }
 
         public DcTerminal SelectTerminal(int id)
@@ -297,6 +325,22 @@ namespace Foxoft
             return product;
         }
 
+        public List<DcUnitOfMeasure> SelectUnitOfMeasuresByParentId(int parentMeasureId)
+        {
+            using subContext db = new();
+            var product = db.DcUnitOfMeasures.Where(x => x.UnitOfMeasureId == parentMeasureId || x.ParentUnitOfMeasureId == parentMeasureId)
+                .ToList();
+            return product;
+        }
+
+        public List<DcUnitOfMeasure> SelectUnitOfMeasures()
+        {
+            using subContext db = new();
+            var product = db.DcUnitOfMeasures
+                .ToList();
+            return product;
+        }
+
         public List<DcProduct> SelectProducts()
         {
             using subContext db = new();
@@ -336,6 +380,7 @@ namespace Foxoft
                                     DcHierarchy = x.DcHierarchy,
                                     TrProductDiscounts = x.TrProductDiscounts,
                                     DcSerialNumbers = x.DcSerialNumbers,
+                                    DefaultUnitOfMeasureId = x.DefaultUnitOfMeasureId
                                 })
                                 .OrderBy(x => x.ProductDesc);
             return products;
@@ -1171,6 +1216,16 @@ namespace Foxoft
 
             return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                     .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                    .Sum(s => s.PaymentLoc);
+        }
+
+        public decimal SelectPaymentLinesSumByInvoice(Guid invoiceHeaderId, string currAccCode)
+        {
+            using subContext db = new();
+
+            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
                                     .Sum(s => s.PaymentLoc);
         }
 
@@ -2078,6 +2133,14 @@ namespace Foxoft
             string asdasd = db.Database.GetConnectionString();
 
             return db.AppSettings.Find(1);
+
+        }
+
+        public DcBarcodeType SelectBarcodTypeDefault()
+        {
+            using subContext db = new();
+
+            return db.DcBarcodeTypes.FirstOrDefault(x => x.DefaultBarcodeType == true);
 
         }
 

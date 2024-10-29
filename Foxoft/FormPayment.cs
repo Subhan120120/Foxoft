@@ -15,6 +15,7 @@ namespace Foxoft
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private TrPaymentLine trPaymentLineCash = new();
         private TrPaymentLine trPaymentLineCashless = new();
+        private DcPaymentMethod dcPaymentMethod = new();
         private TrPaymentPlan TrPaymentPlan = new();
         private EfMethods efMethods = new();
 
@@ -53,7 +54,7 @@ namespace Foxoft
             if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
                 invoiceSumLoc *= (-1);
 
-            decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
             decimal mustPaid = Math.Round(invoiceSumLoc - prePaid, 4);
 
             if (mustPaid < 0)
@@ -313,10 +314,15 @@ namespace Foxoft
                         trPaymentLineCashless.Payment = isNegativ ? trPaymentLineCashless.Payment * (-1) : trPaymentLineCashless.Payment;
                         efMethods.InsertPaymentLine(trPaymentLineCashless);
 
-                        trPaymentHeader.PaymentHeaderId = Guid.NewGuid();
-                        efMethods.InsertPaymentHeader(trPaymentHeader);
+                        TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
 
-                        trPaymentLineCashless.PaymentHeaderId = trPaymentHeader.PaymentHeaderId;
+                        trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode;
+                        trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
+                        //trPaymentHeader2.RelatedPaymentId = trPaymentHeader.PaymentHeaderId;
+                        //trPaymentHeader2.InvoiceHeaderId = null;
+                        efMethods.InsertPaymentHeader(trPaymentHeader2);
+
+                        trPaymentLineCashless.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
                         trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
                         trPaymentLineCashless.Payment = trPaymentLineCashless.Payment * (-1);
                         efMethods.InsertPaymentLine(trPaymentLineCashless);
@@ -372,9 +378,11 @@ namespace Foxoft
         private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit editor = sender as LookUpEdit;
-            trPaymentLineCashless.PaymentMethodId = Convert.ToInt32(editor.EditValue);
-            object value = editor.GetColumnValue("DefaultCashRegCode");
-            btnEdit_BankAccout.EditValue = value;
+
+            dcPaymentMethod = efMethods.SelectPaymentMethod(Convert.ToInt32(editor.EditValue));
+
+            trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
+            btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
 
             List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(trPaymentLineCashless.PaymentMethodId);
             if (paymentPlans.Count > 0)

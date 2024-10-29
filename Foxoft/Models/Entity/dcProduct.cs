@@ -12,14 +12,14 @@ using System.Linq;
 
 namespace Foxoft.Models
 {
-    [Microsoft.EntityFrameworkCore.Index(nameof(ProductTypeCode))]
+    [Index(nameof(ProductTypeCode))]
     [Display(Name = "Məhsul")]
     public partial class DcProduct : BaseEntity
     {
         public DcProduct()
         {
             TrInvoiceLines = new HashSet<TrInvoiceLine>();
-            TrStaticPrices= new HashSet<DcProductStaticPrice>();
+            TrStaticPrices = new HashSet<DcProductStaticPrice>();
             TrProductFeatures = new HashSet<TrProductFeature>();
             TrProductDiscounts = new HashSet<TrProductDiscount>();
             TrPriceListLines = new HashSet<TrPriceListLine>();
@@ -100,9 +100,11 @@ namespace Foxoft.Models
         [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? ImagePath { get; set; }
 
-        //[Display(Name = "Sayt Məhsul İd")]
-        //[ForeignKey("SiteProduct")]
-        //public int? SiteProductId { get; set; }
+
+        [ForeignKey("DcUnitOfMeasure")]
+        [Display(Name = "Default Ölçü Vahidi")]
+        public int DefaultUnitOfMeasureId { get; set; }
+
 
 
 
@@ -120,11 +122,11 @@ namespace Foxoft.Models
 
         public virtual DcProductType DcProductType { get; set; }
 
-        //[ForeignKey("SiteProductId")]
         public virtual SiteProduct SiteProduct { get; set; }
+        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
         public virtual DcHierarchy DcHierarchy { get; set; }
         public virtual ProductBalance ProductBalance { get; set; }
-        public virtual ICollection<DcSerialNumber> DcSerialNumbers{ get; set; }
+        public virtual ICollection<DcSerialNumber> DcSerialNumbers { get; set; }
         public virtual ICollection<DcProductStaticPrice> TrStaticPrices { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrProductFeature> TrProductFeatures { get; set; }

@@ -76,6 +76,9 @@ namespace Foxoft
             colProductCost = new DevExpress.XtraGrid.Columns.GridColumn();
             colSerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtnEdit_SerialNumberCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            colUnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLUE_UnitOfMeasure = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            repoBtnEdit_UnitOfMeasure = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
             checkEdit_IsReturn = new DevExpress.XtraEditors.CheckEdit();
@@ -175,6 +178,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SalesPersonCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SerialNumberCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_UnitOfMeasure).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_UnitOfMeasure).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsReturn.Properties).BeginInit();
@@ -255,6 +260,7 @@ namespace Foxoft
             dataLayoutControl1.Size = new Size(1129, 389);
             dataLayoutControl1.TabIndex = 4;
             dataLayoutControl1.Text = "dataLayoutControl1";
+            dataLayoutControl1.Changed += dataLayoutControl1_Changed;
             // 
             // LBL_SalesPersonDesc
             // 
@@ -290,7 +296,7 @@ namespace Foxoft
             gC_InvoiceLine.Location = new Point(12, 132);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
-            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode });
+            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure });
             gC_InvoiceLine.Size = new Size(1105, 221);
             gC_InvoiceLine.TabIndex = 11;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
@@ -301,7 +307,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, colUnitOfMeasureId });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(760, 456, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -591,6 +597,30 @@ namespace Foxoft
             repoBtnEdit_SerialNumberCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             repoBtnEdit_SerialNumberCode.Name = "repoBtnEdit_SerialNumberCode";
             repoBtnEdit_SerialNumberCode.ButtonPressed += repoBtnEdit_SerialNumberCode_ButtonPressed;
+            // 
+            // colUnitOfMeasureId
+            // 
+            colUnitOfMeasureId.ColumnEdit = repoLUE_UnitOfMeasure;
+            colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
+            colUnitOfMeasureId.Name = "colUnitOfMeasureId";
+            // 
+            // repoLUE_UnitOfMeasure
+            // 
+            repoLUE_UnitOfMeasure.AutoHeight = false;
+            repoLUE_UnitOfMeasure.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_UnitOfMeasure.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ConversionRate", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureId", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureDesc", "") });
+            repoLUE_UnitOfMeasure.DisplayMember = "UnitOfMeasureDesc";
+            repoLUE_UnitOfMeasure.Name = "repoLUE_UnitOfMeasure";
+            repoLUE_UnitOfMeasure.NullText = "";
+            repoLUE_UnitOfMeasure.ValueMember = "UnitOfMeasureId";
+            repoLUE_UnitOfMeasure.PopupFilter += repoLUE_UnitOfMeasure_PopupFilter;
+            // 
+            // repoBtnEdit_UnitOfMeasure
+            // 
+            repoBtnEdit_UnitOfMeasure.AutoHeight = false;
+            repoBtnEdit_UnitOfMeasure.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_UnitOfMeasure.Name = "repoBtnEdit_UnitOfMeasure";
+            repoBtnEdit_UnitOfMeasure.ButtonPressed += repoBtnEdit_UnitOfMeasure_ButtonPressed;
             // 
             // checkEdit_IsSent
             // 
@@ -1400,6 +1430,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SalesPersonCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SerialNumberCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_UnitOfMeasure).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_UnitOfMeasure).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsSent.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)checkEdit_IsReturn.Properties).EndInit();
@@ -1585,5 +1617,8 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_Reports;
         private BarSubItem BSI_Reports;
         private PopupMenu popupMenuPrinters;
+        private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_UnitOfMeasure;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_UnitOfMeasure;
     }
 }

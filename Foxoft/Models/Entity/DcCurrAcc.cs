@@ -22,7 +22,7 @@ namespace Foxoft.Models
             ToCashRegTrPaymentHeaders = new HashSet<TrPaymentHeader>();
             DcStoreTrPaymentHeaders = new HashSet<TrPaymentHeader>();
             TrPaymentLines = new HashSet<TrPaymentLine>();
-            DcPaymentMethods = new HashSet<DcPaymentMethod>();
+            //DcPaymentMethods = new HashSet<DcPaymentMethod>();
         }
 
         [Key]
@@ -116,7 +116,7 @@ namespace Foxoft.Models
         public bool IsDisabled { get; set; }
 
         [Display(Name = "Guid Id")]
-        public Guid RowGuid { get; set; }
+        public Guid? RowGuid { get; set; }
 
         [Display(Name = "Bonus Kartı")]
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
@@ -163,6 +163,7 @@ namespace Foxoft.Models
         public virtual ICollection<TrPaymentHeader> ToCashRegTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
         public virtual ICollection<TrCurrAccRole> TrCurrAccRoles { get; set; }
-        public virtual ICollection<DcPaymentMethod> DcPaymentMethods { get; set; }
+        public virtual ICollection<DcPaymentMethod> CashRegDcPaymentMethods { get; set; }
+        public virtual ICollection<DcPaymentMethod> CurrAccDcPaymentMethods { get; set; }
     }
 }

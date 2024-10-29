@@ -10,25 +10,37 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Seria Nömrəsi")]
+    [Display(Name = "Ölçü Vahidi")]
     public partial class DcUnitOfMeasure
     {
         public DcUnitOfMeasure()
         {
             TrInvoiceLines = new HashSet<TrInvoiceLine>();
+            DcProducts = new HashSet<DcProduct>();
+            SettingStores = new HashSet<SettingStore>();
         }
 
         [Key]
-        [Display(Name = "Ölçü Vahidi Kodu")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string UnitOfMeasureCode { get; set; }
+        [Display(Name = "Ölçü Vahidi Id")]
+        public int UnitOfMeasureId { get; set; }
 
+        [Display(Name = "Ölçü Vahidi Açıqlaması")]
+        [StringLength(25, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        public string UnitOfMeasureDesc { get; set; }
+
+        [Display(Name = "Ana Ölçü Vahidi Id")]
+        public int ParentUnitOfMeasureId { get; set; }
+
+        [Display(Name = "Dəyişmə Nisbəti")]
+        public decimal ConversionRate { get; set; }
 
         [Display(Name = "Ölçü Vahidi Səviyyəsi")]
         public byte Level { get; set; }
 
 
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
+        public virtual ICollection<DcProduct> DcProducts { get; set; }
+        public virtual ICollection<SettingStore> SettingStores { get; set; }
 
     }
 }

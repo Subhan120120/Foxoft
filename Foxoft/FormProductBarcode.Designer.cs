@@ -44,7 +44,7 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
             GC_ProductBarcode = new MyGridControl();
             bindingSourceProductBarcode = new System.Windows.Forms.BindingSource(components);
-            GV_ProductBarcode = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gV_ProductBarcode = new DevExpress.XtraGrid.Views.Grid.GridView();
             colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
             RepoBtnEdit_BarcodeGenerate = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             colBarcodeTypeCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -63,7 +63,7 @@ namespace Foxoft
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ((System.ComponentModel.ISupportInitialize)GC_ProductBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceProductBarcode).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)GV_ProductBarcode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gV_ProductBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeGenerate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeType).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_ProductCode).BeginInit();
@@ -75,12 +75,12 @@ namespace Foxoft
             GC_ProductBarcode.DataSource = bindingSourceProductBarcode;
             GC_ProductBarcode.Dock = System.Windows.Forms.DockStyle.Fill;
             GC_ProductBarcode.Location = new System.Drawing.Point(0, 158);
-            GC_ProductBarcode.MainView = GV_ProductBarcode;
+            GC_ProductBarcode.MainView = gV_ProductBarcode;
             GC_ProductBarcode.Name = "GC_ProductBarcode";
             GC_ProductBarcode.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { RepoBtnEdit_BarcodeType, RepoBtnEdit_BarcodeGenerate, RepoBtnEdit_ProductCode });
             GC_ProductBarcode.Size = new System.Drawing.Size(800, 292);
             GC_ProductBarcode.TabIndex = 0;
-            GC_ProductBarcode.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { GV_ProductBarcode });
+            GC_ProductBarcode.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ProductBarcode });
             GC_ProductBarcode.Click += myGridControl1_Click;
             GC_ProductBarcode.KeyDown += GC_ProductBarcode_KeyDown;
             // 
@@ -90,18 +90,18 @@ namespace Foxoft
             // 
             // GV_ProductBarcode
             // 
-            GV_ProductBarcode.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colBarcode, colBarcodeTypeCode, colProductCode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colId, colQty });
-            GV_ProductBarcode.GridControl = GC_ProductBarcode;
-            GV_ProductBarcode.Name = "GV_ProductBarcode";
-            GV_ProductBarcode.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
-            GV_ProductBarcode.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
-            GV_ProductBarcode.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
-            GV_ProductBarcode.OptionsView.ShowGroupPanel = false;
-            GV_ProductBarcode.InitNewRow += GV_ProductBarcode_InitNewRow;
-            GV_ProductBarcode.RowDeleted += GV_ProductBarcode_RowDeleted;
-            GV_ProductBarcode.RowUpdated += GV_ProductBarcode_RowUpdated;
-            GV_ProductBarcode.ValidatingEditor += GV_ProductBarcode_ValidatingEditor;
-            GV_ProductBarcode.InvalidValueException += GV_ProductBarcode_InvalidValueException;
+            gV_ProductBarcode.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colBarcode, colBarcodeTypeCode, colProductCode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colId, colQty });
+            gV_ProductBarcode.GridControl = GC_ProductBarcode;
+            gV_ProductBarcode.Name = "GV_ProductBarcode";
+            gV_ProductBarcode.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            gV_ProductBarcode.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            gV_ProductBarcode.OptionsView.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+            gV_ProductBarcode.OptionsView.ShowGroupPanel = false;
+            gV_ProductBarcode.InitNewRow += GV_ProductBarcode_InitNewRow;
+            gV_ProductBarcode.RowDeleted += GV_ProductBarcode_RowDeleted;
+            gV_ProductBarcode.RowUpdated += GV_ProductBarcode_RowUpdated;
+            gV_ProductBarcode.ValidatingEditor += GV_ProductBarcode_ValidatingEditor;
+            gV_ProductBarcode.InvalidValueException += GV_ProductBarcode_InvalidValueException;
             // 
             // colBarcode
             // 
@@ -224,7 +224,7 @@ namespace Foxoft
             Text = "FormBarcode";
             ((System.ComponentModel.ISupportInitialize)GC_ProductBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceProductBarcode).EndInit();
-            ((System.ComponentModel.ISupportInitialize)GV_ProductBarcode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gV_ProductBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeGenerate).EndInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeType).EndInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_ProductCode).EndInit();
@@ -236,7 +236,7 @@ namespace Foxoft
         #endregion
 
         private MyGridControl myGridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView GV_ProductBarcode;
+        private DevExpress.XtraGrid.Views.Grid.GridView gV_ProductBarcode;
         private System.Windows.Forms.BindingSource bindingSourceProductBarcode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcode;
         private DevExpress.XtraGrid.Columns.GridColumn colBarcodeTypeCode;

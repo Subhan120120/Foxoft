@@ -33,8 +33,14 @@ namespace Foxoft.Models
         [Display(Name = "Satıcı Sətiri Kopyala")]
         public bool SalesmanContinuity { get; set; }
 
+        [Display(Name = "Default Ölçü Vahidi")]
+        [ForeignKey("DcUnitOfMeasure")]
+        public int DefaultUnitOfMeasureId { get; set; }
+
         [ForeignKey("StoreCode")]
         public virtual DcCurrAcc DcStore { get; set; }
+
+        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
 
     }
 }

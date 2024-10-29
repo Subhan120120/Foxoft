@@ -27,12 +27,18 @@ namespace Foxoft.Models
         [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string PaymentMethodDesc { get; set; }
 
-        [ForeignKey("DcCurrAcc")]
+        [ForeignKey("DcCashReg")]
         [Display(Name = "Default Kassa")]
         public string? DefaultCashRegCode { get; set; }
 
+        [ForeignKey("DcCurrAcc")]
+        [Display(Name = "Default Cari Hesab")]
+        public string? DefaultCurrAccCode { get; set; }
+
 
         [ForeignKey("DefaultCashRegCode")]
+        public virtual DcCurrAcc DcCashReg { get; set; }
+        [ForeignKey("DefaultCurrAccCode")]
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         [ForeignKey("PaymentTypeCode")]
         public virtual DcPaymentType DcPaymentType { get; set; }

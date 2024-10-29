@@ -409,7 +409,7 @@ namespace Foxoft
             {
                 string phoneNum = efMethods.SelectCurrAcc(trPaymentHeader.CurrAccCode).PhoneNum;
 
-                if (string.IsNullOrEmpty(phoneNum))
+                if (!string.IsNullOrEmpty(phoneNum))
                 {
                     string copyText = PaymentText("%0A");
 

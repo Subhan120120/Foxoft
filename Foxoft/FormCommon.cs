@@ -91,7 +91,7 @@ namespace Foxoft
 
                                 if (dbContext.Model.FindEntityType(typeof(T)).GetProperty(FieldName_Id).IsPrimaryKey())
                                     if (!IsNew)
-                                        Control_Id.Enabled = false;
+                                        (Control_Id.Control as BaseEdit).Properties.ReadOnly = true;
                             }
                             else if (itemFieldName == FieldName_2)
                             {
@@ -99,7 +99,7 @@ namespace Foxoft
 
                                 if (dbContext.Model.FindEntityType(typeof(T)).GetProperty(FieldName_2).IsPrimaryKey())
                                     if (!IsNew)
-                                        Control_2.Enabled = false;
+                                        (Control_2.Control as BaseEdit).Properties.ReadOnly = true;
                             }
                             else if (dbContext.Model.GetEntityTypes().Select(t => t.GetTableName()).Distinct().ToList().Contains(itemFieldName)
                                 || dbContext.Model.GetEntityTypes().Select(t => t.ClrType.Name).ToList().Contains(itemFieldName)) // relation table adlari silinsin
@@ -169,16 +169,6 @@ namespace Foxoft
 
         private Func<T, bool> ConvertToPredicate(string propName, object value)
         {
-            //ParameterExpression? param = Expression.Parameter(typeof(T));
-            //MemberExpression? member = Expression.Property(param, propName);
-            //MethodInfo? asString = this.GetType().GetMethod("AsString");
-            //MethodCallExpression? stringMember = Expression.Call(asString, Expression.Convert(member, typeof(object)));
-            //ConstantExpression? constant = Expression.Constant(value);
-            //BinaryExpression? expression = Expression.Equal(stringMember, constant);
-            //LambdaExpression? lambda = Expression.Lambda(expression, param);
-            //Func<T, bool> predicate = (Func<T, bool>)lambda.Compile();
-            //return predicate;
-
             var param = Expression.Parameter(typeof(T), "x");
             MemberExpression member = Expression.Property(param, propName);
             UnaryExpression memberAsObject = Expression.Convert(member, typeof(object));
@@ -204,12 +194,9 @@ namespace Foxoft
 
             string NewDocNum = efMethods.GetNextDocNum(false, ProcessCode, FieldName_Id, tableName, 4);
 
-            //dataLayoutControl1.SetCurrentRecordFieldValue(FieldName_2, value_2);
-
             bindingSource1.DataSource = Entity;
 
             Control_Id.Control.Text = NewDocNum;
-
         }
 
 
@@ -246,8 +233,22 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
+            var entityType = dbContext.Model.FindEntityType(typeof(T));
+
+            if (entityType.FindNavigation(e.FieldName) != null)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            if (entityType.GetProperty(e.FieldName).IsPrimaryKey() && !IsNew)
+            {
+                e.Handled = true;
+                return;
+            }
+
             if (e.FieldName == nameof(DcProduct.ProductCode)) e.EditorType = typeof(ButtonEdit);
-            if (e.FieldName == nameof(DcCurrAcc.CurrAccCode)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcCurrAcc.CurrAccCode)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcDiscount.DiscountId)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcReport.ReportId)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcRole.RoleCode)) e.EditorType = typeof(ButtonEdit);
@@ -262,50 +263,60 @@ namespace Foxoft
 
         private void dataLayoutControl1_FieldRetrieved(object sender, FieldRetrievedEventArgs e)
         {
+
             if (e.FieldName == nameof(DcProduct.ProductCode)) // add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ProductCode_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ProductCode_ButtonPressed);
             }
             if (e.FieldName == nameof(DcCurrAcc.CurrAccCode)) // add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_CurrAccCode_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_CurrAccCode_ButtonPressed);
             }
             if (e.FieldName == nameof(DcDiscount.DiscountId))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_DiscountId_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_DiscountId_ButtonPressed);
             }
             if (e.FieldName == nameof(DcForm.FormCode))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FormCode_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FormCode_ButtonPressed);
             }
             if (e.FieldName == nameof(DcReport.ReportId))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ReportId_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ReportId_ButtonPressed);
             }
             if (e.FieldName == nameof(DcRole.RoleCode))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_RoleCode_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_RoleCode_ButtonPressed);
             }
             if (e.FieldName == nameof(DcHierarchy.HierarchyCode))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_HierarchyCode_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_HierarchyCode_ButtonPressed);
             }
             if (e.FieldName == nameof(DcFeatureType.FeatureTypeId))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FeatureTypeId_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_FeatureTypeId_ButtonPressed);
             }
             if (e.FieldName == nameof(DcClaim.ClaimCode))// add FieldRetrieving too
             {
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
-                btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCode_ButtonPressed);
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCode_ButtonPressed);
             }
         }
 
@@ -317,9 +328,9 @@ namespace Foxoft
             using FormProductList form = new(new byte[] { 1, 3 }, productCode);
 
             try
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                        editor.EditValue = form.dcProduct.ProductCode;
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    editor.EditValue = form.dcProduct.ProductCode;
             }
             catch (Exception ex)
             {

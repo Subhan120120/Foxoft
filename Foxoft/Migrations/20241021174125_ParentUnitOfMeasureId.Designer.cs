@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20241021174125_ParentUnitOfMeasureId")]
+    partial class ParentUnitOfMeasureId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1327,7 +1330,7 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
-                    b.Property<int>("DefaultUnitOfMeasureId")
+                    b.Property<int?>("DefaultUnitOfMeasureId")
                         .HasColumnType("int");
 
                     b.Property<string>("HierarchyCode")
@@ -2057,9 +2060,6 @@ namespace Foxoft.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UnitOfMeasureId"));
 
-                    b.Property<decimal>("ConversionRate")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<byte>("Level")
                         .HasColumnType("tinyint");
 
@@ -2073,13 +2073,12 @@ namespace Foxoft.Migrations
 
                     b.HasKey("UnitOfMeasureId");
 
-                    b.ToTable("DcUnitOfMeasures");
+                    b.ToTable("DcUnitOfMeasure");
 
                     b.HasData(
                         new
                         {
                             UnitOfMeasureId = 1,
-                            ConversionRate = 0m,
                             Level = (byte)1,
                             ParentUnitOfMeasureId = 0,
                             UnitOfMeasureDesc = "Ədəd"
@@ -2087,7 +2086,6 @@ namespace Foxoft.Migrations
                         new
                         {
                             UnitOfMeasureId = 2,
-                            ConversionRate = 0m,
                             Level = (byte)1,
                             ParentUnitOfMeasureId = 0,
                             UnitOfMeasureDesc = "Qutu"
@@ -2384,7 +2382,7 @@ namespace Foxoft.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DefaultUnitOfMeasureId")
+                    b.Property<int?>("DefaultUnitOfMeasureId")
                         .HasColumnType("int");
 
                     b.Property<string>("DesignFileFolder")
@@ -2982,10 +2980,8 @@ namespace Foxoft.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("UnitOfMeasureId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("1");
+                    b.Property<int?>("UnitOfMeasureId")
+                        .HasColumnType("int");
 
                     b.Property<float>("VatRate")
                         .ValueGeneratedOnAdd()
@@ -4140,8 +4136,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
                         .WithMany("DcProducts")
                         .HasForeignKey("DefaultUnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
                         .WithMany("DcProducts")
@@ -4237,8 +4232,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
                         .WithMany("SettingStores")
                         .HasForeignKey("DefaultUnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
                         .WithMany("SettingStores")
@@ -4401,8 +4395,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
                         .WithMany("TrInvoiceLines")
                         .HasForeignKey("UnitOfMeasureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DcCurrAcc");
 

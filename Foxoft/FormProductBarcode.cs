@@ -64,7 +64,9 @@ namespace Foxoft
 
         private void GV_ProductBarcode_InitNewRow(object sender, InitNewRowEventArgs e)
         {
-            GV_ProductBarcode.SetRowCellValue(e.RowHandle, colProductCode, ProductCode);
+            gV_ProductBarcode.SetRowCellValue(e.RowHandle, colProductCode, ProductCode);
+            DcBarcodeType defaultBarcodeType = efMethods.SelectBarcodTypeDefault();
+            gV_ProductBarcode.SetRowCellValue(e.RowHandle, colBarcodeTypeCode, defaultBarcodeType?.BarcodeTypeCode);
         }
 
         private void GV_ProductBarcode_RowUpdated(object sender, RowObjectEventArgs e)
@@ -141,7 +143,7 @@ namespace Foxoft
             {
                 DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_Barcode");
 
-                string barcode = GV_ProductBarcode.GetFocusedRowCellValue(colBarcode)?.ToString();
+                string barcode = gV_ProductBarcode.GetFocusedRowCellValue(colBarcode)?.ToString();
 
                 string filter = "";
                 if (!string.IsNullOrEmpty(barcode))
@@ -204,7 +206,7 @@ namespace Foxoft
             if (column == colBarcode)
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
-                string oldValue = GV_ProductBarcode.GetFocusedValue()?.ToString();
+                string oldValue = gV_ProductBarcode.GetFocusedValue()?.ToString();
 
                 if (eValue != oldValue) // different value
                 {
@@ -250,7 +252,7 @@ namespace Foxoft
         {
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_Barcode");
 
-            string productCode = GV_ProductBarcode.GetFocusedRowCellValue(colProductCode)?.ToString();
+            string productCode = gV_ProductBarcode.GetFocusedRowCellValue(colProductCode)?.ToString();
 
             string filter = "";
             if (!string.IsNullOrEmpty(productCode))

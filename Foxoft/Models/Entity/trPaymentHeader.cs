@@ -26,6 +26,9 @@ namespace Foxoft.Models
         [ForeignKey("TrInvoiceHeader")]
         public Guid? InvoiceHeaderId { get; set; }
 
+        //[ForeignKey("RelatedPayment")]
+        //public Guid? RelatedPaymentId { get; set; }
+
         [Display(Name = "Sənəd Nömrəsi")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string DocumentNumber { get; set; }
@@ -129,5 +132,8 @@ namespace Foxoft.Models
         //public virtual DcCurrAcc FromCashReg { get; set; }
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
+
+        //public virtual TrPaymentHeader RelatedPayment { get; set; } // Navigation property to the related line
+        //public virtual ICollection<TrPaymentHeader> InversePaymentHeaders { get; set; } // Navigation property for the inverse relationship
     }
 }

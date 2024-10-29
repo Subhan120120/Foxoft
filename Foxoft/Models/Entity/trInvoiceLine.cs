@@ -87,9 +87,10 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Valyuta")]
+        [DefaultValue(1)]
+        [Display(Name = "Ölçü Vahidi")]
         [ForeignKey("DcUnitOfMeasure")]
-        public string? UnitOfMeasure { get; set; }
+        public int UnitOfMeasureId { get; set; }
 
         [Display(Name = "Valyuta")]
         [ForeignKey("DcCurrency")]
