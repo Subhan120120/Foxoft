@@ -1939,12 +1939,12 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateDcProductStaticPrice_Value(string priceTypeCode, string productCode, decimal value)
+        public int UpdateDcProductStaticPrice_Value(string priceTypeCode, string productCode, decimal? value)
         {
             using subContext db = new();
             DcProductStaticPrice pp = db.DcProductStaticPrices.FirstOrDefault(x => x.PriceTypeCode == priceTypeCode && x.ProductCode == productCode);
 
-            if (pp is not null) // update
+            if (pp is not null)
             {
                 if (pp.Price != value)
                 {
@@ -1954,13 +1954,13 @@ namespace Foxoft
                 }
             }
 
-            if (pp?.Price != value)
+            if (pp?.Price != value && value is not null)
             {
                 pp = new DcProductStaticPrice()
                 {
                     PriceTypeCode = priceTypeCode,
                     ProductCode = productCode,
-                    Price = value
+                    Price = (decimal)value
                 };
                 db.DcProductStaticPrices.Add(pp);
             }

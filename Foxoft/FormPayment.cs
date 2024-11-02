@@ -327,11 +327,11 @@ namespace Foxoft
                         trPaymentLineCashless.Payment = trPaymentLineCashless.Payment * (-1);
                         efMethods.InsertPaymentLine(trPaymentLineCashless);
 
-                        if (!string.IsNullOrEmpty(TrPaymentPlan.PaymentPlanCode))
-                        {
-                            TrPaymentPlan.PaymentLineId = trPaymentLineCashless.PaymentLineId;
-                            efMethods.InsertTrPaymentPlan(TrPaymentPlan);
-                        }
+                        //if (!string.IsNullOrEmpty(TrPaymentPlan.PaymentPlanCode))
+                        //{
+                        //    TrPaymentPlan.PaymentLineId = trPaymentLineCashless.PaymentLineId;
+                        //    efMethods.InsertTrPaymentPlan(TrPaymentPlan);
+                        //}
                     }
                 }
 

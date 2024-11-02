@@ -12,6 +12,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Mask;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
@@ -95,8 +96,12 @@ namespace Foxoft
             repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
             repoLUE_UnitOfMeasure.DataSource = efMethods.SelectUnitOfMeasures();
 
-            foreach (string printer in PrinterSettings.InstalledPrinters)
-                repoCBE_PrinterName.Items.Add(printer);
+            try
+            {
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                    repoCBE_PrinterName.Items.Add(printer);
+            }
+            catch (Exception) { }
 
             LoadLayout();
 
@@ -1698,45 +1703,6 @@ namespace Foxoft
         private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
         {
             CustomExtensions.ExportToExcel(this, dcProcess.ProcessDesc, gC_InvoiceLine);
-            //try
-            //{
-            //    XtraSaveFileDialog sFD = new();
-            //    sFD.Filter = "Excel Faylı|*.xlsx";
-            //    sFD.Title = "Excel Faylı Yadda Saxla";
-            //    sFD.FileName = dcProcess.ProcessDesc;
-            //    sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //    sFD.DefaultExt = "*.xlsx";
-
-            //    var fileName = Invoke((Func<string>)(() =>
-            //    {
-            //        if (sFD.ShowDialog() == DialogResult.OK)
-            //        {
-            //            XlsxExportOptionsEx expOpt = new()
-            //            {
-            //                ExportMode = XlsxExportMode.SingleFile,
-            //                TextExportMode = TextExportMode.Value,
-            //                AllowLookupValues = DefaultBoolean.True,
-            //            };
-
-            //            gC_InvoiceLine.ExportToXlsx(sFD.FileName, expOpt);
-
-            //            if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //            {
-            //                Process p = new();
-            //                p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-            //                p.Start();
-            //            }
-
-            //            return "Ok";
-            //        }
-            //        else
-            //            return "Fail";
-            //    }));
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //}
         }
 
         private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
@@ -2077,7 +2043,7 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-
+            MessageBox.Show(gV_InvoiceLine.ActiveEditor?.Text.ToString());
         }
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
@@ -2203,19 +2169,27 @@ namespace Foxoft
 
             menu.ItemLinks.Clear();
 
-            foreach (string printer in PrinterSettings.InstalledPrinters)
+            try
             {
-                BarButtonItem BBI = new();
-                BBI.Caption = printer;
-                BBI.Name = printer;
-                BBI.ImageOptions.SvgImage = svgImageCollection1["print"]; ;
-                BBI.ItemClick += async (sender, e) =>
+                foreach (string printer in PrinterSettings.InstalledPrinters)
                 {
-                    await PrintFast(printer);
-                };
+                    BarButtonItem BBI = new();
+                    BBI.Caption = printer;
+                    BBI.Name = printer;
+                    BBI.ImageOptions.SvgImage = svgImageCollection1["print"]; ;
+                    BBI.ItemClick += async (sender, e) =>
+                    {
+                        await PrintFast(printer);
+                    };
 
-                menu.AddItem(BBI);
+                    menu.AddItem(BBI);
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Xeta: 1256795721 \n" + ex.Message);
+            }
+
             e.Cancel = false;
         }
 
@@ -2245,17 +2219,45 @@ namespace Foxoft
                 if (product is not null)
                 {
                     List<DcUnitOfMeasure> unitOfMeasure = efMethods.SelectUnitOfMeasuresByParentId(product.DefaultUnitOfMeasureId);
-
                     lookupEdit.Properties.DataSource = unitOfMeasure;
                 }
-
             }
         }
 
         private void gV_InvoiceLine_CustomColumnDisplayText(object sender, CustomColumnDisplayTextEventArgs e)
         {
-            if (e.Column == colQty && e.Value is decimal decimalValue)
-                e.DisplayText = decimalValue.ToString("0.##");// Display without ".00" if there are no decimals
+            if (new GridColumn[] { colQty, colBalance }.Contains(e.Column) && e.Value is decimal decimalValue)
+            {
+                //e.DisplayText = decimalValue.ToString("0.##");// Display without ".00" if there are no decimals
+
+                //if (e.DisplayText.EndsWith("."))
+                //{
+                //    e.DisplayText = e.DisplayText.Replace(".", "");
+                //}
+            }
+        }
+
+        private void gV_InvoiceLine_ShowingEditor(object sender, CancelEventArgs e)
+        {
+            //var view = sender as GridView;
+            //if (view != null)
+            //{
+            //    if (view.FocusedColumn == colQty)
+            //    {
+            //        var cellValue = view.GetFocusedValue();
+
+            //        // Check if the value is a whole number (integer)
+            //        if (view.ActiveEditor is not null && decimal.TryParse(cellValue?.ToString(), out var number) && number == Math.Floor(number))
+            //        {
+            //            view.ActiveEditor.EditValue = number.ToString("0"); // Formats without decimal
+            //        }
+            //    }
+            //}
+        }
+
+        private void gV_InvoiceLine_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
+        {
+
         }
     }
 }

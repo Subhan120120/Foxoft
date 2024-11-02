@@ -27,11 +27,6 @@ namespace Foxoft.Models
         [Display(Name = "Müddət Aylarla")]
         public int DurationInMonths { get; set; } // Duration of the payment plan in months
 
-        [Display(Name = "Komissiya")]
-        public decimal Commission { get; set; } // Interest rate associated with the plan, if applicable 
-
-
-
 
 
         [ForeignKey("PaymentMethodId")]

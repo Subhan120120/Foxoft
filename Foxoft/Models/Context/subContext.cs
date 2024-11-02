@@ -357,12 +357,12 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<TrPaymentPlan>(entity =>
-            {
-                entity.HasOne(x => x.TrPaymentLine)
-                    .WithOne(x => x.TrPaymentPlan)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
+            //modelBuilder.Entity<TrPaymentPlan>(entity =>
+            //{
+            //    entity.HasOne(x => x.TrPaymentLine)
+            //        .WithOne(x => x.TrPaymentPlan)
+            //        .OnDelete(DeleteBehavior.Cascade);
+            //});
 
             modelBuilder.Entity<TrPriceListLine>(entity =>
             {
@@ -610,12 +610,12 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcPaymentPlan>().HasData(
-                new DcPaymentPlan { PaymentPlanCode = "M03", PaymentPlanDesc = "3 AY", PaymentMethodId = 2, DurationInMonths = 3, Commission = 0 },
-                new DcPaymentPlan { PaymentPlanCode = "M06", PaymentPlanDesc = "6 AY", PaymentMethodId = 2, DurationInMonths = 6, Commission = 0 },
-                new DcPaymentPlan { PaymentPlanCode = "M09", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9, Commission = 0 },
-                new DcPaymentPlan { PaymentPlanCode = "M12", PaymentPlanDesc = "12 AY", PaymentMethodId = 2, DurationInMonths = 12, Commission = 0 },
-                new DcPaymentPlan { PaymentPlanCode = "M18", PaymentPlanDesc = "18 AY", PaymentMethodId = 2, DurationInMonths = 18, Commission = 0 },
-                new DcPaymentPlan { PaymentPlanCode = "M24", PaymentPlanDesc = "24 AY", PaymentMethodId = 2, DurationInMonths = 24, Commission = 0 }
+                new DcPaymentPlan { PaymentPlanCode = "M03", PaymentPlanDesc = "3 AY", PaymentMethodId = 2, DurationInMonths = 3},
+                new DcPaymentPlan { PaymentPlanCode = "M06", PaymentPlanDesc = "6 AY", PaymentMethodId = 2, DurationInMonths = 6},
+                new DcPaymentPlan { PaymentPlanCode = "M09", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9},
+                new DcPaymentPlan { PaymentPlanCode = "M12", PaymentPlanDesc = "12 AY", PaymentMethodId = 2, DurationInMonths = 12 },
+                new DcPaymentPlan { PaymentPlanCode = "M18", PaymentPlanDesc = "18 AY", PaymentMethodId = 2, DurationInMonths = 18 },
+                new DcPaymentPlan { PaymentPlanCode = "M24", PaymentPlanDesc = "24 AY", PaymentMethodId = 2, DurationInMonths = 24 }
                 );
 
             modelBuilder.Entity<DcProcess>().HasData(

@@ -323,6 +323,11 @@ namespace Foxoft
             ShowNewForm<FormInvoice>("WS", new byte[] { 1, 3 }, null);
         }
 
+        private void ACE_InstallmentsaleInvoice_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("IS", new byte[] { 1, 3 }, null);
+        }
+
         private void aCE_Expense_Click(object sender, EventArgs e)
         {
             ShowExistForm<FormInvoice>("EX", new byte[] { 2, 3 }, null);

@@ -50,6 +50,7 @@ namespace Foxoft
             repoBtnEdit_ProductCode = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             colBalance = new GridColumn();
             colQty = new GridColumn();
+            repoTextEdit_Qty = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             colQtyIn = new GridColumn();
             colQtyOut = new GridColumn();
             colPriceLoc = new GridColumn();
@@ -138,7 +139,6 @@ namespace Foxoft
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repoTxtEdit_TwilioInstance = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             repoTxtEdit_TwilioToken = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-            repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             repo = new DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             txtEdit_PrintCount = new DevExpress.XtraEditors.TextEdit();
@@ -174,6 +174,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoTextEdit_Qty).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_PriceLoc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_Price).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
@@ -199,7 +200,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_PrintCount.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_SalesPerson.Properties).BeginInit();
@@ -237,7 +237,6 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(LBL_SalesPersonDesc);
             dataLayoutControl1.Controls.Add(lbl_CurrAccDesc);
             dataLayoutControl1.Controls.Add(lbl_InvoicePaidSum);
-            dataLayoutControl1.Controls.Add(gC_InvoiceLine);
             dataLayoutControl1.Controls.Add(checkEdit_IsSent);
             dataLayoutControl1.Controls.Add(checkEdit_IsReturn);
             dataLayoutControl1.Controls.Add(DocumentDateDateEdit);
@@ -251,6 +250,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(lUE_ToWarehouseCode);
             dataLayoutControl1.Controls.Add(txtEdit_PrintCount);
             dataLayoutControl1.Controls.Add(btnEdit_SalesPerson);
+            dataLayoutControl1.Controls.Add(gC_InvoiceLine);
             dataLayoutControl1.DataSource = trInvoiceHeadersBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_SalesPerson });
@@ -297,7 +297,7 @@ namespace Foxoft
             gC_InvoiceLine.Location = new Point(12, 144);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
-            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure });
+            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure, repoTextEdit_Qty });
             gC_InvoiceLine.Size = new Size(1105, 165);
             gC_InvoiceLine.TabIndex = 11;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
@@ -320,7 +320,9 @@ namespace Foxoft
             gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
             gV_InvoiceLine.RowCellStyle += gV_InvoiceLine_RowCellStyle;
             gV_InvoiceLine.RowStyle += gV_InvoiceLine_RowStyle;
+            gV_InvoiceLine.CustomRowCellEdit += gV_InvoiceLine_CustomRowCellEdit;
             gV_InvoiceLine.PopupMenuShowing += gV_InvoiceLine_PopupMenuShowing;
+            gV_InvoiceLine.ShowingEditor += gV_InvoiceLine_ShowingEditor;
             gV_InvoiceLine.InitNewRow += gV_InvoiceLine_InitNewRow;
             gV_InvoiceLine.HiddenEditor += gV_InvoiceLine_HiddenEditor;
             gV_InvoiceLine.ShownEditor += gV_InvoiceLine_ShownEditor;
@@ -370,8 +372,6 @@ namespace Foxoft
             // 
             // colBalance
             // 
-            colBalance.DisplayFormat.FormatString = "0.##";
-            colBalance.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             colBalance.FieldName = "DcProduct.Balance";
             colBalance.Name = "colBalance";
             colBalance.OptionsColumn.AllowEdit = false;
@@ -383,11 +383,22 @@ namespace Foxoft
             // 
             // colQty
             // 
+            colQty.ColumnEdit = repoTextEdit_Qty;
             colQty.FieldName = "Qty";
             colQty.Name = "colQty";
             colQty.Visible = true;
             colQty.VisibleIndex = 4;
             colQty.Width = 34;
+            // 
+            // repoTextEdit_Qty
+            // 
+            repoTextEdit_Qty.AutoHeight = false;
+            repoTextEdit_Qty.DisplayFormat.FormatString = "n0";
+            repoTextEdit_Qty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            repoTextEdit_Qty.EditFormat.FormatString = "n0";
+            repoTextEdit_Qty.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            repoTextEdit_Qty.Name = "repoTextEdit_Qty";
+
             // 
             // colQtyIn
             // 
@@ -793,7 +804,7 @@ namespace Foxoft
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
-            ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoTxtEdit_TwilioInstance, repoTxtEdit_TwilioToken, repositoryItemTextEdit1, repo, repoCBE_PrinterName });
+            ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoTxtEdit_TwilioInstance, repoTxtEdit_TwilioToken, repo, repoCBE_PrinterName });
             ribbonControl1.Size = new Size(1129, 192);
             ribbonControl1.StatusBar = ribbonStatusBar1;
             // 
@@ -1149,11 +1160,6 @@ namespace Foxoft
             repoTxtEdit_TwilioToken.AutoHeight = false;
             repoTxtEdit_TwilioToken.Name = "repoTxtEdit_TwilioToken";
             // 
-            // repositoryItemTextEdit1
-            // 
-            repositoryItemTextEdit1.AutoHeight = false;
-            repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
-            // 
             // repo
             // 
             repo.AutoHeight = false;
@@ -1429,6 +1435,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoTextEdit_Qty).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_PriceLoc).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_Price).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
@@ -1454,7 +1461,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoCBE_PrinterName).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioInstance).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoTxtEdit_TwilioToken).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repo).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_PrintCount.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_SalesPerson.Properties).EndInit();
@@ -1580,7 +1586,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportPrintFast;
         private DevExpress.XtraBars.BarButtonItem BBI_PrintSettingSave;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repo;
         private DevExpress.XtraBars.BarEditItem BEI_PrinterName;
@@ -1624,5 +1629,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_UnitOfMeasure;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_UnitOfMeasure;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoTextEdit_Qty;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraLayout;
 using Foxoft.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Foxoft
 {
@@ -51,7 +52,9 @@ namespace Foxoft
 
                 if (edit is TextEdit && edit is not null && edit.EditValue is not null)
                 {
-                    efMethods.UpdateDcProductStaticPrice_Value(edit.Name, dcProduct.ProductCode, Convert.ToDecimal(edit.EditValue));
+                    decimal? result = string.IsNullOrEmpty(edit.EditValue.ToString()) ? null : Convert.ToDecimal(edit.EditValue);
+
+                    efMethods.UpdateDcProductStaticPrice_Value(edit.Name, dcProduct.ProductCode, result);
                     DialogResult = DialogResult.OK;
                 }
             }
