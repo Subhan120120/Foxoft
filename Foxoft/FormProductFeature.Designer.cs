@@ -93,7 +93,7 @@ namespace Foxoft
             Controls.Add(layoutControl1);
             Name = "FormProductFeature";
             Text = "Məhsul Özəllikləri";
-            Load += FormFeatureTest_Load;
+            Load += FormProductFeature_Load;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();

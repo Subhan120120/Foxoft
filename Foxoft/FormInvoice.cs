@@ -12,7 +12,6 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Mask;
-using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Menu;
@@ -26,6 +25,7 @@ using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json.Linq;
@@ -52,8 +52,8 @@ namespace Foxoft
         private EfMethods efMethods = new();
         private subContext dbContext;
         subContext subContext = new(); // for CustomUnboundColumnData
+        CustomMethods cM = new();
 
-        string reportFileNameInvoice = @"InvoiceRS_A4.repx";
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
         readonly SettingStore settingStore;
@@ -83,7 +83,6 @@ namespace Foxoft
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
 
-            CustomMethods cM = new();
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
             cM.AddReports(BSI_Reports, "Invoice", nameof(TrInvoiceLine.InvoiceHeaderId), gV_InvoiceLine, activeFilterStr);
@@ -511,7 +510,7 @@ namespace Foxoft
 
             if (column == colQty)
             {
-                if (new string[] { "RP", "WP", "RS", "WS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
+                if (new string[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
                     && (!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)
                     || trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)))
                 {
@@ -537,7 +536,7 @@ namespace Foxoft
                 }
 
                 if (!String.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
-                    && new string[] { "RP", "WP", "RS", "WS" }.Contains(trInvoiceHeader.ProcessCode)
+                    && new string[] { "RP", "WP", "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode)
                     && (!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)
                     || trInvoiceHeader.IsReturn && (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)))
                 {
@@ -1039,34 +1038,26 @@ namespace Foxoft
             }
         }
 
-        private void GetPrintDialogToWarehouse()
-        {
-            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
+        //private void GetPrintDialogToWarehouse()
+        //{
+        //    XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
 
-            if (report is not null)
-            {
-                ReportPrintTool printTool = new(report);
+        //    if (report is not null)
+        //    {
+        //        ReportPrintTool printTool = new(report);
 
-                bool? isPrinted = printTool.PrintDialog();
+        //        bool? isPrinted = printTool.PrintDialog();
 
-                if (isPrinted is not null)
-                {
-                    bool printed = Convert.ToBoolean(isPrinted);
-                    if (printed)
-                    {
-                        efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
-                    }
-                }
-            }
-        }
-
-        private XtraReport GetInvoiceReport(string fileName)
-        {
-            ReportClass reportClass = new();
-            DsMethods dsMethods = new();
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-            return reportClass.GetReport("invocie", fileName, new SqlQuery[] { sqlQuerySale });
-        }
+        //        if (isPrinted is not null)
+        //        {
+        //            bool printed = Convert.ToBoolean(isPrinted);
+        //            if (printed)
+        //            {
+        //                efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
+        //            }
+        //        }
+        //    }
+        //}
 
         private void MakePayment(decimal summaryInvoice, bool autoPayment)
         {
@@ -1104,17 +1095,17 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
-        private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            string designPath = "";
-            XtraReport xtraReport = GetInvoiceReport(designPath);
+        //private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
+        //{
+        //    string designPath = "";
+        //    XtraReport xtraReport = GetInvoiceReport(designPath);
 
-            if (xtraReport is not null)
-            {
-                ReportDesignTool printTool = new(xtraReport);
-                printTool.ShowRibbonDesigner();
-            }
-        }
+        //    if (xtraReport is not null)
+        //    {
+        //        ReportDesignTool printTool = new(xtraReport);
+        //        printTool.ShowRibbonDesigner();
+        //    }
+        //}
 
         private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -1123,13 +1114,23 @@ namespace Foxoft
 
         private void ShowReportPreview()
         {
-            XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_InvoiceReport");
 
-            if (xtraReport is not null)
-            {
-                ReportPrintTool printTool = new(xtraReport);
-                printTool.ShowRibbonPreview();
-            }
+            foreach (var item in dcReport.DcReportVariables)
+                if (item.VariableProperty == nameof(TrInvoiceHeader.InvoiceHeaderId))
+                    item.VariableValue = trInvoiceHeader.InvoiceHeaderId.ToString();
+
+            FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
+        private XtraReport GetInvoiceReport(string fileName)
+        {
+            ReportClass reportClass = new();
+            DsMethods dsMethods = new();
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            return reportClass.GetReport("invoice", fileName, new SqlQuery[] { sqlQuerySale });
         }
 
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
@@ -1302,29 +1303,36 @@ namespace Foxoft
 
         private void bBI_CopyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Image image = Image.FromStream(GetInvoiceReportImg(reportFileNameInvoice));
+            Image image = Image.FromStream(GetInvoiceReportImg());
             Clipboard.SetImage(image);
         }
 
-        private MemoryStream GetInvoiceReportImg(string designPath)
+        private MemoryStream GetInvoiceReportImg()
         {
-            XtraReport report = GetInvoiceReport(reportFileNameInvoice);
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_InvoiceReport");
+            AdoMethods adoMethods = new();
 
-            if (report is not null)
-            {
-                MemoryStream ms = new();
+            foreach (var item in dcReport.DcReportVariables)
+                if (item.VariableProperty == nameof(TrInvoiceHeader.InvoiceHeaderId))
+                    item.VariableValue = trInvoiceHeader.InvoiceHeaderId.ToString();
 
-                report.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile });
+            SqlParameter[] sqlParameters;
+            dcReport.ReportQuery = cM.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
+            DataTable dt = adoMethods.SqlGetDt(dcReport.ReportQuery, sqlParameters);
 
-                return ms;
-            }
-            else
-                return null;
+            ReportClass reportClass = new();
+            XtraReport xtraReport = reportClass.CreateReport(dt, dcReport.ReportName + ".repx");
+
+            MemoryStream ms = new();
+
+            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
+
+            return ms;
         }
 
         private void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MemoryStream memoryStream = GetInvoiceReportImg(reportFileNameInvoice);
+            MemoryStream memoryStream = GetInvoiceReportImg();
             Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
@@ -1440,7 +1448,7 @@ namespace Foxoft
                     return;
                 }
             }
-            if (trInvoiceHeader.ProcessCode == "RS")
+            else if (trInvoiceHeader.ProcessCode == "RS")
             {
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn");
                 if (!currAccHasClaims)
@@ -1452,6 +1460,15 @@ namespace Foxoft
             else if (trInvoiceHeader.ProcessCode == "WS")
             {
                 bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "WholesaleReturn");
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+            }
+            else if (trInvoiceHeader.ProcessCode == "IS")
+            {
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentsaleReturn");
                 if (!currAccHasClaims)
                 {
                     MessageBox.Show("Yetkiniz yoxdur! ");
@@ -1956,7 +1973,7 @@ namespace Foxoft
             alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
         }
 
-        private void GetPrintToWarehouse(Guid invoiceHeader, string printerName)
+        private void GetPrintToWarehouse(Guid invoiceHeaderId, string printerName)
         {
             XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
             report.PrinterName = printerName;
@@ -1964,9 +1981,8 @@ namespace Foxoft
             if (report is not null)
             {
                 ReportPrintTool printTool = new(report);
-                //printTool.PrintingSystem.EndPrint += PrintingSystem_EndPrint;
                 printTool.Print();
-                efMethods.UpdateInvoicePrintCount(invoiceHeader);
+                efMethods.UpdateInvoicePrintCount(invoiceHeaderId);
             }
         }
 
@@ -2003,7 +2019,7 @@ namespace Foxoft
                 {
                     decimal value = (decimal)benefit;
 
-                    if (value <= 0 && new string[] { "RS", "WS" }.Contains(dcProcess.ProcessCode) && trInvoiceHeader.IsReturn == false)
+                    if (value <= 0 && new string[] { "RS", "WS", "IS" }.Contains(dcProcess.ProcessCode) && trInvoiceHeader.IsReturn == false)
                         e.Appearance.ForeColor = Color.Red;
                 }
             }
@@ -2029,17 +2045,17 @@ namespace Foxoft
             formPictures.ShowDialog();
         }
 
-        private void BBI_Print_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
-            xtraReport.PrinterName = settingStore.PrinterName;
+        //private void BBI_Print_ItemClick(object sender, ItemClickEventArgs e)
+        //{
+        //    XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
+        //    xtraReport.PrinterName = settingStore.PrinterName;
 
-            if (xtraReport is not null)
-            {
-                ReportPrintTool printTool = new(xtraReport);
-                printTool.PrintDialog();
-            }
-        }
+        //    if (xtraReport is not null)
+        //    {
+        //        ReportPrintTool printTool = new(xtraReport);
+        //        printTool.PrintDialog();
+        //    }
+        //}
 
         private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
@@ -2257,7 +2273,12 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
         {
+            //RepositoryItemTextEdit textEdit_Qty = new();
+            //textEdit_Qty.EditFormat.FormatString = "n0";
+            //textEdit_Qty.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            //textEdit_Qty.Name = "repoTextEdit_Qty";
 
+            //e.RepositoryItem = textEdit_Qty;
         }
     }
 }

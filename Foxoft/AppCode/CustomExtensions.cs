@@ -90,6 +90,7 @@ namespace Foxoft
                 "IT" => false,
                 "RS" => false,
                 "WS" => false,
+                "IS" => false,
                 "CO" => false,
                 "WO" => false,
                 _ => null
@@ -108,6 +109,7 @@ namespace Foxoft
                 "RP" => "RetailPurchaseInvoice",
                 "RS" => "RetailSaleInvoice",
                 "WS" => "WholesaleInvoice",
+                "IS" => "InstallmentsaleInvoice",
                 "EX" => "Expense",
                 "EI" => "ExpenseOfInvoice",
                 "PA" => "PaymentDetail",
@@ -128,6 +130,7 @@ namespace Foxoft
                 "RP" => new byte[] { 1, 3 },
                 "RS" => new byte[] { 1, 3 },
                 "WS" => new byte[] { 1, 3 },
+                "IS" => new byte[] { 1, 3 },
                 "EX" => new byte[] { 2, 3 },
                 "EI" => new byte[] { 2, 3 },
                 _ => new byte[] { }

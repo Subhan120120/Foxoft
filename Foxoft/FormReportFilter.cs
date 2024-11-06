@@ -187,9 +187,6 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(qry))
             {
                 FormReportPreview frm = new(qry, filter, dcReport);
-
-                frm.Show();
-
                 frm.MdiParent = this.ParentForm;
                 frm.Show();
                 frm.WindowState = FormWindowState.Maximized;

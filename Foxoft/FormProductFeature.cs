@@ -24,7 +24,7 @@ namespace Foxoft
             dcProduct = efMethods.SelectProduct(productCode);
         }
 
-        private void FormFeatureTest_Load(object sender, EventArgs e)
+        private void FormProductFeature_Load(object sender, EventArgs e)
         {
             List<DcFeatureType> dcFeatures = efMethods.SelectFeatureTypesByHierarchy(dcProduct.HierarchyCode);
 

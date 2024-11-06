@@ -30,6 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -47,13 +48,13 @@ namespace Foxoft
             BSI_CompanyDesc = new DevExpress.XtraBars.BarStaticItem();
             bBI_Session = new DevExpress.XtraBars.BarButtonItem();
             BSI_Report = new DevExpress.XtraBars.BarSubItem();
-            popupMenu2 = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            popupMenu2 = new DevExpress.XtraBars.PopupMenu(components);
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             popupMenu1 = new DevExpress.XtraBars.PopupMenu(components);
             aC_Root = new DevExpress.XtraBars.Navigation.AccordionControl();
@@ -65,6 +66,7 @@ namespace Foxoft
             aCE_RetailPurchaseInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_RetailSaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_WholesaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aCE_InstallmentsaleInvoice = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator6 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_PurchaseReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_RetailSaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -97,9 +99,9 @@ namespace Foxoft
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).BeginInit();
@@ -234,11 +236,6 @@ namespace Foxoft
             BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
             BSI_Report.Name = "BSI_Report";
             // 
-            // popupMenu2
-            // 
-            popupMenu2.Name = "popupMenu2";
-            popupMenu2.Ribbon = parentRibbonControl;
-            // 
             // ribbonPage_Home
             // 
             ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroup1 });
@@ -283,6 +280,11 @@ namespace Foxoft
             ribbonStatusBar.Ribbon = parentRibbonControl;
             ribbonStatusBar.Size = new Size(1023, 24);
             // 
+            // popupMenu2
+            // 
+            popupMenu2.Name = "popupMenu2";
+            popupMenu2.Ribbon = parentRibbonControl;
+            // 
             // svgImageCollection1
             // 
             svgImageCollection1.Add("properties", "image://svgimages/setup/properties.svg");
@@ -309,7 +311,7 @@ namespace Foxoft
             // 
             // aCE_Invoices
             // 
-            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1 });
+            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentsaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1 });
             aCE_Invoices.Expanded = true;
             aCE_Invoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Invoices.ImageOptions.SvgImage");
             aCE_Invoices.Name = "aCE_Invoices";
@@ -366,6 +368,14 @@ namespace Foxoft
             aCE_WholesaleInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             aCE_WholesaleInvoice.Text = "Topdan Satış Fakturası";
             aCE_WholesaleInvoice.Click += ACE_WholesaleInvoice_Click;
+            // 
+            // aCE_InstallmentsaleInvoice
+            // 
+            aCE_InstallmentsaleInvoice.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
+            aCE_InstallmentsaleInvoice.Name = "aCE_InstallmentsaleInvoice";
+            aCE_InstallmentsaleInvoice.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_InstallmentsaleInvoice.Text = "Kredit Satış Fakturası";
+            aCE_InstallmentsaleInvoice.Click += ACE_InstallmentsaleInvoice_Click;
             // 
             // accordionControlSeparator6
             // 
@@ -598,9 +608,9 @@ namespace Foxoft
             FormClosing += FormERP_FormClosing;
             MdiChildActivate += FormERP_MdiChildActivate;
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).EndInit();
-            ((System.ComponentModel.ISupportInitialize)popupMenu2).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)popupMenu2).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)aC_Root).EndInit();
@@ -681,5 +691,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarSubItem BSI_Report;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.PopupMenu popupMenu2;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_InstallmentsaleInvoice;
     }
 }

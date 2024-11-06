@@ -31,7 +31,6 @@ namespace Foxoft.Models
 
 
 
-        //public virtual TrPaymentLine TrPaymentLine { get; set; }
         public virtual TrPaymentHeader TrPaymentHeader { get; set; }
         public virtual DcPaymentPlan DcPaymentPlan { get; set; }
 

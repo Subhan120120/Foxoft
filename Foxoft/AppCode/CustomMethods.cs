@@ -77,9 +77,10 @@ namespace Foxoft.AppCode
         {
             string queryTop = AddTop(query, int.MaxValue);
 
-            string queryMaster = AddFilter(queryTop, filter);
+            if (!string.IsNullOrEmpty(filter))
+                queryTop = AddFilter(queryTop, filter);
 
-            string queryReady = ReplaceFilters(queryMaster, dcReport);
+            string queryReady = ReplaceFilters(queryTop, dcReport);
 
             sqlParameters = GetParameters(dcReport);
 
@@ -275,6 +276,7 @@ namespace Foxoft.AppCode
                 case SqlDbType.NVarChar:
                 case SqlDbType.Char:
                 case SqlDbType.NChar:
+                case SqlDbType.UniqueIdentifier:
                     return typeof(string);
                 case SqlDbType.Decimal:
                 case SqlDbType.Money:
@@ -292,7 +294,6 @@ namespace Foxoft.AppCode
                 case SqlDbType.Binary:
                 case SqlDbType.VarBinary:
                     return typeof(byte[]);
-                // Add more mappings as needed
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sqlDbType), $"No mapping exists for SqlDbType {sqlDbType}");
             }
@@ -316,7 +317,7 @@ namespace Foxoft.AppCode
                 "System.Bool" => DbType.Boolean,
                 "System.String" => DbType.String,
                 "System.Char" => DbType.StringFixedLength,
-                "System.Guid" => DbType.Guid,
+                "System.Guid" => DbType.String,
                 "System.DateTime" => DbType.DateTime,
                 "System.DateTimeOffset" => DbType.DateTimeOffset,
                 "System.Byte[]" => DbType.Binary,

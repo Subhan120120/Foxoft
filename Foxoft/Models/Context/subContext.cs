@@ -638,7 +638,8 @@ namespace Foxoft.Models
                 new DcProcess { ProcessCode = "TF", ProcessDesc = "Transfer", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "IT", ProcessDesc = "Mal Transferi", ProcessDir = 2 },
                 new DcProcess { ProcessCode = "CT", ProcessDesc = "Pul Transferi", ProcessDir = 2 },
-                new DcProcess { ProcessCode = "PL", ProcessDesc = "Qiymət Cədvəli", ProcessDir = 0 }
+                new DcProcess { ProcessCode = "PL", ProcessDesc = "Qiymət Cədvəli", ProcessDir = 0 },
+                new DcProcess { ProcessCode = "IS", ProcessDesc = "Kredit Satışı", ProcessDir = 2 }
                 );
 
             modelBuilder.Entity<DcProduct>().HasData(
@@ -703,7 +704,9 @@ namespace Foxoft.Models
                 new DcVariable { VariableCode = "EX", VariableDesc = "Xərclər" },
                 new DcVariable { VariableCode = "EI", VariableDesc = "Xərclər" },
                 new DcVariable { VariableCode = "IT", VariableDesc = "Mal Transferi" },
-                new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" }
+                new DcVariable { VariableCode = "CT", VariableDesc = "Pul transferi" },
+                new DcVariable { VariableCode = "IS", VariableDesc = "Kredit Satışı" }
+
                 );
         }
 

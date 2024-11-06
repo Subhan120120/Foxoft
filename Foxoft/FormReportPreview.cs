@@ -29,7 +29,7 @@ namespace Foxoft
         public FormReportPreview(string query, string filter, DcReport dcReport)
             : this()
         {
-            dcReport = efMethods.SelectReport(dcReport.ReportId);
+            //dcReport = efMethods.SelectReport(dcReport.ReportId);
 
             SqlParameter[] sqlParameters;
 

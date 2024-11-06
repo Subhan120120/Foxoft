@@ -25,7 +25,7 @@ namespace Foxoft
             DcReport report = efMethods.SelectReportByName("Report_Embedded_InvoiceReport");
 
             QueryParameter queryParameter1 = new();
-            queryParameter1.Name = "invoiceHeader";
+            queryParameter1.Name = "InvoiceHeaderId";
             queryParameter1.Type = typeof(Guid);
             queryParameter1.ValueInfo = invoiceHeader.ToString();
 
