@@ -1310,7 +1310,6 @@ namespace Foxoft
         private MemoryStream GetInvoiceReportImg()
         {
             DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_InvoiceReport");
-            AdoMethods adoMethods = new();
 
             foreach (var item in dcReport.DcReportVariables)
                 if (item.VariableProperty == nameof(TrInvoiceHeader.InvoiceHeaderId))
@@ -1318,15 +1317,15 @@ namespace Foxoft
 
             SqlParameter[] sqlParameters;
             dcReport.ReportQuery = cM.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
-            DataTable dt = adoMethods.SqlGetDt(dcReport.ReportQuery, sqlParameters);
-
+            List<QueryParameter> qryParams = cM.ConvertSqlParametersToQueryParameters(sqlParameters);
+            CustomSqlQuery mainQuery = new("Main", dcReport.ReportQuery);
+            mainQuery.Parameters.AddRange(qryParams);
+            List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
             ReportClass reportClass = new();
-            XtraReport xtraReport = reportClass.CreateReport(dt, dcReport.ReportName + ".repx");
+            XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
 
             MemoryStream ms = new();
-
             xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
-
             return ms;
         }
 
