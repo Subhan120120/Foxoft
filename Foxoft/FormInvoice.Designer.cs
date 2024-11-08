@@ -109,7 +109,6 @@ namespace Foxoft
             repoBtnEdit_ProductCode = new RepositoryItemButtonEdit();
             colBalance = new GridColumn();
             colQty = new GridColumn();
-            repoTextEdit_Qty = new RepositoryItemTextEdit();
             colQtyIn = new GridColumn();
             colQtyOut = new GridColumn();
             colPriceLoc = new GridColumn();
@@ -192,7 +191,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoTextEdit_Qty).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_PriceLoc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_Price).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).BeginInit();
@@ -818,7 +816,7 @@ namespace Foxoft
             gC_InvoiceLine.Location = new Point(12, 144);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
-            gC_InvoiceLine.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure, repoTextEdit_Qty });
+            gC_InvoiceLine.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure });
             gC_InvoiceLine.Size = new Size(1105, 165);
             gC_InvoiceLine.TabIndex = 11;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
@@ -904,21 +902,11 @@ namespace Foxoft
             // 
             // colQty
             // 
-            colQty.ColumnEdit = repoTextEdit_Qty;
             colQty.FieldName = "Qty";
             colQty.Name = "colQty";
             colQty.Visible = true;
             colQty.VisibleIndex = 4;
             colQty.Width = 34;
-            // 
-            // repoTextEdit_Qty
-            // 
-            repoTextEdit_Qty.AutoHeight = false;
-            repoTextEdit_Qty.DisplayFormat.FormatString = "n0";
-            repoTextEdit_Qty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            repoTextEdit_Qty.EditFormat.FormatString = "n0";
-            repoTextEdit_Qty.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            repoTextEdit_Qty.Name = "repoTextEdit_Qty";
             // 
             // colQtyIn
             // 
@@ -1414,7 +1402,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_ProductCode).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoTextEdit_Qty).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_PriceLoc).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoCalcEdit_Price).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_CurrencyCode).EndInit();
@@ -1583,6 +1570,5 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colUnitOfMeasureId;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtnEdit_UnitOfMeasure;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_UnitOfMeasure;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoTextEdit_Qty;
     }
 }
