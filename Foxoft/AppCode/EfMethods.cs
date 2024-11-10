@@ -1464,6 +1464,12 @@ namespace Foxoft
             return db.DcPaymentMethods.ToList();
         }
 
+        public List<DcPaymentMethod> SelectPaymentMethodsByPaymentTypes(byte[] paymentTypes)
+        {
+            using subContext db = new();
+            return db.DcPaymentMethods.Where(x => paymentTypes.Contains(x.PaymentTypeCode)).ToList();
+        }
+
         public List<DcPaymentPlan> SelectPaymentPlans(int paymentMethodId)
         {
             using subContext db = new();

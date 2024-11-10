@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20241109103117_PayPlan")]
+    partial class PayPlan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -988,7 +991,7 @@ namespace Foxoft.Migrations
                         {
                             PaymentMethodId = 2,
                             PaymentMethodDesc = "Daxili Kredit",
-                            PaymentTypeCode = (byte)3
+                            PaymentTypeCode = (byte)2
                         },
                         new
                         {
@@ -1018,17 +1021,12 @@ namespace Foxoft.Migrations
                     b.Property<int>("DurationInMonths")
                         .HasColumnType("int");
 
-                    b.Property<int>("PaymentMethodId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PaymentPlanDesc")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("PaymentPlanCode");
-
-                    b.HasIndex("PaymentMethodId");
 
                     b.ToTable("DcPaymentPlans");
 
@@ -1037,42 +1035,36 @@ namespace Foxoft.Migrations
                         {
                             PaymentPlanCode = "M03",
                             DurationInMonths = 3,
-                            PaymentMethodId = 2,
                             PaymentPlanDesc = "3 AY"
                         },
                         new
                         {
                             PaymentPlanCode = "M06",
                             DurationInMonths = 6,
-                            PaymentMethodId = 2,
                             PaymentPlanDesc = "6 AY"
                         },
                         new
                         {
                             PaymentPlanCode = "M09",
                             DurationInMonths = 9,
-                            PaymentMethodId = 2,
                             PaymentPlanDesc = "9 AY"
                         },
                         new
                         {
                             PaymentPlanCode = "M12",
                             DurationInMonths = 12,
-                            PaymentMethodId = 2,
                             PaymentPlanDesc = "12 AY"
                         },
                         new
                         {
                             PaymentPlanCode = "M18",
                             DurationInMonths = 18,
-                            PaymentMethodId = 2,
                             PaymentPlanDesc = "18 AY"
                         },
                         new
                         {
                             PaymentPlanCode = "M24",
                             DurationInMonths = 24,
-                            PaymentMethodId = 2,
                             PaymentPlanDesc = "24 AY"
                         });
                 });
@@ -1101,11 +1093,6 @@ namespace Foxoft.Migrations
                         {
                             PaymentTypeCode = (byte)2,
                             PaymentTypeDesc = "Nağdsız"
-                        },
-                        new
-                        {
-                            PaymentTypeCode = (byte)3,
-                            PaymentTypeDesc = "Daxili Kredit"
                         });
                 });
 
@@ -3255,11 +3242,11 @@ namespace Foxoft.Migrations
                     b.Property<decimal>("Commission")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("InvoiceHeaderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("MonthlyPayment")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("PaymentHeaderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PaymentPlanCode")
                         .IsRequired()
@@ -3267,7 +3254,7 @@ namespace Foxoft.Migrations
 
                     b.HasKey("PaymentPlanId");
 
-                    b.HasIndex("InvoiceHeaderId");
+                    b.HasIndex("PaymentHeaderId");
 
                     b.HasIndex("PaymentPlanCode");
 
@@ -4145,17 +4132,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcPaymentType");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcPaymentPlan", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcPaymentMethod", "DcPaymentMethod")
-                        .WithMany("DcPaymentPlans")
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcPaymentMethod");
-                });
-
             modelBuilder.Entity("Foxoft.Models.DcProcess", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
@@ -4552,9 +4528,9 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentPlan", b =>
                 {
-                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
+                    b.HasOne("Foxoft.Models.TrPaymentHeader", "TrPaymentHeader")
                         .WithMany("TrPaymentPlans")
-                        .HasForeignKey("InvoiceHeaderId")
+                        .HasForeignKey("PaymentHeaderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -4566,7 +4542,7 @@ namespace Foxoft.Migrations
 
                     b.Navigation("DcPaymentPlan");
 
-                    b.Navigation("TrInvoiceHeader");
+                    b.Navigation("TrPaymentHeader");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
@@ -4868,8 +4844,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcPaymentMethod", b =>
                 {
-                    b.Navigation("DcPaymentPlans");
-
                     b.Navigation("TrPaymentLines");
 
                     b.Navigation("TrPaymentMethodDiscounts");
@@ -4987,8 +4961,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrPaymentHeaders");
-
-                    b.Navigation("TrPaymentPlans");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
@@ -5002,6 +4974,8 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
                 {
                     b.Navigation("TrPaymentLines");
+
+                    b.Navigation("TrPaymentPlans");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>

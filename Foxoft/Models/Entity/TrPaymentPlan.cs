@@ -15,9 +15,9 @@ namespace Foxoft.Models
         [Display(Name = "Ödəmə Planı İd")]
         public int PaymentPlanId { get; set; }
 
-        [ForeignKey("TrPaymentHeader")]
-        [Display(Name = "Ödəmə Detalı İd")]
-        public Guid PaymentHeaderId { get; set; }
+        [ForeignKey("TrInvoiceHeader")]
+        [Display(Name = "Faktura İd")]
+        public Guid InvoiceHeaderId { get; set; }
 
         [Display(Name = "Ödəmə Planı Kodu")]
         [ForeignKey("DcPaymentPlan")]
@@ -31,7 +31,7 @@ namespace Foxoft.Models
 
 
 
-        public virtual TrPaymentHeader TrPaymentHeader { get; set; }
+        public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcPaymentPlan DcPaymentPlan { get; set; }
 
     }

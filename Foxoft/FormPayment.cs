@@ -39,9 +39,20 @@ namespace Foxoft
                 new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
             });
 
+            LUE_PayPlan.Properties.DataSource = efMethods.SelectPaymentPlans(2);
+            LUE_PayPlan.Properties.ValueMember = nameof(DcPaymentPlan.PaymentPlanCode);
+            LUE_PayPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
+            LUE_PayPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
+            {
+                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
+            });
+
+            LUE_InstallmentCurrency.Properties.DataSource = efMethods.SelectCurrencies();
             lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
             lUE_CashlessCurrency.Properties.DataSource = efMethods.SelectCurrencies();
-            lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethods();
+            lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 1, 2 });
         }
 
         public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader)
@@ -316,22 +327,25 @@ namespace Foxoft
 
                         TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
 
-                        trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode;
                         trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
-                        //trPaymentHeader2.RelatedPaymentId = trPaymentHeader.PaymentHeaderId;
-                        //trPaymentHeader2.InvoiceHeaderId = null;
+                        trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode;
                         efMethods.InsertPaymentHeader(trPaymentHeader2);
 
-                        trPaymentLineCashless.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                        trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
-                        trPaymentLineCashless.Payment = trPaymentLineCashless.Payment * (-1);
-                        efMethods.InsertPaymentLine(trPaymentLineCashless);
+                        TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
+                        trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
+                        trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
+                        trPaymentLineCashless2.Payment = trPaymentLineCashless.Payment * (-1);
+                        efMethods.InsertPaymentLine(trPaymentLineCashless2);
 
-                        //if (!string.IsNullOrEmpty(TrPaymentPlan.PaymentPlanCode))
-                        //{
-                        //    TrPaymentPlan.PaymentLineId = trPaymentLineCashless.PaymentLineId;
-                        //    efMethods.InsertTrPaymentPlan(TrPaymentPlan);
-                        //}
+                    }
+                    if (trPaymentLineCashless.PaymentLoc > 0)
+                    {
+                        if (!string.IsNullOrEmpty(TrPaymentPlan.PaymentPlanCode))
+                        {
+                            TrPaymentPlan.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
+                            efMethods.InsertTrPaymentPlan(TrPaymentPlan);
+                        }
+
                     }
                 }
 
@@ -384,7 +398,7 @@ namespace Foxoft
             trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
             btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
 
-            List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(trPaymentLineCashless.PaymentMethodId);
+            List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
             if (paymentPlans.Count > 0)
             {
                 LUE_PaymentPlan.Properties.DataSource = paymentPlans;
@@ -395,7 +409,7 @@ namespace Foxoft
             {
                 LUE_PaymentPlan.Properties.DataSource = null;
                 txt_Commission.EditValue = null;
-                //LUE_PaymentPlan.EditValue = null;
+                LUE_PaymentPlan.EditValue = null;
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Never);
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Never);
             }
