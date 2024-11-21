@@ -31,6 +31,7 @@ namespace Foxoft
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
         CustomMethods cM = new();
+        ReportClass reportClass;
 
         string barcodeDesignFile = @"Barcode.repx";
         public byte[] productTypeArr;
@@ -54,6 +55,7 @@ namespace Foxoft
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             productsFolder = Path.Combine(settingStore.ImageFolder, "Products");
+            reportClass = new ReportClass(settingStore.DesignFileFolder);
 
             string activeFilterStr = "[StoreCode] = \'" + settingStore.StoreCode + "\'";
             cM.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
@@ -399,16 +401,17 @@ namespace Foxoft
 
                     SqlParameter[] sqlParameters;
                     dcReport.ReportQuery = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
-                    var data = adoMethods.SqlGetDt(dcReport.ReportQuery);
+                    DataTable? data = adoMethods.SqlGetDt(dcReport.ReportQuery);
 
-                    ReportClass reportClass = new();
                     XtraReport xtraReport = reportClass.CreateReport(data, dcReport.ReportName + ".repx");
 
                     using (MemoryStream ms = new())
                     {
                         xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
-                        Image img = Image.FromStream(ms);
-                        Clipboard.SetImage(img);
+                        using (Image img = Image.FromStream(ms))
+                        {
+                            Clipboard.SetImage(img);
+                        }
                     };
 
                     e.Handled = true;
@@ -547,7 +550,6 @@ namespace Foxoft
 
         private XtraReport GetBarcodeReport()
         {
-            ReportClass reportClass = new();
             DsMethods dsMethods = new();
             DevExpress.DataAccess.Sql.SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
             return reportClass.GetReport("Barcode", barcodeDesignFile, new DevExpress.DataAccess.Sql.SqlQuery[] { sqlQuerySale });

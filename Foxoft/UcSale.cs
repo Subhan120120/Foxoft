@@ -22,7 +22,7 @@ namespace Foxoft
         EfMethods efMethods = new EfMethods();
         AdoMethods adoMethods = new AdoMethods();
         DsMethods dsMethods = new DsMethods();
-        ReportClass reportClass = new ReportClass();
+        ReportClass reportClass = new ReportClass("");
 
         public UcSale()
         {

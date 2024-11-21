@@ -27,10 +27,14 @@ namespace Foxoft.Models
         [Display(Name = "Müddət Aylarla")]
         public int DurationInMonths { get; set; } // Duration of the payment plan in months
 
+        [Display(Name = "Kamisia Dədəcəsi")]
+        public float CommissionRate { get; set; }
+
+
 
 
         [ForeignKey("PaymentMethodId")]
         public virtual DcPaymentMethod DcPaymentMethod { get; set; }
-        public virtual ICollection<TrPaymentPlan> TrPaymentPlans { get; set; }
+        public virtual ICollection<TrInstallment> TrPaymentPlans { get; set; }
     }
 }

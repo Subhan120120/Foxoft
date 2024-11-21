@@ -17,13 +17,19 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
 
+        string designFolder;
         private string subConnString = Properties.Settings.Default.SubConnString;
+
+        public ReportClass(string designFolder)
+        {
+            this.designFolder = designFolder;
+        }
 
         public string SelectDesign()
         {
             string fileExt = string.Empty;
             OpenFileDialog file = new();
-            file.InitialDirectory = efMethods.SelectSettingStore(Authorization.StoreCode).DesignFileFolder;
+            file.InitialDirectory = designFolder;
             if (file.ShowDialog() == DialogResult.OK)
             {
                 fileExt = Path.GetExtension(file.FileName);
@@ -41,12 +47,10 @@ namespace Foxoft
 
         public XtraReport CreateReport(object datasource, string repxFileName)
         {
-            SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-
             string designPath = string.Empty;
-            if (settingStore is not null)
-                if (CustomExtensions.DirectoryExist(settingStore.DesignFileFolder))
-                    designPath = settingStore.DesignFileFolder + @"\" + repxFileName;
+            if (!string.IsNullOrEmpty(designFolder))
+                if (CustomExtensions.DirectoryExist(designFolder))
+                    designPath = designFolder + @"\" + repxFileName;
 
             if (!File.Exists(designPath))
                 designPath = SelectDesign();

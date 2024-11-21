@@ -34,7 +34,7 @@ namespace Foxoft.Models
         [NotMapped]
         [Display(Name = "Say")]
         [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:n0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         public decimal Qty
         {
             get

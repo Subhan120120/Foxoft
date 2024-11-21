@@ -56,7 +56,7 @@ namespace Foxoft
                 sqlQueries.Add(subQuery);
             }
 
-            ReportClass reportClass = new();
+            ReportClass reportClass = new(settingStore.DesignFileFolder);
 
             xReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
 

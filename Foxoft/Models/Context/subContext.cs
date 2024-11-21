@@ -28,7 +28,7 @@ namespace Foxoft.Models
         public DbSet<DcPaymentType> DcPaymentTypes { get; set; }
         public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
         public DbSet<DcPaymentPlan> DcPaymentPlans { get; set; }
-        public DbSet<TrPaymentPlan> TrPaymentPlans { get; set; }
+        public DbSet<TrInstallment> TrInstallments { get; set; }
 
         //public DbSet<TrInvoiceHeaderDeleted> TrInvoiceHeaderDeleteds { get; set; }
         public DbSet<DcProcess> DcProcesses { get; set; }
@@ -562,16 +562,6 @@ namespace Foxoft.Models
                 new TrClaimReport { ClaimReportId = 18, ClaimCode = "ButunHesabatlar", ReportId = 18 }
                );
 
-            modelBuilder.Entity<DcReportVariableType>().HasData(
-                new DcReportVariableType { VariableTypeId = 1, VariableTypeDesc = "Parameter" },
-                new DcReportVariableType { VariableTypeId = 2, VariableTypeDesc = "Filter" }
-               );
-
-            modelBuilder.Entity<DcReportVariable>().HasData(
-                new DcReportVariable { VariableId = 1, ReportId = 13, VariableTypeId = 2, VariableProperty = "CurrAccCode", Representative = "{CurrAccCode}", VariableValue = "c-0000001", VariableOperator = "=", VariableValueType = "System.String" },
-                new DcReportVariable { VariableId = 2, ReportId = 17, VariableTypeId = 2, VariableProperty = "DocumentDate", Representative = "{StartDate}", VariableValue = "08.01.2030", VariableOperator = "<=", VariableValueType = "System.DateTime" }
-               );
-
             CustomMethods cM = new();
 
             modelBuilder.Entity<DcReport>().HasData(
@@ -590,6 +580,17 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 18, ReportTypeId = 2, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 19, ReportTypeId = 1, ReportName = "Məhsul Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductBalanceSerialNumber.sql"), ReportLayout = "" }
                 // reportlarin layoutlarin FormLogin de duzelt
+               );
+
+            modelBuilder.Entity<DcReportVariableType>().HasData(
+                new DcReportVariableType { VariableTypeId = 1, VariableTypeDesc = "Parameter" },
+                new DcReportVariableType { VariableTypeId = 2, VariableTypeDesc = "Filter" }
+               );
+
+            modelBuilder.Entity<DcReportVariable>().HasData(
+                new DcReportVariable { VariableId = 1, ReportId = 4, VariableTypeId = 1, VariableProperty = "InvoiceHeaderId", Representative = "@InvoiceHeaderId", VariableValue = "", VariableOperator = "", VariableValueType = "System.Guid" },
+                new DcReportVariable { VariableId = 2, ReportId = 13, VariableTypeId = 2, VariableProperty = "CurrAccCode", Representative = "{CurrAccCode}", VariableValue = "c-0000001", VariableOperator = "=", VariableValueType = "System.String" },
+                new DcReportVariable { VariableId = 3, ReportId = 17, VariableTypeId = 2, VariableProperty = "DocumentDate", Representative = "{StartDate}", VariableValue = "08.01.2030", VariableOperator = "<=", VariableValueType = "System.DateTime" }
                );
 
             modelBuilder.Entity<DcOffice>().HasData(

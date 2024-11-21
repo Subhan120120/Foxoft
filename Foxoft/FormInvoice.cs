@@ -63,15 +63,15 @@ namespace Foxoft
         public DcProcess dcProcess;
         private byte[] productTypeArr;
         private decimal CurrAccBalanceBefore;
+        ReportClass reportClass;
 
         private const int WM_GETTAG = 0x0400 + 1; // for acccess to tag via Windows API
-
-        //public AdornerElement[] Badges { get { return new AdornerElement[] { badge1, badge2 }; } }
 
         public FormInvoice(string processCode, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             dcProcess = efMethods.SelectProcess(processCode);
+            reportClass = new(settingStore.DesignFileFolder);
 
             InitializeComponent();
 
@@ -340,6 +340,10 @@ namespace Foxoft
         {
             decimal paidSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
             lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+
+            decimal installmentSum = efMethods.SelectInstallmentsSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            lbl_InstallmentSum.Text = "Kredit: " + Math.Round(installmentSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
 
         private void ShowPrintCount()
@@ -1038,27 +1042,6 @@ namespace Foxoft
             }
         }
 
-        //private void GetPrintDialogToWarehouse()
-        //{
-        //    XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
-
-        //    if (report is not null)
-        //    {
-        //        ReportPrintTool printTool = new(report);
-
-        //        bool? isPrinted = printTool.PrintDialog();
-
-        //        if (isPrinted is not null)
-        //        {
-        //            bool printed = Convert.ToBoolean(isPrinted);
-        //            if (printed)
-        //            {
-        //                efMethods.UpdateInvoicePrintCount(trInvoiceHeader.InvoiceHeaderId);
-        //            }
-        //        }
-        //    }
-        //}
-
         private void MakePayment(decimal summaryInvoice, bool autoPayment)
         {
             using FormPayment formPayment = new(1, summaryInvoice, trInvoiceHeader, autoPayment);
@@ -1078,34 +1061,10 @@ namespace Foxoft
             }
         }
 
-        private void gV_InvoiceLine_AsyncCompleted(object sender, EventArgs e)
-        {
-            MessageBox.Show("Event AsyncCompleted");
-        }
-
-        private void gV_InvoiceLine_RowLoaded(object sender, RowEventArgs e)
-        {
-            //object a = sender;
-            //RowEventArgs r = e;
-            MessageBox.Show("Event RowLoaded");
-        }
-
         private void bBI_New_ItemClick(object sender, ItemClickEventArgs e)
         {
             ClearControlsAddNew();
         }
-
-        //private void bBI_reportDesign_ItemClick(object sender, ItemClickEventArgs e)
-        //{
-        //    string designPath = "";
-        //    XtraReport xtraReport = GetInvoiceReport(designPath);
-
-        //    if (xtraReport is not null)
-        //    {
-        //        ReportDesignTool printTool = new(xtraReport);
-        //        printTool.ShowRibbonDesigner();
-        //    }
-        //}
 
         private void bBI_reportPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -1127,7 +1086,6 @@ namespace Foxoft
 
         private XtraReport GetInvoiceReport(string fileName)
         {
-            ReportClass reportClass = new();
             DsMethods dsMethods = new();
             SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
             return reportClass.GetReport("invoice", fileName, new SqlQuery[] { sqlQuerySale });
@@ -1321,11 +1279,11 @@ namespace Foxoft
             CustomSqlQuery mainQuery = new("Main", dcReport.ReportQuery);
             mainQuery.Parameters.AddRange(qryParams);
             List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });
-            ReportClass reportClass = new();
             XtraReport xtraReport = reportClass.GetReport(dcReport.ReportName, dcReport.ReportName + ".repx", sqlQueries);
 
             MemoryStream ms = new();
-            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 480 });
+            xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
+            
             return ms;
         }
 
@@ -1697,7 +1655,6 @@ namespace Foxoft
             ColumnView View = gC_InvoiceLine.MainView as ColumnView;
             List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(View).ToList();
 
-            ReportClass reportClass = new();
             XtraReport xtraReport = reportClass.CreateReport(mydata, "");
 
             if (xtraReport is not null)
@@ -2061,11 +2018,6 @@ namespace Foxoft
             MessageBox.Show(gV_InvoiceLine.ActiveEditor?.Text.ToString());
         }
 
-        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
             int rowInd = gV_InvoiceLine.GetRowHandle(e.ListSourceRowIndex);
@@ -2217,10 +2169,6 @@ namespace Foxoft
         {
             FormCommonList<DcUnitOfMeasure> formCommon = new("", nameof(DcUnitOfMeasure.UnitOfMeasureId));
             formCommon.ShowDialog();
-        }
-
-        private void repoLUE_UnitOfMeasure_Popup(object sender, EventArgs e)
-        {
         }
 
         private void repoLUE_UnitOfMeasure_PopupFilter(object sender, PopupFilterEventArgs e)

@@ -31,7 +31,7 @@ select  InvoiceLineId
 , CurrencyCode
 , ExchangeRate
 , TrInvoiceHeaders.ProcessCode
-, ProcessDesc
+, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)
 , DocumentNumber
 , IsReturn
 , ProductCost

@@ -1,6 +1,5 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -16,7 +15,7 @@ namespace Foxoft
         private TrPaymentLine trPaymentLineCash = new();
         private TrPaymentLine trPaymentLineCashless = new();
         private DcPaymentMethod dcPaymentMethod = new();
-        private TrPaymentPlan TrPaymentPlan = new();
+        private TrInstallment trInstallment = new();
         private EfMethods efMethods = new();
 
         private bool isNegativ = false;
@@ -39,10 +38,10 @@ namespace Foxoft
                 new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
             });
 
-            LUE_PayPlan.Properties.DataSource = efMethods.SelectPaymentPlans(2);
-            LUE_PayPlan.Properties.ValueMember = nameof(DcPaymentPlan.PaymentPlanCode);
-            LUE_PayPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
-            LUE_PayPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
+            LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectPaymentPlans(2);
+            LUE_InstallmentPlan.Properties.ValueMember = nameof(DcPaymentPlan.PaymentPlanCode);
+            LUE_InstallmentPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
+            LUE_InstallmentPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
             {
                 new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
                 new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
@@ -84,6 +83,19 @@ namespace Foxoft
                     SavePayment(true);
         }
 
+        private void btn_Num_Click(object sender, EventArgs e)
+        {
+            string key = (sender as SimpleButton).Text;
+
+            switch (key)
+            {
+                case "←": SendKeys.Send("{BACKSPACE}"); break;
+                case "C": SendKeys.Send("^A"); SendKeys.Send("{BACKSPACE}"); break;
+                case "↵": btn_Ok.PerformClick(); break;
+                default: SendKeys.Send(key); break;
+            }
+        }
+
         private void PaymentDefaults(byte paymentType, TrInvoiceHeader trInvoiceHeader)
         {
             PaymentHeaderId = Guid.NewGuid();
@@ -122,6 +134,10 @@ namespace Foxoft
             trPaymentLineCashless.ExchangeRate = 1;
             trPaymentLineCashless.CreatedUserName = Authorization.CurrAccCode;
 
+            trInstallment.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            trInstallment.ExchangeRate = 1;
+
+
             string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
             if (!String.IsNullOrEmpty(cashReg))
             {
@@ -137,14 +153,19 @@ namespace Foxoft
 
         private void FillControls()
         {
-            txtEdit_Cash.EditValue = trPaymentLineCash.PaymentLoc;
-            txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
-
             dateEdit_Date.EditValue = DateTime.Now.ToString("yyyy-MM-dd");
-            btnEdit_CashRegister.EditValue = trPaymentLineCash.CashRegisterCode;
-            btnEdit_BankAccout.EditValue = trPaymentLineCashless.CashRegisterCode;
+
+            txtEdit_Cash.EditValue = trPaymentLineCash.PaymentLoc;
             lUE_cashCurrency.EditValue = trPaymentLineCash.CurrencyCode;
+            btnEdit_CashRegister.EditValue = trPaymentLineCash.CashRegisterCode;
+
+            txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
             lUE_CashlessCurrency.EditValue = trPaymentLineCashless.CurrencyCode;
+            btnEdit_BankAccout.EditValue = trPaymentLineCashless.CashRegisterCode;
+
+            TxtEdit_Installment.EditValue = trInstallment.Amount;
+            LUE_InstallmentCurrency.EditValue = trInstallment.CurrencyCode;
+            LUE_InstallmentPlan.EditValue = trInstallment.PaymentPlanCode;
         }
 
         private void dateEdit_Date_EditValueChanged(object sender, EventArgs e)
@@ -153,10 +174,9 @@ namespace Foxoft
             trPaymentHeader.OperationDate = date;
         }
 
-        private void textEditCash_EditValueChanged(object sender, EventArgs e)
+        private void txtEdit_Cash_EditValueChanged(object sender, EventArgs e)
         {
-            decimal txtCash = Convert.ToDecimal(txtEdit_Cash.EditValue);
-            trPaymentLineCash.Payment = txtCash;
+            trPaymentLineCash.Payment = Convert.ToDecimal(txtEdit_Cash.EditValue);
             txtEdit_Cash.DoValidate();
         }
 
@@ -173,16 +193,39 @@ namespace Foxoft
             e.ErrorText = "Dəyər 0 dan böyük olmalıdır";
         }
 
-        private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
-        {
-            SelectCashRegister(sender, 1);
-        }
-
         private void lUE_cashCurrency_EditValueChanged(object sender, EventArgs e)
         {
             trPaymentLineCash.CurrencyCode = lUE_cashCurrency.EditValue.ToString();
-            trPaymentLineCash.ExchangeRate = (float)lUE_cashCurrency.GetColumnValue("ExchangeRate");
-            //FillControls();
+            trPaymentLineCash.ExchangeRate = (float)lUE_cashCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
+        }
+
+        private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
+        {
+            dcPaymentMethod = efMethods.SelectPaymentMethod(Convert.ToInt32(lUE_PaymentMethod.EditValue));
+
+            trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
+            btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
+
+            List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
+            if (paymentPlans.Count > 0)
+            {
+                LUE_PaymentPlan.Properties.DataSource = paymentPlans;
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Always);
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Always);
+            }
+            else
+            {
+                LUE_PaymentPlan.Properties.DataSource = null;
+                txt_Commission.EditValue = null;
+                LUE_PaymentPlan.EditValue = null;
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Never);
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Never);
+            }
+        }
+
+        private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            SelectCashRegister(sender, 1);
         }
 
         private void SelectCashRegister(object sender, byte paymentTypeCode)
@@ -198,15 +241,47 @@ namespace Foxoft
             }
         }
 
-        private void simpleButtonUpdateCash_Click(object sender, EventArgs e)
+        private void btnEdit_CashRegister_EditValueChanged(object sender, EventArgs e)
         {
+            trPaymentLineCash.CashRegisterCode = btnEdit_CashRegister.EditValue.ToString();
+        }
+
+        private void btnEdit_CashRegister_Validating(object sender, CancelEventArgs e)
+        {
+            object eValue = btnEdit_CashRegister.EditValue;
+
+            if (eValue is not null)
+            {
+                DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
+
+                if (curr is null)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    trPaymentLineCash.CashRegisterCode = eValue.ToString();
+                }
+            }
+        }
+
+        private void btnEdit_CashRegister_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ErrorText = "Belə bir kassa yoxdur";
+            e.ExceptionMode = ExceptionMode.DisplayError;
         }
 
         private void textEditCashless_EditValueChanged(object sender, EventArgs e)
         {
-            decimal txtCashless = Convert.ToDecimal(txtEdit_Cashless.EditValue);
-            trPaymentLineCashless.Payment = txtCashless;
+            trPaymentLineCashless.Payment = Convert.ToDecimal(txtEdit_Cashless.EditValue);
             txtEdit_Cashless.DoValidate();
+
+            object row = LUE_PaymentPlan.Properties.GetDataSourceRowByKeyValue(LUE_PaymentPlan.EditValue);
+            if (row is not null)
+            {
+                float paymentTypeCode = ((DcPaymentPlan)row).CommissionRate;
+                txt_Commission.EditValue = trPaymentLineCashless.Payment * (decimal)paymentTypeCode / 100;
+            }
         }
 
         private void textEditCashless_Validating(object sender, CancelEventArgs e)
@@ -215,45 +290,65 @@ namespace Foxoft
                 e.Cancel = true;
         }
 
-        private void textEditCashless_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
-        {
-        }
-
-        private void simpleButtonUpdateCashless_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void textEditBonus_EditValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void textEditBonus_Validating(object sender, CancelEventArgs e)
-        {
-        }
-
-        private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
-        {
-        }
+        private void textEditCashless_InvalidValue(object sender, InvalidValueExceptionEventArgs e) { }
 
         private void lUE_CashlessCurrency_EditValueChanged(object sender, EventArgs e)
         {
-            LookUpEdit editor = sender as LookUpEdit;
             trPaymentLineCashless.CurrencyCode = lUE_CashlessCurrency.EditValue.ToString();
-            trPaymentLineCashless.ExchangeRate = (float)editor.GetColumnValue("ExchangeRate");
-            //FillControls();
+            trPaymentLineCashless.ExchangeRate = (float)lUE_CashlessCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
         }
 
-        private void btn_Num_Click(object sender, EventArgs e)
+        private void btnEdit_BankAccout_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            string key = (sender as SimpleButton).Text;
-
-            switch (key)
+            object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
+            if (row is not null)
             {
-                case "←": SendKeys.Send("{BACKSPACE}"); break;
-                case "C": SendKeys.Send("^A"); SendKeys.Send("{BACKSPACE}"); break;
-                case "↵": btn_Ok.PerformClick(); break;
-                default: SendKeys.Send(key); break;
+                byte paymentTypeCode = ((DcPaymentMethod)row).PaymentTypeCode;
+                SelectCashRegister(sender, paymentTypeCode);
             }
+        }
+
+        private void btnEdit_BankAccout_EditValueChanged(object sender, EventArgs e)
+        {
+            trPaymentLineCashless.CashRegisterCode = btnEdit_BankAccout.EditValue?.ToString();
+        }
+
+        private void LUE_PaymentPlan_EditValueChanged(object sender, EventArgs e)
+        {
+            object row = LUE_PaymentPlan.Properties.GetDataSourceRowByKeyValue(LUE_PaymentPlan.EditValue);
+            if (row is not null)
+            {
+                float paymentTypeCode = ((DcPaymentPlan)row).CommissionRate;
+                txt_Commission.EditValue = trPaymentLineCashless.Payment * (decimal)paymentTypeCode / 100;
+            }
+        }
+
+        private void txt_Commission_EditValueChanged(object sender, EventArgs e)
+        {
+            //TrPaymentPlan.Commission = Convert.ToDecimal(txt_Commission.EditValue);
+        }
+
+        private void textEditBonus_EditValueChanged(object sender, EventArgs e) { }
+
+        private void textEditBonus_Validating(object sender, CancelEventArgs e) { }
+
+        private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e) { }
+
+        private void TxtEdit_Installment_EditValueChanged(object sender, EventArgs e)
+        {
+            trInstallment.Amount = Convert.ToDecimal(TxtEdit_Installment.EditValue);
+            TxtEdit_Installment.DoValidate();
+        }
+
+        private void LUE_InstallmentCurrency_EditValueChanged(object sender, EventArgs e)
+        {
+            trInstallment.CurrencyCode = LUE_InstallmentCurrency.EditValue.ToString();
+            trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
+        }
+
+        private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
+        {
+            trInstallment.PaymentPlanCode = LUE_InstallmentPlan.EditValue?.ToString();
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -263,12 +358,6 @@ namespace Foxoft
 
         private void SavePayment(bool autoPayment)
         {
-            if (trPaymentLineCash.PaymentLoc > 0 && lUE_cashCurrency.EditValue == null)
-            {
-                dxErrorProvider1.SetError(lUE_cashCurrency, "Boş buraxıla bilməz!");
-                return;
-            }
-
             if (trPaymentLineCashless.PaymentLoc > 0)// lUE_PaymentMethod Validation
             {
                 if (lUE_PaymentMethod.EditValue == null)
@@ -276,10 +365,12 @@ namespace Foxoft
                     dxErrorProvider1.SetError(lUE_PaymentMethod, "Boş buraxıla bilməz!");
                     return;
                 }
-
-                if (lUE_CashlessCurrency.EditValue == null)
+            }
+            if (trInstallment.Amount > 0)// lUE_PaymentMethod Validation
+            {
+                if (LUE_InstallmentPlan.EditValue == null)
                 {
-                    dxErrorProvider1.SetError(lUE_CashlessCurrency, "Boş buraxıla bilməz!");
+                    dxErrorProvider1.SetError(LUE_InstallmentPlan, "Boş buraxıla bilməz!");
                     return;
                 }
             }
@@ -326,115 +417,29 @@ namespace Foxoft
                         efMethods.InsertPaymentLine(trPaymentLineCashless);
 
                         TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
-
                         trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
-                        trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode;
+                        trPaymentHeader2.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+                        trPaymentHeader2.CurrAccCode = btnEdit_BankAccout.EditValue?.ToString();
                         efMethods.InsertPaymentHeader(trPaymentHeader2);
 
                         TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
                         trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
                         trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                        trPaymentLineCashless2.Payment = trPaymentLineCashless.Payment * (-1);
+                        trPaymentLineCashless2.Payment = (-1) * trPaymentLineCashless.Payment - (decimal)txt_Commission.EditValue;
                         efMethods.InsertPaymentLine(trPaymentLineCashless2);
-
                     }
-                    if (trPaymentLineCashless.PaymentLoc > 0)
+                    if (trInstallment.Amount > 0)
                     {
-                        if (!string.IsNullOrEmpty(TrPaymentPlan.PaymentPlanCode))
+                        if (!string.IsNullOrEmpty(trInstallment.PaymentPlanCode))
                         {
-                            TrPaymentPlan.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
-                            efMethods.InsertTrPaymentPlan(TrPaymentPlan);
+                            trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
+                            efMethods.InsertTrInstallment(trInstallment);
                         }
-
                     }
                 }
 
                 DialogResult = DialogResult.OK;
             }
-        }
-
-        private void btnEdit_CashRegister_Validating(object sender, CancelEventArgs e)
-        {
-            object eValue = btnEdit_CashRegister.EditValue;
-
-            if (eValue is not null)
-            {
-                DcCurrAcc curr = efMethods.SelectCurrAcc(eValue.ToString());
-
-                if (curr is null)
-                {
-                    e.Cancel = true;
-                }
-                else
-                {
-                    trPaymentLineCash.CashRegisterCode = eValue.ToString();
-                }
-            }
-        }
-
-        private void btnEdit_CashRegister_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
-        {
-            e.ErrorText = "Belə bir kassa yoxdur";
-            e.ExceptionMode = ExceptionMode.DisplayError;
-        }
-
-        private void btnEdit_BankAccout_ButtonClick(object sender, ButtonPressedEventArgs e)
-        {
-            object row = lUE_PaymentMethod.Properties.GetDataSourceRowByKeyValue(lUE_PaymentMethod.EditValue);
-            if (row is not null)
-            {
-                byte paymentTypeCode = ((DcPaymentMethod)row).PaymentTypeCode;
-                SelectCashRegister(sender, paymentTypeCode);
-            }
-        }
-
-
-        private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
-        {
-            LookUpEdit editor = sender as LookUpEdit;
-
-            dcPaymentMethod = efMethods.SelectPaymentMethod(Convert.ToInt32(editor.EditValue));
-
-            trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
-            btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
-
-            List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
-            if (paymentPlans.Count > 0)
-            {
-                LUE_PaymentPlan.Properties.DataSource = paymentPlans;
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Always);
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Always);
-            }
-            else
-            {
-                LUE_PaymentPlan.Properties.DataSource = null;
-                txt_Commission.EditValue = null;
-                LUE_PaymentPlan.EditValue = null;
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Never);
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Never);
-            }
-        }
-
-        private void btnEdit_CashRegister_EditValueChanged(object sender, EventArgs e)
-        {
-            trPaymentLineCash.CashRegisterCode = btnEdit_CashRegister.EditValue.ToString();
-        }
-
-        private void btnEdit_BankAccout_EditValueChanged(object sender, EventArgs e)
-        {
-            trPaymentLineCashless.CashRegisterCode = btnEdit_BankAccout.EditValue?.ToString();
-        }
-
-        private void LUE_PaymentPlan_EditValueChanged(object sender, EventArgs e)
-        {
-            TrPaymentPlan.PaymentPlanCode = LUE_PaymentPlan.EditValue?.ToString();
-            //txtEdit_Cashless.DoValidate();
-        }
-
-        private void txt_Commission_EditValueChanged(object sender, EventArgs e)
-        {
-            TrPaymentPlan.Commission = Convert.ToDecimal(txt_Commission.EditValue);
-            //txtEdit_Cashless.DoValidate();
         }
     }
 }

@@ -17,7 +17,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
 using System.Windows.Controls;
 using static DevExpress.Skins.SolidColorHelper;
-using Foxoft.Migrations;
 
 namespace Foxoft
 {
@@ -1172,10 +1171,10 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int InsertTrPaymentPlan(TrPaymentPlan trPaymentPlan)
+        public int InsertTrInstallment(TrInstallment trPaymentPlan)
         {
             using subContext db = new();
-            db.TrPaymentPlans.Add(trPaymentPlan);
+            db.TrInstallments.Add(trPaymentPlan);
             return db.SaveChanges();
         }
 
@@ -1227,6 +1226,14 @@ namespace Foxoft
                                     .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
                                     .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
                                     .Sum(s => s.PaymentLoc);
+        }
+
+        public decimal SelectInstallmentsSumByInvoice(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+
+            return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                    .Sum(s => s.Amount / (decimal)s.ExchangeRate);
         }
 
         public List<DcCurrAcc> SelectCurrAccs(byte[] currAccTypeArr)

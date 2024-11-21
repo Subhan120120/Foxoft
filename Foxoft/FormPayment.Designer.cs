@@ -73,7 +73,7 @@ namespace Foxoft
             lUE_PaymentMethod = new DevExpress.XtraEditors.LookUpEdit();
             TxtEdit_Installment = new DevExpress.XtraEditors.TextEdit();
             LUE_InstallmentCurrency = new DevExpress.XtraEditors.LookUpEdit();
-            LUE_PayPlan = new DevExpress.XtraEditors.LookUpEdit();
+            LUE_InstallmentPlan = new DevExpress.XtraEditors.LookUpEdit();
             lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
             lCG_Cash = new DevExpress.XtraLayout.LayoutControlGroup();
             lCI_Cash = new DevExpress.XtraLayout.LayoutControlItem();
@@ -131,7 +131,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_PaymentMethod.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TxtEdit_Installment.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LUE_InstallmentCurrency.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LUE_PayPlan.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_InstallmentPlan.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Cash).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cash).BeginInit();
@@ -207,39 +207,39 @@ namespace Foxoft
             lC_Root.Controls.Add(lUE_PaymentMethod);
             lC_Root.Controls.Add(TxtEdit_Installment);
             lC_Root.Controls.Add(LUE_InstallmentCurrency);
-            lC_Root.Controls.Add(LUE_PayPlan);
+            lC_Root.Controls.Add(LUE_InstallmentPlan);
             lC_Root.Dock = DockStyle.Fill;
             lC_Root.Location = new Point(0, 0);
             lC_Root.Name = "lC_Root";
             lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(962, 203, 650, 400);
             lC_Root.Root = lCG_Root;
-            lC_Root.Size = new Size(750, 616);
+            lC_Root.Size = new Size(750, 632);
             lC_Root.TabIndex = 0;
             lC_Root.Text = "layoutControl1";
             // 
             // txt_Commission
             // 
-            txt_Commission.Location = new Point(110, 262);
+            txt_Commission.Location = new Point(110, 298);
             txt_Commission.Name = "txt_Commission";
-            txt_Commission.Size = new Size(252, 20);
+            txt_Commission.Size = new Size(252, 22);
             txt_Commission.StyleController = lC_Root;
             txt_Commission.TabIndex = 10;
             txt_Commission.EditValueChanged += txt_Commission_EditValueChanged;
             // 
             // LUE_PaymentPlan
             // 
-            LUE_PaymentPlan.Location = new Point(110, 236);
+            LUE_PaymentPlan.Location = new Point(110, 272);
             LUE_PaymentPlan.Name = "LUE_PaymentPlan";
             LUE_PaymentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_PaymentPlan.Properties.NullText = "";
-            LUE_PaymentPlan.Size = new Size(252, 20);
+            LUE_PaymentPlan.Size = new Size(252, 22);
             LUE_PaymentPlan.StyleController = lC_Root;
             LUE_PaymentPlan.TabIndex = 9;
             LUE_PaymentPlan.EditValueChanged += LUE_PaymentPlan_EditValueChanged;
             // 
             // lUE_CashlessCurrency
             // 
-            lUE_CashlessCurrency.Location = new Point(257, 150);
+            lUE_CashlessCurrency.Location = new Point(256, 170);
             lUE_CashlessCurrency.Name = "lUE_CashlessCurrency";
             lUE_CashlessCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_CashlessCurrency.Properties.Appearance.Options.UseFont = true;
@@ -250,17 +250,17 @@ namespace Foxoft
             lUE_CashlessCurrency.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
             lUE_CashlessCurrency.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
             lUE_CashlessCurrency.Properties.ValueMember = "CurrencyCode";
-            lUE_CashlessCurrency.Size = new Size(105, 32);
+            lUE_CashlessCurrency.Size = new Size(106, 40);
             lUE_CashlessCurrency.StyleController = lC_Root;
             lUE_CashlessCurrency.TabIndex = 6;
             lUE_CashlessCurrency.EditValueChanged += lUE_CashlessCurrency_EditValueChanged;
             // 
             // btnEdit_BankAccout
             // 
-            btnEdit_BankAccout.Location = new Point(110, 212);
+            btnEdit_BankAccout.Location = new Point(110, 246);
             btnEdit_BankAccout.Name = "btnEdit_BankAccout";
             btnEdit_BankAccout.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_BankAccout.Size = new Size(252, 20);
+            btnEdit_BankAccout.Size = new Size(252, 22);
             btnEdit_BankAccout.StyleController = lC_Root;
             btnEdit_BankAccout.TabIndex = 8;
             btnEdit_BankAccout.ButtonClick += btnEdit_BankAccout_ButtonClick;
@@ -270,10 +270,10 @@ namespace Foxoft
             // 
             // btnEdit_CashRegister
             // 
-            btnEdit_CashRegister.Location = new Point(110, 81);
+            btnEdit_CashRegister.Location = new Point(110, 94);
             btnEdit_CashRegister.Name = "btnEdit_CashRegister";
             btnEdit_CashRegister.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CashRegister.Size = new Size(252, 20);
+            btnEdit_CashRegister.Size = new Size(252, 22);
             btnEdit_CashRegister.StyleController = lC_Root;
             btnEdit_CashRegister.TabIndex = 3;
             btnEdit_CashRegister.ButtonClick += btnEdit_CashRegister_ButtonClick;
@@ -293,14 +293,14 @@ namespace Foxoft
             dateEdit_Date.Properties.EditFormat.FormatString = "";
             dateEdit_Date.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             dateEdit_Date.Properties.MaskSettings.Set("mask", "");
-            dateEdit_Date.Size = new Size(274, 20);
+            dateEdit_Date.Size = new Size(274, 22);
             dateEdit_Date.StyleController = lC_Root;
             dateEdit_Date.TabIndex = 4;
             dateEdit_Date.EditValueChanged += dateEdit_Date_EditValueChanged;
             // 
             // txtEdit_Cash
             // 
-            txtEdit_Cash.Location = new Point(110, 45);
+            txtEdit_Cash.Location = new Point(110, 50);
             txtEdit_Cash.Name = "txtEdit_Cash";
             txtEdit_Cash.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Cash.Properties.Appearance.Options.UseFont = true;
@@ -308,16 +308,16 @@ namespace Foxoft
             txtEdit_Cash.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             txtEdit_Cash.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtEdit_Cash.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_Cash.Size = new Size(143, 32);
+            txtEdit_Cash.Size = new Size(142, 40);
             txtEdit_Cash.StyleController = lC_Root;
             txtEdit_Cash.TabIndex = 0;
             txtEdit_Cash.InvalidValue += textEditCash_InvalidValue;
-            txtEdit_Cash.EditValueChanged += textEditCash_EditValueChanged;
+            txtEdit_Cash.EditValueChanged += txtEdit_Cash_EditValueChanged;
             txtEdit_Cash.Validating += txtEdit_Cash_Validating;
             // 
             // txtEdit_Cashless
             // 
-            txtEdit_Cashless.Location = new Point(110, 150);
+            txtEdit_Cashless.Location = new Point(110, 170);
             txtEdit_Cashless.Name = "txtEdit_Cashless";
             txtEdit_Cashless.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Cashless.Properties.Appearance.Options.UseFont = true;
@@ -325,7 +325,7 @@ namespace Foxoft
             txtEdit_Cashless.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             txtEdit_Cashless.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtEdit_Cashless.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_Cashless.Size = new Size(143, 32);
+            txtEdit_Cashless.Size = new Size(142, 40);
             txtEdit_Cashless.StyleController = lC_Root;
             txtEdit_Cashless.TabIndex = 5;
             txtEdit_Cashless.InvalidValue += textEditCashless_InvalidValue;
@@ -334,7 +334,7 @@ namespace Foxoft
             // 
             // txtEdit_Bonus
             // 
-            txtEdit_Bonus.Location = new Point(110, 334);
+            txtEdit_Bonus.Location = new Point(110, 375);
             txtEdit_Bonus.Name = "txtEdit_Bonus";
             txtEdit_Bonus.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Bonus.Properties.Appearance.Options.UseFont = true;
@@ -342,7 +342,7 @@ namespace Foxoft
             txtEdit_Bonus.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             txtEdit_Bonus.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtEdit_Bonus.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_Bonus.Size = new Size(252, 32);
+            txtEdit_Bonus.Size = new Size(252, 40);
             txtEdit_Bonus.StyleController = lC_Root;
             txtEdit_Bonus.TabIndex = 11;
             txtEdit_Bonus.InvalidValue += textEditBonus_InvalidValue;
@@ -351,12 +351,12 @@ namespace Foxoft
             // 
             // txtEdit_CustomerBonus
             // 
-            txtEdit_CustomerBonus.Location = new Point(110, 370);
+            txtEdit_CustomerBonus.Location = new Point(110, 419);
             txtEdit_CustomerBonus.Name = "txtEdit_CustomerBonus";
             txtEdit_CustomerBonus.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_CustomerBonus.Properties.Appearance.Options.UseFont = true;
             txtEdit_CustomerBonus.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            txtEdit_CustomerBonus.Size = new Size(252, 32);
+            txtEdit_CustomerBonus.Size = new Size(252, 40);
             txtEdit_CustomerBonus.StyleController = lC_Root;
             txtEdit_CustomerBonus.TabIndex = 12;
             // 
@@ -364,9 +364,9 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(642, 523);
+            btn_Cancel.Location = new Point(642, 595);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(96, 81);
+            btn_Cancel.Size = new Size(96, 25);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 17;
             btn_Cancel.Text = "simpleButton1";
@@ -375,9 +375,9 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(543, 523);
+            btn_Ok.Location = new Point(543, 595);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(95, 81);
+            btn_Ok.Size = new Size(95, 25);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 16;
             btn_Ok.Text = "Ödə";
@@ -388,10 +388,10 @@ namespace Foxoft
             btn_Star.AllowFocus = false;
             btn_Star.Appearance.Font = new Font("Tahoma", 16F);
             btn_Star.Appearance.Options.UseFont = true;
-            btn_Star.Location = new Point(390, 399);
+            btn_Star.Location = new Point(390, 456);
             btn_Star.Name = "btn_Star";
             btn_Star.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Star.Size = new Size(81, 108);
+            btn_Star.Size = new Size(81, 123);
             btn_Star.StyleController = lC_Root;
             btn_Star.TabIndex = 1;
             btn_Star.Text = "*";
@@ -402,10 +402,10 @@ namespace Foxoft
             btn_Comma.AllowFocus = false;
             btn_Comma.Appearance.Font = new Font("Tahoma", 16F);
             btn_Comma.Appearance.Options.UseFont = true;
-            btn_Comma.Location = new Point(560, 399);
+            btn_Comma.Location = new Point(560, 456);
             btn_Comma.Name = "btn_Comma";
             btn_Comma.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Comma.Size = new Size(81, 108);
+            btn_Comma.Size = new Size(81, 123);
             btn_Comma.StyleController = lC_Root;
             btn_Comma.TabIndex = 1;
             btn_Comma.Text = ",";
@@ -416,10 +416,10 @@ namespace Foxoft
             btn_Num0.AllowFocus = false;
             btn_Num0.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num0.Appearance.Options.UseFont = true;
-            btn_Num0.Location = new Point(475, 399);
+            btn_Num0.Location = new Point(475, 456);
             btn_Num0.Name = "btn_Num0";
             btn_Num0.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num0.Size = new Size(81, 108);
+            btn_Num0.Size = new Size(81, 123);
             btn_Num0.StyleController = lC_Root;
             btn_Num0.TabIndex = 1;
             btn_Num0.Text = "0";
@@ -430,10 +430,10 @@ namespace Foxoft
             btn_Num1.AllowFocus = false;
             btn_Num1.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num1.Appearance.Options.UseFont = true;
-            btn_Num1.Location = new Point(390, 289);
+            btn_Num1.Location = new Point(390, 329);
             btn_Num1.Name = "btn_Num1";
             btn_Num1.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num1.Size = new Size(81, 106);
+            btn_Num1.Size = new Size(81, 123);
             btn_Num1.StyleController = lC_Root;
             btn_Num1.TabIndex = 1;
             btn_Num1.Text = "1";
@@ -444,10 +444,10 @@ namespace Foxoft
             btn_Num2.AllowFocus = false;
             btn_Num2.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num2.Appearance.Options.UseFont = true;
-            btn_Num2.Location = new Point(475, 289);
+            btn_Num2.Location = new Point(475, 329);
             btn_Num2.Name = "btn_Num2";
             btn_Num2.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num2.Size = new Size(81, 106);
+            btn_Num2.Size = new Size(81, 123);
             btn_Num2.StyleController = lC_Root;
             btn_Num2.TabIndex = 1;
             btn_Num2.Text = "2";
@@ -458,10 +458,10 @@ namespace Foxoft
             btn_Num3.AllowFocus = false;
             btn_Num3.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num3.Appearance.Options.UseFont = true;
-            btn_Num3.Location = new Point(560, 289);
+            btn_Num3.Location = new Point(560, 329);
             btn_Num3.Name = "btn_Num3";
             btn_Num3.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num3.Size = new Size(81, 106);
+            btn_Num3.Size = new Size(81, 123);
             btn_Num3.StyleController = lC_Root;
             btn_Num3.TabIndex = 1;
             btn_Num3.Text = "3";
@@ -472,10 +472,10 @@ namespace Foxoft
             btn_Num4.AllowFocus = false;
             btn_Num4.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num4.Appearance.Options.UseFont = true;
-            btn_Num4.Location = new Point(390, 179);
+            btn_Num4.Location = new Point(390, 202);
             btn_Num4.Name = "btn_Num4";
             btn_Num4.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num4.Size = new Size(81, 106);
+            btn_Num4.Size = new Size(81, 123);
             btn_Num4.StyleController = lC_Root;
             btn_Num4.TabIndex = 1;
             btn_Num4.Text = "4";
@@ -486,10 +486,10 @@ namespace Foxoft
             btn_Num5.AllowFocus = false;
             btn_Num5.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num5.Appearance.Options.UseFont = true;
-            btn_Num5.Location = new Point(475, 179);
+            btn_Num5.Location = new Point(475, 202);
             btn_Num5.Name = "btn_Num5";
             btn_Num5.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num5.Size = new Size(81, 106);
+            btn_Num5.Size = new Size(81, 123);
             btn_Num5.StyleController = lC_Root;
             btn_Num5.TabIndex = 1;
             btn_Num5.Text = "5";
@@ -500,10 +500,10 @@ namespace Foxoft
             btn_Num6.AllowFocus = false;
             btn_Num6.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num6.Appearance.Options.UseFont = true;
-            btn_Num6.Location = new Point(560, 179);
+            btn_Num6.Location = new Point(560, 202);
             btn_Num6.Name = "btn_Num6";
             btn_Num6.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num6.Size = new Size(81, 106);
+            btn_Num6.Size = new Size(81, 123);
             btn_Num6.StyleController = lC_Root;
             btn_Num6.TabIndex = 1;
             btn_Num6.Text = "6";
@@ -514,10 +514,10 @@ namespace Foxoft
             btn_Num8.AllowFocus = false;
             btn_Num8.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num8.Appearance.Options.UseFont = true;
-            btn_Num8.Location = new Point(475, 69);
+            btn_Num8.Location = new Point(475, 76);
             btn_Num8.Name = "btn_Num8";
             btn_Num8.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num8.Size = new Size(81, 106);
+            btn_Num8.Size = new Size(81, 122);
             btn_Num8.StyleController = lC_Root;
             btn_Num8.TabIndex = 1;
             btn_Num8.Text = "8";
@@ -528,10 +528,10 @@ namespace Foxoft
             btn_Num9.AllowFocus = false;
             btn_Num9.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num9.Appearance.Options.UseFont = true;
-            btn_Num9.Location = new Point(560, 69);
+            btn_Num9.Location = new Point(560, 76);
             btn_Num9.Name = "btn_Num9";
             btn_Num9.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num9.Size = new Size(81, 106);
+            btn_Num9.Size = new Size(81, 122);
             btn_Num9.StyleController = lC_Root;
             btn_Num9.TabIndex = 1;
             btn_Num9.Text = "9";
@@ -542,10 +542,10 @@ namespace Foxoft
             btn_Num7.AllowFocus = false;
             btn_Num7.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num7.Appearance.Options.UseFont = true;
-            btn_Num7.Location = new Point(390, 69);
+            btn_Num7.Location = new Point(390, 76);
             btn_Num7.Name = "btn_Num7";
             btn_Num7.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Num7.Size = new Size(81, 106);
+            btn_Num7.Size = new Size(81, 122);
             btn_Num7.StyleController = lC_Root;
             btn_Num7.TabIndex = 1;
             btn_Num7.Text = "7";
@@ -556,10 +556,10 @@ namespace Foxoft
             btn_Enter.AllowFocus = false;
             btn_Enter.Appearance.Font = new Font("Tahoma", 20F, FontStyle.Bold);
             btn_Enter.Appearance.Options.UseFont = true;
-            btn_Enter.Location = new Point(645, 289);
+            btn_Enter.Location = new Point(645, 329);
             btn_Enter.Name = "btn_Enter";
             btn_Enter.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_Enter.Size = new Size(81, 218);
+            btn_Enter.Size = new Size(81, 250);
             btn_Enter.StyleController = lC_Root;
             btn_Enter.TabIndex = 1;
             btn_Enter.Text = "↵";
@@ -570,10 +570,10 @@ namespace Foxoft
             btn_C.AllowFocus = false;
             btn_C.Appearance.Font = new Font("Tahoma", 16F);
             btn_C.Appearance.Options.UseFont = true;
-            btn_C.Location = new Point(645, 179);
+            btn_C.Location = new Point(645, 202);
             btn_C.Name = "btn_C";
             btn_C.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_C.Size = new Size(81, 106);
+            btn_C.Size = new Size(81, 123);
             btn_C.StyleController = lC_Root;
             btn_C.TabIndex = 1;
             btn_C.Text = "C";
@@ -584,10 +584,10 @@ namespace Foxoft
             btn_BackSpace.AllowFocus = false;
             btn_BackSpace.Appearance.Font = new Font("Tahoma", 15.75F, FontStyle.Bold);
             btn_BackSpace.Appearance.Options.UseFont = true;
-            btn_BackSpace.Location = new Point(645, 69);
+            btn_BackSpace.Location = new Point(645, 76);
             btn_BackSpace.Name = "btn_BackSpace";
             btn_BackSpace.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
-            btn_BackSpace.Size = new Size(81, 106);
+            btn_BackSpace.Size = new Size(81, 122);
             btn_BackSpace.StyleController = lC_Root;
             btn_BackSpace.TabIndex = 1;
             btn_BackSpace.Text = "←";
@@ -595,7 +595,7 @@ namespace Foxoft
             // 
             // lUE_cashCurrency
             // 
-            lUE_cashCurrency.Location = new Point(257, 45);
+            lUE_cashCurrency.Location = new Point(256, 50);
             lUE_cashCurrency.Name = "lUE_cashCurrency";
             lUE_cashCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_cashCurrency.Properties.Appearance.Options.UseFont = true;
@@ -607,14 +607,14 @@ namespace Foxoft
             lUE_cashCurrency.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
             lUE_cashCurrency.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
             lUE_cashCurrency.Properties.ValueMember = "CurrencyCode";
-            lUE_cashCurrency.Size = new Size(105, 32);
+            lUE_cashCurrency.Size = new Size(106, 40);
             lUE_cashCurrency.StyleController = lC_Root;
             lUE_cashCurrency.TabIndex = 2;
             lUE_cashCurrency.EditValueChanged += lUE_cashCurrency_EditValueChanged;
             // 
             // lUE_PaymentMethod
             // 
-            lUE_PaymentMethod.Location = new Point(110, 186);
+            lUE_PaymentMethod.Location = new Point(110, 214);
             lUE_PaymentMethod.Name = "lUE_PaymentMethod";
             lUE_PaymentMethod.Properties.Appearance.Font = new Font("Tahoma", 10F);
             lUE_PaymentMethod.Properties.Appearance.Options.UseFont = true;
@@ -625,14 +625,14 @@ namespace Foxoft
             lUE_PaymentMethod.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
             lUE_PaymentMethod.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
             lUE_PaymentMethod.Properties.ValueMember = "PaymentMethodId";
-            lUE_PaymentMethod.Size = new Size(252, 22);
+            lUE_PaymentMethod.Size = new Size(252, 28);
             lUE_PaymentMethod.StyleController = lC_Root;
             lUE_PaymentMethod.TabIndex = 7;
             lUE_PaymentMethod.EditValueChanged += lUE_PaymentMethod_EditValueChanged;
             // 
             // TxtEdit_Installment
             // 
-            TxtEdit_Installment.Location = new Point(110, 451);
+            TxtEdit_Installment.Location = new Point(110, 513);
             TxtEdit_Installment.Name = "TxtEdit_Installment";
             TxtEdit_Installment.Properties.Appearance.Font = new Font("Tahoma", 16F);
             TxtEdit_Installment.Properties.Appearance.Options.UseFont = true;
@@ -640,13 +640,14 @@ namespace Foxoft
             TxtEdit_Installment.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             TxtEdit_Installment.Properties.Mask.UseMaskAsDisplayFormat = true;
             TxtEdit_Installment.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            TxtEdit_Installment.Size = new Size(140, 32);
+            TxtEdit_Installment.Size = new Size(140, 40);
             TxtEdit_Installment.StyleController = lC_Root;
             TxtEdit_Installment.TabIndex = 14;
+            TxtEdit_Installment.EditValueChanged += TxtEdit_Installment_EditValueChanged;
             // 
             // LUE_InstallmentCurrency
             // 
-            LUE_InstallmentCurrency.Location = new Point(254, 451);
+            LUE_InstallmentCurrency.Location = new Point(254, 513);
             LUE_InstallmentCurrency.Name = "LUE_InstallmentCurrency";
             LUE_InstallmentCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             LUE_InstallmentCurrency.Properties.Appearance.Options.UseFont = true;
@@ -657,19 +658,21 @@ namespace Foxoft
             LUE_InstallmentCurrency.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
             LUE_InstallmentCurrency.Properties.SearchMode = DevExpress.XtraEditors.Controls.SearchMode.AutoComplete;
             LUE_InstallmentCurrency.Properties.ValueMember = "CurrencyCode";
-            LUE_InstallmentCurrency.Size = new Size(108, 32);
+            LUE_InstallmentCurrency.Size = new Size(108, 40);
             LUE_InstallmentCurrency.StyleController = lC_Root;
             LUE_InstallmentCurrency.TabIndex = 13;
+            LUE_InstallmentCurrency.EditValueChanged += LUE_InstallmentCurrency_EditValueChanged;
             // 
-            // LUE_PayPlan
+            // LUE_InstallmentPlan
             // 
-            LUE_PayPlan.Location = new Point(110, 487);
-            LUE_PayPlan.Name = "LUE_PayPlan";
-            LUE_PayPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            LUE_PayPlan.Properties.NullText = "";
-            LUE_PayPlan.Size = new Size(252, 20);
-            LUE_PayPlan.StyleController = lC_Root;
-            LUE_PayPlan.TabIndex = 15;
+            LUE_InstallmentPlan.Location = new Point(110, 557);
+            LUE_InstallmentPlan.Name = "LUE_InstallmentPlan";
+            LUE_InstallmentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_InstallmentPlan.Properties.NullText = "";
+            LUE_InstallmentPlan.Size = new Size(252, 22);
+            LUE_InstallmentPlan.StyleController = lC_Root;
+            LUE_InstallmentPlan.TabIndex = 15;
+            LUE_InstallmentPlan.EditValueChanged += LUE_InstallmentPlan_EditValueChanged;
             // 
             // lCG_Root
             // 
@@ -677,7 +680,7 @@ namespace Foxoft
             lCG_Root.GroupBordersVisible = false;
             lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCG_Cash, lCG_Cashless, lCG_Barcode, lCG_CustomerBonus, lCI_Cancel, lCI_Ok, emptySpaceItem1, lCI_Date, LCG_Installment });
             lCG_Root.Name = "Root";
-            lCG_Root.Size = new Size(750, 616);
+            lCG_Root.Size = new Size(750, 632);
             lCG_Root.TextVisible = false;
             // 
             // lCG_Cash
@@ -686,7 +689,7 @@ namespace Foxoft
             lCG_Cash.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Cash, lCI_CashRegister, lCI_CashCurrency });
             lCG_Cash.Location = new Point(0, 0);
             lCG_Cash.Name = "layoutControlGroupCash";
-            lCG_Cash.Size = new Size(366, 105);
+            lCG_Cash.Size = new Size(366, 120);
             lCG_Cash.Text = "Nağd";
             // 
             // lCI_Cash
@@ -695,25 +698,25 @@ namespace Foxoft
             lCI_Cash.ImageOptions.Image = Properties.Resources.Untitled_32x32x;
             lCI_Cash.Location = new Point(0, 0);
             lCI_Cash.Name = "layoutControlItemCash";
-            lCI_Cash.Size = new Size(233, 36);
+            lCI_Cash.Size = new Size(232, 44);
             lCI_Cash.Text = "Nağd";
             lCI_Cash.TextSize = new Size(74, 32);
             // 
             // lCI_CashRegister
             // 
             lCI_CashRegister.Control = btnEdit_CashRegister;
-            lCI_CashRegister.Location = new Point(0, 36);
+            lCI_CashRegister.Location = new Point(0, 44);
             lCI_CashRegister.Name = "lCI_CashRegister";
-            lCI_CashRegister.Size = new Size(342, 24);
+            lCI_CashRegister.Size = new Size(342, 26);
             lCI_CashRegister.Text = "Kassa Hesabı";
             lCI_CashRegister.TextSize = new Size(74, 13);
             // 
             // lCI_CashCurrency
             // 
             lCI_CashCurrency.Control = lUE_cashCurrency;
-            lCI_CashCurrency.Location = new Point(233, 0);
+            lCI_CashCurrency.Location = new Point(232, 0);
             lCI_CashCurrency.Name = "lCI_CashCurrency";
-            lCI_CashCurrency.Size = new Size(109, 36);
+            lCI_CashCurrency.Size = new Size(110, 44);
             lCI_CashCurrency.Text = "Valyuta";
             lCI_CashCurrency.TextSize = new Size(0, 0);
             lCI_CashCurrency.TextVisible = false;
@@ -722,9 +725,9 @@ namespace Foxoft
             // 
             lCG_Cashless.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_Cashless.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Cashless, lCI_BankCurrAcc, lCI_CashlessCurrency, lCI_PaymentMethod, LCI_PaymentPlan, LCI_Commission });
-            lCG_Cashless.Location = new Point(0, 105);
+            lCG_Cashless.Location = new Point(0, 120);
             lCG_Cashless.Name = "layoutControlGroupCashless";
-            lCG_Cashless.Size = new Size(366, 184);
+            lCG_Cashless.Size = new Size(366, 205);
             lCG_Cashless.Text = "Nağdsız";
             // 
             // lCI_Cashless
@@ -733,25 +736,25 @@ namespace Foxoft
             lCI_Cashless.ImageOptions.Image = Properties.Resources.CreditCard_32x32;
             lCI_Cashless.Location = new Point(0, 0);
             lCI_Cashless.Name = "layoutControlItemCashless";
-            lCI_Cashless.Size = new Size(233, 36);
+            lCI_Cashless.Size = new Size(232, 44);
             lCI_Cashless.Text = "Nağdsız";
             lCI_Cashless.TextSize = new Size(74, 32);
             // 
             // lCI_BankCurrAcc
             // 
             lCI_BankCurrAcc.Control = btnEdit_BankAccout;
-            lCI_BankCurrAcc.Location = new Point(0, 62);
+            lCI_BankCurrAcc.Location = new Point(0, 76);
             lCI_BankCurrAcc.Name = "lCI_BankCurrAcc";
-            lCI_BankCurrAcc.Size = new Size(342, 24);
+            lCI_BankCurrAcc.Size = new Size(342, 26);
             lCI_BankCurrAcc.Text = "Bank Hesabı";
             lCI_BankCurrAcc.TextSize = new Size(74, 13);
             // 
             // lCI_CashlessCurrency
             // 
             lCI_CashlessCurrency.Control = lUE_CashlessCurrency;
-            lCI_CashlessCurrency.Location = new Point(233, 0);
+            lCI_CashlessCurrency.Location = new Point(232, 0);
             lCI_CashlessCurrency.Name = "lCI_CashlessCurrency";
-            lCI_CashlessCurrency.Size = new Size(109, 36);
+            lCI_CashlessCurrency.Size = new Size(110, 44);
             lCI_CashlessCurrency.Text = "Valyuta";
             lCI_CashlessCurrency.TextSize = new Size(0, 0);
             lCI_CashlessCurrency.TextVisible = false;
@@ -759,16 +762,16 @@ namespace Foxoft
             // lCI_PaymentMethod
             // 
             lCI_PaymentMethod.Control = lUE_PaymentMethod;
-            lCI_PaymentMethod.Location = new Point(0, 36);
+            lCI_PaymentMethod.Location = new Point(0, 44);
             lCI_PaymentMethod.Name = "lCI_PaymentMethod";
-            lCI_PaymentMethod.Size = new Size(342, 26);
+            lCI_PaymentMethod.Size = new Size(342, 32);
             lCI_PaymentMethod.Text = "Ödəmə Metodu";
             lCI_PaymentMethod.TextSize = new Size(74, 13);
             // 
             // LCI_PaymentPlan
             // 
             LCI_PaymentPlan.Control = LUE_PaymentPlan;
-            LCI_PaymentPlan.Location = new Point(0, 86);
+            LCI_PaymentPlan.Location = new Point(0, 102);
             LCI_PaymentPlan.MaxSize = new Size(0, 26);
             LCI_PaymentPlan.MinSize = new Size(140, 1);
             LCI_PaymentPlan.Name = "LCI_PaymentPlan";
@@ -781,7 +784,7 @@ namespace Foxoft
             // LCI_Commission
             // 
             LCI_Commission.Control = txt_Commission;
-            LCI_Commission.Location = new Point(0, 112);
+            LCI_Commission.Location = new Point(0, 128);
             LCI_Commission.MinSize = new Size(140, 1);
             LCI_Commission.Name = "LCI_Commission";
             LCI_Commission.Size = new Size(342, 27);
@@ -796,7 +799,7 @@ namespace Foxoft
             lCG_Barcode.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_Barcode.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Num7, lCI_Num9, lCI_Num8, lCI_BackSpace, lCI_Num4, lCI_Num5, lCI_Num6, lCI_Num1, lCI_Star, lCI_Num0, lCI_Num2, lCI_Num3, lCI_Comma, lCI_Enter, lCI_C });
             lCG_Barcode.LayoutMode = DevExpress.XtraLayout.Utils.LayoutMode.Table;
-            lCG_Barcode.Location = new Point(366, 24);
+            lCG_Barcode.Location = new Point(366, 26);
             lCG_Barcode.Name = "layoutControlGroupBarcode";
             columnDefinition1.SizeType = SizeType.Percent;
             columnDefinition1.Width = 25D;
@@ -816,7 +819,7 @@ namespace Foxoft
             rowDefinition4.Height = 25D;
             rowDefinition4.SizeType = SizeType.Percent;
             lCG_Barcode.OptionsTableLayoutGroup.RowDefinitions.AddRange(new DevExpress.XtraLayout.RowDefinition[] { rowDefinition1, rowDefinition2, rowDefinition3, rowDefinition4 });
-            lCG_Barcode.Size = new Size(364, 487);
+            lCG_Barcode.Size = new Size(364, 557);
             lCG_Barcode.Text = "Barcode";
             // 
             // lCI_Num7
@@ -827,7 +830,7 @@ namespace Foxoft
             lCI_Num7.Location = new Point(0, 0);
             lCI_Num7.MinSize = new Size(40, 26);
             lCI_Num7.Name = "layoutControlItemNum7";
-            lCI_Num7.Size = new Size(85, 110);
+            lCI_Num7.Size = new Size(85, 126);
             lCI_Num7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num7.TextSize = new Size(0, 0);
             lCI_Num7.TextVisible = false;
@@ -841,7 +844,7 @@ namespace Foxoft
             lCI_Num9.MinSize = new Size(40, 26);
             lCI_Num9.Name = "layoutControlItemNum9";
             lCI_Num9.OptionsTableLayoutItem.ColumnIndex = 2;
-            lCI_Num9.Size = new Size(85, 110);
+            lCI_Num9.Size = new Size(85, 126);
             lCI_Num9.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num9.TextSize = new Size(0, 0);
             lCI_Num9.TextVisible = false;
@@ -855,7 +858,7 @@ namespace Foxoft
             lCI_Num8.MinSize = new Size(40, 26);
             lCI_Num8.Name = "layoutControlItemNum8";
             lCI_Num8.OptionsTableLayoutItem.ColumnIndex = 1;
-            lCI_Num8.Size = new Size(85, 110);
+            lCI_Num8.Size = new Size(85, 126);
             lCI_Num8.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num8.TextSize = new Size(0, 0);
             lCI_Num8.TextVisible = false;
@@ -869,7 +872,7 @@ namespace Foxoft
             lCI_BackSpace.MinSize = new Size(40, 26);
             lCI_BackSpace.Name = "layoutControlItemBackSpace";
             lCI_BackSpace.OptionsTableLayoutItem.ColumnIndex = 3;
-            lCI_BackSpace.Size = new Size(85, 110);
+            lCI_BackSpace.Size = new Size(85, 126);
             lCI_BackSpace.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_BackSpace.TextSize = new Size(0, 0);
             lCI_BackSpace.TextVisible = false;
@@ -879,11 +882,11 @@ namespace Foxoft
             lCI_Num4.Control = btn_Num4;
             lCI_Num4.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Num4.CustomizationFormText = "layoutControlItemNum4";
-            lCI_Num4.Location = new Point(0, 110);
+            lCI_Num4.Location = new Point(0, 126);
             lCI_Num4.MinSize = new Size(40, 26);
             lCI_Num4.Name = "layoutControlItemNum4";
             lCI_Num4.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_Num4.Size = new Size(85, 110);
+            lCI_Num4.Size = new Size(85, 127);
             lCI_Num4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num4.TextSize = new Size(0, 0);
             lCI_Num4.TextVisible = false;
@@ -893,12 +896,12 @@ namespace Foxoft
             lCI_Num5.Control = btn_Num5;
             lCI_Num5.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Num5.CustomizationFormText = "layoutControlItemNum5";
-            lCI_Num5.Location = new Point(85, 110);
+            lCI_Num5.Location = new Point(85, 126);
             lCI_Num5.MinSize = new Size(40, 26);
             lCI_Num5.Name = "layoutControlItemNum5";
             lCI_Num5.OptionsTableLayoutItem.ColumnIndex = 1;
             lCI_Num5.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_Num5.Size = new Size(85, 110);
+            lCI_Num5.Size = new Size(85, 127);
             lCI_Num5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num5.TextSize = new Size(0, 0);
             lCI_Num5.TextVisible = false;
@@ -908,12 +911,12 @@ namespace Foxoft
             lCI_Num6.Control = btn_Num6;
             lCI_Num6.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Num6.CustomizationFormText = "layoutControlItemNum6";
-            lCI_Num6.Location = new Point(170, 110);
+            lCI_Num6.Location = new Point(170, 126);
             lCI_Num6.MinSize = new Size(40, 26);
             lCI_Num6.Name = "layoutControlItemNum6";
             lCI_Num6.OptionsTableLayoutItem.ColumnIndex = 2;
             lCI_Num6.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_Num6.Size = new Size(85, 110);
+            lCI_Num6.Size = new Size(85, 127);
             lCI_Num6.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num6.TextSize = new Size(0, 0);
             lCI_Num6.TextVisible = false;
@@ -923,11 +926,11 @@ namespace Foxoft
             lCI_Num1.Control = btn_Num1;
             lCI_Num1.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Num1.CustomizationFormText = "layoutControlItemNum1";
-            lCI_Num1.Location = new Point(0, 220);
+            lCI_Num1.Location = new Point(0, 253);
             lCI_Num1.MinSize = new Size(40, 26);
             lCI_Num1.Name = "layoutControlItemNum1";
             lCI_Num1.OptionsTableLayoutItem.RowIndex = 2;
-            lCI_Num1.Size = new Size(85, 110);
+            lCI_Num1.Size = new Size(85, 127);
             lCI_Num1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num1.TextSize = new Size(0, 0);
             lCI_Num1.TextVisible = false;
@@ -937,11 +940,11 @@ namespace Foxoft
             lCI_Star.Control = btn_Star;
             lCI_Star.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Star.CustomizationFormText = "layoutControlItemStar";
-            lCI_Star.Location = new Point(0, 330);
+            lCI_Star.Location = new Point(0, 380);
             lCI_Star.MinSize = new Size(40, 26);
             lCI_Star.Name = "layoutControlItemStar";
             lCI_Star.OptionsTableLayoutItem.RowIndex = 3;
-            lCI_Star.Size = new Size(85, 112);
+            lCI_Star.Size = new Size(85, 127);
             lCI_Star.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Star.TextSize = new Size(0, 0);
             lCI_Star.TextVisible = false;
@@ -951,12 +954,12 @@ namespace Foxoft
             lCI_Num0.Control = btn_Num0;
             lCI_Num0.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Num0.CustomizationFormText = "layoutControlItemNum0";
-            lCI_Num0.Location = new Point(85, 330);
+            lCI_Num0.Location = new Point(85, 380);
             lCI_Num0.MinSize = new Size(40, 26);
             lCI_Num0.Name = "layoutControlItemNum0";
             lCI_Num0.OptionsTableLayoutItem.ColumnIndex = 1;
             lCI_Num0.OptionsTableLayoutItem.RowIndex = 3;
-            lCI_Num0.Size = new Size(85, 112);
+            lCI_Num0.Size = new Size(85, 127);
             lCI_Num0.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num0.TextSize = new Size(0, 0);
             lCI_Num0.TextVisible = false;
@@ -966,12 +969,12 @@ namespace Foxoft
             lCI_Num2.Control = btn_Num2;
             lCI_Num2.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Num2.CustomizationFormText = "layoutControlItemNum2";
-            lCI_Num2.Location = new Point(85, 220);
+            lCI_Num2.Location = new Point(85, 253);
             lCI_Num2.MinSize = new Size(40, 26);
             lCI_Num2.Name = "layoutControlItemNum2";
             lCI_Num2.OptionsTableLayoutItem.ColumnIndex = 1;
             lCI_Num2.OptionsTableLayoutItem.RowIndex = 2;
-            lCI_Num2.Size = new Size(85, 110);
+            lCI_Num2.Size = new Size(85, 127);
             lCI_Num2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num2.TextSize = new Size(0, 0);
             lCI_Num2.TextVisible = false;
@@ -981,12 +984,12 @@ namespace Foxoft
             lCI_Num3.Control = btn_Num3;
             lCI_Num3.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Num3.CustomizationFormText = "layoutControlItemNum3";
-            lCI_Num3.Location = new Point(170, 220);
+            lCI_Num3.Location = new Point(170, 253);
             lCI_Num3.MinSize = new Size(40, 26);
             lCI_Num3.Name = "layoutControlItemNum3";
             lCI_Num3.OptionsTableLayoutItem.ColumnIndex = 2;
             lCI_Num3.OptionsTableLayoutItem.RowIndex = 2;
-            lCI_Num3.Size = new Size(85, 110);
+            lCI_Num3.Size = new Size(85, 127);
             lCI_Num3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Num3.TextSize = new Size(0, 0);
             lCI_Num3.TextVisible = false;
@@ -996,12 +999,12 @@ namespace Foxoft
             lCI_Comma.Control = btn_Comma;
             lCI_Comma.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Comma.CustomizationFormText = "layoutControlItemComma";
-            lCI_Comma.Location = new Point(170, 330);
+            lCI_Comma.Location = new Point(170, 380);
             lCI_Comma.MinSize = new Size(40, 26);
             lCI_Comma.Name = "layoutControlItemComma";
             lCI_Comma.OptionsTableLayoutItem.ColumnIndex = 2;
             lCI_Comma.OptionsTableLayoutItem.RowIndex = 3;
-            lCI_Comma.Size = new Size(85, 112);
+            lCI_Comma.Size = new Size(85, 127);
             lCI_Comma.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Comma.TextSize = new Size(0, 0);
             lCI_Comma.TextVisible = false;
@@ -1011,13 +1014,13 @@ namespace Foxoft
             lCI_Enter.Control = btn_Enter;
             lCI_Enter.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Enter.CustomizationFormText = "layoutControlItemEnter";
-            lCI_Enter.Location = new Point(255, 220);
+            lCI_Enter.Location = new Point(255, 253);
             lCI_Enter.MinSize = new Size(40, 26);
             lCI_Enter.Name = "layoutControlItemEnter";
             lCI_Enter.OptionsTableLayoutItem.ColumnIndex = 3;
             lCI_Enter.OptionsTableLayoutItem.RowIndex = 2;
             lCI_Enter.OptionsTableLayoutItem.RowSpan = 2;
-            lCI_Enter.Size = new Size(85, 222);
+            lCI_Enter.Size = new Size(85, 254);
             lCI_Enter.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Enter.TextSize = new Size(0, 0);
             lCI_Enter.TextVisible = false;
@@ -1027,12 +1030,12 @@ namespace Foxoft
             lCI_C.Control = btn_C;
             lCI_C.ControlAlignment = ContentAlignment.TopLeft;
             lCI_C.CustomizationFormText = "layoutControlItemC";
-            lCI_C.Location = new Point(255, 110);
+            lCI_C.Location = new Point(255, 126);
             lCI_C.MinSize = new Size(40, 26);
             lCI_C.Name = "layoutControlItemC";
             lCI_C.OptionsTableLayoutItem.ColumnIndex = 3;
             lCI_C.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_C.Size = new Size(85, 110);
+            lCI_C.Size = new Size(85, 127);
             lCI_C.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_C.TextSize = new Size(0, 0);
             lCI_C.TextVisible = false;
@@ -1042,9 +1045,9 @@ namespace Foxoft
             lCG_CustomerBonus.Enabled = false;
             lCG_CustomerBonus.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_CustomerBonus.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_CustomerBonus, lCI_CusBonus });
-            lCG_CustomerBonus.Location = new Point(0, 289);
+            lCG_CustomerBonus.Location = new Point(0, 325);
             lCG_CustomerBonus.Name = "layoutControlGroupCustomerBonus";
-            lCG_CustomerBonus.Size = new Size(366, 117);
+            lCG_CustomerBonus.Size = new Size(366, 138);
             lCG_CustomerBonus.Text = "Bonus";
             // 
             // lCI_CustomerBonus
@@ -1053,26 +1056,26 @@ namespace Foxoft
             lCI_CustomerBonus.ImageOptions.Image = (Image)resources.GetObject("lCI_CustomerBonus.ImageOptions.Image");
             lCI_CustomerBonus.Location = new Point(0, 0);
             lCI_CustomerBonus.Name = "layoutControlItemCustomerBonus";
-            lCI_CustomerBonus.Size = new Size(342, 36);
+            lCI_CustomerBonus.Size = new Size(342, 44);
             lCI_CustomerBonus.Text = "Bonus";
             lCI_CustomerBonus.TextSize = new Size(74, 32);
             // 
             // lCI_CusBonus
             // 
             lCI_CusBonus.Control = txtEdit_CustomerBonus;
-            lCI_CusBonus.Location = new Point(0, 36);
+            lCI_CusBonus.Location = new Point(0, 44);
             lCI_CusBonus.Name = "layoutControlItemCusBonus";
-            lCI_CusBonus.Size = new Size(342, 36);
+            lCI_CusBonus.Size = new Size(342, 44);
             lCI_CusBonus.Text = "Puan";
             lCI_CusBonus.TextSize = new Size(74, 13);
             // 
             // lCI_Cancel
             // 
             lCI_Cancel.Control = btn_Cancel;
-            lCI_Cancel.Location = new Point(630, 511);
+            lCI_Cancel.Location = new Point(630, 583);
             lCI_Cancel.MinSize = new Size(78, 26);
             lCI_Cancel.Name = "layoutControlItemCancel";
-            lCI_Cancel.Size = new Size(100, 85);
+            lCI_Cancel.Size = new Size(100, 29);
             lCI_Cancel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cancel.TextSize = new Size(0, 0);
             lCI_Cancel.TextVisible = false;
@@ -1080,10 +1083,10 @@ namespace Foxoft
             // lCI_Ok
             // 
             lCI_Ok.Control = btn_Ok;
-            lCI_Ok.Location = new Point(531, 511);
+            lCI_Ok.Location = new Point(531, 583);
             lCI_Ok.MinSize = new Size(78, 26);
             lCI_Ok.Name = "layoutControlItemOk";
-            lCI_Ok.Size = new Size(99, 85);
+            lCI_Ok.Size = new Size(99, 29);
             lCI_Ok.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Ok.TextSize = new Size(0, 0);
             lCI_Ok.TextVisible = false;
@@ -1091,9 +1094,9 @@ namespace Foxoft
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new Point(0, 511);
+            emptySpaceItem1.Location = new Point(0, 583);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(531, 85);
+            emptySpaceItem1.Size = new Size(531, 29);
             emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // lCI_Date
@@ -1101,7 +1104,7 @@ namespace Foxoft
             lCI_Date.Control = dateEdit_Date;
             lCI_Date.Location = new Point(366, 0);
             lCI_Date.Name = "lCI_Date";
-            lCI_Date.Size = new Size(364, 24);
+            lCI_Date.Size = new Size(364, 26);
             lCI_Date.Text = "Tarix";
             lCI_Date.TextSize = new Size(74, 13);
             // 
@@ -1109,9 +1112,9 @@ namespace Foxoft
             // 
             LCG_Installment.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             LCG_Installment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_Installment, LCI_PayPlan, LCI_InstallmentCurrency });
-            LCG_Installment.Location = new Point(0, 406);
+            LCG_Installment.Location = new Point(0, 463);
             LCG_Installment.Name = "LCG_Installment";
-            LCG_Installment.Size = new Size(366, 105);
+            LCG_Installment.Size = new Size(366, 120);
             LCG_Installment.Text = "Daxili Kredit";
             // 
             // LCI_Installment
@@ -1119,16 +1122,16 @@ namespace Foxoft
             LCI_Installment.Control = TxtEdit_Installment;
             LCI_Installment.Location = new Point(0, 0);
             LCI_Installment.Name = "LCI_Installment";
-            LCI_Installment.Size = new Size(230, 36);
+            LCI_Installment.Size = new Size(230, 44);
             LCI_Installment.Text = "Kredit";
             LCI_Installment.TextSize = new Size(74, 13);
             // 
             // LCI_PayPlan
             // 
-            LCI_PayPlan.Control = LUE_PayPlan;
-            LCI_PayPlan.Location = new Point(0, 36);
+            LCI_PayPlan.Control = LUE_InstallmentPlan;
+            LCI_PayPlan.Location = new Point(0, 44);
             LCI_PayPlan.Name = "LCI_PayPlan";
-            LCI_PayPlan.Size = new Size(342, 24);
+            LCI_PayPlan.Size = new Size(342, 26);
             LCI_PayPlan.Text = "Ödəmə Planı";
             LCI_PayPlan.TextSize = new Size(74, 13);
             // 
@@ -1137,7 +1140,7 @@ namespace Foxoft
             LCI_InstallmentCurrency.Control = LUE_InstallmentCurrency;
             LCI_InstallmentCurrency.Location = new Point(230, 0);
             LCI_InstallmentCurrency.Name = "LCI_InstallmentCurrency";
-            LCI_InstallmentCurrency.Size = new Size(112, 36);
+            LCI_InstallmentCurrency.Size = new Size(112, 44);
             LCI_InstallmentCurrency.TextSize = new Size(0, 0);
             LCI_InstallmentCurrency.TextVisible = false;
             // 
@@ -1149,7 +1152,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(750, 616);
+            ClientSize = new Size(750, 632);
             Controls.Add(lC_Root);
             Name = "FormPayment";
             StartPosition = FormStartPosition.CenterParent;
@@ -1172,7 +1175,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lUE_PaymentMethod.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TxtEdit_Installment.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LUE_InstallmentCurrency.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LUE_PayPlan.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_InstallmentPlan.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Cash).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cash).EndInit();
@@ -1290,7 +1293,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlGroup LCG_Installment;
         private DevExpress.XtraLayout.LayoutControlItem LCI_Installment;
         private DevExpress.XtraEditors.LookUpEdit LUE_InstallmentCurrency;
-        private DevExpress.XtraEditors.LookUpEdit LUE_PayPlan;
+        private DevExpress.XtraEditors.LookUpEdit LUE_InstallmentPlan;
         private DevExpress.XtraLayout.LayoutControlItem LCI_PayPlan;
     }
 }

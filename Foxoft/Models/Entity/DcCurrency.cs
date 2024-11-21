@@ -11,6 +11,7 @@ namespace Foxoft.Models
         public DcCurrency()
         {
             TrInvoiceLines = new HashSet<TrInvoiceLine>();
+            TrInstallments = new HashSet<TrInstallment>();
             TrPaymentLines = new HashSet<TrPaymentLine>();
             TrPriceListLines = new HashSet<TrPriceListLine>();
         }
@@ -31,6 +32,7 @@ namespace Foxoft.Models
 
         public virtual AppSetting AppSetting { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
+        public virtual ICollection<TrInstallment> TrInstallments { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
         public virtual ICollection<DcProcess> DcProcesses { get; set; }
         public virtual ICollection<TrPriceListLine> TrPriceListLines { get; set; }

@@ -25,8 +25,8 @@ namespace Foxoft
 
             int result = cmd.ExecuteNonQuery();
 
-            if (result < 0)
-                XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
+            //if (result < 0)
+            //    XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
             return result;
         }
 
@@ -41,8 +41,8 @@ namespace Foxoft
 
             int result = cmd.ExecuteNonQuery();
 
-            if (result < 0)
-                XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
+            //if (result < 0)
+            //    XtraMessageBox.Show("Data Əlavə edilməsində xəta baş verdi!");
             return result;
         }
 
