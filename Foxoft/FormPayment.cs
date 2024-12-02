@@ -425,8 +425,22 @@ namespace Foxoft
                         TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
                         trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
                         trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                        trPaymentLineCashless2.Payment = (-1) * trPaymentLineCashless.Payment - (decimal)txt_Commission.EditValue;
+                        trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)txt_Commission.EditValue);
                         efMethods.InsertPaymentLine(trPaymentLineCashless2);
+
+                        TrPaymentHeader trPaymentHeaderCommission = trPaymentHeader;
+                        trPaymentHeaderCommission.PaymentHeaderId = Guid.NewGuid();
+                        trPaymentHeaderCommission.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+                        trPaymentHeaderCommission.CurrAccCode = null;
+                        trPaymentHeaderCommission.Description = "Commission";
+                        efMethods.InsertPaymentHeader(trPaymentHeaderCommission);
+
+                        TrPaymentLine trPaymentLineCommission = trPaymentLineCashless;
+                        trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
+                        trPaymentLineCommission.PaymentHeaderId = trPaymentHeaderCommission.PaymentHeaderId;
+                        trPaymentLineCommission.LineDescription = LUE_PaymentPlan.EditValue.ToString();
+                        trPaymentLineCommission.Payment = (-1) * (decimal)txt_Commission.EditValue;
+                        efMethods.InsertPaymentLine(trPaymentLineCommission);
                     }
                     if (trInstallment.Amount > 0)
                     {

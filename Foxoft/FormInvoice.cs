@@ -905,10 +905,8 @@ namespace Foxoft
             //}
 
             if (new string[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
-            {
                 SavePayment();
-            }
-
+            
             SaveSession();
 
             Tag = btnEdit_DocNum.EditValue;
@@ -1940,6 +1938,7 @@ namespace Foxoft
                 printTool.Print();
                 efMethods.UpdateInvoicePrintCount(invoiceHeaderId);
             }
+            report.Dispose();
         }
 
         //private void PrintingSystem_EndPrint(object sender, EventArgs e)

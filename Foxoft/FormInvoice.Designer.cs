@@ -925,6 +925,8 @@ namespace Foxoft
             colQty.Visible = true;
             colQty.VisibleIndex = 4;
             colQty.Width = 34;
+            colQty.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Qty", "{0:n2}") });
+
             // 
             // colQtyIn
             // 
@@ -1032,6 +1034,8 @@ namespace Foxoft
             col_NetAmount.Visible = true;
             col_NetAmount.VisibleIndex = 8;
             col_NetAmount.Width = 42;
+            col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}") });
+
             // 
             // col_LineDesc
             // 

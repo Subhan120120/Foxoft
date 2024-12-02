@@ -11,7 +11,7 @@ select * from (
 
 Select pro.ProductCode
 		, pro.HierarchyCode
-		, [M?hsulun Genis Adi]= isnull(pro.HierarchyCode + ' ','')  + ProductDesc 
+		, [Məhsulun Genis Adi]= isnull(pro.HierarchyCode + ' ','')  + ProductDesc 
 			+ isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') + isnull(' ' + Feature06,'') + isnull(' ' +Feature07,'')
 			+ isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') + isnull(' ' + Feature11,'')
 			+ isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') 
@@ -19,7 +19,7 @@ Select pro.ProductCode
 			+ isnull(' ' + Feature23,'') + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') 
 			+ isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') 
 		, ProductDesc
-		, Balance = isnull(ProductBalance.[depo-01],0)
+		, Balance = CAST(isnull(ProductBalance.[depo-01],0) AS INT)
 		, WholesalePrice
 		, HierarchyDesc
 		, ProductTypeCode
