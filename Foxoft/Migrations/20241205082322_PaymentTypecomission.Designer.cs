@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20340912185137_ProductHierarchies")]
-    partial class ProductHierarchies
+    [Migration("20241205082322_PaymentTypecomission")]
+    partial class PaymentTypecomission
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,9 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool?>("DefaultBarcodeType")
+                        .HasColumnType("bit");
 
                     b.HasKey("BarcodeTypeCode");
 
@@ -460,7 +463,7 @@ namespace Foxoft.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<Guid>("RowGuid")
+                    b.Property<Guid?>("RowGuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("StoreCode")
@@ -504,7 +507,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "0519678909",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -523,7 +525,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -542,7 +543,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -561,7 +561,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -578,7 +577,6 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "123",
                             OfficeCode = "ofs01",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -596,7 +594,6 @@ namespace Foxoft.Migrations
                             NewPassword = "456",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -613,7 +610,6 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "456",
                             OfficeCode = "ofs01",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         });
                 });
@@ -963,6 +959,9 @@ namespace Foxoft.Migrations
                     b.Property<string>("DefaultCashRegCode")
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("DefaultCurrAccCode")
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("PaymentMethodDesc")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -974,6 +973,8 @@ namespace Foxoft.Migrations
                     b.HasKey("PaymentMethodId");
 
                     b.HasIndex("DefaultCashRegCode");
+
+                    b.HasIndex("DefaultCurrAccCode");
 
                     b.HasIndex("PaymentTypeCode");
 
@@ -990,7 +991,7 @@ namespace Foxoft.Migrations
                         {
                             PaymentMethodId = 2,
                             PaymentMethodDesc = "Daxili Kredit",
-                            PaymentTypeCode = (byte)2
+                            PaymentTypeCode = (byte)3
                         },
                         new
                         {
@@ -1017,8 +1018,8 @@ namespace Foxoft.Migrations
                     b.Property<string>("PaymentPlanCode")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("Commission")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("CommissionRate")
+                        .HasColumnType("real");
 
                     b.Property<int>("DurationInMonths")
                         .HasColumnType("int");
@@ -1040,24 +1041,24 @@ namespace Foxoft.Migrations
                     b.HasData(
                         new
                         {
-                            PaymentPlanCode = "M3",
-                            Commission = 0m,
+                            PaymentPlanCode = "M03",
+                            CommissionRate = 0f,
                             DurationInMonths = 3,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "3 AY"
                         },
                         new
                         {
-                            PaymentPlanCode = "M6",
-                            Commission = 0m,
+                            PaymentPlanCode = "M06",
+                            CommissionRate = 0f,
                             DurationInMonths = 6,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "6 AY"
                         },
                         new
                         {
-                            PaymentPlanCode = "M9",
-                            Commission = 0m,
+                            PaymentPlanCode = "M09",
+                            CommissionRate = 0f,
                             DurationInMonths = 9,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "9 AY"
@@ -1065,7 +1066,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M12",
-                            Commission = 0m,
+                            CommissionRate = 0f,
                             DurationInMonths = 12,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "12 AY"
@@ -1073,7 +1074,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M18",
-                            Commission = 0m,
+                            CommissionRate = 0f,
                             DurationInMonths = 18,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "18 AY"
@@ -1081,7 +1082,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentPlanCode = "M24",
-                            Commission = 0m,
+                            CommissionRate = 0f,
                             DurationInMonths = 24,
                             PaymentMethodId = 2,
                             PaymentPlanDesc = "24 AY"
@@ -1112,6 +1113,16 @@ namespace Foxoft.Migrations
                         {
                             PaymentTypeCode = (byte)2,
                             PaymentTypeDesc = "Nağdsız"
+                        },
+                        new
+                        {
+                            PaymentTypeCode = (byte)3,
+                            PaymentTypeDesc = "Daxili Kredit"
+                        },
+                        new
+                        {
+                            PaymentTypeCode = (byte)4,
+                            PaymentTypeDesc = "Komissiya"
                         });
                 });
 
@@ -1154,6 +1165,8 @@ namespace Foxoft.Migrations
                     b.HasKey("PriceTypeCode");
 
                     b.ToTable("DcPriceTypes");
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
 
                     b.HasData(
                         new
@@ -1307,6 +1320,12 @@ namespace Foxoft.Migrations
                             ProcessCode = "PL",
                             ProcessDesc = "Qiymət Cədvəli",
                             ProcessDir = (byte)0
+                        },
+                        new
+                        {
+                            ProcessCode = "IS",
+                            ProcessDesc = "Kredit Satışı",
+                            ProcessDir = (byte)2
                         });
                 });
 
@@ -1326,6 +1345,9 @@ namespace Foxoft.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<int>("DefaultUnitOfMeasureId")
+                        .HasColumnType("int");
 
                     b.Property<string>("HierarchyCode")
                         .HasColumnType("nvarchar(450)");
@@ -1411,6 +1433,8 @@ namespace Foxoft.Migrations
 
                     b.HasKey("ProductCode");
 
+                    b.HasIndex("DefaultUnitOfMeasureId");
+
                     b.HasIndex("HierarchyCode");
 
                     b.HasIndex("ProductTypeCode");
@@ -1422,6 +1446,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "test01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -1438,6 +1463,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "test02",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -1454,6 +1480,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "xerc01",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -1470,6 +1497,7 @@ namespace Foxoft.Migrations
                         {
                             ProductCode = "xerc02",
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
@@ -1482,6 +1510,48 @@ namespace Foxoft.Migrations
                             UsePos = false,
                             WholesalePrice = 0m
                         });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
+                {
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("PriceTypeCode")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductCode", "PriceTypeCode");
+
+                    b.HasIndex("PriceTypeCode");
+
+                    b.ToTable("DcProductStaticPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductType", b =>
@@ -1575,7 +1645,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_ProductList",
-                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n--declare @StartDate date = dateadd(DAY, 1, getdate())\r\n--declare @StartTime time =  '00:00:00.000'\r\n\r\nselect * from (\r\n\r\nSelect pro.ProductCode\r\n		, pro.HierarchyCode\r\n		, [M?hsulun Genis Adi]= isnull(pro.HierarchyCode + ' ','')  + ProductDesc \r\n			+ isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') + isnull(' ' + Feature06,'') + isnull(' ' +Feature07,'')\r\n			+ isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') + isnull(' ' + Feature11,'')\r\n			+ isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n			+ isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')\r\n			+ isnull(' ' + Feature23,'') + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') \r\n			+ isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		, ProductDesc\r\n		, Balance = isnull(ProductBalance.[depo-01],0)\r\n		, WholesalePrice\r\n		, HierarchyDesc\r\n		, ProductTypeCode\r\n		--, ProductId	\r\n		, ProductCost = dbo.GetProductCost(pro.ProductCode, null)\r\n		, CalcClosingStockFifo.FIFO_CORG\r\n		\r\nfrom DcProducts pro\r\n\r\nleft join DcHierarchies on pro.HierarchyCode = DcHierarchies.HierarchyCode\r\n--left join SiteProducts on SiteProducts.ProductCode = pro.ProductCode\r\nleft join ProductFeatures ON pro.ProductCode = ProductFeatures.ProductCode \r\nleft join ProductBalance on ProductBalance.ProductCode = pro.ProductCode\r\nleft join CalcClosingStockFifo on CalcClosingStockFifo.ProductCode = pro.ProductCode\r\n\r\n	--where ProductTypeCode = 1\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--	(CAST(@StartDate AS DATETIME) + CAST(@StartTime AS DATETIME))\r\n	--and il.ProductCode = '5503'\r\n\r\n) as tablo \r\n	order by \r\ntablo.HierarchyCode \r\n, tablo.ProductDesc \r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n--declare @StartDate date = dateadd(DAY, 1, getdate())\r\n--declare @StartTime time =  '00:00:00.000'\r\n\r\nselect * from (\r\n\r\nSelect pro.ProductCode\r\n		, pro.HierarchyCode\r\n		, [Məhsulun Genis Adi]= isnull(pro.HierarchyCode + ' ','')  + ProductDesc \r\n			+ isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') + isnull(' ' + Feature06,'') + isnull(' ' +Feature07,'')\r\n			+ isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') + isnull(' ' + Feature11,'')\r\n			+ isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n			+ isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')\r\n			+ isnull(' ' + Feature23,'') + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') \r\n			+ isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		, ProductDesc\r\n		, Balance = CAST(isnull(ProductBalance.[depo-01],0) AS INT)\r\n		, WholesalePrice\r\n		, HierarchyDesc\r\n		, ProductTypeCode\r\n		--, ProductId	\r\n		, ProductCost = dbo.GetProductCost(pro.ProductCode, null)\r\n		, CalcClosingStockFifo.FIFO_CORG\r\n		\r\nfrom DcProducts pro\r\n\r\nleft join DcHierarchies on pro.HierarchyCode = DcHierarchies.HierarchyCode\r\n--left join SiteProducts on SiteProducts.ProductCode = pro.ProductCode\r\nleft join ProductFeatures ON pro.ProductCode = ProductFeatures.ProductCode \r\nleft join ProductBalance on ProductBalance.ProductCode = pro.ProductCode\r\nleft join CalcClosingStockFifo on CalcClosingStockFifo.ProductCode = pro.ProductCode\r\n\r\n	--where ProductTypeCode = 1\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--	(CAST(@StartDate AS DATETIME) + CAST(@StartTime AS DATETIME))\r\n	--and il.ProductCode = '5503'\r\n\r\n) as tablo \r\n	order by \r\ntablo.HierarchyCode \r\n, tablo.ProductDesc \r\n\r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -1605,7 +1675,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_InvoiceReport",
-                            ReportQuery = "\r\n\r\n--Declare @invoiceHeader nvarchar(50) = 'dd6927e4-d33c-4dc7-929c-1410c299e0a9'\r\n\r\n	select  TrInvoiceLines.InvoiceLineId\r\n			,	[Marka] = isnull(' ' +  Feature02Desc,'')\r\n		  , [Ceki] = isnull(' ' + Feature04Desc,'')\r\n		  , [Reng] = isnull(' ' + Feature05Desc,'')\r\n		  , [Məhsul Tipi] = isnull(' ' + Feature06Desc,'')\r\n		  , [Soyutma Tipi] = isnull(' ' + Feature07Desc,'')\r\n		  , [BTU] = isnull(' ' + Feature09Desc,'')\r\n		  , [Ekran Ölçüsü] = isnull(' ' + Feature10Desc,'')\r\n		  , [Ekran İcazəsi] = isnull(' ' + Feature11Desc,'')\r\n		  , [Motorun Növü] = isnull(' ' + Feature12Desc,'')\r\n		  , [Həcmi] = isnull(' ' + Feature13Desc,'')\r\n		  , [Soyuducu Kameranın Həcmi] = isnull(' ' + Feature14Desc,'')\r\n		  , [Dondurucu Kameranın Həcmi] = isnull(' ' + Feature15Desc,'')\r\n		  , [Istehsalçı Ölkə] = isnull(' ' + Feature16Desc,'')\r\n		  , [Məhsuldarlıq] = isnull(' ' + Feature17Desc,'')\r\n		  , [Güc] = isnull(' ' + Feature18Desc,'')\r\n		  , [Tərtib Edən İstifadəçi] =( select CurrAccDesc from DcCurrAccs where CurrAccCode = TrInvoiceHeaders.CreatedUserName)\r\n	, TrInvoiceHeaders.InvoiceHeaderId\r\n	, DcProducts.ProductCode\r\n	, ProductDesc\r\n	, QtyIn = QtyIn\r\n	, QtyOut = QtyOut\r\n	, Price\r\n	, TrInvoiceLines.PosDiscount\r\n	, TrInvoiceHeaders.ProcessCode\r\n	, ProcessDesc\r\n	, TrInvoiceLines.CurrencyCode\r\n	, DcProducts.HierarchyCode\r\n	, HierarchyDesc\r\n	, IsReturn\r\n	, CustomsDocumentNumber\r\n	, PrintCount\r\n	, NetAmount\r\n	, LineDescription\r\n	, PriceLoc\r\n	, PriceDiscounted\r\n	, PriceDiscountedLoc\r\n	, TrInvoiceLines.ExchangeRate\r\n	, NetAmountLoc = (QtyIn-QtyOut) * PriceDiscountedLoc\r\n	, DocumentNumber\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, DcCurrAccs.CurrAccCode\r\n	, DcCurrAccs.CurrAccDesc\r\n	, DcCurrAccs.FirstName\r\n	, DcCurrAccs.PhoneNum\r\n	, HeaderCreatedDate = TrInvoiceHeaders.CreatedDate\r\n	, LineCreatedDate = TrInvoiceLines.CreatedDate\r\n	, TrInvoiceHeaders.CreatedUserName\r\n	, CurrAccBalance = dbo.CurrAccBalance(TrInvoiceHeaders.CurrAccCode, CAST(DocumentDate as Datetime) + CAST(DocumentTime as Datetime))\r\n	, BalanceCode = 'M' + Convert(nvarchar, Format((select SUM(QtyIn - QtyOut) ProductBalance\r\n						from TrInvoiceLines il \r\n						left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n						where il.ProductCode = TrInvoiceLines.ProductCode and WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n						and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )),'000')) \r\n						\r\n	, TrInvoiceHeaders.WarehouseCode\r\n	, TrInvoiceHeaders.ToWarehouseCode\r\n	, [Depodan] = wareIn.WarehouseDesc\r\n	, [Depoya] = wareOut.WarehouseDesc\r\n	, Description\r\n	, TrInvoiceHeaders.StoreCode\r\n	, PaymentLoc = ISNULL((	select sum(PaymentLoc) from TrPaymentLines pl \r\n							join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n							where ph.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId), 0)\r\n	, ProductCost\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n	from TrInvoiceLines\r\n	left join TrInvoiceLineExts on TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId\r\n	left join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\n	left join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n	left join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\n	left join DcHierarchies on DcHierarchies.HierarchyCode = DcProducts.HierarchyCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = TrInvoiceLines.CurrencyCode\r\n	left join DcWarehouses wareIn on wareIn.WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n	left join DcWarehouses wareOut on wareOut.WarehouseCode = TrInvoiceHeaders.ToWarehouseCode\r\n	left join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n	left join DcCurrAccs store on store.CurrAccCode = TrInvoiceHeaders.StoreCode\r\n\r\n	where TrInvoiceHeaders.InvoiceHeaderId = @invoiceHeader\r\n\r\n\r\n	order by TrInvoiceLines.CreatedDate\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n--Declare @invoiceHeader nvarchar(50) = 'dd6927e4-d33c-4dc7-929c-1410c299e0a9'\r\n\r\n	select  TrInvoiceLines.InvoiceLineId\r\n			,	[Marka] = isnull(' ' +  Feature02Desc,'')\r\n		  , [Ceki] = isnull(' ' + Feature04Desc,'')\r\n		  , [Reng] = isnull(' ' + Feature05Desc,'')\r\n		  , [Məhsul Tipi] = isnull(' ' + Feature06Desc,'')\r\n		  , [Soyutma Tipi] = isnull(' ' + Feature07Desc,'')\r\n		  , [BTU] = isnull(' ' + Feature09Desc,'')\r\n		  , [Ekran Ölçüsü] = isnull(' ' + Feature10Desc,'')\r\n		  , [Ekran İcazəsi] = isnull(' ' + Feature11Desc,'')\r\n		  , [Motorun Növü] = isnull(' ' + Feature12Desc,'')\r\n		  , [Həcmi] = isnull(' ' + Feature13Desc,'')\r\n		  , [Soyuducu Kameranın Həcmi] = isnull(' ' + Feature14Desc,'')\r\n		  , [Dondurucu Kameranın Həcmi] = isnull(' ' + Feature15Desc,'')\r\n		  , [Istehsalçı Ölkə] = isnull(' ' + Feature16Desc,'')\r\n		  , [Məhsuldarlıq] = isnull(' ' + Feature17Desc,'')\r\n		  , [Güc] = isnull(' ' + Feature18Desc,'')\r\n		  , [Tərtib Edən İstifadəçi] =( select CurrAccDesc from DcCurrAccs where CurrAccCode = TrInvoiceHeaders.CreatedUserName)\r\n	, TrInvoiceHeaders.InvoiceHeaderId\r\n	, DcProducts.ProductCode\r\n	, ProductDesc\r\n	, QtyIn = QtyIn\r\n	, QtyOut = QtyOut\r\n	, Price\r\n	, TrInvoiceLines.PosDiscount\r\n	, TrInvoiceHeaders.ProcessCode\r\n	, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)\r\n	, TrInvoiceLines.CurrencyCode\r\n	, DcProducts.HierarchyCode\r\n	, HierarchyDesc\r\n	, IsReturn\r\n	, CustomsDocumentNumber\r\n	, PrintCount\r\n	, NetAmount\r\n	, LineDescription\r\n	, PriceLoc\r\n	, PriceDiscounted\r\n	, PriceDiscountedLoc\r\n	, TrInvoiceLines.ExchangeRate\r\n	, NetAmountLoc = (QtyIn-QtyOut) * PriceDiscountedLoc\r\n	, DocumentNumber\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, DcCurrAccs.CurrAccCode\r\n	, DcCurrAccs.CurrAccDesc\r\n	, DcCurrAccs.FirstName\r\n	, DcCurrAccs.PhoneNum\r\n	, HeaderCreatedDate = TrInvoiceHeaders.CreatedDate\r\n	, LineCreatedDate = TrInvoiceLines.CreatedDate\r\n	, TrInvoiceHeaders.CreatedUserName\r\n	, CurrAccBalance = dbo.CurrAccBalance(TrInvoiceHeaders.CurrAccCode, CAST(DocumentDate as Datetime) + CAST(DocumentTime as Datetime))\r\n	, BalanceCode = 'M' + Convert(nvarchar, Format((select SUM(QtyIn - QtyOut) ProductBalance\r\n						from TrInvoiceLines il \r\n						left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n						where il.ProductCode = TrInvoiceLines.ProductCode and WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n						and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )),'000')) \r\n						\r\n	, TrInvoiceHeaders.WarehouseCode\r\n	, TrInvoiceHeaders.ToWarehouseCode\r\n	, [Depodan] = wareIn.WarehouseDesc\r\n	, [Depoya] = wareOut.WarehouseDesc\r\n	, Description\r\n	, TrInvoiceHeaders.StoreCode\r\n	, PaymentLoc = ISNULL((	select sum(PaymentLoc) from TrPaymentLines pl \r\n							join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n							where ph.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId), 0)\r\n	, ProductCost\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n	from TrInvoiceLines\r\n	left join TrInvoiceLineExts on TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId\r\n	left join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\n	left join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n	left join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\n	left join DcHierarchies on DcHierarchies.HierarchyCode = DcProducts.HierarchyCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = TrInvoiceLines.CurrencyCode\r\n	left join DcWarehouses wareIn on wareIn.WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n	left join DcWarehouses wareOut on wareOut.WarehouseCode = TrInvoiceHeaders.ToWarehouseCode\r\n	left join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n	left join DcCurrAccs store on store.CurrAccCode = TrInvoiceHeaders.StoreCode\r\n\r\n	where TrInvoiceHeaders.InvoiceHeaderId = @InvoiceHeaderId\r\n\r\n\r\n	order by TrInvoiceLines.CreatedDate\r\n\r\n\r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -1655,7 +1725,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Məhsulun Hərəkəti",
-                            ReportQuery = "\r\n\r\n\r\n\r\n\r\nselect  InvoiceLineId\r\n, TrInvoiceHeaders.InvoiceHeaderId\r\n, TrInvoiceLines.ProductCode\r\n, [Məhsulun Geniş Adı] = isnull(DcProducts.HierarchyCode + ' ','')  + ProductDesc +  isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') \r\n		  + isnull(' ' + Feature06,'') + isnull(' ' + Feature07,'') + isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') \r\n		  + isnull(' ' + Feature11,'') + isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n		  + isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')+ isnull(' ' + Feature23,'')\r\n		  + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') + isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		  + isnull(' ' + Feature29,'') \r\n\r\n\r\n, ProductDesc\r\n, QtyIn\r\n, QtyOut\r\n, Price\r\n, PriceLoc\r\n, Net = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * TrInvoiceLines.PosDiscount / 100))\r\n, [Qiymət End.li] = Price * (1 - (TrInvoiceLines.PosDiscount / 100))\r\n, Amount\r\n, NetAmountLoc\r\n, [Qaime Üzrə Ödəniş] = (select sum(TrPaymentLines.PaymentLoc) from TrPaymentLines \r\n		join TrPaymentHeaders on TrPaymentHeaders.PaymentHeaderId = TrPaymentLines.PaymentHeaderId\r\n		where TrPaymentHeaders.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId)\r\n, LineDescription\r\n, SalesPersonCode\r\n, CurrencyCode\r\n, ExchangeRate\r\n, TrInvoiceHeaders.ProcessCode\r\n, ProcessDesc\r\n, DocumentNumber\r\n, IsReturn\r\n, ProductCost\r\n, Benefit = (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)\r\n, DocumentDate\r\n, DocumentTime\r\n, OperationDate\r\n, OperationTime\r\n, Description\r\n, TrInvoiceLines.PosDiscount\r\n, TrInvoiceHeaders.CurrAccCode\r\n, DcCurrAccs .CurrAccDesc\r\n, DcCurrAccTypes.CurrAccTypeDesc\r\n, DcCurrAccs.CurrAccTypeCode\r\n, TrInvoiceHeaders.OfficeCode\r\n, TrInvoiceHeaders.StoreCode\r\n, WarehouseCode\r\n, CustomsDocumentNumber\r\n, PosTerminalId\r\n, IsSuspended\r\n, IsCompleted\r\n, PrintCount\r\n, IsSalesViaInternet\r\n, IsLocked\r\n, DcProducts.ProductTypeCode\r\n, ProductTypeDesc\r\n, UsePos\r\n, PromotionCode\r\n, TaxRate\r\n, RetailPrice\r\n, PurchasePrice\r\n, WholesalePrice\r\n, TrInvoiceLines.CreatedDate\r\n, Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il \r\n					left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n					where il.ProductCode = TrInvoiceLines.ProductCode\r\n					and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT'))\r\n, TrInvoiceHeaders.CreatedUserName\r\n, ImagePath\r\n--, ROW_NUMBER() OVER (ORDER BY DocumentDate DESC) AS RowNum  \r\n\r\nfrom TrInvoiceLines \r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nleft join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\nleft join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\nleft join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\nleft join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode\r\nleft join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n\r\n\r\norder by DocumentDate, DocumentTime\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n\r\n\r\n\r\nselect  InvoiceLineId\r\n, TrInvoiceHeaders.InvoiceHeaderId\r\n, TrInvoiceLines.ProductCode\r\n, [Məhsulun Geniş Adı] = isnull(DcProducts.HierarchyCode + ' ','')  + ProductDesc +  isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') \r\n		  + isnull(' ' + Feature06,'') + isnull(' ' + Feature07,'') + isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') \r\n		  + isnull(' ' + Feature11,'') + isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n		  + isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')+ isnull(' ' + Feature23,'')\r\n		  + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') + isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		  + isnull(' ' + Feature29,'') \r\n\r\n\r\n, ProductDesc\r\n, QtyIn\r\n, QtyOut\r\n, Price\r\n, PriceLoc\r\n, Net = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * TrInvoiceLines.PosDiscount / 100))\r\n, [Qiymət End.li] = Price * (1 - (TrInvoiceLines.PosDiscount / 100))\r\n, Amount\r\n, NetAmountLoc\r\n, [Qaime Üzrə Ödəniş] = (select sum(TrPaymentLines.PaymentLoc) from TrPaymentLines \r\n		join TrPaymentHeaders on TrPaymentHeaders.PaymentHeaderId = TrPaymentLines.PaymentHeaderId\r\n		where TrPaymentHeaders.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId)\r\n, LineDescription\r\n, SalesPersonCode\r\n, CurrencyCode\r\n, ExchangeRate\r\n, TrInvoiceHeaders.ProcessCode\r\n, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)\r\n, DocumentNumber\r\n, IsReturn\r\n, ProductCost\r\n, Benefit = (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)\r\n, DocumentDate\r\n, DocumentTime\r\n, OperationDate\r\n, OperationTime\r\n, Description\r\n, TrInvoiceLines.PosDiscount\r\n, TrInvoiceHeaders.CurrAccCode\r\n, DcCurrAccs .CurrAccDesc\r\n, DcCurrAccTypes.CurrAccTypeDesc\r\n, DcCurrAccs.CurrAccTypeCode\r\n, TrInvoiceHeaders.OfficeCode\r\n, TrInvoiceHeaders.StoreCode\r\n, WarehouseCode\r\n, CustomsDocumentNumber\r\n, PosTerminalId\r\n, IsSuspended\r\n, IsCompleted\r\n, PrintCount\r\n, IsSalesViaInternet\r\n, IsLocked\r\n, DcProducts.ProductTypeCode\r\n, ProductTypeDesc\r\n, UsePos\r\n, PromotionCode\r\n, TaxRate\r\n, RetailPrice\r\n, PurchasePrice\r\n, WholesalePrice\r\n, TrInvoiceLines.CreatedDate\r\n, Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il \r\n					left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n					where il.ProductCode = TrInvoiceLines.ProductCode\r\n					and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT'))\r\n, TrInvoiceHeaders.CreatedUserName\r\n, ImagePath\r\n--, ROW_NUMBER() OVER (ORDER BY DocumentDate DESC) AS RowNum  \r\n\r\nfrom TrInvoiceLines \r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nleft join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\nleft join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\nleft join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\nleft join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode\r\nleft join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n\r\n\r\norder by DocumentDate, DocumentTime\r\n\r\n\r\n",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -1804,6 +1874,17 @@ namespace Foxoft.Migrations
                         new
                         {
                             VariableId = 1,
+                            ReportId = 4,
+                            Representative = "@InvoiceHeaderId",
+                            VariableOperator = "",
+                            VariableProperty = "InvoiceHeaderId",
+                            VariableTypeId = (byte)1,
+                            VariableValue = "",
+                            VariableValueType = "System.Guid"
+                        },
+                        new
+                        {
+                            VariableId = 2,
                             ReportId = 13,
                             Representative = "{CurrAccCode}",
                             VariableOperator = "=",
@@ -1814,7 +1895,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            VariableId = 2,
+                            VariableId = 3,
                             ReportId = 17,
                             Representative = "{StartDate}",
                             VariableOperator = "<=",
@@ -2000,27 +2081,46 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
                 {
-                    b.Property<string>("UnitOfMeasureCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("UnitOfMeasureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UnitOfMeasureId"));
+
+                    b.Property<decimal>("ConversionRate")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<byte>("Level")
                         .HasColumnType("tinyint");
 
-                    b.HasKey("UnitOfMeasureCode");
+                    b.Property<int>("ParentUnitOfMeasureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitOfMeasureDesc")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("UnitOfMeasureId");
 
                     b.ToTable("DcUnitOfMeasures");
 
                     b.HasData(
                         new
                         {
-                            UnitOfMeasureCode = "Ədəd",
-                            Level = (byte)1
+                            UnitOfMeasureId = 1,
+                            ConversionRate = 0m,
+                            Level = (byte)1,
+                            ParentUnitOfMeasureId = 0,
+                            UnitOfMeasureDesc = "Ədəd"
                         },
                         new
                         {
-                            UnitOfMeasureCode = "Qutu",
-                            Level = (byte)1
+                            UnitOfMeasureId = 2,
+                            ConversionRate = 0m,
+                            Level = (byte)1,
+                            ParentUnitOfMeasureId = 0,
+                            UnitOfMeasureDesc = "Qutu"
                         });
                 });
 
@@ -2141,6 +2241,11 @@ namespace Foxoft.Migrations
                         {
                             VariableCode = "CT",
                             VariableDesc = "Pul transferi"
+                        },
+                        new
+                        {
+                            VariableCode = "IS",
+                            VariableDesc = "Kredit Satışı"
                         });
                 });
 
@@ -2314,6 +2419,9 @@ namespace Foxoft.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("DefaultUnitOfMeasureId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DesignFileFolder")
                         .HasColumnType("nvarchar(max)");
 
@@ -2333,6 +2441,8 @@ namespace Foxoft.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DefaultUnitOfMeasureId");
+
                     b.HasIndex("StoreCode");
 
                     b.ToTable("SettingStores");
@@ -2341,6 +2451,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             Id = 1,
+                            DefaultUnitOfMeasureId = 1,
                             DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
                             ImageFolder = "C:\\Foxoft\\Foxoft Images",
                             SalesmanContinuity = false,
@@ -2652,6 +2763,45 @@ namespace Foxoft.Migrations
                     b.ToTable("TrHierarchyFeatureTypes");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrInstallment", b =>
+                {
+                    b.Property<int>("InstallmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstallmentId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Commission")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<float>("ExchangeRate")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("InvoiceHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PaymentPlanCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("InstallmentId");
+
+                    b.HasIndex("CurrencyCode");
+
+                    b.HasIndex("InvoiceHeaderId");
+
+                    b.HasIndex("PaymentPlanCode");
+
+                    b.ToTable("TrInstallments");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
                 {
                     b.Property<Guid>("InvoiceHeaderId")
@@ -2886,14 +3036,17 @@ namespace Foxoft.Migrations
                     b.Property<decimal?>("ProductCost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("QtyIn")
+                    b.Property<int?>("ProductUnitOfMeasureId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("QtyIn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValueSql("0");
 
-                    b.Property<int>("QtyOut")
+                    b.Property<decimal>("QtyOut")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValueSql("0");
 
                     b.Property<Guid?>("RelatedLineId")
@@ -2906,9 +3059,6 @@ namespace Foxoft.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("UnitOfMeasure")
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<float>("VatRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
@@ -2920,13 +3070,13 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("ProductCode");
 
+                    b.HasIndex("ProductUnitOfMeasureId");
+
                     b.HasIndex("RelatedLineId");
 
                     b.HasIndex("SalesPersonCode");
 
                     b.HasIndex("SerialNumberCode");
-
-                    b.HasIndex("UnitOfMeasure");
 
                     b.HasIndex("InvoiceHeaderId", "ProductCode");
 
@@ -3159,81 +3309,6 @@ namespace Foxoft.Migrations
                     b.HasIndex("PaymentMethodId");
 
                     b.ToTable("TrPaymentMethodDiscounts");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrPaymentPlan", b =>
-                {
-                    b.Property<int>("PaymentPlanId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentPlanId"));
-
-                    b.Property<decimal>("Commission")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("MonthlyPayment")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("PaymentLineId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PaymentPlanCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PaymentPlanId");
-
-                    b.HasIndex("PaymentLineId")
-                        .IsUnique();
-
-                    b.HasIndex("PaymentPlanCode");
-
-                    b.ToTable("TrPaymentPlans");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrPrice", b =>
-                {
-                    b.Property<int>("PriceCode")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PriceCode"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProductCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("PriceCode");
-
-                    b.HasIndex("ProductCode");
-
-                    b.ToTable("TrPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
@@ -3484,9 +3559,9 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("Qty")
+                    b.Property<decimal>("Qty")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValueSql("1");
 
                     b.HasKey("Id");
@@ -3545,6 +3620,35 @@ namespace Foxoft.Migrations
                     b.HasIndex("FeatureCode", "FeatureTypeId");
 
                     b.ToTable("TrProductFeatures");
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrProductUnitOfMeasure", b =>
+                {
+                    b.Property<int>("ProductUnitOfMeasureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductUnitOfMeasureId"));
+
+                    b.Property<decimal>("ConversionRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("UnitOfMeasureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductUnitOfMeasureId");
+
+                    b.HasIndex("ProductCode");
+
+                    b.HasIndex("UnitOfMeasureId");
+
+                    b.ToTable("TrProductUnitOfMeasures");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
@@ -4055,9 +4159,14 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcPaymentMethod", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
-                        .WithMany("DcPaymentMethods")
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCashReg")
+                        .WithMany("CashRegDcPaymentMethods")
                         .HasForeignKey("DefaultCashRegCode")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("CurrAccDcPaymentMethods")
+                        .HasForeignKey("DefaultCurrAccCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Foxoft.Models.DcPaymentType", "DcPaymentType")
@@ -4065,6 +4174,8 @@ namespace Foxoft.Migrations
                         .HasForeignKey("PaymentTypeCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("DcCashReg");
 
                     b.Navigation("DcCurrAcc");
 
@@ -4094,6 +4205,12 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcProduct", b =>
                 {
+                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
+                        .WithMany("DcProducts")
+                        .HasForeignKey("DefaultUnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
                         .WithMany("DcProducts")
                         .HasForeignKey("HierarchyCode")
@@ -4108,6 +4225,27 @@ namespace Foxoft.Migrations
                     b.Navigation("DcHierarchy");
 
                     b.Navigation("DcProductType");
+
+                    b.Navigation("DcUnitOfMeasure");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcPriceType", "DcPriceType")
+                        .WithMany("TrStaticPrices")
+                        .HasForeignKey("PriceTypeCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+                        .WithMany("TrStaticPrices")
+                        .HasForeignKey("ProductCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcPriceType");
+
+                    b.Navigation("DcProduct");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
@@ -4164,6 +4302,12 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.SettingStore", b =>
                 {
+                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
+                        .WithMany("SettingStores")
+                        .HasForeignKey("DefaultUnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
                         .WithMany("SettingStores")
                         .HasForeignKey("StoreCode")
@@ -4171,6 +4315,8 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.Navigation("DcStore");
+
+                    b.Navigation("DcUnitOfMeasure");
                 });
 
             modelBuilder.Entity("Foxoft.Models.SiteProduct", b =>
@@ -4260,6 +4406,33 @@ namespace Foxoft.Migrations
                     b.Navigation("DcHierarchy");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrInstallment", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
+                        .WithMany("TrInstallments")
+                        .HasForeignKey("CurrencyCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
+                        .WithMany("TrPaymentPlans")
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcPaymentPlan", "DcPaymentPlan")
+                        .WithMany("TrPaymentPlans")
+                        .HasForeignKey("PaymentPlanCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrency");
+
+                    b.Navigation("DcPaymentPlan");
+
+                    b.Navigation("TrInvoiceHeader");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
@@ -4305,6 +4478,11 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Foxoft.Models.TrProductUnitOfMeasure", "TrProductUnitOfMeasure")
+                        .WithMany("TrInvoiceLines")
+                        .HasForeignKey("ProductUnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Foxoft.Models.TrInvoiceLine", "RelatedLine")
                         .WithMany("InverseRelatedLines")
                         .HasForeignKey("RelatedLineId")
@@ -4320,11 +4498,6 @@ namespace Foxoft.Migrations
                         .HasForeignKey("SerialNumberCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
-                        .WithMany("TrInvoiceLines")
-                        .HasForeignKey("UnitOfMeasure")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("DcCurrency");
@@ -4333,11 +4506,11 @@ namespace Foxoft.Migrations
 
                     b.Navigation("DcSerialNumber");
 
-                    b.Navigation("DcUnitOfMeasure");
-
                     b.Navigation("RelatedLine");
 
                     b.Navigation("TrInvoiceHeader");
+
+                    b.Navigation("TrProductUnitOfMeasure");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
@@ -4439,36 +4612,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcDiscount");
 
                     b.Navigation("DcPaymentMethod");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrPaymentPlan", b =>
-                {
-                    b.HasOne("Foxoft.Models.TrPaymentLine", "TrPaymentLine")
-                        .WithOne("TrPaymentPlan")
-                        .HasForeignKey("Foxoft.Models.TrPaymentPlan", "PaymentLineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Foxoft.Models.DcPaymentPlan", "DcPaymentPlan")
-                        .WithMany("TrPaymentPlans")
-                        .HasForeignKey("PaymentPlanCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcPaymentPlan");
-
-                    b.Navigation("TrPaymentLine");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrPrice", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                        .WithMany("TrPrices")
-                        .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcProduct");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
@@ -4593,6 +4736,25 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrProductUnitOfMeasure", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+                        .WithMany("TrProductUnitOfMeasures")
+                        .HasForeignKey("ProductCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
+                        .WithMany("TrProductUnitOfMeasures")
+                        .HasForeignKey("UnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcProduct");
+
+                    b.Navigation("DcUnitOfMeasure");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
                 {
                     b.HasOne("Foxoft.Models.DcReport", "DcReport")
@@ -4675,7 +4837,9 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAcc", b =>
                 {
-                    b.Navigation("DcPaymentMethods");
+                    b.Navigation("CashRegDcPaymentMethods");
+
+                    b.Navigation("CurrAccDcPaymentMethods");
 
                     b.Navigation("DcStoreTrPaymentHeaders");
 
@@ -4708,6 +4872,8 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.Navigation("DcProcesses");
+
+                    b.Navigation("TrInstallments");
 
                     b.Navigation("TrInvoiceLines");
 
@@ -4778,6 +4944,8 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcPriceType", b =>
                 {
                     b.Navigation("TrPriceListHeaders");
+
+                    b.Navigation("TrStaticPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProcess", b =>
@@ -4801,13 +4969,15 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrPriceListLines");
 
-                    b.Navigation("TrPrices");
-
                     b.Navigation("TrProductBarcodes");
 
                     b.Navigation("TrProductDiscounts");
 
                     b.Navigation("TrProductFeatures");
+
+                    b.Navigation("TrProductUnitOfMeasures");
+
+                    b.Navigation("TrStaticPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductType", b =>
@@ -4850,7 +5020,11 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
                 {
-                    b.Navigation("TrInvoiceLines");
+                    b.Navigation("DcProducts");
+
+                    b.Navigation("SettingStores");
+
+                    b.Navigation("TrProductUnitOfMeasures");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
@@ -4860,6 +5034,8 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrPaymentHeaders");
+
+                    b.Navigation("TrPaymentPlans");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
@@ -4875,15 +5051,14 @@ namespace Foxoft.Migrations
                     b.Navigation("TrPaymentLines");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrPaymentLine", b =>
-                {
-                    b.Navigation("TrPaymentPlan")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
                 {
                     b.Navigation("TrPriceListLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrProductUnitOfMeasure", b =>
+                {
+                    b.Navigation("TrInvoiceLines");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>

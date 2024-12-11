@@ -405,6 +405,7 @@ namespace Foxoft
             btnEdit_CurrAccCode.ButtonClick += btnEdit_CurrAccCode_ButtonClick;
             btnEdit_CurrAccCode.InvalidValue += btnEdit_CurrAccCode_InvalidValue;
             btnEdit_CurrAccCode.EditValueChanged += btnEdit_CurrAccCode_EditValueChanged;
+            btnEdit_CurrAccCode.EditValueChanging += btnEdit_CurrAccCode_EditValueChanging;
             btnEdit_CurrAccCode.DoubleClick += btnEdit_CurrAccCode_DoubleClick;
             btnEdit_CurrAccCode.KeyDown += dataLayoutControls_KeyDown;
             btnEdit_CurrAccCode.Validating += btnEdit_CurrAccCode_Validating;
@@ -922,11 +923,10 @@ namespace Foxoft
             // 
             colQty.FieldName = "Qty";
             colQty.Name = "colQty";
+            colQty.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Qty", "{0:n2}") });
             colQty.Visible = true;
             colQty.VisibleIndex = 4;
             colQty.Width = 34;
-            colQty.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Qty", "{0:n2}") });
-
             // 
             // colQtyIn
             // 
@@ -1031,11 +1031,10 @@ namespace Foxoft
             col_NetAmount.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_NetAmount.FieldName = "NetAmount";
             col_NetAmount.Name = "col_NetAmount";
+            col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}") });
             col_NetAmount.Visible = true;
             col_NetAmount.VisibleIndex = 8;
             col_NetAmount.Width = 42;
-            col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}") });
-
             // 
             // col_LineDesc
             // 

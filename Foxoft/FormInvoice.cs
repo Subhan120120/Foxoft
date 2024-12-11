@@ -341,7 +341,6 @@ namespace Foxoft
             decimal paidSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
             lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
-
             decimal installmentSum = efMethods.SelectInstallmentsSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
             lbl_InstallmentSum.Text = "Kredit: " + Math.Round(installmentSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
@@ -906,7 +905,7 @@ namespace Foxoft
 
             if (new string[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
                 SavePayment();
-            
+
             SaveSession();
 
             Tag = btnEdit_DocNum.EditValue;
@@ -1281,7 +1280,7 @@ namespace Foxoft
 
             MemoryStream ms = new();
             xtraReport.ExportToImage(ms, new ImageExportOptions() { Format = ImageFormat.Png, PageRange = "1", ExportMode = ImageExportMode.SingleFile, Resolution = 240 });
-            
+
             return ms;
         }
 
@@ -2225,6 +2224,11 @@ namespace Foxoft
             //textEdit_Qty.Name = "repoTextEdit_Qty";
 
             //e.RepositoryItem = textEdit_Qty;
+        }
+
+        private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
+        {
+
         }
     }
 }

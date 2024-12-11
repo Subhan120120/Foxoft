@@ -51,7 +51,7 @@ namespace Foxoft
             LUE_InstallmentCurrency.Properties.DataSource = efMethods.SelectCurrencies();
             lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
             lUE_CashlessCurrency.Properties.DataSource = efMethods.SelectCurrencies();
-            lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 1, 2 });
+            lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 });
         }
 
         public FormPayment(byte paymentType, decimal invoiceSumLoc, TrInvoiceHeader trInvoiceHeader)
@@ -204,7 +204,7 @@ namespace Foxoft
             dcPaymentMethod = efMethods.SelectPaymentMethod(Convert.ToInt32(lUE_PaymentMethod.EditValue));
 
             trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
-            btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
+            //btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
 
             List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
             if (paymentPlans.Count > 0)
@@ -325,7 +325,6 @@ namespace Foxoft
 
         private void txt_Commission_EditValueChanged(object sender, EventArgs e)
         {
-            //TrPaymentPlan.Commission = Convert.ToDecimal(txt_Commission.EditValue);
         }
 
         private void textEditBonus_EditValueChanged(object sender, EventArgs e) { }
@@ -364,6 +363,14 @@ namespace Foxoft
                 {
                     dxErrorProvider1.SetError(lUE_PaymentMethod, "Boş buraxıla bilməz!");
                     return;
+                }
+                else
+                {
+                    if (((List<DcPaymentPlan>)LUE_PaymentPlan.Properties.DataSource)?.Count > 0 && LUE_PaymentPlan.EditValue == null)
+                    {
+                        dxErrorProvider1.SetError(LUE_PaymentPlan, "Boş buraxıla bilməz!");
+                        return;
+                    }
                 }
             }
             if (trInstallment.Amount > 0)// lUE_PaymentMethod Validation
@@ -419,26 +426,22 @@ namespace Foxoft
                         TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
                         trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
                         trPaymentHeader2.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
-                        trPaymentHeader2.CurrAccCode = btnEdit_BankAccout.EditValue?.ToString();
+                        trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode?.ToString();
+                        trPaymentHeader2.OperationType = "payment";
                         efMethods.InsertPaymentHeader(trPaymentHeader2);
 
                         TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
                         trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
                         trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                        trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)txt_Commission.EditValue);
+                        trPaymentLineCashless2.CreatedDate = DateTime.Now; 
+                        trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_Commission.EditValue ?? 0m));
                         efMethods.InsertPaymentLine(trPaymentLineCashless2);
-
-                        TrPaymentHeader trPaymentHeaderCommission = trPaymentHeader;
-                        trPaymentHeaderCommission.PaymentHeaderId = Guid.NewGuid();
-                        trPaymentHeaderCommission.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
-                        trPaymentHeaderCommission.CurrAccCode = null;
-                        trPaymentHeaderCommission.Description = "Commission";
-                        efMethods.InsertPaymentHeader(trPaymentHeaderCommission);
 
                         TrPaymentLine trPaymentLineCommission = trPaymentLineCashless;
                         trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
-                        trPaymentLineCommission.PaymentHeaderId = trPaymentHeaderCommission.PaymentHeaderId;
-                        trPaymentLineCommission.LineDescription = LUE_PaymentPlan.EditValue.ToString();
+                        trPaymentLineCommission.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
+                        trPaymentLineCommission.PaymentTypeCode = 4;
+                        trPaymentLineCommission.LineDescription = LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
                         trPaymentLineCommission.Payment = (-1) * (decimal)txt_Commission.EditValue;
                         efMethods.InsertPaymentLine(trPaymentLineCommission);
                     }

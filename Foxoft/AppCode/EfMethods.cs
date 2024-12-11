@@ -1082,8 +1082,11 @@ namespace Foxoft
 
             foreach (TrPaymentHeader entity in trPaymentHeaders)
             {
-                entity.CurrAccCode = currAccCode;
-                db.Entry(entity).Property(x => x.CurrAccCode).IsModified = true;
+                if (entity.OperationType == "invoice")
+                {
+                    entity.CurrAccCode = currAccCode;
+                    db.Entry(entity).Property(x => x.CurrAccCode).IsModified = true;
+                }
             }
 
             return db.SaveChanges();
