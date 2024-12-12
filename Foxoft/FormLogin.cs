@@ -171,14 +171,9 @@ namespace Foxoft
 
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
         {
-            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet && nic.Name.StartsWith("Ethernet"))
-                {
-                    PhysicalAddress pInterfaceProperties = nic.GetPhysicalAddress();
-                    System.Windows.Clipboard.SetText(nic.Id + pInterfaceProperties);
-                }
-            }
+            string localAddress = CustomExtensions.GetPhiscalAdress();
+
+            System.Windows.Clipboard.SetText(localAddress);
         }
 
         private void LUE_Terminal_EditValueChanged(object sender, EventArgs e)
