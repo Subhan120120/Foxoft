@@ -131,7 +131,7 @@ namespace Foxoft
             this.ACE_Discounts.Name = "DiscountList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
             this.ACE_HierarchyFeatureType.Name = "HierarchyFeatureType";
-            this.aCE_CurrAccRole.Name = "CurrAccRole";
+            this.aCE_CurrAccRole.Name = "CurrAccClaim";
             this.bBI_Session.Name = "Session";
         }
 
