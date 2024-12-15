@@ -1886,6 +1886,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateCurrAccPassword(string CurrAccCode, string newPassword)
+        {
+            using subContext db = new();
+            DcCurrAcc dcCurrAcc = new() { CurrAccCode = CurrAccCode, NewPassword = newPassword };
+            db.Entry(dcCurrAcc).Property(x => x.NewPassword).IsModified = true;
+            return db.SaveChanges();
+        }
+
         public DcReport SelectReport(int id)
         {
             using subContext db = new();

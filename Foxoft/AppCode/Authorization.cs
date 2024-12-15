@@ -37,54 +37,53 @@ namespace Foxoft
             if (userCurrAcc != null)
             {
                 DcCurrAcc store = efMethods.SelectStore(userCurrAcc.StoreCode);
-
-                if (store != null)
-                {
-                    List<TrSession> trSessions = efMethods.SelectSessions();
-
-                    foreach (var session in trSessions)
-                    {
-                        try
-                        {
-                            Process process = Process.GetProcessById(session.PID);
-
-                            if (process is not null && session.CurrAccCode.Equals(user, StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
-                                return false;
-                            }
-                        }
-                        catch (ArgumentException)
-                        {
-                            efMethods.DeleteSession(session);
-                        }
-                    }
-
-                    TrSession trSession = new();
-                    trSession.CurrAccCode = user;
-                    trSession.PID = Process.GetCurrentProcess().Id;
-                    trSession.CreatedDate = DateTime.Now;
-
-                    efMethods.InsertTrSession(trSession);
-
-                    Authorization.CurrAccCode = user;
-                    Authorization.DcRoles = efMethods.SelectRoles(user);
-                    Authorization.StoreCode = efMethods.SelectStoreCode(user);
-                    Authorization.OfficeCode = efMethods.SelectOfficeCode(user);
-                }
-                else
+                if (store == null)
                 {
                     XtraMessageBox.Show("Mağaza Aktiv Deyil");
                     return false;
                 }
+
+                List<TrSession> trSessions = efMethods.SelectSessions();
+                foreach (var session in trSessions)
+                {
+                    try
+                    {
+                        Process process = Process.GetProcessById(session.PID);
+
+                        if (process is not null && session.CurrAccCode.Equals(user, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
+                            return false;
+                        }
+                    }
+                    catch (ArgumentException)
+                    {
+                        efMethods.DeleteSession(session);
+                    }
+                }
+
+                TrSession trSession = new()
+                {
+                    CurrAccCode = user,
+                    PID = Process.GetCurrentProcess().Id,
+                    CreatedDate = DateTime.Now
+                };
+
+                efMethods.InsertTrSession(trSession);
+
+                Authorization.CurrAccCode = user;
+                Authorization.DcRoles = efMethods.SelectRoles(user);
+                Authorization.StoreCode = efMethods.SelectStoreCode(user);
+                Authorization.OfficeCode = efMethods.SelectOfficeCode(user);
+
+                return true;
             }
             else
             {
                 XtraMessageBox.Show("İstifadəçi və ya şifrə yanlışdır");
                 return false;
             }
-
-            return true;
         }
+
     }
 }

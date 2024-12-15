@@ -1,6 +1,6 @@
 ﻿namespace Foxoft
 {
-    partial class FormUser
+    partial class FormCurrAccSession
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUser));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAccSession));
             ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_Update = new DevExpress.XtraBars.BarButtonItem();
             bBI_KickUser = new DevExpress.XtraBars.BarButtonItem();

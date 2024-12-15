@@ -425,7 +425,7 @@ namespace Foxoft
 
         private void BBI_Session_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ShowExistForm<FormUser>();
+            ShowExistForm<FormCurrAccSession>();
         }
 
         private void ACE_HierarchyFeatureType_Click(object sender, EventArgs e)
@@ -435,7 +435,7 @@ namespace Foxoft
 
         private void aCE_CurrAccRole_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormCurrAccClaim>();
+            ShowExistForm<FormCurrAccProfile>();
         }
 
         private void ACE_Delivery_Click(object sender, EventArgs e)

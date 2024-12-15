@@ -16,10 +16,10 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormCurrAccClaim : RibbonForm
+    public partial class FormCurrAccProfile : RibbonForm
     {
         EfMethods efMethods = new();
-        public FormCurrAccClaim()
+        public FormCurrAccProfile()
         {
             InitializeComponent();
 
@@ -159,6 +159,24 @@ namespace Foxoft
             FormCommon<TrRoleClaim> common = new("", false, nameof(TrRoleClaim.RoleClaimId), roleClaimId);
             if (DialogResult.OK == common.ShowDialog())
                 LoadRoleClaim(btnEdit_RoleCode.EditValue?.ToString());
+        }
+
+        private void btn_Save_Click(object sender, EventArgs e)
+        {
+            if (txtEdit_NewPassword.EditValue?.ToString() != txtEdit_ConfirmPassword.EditValue.ToString())
+            {
+                dxErrorProvider1.SetError(txtEdit_ConfirmPassword, "Təsdiq şifrəsi eyni deyil!");
+                return;
+            }
+            else
+                dxErrorProvider1.SetError(txtEdit_ConfirmPassword, ""); // Clears the error
+
+            string currAccCode = btnEdit_CurrAccCode.EditValue?.ToString();
+
+            DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
+
+            if (dcCurrAcc is not null && txtEdit_NewPassword.EditValue is not null)
+                efMethods.UpdateCurrAccPassword(dcCurrAcc.CurrAccCode, txtEdit_NewPassword.EditValue?.ToString());
         }
     }
 }

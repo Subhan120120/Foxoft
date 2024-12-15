@@ -18,10 +18,10 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormUser : RibbonForm
+    public partial class FormCurrAccSession : RibbonForm
     {
         EfMethods efMethods = new EfMethods();
-        public FormUser()
+        public FormCurrAccSession()
         {
             InitializeComponent();
 

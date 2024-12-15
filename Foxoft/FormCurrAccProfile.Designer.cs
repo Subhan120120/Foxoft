@@ -1,6 +1,6 @@
 ﻿namespace Foxoft
 {
-    partial class FormCurrAccClaim
+    partial class FormCurrAccProfile
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAccClaim));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCurrAccProfile));
             ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_Add = new DevExpress.XtraBars.BarButtonItem();
             BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
@@ -43,6 +43,9 @@
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             btnEdit_CurrAccCode = new DevExpress.XtraEditors.ButtonEdit();
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            btn_Save = new Button();
+            txtEdit_ConfirmPassword = new DevExpress.XtraEditors.TextEdit();
+            txtEdit_NewPassword = new DevExpress.XtraEditors.TextEdit();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             bindingSource1 = new BindingSource(components);
             gV_CurrAccRole = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -54,6 +57,10 @@
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_NewPassword = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_ConfirmPassword = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             splitterControl1 = new DevExpress.XtraEditors.SplitterControl();
             layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
             gridControl2 = new DevExpress.XtraGrid.GridControl();
@@ -66,16 +73,23 @@
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             Rol = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
             layoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_ConfirmPassword.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_NewPassword.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccRole).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_NewPassword).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_ConfirmPassword).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl2).BeginInit();
             layoutControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridControl2).BeginInit();
@@ -85,6 +99,7 @@
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Rol).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             SuspendLayout();
             // 
             // ribbon
@@ -177,11 +192,11 @@
             // 
             // btnEdit_CurrAccCode
             // 
-            btnEdit_CurrAccCode.Location = new Point(76, 12);
+            btnEdit_CurrAccCode.Location = new Point(96, 12);
             btnEdit_CurrAccCode.MenuManager = ribbon;
             btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
             btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CurrAccCode.Size = new Size(541, 20);
+            btnEdit_CurrAccCode.Size = new Size(521, 20);
             btnEdit_CurrAccCode.StyleController = layoutControl1;
             btnEdit_CurrAccCode.TabIndex = 2;
             btnEdit_CurrAccCode.ButtonPressed += btnEdit_CurrAccCode_ButtonPressed;
@@ -189,6 +204,9 @@
             // 
             // layoutControl1
             // 
+            layoutControl1.Controls.Add(btn_Save);
+            layoutControl1.Controls.Add(txtEdit_ConfirmPassword);
+            layoutControl1.Controls.Add(txtEdit_NewPassword);
             layoutControl1.Controls.Add(gridControl1);
             layoutControl1.Controls.Add(btnEdit_CurrAccCode);
             layoutControl1.Dock = DockStyle.Left;
@@ -200,14 +218,44 @@
             layoutControl1.TabIndex = 3;
             layoutControl1.Text = "layoutControl1";
             // 
+            // btn_Save
+            // 
+            btn_Save.Location = new Point(457, 84);
+            btn_Save.Name = "btn_Save";
+            btn_Save.Size = new Size(160, 20);
+            btn_Save.TabIndex = 7;
+            btn_Save.Text = "Yadda Saxla";
+            btn_Save.UseVisualStyleBackColor = true;
+            btn_Save.Click += btn_Save_Click;
+            // 
+            // txtEdit_ConfirmPassword
+            // 
+            txtEdit_ConfirmPassword.Location = new Point(96, 60);
+            txtEdit_ConfirmPassword.MenuManager = ribbon;
+            txtEdit_ConfirmPassword.Name = "txtEdit_ConfirmPassword";
+            txtEdit_ConfirmPassword.Properties.PasswordChar = '*';
+            txtEdit_ConfirmPassword.Size = new Size(521, 20);
+            txtEdit_ConfirmPassword.StyleController = layoutControl1;
+            txtEdit_ConfirmPassword.TabIndex = 6;
+            // 
+            // txtEdit_NewPassword
+            // 
+            txtEdit_NewPassword.Location = new Point(96, 36);
+            txtEdit_NewPassword.MenuManager = ribbon;
+            txtEdit_NewPassword.Name = "txtEdit_NewPassword";
+            txtEdit_NewPassword.Properties.PasswordChar = '*';
+            txtEdit_NewPassword.Size = new Size(521, 20);
+            txtEdit_NewPassword.StyleController = layoutControl1;
+            txtEdit_NewPassword.TabIndex = 5;
+            // 
             // gridControl1
             // 
             gridControl1.DataSource = bindingSource1;
-            gridControl1.Location = new Point(12, 36);
+            gridControl1.Location = new Point(12, 108);
             gridControl1.MainView = gV_CurrAccRole;
             gridControl1.MenuManager = ribbon;
             gridControl1.Name = "gridControl1";
-            gridControl1.Size = new Size(605, 318);
+            gridControl1.Size = new Size(605, 246);
             gridControl1.TabIndex = 4;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_CurrAccRole });
             // 
@@ -264,7 +312,7 @@
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, layoutControlItem2 });
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1, layoutControlItem2, LCI_NewPassword, LCI_ConfirmPassword, layoutControlItem3, emptySpaceItem1 });
             Root.Name = "Root";
             Root.Size = new Size(629, 366);
             Root.TextVisible = false;
@@ -276,16 +324,51 @@
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(609, 24);
             layoutControlItem1.Text = "Cari Hesab";
-            layoutControlItem1.TextSize = new Size(52, 13);
+            layoutControlItem1.TextSize = new Size(72, 13);
             // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = gridControl1;
-            layoutControlItem2.Location = new Point(0, 24);
+            layoutControlItem2.Location = new Point(0, 96);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new Size(609, 322);
+            layoutControlItem2.Size = new Size(609, 250);
             layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
+            // 
+            // LCI_NewPassword
+            // 
+            LCI_NewPassword.Control = txtEdit_NewPassword;
+            LCI_NewPassword.Location = new Point(0, 24);
+            LCI_NewPassword.Name = "LCI_NewPassword";
+            LCI_NewPassword.Size = new Size(609, 24);
+            LCI_NewPassword.Text = "Yeni Şifrə";
+            LCI_NewPassword.TextSize = new Size(72, 13);
+            // 
+            // LCI_ConfirmPassword
+            // 
+            LCI_ConfirmPassword.Control = txtEdit_ConfirmPassword;
+            LCI_ConfirmPassword.Location = new Point(0, 48);
+            LCI_ConfirmPassword.Name = "LCI_ConfirmPassword";
+            LCI_ConfirmPassword.Size = new Size(609, 24);
+            LCI_ConfirmPassword.Text = "Şifrəni Təsdiqlə";
+            LCI_ConfirmPassword.TextSize = new Size(72, 13);
+            // 
+            // layoutControlItem3
+            // 
+            layoutControlItem3.Control = btn_Save;
+            layoutControlItem3.Location = new Point(445, 72);
+            layoutControlItem3.Name = "layoutControlItem3";
+            layoutControlItem3.Size = new Size(164, 24);
+            layoutControlItem3.TextSize = new Size(0, 0);
+            layoutControlItem3.TextVisible = false;
+            // 
+            // emptySpaceItem1
+            // 
+            emptySpaceItem1.AllowHotTrack = false;
+            emptySpaceItem1.Location = new Point(0, 72);
+            emptySpaceItem1.Name = "emptySpaceItem1";
+            emptySpaceItem1.Size = new Size(445, 24);
+            emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // splitterControl1
             // 
@@ -386,7 +469,11 @@
             layoutControlItem4.TextSize = new Size(0, 0);
             layoutControlItem4.TextVisible = false;
             // 
-            // FormCurrAccRole
+            // dxErrorProvider1
+            // 
+            dxErrorProvider1.ContainerControl = this;
+            // 
+            // FormCurrAccProfile
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -396,7 +483,7 @@
             Controls.Add(layoutControl1);
             Controls.Add(ribbonStatusBar);
             Controls.Add(ribbon);
-            Name = "FormCurrAccRole";
+            Name = "FormCurrAccProfile";
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
             Text = "FormCurrAccRole";
@@ -404,12 +491,18 @@
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)txtEdit_ConfirmPassword.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_NewPassword.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccRole).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_NewPassword).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_ConfirmPassword).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl2).EndInit();
             layoutControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridControl2).EndInit();
@@ -419,6 +512,7 @@
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Rol).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -461,5 +555,13 @@
         private DevExpress.XtraBars.BarButtonItem BBI_AddRoleClaim;
         private DevExpress.XtraBars.BarButtonItem BBI_EditRoleClaim;
         private DevExpress.XtraBars.BarButtonItem BBI_DeleteRoleClaim;
+        private DevExpress.XtraEditors.TextEdit txtEdit_ConfirmPassword;
+        private DevExpress.XtraEditors.TextEdit txtEdit_NewPassword;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_NewPassword;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_ConfirmPassword;
+        private Button btn_Save;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
     }
 }
