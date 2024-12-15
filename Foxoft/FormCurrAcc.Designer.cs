@@ -35,12 +35,10 @@ namespace Foxoft
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             CurrAccCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
-            dcCurrAccsBindingSource = new System.Windows.Forms.BindingSource(components);
+            dcCurrAccsBindingSource = new BindingSource(components);
             FirstNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             LastNameTextEdit = new DevExpress.XtraEditors.TextEdit();
             FatherNameTextEdit = new DevExpress.XtraEditors.TextEdit();
-            NewPasswordTextEdit = new DevExpress.XtraEditors.TextEdit();
-            ConfirmPasswordTextEdit = new DevExpress.XtraEditors.TextEdit();
             IdentityNumTextEdit = new DevExpress.XtraEditors.TextEdit();
             TaxNumTextEdit = new DevExpress.XtraEditors.TextEdit();
             CreditLimitTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -73,8 +71,6 @@ namespace Foxoft
             ItemForIdentityNum = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForTaxNum = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCurrAccTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForNewPassword = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForConfirmPassword = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -82,7 +78,7 @@ namespace Foxoft
             ItemForOfficeCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDataLanguageCode = new DevExpress.XtraLayout.LayoutControlItem();
-            bindingSource1 = new System.Windows.Forms.BindingSource(components);
+            bindingSource1 = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CurrAccCodeTextEdit.Properties).BeginInit();
@@ -90,8 +86,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)FirstNameTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LastNameTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FatherNameTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NewPasswordTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ConfirmPasswordTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IdentityNumTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TaxNumTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CreditLimitTextEdit.Properties).BeginInit();
@@ -100,8 +94,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)BonusCardNumTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AddressTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PhoneNumTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)BirthDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BirthDateDateEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BirthDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CurrAccTypeCodeLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CurrAccDescTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DataLanguageCodeTextEdit.Properties).BeginInit();
@@ -125,8 +119,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForIdentityNum).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTaxNum).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccTypeCode).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForNewPassword).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForConfirmPassword).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
@@ -145,8 +137,6 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(FirstNameTextEdit);
             dataLayoutControl1.Controls.Add(LastNameTextEdit);
             dataLayoutControl1.Controls.Add(FatherNameTextEdit);
-            dataLayoutControl1.Controls.Add(NewPasswordTextEdit);
-            dataLayoutControl1.Controls.Add(ConfirmPasswordTextEdit);
             dataLayoutControl1.Controls.Add(IdentityNumTextEdit);
             dataLayoutControl1.Controls.Add(TaxNumTextEdit);
             dataLayoutControl1.Controls.Add(CreditLimitTextEdit);
@@ -162,14 +152,13 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(OfficeCodeLookUpEdit);
             dataLayoutControl1.Controls.Add(StoreCodeLookUpEdit);
             dataLayoutControl1.DataSource = dcCurrAccsBindingSource;
-            dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForNewPassword, ItemForConfirmPassword });
-            dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
+            dataLayoutControl1.Dock = DockStyle.Fill;
+            dataLayoutControl1.Location = new Point(0, 0);
             dataLayoutControl1.Name = "dataLayoutControl1";
-            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1023, 140, 650, 400);
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1023, 140, 650, 400);
             dataLayoutControl1.OptionsFocus.MoveFocusRightToLeft = false;
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new System.Drawing.Size(604, 420);
+            dataLayoutControl1.Size = new Size(604, 420);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             dataLayoutControl1.FieldRetrieving += dataLayoutControl1_FieldRetrieving;
@@ -178,9 +167,9 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new System.Drawing.Point(435, 318);
+            btn_Cancel.Location = new Point(440, 318);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new System.Drawing.Size(76, 90);
+            btn_Cancel.Size = new Size(74, 90);
             btn_Cancel.StyleController = dataLayoutControl1;
             btn_Cancel.TabIndex = 19;
             btn_Cancel.Text = "simpleButton2";
@@ -189,9 +178,9 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new System.Drawing.Point(515, 318);
+            btn_Ok.Location = new Point(518, 318);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new System.Drawing.Size(77, 90);
+            btn_Ok.Size = new Size(74, 90);
             btn_Ok.StyleController = dataLayoutControl1;
             btn_Ok.TabIndex = 20;
             btn_Ok.Text = "simpleButton1";
@@ -199,10 +188,10 @@ namespace Foxoft
             // 
             // CurrAccCodeTextEdit
             // 
-            CurrAccCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "CurrAccCode", true));
-            CurrAccCodeTextEdit.Location = new System.Drawing.Point(122, 12);
+            CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccCode", true));
+            CurrAccCodeTextEdit.Location = new Point(122, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
-            CurrAccCodeTextEdit.Size = new System.Drawing.Size(177, 20);
+            CurrAccCodeTextEdit.Size = new Size(177, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 0;
             // 
@@ -213,159 +202,138 @@ namespace Foxoft
             // 
             // FirstNameTextEdit
             // 
-            FirstNameTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "FirstName", true));
-            FirstNameTextEdit.Location = new System.Drawing.Point(134, 117);
+            FirstNameTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "FirstName", true));
+            FirstNameTextEdit.Location = new Point(134, 117);
             FirstNameTextEdit.Name = "FirstNameTextEdit";
             FirstNameTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            FirstNameTextEdit.Size = new System.Drawing.Size(165, 20);
+            FirstNameTextEdit.Size = new Size(165, 20);
             FirstNameTextEdit.StyleController = dataLayoutControl1;
             FirstNameTextEdit.TabIndex = 7;
             // 
             // LastNameTextEdit
             // 
-            LastNameTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "LastName", true));
-            LastNameTextEdit.Location = new System.Drawing.Point(134, 141);
+            LastNameTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "LastName", true));
+            LastNameTextEdit.Location = new Point(134, 141);
             LastNameTextEdit.Name = "LastNameTextEdit";
             LastNameTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            LastNameTextEdit.Size = new System.Drawing.Size(165, 20);
+            LastNameTextEdit.Size = new Size(165, 20);
             LastNameTextEdit.StyleController = dataLayoutControl1;
             LastNameTextEdit.TabIndex = 9;
             // 
             // FatherNameTextEdit
             // 
-            FatherNameTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "FatherName", true));
-            FatherNameTextEdit.Location = new System.Drawing.Point(134, 165);
+            FatherNameTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "FatherName", true));
+            FatherNameTextEdit.Location = new Point(134, 165);
             FatherNameTextEdit.Name = "FatherNameTextEdit";
             FatherNameTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            FatherNameTextEdit.Size = new System.Drawing.Size(165, 20);
+            FatherNameTextEdit.Size = new Size(165, 20);
             FatherNameTextEdit.StyleController = dataLayoutControl1;
             FatherNameTextEdit.TabIndex = 11;
             // 
-            // NewPasswordTextEdit
-            // 
-            NewPasswordTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "NewPassword", true));
-            NewPasswordTextEdit.Location = new System.Drawing.Point(413, 12);
-            NewPasswordTextEdit.Name = "NewPasswordTextEdit";
-            NewPasswordTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            NewPasswordTextEdit.Properties.UseSystemPasswordChar = true;
-            NewPasswordTextEdit.Size = new System.Drawing.Size(179, 20);
-            NewPasswordTextEdit.StyleController = dataLayoutControl1;
-            NewPasswordTextEdit.TabIndex = 1;
-            // 
-            // ConfirmPasswordTextEdit
-            // 
-            ConfirmPasswordTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "ConfirmPassword", true));
-            ConfirmPasswordTextEdit.Location = new System.Drawing.Point(413, 36);
-            ConfirmPasswordTextEdit.Name = "ConfirmPasswordTextEdit";
-            ConfirmPasswordTextEdit.Properties.UseSystemPasswordChar = true;
-            ConfirmPasswordTextEdit.Size = new System.Drawing.Size(179, 20);
-            ConfirmPasswordTextEdit.StyleController = dataLayoutControl1;
-            ConfirmPasswordTextEdit.TabIndex = 1;
-            // 
             // IdentityNumTextEdit
             // 
-            IdentityNumTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "IdentityNum", true));
-            IdentityNumTextEdit.Location = new System.Drawing.Point(413, 141);
+            IdentityNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "IdentityNum", true));
+            IdentityNumTextEdit.Location = new Point(413, 141);
             IdentityNumTextEdit.Name = "IdentityNumTextEdit";
             IdentityNumTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            IdentityNumTextEdit.Size = new System.Drawing.Size(167, 20);
+            IdentityNumTextEdit.Size = new Size(167, 20);
             IdentityNumTextEdit.StyleController = dataLayoutControl1;
             IdentityNumTextEdit.TabIndex = 10;
             // 
             // TaxNumTextEdit
             // 
-            TaxNumTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "TaxNum", true));
-            TaxNumTextEdit.Location = new System.Drawing.Point(413, 165);
+            TaxNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "TaxNum", true));
+            TaxNumTextEdit.Location = new Point(413, 165);
             TaxNumTextEdit.Name = "TaxNumTextEdit";
             TaxNumTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            TaxNumTextEdit.Size = new System.Drawing.Size(167, 20);
+            TaxNumTextEdit.Size = new Size(167, 20);
             TaxNumTextEdit.StyleController = dataLayoutControl1;
             TaxNumTextEdit.TabIndex = 12;
             // 
             // CreditLimitTextEdit
             // 
-            CreditLimitTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "CreditLimit", true));
-            CreditLimitTextEdit.Location = new System.Drawing.Point(413, 258);
+            CreditLimitTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CreditLimit", true));
+            CreditLimitTextEdit.Location = new Point(413, 258);
             CreditLimitTextEdit.Name = "CreditLimitTextEdit";
             CreditLimitTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             CreditLimitTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             CreditLimitTextEdit.Properties.Mask.EditMask = "G";
             CreditLimitTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             CreditLimitTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            CreditLimitTextEdit.Size = new System.Drawing.Size(167, 20);
+            CreditLimitTextEdit.Size = new Size(167, 20);
             CreditLimitTextEdit.StyleController = dataLayoutControl1;
             CreditLimitTextEdit.TabIndex = 16;
             // 
             // IsVipCheckEdit
             // 
-            IsVipCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "IsVip", true));
-            IsVipCheckEdit.Location = new System.Drawing.Point(303, 282);
+            IsVipCheckEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "IsVip", true));
+            IsVipCheckEdit.Location = new Point(303, 282);
             IsVipCheckEdit.Name = "IsVipCheckEdit";
             IsVipCheckEdit.Properties.Caption = "VIP";
             IsVipCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            IsVipCheckEdit.Size = new System.Drawing.Size(277, 20);
+            IsVipCheckEdit.Size = new Size(277, 20);
             IsVipCheckEdit.StyleController = dataLayoutControl1;
             IsVipCheckEdit.TabIndex = 18;
             // 
             // IsDisabledCheckEdit
             // 
-            IsDisabledCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "IsDisabled", true));
-            IsDisabledCheckEdit.Location = new System.Drawing.Point(24, 282);
+            IsDisabledCheckEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "IsDisabled", true));
+            IsDisabledCheckEdit.Location = new Point(24, 282);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
             IsDisabledCheckEdit.Properties.Caption = "Qeyri-Aktiv";
             IsDisabledCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            IsDisabledCheckEdit.Size = new System.Drawing.Size(275, 20);
+            IsDisabledCheckEdit.Size = new Size(275, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
             IsDisabledCheckEdit.TabIndex = 17;
             // 
             // BonusCardNumTextEdit
             // 
-            BonusCardNumTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "BonusCardNum", true));
-            BonusCardNumTextEdit.Location = new System.Drawing.Point(134, 258);
+            BonusCardNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "BonusCardNum", true));
+            BonusCardNumTextEdit.Location = new Point(134, 258);
             BonusCardNumTextEdit.Name = "BonusCardNumTextEdit";
-            BonusCardNumTextEdit.Size = new System.Drawing.Size(165, 20);
+            BonusCardNumTextEdit.Size = new Size(165, 20);
             BonusCardNumTextEdit.StyleController = dataLayoutControl1;
             BonusCardNumTextEdit.TabIndex = 15;
             // 
             // AddressTextEdit
             // 
-            AddressTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "Address", true));
-            AddressTextEdit.Location = new System.Drawing.Point(413, 189);
+            AddressTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "Address", true));
+            AddressTextEdit.Location = new Point(413, 189);
             AddressTextEdit.Name = "AddressTextEdit";
-            AddressTextEdit.Size = new System.Drawing.Size(167, 20);
+            AddressTextEdit.Size = new Size(167, 20);
             AddressTextEdit.StyleController = dataLayoutControl1;
             AddressTextEdit.TabIndex = 14;
             // 
             // PhoneNumTextEdit
             // 
-            PhoneNumTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "PhoneNum", true));
-            PhoneNumTextEdit.Location = new System.Drawing.Point(134, 189);
+            PhoneNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "PhoneNum", true));
+            PhoneNumTextEdit.Location = new Point(134, 189);
             PhoneNumTextEdit.Name = "PhoneNumTextEdit";
             PhoneNumTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
             PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerSignature", "isOptimistic=False");
             PhoneNumTextEdit.Properties.MaskSettings.Set("mask", "(\\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2})| ?");
-            PhoneNumTextEdit.Size = new System.Drawing.Size(165, 20);
+            PhoneNumTextEdit.Size = new Size(165, 20);
             PhoneNumTextEdit.StyleController = dataLayoutControl1;
             PhoneNumTextEdit.TabIndex = 13;
             // 
             // BirthDateDateEdit
             // 
-            BirthDateDateEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "BirthDate", true));
-            BirthDateDateEdit.EditValue = new System.DateTime(2022, 3, 3, 0, 0, 0, 0);
-            BirthDateDateEdit.Location = new System.Drawing.Point(413, 117);
+            BirthDateDateEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "BirthDate", true));
+            BirthDateDateEdit.EditValue = new DateTime(2022, 3, 3, 0, 0, 0, 0);
+            BirthDateDateEdit.Location = new Point(413, 117);
             BirthDateDateEdit.Name = "BirthDateDateEdit";
             BirthDateDateEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             BirthDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             BirthDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            BirthDateDateEdit.Size = new System.Drawing.Size(167, 20);
+            BirthDateDateEdit.Size = new Size(167, 20);
             BirthDateDateEdit.StyleController = dataLayoutControl1;
             BirthDateDateEdit.TabIndex = 8;
             // 
             // CurrAccTypeCodeLookUpEdit
             // 
-            CurrAccTypeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "CurrAccTypeCode", true));
-            CurrAccTypeCodeLookUpEdit.Location = new System.Drawing.Point(122, 36);
+            CurrAccTypeCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccTypeCode", true));
+            CurrAccTypeCodeLookUpEdit.Location = new Point(122, 36);
             CurrAccTypeCodeLookUpEdit.Name = "CurrAccTypeCodeLookUpEdit";
             CurrAccTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
             CurrAccTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -374,32 +342,32 @@ namespace Foxoft
             CurrAccTypeCodeLookUpEdit.Properties.DisplayMember = "CurrAccTypeDesc";
             CurrAccTypeCodeLookUpEdit.Properties.NullText = "";
             CurrAccTypeCodeLookUpEdit.Properties.ValueMember = "CurrAccTypeCode";
-            CurrAccTypeCodeLookUpEdit.Size = new System.Drawing.Size(177, 20);
+            CurrAccTypeCodeLookUpEdit.Size = new Size(177, 20);
             CurrAccTypeCodeLookUpEdit.StyleController = dataLayoutControl1;
             CurrAccTypeCodeLookUpEdit.TabIndex = 3;
             // 
             // CurrAccDescTextEdit
             // 
-            CurrAccDescTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "CurrAccDesc", true));
-            CurrAccDescTextEdit.Location = new System.Drawing.Point(122, 60);
+            CurrAccDescTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "CurrAccDesc", true));
+            CurrAccDescTextEdit.Location = new Point(122, 60);
             CurrAccDescTextEdit.Name = "CurrAccDescTextEdit";
-            CurrAccDescTextEdit.Size = new System.Drawing.Size(177, 20);
+            CurrAccDescTextEdit.Size = new Size(177, 20);
             CurrAccDescTextEdit.StyleController = dataLayoutControl1;
             CurrAccDescTextEdit.TabIndex = 5;
             // 
             // DataLanguageCodeTextEdit
             // 
-            DataLanguageCodeTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "DataLanguageCode", true));
-            DataLanguageCodeTextEdit.Location = new System.Drawing.Point(413, 36);
+            DataLanguageCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "DataLanguageCode", true));
+            DataLanguageCodeTextEdit.Location = new Point(413, 36);
             DataLanguageCodeTextEdit.Name = "DataLanguageCodeTextEdit";
-            DataLanguageCodeTextEdit.Size = new System.Drawing.Size(179, 20);
+            DataLanguageCodeTextEdit.Size = new Size(179, 20);
             DataLanguageCodeTextEdit.StyleController = dataLayoutControl1;
             DataLanguageCodeTextEdit.TabIndex = 4;
             // 
             // OfficeCodeLookUpEdit
             // 
-            OfficeCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "OfficeCode", true));
-            OfficeCodeLookUpEdit.Location = new System.Drawing.Point(413, 60);
+            OfficeCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "OfficeCode", true));
+            OfficeCodeLookUpEdit.Location = new Point(413, 60);
             OfficeCodeLookUpEdit.Name = "OfficeCodeLookUpEdit";
             OfficeCodeLookUpEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             OfficeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -407,21 +375,21 @@ namespace Foxoft
             OfficeCodeLookUpEdit.Properties.DisplayMember = "OfficeDesc";
             OfficeCodeLookUpEdit.Properties.NullText = "";
             OfficeCodeLookUpEdit.Properties.ValueMember = "OfficeCode";
-            OfficeCodeLookUpEdit.Size = new System.Drawing.Size(179, 20);
+            OfficeCodeLookUpEdit.Size = new Size(179, 20);
             OfficeCodeLookUpEdit.StyleController = dataLayoutControl1;
             OfficeCodeLookUpEdit.TabIndex = 6;
             // 
             // StoreCodeLookUpEdit
             // 
-            StoreCodeLookUpEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", dcCurrAccsBindingSource, "StoreCode", true));
-            StoreCodeLookUpEdit.Location = new System.Drawing.Point(413, 12);
+            StoreCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "StoreCode", true));
+            StoreCodeLookUpEdit.Location = new Point(413, 12);
             StoreCodeLookUpEdit.Name = "StoreCodeLookUpEdit";
             StoreCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             StoreCodeLookUpEdit.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "") });
             StoreCodeLookUpEdit.Properties.DisplayMember = "CurrAccDesc";
             StoreCodeLookUpEdit.Properties.NullText = "";
             StoreCodeLookUpEdit.Properties.ValueMember = "CurrAccCode";
-            StoreCodeLookUpEdit.Size = new System.Drawing.Size(179, 20);
+            StoreCodeLookUpEdit.Size = new Size(179, 20);
             StoreCodeLookUpEdit.StyleController = dataLayoutControl1;
             StoreCodeLookUpEdit.TabIndex = 2;
             // 
@@ -432,7 +400,7 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { autoGeneratedGroup0 });
             Root.Name = "Root";
-            Root.Size = new System.Drawing.Size(604, 420);
+            Root.Size = new Size(604, 420);
             Root.TextVisible = false;
             // 
             // autoGeneratedGroup0
@@ -441,75 +409,75 @@ namespace Foxoft
             autoGeneratedGroup0.CustomizationFormText = "autoGeneratedGroup0";
             autoGeneratedGroup0.GroupBordersVisible = false;
             autoGeneratedGroup0.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForCurrAccCode, layoutControlGroup3, layoutControlGroup2, ItemForCurrAccTypeCode, layoutControlItem1, layoutControlItem2, emptySpaceItem1, ItemForCurrAccDesc, ItemForOfficeCode, ItemForStoreCode, ItemForDataLanguageCode });
-            autoGeneratedGroup0.Location = new System.Drawing.Point(0, 0);
+            autoGeneratedGroup0.Location = new Point(0, 0);
             autoGeneratedGroup0.Name = "autoGeneratedGroup0";
-            autoGeneratedGroup0.Size = new System.Drawing.Size(584, 400);
+            autoGeneratedGroup0.Size = new Size(584, 400);
             // 
             // ItemForCurrAccCode
             // 
             ItemForCurrAccCode.Control = CurrAccCodeTextEdit;
-            ItemForCurrAccCode.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForCurrAccCode.ControlAlignment = ContentAlignment.TopLeft;
             ItemForCurrAccCode.CustomizationFormText = "Cari Hesab Kodu";
-            ItemForCurrAccCode.Location = new System.Drawing.Point(0, 0);
+            ItemForCurrAccCode.Location = new Point(0, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new System.Drawing.Size(291, 24);
+            ItemForCurrAccCode.Size = new Size(291, 24);
             ItemForCurrAccCode.Text = "Cari Hesab Kodu";
-            ItemForCurrAccCode.TextSize = new System.Drawing.Size(98, 13);
+            ItemForCurrAccCode.TextSize = new Size(98, 13);
             // 
             // layoutControlGroup3
             // 
             layoutControlGroup3.CustomizationFormText = "Əlavə";
             layoutControlGroup3.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForIsVip, ItemForBonusCardNum, ItemForCreditLimit, ItemForIsDisabled });
-            layoutControlGroup3.Location = new System.Drawing.Point(0, 213);
+            layoutControlGroup3.Location = new Point(0, 213);
             layoutControlGroup3.Name = "layoutControlGroup3";
-            layoutControlGroup3.Size = new System.Drawing.Size(584, 93);
+            layoutControlGroup3.Size = new Size(584, 93);
             layoutControlGroup3.Text = "Əlavə";
             // 
             // ItemForIsVip
             // 
             ItemForIsVip.Control = IsVipCheckEdit;
-            ItemForIsVip.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForIsVip.ControlAlignment = ContentAlignment.TopLeft;
             ItemForIsVip.CustomizationFormText = "VIP";
-            ItemForIsVip.Location = new System.Drawing.Point(279, 24);
+            ItemForIsVip.Location = new Point(279, 24);
             ItemForIsVip.Name = "ItemForIsVip";
-            ItemForIsVip.Size = new System.Drawing.Size(281, 24);
+            ItemForIsVip.Size = new Size(281, 24);
             ItemForIsVip.Text = "VIP";
-            ItemForIsVip.TextSize = new System.Drawing.Size(0, 0);
+            ItemForIsVip.TextSize = new Size(0, 0);
             ItemForIsVip.TextVisible = false;
             // 
             // ItemForBonusCardNum
             // 
             ItemForBonusCardNum.Control = BonusCardNumTextEdit;
-            ItemForBonusCardNum.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForBonusCardNum.ControlAlignment = ContentAlignment.TopLeft;
             ItemForBonusCardNum.CustomizationFormText = "Bonus Kartı";
-            ItemForBonusCardNum.Location = new System.Drawing.Point(0, 0);
+            ItemForBonusCardNum.Location = new Point(0, 0);
             ItemForBonusCardNum.Name = "ItemForBonusCardNum";
-            ItemForBonusCardNum.Size = new System.Drawing.Size(279, 24);
+            ItemForBonusCardNum.Size = new Size(279, 24);
             ItemForBonusCardNum.Text = "Bonus Kartı";
-            ItemForBonusCardNum.TextSize = new System.Drawing.Size(98, 13);
+            ItemForBonusCardNum.TextSize = new Size(98, 13);
             // 
             // ItemForCreditLimit
             // 
             ItemForCreditLimit.Control = CreditLimitTextEdit;
-            ItemForCreditLimit.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForCreditLimit.ControlAlignment = ContentAlignment.TopLeft;
             ItemForCreditLimit.CustomizationFormText = "Kredit Limiti";
-            ItemForCreditLimit.Location = new System.Drawing.Point(279, 0);
+            ItemForCreditLimit.Location = new Point(279, 0);
             ItemForCreditLimit.Name = "ItemForCreditLimit";
-            ItemForCreditLimit.Size = new System.Drawing.Size(281, 24);
+            ItemForCreditLimit.Size = new Size(281, 24);
             ItemForCreditLimit.Text = "Kredit Limiti";
-            ItemForCreditLimit.TextSize = new System.Drawing.Size(98, 13);
+            ItemForCreditLimit.TextSize = new Size(98, 13);
             // 
             // ItemForIsDisabled
             // 
             ItemForIsDisabled.Control = IsDisabledCheckEdit;
-            ItemForIsDisabled.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForIsDisabled.ControlAlignment = ContentAlignment.TopLeft;
             ItemForIsDisabled.CustomizationFormText = "Qeyri-Aktiv";
-            ItemForIsDisabled.Location = new System.Drawing.Point(0, 24);
+            ItemForIsDisabled.Location = new Point(0, 24);
             ItemForIsDisabled.Name = "ItemForIsDisabled";
-            ItemForIsDisabled.Size = new System.Drawing.Size(279, 24);
+            ItemForIsDisabled.Size = new Size(279, 24);
             ItemForIsDisabled.Text = "Qeyri-Aktiv";
-            ItemForIsDisabled.TextSize = new System.Drawing.Size(0, 0);
+            ItemForIsDisabled.TextSize = new Size(0, 0);
             ItemForIsDisabled.TextVisible = false;
             // 
             // layoutControlGroup2
@@ -517,200 +485,180 @@ namespace Foxoft
             layoutControlGroup2.CustomizationFormText = "Şəxsi";
             layoutControlGroup2.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForAddress, ItemForFirstName, ItemForLastName, ItemForFatherName, ItemForPhoneNum, ItemForBirthDate, ItemForIdentityNum, ItemForTaxNum });
-            layoutControlGroup2.Location = new System.Drawing.Point(0, 72);
+            layoutControlGroup2.Location = new Point(0, 72);
             layoutControlGroup2.Name = "layoutControlGroup2";
-            layoutControlGroup2.Size = new System.Drawing.Size(584, 141);
+            layoutControlGroup2.Size = new Size(584, 141);
             layoutControlGroup2.Text = "Şəxsi";
             // 
             // ItemForAddress
             // 
             ItemForAddress.Control = AddressTextEdit;
-            ItemForAddress.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForAddress.ControlAlignment = ContentAlignment.TopLeft;
             ItemForAddress.CustomizationFormText = "Adres";
-            ItemForAddress.Location = new System.Drawing.Point(279, 72);
+            ItemForAddress.Location = new Point(279, 72);
             ItemForAddress.Name = "ItemForAddress";
-            ItemForAddress.Size = new System.Drawing.Size(281, 24);
+            ItemForAddress.Size = new Size(281, 24);
             ItemForAddress.Text = "Adres";
-            ItemForAddress.TextSize = new System.Drawing.Size(98, 13);
+            ItemForAddress.TextSize = new Size(98, 13);
             // 
             // ItemForFirstName
             // 
             ItemForFirstName.Control = FirstNameTextEdit;
-            ItemForFirstName.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForFirstName.ControlAlignment = ContentAlignment.TopLeft;
             ItemForFirstName.CustomizationFormText = "Adı";
-            ItemForFirstName.Location = new System.Drawing.Point(0, 0);
+            ItemForFirstName.Location = new Point(0, 0);
             ItemForFirstName.Name = "ItemForFirstName";
-            ItemForFirstName.Size = new System.Drawing.Size(279, 24);
+            ItemForFirstName.Size = new Size(279, 24);
             ItemForFirstName.Text = "Adı";
-            ItemForFirstName.TextSize = new System.Drawing.Size(98, 13);
+            ItemForFirstName.TextSize = new Size(98, 13);
             // 
             // ItemForLastName
             // 
             ItemForLastName.Control = LastNameTextEdit;
-            ItemForLastName.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForLastName.ControlAlignment = ContentAlignment.TopLeft;
             ItemForLastName.CustomizationFormText = "Soyadı";
-            ItemForLastName.Location = new System.Drawing.Point(0, 24);
+            ItemForLastName.Location = new Point(0, 24);
             ItemForLastName.Name = "ItemForLastName";
-            ItemForLastName.Size = new System.Drawing.Size(279, 24);
+            ItemForLastName.Size = new Size(279, 24);
             ItemForLastName.Text = "Soyadı";
-            ItemForLastName.TextSize = new System.Drawing.Size(98, 13);
+            ItemForLastName.TextSize = new Size(98, 13);
             // 
             // ItemForFatherName
             // 
             ItemForFatherName.Control = FatherNameTextEdit;
-            ItemForFatherName.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForFatherName.ControlAlignment = ContentAlignment.TopLeft;
             ItemForFatherName.CustomizationFormText = "Ata Adı";
-            ItemForFatherName.Location = new System.Drawing.Point(0, 48);
+            ItemForFatherName.Location = new Point(0, 48);
             ItemForFatherName.Name = "ItemForFatherName";
-            ItemForFatherName.Size = new System.Drawing.Size(279, 24);
+            ItemForFatherName.Size = new Size(279, 24);
             ItemForFatherName.Text = "Ata Adı";
-            ItemForFatherName.TextSize = new System.Drawing.Size(98, 13);
+            ItemForFatherName.TextSize = new Size(98, 13);
             // 
             // ItemForPhoneNum
             // 
             ItemForPhoneNum.Control = PhoneNumTextEdit;
-            ItemForPhoneNum.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForPhoneNum.ControlAlignment = ContentAlignment.TopLeft;
             ItemForPhoneNum.CustomizationFormText = "Telefon";
-            ItemForPhoneNum.Location = new System.Drawing.Point(0, 72);
+            ItemForPhoneNum.Location = new Point(0, 72);
             ItemForPhoneNum.Name = "ItemForPhoneNum";
-            ItemForPhoneNum.Size = new System.Drawing.Size(279, 24);
+            ItemForPhoneNum.Size = new Size(279, 24);
             ItemForPhoneNum.Text = "Telefon";
-            ItemForPhoneNum.TextSize = new System.Drawing.Size(98, 13);
+            ItemForPhoneNum.TextSize = new Size(98, 13);
             // 
             // ItemForBirthDate
             // 
             ItemForBirthDate.Control = BirthDateDateEdit;
-            ItemForBirthDate.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForBirthDate.ControlAlignment = ContentAlignment.TopLeft;
             ItemForBirthDate.CustomizationFormText = "Doğum Günü";
-            ItemForBirthDate.Location = new System.Drawing.Point(279, 0);
+            ItemForBirthDate.Location = new Point(279, 0);
             ItemForBirthDate.Name = "ItemForBirthDate";
-            ItemForBirthDate.Size = new System.Drawing.Size(281, 24);
+            ItemForBirthDate.Size = new Size(281, 24);
             ItemForBirthDate.Text = "Doğum Günü";
-            ItemForBirthDate.TextSize = new System.Drawing.Size(98, 13);
+            ItemForBirthDate.TextSize = new Size(98, 13);
             // 
             // ItemForIdentityNum
             // 
             ItemForIdentityNum.Control = IdentityNumTextEdit;
-            ItemForIdentityNum.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForIdentityNum.ControlAlignment = ContentAlignment.TopLeft;
             ItemForIdentityNum.CustomizationFormText = "Ş.V.Nömrəsi";
-            ItemForIdentityNum.Location = new System.Drawing.Point(279, 24);
+            ItemForIdentityNum.Location = new Point(279, 24);
             ItemForIdentityNum.Name = "ItemForIdentityNum";
-            ItemForIdentityNum.Size = new System.Drawing.Size(281, 24);
+            ItemForIdentityNum.Size = new Size(281, 24);
             ItemForIdentityNum.Text = "Ş.V.Nömrəsi";
-            ItemForIdentityNum.TextSize = new System.Drawing.Size(98, 13);
+            ItemForIdentityNum.TextSize = new Size(98, 13);
             // 
             // ItemForTaxNum
             // 
             ItemForTaxNum.Control = TaxNumTextEdit;
-            ItemForTaxNum.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForTaxNum.ControlAlignment = ContentAlignment.TopLeft;
             ItemForTaxNum.CustomizationFormText = "Vergi Nömrəsi";
-            ItemForTaxNum.Location = new System.Drawing.Point(279, 48);
+            ItemForTaxNum.Location = new Point(279, 48);
             ItemForTaxNum.Name = "ItemForTaxNum";
-            ItemForTaxNum.Size = new System.Drawing.Size(281, 24);
+            ItemForTaxNum.Size = new Size(281, 24);
             ItemForTaxNum.Text = "Vergi Nömrəsi";
-            ItemForTaxNum.TextSize = new System.Drawing.Size(98, 13);
+            ItemForTaxNum.TextSize = new Size(98, 13);
             // 
             // ItemForCurrAccTypeCode
             // 
             ItemForCurrAccTypeCode.Control = CurrAccTypeCodeLookUpEdit;
-            ItemForCurrAccTypeCode.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            ItemForCurrAccTypeCode.ControlAlignment = ContentAlignment.TopLeft;
             ItemForCurrAccTypeCode.CustomizationFormText = "Cari Hesab Tipi Kodu";
-            ItemForCurrAccTypeCode.Location = new System.Drawing.Point(0, 24);
+            ItemForCurrAccTypeCode.Location = new Point(0, 24);
             ItemForCurrAccTypeCode.Name = "ItemForCurrAccTypeCode";
-            ItemForCurrAccTypeCode.Size = new System.Drawing.Size(291, 24);
+            ItemForCurrAccTypeCode.Size = new Size(291, 24);
             ItemForCurrAccTypeCode.Text = "Cari Hesab Tipi Kodu";
-            ItemForCurrAccTypeCode.TextSize = new System.Drawing.Size(98, 13);
-            // 
-            // ItemForNewPassword
-            // 
-            ItemForNewPassword.Control = NewPasswordTextEdit;
-            ItemForNewPassword.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
-            ItemForNewPassword.CustomizationFormText = "Yeni Şifrə";
-            ItemForNewPassword.Location = new System.Drawing.Point(291, 0);
-            ItemForNewPassword.Name = "ItemForNewPassword";
-            ItemForNewPassword.Size = new System.Drawing.Size(293, 24);
-            ItemForNewPassword.TextSize = new System.Drawing.Size(98, 13);
-            // 
-            // ItemForConfirmPassword
-            // 
-            ItemForConfirmPassword.Control = ConfirmPasswordTextEdit;
-            ItemForConfirmPassword.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
-            ItemForConfirmPassword.CustomizationFormText = "Şifrəni Təsdiqlə";
-            ItemForConfirmPassword.Location = new System.Drawing.Point(291, 24);
-            ItemForConfirmPassword.Name = "ItemForConfirmPassword";
-            ItemForConfirmPassword.Size = new System.Drawing.Size(293, 24);
-            ItemForConfirmPassword.TextSize = new System.Drawing.Size(98, 13);
+            ItemForCurrAccTypeCode.TextSize = new Size(98, 13);
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = btn_Ok;
-            layoutControlItem1.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            layoutControlItem1.ControlAlignment = ContentAlignment.TopLeft;
             layoutControlItem1.CustomizationFormText = "layoutControlItem1";
-            layoutControlItem1.Location = new System.Drawing.Point(503, 306);
-            layoutControlItem1.MinSize = new System.Drawing.Size(78, 26);
+            layoutControlItem1.Location = new Point(506, 306);
+            layoutControlItem1.MinSize = new Size(78, 26);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new System.Drawing.Size(81, 94);
+            layoutControlItem1.Size = new Size(78, 94);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = btn_Cancel;
-            layoutControlItem2.ControlAlignment = System.Drawing.ContentAlignment.TopLeft;
+            layoutControlItem2.ControlAlignment = ContentAlignment.TopLeft;
             layoutControlItem2.CustomizationFormText = "layoutControlItem2";
-            layoutControlItem2.Location = new System.Drawing.Point(423, 306);
-            layoutControlItem2.MinSize = new System.Drawing.Size(78, 26);
+            layoutControlItem2.Location = new Point(428, 306);
+            layoutControlItem2.MinSize = new Size(78, 26);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(80, 94);
+            layoutControlItem2.Size = new Size(78, 94);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
+            layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
             emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
-            emptySpaceItem1.Location = new System.Drawing.Point(0, 306);
+            emptySpaceItem1.Location = new Point(0, 306);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new System.Drawing.Size(423, 94);
-            emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+            emptySpaceItem1.Size = new Size(428, 94);
+            emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // ItemForCurrAccDesc
             // 
             ItemForCurrAccDesc.Control = CurrAccDescTextEdit;
-            ItemForCurrAccDesc.Location = new System.Drawing.Point(0, 48);
+            ItemForCurrAccDesc.Location = new Point(0, 48);
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
-            ItemForCurrAccDesc.Size = new System.Drawing.Size(291, 24);
+            ItemForCurrAccDesc.Size = new Size(291, 24);
             ItemForCurrAccDesc.Text = "Cari Hesab Adı";
-            ItemForCurrAccDesc.TextSize = new System.Drawing.Size(98, 13);
+            ItemForCurrAccDesc.TextSize = new Size(98, 13);
             // 
             // ItemForOfficeCode
             // 
             ItemForOfficeCode.Control = OfficeCodeLookUpEdit;
-            ItemForOfficeCode.Location = new System.Drawing.Point(291, 48);
+            ItemForOfficeCode.Location = new Point(291, 48);
             ItemForOfficeCode.Name = "ItemForOfficeCode";
-            ItemForOfficeCode.Size = new System.Drawing.Size(293, 24);
+            ItemForOfficeCode.Size = new Size(293, 24);
             ItemForOfficeCode.Text = "Ofis";
-            ItemForOfficeCode.TextSize = new System.Drawing.Size(98, 13);
+            ItemForOfficeCode.TextSize = new Size(98, 13);
             // 
             // ItemForStoreCode
             // 
             ItemForStoreCode.Control = StoreCodeLookUpEdit;
-            ItemForStoreCode.Location = new System.Drawing.Point(291, 0);
+            ItemForStoreCode.Location = new Point(291, 0);
             ItemForStoreCode.Name = "ItemForStoreCode";
-            ItemForStoreCode.Size = new System.Drawing.Size(293, 24);
+            ItemForStoreCode.Size = new Size(293, 24);
             ItemForStoreCode.Text = "Mağaza";
-            ItemForStoreCode.TextSize = new System.Drawing.Size(98, 13);
+            ItemForStoreCode.TextSize = new Size(98, 13);
             // 
             // ItemForDataLanguageCode
             // 
             ItemForDataLanguageCode.Control = DataLanguageCodeTextEdit;
-            ItemForDataLanguageCode.Location = new System.Drawing.Point(291, 24);
+            ItemForDataLanguageCode.Location = new Point(291, 24);
             ItemForDataLanguageCode.Name = "ItemForDataLanguageCode";
-            ItemForDataLanguageCode.Size = new System.Drawing.Size(293, 24);
+            ItemForDataLanguageCode.Size = new Size(293, 24);
             ItemForDataLanguageCode.Text = "İstifadəçi Dili";
-            ItemForDataLanguageCode.TextSize = new System.Drawing.Size(98, 13);
+            ItemForDataLanguageCode.TextSize = new Size(98, 13);
             // 
             // bindingSource1
             // 
@@ -718,9 +666,9 @@ namespace Foxoft
             // 
             // FormCurrAcc
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(604, 420);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(604, 420);
             Controls.Add(dataLayoutControl1);
             Name = "FormCurrAcc";
             Text = "Cari Hesab";
@@ -732,8 +680,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)FirstNameTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LastNameTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)FatherNameTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NewPasswordTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ConfirmPasswordTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)IdentityNumTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TaxNumTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)CreditLimitTextEdit.Properties).EndInit();
@@ -767,8 +713,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForIdentityNum).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForTaxNum).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccTypeCode).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForNewPassword).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForConfirmPassword).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
@@ -792,8 +736,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.TextEdit FirstNameTextEdit;
         private DevExpress.XtraEditors.TextEdit LastNameTextEdit;
         private DevExpress.XtraEditors.TextEdit FatherNameTextEdit;
-        private DevExpress.XtraEditors.TextEdit NewPasswordTextEdit;
-        private DevExpress.XtraEditors.TextEdit ConfirmPasswordTextEdit;
         private DevExpress.XtraEditors.TextEdit IdentityNumTextEdit;
         private DevExpress.XtraEditors.TextEdit TaxNumTextEdit;
         private DevExpress.XtraEditors.TextEdit CreditLimitTextEdit;
@@ -821,8 +763,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForIdentityNum;
         private DevExpress.XtraLayout.LayoutControlItem ItemForTaxNum;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccTypeCode;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForNewPassword;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForConfirmPassword;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
