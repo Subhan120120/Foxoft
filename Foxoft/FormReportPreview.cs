@@ -44,10 +44,10 @@ namespace Foxoft
 
             foreach (TrReportSubQuery reportSubQuery in dcReport.TrReportSubQueries)
             {
-                reportSubQuery.SubQueryText = cM.AddRelation(query, reportSubQuery);
-
                 SqlParameter[] sqlParameters1;
-                string qry = cM.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
+                reportSubQuery.SubQueryText = cM.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
+
+                reportSubQuery.SubQueryText = cM.AddRelation(query, reportSubQuery);
 
                 List<QueryParameter> subQryParams = cM.ConvertSqlParametersToQueryParameters(sqlParameters1);
                 CustomSqlQuery subQuery = new(reportSubQuery.SubQueryName, reportSubQuery.SubQueryText);
