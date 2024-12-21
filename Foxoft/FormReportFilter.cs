@@ -20,6 +20,7 @@ using Microsoft.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Foxoft
 {
@@ -290,7 +291,9 @@ namespace Foxoft
             if (e.Value is not null && e.PropertyName is not null)
             {
                 foreach (var item in dcReport.DcReportVariables)
+                {
                     efMethods.UpdateReportFilter(dcReport.ReportId, e.PropertyName, e.Value.ToString());
+                }
 
                 this.dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
             }

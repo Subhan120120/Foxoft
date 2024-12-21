@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using DevExpress.XtraGrid.Views.Grid;
+using System.Globalization;
 
 namespace Foxoft.AppCode
 {
@@ -219,7 +220,7 @@ namespace Foxoft.AppCode
                     sqlParameterList.Add(new SqlParameter()
                     {
                         ParameterName = rf.Representative,
-                        Value = rf.VariableValue,
+                        Value = Convert.ChangeType(rf.VariableValue, Type.GetType(rf.VariableValueType)),// rf.VariableValue,
                         DbType = GetDbType(rf.VariableValueType)
                     });
             }
