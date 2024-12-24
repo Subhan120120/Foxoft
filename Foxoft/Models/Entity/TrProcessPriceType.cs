@@ -16,7 +16,7 @@ namespace Foxoft.Models
         public int Id { get; set; }
 
         [ForeignKey("DcProcess")]
-        [Display(Name = "Proses Adı")]
+        [Display(Name = "Proses Kodu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string ProcessCode { get; set; }
 

@@ -2,7 +2,7 @@
 
 
 
-select DcCurrAccs.CurrAccCode
+select CashRegisterCode
 , CurrAccDesc
 , Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)
 , PhoneNum

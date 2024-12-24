@@ -74,7 +74,6 @@ namespace Foxoft.Models
         [Display(Name = "Qeyri-Aktiv")]
         public bool IsDisabled { get; set; }
 
-
         const string qiymetler = "Qiymətlər";
         [DefaultValue("0")]
         [Display(Name = "Alış Qiyməti", GroupName = qiymetler, Order = 0)]
@@ -101,6 +100,10 @@ namespace Foxoft.Models
         [ForeignKey("DcUnitOfMeasure")]
         [Display(Name = "Default Ölçü Vahidi")]
         public int DefaultUnitOfMeasureId { get; set; }
+
+        [Display(Name = "Qalıq Xəbərdarlıq Səviyyəsi")]
+        public decimal BalanceWarningLevel { get; set; }
+
 
 
 

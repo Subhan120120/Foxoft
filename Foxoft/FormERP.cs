@@ -494,7 +494,8 @@ namespace Foxoft
 
         private void OptimizeDatabaseIndexes()
         {
-            string queryRebuldOrReorganize = @"DECLARE @SchemaName NVARCHAR(MAX);
+            string queryRebuldOrReorganize = @"
+                DECLARE @SchemaName NVARCHAR(MAX);
                 DECLARE @TableName NVARCHAR(MAX);
                 DECLARE @IndexName NVARCHAR(MAX);
                 DECLARE @Fragmentation FLOAT;

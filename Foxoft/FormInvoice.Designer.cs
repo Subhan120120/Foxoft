@@ -1395,6 +1395,8 @@ namespace Foxoft
             // 
             alertControl1.AutoFormDelay = 3000;
             alertControl1.FormDisplaySpeed = DevExpress.XtraBars.Alerter.AlertFormDisplaySpeed.Fast;
+            alertControl1.HtmlTemplate.Styles = resources.GetString("alertControl1.HtmlTemplate.Styles");
+            alertControl1.HtmlTemplate.Template = resources.GetString("alertControl1.HtmlTemplate.Template");
             // 
             // FormInvoice
             // 

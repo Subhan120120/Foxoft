@@ -797,6 +797,8 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
+
+            alertControl1.Show(this, "Print Göndərildi.", "Printer: ", "", (Image)null, null);
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -830,8 +832,6 @@ namespace Foxoft
         Guid quidHead;
         private void SaveInvoice()
         {
-            //try
-            //{
             dbContext.SaveChanges(false, Authorization.CurrAccCode);
 
             IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
@@ -897,11 +897,6 @@ namespace Foxoft
             }
 
             dbContext.ChangeTracker.AcceptAllChanges();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Daxil Etdiyiniz Məlumatlar Əsaslı Deyil ! \n \n {ex}");
-            //}
 
             if (new string[] { "EX", "EI" }.Contains(trInvoiceHeader.ProcessCode))
                 SavePayment();
@@ -1013,10 +1008,6 @@ namespace Foxoft
                 {
                     SaveInvoice();
 
-                    //MakePayment(summaryInvoice);
-
-                    //GetPrintDialogToWarehouse();
-
                     ClearControlsAddNew();
                 }
                 else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
@@ -1095,9 +1086,7 @@ namespace Foxoft
                 decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
                 if (summaryInvoice != 0)
-                {
                     SaveInvoice();
-                }
             }
             else
             {
@@ -1114,7 +1103,6 @@ namespace Foxoft
 
                 if (summaryInvoice != 0)
                 {
-                    //SaveInvoice();
                     MakePayment(summaryInvoice, false);
                 }
             }
@@ -1195,11 +1183,6 @@ namespace Foxoft
                 if (summInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
                 {
                     SaveInvoice();
-
-                    //MakePayment(summInvoice, false);
-
-                    //GetPrintDialogToWarehouse();
-
                     Close();
                 }
                 else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
