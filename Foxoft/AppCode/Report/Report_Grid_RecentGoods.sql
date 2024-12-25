@@ -37,7 +37,7 @@ from (
 								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId
 								where il.ProductCode = prdcts.ProductCode
 								and ih.WarehouseCode = 'depo-01'
-								and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT'))
+								and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT'))
 	from DcProducts prdcts
 	left join TrProductFeatures on TrProductFeatures.ProductCode = prdcts.ProductCode
 

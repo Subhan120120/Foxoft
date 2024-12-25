@@ -30,7 +30,7 @@ namespace Foxoft.Migrations
                                     FROM TrInvoiceLines il  
                                     LEFT JOIN TrInvoiceHeaders ih ON il.InvoiceHeaderId = ih.InvoiceHeaderId
                                     WHERE ih.CurrAccCode = @CurrAccCode
-                                      and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )
+                                      and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )
                                       AND (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <= @DateTime
                                 ), 
                                 0

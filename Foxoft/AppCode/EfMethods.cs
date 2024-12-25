@@ -357,7 +357,7 @@ namespace Foxoft
                                 .Include(x => x.DcSerialNumbers)
                                 .Select(x => new DcProduct
                                 {
-                                    Balance = x.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                    Balance = x.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                                               .Sum(l => l.QtyIn - l.QtyOut),
                                     ProductCost = SqlFunctions.GetProductCost(x.ProductCode, null),
                                     ProductCode = x.ProductCode,
@@ -477,7 +477,7 @@ namespace Foxoft
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                     .Where(x => x.ProductCode == productCode)
                                     .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
-                                    .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                    .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 
@@ -487,7 +487,7 @@ namespace Foxoft
 
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                     .Where(x => x.ProductCode == productCode)
-                                    .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                    .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                     .Where(x => x.SerialNumberCode == serialNumberCode)
                                     .Where(x => x.TrInvoiceHeader.WarehouseCode == warehouseCode)
                                     .Sum(x => x.QtyIn - x.QtyOut);
@@ -1266,7 +1266,7 @@ namespace Foxoft
                            LastUpdatedDate = x.LastUpdatedDate,
                            LastUpdatedUserName = x.LastUpdatedUserName,
                            Balance = db.TrInvoiceLines.Include(l => l.TrInvoiceHeader)
-                                                     .Where(l => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(l.TrInvoiceHeader.ProcessCode))
+                                                     .Where(l => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(l.TrInvoiceHeader.ProcessCode))
                                                      .Where(l => l.TrInvoiceHeader.CurrAccCode == x.CurrAccCode)
                                                      .Sum(s => (s.QtyIn - s.QtyOut) * (s.PriceLoc - (s.PriceLoc * s.PosDiscount / 100)))
                                   + db.TrPaymentLines.Include(l => l.TrPaymentHeader)
@@ -1342,7 +1342,7 @@ namespace Foxoft
 
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
-                                       .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                       .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                        .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
                                        .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) < documentDate)
                                        .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
@@ -1361,7 +1361,7 @@ namespace Foxoft
             using subContext db = new();
 
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader).Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
-                                                  .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                                  .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                                   .Sum(x => x.NetAmountLoc);
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)

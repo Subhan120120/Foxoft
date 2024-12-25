@@ -68,7 +68,7 @@ select  InvoiceLineId
 , Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il 
 					left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId
 					where il.ProductCode = TrInvoiceLines.ProductCode
-					and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT'))
+					and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT'))
 , TrInvoiceHeaders.CreatedUserName
 , ImagePath
 --, ROW_NUMBER() OVER (ORDER BY DocumentDate DESC) AS RowNum  

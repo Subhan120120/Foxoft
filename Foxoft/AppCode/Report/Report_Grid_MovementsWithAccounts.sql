@@ -44,7 +44,7 @@ from (
 	left join DcCurrAccs on ih.CurrAccCode = DcCurrAccs.CurrAccCode
 	left join DcProcesses on DcProcesses.ProcessCode = ih.ProcessCode
 	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode
-	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )
+	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )
 	group by FirstName
 			, CurrAccDesc
 			, ProcessDesc

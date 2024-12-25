@@ -484,11 +484,20 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "RetailPurchaseReturn", ClaimDesc = "Alışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailSaleReturn", ClaimDesc = "Satışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "WholesaleReturn", ClaimDesc = "Topdan Satışın Qaytarılması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "InstallmentsaleInvoice", ClaimDesc = "Kredit Satışı", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəlliyi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "HierarchyFeatureType", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "ExpenseOfInvoice", ClaimDesc = "Faktura Xərci", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1 }
+                new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteInvoiceRP", ClaimDesc = "Alış Fakturası Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteInvoiceRS", ClaimDesc = "Pərakəndə Satış Fakturası Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteInvoiceWS", ClaimDesc = "Topdan Satış Fakturası Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteInvoiceIS", ClaimDesc = "Kredit Satış Fakturası Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteLineRP", ClaimDesc = "Alış Fakturası Sətiri Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteLineRS", ClaimDesc = "Pərakəndə Satış Sətiri Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteLineWS", ClaimDesc = "Topdan Satış Sətiri Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteLineIS", ClaimDesc = "Kredit Satış Sətiri Silmə", ClaimTypeId = 1 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -543,7 +552,16 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 25, RoleCode = "Admin", ClaimCode = "Session" },
                 new TrRoleClaim { RoleClaimId = 26, RoleCode = "Admin", ClaimCode = "WaybillIn" },
                 new TrRoleClaim { RoleClaimId = 27, RoleCode = "Admin", ClaimCode = "WaybillOut" },
-                new TrRoleClaim { RoleClaimId = 28, RoleCode = "Admin", ClaimCode = "ExpenseOfInvoice" }
+                new TrRoleClaim { RoleClaimId = 28, RoleCode = "Admin", ClaimCode = "ExpenseOfInvoice" },
+                new TrRoleClaim { RoleClaimId = 29, RoleCode = "Admin", ClaimCode = "InstallmentsaleInvoice" },
+                new TrRoleClaim { RoleClaimId = 30, RoleCode = "Admin", ClaimCode = "DeleteInvoiceRP" },
+                new TrRoleClaim { RoleClaimId = 31, RoleCode = "Admin", ClaimCode = "DeleteInvoiceRS" },
+                new TrRoleClaim { RoleClaimId = 32, RoleCode = "Admin", ClaimCode = "DeleteInvoiceWS" },
+                new TrRoleClaim { RoleClaimId = 33, RoleCode = "Admin", ClaimCode = "DeleteInvoiceIS" },
+                new TrRoleClaim { RoleClaimId = 34, RoleCode = "Admin", ClaimCode = "DeleteLineRP" },
+                new TrRoleClaim { RoleClaimId = 35, RoleCode = "Admin", ClaimCode = "DeleteLineRS" },
+                new TrRoleClaim { RoleClaimId = 36, RoleCode = "Admin", ClaimCode = "DeleteLineWS" },
+                new TrRoleClaim { RoleClaimId = 37, RoleCode = "Admin", ClaimCode = "DeleteLineIS" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -613,9 +631,9 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcPaymentPlan>().HasData(
-                new DcPaymentPlan { PaymentPlanCode = "M03", PaymentPlanDesc = "3 AY", PaymentMethodId = 2, DurationInMonths = 3},
-                new DcPaymentPlan { PaymentPlanCode = "M06", PaymentPlanDesc = "6 AY", PaymentMethodId = 2, DurationInMonths = 6},
-                new DcPaymentPlan { PaymentPlanCode = "M09", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9},
+                new DcPaymentPlan { PaymentPlanCode = "M03", PaymentPlanDesc = "3 AY", PaymentMethodId = 2, DurationInMonths = 3 },
+                new DcPaymentPlan { PaymentPlanCode = "M06", PaymentPlanDesc = "6 AY", PaymentMethodId = 2, DurationInMonths = 6 },
+                new DcPaymentPlan { PaymentPlanCode = "M09", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9 },
                 new DcPaymentPlan { PaymentPlanCode = "M12", PaymentPlanDesc = "12 AY", PaymentMethodId = 2, DurationInMonths = 12 },
                 new DcPaymentPlan { PaymentPlanCode = "M18", PaymentPlanDesc = "18 AY", PaymentMethodId = 2, DurationInMonths = 18 },
                 new DcPaymentPlan { PaymentPlanCode = "M24", PaymentPlanDesc = "24 AY", PaymentMethodId = 2, DurationInMonths = 24 }

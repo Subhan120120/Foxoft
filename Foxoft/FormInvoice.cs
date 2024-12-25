@@ -797,8 +797,6 @@ namespace Foxoft
         {
             if (Settings.Default.AppSetting.AutoSave)
                 SaveInvoice();
-
-            alertControl1.Show(this, "Print Göndərildi.", "Printer: ", "", (Image)null, null);
         }
 
         private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -1115,47 +1113,62 @@ namespace Foxoft
 
         private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
+            if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
             {
-                List<TrInvoiceLine> invoicelines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+                return;
+            }
 
-                foreach (var invoiceline in invoicelines)
+            string claim = "DeleteInvoice" + dcProcess.ProcessCode;
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+            if (!currAccHasClaims)
+            {
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+
+            List<TrInvoiceLine> invoicelines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+
+            foreach (var invoiceline in invoicelines)
+            {
+                if (efMethods.ReturnExistByInvoiceLine(invoiceline.InvoiceLineId))
                 {
-                    if (efMethods.ReturnExistByInvoiceLine(invoiceline.InvoiceLineId))
-                    {
-                        XtraMessageBox.Show("Bu məhsul üzrə geri qaytarma mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-
-                    if (efMethods.WaybillExistByInvoiceLine(invoiceline.InvoiceLineId))
-                    {
-                        XtraMessageBox.Show("Bu məhsul üzrə təhvil mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
+                    XtraMessageBox.Show("Bu məhsul üzrə geri qaytarma mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
 
-
-                if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (efMethods.WaybillExistByInvoiceLine(invoiceline.InvoiceLineId))
                 {
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
-
-                    if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
-                        if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                        else if (currAccHasClaims && MessageBox.Show("Qaimə üzrə olan ödənişləri də silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-
-                    if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
-                        if (MessageBox.Show("Qaimə üzrə olan xərcləri də Silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-                            efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-
-                    efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
-
-                    ClearControlsAddNew();
+                    XtraMessageBox.Show("Bu məhsul üzrə təhvil mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
             }
-            else
-                XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
+
+            if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                bool currAccHasPayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
+                bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
+
+                if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
+                    if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+                        efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                    else if (MessageBox.Show("Qaimə üzrə olan ödənişləri də silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                        if (currAccHasClaims)
+                            efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                        else
+                            MessageBox.Show("Ödəniş Yetkiniz yoxdur!");
+
+                if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
+                    if (MessageBox.Show("Qaimə üzrə olan xərcləri də Silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                        if (currAccHasClaims)
+                            efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                        else
+                            MessageBox.Show("Xərc Yetkiniz yoxdur!");
+
+                efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
+
+                ClearControlsAddNew();
+            }
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
@@ -2015,7 +2028,7 @@ namespace Foxoft
                 if (dcProduct is not null)
                 {
                     dcProduct.Balance = subContext.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                                                 .Where(x => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                                                 .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                                                                  .Where(x => x.ProductCode == productCode)
                                                                  .Sum(x => x.QtyIn - x.QtyOut);
 

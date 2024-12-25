@@ -16,8 +16,8 @@ select  TrInvoiceLines.InvoiceLineId
 , TrInvoiceLines.PosDiscount
 , QtyIn
 , QtyOut
-, Satis = case when TrInvoiceHeaders.ProcessCode = 'WS' then NetAmountLoc else 0 end
-, Maya = CASE WHEN TrInvoiceHeaders.ProcessCode = 'WS' THEN (QtyOut - QtyIn) * COALESCE(ProductCost, 0) ELSE 0 END
+, Satis = case when TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') then NetAmountLoc else 0 end
+, Maya = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN (QtyOut - QtyIn) * COALESCE(ProductCost, 0) ELSE 0 END
 , Xərc = case when TrInvoiceHeaders.ProcessCode = 'EX' then NetAmountLoc else 0 end
 , Artirma = case when TrInvoiceHeaders.ProcessCode = 'CI' then NetAmountLoc else 0 end
 , Silinme = case when TrInvoiceHeaders.ProcessCode = 'CO' then NetAmountLoc else 0 end
@@ -72,7 +72,7 @@ left join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccT
 left join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode
 left join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode	
 
-where TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'EX')
+where TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'RS', 'IS', 'EX')
 --and DocumentNumber = 'RS-000012'
 ) Dvijok
 order by Dvijok.DocumentDate

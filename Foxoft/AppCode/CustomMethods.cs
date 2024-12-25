@@ -235,7 +235,6 @@ namespace Foxoft.AppCode
                 return Guid.Parse(variableValue); // Explicitly parse Guid
             }
 
-            // Handle other types with Convert.ChangeType
             return Convert.ChangeType(variableValue, Type.GetType(variableValueType));
         }
 

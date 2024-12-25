@@ -257,7 +257,7 @@ namespace Foxoft
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_SalesPerson });
             dataLayoutControl1.Location = new Point(0, 158);
             dataLayoutControl1.Name = "dataLayoutControl1";
-            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1187, 260, 650, 400);
+            dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(716, 260, 650, 400);
             dataLayoutControl1.Root = Root;
             dataLayoutControl1.Size = new Size(1129, 389);
             dataLayoutControl1.TabIndex = 4;

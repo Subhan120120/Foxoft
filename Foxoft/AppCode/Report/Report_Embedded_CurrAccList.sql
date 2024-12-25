@@ -15,7 +15,7 @@ left join
 	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd
 	from TrInvoiceLines il
 	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId
-	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )
+	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )
 	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=
 	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
 

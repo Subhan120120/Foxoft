@@ -25,7 +25,7 @@ LEFT JOIN TrInvoiceHeaders
 	ON TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId
 LEFT JOIN DcProducts 
 	on DcProducts.ProductCode = TrInvoiceLines.ProductCode
-where DcProducts.ProductTypeCode = 1 --and TrInvoiceHeaders.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT')
+where DcProducts.ProductTypeCode = 1 --and TrInvoiceHeaders.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT')
 
 {StartDate}
 Group by DcProducts.ProductCode

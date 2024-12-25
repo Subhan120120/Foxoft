@@ -48,7 +48,7 @@ namespace Foxoft
 
         private void SelectDocNum()
         {
-            using (FormInvoiceLineUndeliveredList form = new(new string[] { "WS", "RS" }))
+            using (FormInvoiceLineUndeliveredList form = new(new string[] { "WS", "RS", "IS" }))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {

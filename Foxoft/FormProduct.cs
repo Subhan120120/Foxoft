@@ -114,7 +114,7 @@ namespace Foxoft
                                     .Include(x => x.SiteProduct)
                                     .Load();
 
-                dbContext.DcProducts.Local.ForEach(x => x.Balance = x.TrInvoiceLines.Where(l => new string[] { "RP", "WP", "RS", "WS", "CI", "CO", "IT" }.Contains(l.TrInvoiceHeader.ProcessCode))
+                dbContext.DcProducts.Local.ForEach(x => x.Balance = x.TrInvoiceLines.Where(l => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(l.TrInvoiceHeader.ProcessCode))
                                                                                     .Sum(l => l.QtyIn - l.QtyOut));
 
                 dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
