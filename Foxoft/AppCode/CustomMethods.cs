@@ -220,12 +220,23 @@ namespace Foxoft.AppCode
                     sqlParameterList.Add(new SqlParameter()
                     {
                         ParameterName = rf.Representative,
-                        Value = Convert.ChangeType(rf.VariableValue, Type.GetType(rf.VariableValueType)),// rf.VariableValue,
+                        Value = GetTypedValue(rf.VariableValue, rf.VariableValueType),
                         DbType = GetDbType(rf.VariableValueType)
                     });
             }
 
             return sqlParameterList.ToArray();
+        }
+
+        private static object GetTypedValue(string variableValue, string variableValueType)
+        {
+            if (variableValueType == "System.Guid")
+            {
+                return Guid.Parse(variableValue); // Explicitly parse Guid
+            }
+
+            // Handle other types with Convert.ChangeType
+            return Convert.ChangeType(variableValue, Type.GetType(variableValueType));
         }
 
         public string ReplaceFilters(string sqlQuery, DcReport report)
