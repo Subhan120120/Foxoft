@@ -350,6 +350,13 @@ namespace Foxoft.Models
                    .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<DcSerialNumber>(entity =>
+            {
+                entity.HasOne(x => x.DcProduct)
+                   .WithMany(x => x.DcSerialNumbers)
+                   .OnDelete(DeleteBehavior.Cascade);
+            });
+
             modelBuilder.Entity<TrPaymentLine>(entity =>
             {
                 entity.HasOne(x => x.TrPaymentHeader)

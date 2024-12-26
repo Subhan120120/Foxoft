@@ -54,7 +54,6 @@ namespace Foxoft
             SerializableAppearanceObject serializableAppearanceObject15 = new SerializableAppearanceObject();
             SerializableAppearanceObject serializableAppearanceObject16 = new SerializableAppearanceObject();
             gC_ProductList = new MyGridControl();
-            gV_ProductList = new MyGridView(this);
             dcProductsBindingSource = new BindingSource(components);
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_ProductNew = new DevExpress.XtraBars.BarButtonItem();
