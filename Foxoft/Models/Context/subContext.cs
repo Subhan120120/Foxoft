@@ -487,11 +487,12 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ReportZet", ClaimDesc = "Gün Sonu Hesabatı", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailPurchaseInvoice", ClaimDesc = "Alış Fakturası", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailSaleInvoice", ClaimDesc = "Satış Fakturası", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "WholesaleInvoice", ClaimDesc = "Topdan Satışın Qaytarılması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "WholesaleInvoice", ClaimDesc = "Topdan Satış Fakturası", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailPurchaseReturn", ClaimDesc = "Alışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailSaleReturn", ClaimDesc = "Satışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "WholesaleReturn", ClaimDesc = "Topdan Satışın Qaytarılması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "InstallmentsaleInvoice", ClaimDesc = "Kredit Satışı", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "InstallmentsaleReturn", ClaimDesc = "Kredit Satışı", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəlliyi", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "HierarchyFeatureType", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1 },
@@ -568,7 +569,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 34, RoleCode = "Admin", ClaimCode = "DeleteLineRP" },
                 new TrRoleClaim { RoleClaimId = 35, RoleCode = "Admin", ClaimCode = "DeleteLineRS" },
                 new TrRoleClaim { RoleClaimId = 36, RoleCode = "Admin", ClaimCode = "DeleteLineWS" },
-                new TrRoleClaim { RoleClaimId = 37, RoleCode = "Admin", ClaimCode = "DeleteLineIS" }
+                new TrRoleClaim { RoleClaimId = 37, RoleCode = "Admin", ClaimCode = "DeleteLineIS" },
+                new TrRoleClaim { RoleClaimId = 38, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturn" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

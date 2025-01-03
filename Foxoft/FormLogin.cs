@@ -165,7 +165,7 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraForm1 xtraForm1 = new();
+            FeatureBrowserForm xtraForm1 = new(new DevExpress.XtraGrid.Views.Grid.GridView());
             xtraForm1.ShowDialog();
         }
 

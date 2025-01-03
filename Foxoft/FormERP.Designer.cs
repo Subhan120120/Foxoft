@@ -73,6 +73,7 @@ namespace Foxoft
             ACE_PurchaseReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_RetailSaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_WholesaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_InstallmentsaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator5 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             aCE_InventoryTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CashTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -123,7 +124,7 @@ namespace Foxoft
             parentRibbonControl.QuickToolbarItemLinks.Add(bBI_POS);
             parentRibbonControl.QuickToolbarItemLinks.Add(barSubItem1);
             parentRibbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemImageComboBox1, repositoryItemComboBox1 });
-            parentRibbonControl.Size = new Size(1023, 192);
+            parentRibbonControl.Size = new Size(1023, 158);
             parentRibbonControl.StatusBar = ribbonStatusBar;
             // 
             // skinRibbonGalleryBarItem
@@ -298,10 +299,10 @@ namespace Foxoft
             ribbonStatusBar.ItemLinks.Add(BSI_StoreDesc);
             ribbonStatusBar.ItemLinks.Add(bSI_UserName);
             ribbonStatusBar.ItemLinks.Add(bSI_TerminalName);
-            ribbonStatusBar.Location = new Point(0, 606);
+            ribbonStatusBar.Location = new Point(0, 612);
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = parentRibbonControl;
-            ribbonStatusBar.Size = new Size(1023, 30);
+            ribbonStatusBar.Size = new Size(1023, 24);
             // 
             // popupMenu2
             // 
@@ -322,19 +323,19 @@ namespace Foxoft
             // 
             aC_Root.Dock = DockStyle.Left;
             aC_Root.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Invoices, aCE_Acounting, aCE_Operation, aCE_Reports, aCE_Setting });
-            aC_Root.Location = new Point(0, 192);
+            aC_Root.Location = new Point(0, 158);
             aC_Root.Name = "aC_Root";
             aC_Root.OptionsMinimizing.AllowMinimizeMode = DevExpress.Utils.DefaultBoolean.True;
             aC_Root.ResizeMode = DevExpress.XtraBars.Navigation.AccordionControlResizeMode.InnerResizeZone;
             aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
             aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
             aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-            aC_Root.Size = new Size(216, 414);
+            aC_Root.Size = new Size(216, 454);
             aC_Root.TabIndex = 2;
             // 
             // aCE_Invoices
             // 
-            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentsaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1 });
+            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentsaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentsaleReturn, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1 });
             aCE_Invoices.Expanded = true;
             aCE_Invoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Invoices.ImageOptions.SvgImage");
             aCE_Invoices.Name = "aCE_Invoices";
@@ -427,6 +428,14 @@ namespace Foxoft
             aCE_WholesaleReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             aCE_WholesaleReturn.Text = "Topdan Satış. Qaytarılması";
             aCE_WholesaleReturn.Click += aCE_WholesaleReturn_Click;
+            // 
+            // accordionControlElement1
+            // 
+            ACE_InstallmentsaleReturn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
+            ACE_InstallmentsaleReturn.Name = "accordionControlElement1";
+            ACE_InstallmentsaleReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InstallmentsaleReturn.Text = "Kredit Satış. Qaytarılması";
+            ACE_InstallmentsaleReturn.Click += ACE_InstallmentsaleReturn_Click;
             // 
             // accordionControlSeparator5
             // 
@@ -724,5 +733,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
         private System.Windows.Forms.Timer timer1;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentsaleReturn;
     }
 }

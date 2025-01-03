@@ -383,6 +383,11 @@ namespace Foxoft
             ShowExistForm<FormReturn>("WS");
         }
 
+        private void ACE_InstallmentsaleReturn_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormReturn>("IS");
+        }
+
         private void ACE_CashRegs_Click(object sender, EventArgs e)
         {
             ShowExistForm<FormCurrAccList>(new byte[] { 5 });

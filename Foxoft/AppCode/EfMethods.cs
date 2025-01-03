@@ -1486,6 +1486,14 @@ namespace Foxoft
             return db.DcPaymentPlans.Where(x => x.PaymentMethodId == paymentMethodId).ToList();
         }
 
+        public DcPaymentPlan SelectPaymentPlanDefault(int paymentMethodId)
+        {
+            using subContext db = new();
+            return db.DcPaymentPlans.Where(x => x.PaymentMethodId == paymentMethodId)
+                                    .Where(x => x.IsDefault)
+                                    .FirstOrDefault();
+        }
+
         public DcPaymentMethod SelectPaymentMethod(int paymentMethodId)
         {
             using subContext db = new();

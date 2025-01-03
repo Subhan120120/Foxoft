@@ -30,7 +30,8 @@ namespace Foxoft.Models
         [Display(Name = "Kamisia Dədəcəsi")]
         public float CommissionRate { get; set; }
 
-
+        [Display(Name = "Varsayılandır")]
+        public bool IsDefault { get; set; }
 
 
         [ForeignKey("PaymentMethodId")]

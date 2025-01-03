@@ -243,7 +243,6 @@ namespace Foxoft
         {
             if (e.OldValue != e.NewValue)
                 MessageBox.Show("EditValueChanging");
-            //SaveInvoiceHeader();
         }
 
         private void item_Leave(object sender, EventArgs e)
@@ -482,20 +481,6 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
-            //GridView gV = (GridView)sender;
-
-            //if (gV is not null)
-            //{
-            //    if (e.Column != colLastUpdatedDate && e.Column != colLastUpdatedUserName && !e.Column.ReadOnly && e.Column.OptionsColumn.AllowEdit)
-            //    {
-            //        if (gV.ActiveEditor is not null && !Equals(e.Value, gV.ActiveEditor.OldEditValue))
-            //        {
-            //            string userName = efMethods.SelectCurrAcc(Authorization.CurrAccCode)?.CurrAccDesc;
-
-            //            gV.SetRowCellValue(e.RowHandle, colLastUpdatedUserName, userName);
-            //        }
-            //    }
-            //}
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -1936,11 +1921,6 @@ namespace Foxoft
             report.Dispose();
         }
 
-        //private void PrintingSystem_EndPrint(object sender, EventArgs e)
-        //{
-        //    alertControl1.Show(this, "Print Göndərildi.", "Printer: Printer Adı" , "", (Image)null, null);
-        //}
-
         private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)
         {
             ComboBoxEdit comboBox = (ComboBoxEdit)sender;
@@ -1994,18 +1974,6 @@ namespace Foxoft
             FormImage formPictures = new(btnEdit_DocNum.EditValue?.ToString());
             formPictures.ShowDialog();
         }
-
-        //private void BBI_Print_ItemClick(object sender, ItemClickEventArgs e)
-        //{
-        //    XtraReport xtraReport = GetInvoiceReport(reportFileNameInvoice);
-        //    xtraReport.PrinterName = settingStore.PrinterName;
-
-        //    if (xtraReport is not null)
-        //    {
-        //        ReportPrintTool printTool = new(xtraReport);
-        //        printTool.PrintDialog();
-        //    }
-        //}
 
         private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
@@ -2196,30 +2164,10 @@ namespace Foxoft
 
         private void gV_InvoiceLine_ShowingEditor(object sender, CancelEventArgs e)
         {
-            //var view = sender as GridView;
-            //if (view != null)
-            //{
-            //    if (view.FocusedColumn == colQty)
-            //    {
-            //        var cellValue = view.GetFocusedValue();
-
-            //        // Check if the value is a whole number (integer)
-            //        if (view.ActiveEditor is not null && decimal.TryParse(cellValue?.ToString(), out var number) && number == Math.Floor(number))
-            //        {
-            //            view.ActiveEditor.EditValue = number.ToString("0"); // Formats without decimal
-            //        }
-            //    }
-            //}
         }
 
         private void gV_InvoiceLine_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
         {
-            //RepositoryItemTextEdit textEdit_Qty = new();
-            //textEdit_Qty.EditFormat.FormatString = "n0";
-            //textEdit_Qty.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            //textEdit_Qty.Name = "repoTextEdit_Qty";
-
-            //e.RepositoryItem = textEdit_Qty;
         }
 
         private void btnEdit_CurrAccCode_EditValueChanging(object sender, ChangingEventArgs e)
