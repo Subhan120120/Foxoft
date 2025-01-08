@@ -199,11 +199,12 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            List<DcFeatureType> featureTypes = db.DcFeatureTypes.Include(x => x.TrHierarchyFeatureTypes)
-                                                                    .ThenInclude(x => x.DcHierarchy)
-                                                                .Where(x => x.TrHierarchyFeatureTypes.Where(x => x.HierarchyCode == hierarchyCode).Any() || !x.TrHierarchyFeatureTypes.Any())
-                                                                .OrderByDescending(x => x.Order)
-                                                                .ToList();
+            List<DcFeatureType> featureTypes = 
+                db.DcFeatureTypes.Include(x => x.TrHierarchyFeatureTypes)
+                    .ThenInclude(x => x.DcHierarchy)
+                .Where(x => x.TrHierarchyFeatureTypes.Where(x => x.HierarchyCode == hierarchyCode).Any() || !x.TrHierarchyFeatureTypes.Any())
+                .OrderByDescending(x => x.Order)
+                .ToList();
 
             return featureTypes;
         }

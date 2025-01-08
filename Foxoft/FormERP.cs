@@ -115,6 +115,7 @@ namespace Foxoft
             this.ACE_RetailSaleReturn.Name = "RetailSaleReturn";
             this.aCE_WholesaleReturn.Name = "WholesaleReturn";
             this.aCE_InstallmentsaleInvoice.Name = "InstallmentsaleInvoice";
+            this.ACE_InstallmentsaleReturn.Name = "InstallmentsaleReturn";
             this.aCE_InventoryTransfer.Name = "InventoryTransfer";
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
