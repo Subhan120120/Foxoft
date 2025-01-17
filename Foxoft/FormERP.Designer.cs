@@ -81,6 +81,7 @@ namespace Foxoft
             aCE_Expense = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_PaymentDetail = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator1 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            ACE_Installments = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Acounting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CountIn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CountOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -335,7 +336,7 @@ namespace Foxoft
             // 
             // aCE_Invoices
             // 
-            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentsaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentsaleReturn, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1 });
+            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentsaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentsaleReturn, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1, ACE_Installments });
             aCE_Invoices.Expanded = true;
             aCE_Invoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Invoices.ImageOptions.SvgImage");
             aCE_Invoices.Name = "aCE_Invoices";
@@ -429,10 +430,10 @@ namespace Foxoft
             aCE_WholesaleReturn.Text = "Topdan Satış. Qaytarılması";
             aCE_WholesaleReturn.Click += aCE_WholesaleReturn_Click;
             // 
-            // accordionControlElement1
+            // ACE_InstallmentsaleReturn
             // 
-            ACE_InstallmentsaleReturn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement1.ImageOptions.SvgImage");
-            ACE_InstallmentsaleReturn.Name = "accordionControlElement1";
+            ACE_InstallmentsaleReturn.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InstallmentsaleReturn.ImageOptions.SvgImage");
+            ACE_InstallmentsaleReturn.Name = "ACE_InstallmentsaleReturn";
             ACE_InstallmentsaleReturn.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_InstallmentsaleReturn.Text = "Kredit Satış. Qaytarılması";
             ACE_InstallmentsaleReturn.Click += ACE_InstallmentsaleReturn_Click;
@@ -480,6 +481,13 @@ namespace Foxoft
             // accordionControlSeparator1
             // 
             accordionControlSeparator1.Name = "accordionControlSeparator1";
+            // 
+            // accordionControlElement1
+            // 
+            ACE_Installments.Name = "accordionControlElement1";
+            ACE_Installments.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Installments.Text = "Kreditlər";
+            ACE_Installments.Click += ACE_Installments_Click;
             // 
             // aCE_Acounting
             // 
@@ -734,5 +742,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
         private System.Windows.Forms.Timer timer1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentsaleReturn;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Installments;
     }
 }

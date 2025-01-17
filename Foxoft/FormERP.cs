@@ -134,6 +134,7 @@ namespace Foxoft
             this.ACE_HierarchyFeatureType.Name = "HierarchyFeatureType";
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
             this.bBI_Session.Name = "Session";
+            this.ACE_Installments.Name = "Installments";
         }
 
         private void InitializeReports()
@@ -552,6 +553,12 @@ namespace Foxoft
         private void timer1_Tick(object sender, EventArgs e)
         {
             ShowDatabaseFragPercent();
+        }
+
+        private void ACE_Installments_Click(object sender, EventArgs e)
+        {
+            FormInstallmentsale formInstallmentsale = new FormInstallmentsale();
+            formInstallmentsale.ShowDialog();
         }
     }
 }

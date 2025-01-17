@@ -61,7 +61,7 @@ namespace Foxoft
 
             PaymentDefaults(paymentType, trInvoiceHeader);
 
-            if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
+            if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode, trInvoiceHeader.IsReturn))
                 invoiceSumLoc *= (-1);
 
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);

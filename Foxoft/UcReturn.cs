@@ -230,21 +230,21 @@ namespace Foxoft
                 MessageBox.Show("Belə bir sənəd yoxdur.");
         }
 
-        private void MakePayment(decimal summaryInvoice, bool autoPayment)
-        {
-            using FormPayment formPayment = new(1, summaryInvoice, returnInvoHeader, autoPayment);
+        //private void MakePayment(decimal summaryInvoice, bool autoPayment)
+        //{
+        //    using FormPayment formPayment = new(1, summaryInvoice, returnInvoHeader, autoPayment);
 
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
-            if (!currAccHasClaims)
-            {
-                MessageBox.Show("Yetkiniz yoxdur! ");
-                return;
-            }
-            else
-            {
-                if (formPayment.ShowDialog(this) == DialogResult.OK) { }
-            }
-        }
+        //    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
+        //    if (!currAccHasClaims)
+        //    {
+        //        MessageBox.Show("Yetkiniz yoxdur! ");
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        if (formPayment.ShowDialog(this) == DialogResult.OK) { }
+        //    }
+        //}
 
         private void gV_ReturnInvoiceLine_CalcPreviewText(object sender, CalcPreviewTextEventArgs e)
         {

@@ -97,6 +97,15 @@ namespace Foxoft
             };
         }
 
+        public static bool? DirectionIsIn(string processCode, bool isReturn)
+        {
+            bool? result = DirectionIsIn(processCode);
+            if (isReturn)
+                return !result;
+            else
+                return result;
+        }
+
         public static string GetClaim(string processCode)
         {
             return processCode switch

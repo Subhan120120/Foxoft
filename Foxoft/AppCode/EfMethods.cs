@@ -1,22 +1,15 @@
-﻿using DevExpress.ClipboardSource.SpreadsheetML;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
 using DevExpress.Mvvm.Native;
-using Foxoft.Models;
 using DevExpress.Spreadsheet;
-using DevExpress.XtraSpreadsheet;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using Foxoft.Models;
 using Foxoft.Models.Entity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
-using System.Windows.Controls;
-using static DevExpress.Skins.SolidColorHelper;
 
 namespace Foxoft
 {
@@ -199,7 +192,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            List<DcFeatureType> featureTypes = 
+            List<DcFeatureType> featureTypes =
                 db.DcFeatureTypes.Include(x => x.TrHierarchyFeatureTypes)
                     .ThenInclude(x => x.DcHierarchy)
                 .Where(x => x.TrHierarchyFeatureTypes.Where(x => x.HierarchyCode == hierarchyCode).Any() || !x.TrHierarchyFeatureTypes.Any())
@@ -1239,6 +1232,58 @@ namespace Foxoft
             return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                     .Sum(s => s.Amount / (decimal)s.ExchangeRate);
         }
+
+
+
+        public List<TrInstallmentViewModel> SelectInstallmentsVM()
+        {
+            using subContext db = new();
+
+            DateTime currentDate = DateTime.Now;
+
+            return db.TrInstallments.Include(x => x.TrInvoiceHeader)
+                                     .Include(x => x.DcPaymentPlan)
+                                     .Select(installment => new TrInstallmentViewModel
+                                     {
+                                         InstallmentId = installment.InstallmentId,
+                                         InvoiceHeaderId = installment.InvoiceHeaderId,
+                                         DocumentDate = installment.DocumentDate,
+                                         PaymentPlanCode = installment.PaymentPlanCode,
+                                         Amount = installment.Amount,
+                                         CurrencyCode = installment.CurrencyCode,
+                                         ExchangeRate = installment.ExchangeRate,
+                                         PaidAmount = db.TrPaymentLines
+                                                         .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
+                                                                     x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
+                                                         .Sum(s => s.PaymentLoc),
+                                         RemainingBalance = installment.Amount - db.TrPaymentLines
+                                                                                .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
+                                                                                            x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
+                                                                                .Sum(s => s.PaymentLoc),
+                                         MonthlyPayment = installment.Amount / installment.DcPaymentPlan.DurationInMonths, // Calculate monthly payment
+                                         DueAmount = Math.Max(0,
+                                                 ((currentDate - installment.DocumentDate).Days / 30) *
+                                                 (installment.Amount / installment.DcPaymentPlan.DurationInMonths) -
+                                                 db.TrPaymentLines.Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
+                                                                               x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
+                                                                  .Sum(s => s.PaymentLoc))
+                                     }).ToList();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public List<DcCurrAcc> SelectCurrAccs(byte[] currAccTypeArr)
         {

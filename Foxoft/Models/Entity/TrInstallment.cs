@@ -8,9 +8,7 @@ namespace Foxoft.Models
     [Display(Name = "Ödəmə Planı")]
     public partial class TrInstallment
     {
-        public TrInstallment()
-        {
-        }
+        public TrInstallment() { }
 
         [Key]
         [Display(Name = "Ödəmə Planı İd")]
@@ -19,6 +17,11 @@ namespace Foxoft.Models
         [ForeignKey("TrInvoiceHeader")]
         [Display(Name = "Faktura İd")]
         public Guid InvoiceHeaderId { get; set; }
+
+        [Column(TypeName = "date")]
+        [DefaultValue("getdate()")]
+        [Display(Name = "Faktura Tarixi")]
+        public DateTime DocumentDate { get; set; }
 
         [Display(Name = "Ödəmə Planı Kodu")]
         [ForeignKey("DcPaymentPlan")]
