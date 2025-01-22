@@ -557,8 +557,7 @@ namespace Foxoft
 
         private void ACE_Installments_Click(object sender, EventArgs e)
         {
-            FormInstallmentsale formInstallmentsale = new FormInstallmentsale();
-            formInstallmentsale.ShowDialog();
+            ShowExistForm<FormInstallmentsale>();
         }
     }
 }

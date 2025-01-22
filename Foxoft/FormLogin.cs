@@ -165,8 +165,11 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormInstallmentsale xtraForm1 = new();
-            xtraForm1.ShowDialog();
+            UCNumberPad xtraForm1 = new();
+
+            xtraForm1.Dock = DockStyle.Fill;
+            this.Controls.Add(xtraForm1);
+            xtraForm1.Show();
         }
 
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)

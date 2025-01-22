@@ -33,6 +33,11 @@ namespace Foxoft.Models
         [Display(Name = "Ümumi Məbləğ")]
         public decimal Amount { get; set; }
 
+        [Display(Name = "Ümumi Məbləğ (YPV)")]
+        public decimal AmountLoc { get { return Math.Round(Amount / (decimal)ExchangeRate, 4); } set { } }
+
+
+
         [ForeignKey("DcCurrency")]
         [Display(Name = "Valyuta")]
         public string CurrencyCode { get; set; }
@@ -40,6 +45,38 @@ namespace Foxoft.Models
         [Display(Name = "Valyuta Kursu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public float ExchangeRate { get; set; }
+
+
+        [NotMapped]
+        [Display(Name = "Cari Hesab")]
+        public string? CurrAccCode { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Ödənişlərin Cəmi")]
+        public decimal TotalPaid { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Qalan Balans")]
+        public decimal RemainingBalance { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Aylıq Ödəniş")]
+        public decimal MonthlyPayment { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Ödənilməli")]
+        public decimal DueAmount { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Gecikən Günlər")]
+        public int OverdueDays { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Gecikmə Tarixi")]
+        public DateTime? OverdueDate { get; set; } // İlk gecikmə tarixi olaraq "OverdueDate" istifadə edildi
+
+
+
 
         public virtual DcCurrency DcCurrency { get; set; }
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }

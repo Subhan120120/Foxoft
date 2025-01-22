@@ -1232,58 +1232,57 @@ namespace Foxoft
             return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                     .Sum(s => s.Amount / (decimal)s.ExchangeRate);
         }
-
-
-
         public List<TrInstallmentViewModel> SelectInstallmentsVM()
         {
             using subContext db = new();
 
             DateTime currentDate = DateTime.Now;
 
-            return db.TrInstallments.Include(x => x.TrInvoiceHeader)
-                                     .Include(x => x.DcPaymentPlan)
-                                     .Select(installment => new TrInstallmentViewModel
-                                     {
-                                         InstallmentId = installment.InstallmentId,
-                                         InvoiceHeaderId = installment.InvoiceHeaderId,
-                                         DocumentDate = installment.DocumentDate,
-                                         PaymentPlanCode = installment.PaymentPlanCode,
-                                         Amount = installment.Amount,
-                                         CurrencyCode = installment.CurrencyCode,
-                                         ExchangeRate = installment.ExchangeRate,
-                                         PaidAmount = db.TrPaymentLines
-                                                         .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
-                                                                     x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
-                                                         .Sum(s => s.PaymentLoc),
-                                         RemainingBalance = installment.Amount - db.TrPaymentLines
-                                                                                .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
-                                                                                            x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
-                                                                                .Sum(s => s.PaymentLoc),
-                                         MonthlyPayment = installment.Amount / installment.DcPaymentPlan.DurationInMonths, // Calculate monthly payment
-                                         DueAmount = Math.Max(0,
-                                                 ((currentDate - installment.DocumentDate).Days / 30) *
-                                                 (installment.Amount / installment.DcPaymentPlan.DurationInMonths) -
-                                                 db.TrPaymentLines.Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
-                                                                               x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
-                                                                  .Sum(s => s.PaymentLoc))
-                                     }).ToList();
+            var installments = db.TrInstallments
+                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+                .Include(x => x.DcPaymentPlan)
+                .Select(installment => new
+                {
+                    Installment = installment,
+                    PaymentLinesSum = db.TrPaymentLines
+                        .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
+                                    x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
+                        .Sum(s => s.PaymentLoc)
+                })
+                .AsEnumerable() // Materialize query to client-side (switch from SQL to LINQ to Objects)
+                .Select(temp =>
+                {
+                    var installment = temp.Installment;
+                    var totalPaid = temp.PaymentLinesSum;
+                    var AmountWithComLoc = installment.AmountLoc + installment.Commission;
+                    var monthlyPayment = AmountWithComLoc / installment.DcPaymentPlan.DurationInMonths;
+                    var monthsPaid = (int)(totalPaid / monthlyPayment);
+                    var overdueDate = installment.DocumentDate.AddMonths(monthsPaid + 1);
+                    var overdueDays = currentDate > overdueDate ? (currentDate - overdueDate).Days : 0;
+
+                    return new TrInstallmentViewModel
+                    {
+                        InstallmentId = installment.InstallmentId,
+                        InvoiceHeaderId = installment.InvoiceHeaderId,
+                        CurrAccCode = installment.TrInvoiceHeader.CurrAccCode,
+                        DocumentDate = installment.DocumentDate,
+                        PaymentPlanCode = installment.PaymentPlanCode,
+                        Amount = installment.Amount,
+                        AmountLoc = AmountWithComLoc,
+                        CurrencyCode = installment.CurrencyCode,
+                        ExchangeRate = installment.ExchangeRate,
+                        TotalPaid = totalPaid,
+                        RemainingBalance = AmountWithComLoc - totalPaid,
+                        MonthlyPayment = monthlyPayment,
+                        DueAmount = totalPaid - (currentDate - installment.DocumentDate).Days / 30 * monthlyPayment,
+                        OverdueDate = overdueDate,
+                        OverdueDays = overdueDays
+                    };
+                })
+                .ToList();
+
+            return installments;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         public List<DcCurrAcc> SelectCurrAccs(byte[] currAccTypeArr)
         {

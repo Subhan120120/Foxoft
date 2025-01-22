@@ -387,7 +387,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ClaimTypeId = (byte)1,
-                            ClaimTypeDesc = "Embaded"
+                            ClaimTypeDesc = "Embedded"
                         },
                         new
                         {
@@ -1763,6 +1763,16 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ReportId = 6,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportLayout = "",
+                            ReportName = "Report_Embedded_Installmentsale",
+                            ReportQuery = "\r\n\r\nWITH PaymentLinesSum AS (\r\n    SELECT\r\n        ph.InvoiceHeaderId,\r\n        ph.CurrAccCode,\r\n        SUM(pl.PaymentLoc) AS PaymentLinesSum\r\n    FROM\r\n        TrPaymentLines pl\r\n    INNER JOIN\r\n        TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId\r\n    GROUP BY\r\n        ph.InvoiceHeaderId, ph.CurrAccCode\r\n),\r\nInstallmentData AS (\r\n    SELECT\r\n        i.InstallmentId,\r\n        i.InvoiceHeaderId,\r\n        i.DocumentDate,\r\n        i.PaymentPlanCode,\r\n        i.Amount,\r\n        i.AmountLoc,\r\n        i.CurrencyCode,\r\n        i.ExchangeRate,\r\n        i.AmountLoc + i.Commission AS AmountWithComLoc,\r\n        p.DurationInMonths,\r\n        COALESCE(psum.PaymentLinesSum, 0) AS TotalPaid\r\n    FROM\r\n        TrInstallments i\r\n    INNER JOIN\r\n        TrInvoiceHeaders ih ON i.InvoiceHeaderId = ih.InvoiceHeaderId\r\n    INNER JOIN\r\n        DcCurrAccs ca ON ih.CurrAccCode = ca.CurrAccCode\r\n    INNER JOIN\r\n        DcPaymentPlans p ON i.PaymentPlanCode = p.PaymentPlanCode\r\n    LEFT JOIN\r\n        PaymentLinesSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId AND ih.CurrAccCode = psum.CurrAccCode\r\n),\r\nCalculatedData AS (\r\n    SELECT\r\n        InstallmentId,\r\n        InvoiceHeaderId,\r\n        DocumentDate,\r\n        PaymentPlanCode,\r\n        Amount,\r\n        AmountWithComLoc,\r\n        CurrencyCode,\r\n        ExchangeRate,\r\n        TotalPaid,\r\n        AmountWithComLoc - TotalPaid AS RemainingBalance,\r\n        (AmountWithComLoc / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,\r\n        FLOOR(TotalPaid / (AmountWithComLoc / NULLIF(DurationInMonths, 0))) AS MonthsPaid,\r\n        DATEADD(MONTH, FLOOR(TotalPaid / (AmountWithComLoc / NULLIF(DurationInMonths, 0))) + 1, DocumentDate) AS OverdueDate\r\n    FROM\r\n        InstallmentData\r\n)\r\nSELECT\r\n    InstallmentId,\r\n    InvoiceHeaderId,\r\n    DocumentDate,\r\n    PaymentPlanCode,\r\n    Amount,\r\n    AmountWithComLoc,\r\n    CurrencyCode,\r\n    ExchangeRate,\r\n    TotalPaid,\r\n    RemainingBalance,\r\n    MonthlyPayment,\r\n    TotalPaid - (DATEDIFF(DAY, DocumentDate, GETDATE()) / 30) * MonthlyPayment AS DueAmount,\r\n    OverdueDate,\r\n    CASE \r\n        WHEN GETDATE() > OverdueDate THEN DATEDIFF(DAY, OverdueDate, GETDATE())\r\n        ELSE 0\r\n    END AS OverdueDays\r\nFROM\r\n    CalculatedData;\r\n",
+                            ReportTypeId = (byte)0
+                        },
+                        new
+                        {
                             ReportId = 11,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -2845,6 +2855,9 @@ namespace Foxoft.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstallmentId"));
 
                     b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AmountLoc")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Commission")

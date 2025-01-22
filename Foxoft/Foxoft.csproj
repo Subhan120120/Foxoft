@@ -32,6 +32,7 @@
     <None Remove="AppCode\Report\Report_Embedded_Barcode.sql" />
     <None Remove="AppCode\Report\Report_Embedded_CashRegList.sql" />
     <None Remove="AppCode\Report\Report_Embedded_CurrAccList.sql" />
+    <None Remove="AppCode\Report\Report_Embedded_Installmentsale.sql" />
     <None Remove="AppCode\Report\Report_Embedded_InvoiceReport.sql" />
     <None Remove="AppCode\Report\Report_Embedded_ProductList.sql" />
     <None Remove="AppCode\Report\Report_Grid_Expenses.sql" />
@@ -83,6 +84,7 @@
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
     <EmbeddedResource Include="AppCode\Report\Report_Detail_ProductCard.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_Barcode.sql" />
+    <EmbeddedResource Include="AppCode\Report\Report_Embedded_Installmentsale.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_CashRegList.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_CurrAccList.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_InvoiceReport.sql" />

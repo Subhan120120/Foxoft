@@ -509,7 +509,7 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
-                new DcClaimType { ClaimTypeId = 1, ClaimTypeDesc = "Embaded" },
+                new DcClaimType { ClaimTypeId = 1, ClaimTypeDesc = "Embedded" },
                 new DcClaimType { ClaimTypeId = 2, ClaimTypeDesc = "Report" },
                 new DcClaimType { ClaimTypeId = 3, ClaimTypeDesc = "Column" }
                 );
@@ -597,6 +597,7 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 3, ReportTypeId = 0, ReportName = "Report_Embedded_CashRegList", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_CashRegList.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 4, ReportTypeId = 0, ReportName = "Report_Embedded_InvoiceReport", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_InvoiceReport.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 5, ReportTypeId = 0, ReportName = "Report_Embedded_Barcode", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_Barcode.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 6, ReportTypeId = 0, ReportName = "Report_Embedded_Installmentsale", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_Installmentsale.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 11, ReportTypeId = 1, ReportName = "Xərclər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 12, ReportTypeId = 1, ReportName = "Pulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 13, ReportTypeId = 1, ReportName = "Cari Hesab ilə Əməliyatlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
@@ -628,7 +629,8 @@ namespace Foxoft.Models
                 new DcPaymentType { PaymentTypeCode = 1, PaymentTypeDesc = "Nağd" },
                 new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" },
                 new DcPaymentType { PaymentTypeCode = 3, PaymentTypeDesc = "Daxili Kredit" },
-                new DcPaymentType { PaymentTypeCode = 4, PaymentTypeDesc = "Komissiya" }
+                new DcPaymentType { PaymentTypeCode = 4, PaymentTypeDesc = "Müştəri Bonusu" },
+                new DcPaymentType { PaymentTypeCode = 5, PaymentTypeDesc = "Komissiya" }
                 );
 
             modelBuilder.Entity<DcPaymentMethod>().HasData(

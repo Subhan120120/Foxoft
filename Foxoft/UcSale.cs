@@ -62,7 +62,7 @@ namespace Foxoft
 
         private void btn_ProductSearch_Click(object sender, EventArgs e)
         {
-            using (FormProductList formProductList = new (new byte[] { 1 }))
+            using (FormProductList formProductList = new(new byte[] { 1 }))
             {
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
@@ -266,7 +266,7 @@ namespace Foxoft
                         break;
                 }
 
-                using (FormPayment formPayment = new (paymentType, summaryNetAmount, new TrInvoiceHeader() { }))
+                using (FormPayment formPayment = new(paymentType, summaryNetAmount, new TrInvoiceHeader() { }, new byte[] { 1, 2, 3, 4 }))
                 {
                     if (formPayment.ShowDialog(this) == DialogResult.OK)
                     {
@@ -278,7 +278,7 @@ namespace Foxoft
                             if (!File.Exists(designPath))
                                 designPath = reportClass.SelectDesign();
 
-                            ReportPrintTool printTool = new (reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
+                            ReportPrintTool printTool = new(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
                             printTool.Print();
                         }
 
@@ -293,7 +293,7 @@ namespace Foxoft
         private void btn_Customer_Click(object sender, EventArgs e)
         {
             SimpleButton simpleButton = (SimpleButton)sender;
-            DcCurrAcc DcCurrAcc = new ();
+            DcCurrAcc DcCurrAcc = new();
 
             if (simpleButton.Name == "btn_CustomerEdit")
             {
@@ -309,7 +309,7 @@ namespace Foxoft
                 }
             }
 
-            using (FormCustomer formCustomer = new (DcCurrAcc))
+            using (FormCustomer formCustomer = new(DcCurrAcc))
             {
                 if (formCustomer.ShowDialog(this) == DialogResult.OK)
                 {
@@ -332,7 +332,7 @@ namespace Foxoft
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
-            using (FormCurrAccList form = new (new byte[] { 1 }))
+            using (FormCurrAccList form = new(new byte[] { 1 }))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -356,7 +356,7 @@ namespace Foxoft
         private void gC_Sale_DoubleClick(object sender, EventArgs e)
         {
             if (gV_InvoiceLine.FocusedColumn == col_Qty)
-                using (FormQty formQty = new ())
+                using (FormQty formQty = new())
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
@@ -386,7 +386,7 @@ namespace Foxoft
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
 
-            ReportDesignTool designTool = new (reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
+            ReportDesignTool designTool = new(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
             designTool.ShowRibbonDesignerDialog();
 
         }
@@ -403,7 +403,7 @@ namespace Foxoft
             //DataSet dataSet = new DataSet("GunSonu");
             //dataSet.Tables.AddRange(new DataTable[] { trInvoiceLines, trPaymentLines });
 
-            SqlDataSource dataSource = new (new CustomStringConnectionParameters(subConnString));
+            SqlDataSource dataSource = new(new CustomStringConnectionParameters(subConnString));
             dataSource.Name = "GunSonu";
 
             //SqlQuery sqlQueryPurchases = dsMethods.SelectPurchases(DateTime.Now.Date, DateTime.Now.Date);
@@ -418,7 +418,7 @@ namespace Foxoft
             string designPath = Settings.Default.AppSetting.PrintDesignPath;
             if (!File.Exists(designPath))
                 designPath = reportClass.SelectDesign();
-            ReportDesignTool designTool = new (reportClass.CreateReport(dataSource, designPath));
+            ReportDesignTool designTool = new(reportClass.CreateReport(dataSource, designPath));
             designTool.ShowRibbonDesignerDialog();
 
         }
@@ -427,7 +427,7 @@ namespace Foxoft
         {
             if (rowIndx >= 0)
             {
-                using (FormCurrAccList form = new (new byte[] { 3 }))
+                using (FormCurrAccList form = new(new byte[] { 3 }))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {

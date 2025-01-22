@@ -220,7 +220,7 @@ namespace Foxoft
                 {
                     TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-                    using (FormPayment formPayment = new(1, 0, trInvoiceHeader))
+                    using (FormPayment formPayment = new(1, 0, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }))
                     {
                         bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
                         if (!currAccHasClaims)
@@ -243,13 +243,13 @@ namespace Foxoft
 
         private void bBI_MakePayment_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            using (FormCurrAccList formCurrAcc = new FormCurrAccList(new byte[] { 0 }))
+            using (FormCurrAccList formCurrAcc = new(new byte[] { 0 }))
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
-                    TrInvoiceHeader trInvoiceHeader = new TrInvoiceHeader() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
+                    TrInvoiceHeader trInvoiceHeader = new() { CurrAccCode = formCurrAcc.dcCurrAcc.CurrAccCode };
 
-                    using (FormPayment formPayment = new FormPayment(1, -1, trInvoiceHeader))
+                    using (FormPayment formPayment = new(1, -1, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }))
                     {
                         if (formPayment.ShowDialog(this) == DialogResult.OK)
                         {
