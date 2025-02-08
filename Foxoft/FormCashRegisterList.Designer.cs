@@ -71,7 +71,6 @@ namespace Foxoft
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             BBI_test = new DevExpress.XtraBars.BarButtonItem();
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
-            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -79,6 +78,7 @@ namespace Foxoft
             ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ((System.ComponentModel.ISupportInitialize)gC_CashRegList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
@@ -88,13 +88,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             SuspendLayout();
             // 
-            // gC_CurrAccList
+            // gC_CashRegList
             // 
             gC_CashRegList.DataSource = dcCurrAccsBindingSource;
             gC_CashRegList.Dock = DockStyle.Fill;
             gC_CashRegList.Location = new Point(0, 158);
             gC_CashRegList.MainView = gV_CashRegList;
-            gC_CashRegList.Name = "gC_CurrAccList";
+            gC_CashRegList.Name = "gC_CashRegList";
             gC_CashRegList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemTextEdit1 });
             gC_CashRegList.Size = new Size(858, 413);
             gC_CashRegList.TabIndex = 0;
@@ -102,12 +102,12 @@ namespace Foxoft
             gC_CashRegList.Load += gC_CurrAccList_Load;
             gC_CashRegList.ProcessGridKey += gC_CurrAccList_ProcessGridKey;
             // 
-            // gV_CurrAccList
+            // gV_CashRegList
             // 
             gV_CashRegList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colCurrAccCode, colCurrAccDesc, colCurrAccTypeCode, colCompanyCode, colOfficeCode, colStoreCode, colFirstName, colLastName, colFatherName, colIdentityNum, colTaxNum, colDataLanguageCode, colCreditLimit, colIsVip, colCustomerTypeCode, colVendorTypeCode, colCustomerPosDiscountRate, colIsDisabled, colBonusCardNum, colAddress, colPhoneNum, colBirthDate, colBalance });
             gV_CashRegList.CustomizationFormBounds = new Rectangle(760, 248, 264, 272);
             gV_CashRegList.GridControl = gC_CashRegList;
-            gV_CashRegList.Name = "gV_CurrAccList";
+            gV_CashRegList.Name = "gV_CashRegList";
             gV_CashRegList.OptionsBehavior.Editable = false;
             gV_CashRegList.OptionsFind.FindDelay = 100;
             gV_CashRegList.OptionsView.ShowGroupPanel = false;
@@ -287,7 +287,6 @@ namespace Foxoft
             // 
             bBI_quit.Caption = "Bağla";
             bBI_quit.Id = 4;
-            bBI_quit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_quit.ImageOptions.SvgImage");
             bBI_quit.Name = "bBI_quit";
             bBI_quit.ItemClick += bBI_quit_ItemClick;
             // 
@@ -342,15 +341,8 @@ namespace Foxoft
             // 
             BBI_query.Caption = "Sorğu";
             BBI_query.Id = 28;
-            BBI_query.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_query.ImageOptions.SvgImage");
             BBI_query.Name = "BBI_query";
             BBI_query.ItemClick += BBI_query_ItemClick;
-            // 
-            // popupMenuReports
-            // 
-            popupMenuReports.Name = "popupMenuReports";
-            popupMenuReports.Ribbon = ribbonControl1;
-            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
             // 
             // BSI_Reports
             // 
@@ -399,6 +391,12 @@ namespace Foxoft
             ribbonStatusBar1.Name = "ribbonStatusBar1";
             ribbonStatusBar1.Ribbon = ribbonControl1;
             ribbonStatusBar1.Size = new Size(858, 24);
+            // 
+            // popupMenuReports
+            // 
+            popupMenuReports.Name = "popupMenuReports";
+            popupMenuReports.Ribbon = ribbonControl1;
+            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
             // 
             // ribbonPage2
             // 
