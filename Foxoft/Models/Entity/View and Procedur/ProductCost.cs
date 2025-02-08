@@ -9,7 +9,7 @@ namespace Foxoft.Models.Entity
 {
     public static class SqlFunctions
     {
-        [DbFunction("CalculateDiscount", "dbo")]
+        [DbFunction("GetProductCost", "dbo")]
         public static decimal GetProductCost(string productCode, DateTime? dateTime = null)
         {
             throw new NotSupportedException();

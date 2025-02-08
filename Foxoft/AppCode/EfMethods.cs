@@ -256,7 +256,32 @@ namespace Foxoft
             using subContext db = new();
             return db.TrProductBarcodes
                 .Where(x => x.Barcode == barCode)
-                .Select(x => x.DcProduct)
+                .Select(x => new DcProduct
+                {
+                    //Balance = x.DcProduct.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                    //                                          .Sum(l => l.QtyIn - l.QtyOut),
+                    ProductCost = SqlFunctions.GetProductCost(x.DcProduct.ProductCode, null),
+                    ProductCode = x.DcProduct.ProductCode,
+                    ProductDesc = x.DcProduct.ProductDesc,
+                    PosDiscount = x.DcProduct.PosDiscount,
+                    RetailPrice = x.DcProduct.RetailPrice,
+                    PurchasePrice = x.DcProduct.PurchasePrice,
+                    ProductTypeCode = x.DcProduct.ProductTypeCode,
+                    WholesalePrice = x.DcProduct.WholesalePrice,
+                    UsePos = x.DcProduct.UsePos,
+                    UseInternet = x.DcProduct.UseInternet,
+                    CreatedDate = x.DcProduct.CreatedDate,
+                    CreatedUserName = x.DcProduct.CreatedUserName,
+                    LastUpdatedDate = x.DcProduct.LastUpdatedDate,
+                    LastUpdatedUserName = x.DcProduct.LastUpdatedUserName,
+                    HierarchyCode = x.DcProduct.HierarchyCode,
+                    TrProductFeatures = x.DcProduct.TrProductFeatures,
+                    SiteProduct = x.DcProduct.SiteProduct,
+                    DcHierarchy = x.DcProduct.DcHierarchy,
+                    TrProductDiscounts = x.DcProduct.TrProductDiscounts,
+                    DcSerialNumbers = x.DcProduct.DcSerialNumbers,
+                    DefaultUnitOfMeasureId = x.DcProduct.DefaultUnitOfMeasureId
+                })
                 .FirstOrDefault();
         }
 
@@ -934,6 +959,17 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int DeleteInstallmentsByInvoiceId(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            List<TrInstallment> trInstallments = db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                                               .ToList();
+            if (trInstallments is not null)
+                db.TrInstallments.RemoveRange(trInstallments);
+
+            return db.SaveChanges();
+        }
+
         public int DeletePaymentLinesByPaymentHeader(Guid paymentHeader)
         {
             using subContext db = new();
@@ -1225,13 +1261,52 @@ namespace Foxoft
                                     .Sum(s => s.PaymentLoc);
         }
 
+        public decimal SelectPaymentLinesCashSumByInvoice(Guid invoiceHeaderId, string currAccCode)
+        {
+            using subContext db = new();
+
+            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
+                                    .Where(x => x.PaymentTypeCode == 1)
+                                    .Sum(s => s.PaymentLoc);
+        }
+
+        public decimal SelectPaymentLinesCashlessSumByInvoice(Guid invoiceHeaderId, string currAccCode)
+        {
+            using subContext db = new();
+
+            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
+                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
+                                    .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
+                                    .Where(x => x.PaymentTypeCode == 2)
+                                    .Sum(s => s.PaymentLoc);
+        }
+
         public decimal SelectInstallmentsSumByInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();
 
             return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(s => s.Amount / (decimal)s.ExchangeRate);
+                                    .Sum(s => s.AmountLoc);
         }
+
+        public decimal SelectInstallmentCommissionsSumByInvoice(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+
+            return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                    .Sum(s => s.Commission / (decimal)s.ExchangeRate);
+        }
+
+        public decimal SelectInstallmentsTotalSumByInvoice(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+
+            return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                    .Sum(s => s.AmountLoc + (s.Commission / (decimal)s.ExchangeRate));
+        }
+
         public List<TrInstallmentViewModel> SelectInstallmentsVM()
         {
             using subContext db = new();

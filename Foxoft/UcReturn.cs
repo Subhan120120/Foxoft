@@ -96,7 +96,7 @@ namespace Foxoft
             //{
 
             Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
-            int maxReturn = Convert.ToInt32(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
+            decimal maxReturn = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
 
             if (maxReturn > 0)
             {
@@ -152,6 +152,7 @@ namespace Foxoft
                             returnInvoiceLine.PosDiscount = invoiceLine.PosDiscount;
                             returnInvoiceLine.ExchangeRate = invoiceLine.ExchangeRate;
                             returnInvoiceLine.VatRate = invoiceLine.VatRate;
+                            returnInvoiceLine.SerialNumberCode = invoiceLine.SerialNumberCode;
                             returnInvoiceLine.NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.Qty * (-1);
                             returnInvoiceLine.NetAmountLoc = formQty.qty * invoiceLine.NetAmountLoc / invoiceLine.Qty * (-1);
                             returnInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
@@ -219,7 +220,7 @@ namespace Foxoft
 
                 byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
-                FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                 frm.MdiParent = formERP;
                 frm.WindowState = FormWindowState.Maximized;

@@ -1,5 +1,6 @@
 ﻿
 #region Using
+using DevExpress.CodeParser;
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
@@ -21,6 +22,7 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraRichEdit.Model;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.Models;
@@ -58,6 +60,7 @@ namespace Foxoft
 
         readonly SettingStore settingStore;
         private TrInvoiceHeader trInvoiceHeader;
+        private bool isReturn;
         Guid invoiceHeaderId;
         Guid? relatedInvoiceId;
         public DcProcess dcProcess;
@@ -67,7 +70,7 @@ namespace Foxoft
 
         private const int WM_GETTAG = 0x0400 + 1; // for acccess to tag via Windows API
 
-        public FormInvoice(string processCode, byte[] productTypeArr, Guid? relatedInvoiceId)
+        public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             dcProcess = efMethods.SelectProcess(processCode);
@@ -79,6 +82,10 @@ namespace Foxoft
 
             this.productTypeArr = productTypeArr;
             this.relatedInvoiceId = relatedInvoiceId;
+
+            if (isReturn.HasValue)
+                this.isReturn = (bool)isReturn;
+
             this.Text = dcProcess.ProcessDesc;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
@@ -110,6 +117,8 @@ namespace Foxoft
 
             ClearControlsAddNew();
 
+            //ChangeQtyByProcessDir();
+
             foreach (BaseLayoutItem item in dataLayoutControl1.Items)
             {
                 if (item is LayoutControlItem)
@@ -122,8 +131,8 @@ namespace Foxoft
             }
         }
 
-        public FormInvoice(string processCode, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
-            : this(processCode, productTypeArr, relatedInvoiceId)
+        public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
+            : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
         {
             trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
             LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
@@ -163,9 +172,9 @@ namespace Foxoft
             checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
         }
 
-        private void ChangeQtyByProcessDir()
+        private void ChangeQtyByProcessDir() // if Isreturn Changed calculate Qty again
         {
-            if (trInvoiceHeader is not null) // if Isreturn Changed calculate Qty again
+            if (trInvoiceHeader is not null)
             {
                 for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                 {
@@ -192,8 +201,11 @@ namespace Foxoft
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
             CalcPaidAmount();
+            CalcInstallmentAmount();
 
             lbl_CurrAccDesc.Text = trInvoiceHeader.CurrAccDesc;
+
+            trInvoiceHeader.IsReturn = isReturn;
 
             dbContext.TrInvoiceLines.Include(x => x.DcProduct)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
@@ -248,16 +260,11 @@ namespace Foxoft
         private void item_Leave(object sender, EventArgs e)
         {
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-            ChangeQtyByProcessDir();
 
             if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out List<string> errorList))
-            {
                 if (Settings.Default.AppSetting.AutoSave)
-                {
                     if (gV_InvoiceLine.DataRowCount > 0)
                         SaveInvoice();
-                }
-            }
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -326,6 +333,7 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
             CalcPaidAmount();
+            CalcInstallmentAmount();
             //ShowPrintCount();
 
             checkEdit_IsReturn.Enabled = false;
@@ -337,11 +345,26 @@ namespace Foxoft
 
         private void CalcPaidAmount()
         {
-            decimal paidSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
-            lbl_InvoicePaidSum.Text = "Ödənilib: " + Math.Round(paidSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            decimal cashSum = efMethods.SelectPaymentLinesCashSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+            lbl_InvoicePaidCashSum.Text = Math.Round(cashSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
 
+            decimal cashlessSum = efMethods.SelectPaymentLinesCashlessSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+            lbl_InvoicePaidCashlessSum.Text = Math.Round(cashlessSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            decimal totalSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode) * (dcProcess.ProcessDir == 1 ? (-1) : 1);
+            lbl_InvoicePaidTotalSum.Text = Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+        }
+
+        private void CalcInstallmentAmount()
+        {
             decimal installmentSum = efMethods.SelectInstallmentsSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
-            lbl_InstallmentSum.Text = "Kredit: " + Math.Round(installmentSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+            lbl_InstallmentSum.Text = Math.Round(installmentSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            decimal InstallmentCommissionsSum = efMethods.SelectInstallmentCommissionsSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            lbl_InstallmentCommissionSum.Text = Math.Round(InstallmentCommissionsSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            decimal InstallmentsTotalSum = efMethods.SelectInstallmentsTotalSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
+            lbl_InstallmentTotalSum.Text = Math.Round(InstallmentsTotalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
 
         private void ShowPrintCount()
@@ -1030,6 +1053,7 @@ namespace Foxoft
                 if (formPayment.ShowDialog(this) == DialogResult.OK)
                 {
                     CalcPaidAmount();
+                    CalcInstallmentAmount();
                     //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
@@ -1158,12 +1182,21 @@ namespace Foxoft
             }
         }
 
-        private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
+        private void bBI_PaymentDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show("Ödənişləri Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                 CalcPaidAmount();
+            }
+        }
+
+        private void BBI_InstallmentDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (MessageBox.Show("Kreditləri Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                efMethods.DeleteInstallmentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                CalcInstallmentAmount();
             }
         }
 
@@ -1481,11 +1514,21 @@ namespace Foxoft
         private void LoadLayout()
         {
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
-            if (!new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+            {
+                BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
+                RPG_Payment.Visible = false;
+                RPG_Installment.Visible = false;
+            }
+            else
             {
                 BBI_InvoiceExpenses.Visibility = BarItemVisibility.Always;
                 RPG_Payment.Visible = true;
+                RPG_Installment.Visible = true;
             }
+
+            LCG_InfoInstallment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+            RPG_Installment.Visible = false;
 
             if (new string[] { "EX", "EI", "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
             {
@@ -1501,13 +1544,23 @@ namespace Foxoft
                     colQty.OptionsColumn.ReadOnly = true;
                 }
 
-                if (dcProcess.ProcessCode == "IT")
+                if (new string[] { "CI", "CO", "IT" }.Contains(dcProcess.ProcessCode))
                 {
-                    btnEdit_CurrAccCode.Enabled = true;
-                    col_Price.Visible = false;
-                    colCurrencyCode.Visible = false;
-                    col_NetAmount.Visible = false;
+                    LCG_InfoPayment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
+
+                    if (dcProcess.ProcessCode == "IT")
+                    {
+                        btnEdit_CurrAccCode.Enabled = true;
+                        col_Price.Visible = false;
+                        colCurrencyCode.Visible = false;
+                        col_NetAmount.Visible = false;
+                    }
                 }
+            }
+            if (new string[] { "IS" }.Contains(dcProcess.ProcessCode))
+            {
+                LCG_InfoInstallment.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Always;
+                RPG_Installment.Visible = true;
             }
 
             string layoutHeaderPath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
@@ -1973,6 +2026,13 @@ namespace Foxoft
 
         private void BBI_picture_ItemClick(object sender, ItemClickEventArgs e)
         {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ExpenseOfInvoice");
+            if (!currAccHasClaims)
+            {
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+
             FormImage formPictures = new(btnEdit_DocNum.EditValue?.ToString());
             formPictures.ShowDialog();
         }
@@ -2012,7 +2072,7 @@ namespace Foxoft
 
         private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormInvoice formInvoice = new("EI", new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId);
+            FormInvoice formInvoice = new("EI", null, new byte[] { 2, 3 }, trInvoiceHeader.InvoiceHeaderId);
             formInvoice.WindowState = FormWindowState.Normal;
             formInvoice.ShowDialog();
         }

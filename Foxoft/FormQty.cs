@@ -31,7 +31,7 @@ namespace Foxoft
 
         private void textEditQty_EditValueChanged(object sender, EventArgs e)
         {
-            qty = Convert.ToInt32(txtEdit_Qty.EditValue);
+            qty = Convert.ToDecimal(txtEdit_Qty.EditValue);
             txtEdit_Qty.DoValidate();
         }
 

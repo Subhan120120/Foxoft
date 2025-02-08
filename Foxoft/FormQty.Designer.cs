@@ -153,8 +153,6 @@ namespace Foxoft
             this.txtEdit_Qty.Properties.Appearance.Options.UseFont = true;
             this.txtEdit_Qty.Properties.Appearance.Options.UseTextOptions = true;
             this.txtEdit_Qty.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.txtEdit_Qty.Properties.Mask.EditMask = "n0";
-            this.txtEdit_Qty.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             this.txtEdit_Qty.Size = new System.Drawing.Size(288, 32);
             this.txtEdit_Qty.StyleController = this.lC_Root;
             this.txtEdit_Qty.TabIndex = 5;

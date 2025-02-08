@@ -154,7 +154,10 @@ namespace Foxoft.Models
         public decimal? ProductCost { get; set; }
 
         [Display(Name = "Mənfəət")]
-        public decimal? Benefit => PriceLoc - ProductCost;
+        public decimal? Benefit => PriceLoc * (1 - PosDiscount / 100) - ProductCost;
+
+        [Display(Name = "Toplam Mənfəət")]
+        public decimal? TotalBenefit => NetAmountLoc - ((QtyIn + QtyOut) * ProductCost);
 
         [NotMapped]
         [Display(Name = "Qalıq")]

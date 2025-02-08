@@ -112,6 +112,7 @@ namespace Foxoft
             this.BBI_New.Caption = "Yeni";
             this.BBI_New.Id = 1;
             this.BBI_New.Name = "BBI_New";
+            this.BBI_New.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Control | Keys.N);
             this.BBI_New.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_New_ItemClick);
             // 
             // BBI_Edit
@@ -119,6 +120,7 @@ namespace Foxoft
             this.BBI_Edit.Caption = "Dəyiş";
             this.BBI_Edit.Id = 2;
             this.BBI_Edit.Name = "BBI_Edit";
+            this.BBI_Edit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
             this.BBI_Edit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Edit_ItemClick);
             // 
             // bBI_Delete
@@ -126,6 +128,7 @@ namespace Foxoft
             this.bBI_Delete.Caption = "Sil";
             this.bBI_Delete.Id = 8;
             this.bBI_Delete.Name = "bBI_Delete";
+            this.bBI_Delete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Delete);
             this.bBI_Delete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Delete_ItemClick);
             // 
             // bBI_Refresh
@@ -133,6 +136,7 @@ namespace Foxoft
             this.bBI_Refresh.Caption = "Yenilə";
             this.bBI_Refresh.Id = 9;
             this.bBI_Refresh.Name = "bBI_Refresh";
+            this.bBI_Refresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
             this.bBI_Refresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BBI_Refresh_ItemClick);
             // 
             // ribbonPage2

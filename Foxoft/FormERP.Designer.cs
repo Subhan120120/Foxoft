@@ -30,6 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -74,6 +75,11 @@ namespace Foxoft
             ACE_RetailSaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_WholesaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_InstallmentsaleReturn = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            accordionControlSeparator10 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
+            ACE_PurchaseReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_RetailsaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_WholesaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_InstallmentsaleReturnCustom = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator5 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             aCE_InventoryTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_CashTransfer = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -331,12 +337,12 @@ namespace Foxoft
             aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
             aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
             aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-            aC_Root.Size = new Size(216, 454);
+            aC_Root.Size = new Size(244, 454);
             aC_Root.TabIndex = 2;
             // 
             // aCE_Invoices
             // 
-            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentsaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentsaleReturn, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1, ACE_Installments });
+            aCE_Invoices.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_Products, aCE_CurrAccs, ACE_CashRegs, accordionControlSeparator3, aCE_RetailPurchaseInvoice, aCE_RetailSaleInvoice, aCE_WholesaleInvoice, aCE_InstallmentsaleInvoice, accordionControlSeparator6, ACE_PurchaseReturn, ACE_RetailSaleReturn, aCE_WholesaleReturn, ACE_InstallmentsaleReturn, accordionControlSeparator10, ACE_PurchaseReturnCustom, ACE_RetailsaleReturnCustom, ACE_WholesaleReturnCustom, ACE_InstallmentsaleReturnCustom, accordionControlSeparator5, aCE_InventoryTransfer, ACE_CashTransfer, accordionControlSeparator7, aCE_Expense, aCE_PaymentDetail, accordionControlSeparator1, ACE_Installments });
             aCE_Invoices.Expanded = true;
             aCE_Invoices.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Invoices.ImageOptions.SvgImage");
             aCE_Invoices.Name = "aCE_Invoices";
@@ -438,6 +444,42 @@ namespace Foxoft
             ACE_InstallmentsaleReturn.Text = "Kredit Satış. Qaytarılması";
             ACE_InstallmentsaleReturn.Click += ACE_InstallmentsaleReturn_Click;
             // 
+            // accordionControlSeparator10
+            // 
+            accordionControlSeparator10.Name = "accordionControlSeparator10";
+            // 
+            // ACE_PurchaseReturnCustom
+            // 
+            ACE_PurchaseReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_PurchaseReturnCustom.ImageOptions.SvgImage");
+            ACE_PurchaseReturnCustom.Name = "ACE_PurchaseReturnCustom";
+            ACE_PurchaseReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_PurchaseReturnCustom.Text = "Alış. Xüsusi Qaytarılması";
+            ACE_PurchaseReturnCustom.Click += ACE_PurchaseReturnCustom_Click;
+            // 
+            // ACE_RetailsaleReturnCustom
+            // 
+            ACE_RetailsaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_RetailsaleReturnCustom.ImageOptions.SvgImage");
+            ACE_RetailsaleReturnCustom.Name = "ACE_RetailsaleReturnCustom";
+            ACE_RetailsaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_RetailsaleReturnCustom.Text = "Pərak. Satış. Xüsusi Qaytarılması";
+            ACE_RetailsaleReturnCustom.Click += ACE_RetailsaleReturnCustom_Click;
+            // 
+            // ACE_WholesaleReturnCustom
+            // 
+            ACE_WholesaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_WholesaleReturnCustom.ImageOptions.SvgImage");
+            ACE_WholesaleReturnCustom.Name = "ACE_WholesaleReturnCustom";
+            ACE_WholesaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_WholesaleReturnCustom.Text = "Top. Sat. Xüsusi Qaytarılması";
+            ACE_WholesaleReturnCustom.Click += ACE_WholesaleReturnCustom_Click;
+            // 
+            // ACE_InstallmentsaleReturnCustom
+            // 
+            ACE_InstallmentsaleReturnCustom.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_InstallmentsaleReturnCustom.ImageOptions.SvgImage");
+            ACE_InstallmentsaleReturnCustom.Name = "ACE_InstallmentsaleReturnCustom";
+            ACE_InstallmentsaleReturnCustom.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_InstallmentsaleReturnCustom.Text = "Kresit Satış. Xüsusi Qaytarılması";
+            ACE_InstallmentsaleReturnCustom.Click += ACE_InstallmentsaleReturnCustom_Click;
+            // 
             // accordionControlSeparator5
             // 
             accordionControlSeparator5.Name = "accordionControlSeparator5";
@@ -482,9 +524,9 @@ namespace Foxoft
             // 
             accordionControlSeparator1.Name = "accordionControlSeparator1";
             // 
-            // accordionControlElement1
+            // ACE_Installments
             // 
-            ACE_Installments.Name = "accordionControlElement1";
+            ACE_Installments.Name = "ACE_Installments";
             ACE_Installments.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_Installments.Text = "Kreditlər";
             ACE_Installments.Click += ACE_Installments_Click;
@@ -743,5 +785,10 @@ namespace Foxoft
         private System.Windows.Forms.Timer timer1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentsaleReturn;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Installments;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PurchaseReturnCustom;
+        private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator10;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailsaleReturnCustom;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WholesaleReturnCustom;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentsaleReturnCustom;
     }
 }

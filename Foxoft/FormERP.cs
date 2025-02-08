@@ -109,14 +109,21 @@ namespace Foxoft
             this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
             this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
             this.aCE_WholesaleInvoice.Name = "WholesaleInvoice";
+            this.aCE_InstallmentsaleInvoice.Name = "InstallmentsaleInvoice";
+            this.aCE_InventoryTransfer.Name = "InventoryTransfer";
             this.ACE_RetailPurchaseOrder.Name = "RetailPurchaseOrder";
             this.ACE_RetailSaleOrder.Name = "RetailSaleOrder";
+
             this.ACE_PurchaseReturn.Name = "RetailPurchaseReturn";
             this.ACE_RetailSaleReturn.Name = "RetailSaleReturn";
             this.aCE_WholesaleReturn.Name = "WholesaleReturn";
-            this.aCE_InstallmentsaleInvoice.Name = "InstallmentsaleInvoice";
             this.ACE_InstallmentsaleReturn.Name = "InstallmentsaleReturn";
-            this.aCE_InventoryTransfer.Name = "InventoryTransfer";
+
+            this.ACE_PurchaseReturnCustom.Name = "PurchaseReturnCustom";
+            this.ACE_RetailsaleReturnCustom.Name = "RetailsaleReturnCustom";
+            this.ACE_WholesaleReturnCustom.Name = "WholesaleReturnCustom";
+            this.ACE_InstallmentsaleReturnCustom.Name = "InstallmentsaleReturnCustom";
+
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
             this.aCE_PaymentDetail.Name = "PaymentDetail";
@@ -317,52 +324,67 @@ namespace Foxoft
 
         private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("RP", new byte[] { 1, 3 }, null);
+            ShowNewForm<FormInvoice>("RP", false, new byte[] { 1, 3 }, null);
         }
 
         private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("RS", new byte[] { 1, 3 }, null);
+            ShowNewForm<FormInvoice>("RS", false, new byte[] { 1, 3 }, null);
         }
 
         private void ACE_WholesaleInvoice_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("WS", new byte[] { 1, 3 }, null);
+            ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null);
         }
 
         private void ACE_InstallmentsaleInvoice_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("IS", new byte[] { 1, 3 }, null);
+            ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null);
         }
 
         private void aCE_Expense_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormInvoice>("EX", new byte[] { 2, 3 }, null);
-        }
-
-        private void aCE_Payments_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormPaymentLineList>();
+            ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null);
         }
 
         private void aCE_CountIn_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("CI", new byte[] { 1 }, null);
+            ShowNewForm<FormInvoice>("CI", false, new byte[] { 1 }, null);
         }
 
         private void aCE_CountOut_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("CO", new byte[] { 1 }, null);
+            ShowNewForm<FormInvoice>("CO", false, new byte[] { 1 }, null);
+        }
+
+        private void aCE_InventoryTransfer_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null);
+        }
+
+        private void ACE_PurchaseReturnCustom_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null);
+        }
+
+        private void ACE_RetailsaleReturnCustom_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null);
+        }
+
+        private void ACE_WholesaleReturnCustom_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null);
+        }
+
+        private void ACE_InstallmentsaleReturnCustom_Click(object sender, EventArgs e)
+        {
+            ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null);
         }
 
         private void aCE_PaymentDetail_Click(object sender, EventArgs e)
         {
             ShowNewForm<FormPaymentDetail>();
-        }
-
-        private void aCE_InventoryTransfer_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("IT", new byte[] { 1 }, null);
         }
 
         private void ACE_CashTransfer_Click(object sender, EventArgs e)
@@ -392,7 +414,12 @@ namespace Foxoft
 
         private void ACE_CashRegs_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormCurrAccList>(new byte[] { 5 });
+            ShowExistForm<FormCashRegisterList>();
+        }
+
+        private void ACE_Installments_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormInstallmentsale>();
         }
 
         private void ACE_PricList_Click(object sender, EventArgs e)
@@ -417,7 +444,7 @@ namespace Foxoft
 
         private void ACE_RetailSaleOrder_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("RSO", new byte[] { 1, 3 }, null);
+            ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null);
         }
 
         private void ACE_ProductFeatureTypes_Click(object sender, EventArgs e)
@@ -447,17 +474,17 @@ namespace Foxoft
 
         private void ACE_Delivery_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormWaybill>("WO");
+            ShowNewForm<FormWaybill>("WO");
         }
 
         private void ACE_WaybillIn_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("WI", new byte[] { 1 }, null);
+            ShowNewForm<FormInvoice>("WI", false, new byte[] { 1 }, null);
         }
 
         private void ACE_WaybillOut_Click(object sender, EventArgs e)
         {
-            ShowNewForm<FormInvoice>("WO", new byte[] { 1 }, null);
+            ShowNewForm<FormInvoice>("WO", false, new byte[] { 1 }, null);
         }
 
         private void BBI_DatabaseRebuildIndexes_ItemClick(object sender, ItemClickEventArgs e)
@@ -553,11 +580,6 @@ namespace Foxoft
         private void timer1_Tick(object sender, EventArgs e)
         {
             ShowDatabaseFragPercent();
-        }
-
-        private void ACE_Installments_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormInstallmentsale>();
         }
     }
 }

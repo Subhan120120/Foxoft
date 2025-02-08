@@ -49,6 +49,7 @@ namespace Foxoft
             col_RVatRate = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_RProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             gC_PaymentLine = new DevExpress.XtraGrid.GridControl();
             gV_PaymentLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_PaymentHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -91,6 +92,7 @@ namespace Foxoft
             lCI_Payment = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             splitterItem2 = new DevExpress.XtraLayout.SplitterItem();
+            col_SerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_ReturnInvoiceLine).BeginInit();
@@ -155,7 +157,7 @@ namespace Foxoft
             gV_ReturnInvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_ReturnInvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_ReturnInvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_ReturnInvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_RInvoiceHeaderId, col_RRelatedLineId, col_RProductCode, col_RQty, col_RPrice, col_RAmount, col_RPosDiscount, col_RNetAmount, col_RVatRate, col_RCurrencyCode, col_RSalesPersonCode });
+            gV_ReturnInvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_RInvoiceHeaderId, col_RRelatedLineId, col_RProductCode, col_RQty, col_RPrice, col_RAmount, col_RPosDiscount, col_RNetAmount, col_RVatRate, col_RCurrencyCode, col_RSalesPersonCode, col_RProductDesc });
             gV_ReturnInvoiceLine.DetailHeight = 404;
             gV_ReturnInvoiceLine.GridControl = gC_ReturnInvoiceLine;
             gV_ReturnInvoiceLine.Name = "gV_ReturnInvoiceLine";
@@ -265,6 +267,14 @@ namespace Foxoft
             col_RSalesPersonCode.Name = "col_RSalesPersonCode";
             col_RSalesPersonCode.Width = 87;
             // 
+            // col_RProductDesc
+            // 
+            col_RProductDesc.Caption = "Məhsul Adı";
+            col_RProductDesc.FieldName = "ProductDesc";
+            col_RProductDesc.Name = "col_RProductDesc";
+            col_RProductDesc.Visible = true;
+            col_RProductDesc.VisibleIndex = 4;
+            // 
             // gC_PaymentLine
             // 
             gC_PaymentLine.EmbeddedNavigator.Margin = new Padding(4, 3, 4, 3);
@@ -339,7 +349,7 @@ namespace Foxoft
             gV_InvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_Return });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_Return, col_SerialNumberCode });
             gV_InvoiceLine.DetailHeight = 404;
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -385,6 +395,8 @@ namespace Foxoft
             // col_Qty
             // 
             col_Qty.Caption = "Say";
+            col_Qty.DisplayFormat.FormatString = "{0:0.##}";
+            col_Qty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_Qty.FieldName = "Qty";
             col_Qty.MinWidth = 23;
             col_Qty.Name = "col_Qty";
@@ -396,6 +408,7 @@ namespace Foxoft
             // col_ReturnQty
             // 
             col_ReturnQty.Caption = "Geri Qaytarılan Mikdar";
+            col_ReturnQty.DisplayFormat.FormatString = "{0:0.##}";
             col_ReturnQty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_ReturnQty.FieldName = "ReturnQty";
             col_ReturnQty.MinWidth = 23;
@@ -409,6 +422,8 @@ namespace Foxoft
             // col_RemainingQty
             // 
             col_RemainingQty.Caption = "Qalan Miqdar";
+            col_RemainingQty.DisplayFormat.FormatString = "{0:0.##}";
+            col_RemainingQty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             col_RemainingQty.FieldName = "RemainingQty";
             col_RemainingQty.MinWidth = 23;
             col_RemainingQty.Name = "col_RemainingQty";
@@ -695,6 +710,14 @@ namespace Foxoft
             splitterItem2.Name = "splitterItem2";
             splitterItem2.Size = new Size(361, 10);
             // 
+            // col_SerialNumberCode
+            // 
+            col_SerialNumberCode.Caption = "Seria Nömrəsi";
+            col_SerialNumberCode.FieldName = "SerialNumberCode";
+            col_SerialNumberCode.Name = "col_SerialNumberCode";
+            col_SerialNumberCode.Visible = true;
+            col_SerialNumberCode.VisibleIndex = 8;
+            // 
             // UcReturn
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -791,5 +814,7 @@ namespace Foxoft
       private DevExpress.XtraLayout.LayoutControlItem lbl_CurrAccDesc;
       private DevExpress.XtraLayout.SplitterItem splitterItem1;
       private DevExpress.XtraLayout.SplitterItem splitterItem2;
-   }
+        private DevExpress.XtraGrid.Columns.GridColumn col_RProductDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn col_SerialNumberCode;
+    }
 }

@@ -505,7 +505,11 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "DeleteLineRP", ClaimDesc = "Alış Fakturası Sətiri Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteLineRS", ClaimDesc = "Pərakəndə Satış Sətiri Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteLineWS", ClaimDesc = "Topdan Satış Sətiri Silmə", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "DeleteLineIS", ClaimDesc = "Kredit Satış Sətiri Silmə", ClaimTypeId = 1 }
+                new DcClaim { ClaimCode = "DeleteLineIS", ClaimDesc = "Kredit Satış Sətiri Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "PurchaseReturnCustom", ClaimDesc = "Alış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "RetailsaleReturnCustom", ClaimDesc = "Pərakəndə Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "WholesaleReturnCustom", ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "InstallmentsaleReturnCustom", ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -570,7 +574,11 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 35, RoleCode = "Admin", ClaimCode = "DeleteLineRS" },
                 new TrRoleClaim { RoleClaimId = 36, RoleCode = "Admin", ClaimCode = "DeleteLineWS" },
                 new TrRoleClaim { RoleClaimId = 37, RoleCode = "Admin", ClaimCode = "DeleteLineIS" },
-                new TrRoleClaim { RoleClaimId = 38, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturn" }
+                new TrRoleClaim { RoleClaimId = 38, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturn" },
+                new TrRoleClaim { RoleClaimId = 39, RoleCode = "Admin", ClaimCode = "PurchaseReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 40, RoleCode = "Admin", ClaimCode = "RetailsaleReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 41, RoleCode = "Admin", ClaimCode = "WholesaleReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturnCustom" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

@@ -259,18 +259,21 @@ namespace Foxoft
 
         private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Stream str = new MemoryStream();
-            OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-            gV_Report.SaveLayoutToStream(str, option);
+            FormReportGridOptions gridSetting = new FormReportGridOptions(gV_Report);
+            gridSetting.ShowDialog();
 
-            using (FormReportGridOptions formGridOptions = new(str, gV_Report))
-            {
-                if (formGridOptions.ShowDialog(this) == DialogResult.OK)
-                {
-                    formGridOptions.stream.Seek(0, SeekOrigin.Begin);
-                    gV_Report.RestoreLayoutFromStream(formGridOptions.stream, option);
-                }
-            }
+            //Stream str = new MemoryStream();
+            //OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
+            //gV_Report.SaveLayoutToStream(str, option);
+
+            //using (FormReportGridOptions2 formGridOptions = new(str, gV_Report))
+            //{
+            //    if (formGridOptions.ShowDialog(this) == DialogResult.OK)
+            //    {
+            //        formGridOptions.stream.Seek(0, SeekOrigin.Begin);
+            //        gV_Report.RestoreLayoutFromStream(formGridOptions.stream, option);
+            //    }
+            //}
         }
 
         private void bBI_DesignClear_ItemClick(object sender, ItemClickEventArgs e)
@@ -369,7 +372,7 @@ namespace Foxoft
 
                 byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
 
-                FormInvoice frm = new(trInvoiceHeader.ProcessCode, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
                 FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
                 frm.MdiParent = formERP;
                 frm.WindowState = FormWindowState.Maximized;
@@ -635,8 +638,10 @@ namespace Foxoft
 
                     string filter = "";
 
+                    string columnValue = gV_Report.GetRowCellValue(rowHandle, gridColumn)?.ToString();
+
                     if (rowHandle >= 0)
-                        filter = gridColumn.FieldName + " = '" + gV_Report.GetRowCellValue(rowHandle, gridColumn) + "' ";
+                        filter = gridColumn.FieldName + " = '" + columnValue + "' ";
                     else
                     {
                         var combined = "";
@@ -645,6 +650,15 @@ namespace Foxoft
 
                         combined = combined.Substring(0, combined.Length - 1);
                         filter = "[" + gridColumn.FieldName + "] in ( " + combined + ")";
+                    }
+
+                    foreach (var item in dcReport.DcReportVariables.Where(x => x.ReportId == report.DcReport.ReportId))
+                    {
+                        if (item.VariableProperty == gridColumn?.FieldName && !string.IsNullOrEmpty(columnValue))
+                        {
+                            item.VariableValue = columnValue;
+                            //efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, item.VariableValue);
+                        }
                     }
 
                     if (dcReport.ReportTypeId == 1)
@@ -718,7 +732,6 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            gV_Report.MakeRowVisible(gV_Report.FocusedRowHandle);
         }
 
         private void BBI_PrintPreview_ItemClick(object sender, ItemClickEventArgs e)
