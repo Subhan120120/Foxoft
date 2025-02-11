@@ -1014,6 +1014,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateInvoiceIsLocked(Guid invoiceHeaderId, bool isLocked)
+        {
+            using subContext db = new();
+            TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsLocked = isLocked };
+            db.Entry(trInvoiceHeader).Property(x => x.IsLocked).IsModified = true;
+            return db.SaveChanges();
+        }
+
         public int UpdatePaymentIsSent(Guid paymentHeaderId)
         {
             using subContext db = new();

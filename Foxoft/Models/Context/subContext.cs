@@ -435,8 +435,9 @@ namespace Foxoft.Models
                 );
 
             modelBuilder.Entity<DcForm>().HasData(
-                new DcForm { FormCode = "CurrAccs", FormDesc = "CurrAccs" },
-                new DcForm { FormCode = "Products", FormDesc = "Products" },
+                new DcForm { FormCode = "CurrAccs", FormDesc = "Cari Hesablar" },
+                new DcForm { FormCode = "Products", FormDesc = "Məhsullar" },
+                new DcForm { FormCode = "CashRegisters", FormDesc = "Kassalar" },
                 new DcForm { FormCode = "PaymentDetails", FormDesc = "Payment Details" },
                 new DcForm { FormCode = "ERP", FormDesc = "ERP" }
                 );
@@ -452,6 +453,7 @@ namespace Foxoft.Models
                 new DcCurrAcc { CurrAccCode = "C-000003", CurrAccDesc = "Operator", LastName = "Operator", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "C-000004", CurrAccDesc = "Satici", LastName = "Satici", NewPassword = "123", PhoneNum = "", CurrAccTypeCode = 3, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "C-000005", CurrAccDesc = "Ümumi Müştəri", NewPassword = "123", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" },
+                new DcCurrAcc { CurrAccCode = "C-000006", CurrAccDesc = "Birbank", NewPassword = "", CurrAccTypeCode = 1, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "mgz01", CurrAccDesc = "Merkez Mağaza", NewPassword = "456", PhoneNum = "", CurrAccTypeCode = 4, CreatedDate = new DateTime(1901, 01, 01), OfficeCode = "ofs01", StoreCode = "mgz01" },
                 new DcCurrAcc { CurrAccCode = "kassa01", CurrAccDesc = "Nağd Kassa", NewPassword = "456", CurrAccTypeCode = 5, CreatedDate = new DateTime(1901, 01, 01), IsDefault = true, OfficeCode = "ofs01", StoreCode = "mgz01" });
 
@@ -509,7 +511,8 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PurchaseReturnCustom", ClaimDesc = "Alış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailsaleReturnCustom", ClaimDesc = "Pərakəndə Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "WholesaleReturnCustom", ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "InstallmentsaleReturnCustom", ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 }
+                new DcClaim { ClaimCode = "InstallmentsaleReturnCustom", ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "Installments", ClaimDesc = "Kreditlər", ClaimTypeId = 1 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -578,7 +581,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 39, RoleCode = "Admin", ClaimCode = "PurchaseReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 40, RoleCode = "Admin", ClaimCode = "RetailsaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 41, RoleCode = "Admin", ClaimCode = "WholesaleReturnCustom" },
-                new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturnCustom" }
+                new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 43, RoleCode = "Admin", ClaimCode = "Installments" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -644,7 +648,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcPaymentMethod>().HasData(
                 new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" },
                 new DcPaymentMethod { PaymentMethodId = 2, PaymentTypeCode = 3, PaymentMethodDesc = "Daxili Kredit" },// Internal Credit
-                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart" },
+                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart", DefaultCurrAccCode = "C-000006" },
                 new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = 1, PaymentMethodDesc = "Çatdırılma zamanı nağd ödə" },
                 new DcPaymentMethod { PaymentMethodId = 5, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" }
                 );
@@ -655,7 +659,13 @@ namespace Foxoft.Models
                 new DcPaymentPlan { PaymentPlanCode = "M09", PaymentPlanDesc = "9 AY", PaymentMethodId = 2, DurationInMonths = 9 },
                 new DcPaymentPlan { PaymentPlanCode = "M12", PaymentPlanDesc = "12 AY", PaymentMethodId = 2, DurationInMonths = 12 },
                 new DcPaymentPlan { PaymentPlanCode = "M18", PaymentPlanDesc = "18 AY", PaymentMethodId = 2, DurationInMonths = 18 },
-                new DcPaymentPlan { PaymentPlanCode = "M24", PaymentPlanDesc = "24 AY", PaymentMethodId = 2, DurationInMonths = 24 }
+                new DcPaymentPlan { PaymentPlanCode = "M24", PaymentPlanDesc = "24 AY", PaymentMethodId = 2, DurationInMonths = 24 },
+                new DcPaymentPlan { PaymentPlanCode = "B03", PaymentPlanDesc = "3 AY", PaymentMethodId = 3, DurationInMonths = 3 },
+                new DcPaymentPlan { PaymentPlanCode = "B06", PaymentPlanDesc = "6 AY", PaymentMethodId = 3, DurationInMonths = 6 },
+                new DcPaymentPlan { PaymentPlanCode = "B09", PaymentPlanDesc = "9 AY", PaymentMethodId = 3, DurationInMonths = 9 },
+                new DcPaymentPlan { PaymentPlanCode = "B12", PaymentPlanDesc = "12 AY", PaymentMethodId = 3, DurationInMonths = 12 },
+                new DcPaymentPlan { PaymentPlanCode = "B18", PaymentPlanDesc = "18 AY", PaymentMethodId = 3, DurationInMonths = 18 },
+                new DcPaymentPlan { PaymentPlanCode = "B24", PaymentPlanDesc = "24 AY", PaymentMethodId = 3, DurationInMonths = 24 }
                 );
 
             modelBuilder.Entity<DcProcess>().HasData(

@@ -30,7 +30,6 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -526,6 +525,7 @@ namespace Foxoft
             // 
             // ACE_Installments
             // 
+            ACE_Installments.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Installments.ImageOptions.SvgImage");
             ACE_Installments.Name = "ACE_Installments";
             ACE_Installments.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_Installments.Text = "Kreditlər";

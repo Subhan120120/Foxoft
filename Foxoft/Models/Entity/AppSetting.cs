@@ -38,7 +38,7 @@ namespace Foxoft.Models
         public string? License { get; set; }
 
         [Display(Name = "Son Tarix")]
-        public string? DueDate { get; set; }
+        public string? DueDate { get; set; }  // lazimsiz prop, silinecek
 
         [DefaultValue("0")]
         [Display(Name = "Qiymət Cədvəli İstifadə Et")]
@@ -47,6 +47,12 @@ namespace Foxoft.Models
         [DefaultValue("0")]
         [Display(Name = "Avtomatik Yadda Saxla")]
         public bool AutoSave { get; set; }
+
+        [Display(Name = "Faktura Redaktə Üçün Möhlət Günləri")]
+        public int? InvoiceEditGraceDays { get; set; }
+
+        [Display(Name = "Ödəniş Redaktə Üçün Möhlət Günləri")]
+        public int? PaymentEditGraceDays { get; set; }
 
 
         [ForeignKey("LocalCurrencyCode")]

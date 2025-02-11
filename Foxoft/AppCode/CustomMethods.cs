@@ -287,8 +287,9 @@ namespace Foxoft.AppCode
                 case SqlDbType.NVarChar:
                 case SqlDbType.Char:
                 case SqlDbType.NChar:
-                case SqlDbType.UniqueIdentifier:
                     return typeof(string);
+                case SqlDbType.UniqueIdentifier:
+                    return typeof(Guid);
                 case SqlDbType.Decimal:
                 case SqlDbType.Money:
                 case SqlDbType.SmallMoney:
@@ -328,7 +329,7 @@ namespace Foxoft.AppCode
                 "System.Bool" => DbType.Boolean,
                 "System.String" => DbType.String,
                 "System.Char" => DbType.StringFixedLength,
-                "System.Guid" => DbType.String,
+                "System.Guid" => DbType.Guid,
                 "System.DateTime" => DbType.DateTime,
                 "System.DateTimeOffset" => DbType.DateTimeOffset,
                 "System.Byte[]" => DbType.Binary,

@@ -287,6 +287,7 @@ namespace Foxoft
             // 
             bBI_quit.Caption = "Bağla";
             bBI_quit.Id = 4;
+            bBI_quit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_quit.ImageOptions.SvgImage");
             bBI_quit.Name = "bBI_quit";
             bBI_quit.ItemClick += bBI_quit_ItemClick;
             // 

@@ -41,7 +41,7 @@ namespace Foxoft
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-            cM.AddReports(BSI_Reports, "CurrAccs", nameof(TrPaymentLine.CashRegisterCode), gV_CashRegList);
+            cM.AddReports(BSI_Reports, "CashRegisters", nameof(TrPaymentLine.CashRegisterCode), gV_CashRegList);
 
             UpdateGridViewData();
             gV_CashRegList.PopulateColumns();

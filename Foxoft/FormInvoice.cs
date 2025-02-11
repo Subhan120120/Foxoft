@@ -1,6 +1,5 @@
 ﻿
 #region Using
-using DevExpress.CodeParser;
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
@@ -22,7 +21,6 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraLayout;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
-using DevExpress.XtraRichEdit.Model;
 using DevExpress.XtraSplashScreen;
 using Foxoft.AppCode;
 using Foxoft.Models;
@@ -215,6 +213,8 @@ namespace Foxoft
 
             dataLayoutControl1.IsValid(out List<string> errorList);
 
+
+            Tag = btnEdit_DocNum.EditValue;
             checkEdit_IsReturn.Enabled = false;
         }
 
@@ -304,6 +304,8 @@ namespace Foxoft
 
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
+
+
             if (!lV_invoiceHeader.Any(x => x.DcCurrAcc is null))
                 lV_invoiceHeader.ForEach(x =>
                 {
@@ -312,6 +314,7 @@ namespace Foxoft
                 });
 
             trInvoiceHeadersBindingSource.DataSource = lV_invoiceHeader.ToBindingList();
+
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
             dcProcess = efMethods.SelectProcess(trInvoiceHeader.ProcessCode);
@@ -334,11 +337,20 @@ namespace Foxoft
             dataLayoutControl1.IsValid(out List<string> errorList);
             CalcPaidAmount();
             CalcInstallmentAmount();
-            //ShowPrintCount();
 
             checkEdit_IsReturn.Enabled = false;
 
             Tag = btnEdit_DocNum.EditValue;
+
+            if (!trInvoiceHeader.IsLocked)
+            {
+                bool locked = (DateTime.Now - trInvoiceHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
+                trInvoiceHeader.IsLocked = locked;
+            }
+
+            LCG_Invoice.Enabled = !trInvoiceHeader.IsLocked;
+
+            efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.IsLocked);
 
             SplashScreenManager.CloseForm(false);
         }
@@ -1409,47 +1421,18 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (trInvoiceHeader.ProcessCode == "RP")
-            {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailPurchaseReturn");
-                if (!currAccHasClaims)
-                {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
-                    return;
-                }
-            }
-            else if (trInvoiceHeader.ProcessCode == "RS")
-            {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleReturn");
-                if (!currAccHasClaims)
-                {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
-                    return;
-                }
-            }
-            else if (trInvoiceHeader.ProcessCode == "WS")
-            {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "WholesaleReturn");
-                if (!currAccHasClaims)
-                {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
-                    return;
-                }
-            }
-            else if (trInvoiceHeader.ProcessCode == "IS")
-            {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentsaleReturn");
-                if (!currAccHasClaims)
-                {
-                    MessageBox.Show("Yetkiniz yoxdur! ");
-                    return;
-                }
-            }
 
-            if (checkEdit_IsReturn.Enabled)
-                checkEdit_IsReturn.Enabled = false;
+            //bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "UnlockInvoice");
+            //if (!currAccHasClaims)
+            //{
+            //    MessageBox.Show("Yetkiniz yoxdur! ");
+            //    return;
+            //}
+
+            if (LCG_Invoice.Enabled)
+                LCG_Invoice.Enabled = false;
             else
-                checkEdit_IsReturn.Enabled = true;
+                LCG_Invoice.Enabled = true;
         }
 
         private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)

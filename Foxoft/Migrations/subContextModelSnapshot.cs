@@ -44,11 +44,17 @@ namespace Foxoft.Migrations
                     b.Property<string>("GridViewLayout")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InvoiceEditGraceDays")
+                        .HasColumnType("int");
+
                     b.Property<string>("License")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocalCurrencyCode")
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<int?>("PaymentEditGraceDays")
+                        .HasColumnType("int");
 
                     b.Property<string>("PrintDesignPath")
                         .HasColumnType("nvarchar(max)");
@@ -365,6 +371,36 @@ namespace Foxoft.Migrations
                         {
                             ClaimCode = "DeleteLineIS",
                             ClaimDesc = "Kredit Satış Sətiri Silmə",
+                            ClaimTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ClaimCode = "PurchaseReturnCustom",
+                            ClaimDesc = "Alış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ClaimCode = "RetailsaleReturnCustom",
+                            ClaimDesc = "Pərakəndə Satış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ClaimCode = "WholesaleReturnCustom",
+                            ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentsaleReturnCustom",
+                            ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1
+                        },
+                        new
+                        {
+                            ClaimCode = "Installments",
+                            ClaimDesc = "Kreditlər",
                             ClaimTypeId = (byte)1
                         });
                 });
@@ -860,12 +896,17 @@ namespace Foxoft.Migrations
                         new
                         {
                             FormCode = "CurrAccs",
-                            FormDesc = "CurrAccs"
+                            FormDesc = "Cari Hesablar"
                         },
                         new
                         {
                             FormCode = "Products",
-                            FormDesc = "Products"
+                            FormDesc = "Məhsullar"
+                        },
+                        new
+                        {
+                            FormCode = "CashRegisters",
+                            FormDesc = "Kassalar"
                         },
                         new
                         {
@@ -1188,6 +1229,11 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentTypeCode = (byte)4,
+                            PaymentTypeDesc = "Müştəri Bonusu"
+                        },
+                        new
+                        {
+                            PaymentTypeCode = (byte)5,
                             PaymentTypeDesc = "Komissiya"
                         });
                 });
@@ -1738,7 +1784,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CashRegList",
-                            ReportQuery = "\r\n\r\n\r\n\r\nselect CashRegisterCode\r\n, CurrAccDesc\r\n, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\nfrom \r\nDcCurrAccs \r\nleft join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode\r\nwhere CurrAccTypeCode = 5 and IsDisabled = 0 and PaymentTypeCode = 1 \r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\norder by CurrAccDesc\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegisterCode \r\n	order by CurrAccDesc",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -4164,6 +4210,46 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 38,
                             ClaimCode = "InstallmentsaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 39,
+                            ClaimCode = "PurchaseReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 40,
+                            ClaimCode = "RetailsaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 41,
+                            ClaimCode = "WholesaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 42,
+                            ClaimCode = "InstallmentsaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 43,
+                            ClaimCode = "Installments",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

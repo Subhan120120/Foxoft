@@ -55,10 +55,8 @@ namespace Foxoft
             this.currAccTypeArr = currAccTypeArr;
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-            if (currAccTypeArr.Contains((byte)5))
-                cM.AddReports(BSI_Reports, "CurrAccs", nameof(TrPaymentLine.CashRegisterCode), gV_CurrAccList);
-            else
-                cM.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
+
+            cM.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
 
             UpdateGridViewData();
             gV_CurrAccList.PopulateColumns();
@@ -76,12 +74,6 @@ namespace Foxoft
             : this(currAccTypeArr, currAccCode)
         {
             this.personalTypes = personalTypes;
-        }
-
-        public FormCurrAccList(byte[] currAccTypeArr, string currAccCode, byte cashRegPaymentTypeCode)
-            : this(currAccTypeArr, currAccCode)
-        {
-            this.cashRegPaymentTypeCode = cashRegPaymentTypeCode;
         }
 
         private void FormCurrAccList_Load(object sender, EventArgs e)
@@ -115,10 +107,7 @@ namespace Foxoft
 
             DcReport dcReport = null;
 
-            if (currAccTypeArr.Contains((byte)5))
-                dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
-            else if (currAccTypeArr.Any(x => new byte[] { 1, 2, 3, 4 }.Contains(x)))
-                dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
+            dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)
             {
@@ -141,11 +130,9 @@ namespace Foxoft
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
-                        dataSource = dt;
+                        dcCurrAccsBindingSource.DataSource = dt;
                 }
             }
-
-            dcCurrAccsBindingSource.DataSource = dataSource;
 
             if (gV_CurrAccList.FocusedRowHandle >= 0)
             {
@@ -326,19 +313,6 @@ namespace Foxoft
                 dcCurrAcc = null;
         }
 
-        private void LoadCurrAc()
-        {
-            //if (currAccTypeCode != 0)
-            //    dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { currAccTypeCode });
-            //else
-            //    dcCurrAccsBindingSource.DataSource = efMethods.SelectCurrAccs(new byte[] { 1, 2, 3, 4 });
-        }
-
-        private void bBI_refresh_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            UpdateGridViewData();
-        }
-
         private void gC_CurrAccList_ProcessGridKey(object sender, KeyEventArgs e)
         {
             ColumnView view = (sender as GridControl).FocusedView as ColumnView;
@@ -386,60 +360,9 @@ namespace Foxoft
                 dcCurrAcc = null;
         }
 
-        private void bBI_Report1_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
-        private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
-        {
-            return filterOperatorType switch
-            {
-                "+" => BinaryOperatorType.Plus,
-                "&" => BinaryOperatorType.BitwiseAnd,
-                "/" => BinaryOperatorType.Divide,
-                "==" => BinaryOperatorType.Equal,
-                ">" => BinaryOperatorType.Greater,
-                ">=" => BinaryOperatorType.GreaterOrEqual,
-                "<" => BinaryOperatorType.Less,
-                "<=" => BinaryOperatorType.LessOrEqual,
-                "%" => BinaryOperatorType.Modulo,
-                "*" => BinaryOperatorType.Multiply,
-                "!=" => BinaryOperatorType.NotEqual,
-                "|" => BinaryOperatorType.BitwiseOr,
-                "-" => BinaryOperatorType.Minus,
-                "^" => BinaryOperatorType.BitwiseXor,
-                _ => BinaryOperatorType.Equal,
-            };
-        }
-
         private void bBI_ExportXlsx_ItemClick(object sender, ItemClickEventArgs e)
         {
             CustomExtensions.ExportToExcel(this, Text, gC_CurrAccList);
-            //XtraSaveFileDialog sFD = new();
-            //sFD.Filter = "Excel Faylı|*.xlsx";
-            //sFD.Title = "Excel Faylı Yadda Saxla";
-            //sFD.FileName = this.Text;
-            //sFD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //sFD.DefaultExt = "*.xlsx";
-
-            //var fileName = Invoke((Func<string>)(() =>
-            //{
-            //    if (sFD.ShowDialog() == DialogResult.OK)
-            //    {
-            //        gC_CurrAccList.ExportToXlsx(sFD.FileName);
-
-            //        if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //        {
-            //            Process p = new Process();
-            //            p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
-            //            p.Start();
-            //        }
-
-            //        return "Ok";
-            //    }
-            //    else
-            //        return "Fail";
-            //}));
         }
 
         private void bBI_CurrAccDelete_ItemClick(object sender, ItemClickEventArgs e)
@@ -470,25 +393,6 @@ namespace Foxoft
         //AutoFocus FindPanel 
         private void gC_CurrAccList_Load(object sender, EventArgs e)
         {
-            //GridControl gC = sender as GridControl;
-            //GridView gV = gC.MainView as GridView;
-            //if (gV is not null)
-            //{
-            //    gV_CurrAccList.OptionsFind.FindFilterColumns = "CurrAccDesc";
-            //    gV_CurrAccList.OptionsFind.FindNullPrompt = "Axtarın...";
-            //
-            //    //if (!gV.FindPanelVisible)
-            //    gC.BeginInvoke(new Action(gV.ShowFindPanel));
-            //}
-            //
-            //int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
-            //if (rowHandle != GridControl.InvalidRowHandle)
-            //{
-            //    gV_CurrAccList.FocusedRowHandle = rowHandle;
-            //    gV_CurrAccList.MakeRowVisible(rowHandle);
-            //}
-            //
-            //gV_CurrAccList.BestFitColumns();
         }
 
         private void gV_CurrAccList_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
@@ -536,30 +440,6 @@ namespace Foxoft
         {
         }
 
-        private void BBI_ReportCashReg_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //DcReport dcReport = efMethods.SelectReport(1006);
-            //object currAccCode = gV_CurrAccList.GetFocusedRowCellValue(colCurrAccCode);
-
-            //if (currAccCode is not null && dcReport is not null)
-            //{
-            //    string qryMaster = "Select * from ( " + dcReport.ReportQuery + ") as master";
-            //    string columnName = "[CurrAccCode]";
-            //    string dateFilter = "";
-
-            //    if (currAccTypeArr.Contains((byte)5))
-            //    {
-            //        columnName = "[CashRegisterCode]";
-            //        dateFilter = $" AND [OperationDate] Between(#{DateTime.Now.ToString("yyyy-MM-dd")}#, #{DateTime.Now.ToString("yyyy-MM-dd")}#) ";
-            //    }
-
-            //    string activeFilterStr = $"{columnName} = \'{currAccCode}\'" + dateFilter;
-
-            //    FormReportGrid formGrid = new(qryMaster, dcReport, activeFilterStr);
-            //    formGrid.Show();
-            //}
-        }
-
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
         }
@@ -601,10 +481,7 @@ namespace Foxoft
         {
             DcReport dcReport = null;
 
-            if (currAccTypeArr.Contains((byte)5))
-                dcReport = efMethods.SelectReportByName("Report_Embedded_CashRegList");
-            else if (currAccTypeArr.Any(x => new byte[] { 1, 2, 3 }.Contains(x)))
-                dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
+            dcReport = efMethods.SelectReportByName("Report_Embedded_CurrAccList");
 
             if (dcReport is not null)
             {

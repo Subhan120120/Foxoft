@@ -236,7 +236,7 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCurrAccList form = new(new byte[] { 5 }, trInvoiceHeader.CurrAccCode, paymentTypeCode))
+            using (FormCashRegisterList form = new(trInvoiceHeader.CurrAccCode, paymentTypeCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
