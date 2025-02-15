@@ -43,7 +43,7 @@ namespace Foxoft
                             bbi.Visibility = BarItemVisibility.Never;
                     }
 
-            DcTerminal dcTerminal = efMethods.SelectTerminal(Settings.Default.TerminalId);
+            DcTerminal dcTerminal = efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId);
             UIMode(dcTerminal.TouchUIMode);
 
             string path = Path.Combine(AppContext.BaseDirectory, $"backgroundImage-{Settings.Default.CompanyCode}.png");
@@ -61,7 +61,7 @@ namespace Foxoft
             BSI_CompanyDesc.Caption = "| " + efMethods.SelectCompany(Settings.Default.CompanyCode).CompanyDesc;
             bSI_UserName.Caption = "| " + efMethods.SelectCurrAcc(Authorization.CurrAccCode).CurrAccDesc;
             BSI_StoreDesc.Caption = "| " + efMethods.SelectCurrAcc(Authorization.StoreCode).CurrAccDesc;
-            bSI_TerminalName.Caption = "| " + efMethods.SelectTerminal(Settings.Default.TerminalId).TerminalDesc;
+            bSI_TerminalName.Caption = "| " + efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId).TerminalDesc;
 
             InitializeReports();
 
@@ -71,7 +71,7 @@ namespace Foxoft
         private void UIMode(bool toucUIMode)
         {
             int TerminalId = Settings.Default.TerminalId;
-            DcTerminal dcTerminal = efMethods.SelectTerminal(TerminalId);
+            DcTerminal dcTerminal = efMethods.SelectEntityById<DcTerminal>(TerminalId);
             if (dcTerminal is not null)
             {
                 if (toucUIMode == true)

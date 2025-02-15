@@ -31,10 +31,10 @@ namespace Foxoft
 
         private void LoadDataByDatabase()
         {
-            AppSetting appSetting = efMethods.SelectAppSetting();
+            AppSetting appSetting = efMethods.SelectEntityById<AppSetting>(1);
             Settings.Default.AppSetting = appSetting;
             Settings.Default.Save();
-            LUE_Terminal.Properties.DataSource = efMethods.SelectTerminals();
+            LUE_Terminal.Properties.DataSource = efMethods.SelectEntities<DcTerminal>();
 
             LUE_Terminal.EditValue = Settings.Default.TerminalId;
             txtEdit_UserName.Text = Settings.Default.LoginName;
@@ -46,7 +46,7 @@ namespace Foxoft
 
         private void TouchUIMode(int terminalId)
         {
-            DcTerminal dcTerminal = efMethods.SelectTerminal(terminalId);
+            DcTerminal dcTerminal = efMethods.SelectEntityById<DcTerminal>(terminalId);
 
             if (dcTerminal != null)
             {
@@ -107,7 +107,7 @@ namespace Foxoft
 
         private bool CheckLicense()
         {
-            string encrypt = efMethods.SelectAppSetting().License;
+            string encrypt = efMethods.SelectEntityById<AppSetting>(1).License;
 
             if (string.IsNullOrEmpty(encrypt))
                 return false;

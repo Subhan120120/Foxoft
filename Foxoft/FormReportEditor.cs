@@ -27,7 +27,7 @@ namespace Foxoft
             CancelButton = btn_Cancel;
             AcceptButton = btn_Ok;
 
-            ReportTypeIdLookUpEdit.Properties.DataSource = efMethods.SelectReportTypes();
+            ReportTypeIdLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcReportType>();
             ReportTypeIdLookUpEdit.Properties.ValueMember = "ReportTypeId";
             ReportTypeIdLookUpEdit.Properties.DisplayMember = "ReportTypeDesc";
         }
@@ -73,8 +73,8 @@ namespace Foxoft
 
                     DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // if query is correct 
 
-                    if (!efMethods.ReportExist(dcReport.ReportId)) //if doesnt exist
-                        efMethods.InsertReport(dcReport);
+                    if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
+                        efMethods.InsertEntity<DcReport>(dcReport);
                     else
                         dbContext.SaveChanges();
 

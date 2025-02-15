@@ -8,6 +8,7 @@ using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraCharts.Design;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
@@ -71,7 +72,7 @@ namespace Foxoft
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId)
         {
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            dcProcess = efMethods.SelectProcess(processCode);
+            dcProcess = efMethods.SelectEntityById<DcProcess>(processCode);
             reportClass = new(settingStore.DesignFileFolder);
 
             InitializeComponent();
@@ -93,12 +94,8 @@ namespace Foxoft
             cM.AddReports(BSI_Reports, "Invoice", nameof(TrInvoiceLine.InvoiceHeaderId), gV_InvoiceLine, activeFilterStr);
             cM.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_InvoiceLine, activeFilterStr);
 
-            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
-            if (!currAccHasClaims)
-                RPG_Payment.Visible = false;
-
-            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
-            repoLUE_UnitOfMeasure.DataSource = efMethods.SelectUnitOfMeasures();
+            repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
+            repoLUE_UnitOfMeasure.DataSource = efMethods.SelectEntities<DcUnitOfMeasure>();
 
             try
             {
@@ -215,7 +212,7 @@ namespace Foxoft
 
 
             Tag = btnEdit_DocNum.EditValue;
-            checkEdit_IsReturn.Enabled = false;
+            //checkEdit_IsReturn.Enabled = false;
         }
 
         private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
@@ -317,7 +314,7 @@ namespace Foxoft
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
-            dcProcess = efMethods.SelectProcess(trInvoiceHeader.ProcessCode);
+            dcProcess = efMethods.SelectEntityById<DcProcess>(trInvoiceHeader.ProcessCode);
 
             dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
@@ -338,7 +335,7 @@ namespace Foxoft
             CalcPaidAmount();
             CalcInstallmentAmount();
 
-            checkEdit_IsReturn.Enabled = false;
+            //checkEdit_IsReturn.Enabled = false;
 
             Tag = btnEdit_DocNum.EditValue;
 
@@ -348,7 +345,7 @@ namespace Foxoft
                 trInvoiceHeader.IsLocked = locked;
             }
 
-            LCG_Invoice.Enabled = !trInvoiceHeader.IsLocked;
+            SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
 
             efMethods.UpdateInvoiceIsLocked(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.IsLocked);
 
@@ -381,7 +378,7 @@ namespace Foxoft
 
         private void ShowPrintCount()
         {
-            int printCount = efMethods.SelectInvoicePrinCount(trInvoiceHeader?.InvoiceHeaderId);
+            int printCount = efMethods.SelectEntityById<TrInvoiceHeader>(trInvoiceHeader?.InvoiceHeaderId).PrintCount;
 
             txtEdit_PrintCount.Text = printCount.ToString();
         }
@@ -428,7 +425,7 @@ namespace Foxoft
             string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
                 currencyCode = dcProcess.CustomCurrencyCode;
-            DcCurrency currency = efMethods.SelectCurrency(currencyCode);
+            DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(currencyCode);
             if (currency is not null)
             {
                 gv.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
@@ -948,7 +945,7 @@ namespace Foxoft
                 trPaymentHeader.DocumentNumber = NewDocNum;
                 trPaymentHeader.Description = trInvoiceHeader.Description;
 
-                efMethods.InsertPaymentHeader(trPaymentHeader);
+                efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader);
             }
 
             efMethods.DeletePaymentLinesByPaymentHeader(trPaymentHeader.PaymentHeaderId);
@@ -965,7 +962,7 @@ namespace Foxoft
                     trPaymentLine.ExchangeRate = il.ExchangeRate;
                     trPaymentLine.LineDescription = il.LineDescription;
                     trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
-                    efMethods.InsertPaymentLine(trPaymentLine);
+                    efMethods.InsertEntity<TrPaymentLine>(trPaymentLine);
                 }
             }
 
@@ -1136,7 +1133,7 @@ namespace Foxoft
 
         private void bBI_DeleteInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
+            if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
             {
                 XtraMessageBox.Show("Silinmeli olan faktura yoxdur");
                 return;
@@ -1215,7 +1212,7 @@ namespace Foxoft
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit textEditor = (LookUpEdit)sender;
-            float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
+            float exRate = efMethods.SelectEntityById<DcCurrency>(textEditor.EditValue.ToString()).ExchangeRate;
             gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, exRate);
         }
 
@@ -1404,7 +1401,7 @@ namespace Foxoft
 
             if (eValue is not null)
             {
-                DcCurrAcc curr = efMethods.SelectCurrAccIncludeDisabled(eValue.ToString());
+                DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(eValue.ToString());
 
                 if (curr is null)
                 {
@@ -1421,18 +1418,32 @@ namespace Foxoft
 
         private void BBI_ModifyInvoice_ItemClick(object sender, ItemClickEventArgs e)
         {
+            if (btnEdit_DocNum.Properties.ReadOnly)
+            {
+                SetLayoutGroupReadOnly(LCG_Invoice, false);
+            }
 
-            //bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "UnlockInvoice");
-            //if (!currAccHasClaims)
-            //{
-            //    MessageBox.Show("Yetkiniz yoxdur! ");
-            //    return;
-            //}
-
-            if (LCG_Invoice.Enabled)
-                LCG_Invoice.Enabled = false;
             else
-                LCG_Invoice.Enabled = true;
+                SetLayoutGroupReadOnly(LCG_Invoice, true);
+        }
+
+        private void SetLayoutGroupReadOnly(LayoutControlGroup group, bool isReadOnly)
+        {
+            foreach (BaseLayoutItem item in group.Items)
+            {
+                if (item is LayoutControlItem layoutControlItem)
+                {
+                    if (layoutControlItem.Control is GridControl gridControl)
+                        gridControl.Enabled = !isReadOnly;
+                    else if (layoutControlItem.Control is BaseEdit baseEdit)
+                    {
+                        baseEdit.Properties.ReadOnly = isReadOnly;
+
+                        if (baseEdit is ButtonEdit buttonEdit && baseEdit.DataBindings[0].BindingMemberInfo.BindingField != nameof(TrInvoiceHeader.DocumentNumber))
+                            buttonEdit.Properties.Buttons[0].Enabled = !isReadOnly;
+                    }
+                }
+            }
         }
 
         private void gC_InvoiceLine_EditorKeyPress(object sender, KeyPressEventArgs e)
@@ -1554,10 +1565,22 @@ namespace Foxoft
             if (File.Exists(layoutLineFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
 
+            bool currAccHasClaimsPayment = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
+            if (!currAccHasClaimsPayment)
+                RPG_Payment.Visible = false;
+
+            bool currAccHasClaimsExpences = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ExpenseOfInvoice");
+            if (!currAccHasClaimsExpences)
+                BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
+
+            bool currAccHasClaimsEditInvoice = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "EditLockedInvoice");
+            if (!currAccHasClaimsEditInvoice)
+                BBI_EditInvoice.Visibility = BarItemVisibility.Never;
+
             if (colProductCost != null)
             {
-                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, $"Column_{nameof(TrInvoiceLine.ProductCost)}");
-                if (!currAccHasClaims)
+                bool currAccHasClaimsColumn = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, $"Column_{nameof(TrInvoiceLine.ProductCost)}");
+                if (!currAccHasClaimsColumn)
                 {
                     colProductCost.OptionsColumn.ShowInCustomizationForm = false;
                     colProductCost.Visible = false;
@@ -1775,7 +1798,7 @@ namespace Foxoft
                                         {
                                             if (!string.IsNullOrEmpty(row[captionCurrency].ToString()))
                                             {
-                                                DcCurrency currency = efMethods.SelectCurrency(row[captionCurrency].ToString());
+                                                DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(row[captionCurrency].ToString());
                                                 if (currency is null)
                                                     currency = efMethods.SelectCurrencyByName(row[captionCurrency].ToString());
 

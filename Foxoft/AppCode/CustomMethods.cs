@@ -517,7 +517,7 @@ namespace Foxoft.AppCode
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
-                        efMethods.InsertFormReport(formCode, Convert.ToInt32(form.Value_Id));
+                        efMethods.InsertEntity<TrFormReport>(new() { FormCode = formCode, ReportId = Convert.ToInt32(form.Value_Id) });
                         AddReports(BSI, formCode, columnName, gV, activeFilterStr);
                     }
                 }

@@ -24,11 +24,11 @@ namespace Foxoft
 
         private void FormProductStaticPrice_Load(object sender, EventArgs e)
         {
-            List<DcPriceType> priceTypes = efMethods.SelectPriceTypes();
+            List<DcPriceType> priceTypes = efMethods.SelectEntities<DcPriceType>();
 
             foreach (DcPriceType priceType in priceTypes)
             {
-                DcProductStaticPrice proPrice = efMethods.SelectStaticPrices(dcProduct.ProductCode, priceType.PriceTypeCode);
+                DcProductStaticPrice proPrice = efMethods.SelectEntityById<DcProductStaticPrice>(dcProduct.ProductCode, priceType.PriceTypeCode);
 
                 TextEdit btn = new();
                 btn.Name = priceType.PriceTypeCode.ToString();

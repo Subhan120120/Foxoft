@@ -222,7 +222,7 @@ namespace Foxoft
             {
                 if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcWarehouse.WarehouseDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeleteWarehouse(dcWarehouse);
+                    efMethods.DeleteEntity<DcWarehouse>(dcWarehouse);
 
                     LoadWarehouses();
                 }

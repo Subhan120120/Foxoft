@@ -38,14 +38,16 @@ namespace Foxoft
             bBI_NewPayment = new DevExpress.XtraBars.BarButtonItem();
             bBI_CopyPayment = new DevExpress.XtraBars.BarButtonItem();
             BBI_Info = new DevExpress.XtraBars.BarButtonItem();
-            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
+            BBI_EditPayment = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Report = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             checkEdit_IsSent = new DevExpress.XtraEditors.CheckEdit();
             trPaymentHeadersBindingSource = new BindingSource(components);
@@ -85,7 +87,7 @@ namespace Foxoft
             btnEdit_CurrAccCode = new DevExpress.XtraEditors.ButtonEdit();
             btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            LCG_Payment = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForOperationTime = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -120,7 +122,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCG_Payment).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOperationTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
@@ -138,9 +140,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_DeletePayment, bBI_SaveAndClose, bBI_SendWhatsapp, bBI_NewPayment, bBI_CopyPayment, BBI_Info, BSI_Reports, BBI_EditPayment });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 16;
+            ribbonControl1.MaxItemId = 17;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(899, 158);
@@ -196,12 +198,6 @@ namespace Foxoft
             BBI_Info.Name = "BBI_Info";
             BBI_Info.ItemClick += BBI_Info_ItemClick;
             // 
-            // popupMenuReports
-            // 
-            popupMenuReports.Name = "popupMenuReports";
-            popupMenuReports.Ribbon = ribbonControl1;
-            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
-            // 
             // BSI_Reports
             // 
             BSI_Reports.Caption = "Hesabat";
@@ -209,9 +205,17 @@ namespace Foxoft
             BSI_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Reports.ImageOptions.SvgImage");
             BSI_Reports.Name = "BSI_Reports";
             // 
+            // BBI_EditPayment
+            // 
+            BBI_EditPayment.Caption = "Dəyiş";
+            BBI_EditPayment.Id = 16;
+            BBI_EditPayment.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_EditPayment.ImageOptions.SvgImage");
+            BBI_EditPayment.Name = "BBI_EditPayment";
+            BBI_EditPayment.ItemClick += BBI_EditPayment_ItemClick_1;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, RPG_Report, ribbonPageGroup3 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, RPG_Report, ribbonPageGroup3, ribbonPageGroup4 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "Ödəmə";
             // 
@@ -243,12 +247,24 @@ namespace Foxoft
             ribbonPageGroup3.Name = "ribbonPageGroup3";
             ribbonPageGroup3.Text = "Məlumat";
             // 
+            // ribbonPageGroup4
+            // 
+            ribbonPageGroup4.ItemLinks.Add(BBI_EditPayment);
+            ribbonPageGroup4.Name = "ribbonPageGroup4";
+            ribbonPageGroup4.Text = "Nəzarət";
+            // 
             // ribbonStatusBar
             // 
             ribbonStatusBar.Location = new Point(0, 554);
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = ribbonControl1;
             ribbonStatusBar.Size = new Size(899, 24);
+            // 
+            // popupMenuReports
+            // 
+            popupMenuReports.Name = "popupMenuReports";
+            popupMenuReports.Ribbon = ribbonControl1;
+            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
             // 
             // dataLayoutControl1
             // 
@@ -613,19 +629,19 @@ namespace Foxoft
             // 
             Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCG_Payment });
             Root.Name = "Root";
             Root.Size = new Size(899, 396);
             Root.TextVisible = false;
             // 
-            // layoutControlGroup1
+            // LCG_Payment
             // 
-            layoutControlGroup1.AllowDrawBackground = false;
-            layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForOperationTime, ItemForCurrAccCode, layoutControlItem1, ItemForDescription, ItemForOperationDate, ItemForDocumentNumber, layoutControlItem3, layoutControlItem4, layoutControlItem5, layoutControlItem2, layoutControlItem6 });
-            layoutControlGroup1.Location = new Point(0, 0);
-            layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(879, 376);
+            LCG_Payment.AllowDrawBackground = false;
+            LCG_Payment.GroupBordersVisible = false;
+            LCG_Payment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForOperationTime, ItemForCurrAccCode, layoutControlItem1, ItemForDescription, ItemForOperationDate, ItemForDocumentNumber, layoutControlItem3, layoutControlItem4, layoutControlItem5, layoutControlItem2, layoutControlItem6 });
+            LCG_Payment.Location = new Point(0, 0);
+            LCG_Payment.Name = "LCG_Payment";
+            LCG_Payment.Size = new Size(879, 376);
             // 
             // ItemForOperationTime
             // 
@@ -772,7 +788,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_DocNum.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCG_Payment).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForOperationTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
@@ -801,7 +817,7 @@ namespace Foxoft
         private DevExpress.XtraEditors.DateEdit OperationDateDateEdit;
         private DevExpress.XtraEditors.TimeSpanEdit OperationTimeTimeSpanEdit;
         private DevExpress.XtraEditors.TextEdit DescriptionTextEdit;
-        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraLayout.LayoutControlGroup LCG_Payment;
         private DevExpress.XtraLayout.LayoutControlItem ItemForOperationTime;
         private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
@@ -859,5 +875,7 @@ namespace Foxoft
         private DevExpress.XtraBars.PopupMenu popupMenuReports;
         private DevExpress.XtraBars.BarSubItem barSubItem1;
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
+        private DevExpress.XtraBars.BarButtonItem BBI_EditPayment;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
     }
 }

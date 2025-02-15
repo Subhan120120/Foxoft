@@ -133,7 +133,7 @@ namespace Foxoft
         private void btn_Save_Click(object sender, EventArgs e)
         {
             //TrInvoiceHeader trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-            if (!efMethods.InvoiceHeaderExist(trInvoiceHeader.InvoiceHeaderId))
+            if (!efMethods.EntityExists<TrInvoiceHeader>(trInvoiceHeader.InvoiceHeaderId))
                 dbContext.TrInvoiceHeaders.Add(trInvoiceHeader);
             dbContext.SaveChanges();
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);

@@ -51,7 +51,7 @@ namespace Foxoft
                 BBI_ProductStaticPriceList.Enabled = true;
             }
 
-            ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectProductTypes();
+            ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
             ProductTypeCodeLookUpEdit.Properties.ValueMember = "ProductTypeCode";
             ProductTypeCodeLookUpEdit.Properties.DisplayMember = "ProductTypeDesc";
 

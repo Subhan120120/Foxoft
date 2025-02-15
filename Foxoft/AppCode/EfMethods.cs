@@ -33,6 +33,64 @@ namespace Foxoft
                 .Value;
         }
 
+        public List<T> SelectEntities<T>() where T : class
+        {
+            using subContext db = new();
+            return db.Set<T>().ToList();
+        }
+
+        public List<DcCompany> SelectCompanies()
+        {
+            using mainContext db = new();
+            return db.DcCompanies.ToList();
+        }
+
+        public int InsertEntity<T>(T entity) where T : class
+        {
+            using subContext db = new();
+            db.Set<T>().Add(entity);
+            return db.SaveChanges();
+        }
+
+        public int UpdateEntity<T>(T entity) where T : class
+        {
+            using subContext db = new();
+            db.Set<T>().Update(entity);
+            return db.SaveChanges();
+        }
+
+        public T SelectEntityById<T>(params object[] keyValues) where T : class
+        {
+            using subContext db = new();
+            return db.Set<T>().Find(keyValues);
+        }
+
+        public bool EntityExists<T>(params object[] keyValues) where T : class
+        {
+            using subContext db = new();
+            return db.Set<T>().Find(keyValues) != null;
+        }
+
+        public int DeleteEntity<T>(T entity) where T : class
+        {
+            using subContext db = new();
+
+            db.Set<T>().Remove(entity); 
+            return db.SaveChanges(); 
+        }
+
+        public int DeleteEntityById<T>(params object[] keyValues) where T : class
+        {
+            using subContext db = new();
+            var entity = db.Set<T>().Find(keyValues); // Find the entity by primary key(s)
+            if (entity != null)
+            {
+                db.Set<T>().Remove(entity); // Mark the entity for deletion
+                return db.SaveChanges(); // Save changes to the database
+            }
+            else return 0;
+        }
+
         public List<TrInvoiceLine> SelectInvoiceLines(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -110,12 +168,6 @@ namespace Foxoft
             return sumNetAmount;
         }
 
-        public List<DcProductType> SelectProductTypes()
-        {
-            using subContext db = new();
-            return db.DcProductTypes.ToList();
-        }
-
         public DateTime SelectInvoiceLastModifiedDate()
         {
             using subContext db = new();
@@ -123,30 +175,6 @@ namespace Foxoft
                     .Select(h => h.LastUpdatedDate)
                     .Concat(db.TrInvoiceLines.Select(l => l.LastUpdatedDate))
                     .Max();
-        }
-
-        public List<DcReportType> SelectReportTypes()
-        {
-            using subContext db = new();
-            return db.DcReportTypes.ToList();
-        }
-
-        public List<DcCurrAccType> SelectCurrAccTypes()
-        {
-            using subContext db = new();
-            return db.DcCurrAccTypes.ToList();
-        }
-
-        public List<DcTerminal> SelectTerminals()
-        {
-            using subContext db = new();
-            return db.DcTerminals.ToList();
-        }
-
-        public List<DcCompany> SelectCompanies()
-        {
-            using mainContext db = new();
-            return db.DcCompanies.ToList();
         }
 
         public string SelectInvoiceLastUpdatedUserName(Guid invoiceHeaderId)
@@ -168,26 +196,6 @@ namespace Foxoft
                 : latestUserNameFromHeader?.LastUpdatedUserName;
         }
 
-        public DcTerminal SelectTerminal(int id)
-        {
-            using subContext db = new();
-            return db.DcTerminals.FirstOrDefault(x => x.TerminalId == id);
-        }
-
-        public DcCompany SelectCompany(string companyCode)
-        {
-            using mainContext db = new();
-            return db.DcCompanies.FirstOrDefault(x => x.CompanyCode == companyCode);
-        }
-
-        public List<DcFeatureType> SelectFeatureTypes()
-        {
-            using subContext db = new();
-
-            List<DcFeatureType> featureTypes = db.DcFeatureTypes.ToList();
-            return featureTypes;
-        }
-
         public List<DcFeatureType> SelectFeatureTypesByHierarchy(string hierarchyCode)
         {
             using subContext db = new();
@@ -202,52 +210,25 @@ namespace Foxoft
             return featureTypes;
         }
 
-        public List<DcFeature> SelectFeaturesByType(int featureTypeId)
-        {
-            using subContext db = new();
+        //public TrProductFeature SelectProductFeature(int featureTypeId, string productCode)
+        //{
+        //    using subContext db = new();
 
-            List<DcFeature> features = db.DcFeatures.Where(x => x.FeatureTypeId == featureTypeId).ToList();
-            return features;
-        }
-
-        public List<DcFeature> SelectFeatures()
-        {
-            using subContext db = new();
-
-            List<DcFeature> features = db.DcFeatures.Include(x => x.DcFeatureType).ToList();
-            return features;
-        }
-
-        public TrProductFeature SelectProductFeature(int featureTypeId, string productCode)
-        {
-            using subContext db = new();
-
-            TrProductFeature dc = db.TrProductFeatures
-                     .Where(x => x.FeatureTypeId == featureTypeId)
-                     .FirstOrDefault(x => x.ProductCode == productCode);
-            return dc;
-        }
+        //    TrProductFeature dc = db.TrProductFeatures
+        //             .Where(x => x.FeatureTypeId == featureTypeId)
+        //             .FirstOrDefault(x => x.ProductCode == productCode);
+        //    return dc;
+        //}
 
 
-        public DcFeatureType SelectFeatureType(int featureTypeId)
-        {
-            using subContext db = new();
+        //public DcFeatureType SelectFeatureType(int featureTypeId)
+        //{
+        //    using subContext db = new();
 
-            DcFeatureType dc = db.DcFeatureTypes
-                     .FirstOrDefault(x => x.FeatureTypeId == featureTypeId);
-            return dc;
-        }
-
-        public List<TrProductFeature> SelectProductFeaturesByProductCode(string productCode)
-        {
-            using subContext db = new();
-
-            List<TrProductFeature> productFeatures = db.TrProductFeatures
-                                            .Include(x => x.DcFeature)
-                                            .Where(x => x.ProductCode == productCode)
-                                            .ToList();
-            return productFeatures;
-        }
+        //    DcFeatureType dc = db.DcFeatureTypes
+        //             .FirstOrDefault(x => x.FeatureTypeId == featureTypeId);
+        //    return dc;
+        //}
 
         public DcProduct SelectProductByBarcode(string barCode)
         {
@@ -295,47 +276,6 @@ namespace Foxoft
                                        .FirstOrDefault();
         }
 
-        public DcProduct SelectProductBySlug(string slug)
-        {
-            if (string.IsNullOrEmpty(slug))
-                return null;
-            using subContext db = new();
-            return QueryableSelectProducts(db).FirstOrDefault(x => x.SiteProduct.Slug == slug);
-        }
-
-        public List<DcProduct> SelectProductByName(string productName, int Skip, int Take)
-        {
-            if (string.IsNullOrEmpty(productName))
-                return null;
-            using subContext db = new();
-
-            char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
-
-            string[] words = productName.Split(delimiterChars);
-
-            IQueryable<DcProduct> products = QueryableSelectProductsForSite(db);
-
-            foreach (var word in words)
-            {
-                products = products.Where(p => p.TrProductFeatures.Where(f => EF.Functions.Like(f.DcFeature.FeatureDesc, $"%{word}%")).Any());
-            }
-
-            var asd = products.Skip(Skip);
-
-
-            var dolma = asd.Take(Take);
-
-            return dolma.ToList();
-        }
-
-
-        public DcProduct SelectProductBySiteId(int productId)
-        {
-            using subContext db = new();
-            var product = QueryableSelectProducts(db).FirstOrDefault(x => x.SiteProduct.ProductId == productId);
-            return product;
-        }
-
         public DcProduct SelectProduct(string productCode)
         {
             using subContext db = new();
@@ -347,14 +287,6 @@ namespace Foxoft
         {
             using subContext db = new();
             var product = db.DcUnitOfMeasures.Where(x => x.UnitOfMeasureId == parentMeasureId || x.ParentUnitOfMeasureId == parentMeasureId)
-                .ToList();
-            return product;
-        }
-
-        public List<DcUnitOfMeasure> SelectUnitOfMeasures()
-        {
-            using subContext db = new();
-            var product = db.DcUnitOfMeasures
                 .ToList();
             return product;
         }
@@ -404,91 +336,6 @@ namespace Foxoft
             return products;
         }
 
-        public List<DcProduct> SelectProductsForSite()
-        {
-            using subContext db = new();
-
-            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db);
-
-            return DcProducts.ToList();
-        }
-
-        public List<DcProduct> SelectProductsByFilterForSite(int CategoryId, int minPrice, int maxPrice)
-        {
-            using subContext db = new();
-
-            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
-                                                    .Where(x => CategoryId > 0 ? x.DcHierarchy.Id == CategoryId : true)
-                                                    .Where(x => x.SiteProduct.Price >= minPrice)
-                                                    .Where(x => x.SiteProduct.Price <= maxPrice);
-
-            return DcProducts.ToList();
-        }
-
-        public List<DcProduct> SelectProductsForSite(int CategoryId, int skip, int take)
-        {
-            using subContext db = new();
-
-            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
-                                                    .Where(x => CategoryId > 0 ? x.DcHierarchy.Id == CategoryId : true)
-                                                    .Skip(skip)
-                                                    .Take(take);
-
-            return DcProducts.ToList();
-        }
-
-        public List<DcProduct> SelectPopularProductsForSite(int take)
-        {
-            using subContext db = new();
-
-            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
-                                                    .OrderBy(x => x.SiteProduct.ViewCount)
-                                                    .Take(take);
-
-            return DcProducts.ToList();
-        }
-
-        public List<DcProduct> SelectProductsForSite(List<int> ProductsIds)
-        {
-            using subContext db = new();
-
-            IQueryable<DcProduct> DcProducts = QueryableSelectProductsForSite(db)
-                                                    .Where(x => ProductsIds.Contains(x.SiteProduct.ProductId));
-
-            return DcProducts.ToList();
-        }
-
-
-        public IQueryable<DcProduct> QueryableSelectProductsForSite(subContext db)
-        {
-            var products = db.DcProducts
-                                .Include(x => x.TrProductFeatures).ThenInclude(x => x.DcFeature).ThenInclude(x => x.DcFeatureType)
-                                .Include(x => x.TrProductDiscounts)
-                                .Include(x => x.DcHierarchy)
-                                .Include(x => x.SiteProduct)
-                                .Where(x => x.HierarchyCode != null)
-                                .Where(x => x.UseInternet == true)
-                                .Where(x => x.ProductTypeCode == 1)
-                                .Select(x => new DcProduct
-                                {
-                                    Balance = x.TrInvoiceLines.Sum(l => l.QtyIn - l.QtyOut),
-                                    ProductCode = x.ProductCode,
-                                    ProductDesc = x.ProductDesc,
-                                    RetailPrice = x.RetailPrice,
-                                    PurchasePrice = x.PurchasePrice,
-                                    ProductTypeCode = x.ProductTypeCode,
-                                    WholesalePrice = x.WholesalePrice,
-                                    UseInternet = x.UseInternet,
-                                    HierarchyCode = x.HierarchyCode,
-                                    TrProductFeatures = x.TrProductFeatures,
-                                    SiteProduct = x.SiteProduct,
-                                    DcHierarchy = x.DcHierarchy,
-                                    TrProductDiscounts = x.TrProductDiscounts,
-                                })
-                                .OrderBy(x => x.ProductDesc);
-            return products;
-        }
-
         public decimal SelectProductBalance(string productCode, string warehouseCode)
         {
             using subContext db = new();
@@ -512,14 +359,6 @@ namespace Foxoft
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 
-        public List<DcProduct> SelectProductsByType(byte[] productTypeArr)
-        {
-            using subContext db = new();
-
-            IQueryable<DcProduct> DcProducts = QueryableSelectProducts(db).Where(x => productTypeArr.Contains(x.ProductTypeCode));
-
-            return DcProducts.ToList();
-        }
         public List<DcProduct> SelectProductsByTypeByFilter(byte[] productTypeArr, CriteriaOperator filterCriteria)
         {
             using subContext db = new();
@@ -530,15 +369,6 @@ namespace Foxoft
             return DcProducts.ToList();
         }
 
-        public List<TrInvoiceHeader> SelectInvoiceHeaders()
-        {
-            using subContext db = new();
-
-            return db.TrInvoiceHeaders.Where(x => x.IsCompleted == true)
-                                      .OrderBy(x => x.CreatedDate)
-                                      .ToList();
-        }
-
         public TrInvoiceHeader SelectInvoiceHeader(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -546,13 +376,6 @@ namespace Foxoft
             return db.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Include(x => x.TrInvoiceLines)
                                       .FirstOrDefault(x => x.InvoiceHeaderId == invoiceHeaderId);
-        }
-
-        public TrPriceListHeader SelectPriceListHeader(Guid priceListHeaderId)
-        {
-            using subContext db = new();
-
-            return db.TrPriceListHeaders.FirstOrDefault(x => x.PriceListHeaderId == priceListHeaderId);
         }
 
         public List<TrHierarchyFeatureType> SelectHierarchyFeatureTypes()
@@ -603,15 +426,6 @@ namespace Foxoft
             return roleClaims;
         }
 
-        public List<TrHierarchyFeatureType> SelectHierarchyFeatureTypes(int featureTypeId)
-        {
-            using subContext db = new();
-
-            return SelectHierarchyFeatureTypes()
-                                             .Where(x => x.FeatureTypeId == featureTypeId)
-                                             .ToList();
-        }
-
         public List<TrFormReport> SelectFormReports(string formCode)
         {
             using subContext db = new();
@@ -660,15 +474,6 @@ namespace Foxoft
                                       .Include(x => x.TrPaymentLines)
                                       .Where(x => x.DocumentNumber == documentNumber)
                                       .FirstOrDefault(x => x.IsMainTF == true);
-        }
-
-        public List<TrInvoiceHeader> SelectInvoiceHeadersByProcessCode(string processCode)
-        {
-            using subContext db = new();
-
-            return db.TrInvoiceHeaders.Where(x => x.ProcessCode == processCode)
-                                      .OrderBy(x => x.CreatedDate)
-                                      .ToList();
         }
 
         public TrInvoiceLine SelectInvoiceLine(Guid invoiceLineId)
@@ -750,19 +555,6 @@ namespace Foxoft
                 return -1;
         }
 
-        public int InsertInvoiceLine(TrInvoiceLine TrInvoiceLine)
-        {
-            using subContext db = new();
-            db.TrInvoiceLines.Add(TrInvoiceLine);
-            return db.SaveChanges();
-        }
-
-        public bool InvoiceHeaderExist(Guid invoiceHeaderId)
-        {
-            using subContext db = new();
-            return db.TrInvoiceHeaders.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
-        }
-
         public bool ExpensesExistByInvoiceId(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -787,19 +579,6 @@ namespace Foxoft
 
         }
 
-        public bool PriceListHeaderExist(Guid priceListHeaderId)
-        {
-            using subContext db = new();
-            return db.TrPriceListHeaders.Any(x => x.PriceListHeaderId == priceListHeaderId);
-        }
-
-        public void InsertInvoiceHeader(TrInvoiceHeader TrInvoiceHeader)
-        {
-            using subContext db = new();
-            db.TrInvoiceHeaders.Add(TrInvoiceHeader);
-            db.SaveChanges();
-        }
-
         public int DeleteInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -817,38 +596,6 @@ namespace Foxoft
             IQueryable<TrInvoiceLine> trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId);
             if (trInvoiceLine.Any())
                 db.TrInvoiceLines.Remove(trInvoiceLine.First());
-
-            return db.SaveChanges();
-        }
-
-        public int DeletePayment(Guid paymentHeaderId)
-        {
-            using subContext db = new();
-            TrPaymentHeader trPaymentHeader = db.TrPaymentHeaders.Where(x => x.PaymentHeaderId == paymentHeaderId)
-                                                        .FirstOrDefault();
-            if (trPaymentHeader is not null)
-                db.TrPaymentHeaders.Remove(trPaymentHeader);
-
-            return db.SaveChanges();
-        }
-
-        public int DeletePriceList(Guid priceListHeaderId)
-        {
-            using subContext db = new();
-            TrPriceListHeader trPriceListHeader = db.TrPriceListHeaders.Where(x => x.PriceListHeaderId == priceListHeaderId)
-                                                        .FirstOrDefault();
-            if (trPriceListHeader is not null)
-                db.TrPriceListHeaders.Remove(trPriceListHeader);
-
-            return db.SaveChanges();
-        }
-
-        public int DeletePriceType(DcPriceType dcPriceType)
-        {
-            using subContext db = new();
-
-            if (dcPriceType is not null)
-                db.DcPriceTypes.Remove(dcPriceType);
 
             return db.SaveChanges();
         }
@@ -878,60 +625,10 @@ namespace Foxoft
 
             if (dcProduct is not null)
             {
-                var asddfgfg = db.SiteProducts.Where(x => x.ProductCode == dcProduct.ProductCode);
-                db.SiteProducts.RemoveRange(asddfgfg);
+                var siteProducts = db.SiteProducts.Where(x => x.ProductCode == dcProduct.ProductCode);
+                db.SiteProducts.RemoveRange(siteProducts);
                 product = db.DcProducts.Remove(dcProduct);
             }
-
-            return db.SaveChanges();
-        }
-
-        public int DeleteCurrAcc(DcCurrAcc dcCurrAcc)
-        {
-            using subContext db = new();
-
-            if (dcCurrAcc is not null)
-                db.DcCurrAccs.Remove(dcCurrAcc);
-
-            return db.SaveChanges();
-        }
-
-        public int DeleteWarehouse(DcWarehouse dcWarehouse)
-        {
-            using subContext db = new();
-
-            if (dcWarehouse is not null)
-                db.DcWarehouses.Remove(dcWarehouse);
-
-            return db.SaveChanges();
-        }
-
-        public int DeleteFeatureType(DcFeatureType dcFeatureType)
-        {
-            using subContext db = new();
-
-            if (dcFeatureType is not null)
-                db.DcFeatureTypes.Remove(dcFeatureType);
-
-            return db.SaveChanges();
-        }
-
-        public int DeleteFeature(DcFeature dcFeature)
-        {
-            using subContext db = new();
-
-            if (dcFeature is not null)
-                db.DcFeatures.Remove(dcFeature);
-
-            return db.SaveChanges();
-        }
-
-        public int DeleteSession(TrSession session)
-        {
-            using subContext db = new();
-
-            if (session is not null)
-                db.TrSessions.Remove(session);
 
             return db.SaveChanges();
         }
@@ -981,23 +678,6 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int DeleteInvoiceLine(object invoiceLineId)
-        {
-            using subContext db = new();
-
-            TrInvoiceLine trInvoiceLine = new() { InvoiceLineId = Guid.Parse(invoiceLineId.ToString()) };
-            db.TrInvoiceLines.Remove(trInvoiceLine);
-            return db.SaveChanges();
-        }
-
-        public int DeleteReport(int ReportId)
-        {
-            using subContext db = new();
-            DcReport dcReport = new() { ReportId = ReportId };
-            db.DcReports.Remove(dcReport);
-            return db.SaveChanges();
-        }
-
         public int UpdateInvoiceIsCompleted(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -1006,19 +686,19 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateInvoiceIsSent(Guid invoiceHeaderId)
-        {
-            using subContext db = new();
-            TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsSent = true };
-            db.Entry(trInvoiceHeader).Property(x => x.IsSent).IsModified = true;
-            return db.SaveChanges();
-        }
-
         public int UpdateInvoiceIsLocked(Guid invoiceHeaderId, bool isLocked)
         {
             using subContext db = new();
             TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsLocked = isLocked };
             db.Entry(trInvoiceHeader).Property(x => x.IsLocked).IsModified = true;
+            return db.SaveChanges();
+        }
+
+        public int UpdatePaymentIsLocked(Guid paymentHeaderId, bool isLocked)
+        {
+            using subContext db = new();
+            TrPaymentHeader trPaymentHeader = new() { PaymentHeaderId = paymentHeaderId, IsLocked = isLocked };
+            db.Entry(trPaymentHeader).Property(x => x.IsLocked).IsModified = true;
             return db.SaveChanges();
         }
 
@@ -1040,21 +720,6 @@ namespace Foxoft
                 db.Entry(trInvoiceHeader).Property(x => x.PrintCount).IsModified = true;
                 db.SaveChanges();
                 return trInvoiceHeader.PrintCount;
-            }
-            else
-                return 0;
-        }
-
-        public int UpdateInvoiceIsOpen(string docNum, bool isOpen)
-        {
-            using subContext db = new();
-            TrInvoiceHeader trInvoiceHeader = db.TrInvoiceHeaders.Where(x => x.DocumentNumber == docNum)
-                                                                 .FirstOrDefault(x => x.IsMainTF == true);
-            if (trInvoiceHeader is not null)
-            {
-                trInvoiceHeader.IsOpen = isOpen;
-                db.Entry(trInvoiceHeader).Property(x => x.IsOpen).IsModified = true;
-                return db.SaveChanges();
             }
             else
                 return 0;
@@ -1116,7 +781,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            List<TrPaymentHeader> trPaymentHeaders = SelectPaymentHeaders(invoiceHeaderId);
+            List<TrPaymentHeader> trPaymentHeaders = SelectPaymentHeadersByInvoice(invoiceHeaderId);
 
             foreach (TrPaymentHeader entity in trPaymentHeaders)
             {
@@ -1145,23 +810,6 @@ namespace Foxoft
             return price;
         }
 
-        public DcProductStaticPrice SelectStaticPrices(string productCode, string priceTypeCode)
-        {
-            using subContext db = new();
-
-            var price = db.DcProductStaticPrices.Where(x => x.ProductCode == productCode && x.PriceTypeCode == priceTypeCode)
-                                           .FirstOrDefault();
-
-            return price;
-        }
-
-        public List<DcPriceType> SelectPriceTypes()
-        {
-            using subContext db = new();
-
-            return db.DcPriceTypes.ToList();
-        }
-
         public int UpdateInvoiceSalesPerson(Guid invoiceLineId, string currAccCode)
         {
             using subContext db = new();
@@ -1169,60 +817,6 @@ namespace Foxoft
             TrInvoiceLine trInvoiceLine = new() { InvoiceLineId = invoiceLineId, SalesPersonCode = currAccCode };
             db.Entry(trInvoiceLine).Property(x => x.SalesPersonCode).IsModified = true;
             return db.SaveChanges();
-        }
-
-        public int InsertCustomer(DcCurrAcc dcCurrAcc)
-        {
-            using subContext db = new();
-            db.DcCurrAccs.Add(dcCurrAcc);
-            return db.SaveChanges();
-        }
-
-        public int InsertCompany(DcCompany dcCompany)
-        {
-            using mainContext db = new();
-            db.DcCompanies.Add(dcCompany);
-            return db.SaveChanges();
-        }
-
-        public bool CustomerExist(string CurrAccCode)
-        {
-            using subContext db = new();
-            return db.DcCurrAccs.Any(x => x.CurrAccCode == CurrAccCode);
-        }
-
-        public int UpdateCustomer(DcCurrAcc dcCurrAcc)
-        {
-            using subContext db = new();
-            db.DcCurrAccs.Update(dcCurrAcc);
-            return db.SaveChanges();
-        }
-
-        public int InsertPaymentHeader(TrPaymentHeader trPaymentHeader)
-        {
-            using subContext db = new();
-            db.TrPaymentHeaders.Add(trPaymentHeader);
-            return db.SaveChanges();
-        }
-
-        public int InsertPaymentLine(TrPaymentLine trPaymentLine)
-        {
-            using subContext db = new();
-            db.TrPaymentLines.Add(trPaymentLine);
-            return db.SaveChanges();
-        }
-
-        public int InsertTrInstallment(TrInstallment trPaymentPlan)
-        {
-            using subContext db = new();
-            db.TrInstallments.Add(trPaymentPlan);
-            return db.SaveChanges();
-        }
-
-        public bool PaymentHeaderExist(Guid paymentHeaderId)
-        {
-            using subContext db = new();
-            return db.TrPaymentHeaders.Any(x => x.PaymentHeaderId == paymentHeaderId);
         }
 
         public List<TrPaymentLine> SelectPaymentLines(Guid paymentHeaderId)
@@ -1243,20 +837,17 @@ namespace Foxoft
                            .ToList();
         }
 
-        public List<TrPaymentHeader> SelectPaymentHeaders(Guid invoiceHeaderId)
+        public DcCompany SelectCompany(string companyCode)
+        {
+            using mainContext db = new();
+            return db.DcCompanies.FirstOrDefault(x => x.CompanyCode == companyCode);
+        }
+
+        public List<TrPaymentHeader> SelectPaymentHeadersByInvoice(Guid invoiceHeaderId)
         {
             using subContext db = new();
             return db.TrPaymentHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                     .ToList();
-        }
-
-        public decimal SelectPaymentLinesSumByInvoice(Guid invoiceHeaderId)
-        {
-            using subContext db = new();
-
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Where(x => x.TrPaymentHeader.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(s => s.PaymentLoc);
         }
 
         public decimal SelectPaymentLinesSumByInvoice(Guid invoiceHeaderId, string currAccCode)
@@ -1434,15 +1025,6 @@ namespace Foxoft
             return asdasd;
         }
 
-        public List<DcCurrAcc> SelectCurrAccsByType(byte currAccTypeCode)
-        {
-            using subContext db = new();
-
-            return db.DcCurrAccs.Where(x => x.IsDisabled == false && x.CurrAccTypeCode == currAccTypeCode)
-                                .OrderBy(x => x.CreatedDate)
-                                .ToList();
-        }
-
         public DcCurrAcc SelectCurrAcc(string currAccCode)
         {
             using subContext db = new();
@@ -1456,12 +1038,6 @@ namespace Foxoft
             return db.DcCurrAccs.Where(x => x.IsDisabled == false)
                                 .Where(x => x.PersonalTypeCode == 1)
                                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
-        }
-
-        public DcCurrAcc SelectCurrAccIncludeDisabled(string currAccCode)
-        {
-            using subContext db = new();
-            return db.DcCurrAccs.FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
         public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate)
@@ -1484,21 +1060,6 @@ namespace Foxoft
             return paymentSum + invoiceSum;
         }
 
-        public decimal SelectCurrAccBalance(string currAccCode)
-        {
-            using subContext db = new();
-
-            decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader).Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
-                                                  .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                                                  .Sum(x => x.NetAmountLoc);
-
-            decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                                  .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                                  .Sum(x => x.PaymentLoc);
-
-            return invoiceSum + paymentSum;
-        }
-
         public decimal SelectCashRegBalance(string cashRegCode, DateTime documentDate)
         {
             using subContext db = new();
@@ -1510,15 +1071,6 @@ namespace Foxoft
                                        .Sum(x => x.PaymentLoc);
 
             return paymentSum;
-        }
-
-        public decimal SelectPaymentLinesSum(Guid paymentHeaderId)
-        {
-            using subContext db = new();
-
-            return db.TrPaymentLines.Include(x => x.TrPaymentHeader)
-                                    .Where(x => x.PaymentHeaderId == paymentHeaderId)
-                                    .Sum(x => x.PaymentLoc);
         }
 
         public decimal SelectInvoiceSum(Guid invoiceHeaderId)
@@ -1539,67 +1091,10 @@ namespace Foxoft
                                .ToList();
         }
 
-        public DcProcess SelectProcess(string processCode)
-        {
-            using subContext db = new();
-            DcProcess dcProcess = db.DcProcesses.Where(x => x.ProcessCode == processCode)
-                      .FirstOrDefault();
-            return dcProcess;
-        }
-
-        public List<DcCurrency> SelectCurrencies()
-        {
-            using subContext db = new();
-
-            return db.DcCurrencies.ToList();
-        }
-
-        public DcCurrency SelectCurrency(string currencyCode)
-        {
-            using subContext db = new();
-            return db.DcCurrencies.FirstOrDefault(x => x.CurrencyCode == currencyCode);
-        }
-
-        public DcHierarchy SelectHierarchy(string hierarchyCode)
-        {
-            using subContext db = new();
-            return db.DcHierarchies.FirstOrDefault(x => x.HierarchyCode == hierarchyCode);
-        }
-
-        public DcRole SelectRole(string roleCode)
-        {
-            using subContext db = new();
-            return db.DcRoles.FirstOrDefault(x => x.RoleCode == roleCode);
-        }
-
-        public DcHierarchy SelectHierarchyBySlug(string slug)
-        {
-            using subContext db = new();
-            return db.DcHierarchies.FirstOrDefault(x => x.Slug == slug);
-        }
-
         public DcCurrency SelectCurrencyByName(string currencyDesc)
         {
             using subContext db = new();
             return db.DcCurrencies.FirstOrDefault(x => x.CurrencyDesc == currencyDesc);
-        }
-
-        public List<DcPaymentType> SelectPaymentTypes()
-        {
-            using subContext db = new();
-            return db.DcPaymentTypes.ToList();
-        }
-
-        public DcPaymentType SelectPaymentType(byte paymentTypeId)
-        {
-            using subContext db = new();
-            return db.DcPaymentTypes.FirstOrDefault(x => x.PaymentTypeCode == paymentTypeId);
-        }
-
-        public List<DcPaymentMethod> SelectPaymentMethods()
-        {
-            using subContext db = new();
-            return db.DcPaymentMethods.ToList();
         }
 
         public List<DcPaymentMethod> SelectPaymentMethodsByPaymentTypes(byte[] paymentTypes)
@@ -1622,20 +1117,6 @@ namespace Foxoft
                                     .FirstOrDefault();
         }
 
-        public DcPaymentMethod SelectPaymentMethod(int paymentMethodId)
-        {
-            using subContext db = new();
-            return db.DcPaymentMethods.FirstOrDefault(x => x.PaymentMethodId == paymentMethodId);
-        }
-
-        public List<TrPaymentMethodDiscount> SelectPaymentDiscounts()
-        {
-            using subContext db = new();
-            return db.TrPaymentMethodDiscounts.Include(x => x.DcDiscount)
-                                              .Include(x => x.DcPaymentMethod)
-                                              .ToList();
-        }
-
         public List<DcDiscount> SelectDiscounts()
         {
             using subContext db = new();
@@ -1654,54 +1135,6 @@ namespace Foxoft
                                  .FirstOrDefault(x => x.DiscountId == discountId);
 
             return discount;
-        }
-
-        public DcHierarchy SelectHierarchyById(int hierarchyId)
-        {
-            using subContext db = new();
-
-            var asd = db.DcHierarchies
-                     .Include(x => x.TrHierarchyFeatureTypes).ThenInclude(x => x.DcFeatureType)
-                     .FirstOrDefault(x => x.Id == hierarchyId);
-
-            return asd;
-        }
-
-        public List<TrPaymentMethodDiscount> SelectPaymentMethodsByDiscount(int discountId)
-        {
-            using subContext db = new();
-            return db.TrPaymentMethodDiscounts
-                        .Include(x => x.DcDiscount)
-                        .Include(x => x.DcPaymentMethod)
-                        .ToList();
-        }
-
-        public List<TrPaymentMethodDiscount> SelectPaymentMethodByDiscounts()
-        {
-            using subContext db = new();
-            return db.TrPaymentMethodDiscounts
-                        .Include(x => x.DcDiscount)
-                        .Include(x => x.DcPaymentMethod)
-                        .ToList();
-        }
-
-        public float SelectExRate(string currancyCode)
-        {
-            using subContext db = new();
-            DcCurrency dcCurrency = db.DcCurrencies.Where(x => x.CurrencyCode == currancyCode)
-                                                   .FirstOrDefault();
-            return dcCurrency.ExchangeRate;
-        }
-
-        public int SelectInvoicePrinCount(Guid? invoiceHeaderId)
-        {
-            using subContext db = new();
-            int rtrn = 0;
-            TrInvoiceHeader trInvoice = db.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                           .FirstOrDefault();
-            if (trInvoice is not null)
-                rtrn = trInvoice.PrintCount;
-            return rtrn;
         }
 
         public List<DcCurrAcc> SelectStores()
@@ -1833,68 +1266,11 @@ namespace Foxoft
                                 .Any(x => x.CurrAccCode == CurrAccCode);
         }
 
-        public bool CheckHasLicense(string id)
-        {
-            using subContext db = new();
-            AppSetting AppSetting = db.AppSettings.FirstOrDefault(x => x.License == id);
-            return db.AppSettings.Any(x => x.License == id);
-        }
-
-        public bool FeatureTypeExist(int featureTypeId)
-        {
-            using subContext db = new();
-            return db.DcFeatureTypes.Any(x => x.FeatureTypeId == featureTypeId);
-        }
-
-        public bool PriceTypeExist(string priceTypeCode)
-        {
-            using subContext db = new();
-            return db.DcPriceTypes.Any(x => x.PriceTypeCode == priceTypeCode);
-        }
-
-        public bool FeatureExist(string featureCode, int featureTypeId)
-        {
-            using subContext db = new();
-            return db.DcFeatures.Any(x => x.FeatureCode == featureCode && x.FeatureTypeId == featureTypeId);
-        }
-
-        public bool HierarchyExist(string hierarchy)
-        {
-            using subContext db = new();
-            return db.DcHierarchies.Any(x => x.HierarchyCode == hierarchy);
-        }
-
-        public bool ReportExist(int Id)
-        {
-            using subContext db = new();
-            return db.DcReports.Any(x => x.ReportId == Id);
-        }
-
         public bool ProductExist(string productCode)
         {
             using subContext db = new();
             return db.DcProducts.Where(x => x.IsDisabled == false)
                        .Any(x => x.ProductCode == productCode);
-        }
-
-        public void InsertCurrAcc(DcCurrAcc dcCurrAcc)
-        {
-            using subContext db = new();
-            db.DcCurrAccs.Add(dcCurrAcc);
-            db.SaveChanges();
-        }
-
-        public void InsertTrSession(TrSession trSession)
-        {
-            using subContext db = new();
-            db.TrSessions.Add(trSession);
-            db.SaveChanges();
-        }
-
-        public bool TrSessionExistCurrAccCode(string currAccCode)
-        {
-            using subContext db = new();
-            return db.TrSessions.Any(x => x.CurrAccCode == currAccCode);
         }
 
         public void InsertProduct(DcProduct dcProduct)
@@ -1908,56 +1284,7 @@ namespace Foxoft
             db.SaveChanges();
         }
 
-        public void InsertFeature(DcFeature dcFeature)
-        {
-            using subContext db = new();
-            db.DcFeatures.Add(dcFeature);
-            db.SaveChanges();
-        }
-
-        public void InsertHierarchy(DcHierarchy dcHierarchy)
-        {
-            using subContext db = new();
-            db.DcHierarchies.Add(dcHierarchy);
-            db.SaveChanges();
-        }
-
-        public int DeleteHierarchy(string hierarchyCode)
-        {
-            using subContext db = new();
-            db.DcHierarchies.Remove(db.DcHierarchies.FirstOrDefault(x => x.HierarchyCode == hierarchyCode));
-            return db.SaveChanges();
-        }
-
-        public int DeleteHierarchyFeatureType(string hierarchyCode, int featureType)
-        {
-            using subContext db = new();
-            db.TrHierarchyFeatureTypes.Remove(db.TrHierarchyFeatureTypes.FirstOrDefault(x => x.HierarchyCode == hierarchyCode && x.FeatureTypeId == featureType));
-            return db.SaveChanges();
-        }
-
-        public int DeleteCurrAccRole(int currAccRolId)
-        {
-            using subContext db = new();
-            db.TrCurrAccRoles.Remove(db.TrCurrAccRoles.Find(currAccRolId));
-            return db.SaveChanges();
-        }
-
-        public int DeleteRoleClaim(int colRoleClaimId)
-        {
-            using subContext db = new();
-            db.TrRoleClaims.Remove(db.TrRoleClaims.Find(colRoleClaimId));
-            return db.SaveChanges();
-        }
-
-        public void InsertFeature(DcPriceType DcPriceType)
-        {
-            using subContext db = new();
-            db.DcPriceTypes.Add(DcPriceType);
-            db.SaveChanges();
-        }
-
-        public List<DcRole> SelectRoles(string CurrAccCode)
+        public List<DcRole> SelectRolesByCurrAcc(string CurrAccCode)
         {
             using subContext db = new();
             return db.DcRoles.Include(x => x.TrCurrAccRoles)
@@ -1987,23 +1314,6 @@ namespace Foxoft
                         .Any(x => x.DcRole.TrRoleClaims.Any(x => x.DcClaim.TrClaimReports.Any(x => x.DcReport.ReportId.ToString() == claim)));
 
             return hasClaim;
-        }
-
-        public string SelectOfficeCode(string CurrAccCode)
-        {
-            using subContext db = new();
-
-            DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
-                                             .FirstOrDefault();
-            return currAcc.OfficeCode;
-        }
-
-        public string SelectStoreCode(string CurrAccCode)
-        {
-            using subContext db = new();
-            DcCurrAcc currAcc = db.DcCurrAccs.Where(x => x.CurrAccCode == CurrAccCode)
-                                    .FirstOrDefault();
-            return currAcc.StoreCode;
         }
 
         public int UpdateReportLayout(int id, string reportLayout)
@@ -2038,34 +1348,10 @@ namespace Foxoft
                                .FirstOrDefault(x => x.ReportId == id);
         }
 
-        public List<TrReportSubQuery> SelectReportQueriesByReport(int reportId)
-        {
-            using subContext db = new();
-            return db.TrReportSubQueries.Where(x => x.ReportId == reportId).ToList();
-        }
-
-        public List<TrReportSubQueryRelationColumn> SelectSubQueryRelationColumnByQueryId(int subQueryId)
-        {
-            using subContext db = new();
-            return db.TrReportSubQueryRelationColumns.Where(x => x.SubQueryId == subQueryId).ToList();
-        }
-
-        //public List<DcQueryParam> SelectQueryParamsByReport(int reportId)
-        //{
-        //    using subContext db = new();
-        //    return db.DcQueryParams.Where(x => x.ReportId == reportId).ToList();
-        //}
-
         public DcReport SelectReportByName(string name)
         {
             using subContext db = new();
             return db.DcReports.Include(x => x.DcReportVariables).FirstOrDefault(x => x.ReportName == name);
-        }
-
-        public List<DcReport> SelectReports()
-        {
-            using subContext db = new();
-            return db.DcReports.ToList();
         }
 
         public List<DcReport> SelectReportsByType(byte[] reportType)
@@ -2079,23 +1365,6 @@ namespace Foxoft
             using subContext db = new();
             DcReport dcReport = new() { ReportId = id, ReportFilter = reportFilter };
             db.Entry(dcReport).Property(x => x.ReportFilter).IsModified = true;
-            return db.SaveChanges();
-        }
-
-        public int UpdateTrSession(TrSession trSession)
-        {
-            using subContext db = new();
-            db.TrSessions.Update(trSession);
-            return db.SaveChanges();
-        }
-
-        public int UpdateDcReportVariable_Value(int ReportId, string fieldName, string filterValue)
-        {
-            using subContext db = new();
-            DcReportVariable reportVariable = db.DcReportVariables.Where(x => x.VariableProperty == fieldName)
-                                                        .FirstOrDefault(x => x.ReportId == ReportId);
-            reportVariable.VariableValue = filterValue;
-            db.Entry(reportVariable).Property(x => x.VariableValue).IsModified = true;
             return db.SaveChanges();
         }
 
@@ -2168,34 +1437,11 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public void InsertReport(DcReport dcReport)
-        {
-            using subContext db = new();
-            db.DcReports.Add(dcReport);
-            db.SaveChanges();
-        }
-
-        public void InsertFormReport(string formCode, int reportId)
-        {
-            using subContext db = new();
-            TrFormReport trFormReport = new() { FormCode = formCode, ReportId = reportId };
-            db.TrFormReports.Add(trFormReport);
-            db.SaveChanges();
-        }
-
         public int UpdateAppSettingGridViewLayout(string layout)
         {
             using subContext db = new();
             AppSetting appSetting = new() { Id = 1, GridViewLayout = layout };
             db.Entry(appSetting).Property(x => x.GridViewLayout).IsModified = true;
-            return db.SaveChanges();
-        }
-
-        public int UpdateSettingStoreImagePath(string storeCode, string imagePath)
-        {
-            using subContext db = new();
-            SettingStore setting = new() { StoreCode = storeCode, ImageFolder = imagePath };
-            db.Entry(setting).Property(x => x.ImageFolder).IsModified = true;
             return db.SaveChanges();
         }
 
@@ -2220,7 +1466,6 @@ namespace Foxoft
         {
             using subContext db = new();
             DcHierarchy hierarcy = new DcHierarchy() { HierarchyCode = hierarchyCode, HierarchyDesc = hierarchyDesc };
-            //hierarcy.HierarchyDesc = hierarchyDesc;
             db.Entry(hierarcy).Property(x => x.HierarchyDesc).IsModified = true;
             return db.SaveChanges();
         }
@@ -2242,22 +1487,6 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        //public int UpdateAppSettingTwilioInstance(string instanceId)
-        //{
-        //    //using subContext db = new();
-        //    //AppSetting appSetting = new() { Id = 1, TwilioInstanceId = instanceId };
-        //    //db.Entry(appSetting).Property(x => x.TwilioInstanceId).IsModified = true;
-        //    //return db.SaveChanges();
-        //}
-
-        public int UpdateAppSettingDueDate(string dueDate)
-        {
-            using subContext db = new();
-            AppSetting appSetting = new() { Id = 1, DueDate = dueDate };
-            db.Entry(appSetting).Property(x => x.DueDate).IsModified = true;
-            return db.SaveChanges();
-        }
-
         public void UpdateAppSettingLicense(string license, string databaseName)
         {
             subContext db = new();
@@ -2265,8 +1494,6 @@ namespace Foxoft
 
             var builder = new SqlConnectionStringBuilder(connString);
             builder.InitialCatalog = databaseName;
-
-
 
             using (db = new subContext(new DbContextOptionsBuilder<subContext>().UseSqlServer(builder.ConnectionString).Options))
             {
@@ -2277,23 +1504,6 @@ namespace Foxoft
                     db.SaveChanges();
                 }
             }
-        }
-
-        public int UpdateAppSettingTwilioToken(string token)
-        {
-            using subContext db = new();
-            AppSetting appSetting = new() { Id = 1, TwilioToken = token };
-            db.Entry(appSetting).Property(x => x.TwilioToken).IsModified = true;
-            return db.SaveChanges();
-        }
-
-        public AppSetting SelectAppSetting()
-        {
-            using subContext db = new();
-            string asdasd = db.Database.GetConnectionString();
-
-            return db.AppSettings.Find(1);
-
         }
 
         public DcBarcodeType SelectBarcodTypeDefault()
@@ -2308,18 +1518,6 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.SettingStores.FirstOrDefault(x => x.StoreCode == StoreCode);
-        }
-
-        public TrSession SelectTrSessionByCurrAccCode(string currAccCode)
-        {
-            using subContext db = new();
-            return db.TrSessions.FirstOrDefault(x => x.CurrAccCode == currAccCode);
-        }
-
-        public List<TrSession> SelectSessions()
-        {
-            using subContext db = new();
-            return db.TrSessions.ToList();
         }
     }
 }

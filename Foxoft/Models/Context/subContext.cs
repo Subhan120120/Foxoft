@@ -512,7 +512,9 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "RetailsaleReturnCustom", ClaimDesc = "Pərakəndə Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "WholesaleReturnCustom", ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "InstallmentsaleReturnCustom", ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
-                new DcClaim { ClaimCode = "Installments", ClaimDesc = "Kreditlər", ClaimTypeId = 1 }
+                new DcClaim { ClaimCode = "Installments", ClaimDesc = "Kreditlər", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "EditLockedInvoice", ClaimDesc = "Kilidli Fakturanı Dəyiş", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "EditLockedPayment", ClaimDesc = "Kilidli Ödənişi Dəyiş", ClaimTypeId = 1 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
@@ -582,7 +584,9 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 40, RoleCode = "Admin", ClaimCode = "RetailsaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 41, RoleCode = "Admin", ClaimCode = "WholesaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturnCustom" },
-                new TrRoleClaim { RoleClaimId = 43, RoleCode = "Admin", ClaimCode = "Installments" }
+                new TrRoleClaim { RoleClaimId = 43, RoleCode = "Admin", ClaimCode = "Installments" },
+                new TrRoleClaim { RoleClaimId = 44, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
+                new TrRoleClaim { RoleClaimId = 45, RoleCode = "Admin", ClaimCode = "EditLockedPayment" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(
@@ -641,7 +645,7 @@ namespace Foxoft.Models
                 new DcPaymentType { PaymentTypeCode = 1, PaymentTypeDesc = "Nağd" },
                 new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" },
                 new DcPaymentType { PaymentTypeCode = 3, PaymentTypeDesc = "Daxili Kredit" },
-                new DcPaymentType { PaymentTypeCode = 4, PaymentTypeDesc = "Müştəri Bonusu" },
+                new DcPaymentType { PaymentTypeCode = 4, PaymentTypeDesc = "Bonus" },
                 new DcPaymentType { PaymentTypeCode = 5, PaymentTypeDesc = "Komissiya" }
                 );
 

@@ -43,7 +43,7 @@ namespace Foxoft
                     return false;
                 }
 
-                List<TrSession> trSessions = efMethods.SelectSessions();
+                List<TrSession> trSessions = efMethods.SelectEntities<TrSession>();
                 foreach (var session in trSessions)
                 {
                     try
@@ -58,7 +58,7 @@ namespace Foxoft
                     }
                     catch (ArgumentException)
                     {
-                        efMethods.DeleteSession(session);
+                        efMethods.DeleteEntity<TrSession>(session);
                     }
                 }
 
@@ -69,12 +69,12 @@ namespace Foxoft
                     CreatedDate = DateTime.Now
                 };
 
-                efMethods.InsertTrSession(trSession);
+                efMethods.InsertEntity<TrSession>(trSession);
 
                 Authorization.CurrAccCode = user;
-                Authorization.DcRoles = efMethods.SelectRoles(user);
-                Authorization.StoreCode = efMethods.SelectStoreCode(user);
-                Authorization.OfficeCode = efMethods.SelectOfficeCode(user);
+                Authorization.DcRoles = efMethods.SelectRolesByCurrAcc(user);
+                Authorization.StoreCode = efMethods.SelectEntityById<DcCurrAcc>(user).StoreCode;
+                Authorization.OfficeCode = efMethods.SelectEntityById<DcCurrAcc>(user).OfficeCode;
 
                 return true;
             }

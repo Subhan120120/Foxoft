@@ -35,7 +35,7 @@ namespace Foxoft
             colProductCost.Caption = ReflectionExt.GetDisplayName<DcProduct>(x => x.ProductCost);
 
             //StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
-            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
+            repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
 
             ClearControlsAddNew();
         }
@@ -43,7 +43,7 @@ namespace Foxoft
         public FormPriceListDetail(Guid PriceListHeaderId)
             : this()
         {
-            trPriceListHeader = efMethods.SelectPriceListHeader(PriceListHeaderId);
+            trPriceListHeader = efMethods.SelectEntityById<TrPriceListHeader>(PriceListHeaderId);
 
             if (trPriceListHeader is not null)
             {
@@ -162,11 +162,11 @@ namespace Foxoft
 
         private void bBI_DeletePriceList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.PriceListHeaderExist(trPriceListHeader.PriceListHeaderId))
+            if (efMethods.EntityExists<TrPriceListHeader>(trPriceListHeader.PriceListHeaderId))
             {
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeletePriceList(trPriceListHeader.PriceListHeaderId);
+                    efMethods.DeleteEntityById<TrPriceListHeader>(trPriceListHeader.PriceListHeaderId);
 
                     ClearControlsAddNew();
                 }
@@ -181,10 +181,10 @@ namespace Foxoft
             gV_PriceListLine.SetRowCellValue(e.RowHandle, colPriceListLineId, Guid.NewGuid());
 
             string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-            DcProcess dcProcess = efMethods.SelectProcess("PL");
+            DcProcess dcProcess = efMethods.SelectEntityById<DcProcess>("PL");
             if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
                 currencyCode = dcProcess.CustomCurrencyCode;
-            DcCurrency currency = efMethods.SelectCurrency(currencyCode);
+            DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(currencyCode);
             if (currency is not null)
             {
                 gV_PriceListLine.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
@@ -412,7 +412,7 @@ namespace Foxoft
                                 {
                                     if (!string.IsNullOrEmpty(row[captionCurrency].ToString()))
                                     {
-                                        DcCurrency currency = efMethods.SelectCurrency(row[captionCurrency].ToString());
+                                        DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(row[captionCurrency].ToString());
                                         if (currency is null)
                                             currency = efMethods.SelectCurrencyByName(row[captionCurrency].ToString());
 

@@ -280,7 +280,7 @@ namespace Foxoft
         {
             if (MessageBox.Show("Silmək İstəyirsiniz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                efMethods.DeleteReport(dcReport.ReportId);
+                efMethods.DeleteEntityById<DcReport>(dcReport.ReportId);
             }
         }
 

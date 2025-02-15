@@ -70,7 +70,7 @@ namespace Foxoft
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 int featureTypeId = Convert.ToInt32(view.GetRowCellValue(rowInd, colFeatureTypeId));
-                DcFeatureType dcfeaturetype = efMethods.SelectFeatureType(featureTypeId);
+                DcFeatureType dcfeaturetype = efMethods.SelectEntityById<DcFeatureType>(featureTypeId);
                 e.Value = dcfeaturetype?.FeatureTypeName;
             }
 
@@ -79,7 +79,7 @@ namespace Foxoft
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string hierarchy = view.GetRowCellValue(rowInd, colHierarchyCode) as string ?? string.Empty;
-                DcHierarchy dcHierarchy = efMethods.SelectHierarchy(hierarchy);
+                DcHierarchy dcHierarchy = efMethods.SelectEntityById<DcHierarchy>(hierarchy);
                 e.Value = dcHierarchy?.HierarchyDesc;
             }
         }
@@ -94,7 +94,7 @@ namespace Foxoft
             string hierarchyCode = gridView1.GetFocusedRowCellValue(colHierarchyCode).ToString();
             int featureTypeId = Convert.ToInt32(gridView1.GetFocusedRowCellValue(colFeatureTypeId));
 
-            efMethods.DeleteHierarchyFeatureType(hierarchyCode, featureTypeId);
+            efMethods.DeleteEntityById<TrHierarchyFeatureType>(hierarchyCode, featureTypeId);
         }
     }
 }

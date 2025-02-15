@@ -37,7 +37,7 @@ namespace Foxoft
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
         {
-            if (efMethods.InvoiceHeaderExist(deliveryInvoiceHeaderId))
+            if (efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
                 efMethods.DeleteInvoice(deliveryInvoiceHeaderId);
         }
 
@@ -54,7 +54,7 @@ namespace Foxoft
                 {
                     ClearControls();
 
-                    if (efMethods.InvoiceHeaderExist(deliveryInvoiceHeaderId))
+                    if (efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
                         efMethods.DeleteInvoice(deliveryInvoiceHeaderId);                // delete previous invoice
 
                     deliveryInvoiceHeaderId = Guid.NewGuid();                   // create next invoice
@@ -91,7 +91,7 @@ namespace Foxoft
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
-                        if (!efMethods.InvoiceHeaderExist(deliveryInvoiceHeaderId)) //if invoiceHeader doesnt exist
+                        if (!efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId)) //if invoiceHeader doesnt exist
                         {
                             string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
 
@@ -107,7 +107,7 @@ namespace Foxoft
                             deliveryInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
                             deliveryInvoHeader.IsMainTF = true;
 
-                            efMethods.InsertInvoiceHeader(deliveryInvoHeader);
+                            efMethods.InsertEntity<TrInvoiceHeader>(deliveryInvoHeader);
                         }
 
                         if (!efMethods.WaybillExistByInvoiceLine(invoiceLineID))
@@ -127,7 +127,7 @@ namespace Foxoft
                             else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
                                 deliveryInvoiceLine.QtyOut = formQty.qty * (-1);
 
-                            efMethods.InsertInvoiceLine(deliveryInvoiceLine);
+                            efMethods.InsertEntity<TrInvoiceLine>(deliveryInvoiceLine);
 
                             List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
                             gC_DeliveryInvoiceLine.DataSource = deliveryLines;
@@ -204,7 +204,7 @@ namespace Foxoft
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Təhvil Ləğv Edilsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                if (efMethods.InvoiceHeaderExist(deliveryInvoiceHeaderId))
+                if (efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
                 {
                     efMethods.DeleteInvoice(deliveryInvoiceHeaderId);
 

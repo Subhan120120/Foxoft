@@ -47,10 +47,10 @@ namespace Foxoft
             DcCurrAcc.BirthDate = Convert.ToDateTime(dateEdit_BirthDate.EditValue ?? new DateTime(1901, 01, 01));
             DcCurrAcc.PhoneNum = txtEdit_PhoneNum.Text;
 
-            if (efMethods.CustomerExist(txtEdit_CurrAccCode.Text))
-                efMethods.UpdateCustomer(DcCurrAcc);
+            if (efMethods.EntityExists<DcCurrAcc>(txtEdit_CurrAccCode.Text))
+                efMethods.UpdateEntity(DcCurrAcc);
             else
-                efMethods.InsertCustomer(DcCurrAcc);
+                efMethods.InsertEntity<DcCurrAcc>(DcCurrAcc);
 
             DialogResult = DialogResult.OK;
         }

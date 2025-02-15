@@ -21,7 +21,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectCurrAccTypes();
+            CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcCurrAccType>();
             OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
 
@@ -104,7 +104,7 @@ namespace Foxoft
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
                 if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if invoiceHeader doesnt exist
-                    efMethods.InsertCurrAcc(dcCurrAcc);
+                    efMethods.InsertEntity<DcCurrAcc>(dcCurrAcc);
                 else
                     dbContext.SaveChanges();
                 DialogResult = DialogResult.OK;

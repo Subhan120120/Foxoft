@@ -40,7 +40,7 @@ namespace Foxoft
         }
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
         {
-            if (efMethods.InvoiceHeaderExist(invoiceHeaderId))
+            if (efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId))
                 efMethods.DeleteInvoice(invoiceHeaderId);                // delete incomplete invoice
         }
 
@@ -66,7 +66,7 @@ namespace Foxoft
             {
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
+                    if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
                     {
                         InsertInvoiceHeader();
                     }
@@ -107,7 +107,7 @@ namespace Foxoft
                 trInvoiceHeader.CurrAccDesc = efMethods.SelectCurrAcc(defaultCustomer).CurrAccDesc;
 
 
-            efMethods.InsertInvoiceHeader(trInvoiceHeader);
+            efMethods.InsertEntity<TrInvoiceHeader>(trInvoiceHeader);
         }
 
         private void btn_CancelInvoice_Click(object sender, EventArgs e)
@@ -138,8 +138,8 @@ namespace Foxoft
                 DialogResult dialogResult = XtraMessageBox.Show("Silmək istədiyinizə əminmisiniz?", "Diqqət", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    object invoiceLineId = gV_InvoiceLine.GetRowCellValue(rowIndx, "InvoiceLineId");
-                    int result = efMethods.DeleteInvoiceLine(invoiceLineId);
+                    Guid invoiceLineId = Guid.Parse(gV_InvoiceLine.GetRowCellValue(rowIndx, "InvoiceLineId").ToString());
+                    int result = efMethods.DeleteEntityById<TrInvoiceLine>(invoiceLineId);
 
                     if (result >= 0)
                     {
@@ -313,7 +313,7 @@ namespace Foxoft
             {
                 if (formCustomer.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
+                    if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
                         InsertInvoiceHeader();
 
                     int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, formCustomer.DcCurrAcc.CurrAccCode);
@@ -336,7 +336,7 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (!efMethods.InvoiceHeaderExist(invoiceHeaderId)) //if invoiceHeader doesnt exist
+                    if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
                         InsertInvoiceHeader();
 
                     int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, form.dcCurrAcc.CurrAccCode);

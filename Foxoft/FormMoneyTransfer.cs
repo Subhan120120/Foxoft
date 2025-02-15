@@ -30,8 +30,8 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
-            repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
+            repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
+            repoLUE_PaymentTypeCode.DataSource = efMethods.SelectEntities<DcPaymentType>();
 
             ClearControlsAddNew();
         }
@@ -250,7 +250,7 @@ namespace Foxoft
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.PaymentHeaderExist(trPaymentHeader.PaymentHeaderId))
+            if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
             {
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
@@ -288,10 +288,10 @@ namespace Foxoft
                 gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);
 
             string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-            DcProcess dcProcess = efMethods.SelectProcess("CT");
+            DcProcess dcProcess = efMethods.SelectEntityById<DcProcess>("CT");
             if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
                 currencyCode = dcProcess.CustomCurrencyCode;
-            DcCurrency currency = efMethods.SelectCurrency(currencyCode);
+            DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(currencyCode);
             if (currency is not null)
             {
                 gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
@@ -386,7 +386,7 @@ namespace Foxoft
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit textEditor = (LookUpEdit)sender;
-            float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
+            float exRate = efMethods.SelectEntityById<DcCurrency>(textEditor.EditValue.ToString()).ExchangeRate;
             gV_PaymentLine.SetFocusedRowCellValue(colExchangeRate, exRate);
 
             //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_PaymentLine.FocusedRowHandle, colExchangeRate, exRate));

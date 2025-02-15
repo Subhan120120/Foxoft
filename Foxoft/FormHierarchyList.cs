@@ -27,7 +27,7 @@ namespace Foxoft
         public FormHierarchyList(string hierarchyCode)
             : this()
         {
-            DcHierarchy = efMethods.SelectHierarchy(hierarchyCode);
+            DcHierarchy = efMethods.SelectEntityById<DcHierarchy>(hierarchyCode);
         }
 
         private void TreeList_GetStateImage(object sender, GetStateImageEventArgs e)
@@ -68,7 +68,7 @@ namespace Foxoft
             object HierarchyCode = e.Node?.GetValue(treeListCol_HierarchyCode);
 
             if (HierarchyCode is not null)
-                DcHierarchy = efMethods.SelectHierarchy(HierarchyCode.ToString());
+                DcHierarchy = efMethods.SelectEntityById<DcHierarchy>(HierarchyCode.ToString());
         }
 
         private void dx_AddChild_ItemClick(object sender, EventArgs e)
@@ -102,7 +102,7 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(hierarchyCode))
             {
-                int result = efMethods.DeleteHierarchy(hierarchyCode);
+                int result = efMethods.DeleteEntityById<DcHierarchy>(hierarchyCode);
 
                 if (result > 0)
                     treeList1.DeleteNode(treeList1.FocusedNode);
@@ -135,7 +135,7 @@ namespace Foxoft
                     string hierarchyCode = treeList1.FocusedValue?.ToString();
                     if (!string.IsNullOrEmpty(hierarchyCode))
                     {
-                        DcHierarchy dcHierarchy = efMethods.SelectHierarchy(hierarchyCode);
+                        DcHierarchy dcHierarchy = efMethods.SelectEntityById<DcHierarchy>(hierarchyCode);
                         if (dcHierarchy is not null)
                             dx_Edit.Enabled = false;
                     }
@@ -155,12 +155,12 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(hierarchyCode))
             {
-                DcHierarchy = efMethods.SelectHierarchy(hierarchyCode);
+                DcHierarchy = efMethods.SelectEntityById<DcHierarchy>(hierarchyCode);
 
                 if (DcHierarchy == null)
                 {
                     DcHierarchy = new() { HierarchyCode = hierarchyCode, HierarchyDesc = "Yeni", HierarchyLevel = treeList1.FocusedNode.Level, HierarchyParentCode = treeList1.FocusedNode.ParentNode?.GetValue(treeListCol_HierarchyCode)?.ToString() };
-                    efMethods.InsertHierarchy(DcHierarchy);
+                    efMethods.InsertEntity<DcHierarchy>(DcHierarchy);
                 }
 
                 if (!string.IsNullOrEmpty(hierarchyDesc))

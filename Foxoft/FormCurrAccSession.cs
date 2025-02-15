@@ -40,7 +40,7 @@ namespace Foxoft
 
         private void LoadUsers()
         {
-            List<TrSession> trSessions = efMethods.SelectSessions();
+            List<TrSession> trSessions = efMethods.SelectEntities<TrSession>();
             List<UserInfo> userInfos = new();
 
             if (trSessions is not null)
@@ -79,7 +79,7 @@ namespace Foxoft
                     }
                     catch (ArgumentException)
                     {
-                        efMethods.DeleteSession(trSession);
+                        efMethods.DeleteEntity<TrSession>(trSession);
                     }
                 }
             }

@@ -51,9 +51,10 @@ namespace Foxoft
                 new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
             });
 
-            LUE_InstallmentCurrency.Properties.DataSource = efMethods.SelectCurrencies();
-            lUE_cashCurrency.Properties.DataSource = efMethods.SelectCurrencies();
-            lUE_CashlessCurrency.Properties.DataSource = efMethods.SelectCurrencies();
+            List<DcCurrency> currencies = efMethods.SelectEntities<DcCurrency>();
+            LUE_InstallmentCurrency.Properties.DataSource = currencies;
+            lUE_cashCurrency.Properties.DataSource = currencies;
+            lUE_CashlessCurrency.Properties.DataSource = currencies;
             lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 });
         }
 
@@ -202,7 +203,7 @@ namespace Foxoft
 
         private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
         {
-            dcPaymentMethod = efMethods.SelectPaymentMethod(Convert.ToInt32(lUE_PaymentMethod.EditValue));
+            dcPaymentMethod = efMethods.SelectEntityById<DcPaymentMethod>(Convert.ToInt32(lUE_PaymentMethod.EditValue));
 
             trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
             //btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
@@ -391,7 +392,7 @@ namespace Foxoft
                     XtraMessageBox.Show("Cari Hesabın Şəxsiyyət Vəsiqəsinin Nömrəsi yoxdur");
                     return;
                 }
-                
+
                 if (String.IsNullOrEmpty(dcCurrAcc.PhoneNum))
                 {
                     XtraMessageBox.Show("Cari Hesabın Telefon Nömrəsi yoxdur");
@@ -410,7 +411,7 @@ namespace Foxoft
                     {
                         efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
 
-                        efMethods.InsertPaymentHeader(trPaymentHeader);
+                        efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader);
 
                         List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
                         foreach (TrInvoiceLine il in trInvoiceLines)
@@ -421,39 +422,39 @@ namespace Foxoft
                             trPaymentLineCash.ExchangeRate = il.ExchangeRate;
                             trPaymentLineCash.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
 
-                            efMethods.InsertPaymentLine(trPaymentLineCash);
+                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCash);
                         }
                     }
                     else
                     {
-                        efMethods.InsertPaymentHeader(trPaymentHeader);
+                        efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader);
 
                         if (trPaymentLineCash.PaymentLoc > 0)
                         {
                             trPaymentLineCash.PaymentLineId = Guid.NewGuid();
                             trPaymentLineCash.Payment = isNegativ ? trPaymentLineCash.Payment * (-1) : trPaymentLineCash.Payment;
-                            efMethods.InsertPaymentLine(trPaymentLineCash);
+                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCash);
                         }
 
                         if (trPaymentLineCashless.PaymentLoc > 0)
                         {
                             trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
                             trPaymentLineCashless.Payment = isNegativ ? trPaymentLineCashless.Payment * (-1) : trPaymentLineCashless.Payment;
-                            efMethods.InsertPaymentLine(trPaymentLineCashless);
+                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless);
 
                             TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
                             trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
                             trPaymentHeader2.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
                             trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode?.ToString();
                             trPaymentHeader2.OperationType = "payment";
-                            efMethods.InsertPaymentHeader(trPaymentHeader2);
+                            efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader2);
 
                             TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
                             trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
                             trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
                             trPaymentLineCashless2.CreatedDate = DateTime.Now;
                             trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_Commission.EditValue ?? 0m));
-                            efMethods.InsertPaymentLine(trPaymentLineCashless2);
+                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless2);
 
                             if ((decimal)txt_Commission.EditValue > 0)
                             {
@@ -463,7 +464,7 @@ namespace Foxoft
                                 trPaymentLineCommission.PaymentTypeCode = 5;
                                 trPaymentLineCommission.LineDescription = LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
                                 trPaymentLineCommission.Payment = (-1) * (decimal)txt_Commission.EditValue;
-                                efMethods.InsertPaymentLine(trPaymentLineCommission);
+                                efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCommission);
                             }
                         }
                     }
@@ -474,7 +475,7 @@ namespace Foxoft
                     if (!string.IsNullOrEmpty(trInstallment.PaymentPlanCode))
                     {
                         trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
-                        efMethods.InsertTrInstallment(trInstallment);
+                        efMethods.InsertEntity<TrInstallment>(trInstallment);
                     }
                 }
 

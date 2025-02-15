@@ -1,7 +1,5 @@
 ﻿using DevExpress.Data;
-using DevExpress.Utils.Extensions;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Commands;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -15,12 +13,10 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -34,7 +30,6 @@ namespace Foxoft
         private Guid paymentHeaderId;
         private decimal BalanceBefore;
 
-
         public FormPaymentDetail()
         {
             InitializeComponent();
@@ -44,8 +39,8 @@ namespace Foxoft
             cM.AddReports(BSI_Reports, "PaymentDetails", nameof(trPaymentHeader.PaymentHeaderId), gV_PaymentLine, activeFilterStr);
 
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
-            repoLUE_CurrencyCode.DataSource = efMethods.SelectCurrencies();
-            repoLUE_PaymentTypeCode.DataSource = efMethods.SelectPaymentTypes();
+            repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
+            repoLUE_PaymentTypeCode.DataSource = efMethods.SelectEntities<DcPaymentType>();
 
             ClearControlsAddNew();
         }
@@ -193,15 +188,25 @@ namespace Foxoft
             dataLayoutControl1.IsValid(out List<string> errorList);
 
             //BalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trPaymentHeader.CurrAccCode, trPaymentHeader.OperationDate.Add(trPaymentHeader.OperationTime)), 2);
+
+            if (!trPaymentHeader.IsLocked)
+            {
+                bool locked = (DateTime.Now - trPaymentHeader.DocumentDate).Days > Settings.Default.AppSetting.InvoiceEditGraceDays;
+                trPaymentHeader.IsLocked = locked;
+            }
+
+            LCG_Payment.Enabled = !trPaymentHeader.IsLocked;
+
+            efMethods.UpdatePaymentIsLocked(trPaymentHeader.PaymentHeaderId, trPaymentHeader.IsLocked);
         }
 
         private void bBI_DeletePayment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (efMethods.PaymentHeaderExist(trPaymentHeader.PaymentHeaderId))
+            if (efMethods.EntityExists<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId))
             {
                 if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeletePayment(trPaymentHeader.PaymentHeaderId);
+                    efMethods.DeleteEntityById<TrPaymentHeader>(trPaymentHeader.PaymentHeaderId);
 
                     ClearControlsAddNew();
                 }
@@ -238,10 +243,10 @@ namespace Foxoft
                 gV_PaymentLine.SetRowCellValue(e.RowHandle, colCashRegisterCode, cashReg);
 
             string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-            DcProcess dcProcess = efMethods.SelectProcess("PA");
+            DcProcess dcProcess = efMethods.SelectEntityById<DcProcess>("PA");
             if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
                 currencyCode = dcProcess.CustomCurrencyCode;
-            DcCurrency currency = efMethods.SelectCurrency(currencyCode);
+            DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(currencyCode);
             if (currency is not null)
             {
                 gV_PaymentLine.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
@@ -366,7 +371,7 @@ namespace Foxoft
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit textEditor = (LookUpEdit)sender;
-            float exRate = efMethods.SelectExRate(textEditor.EditValue.ToString());
+            float exRate = efMethods.SelectEntityById<DcCurrency>(textEditor.EditValue.ToString()).ExchangeRate;
             gV_PaymentLine.SetFocusedRowCellValue(colExchangeRate, exRate);
 
             //CalcRowLocNetAmount(new CellValueChangedEventArgs(gV_PaymentLine.FocusedRowHandle, colExchangeRate, exRate));
@@ -620,6 +625,21 @@ namespace Foxoft
         private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void BBI_EditPayment_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "EditLockedPayment");
+            if (!currAccHasClaims)
+            {
+                MessageBox.Show("Yetkiniz yoxdur! ");
+                return;
+            }
+
+            if (LCG_Payment.Enabled)
+                LCG_Payment.Enabled = false;
+            else
+                LCG_Payment.Enabled = true;
         }
     }
 }

@@ -94,7 +94,7 @@ namespace Foxoft
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string roleCode = view.GetRowCellValue(rowInd, colRoleCode) as string ?? string.Empty;
-                DcRole dcRole = efMethods.SelectRole(roleCode);
+                DcRole dcRole = efMethods.SelectEntityById<DcRole>(roleCode);
                 e.Value = dcRole?.RoleDesc;
             }
         }
@@ -121,7 +121,7 @@ namespace Foxoft
             {
                 int currAccRolId = Convert.ToInt32(gV_CurrAccRole.GetFocusedRowCellValue(colCurrAccRoleId));
 
-                efMethods.DeleteCurrAccRole(currAccRolId);
+                efMethods.DeleteEntityById<TrCurrAccRole>(currAccRolId);
 
                 LoadCurrAccRole(btnEdit_CurrAccCode.EditValue?.ToString());
             }
@@ -146,7 +146,7 @@ namespace Foxoft
             {
                 int roleClaimId = Convert.ToInt32(gv_RoleClaim.GetFocusedRowCellValue(colRoleClaimId));
 
-                efMethods.DeleteRoleClaim(roleClaimId);
+                efMethods.DeleteEntityById<TrRoleClaim>(roleClaimId);
 
                 LoadRoleClaim(btnEdit_CurrAccCode.EditValue?.ToString());
             }
