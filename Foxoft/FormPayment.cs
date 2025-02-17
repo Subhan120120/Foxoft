@@ -213,7 +213,7 @@ namespace Foxoft
             {
                 LUE_PaymentPlan.Properties.DataSource = paymentPlans;
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Always);
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Always);
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, LayoutVisibility.Always);
 
 
                 LUE_PaymentPlan.EditValue = efMethods.SelectPaymentPlanDefault(dcPaymentMethod.PaymentMethodId)?.PaymentPlanCode;
@@ -221,10 +221,10 @@ namespace Foxoft
             else
             {
                 LUE_PaymentPlan.Properties.DataSource = null;
-                txt_Commission.EditValue = null;
+                txt_CashlessCommission.EditValue = null;
                 LUE_PaymentPlan.EditValue = null;
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Never);
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_Commission, LayoutVisibility.Never);
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, LayoutVisibility.Never);
             }
         }
 
@@ -285,7 +285,7 @@ namespace Foxoft
             if (row is not null)
             {
                 float paymentTypeCode = ((DcPaymentPlan)row).CommissionRate;
-                txt_Commission.EditValue = trPaymentLineCashless.Payment * (decimal)paymentTypeCode / 100;
+                txt_CashlessCommission.EditValue = trPaymentLineCashless.Payment * (decimal)paymentTypeCode / 100;
             }
         }
 
@@ -323,13 +323,18 @@ namespace Foxoft
             object row = LUE_PaymentPlan.Properties.GetDataSourceRowByKeyValue(LUE_PaymentPlan.EditValue);
             if (row is not null)
             {
-                float paymentTypeCode = ((DcPaymentPlan)row).CommissionRate;
-                txt_Commission.EditValue = trPaymentLineCashless.Payment * (decimal)paymentTypeCode / 100;
+                float commisionRate = ((DcPaymentPlan)row).CommissionRate;
+                txt_CashlessCommission.EditValue = trPaymentLineCashless.Payment * (decimal)commisionRate / 100;
             }
         }
 
-        private void txt_Commission_EditValueChanged(object sender, EventArgs e)
+        private void txt_CashlessCommission_EditValueChanged(object sender, EventArgs e)
         {
+        }
+
+        private void txt_InstallmentCommission_EditValueChanged(object sender, EventArgs e)
+        {
+            trInstallment.Commission = Convert.ToDecimal(txt_InstallmentCommission.EditValue);
         }
 
         private void textEditBonus_EditValueChanged(object sender, EventArgs e) { }
@@ -352,7 +357,14 @@ namespace Foxoft
 
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
         {
-            trInstallment.PaymentPlanCode = LUE_InstallmentPlan.EditValue?.ToString();
+            object row = LUE_InstallmentPlan.Properties.GetDataSourceRowByKeyValue(LUE_InstallmentPlan.EditValue);
+            trInstallment.PaymentPlanCode = ((DcPaymentPlan)row).PaymentPlanCode;
+
+            if (row is not null)
+            {
+                float commisionRate = ((DcPaymentPlan)row).CommissionRate;
+                txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
+            }
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)
@@ -453,17 +465,17 @@ namespace Foxoft
                             trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
                             trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
                             trPaymentLineCashless2.CreatedDate = DateTime.Now;
-                            trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_Commission.EditValue ?? 0m));
+                            trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_CashlessCommission.EditValue ?? 0m));
                             efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless2);
 
-                            if ((decimal)txt_Commission.EditValue > 0)
+                            if ((decimal)txt_CashlessCommission.EditValue > 0)
                             {
                                 TrPaymentLine trPaymentLineCommission = trPaymentLineCashless;
                                 trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
                                 trPaymentLineCommission.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
                                 trPaymentLineCommission.PaymentTypeCode = 5;
                                 trPaymentLineCommission.LineDescription = LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
-                                trPaymentLineCommission.Payment = (-1) * (decimal)txt_Commission.EditValue;
+                                trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
                                 efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCommission);
                             }
                         }

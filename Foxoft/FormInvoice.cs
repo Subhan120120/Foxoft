@@ -6,6 +6,7 @@ using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
+using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraCharts.Design;
@@ -1164,26 +1165,37 @@ namespace Foxoft
                 }
             }
 
-            if (MessageBox.Show("Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Silmek Isteyirsiz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeleteInvoice"] } }) == DialogResult.OK)
             {
                 bool currAccHasPayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
                 bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
+                bool currAccHasDeleteEXClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceEX");
+                bool currAccHasDeleteISClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "DeleteInvoiceIS");
 
                 if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
                     if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                         efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                    else if (MessageBox.Show("Qaimə üzrə olan ödənişləri də silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-                        if (currAccHasClaims)
+                    else if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Qaimə üzrə olan ödənişləri də silirsiniz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeletePayment"] } }) == DialogResult.OK)
+                        if (currAccHasPayClaims)
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                         else
-                            MessageBox.Show("Ödəniş Yetkiniz yoxdur!");
+                            XtraMessageBox.Show("Ödəniş Yetkiniz yoxdur!");
 
                 if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
-                    if (MessageBox.Show("Qaimə üzrə olan xərcləri də Silirsiniz? ", "Diqqət", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-                        if (currAccHasClaims)
-                            efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                    if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Qaimə üzrə olan xərcləri də Silirsiniz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeleteExpenses"] } }) == DialogResult.OK)
+                        if (currAccHasExpenceClaims)
+                            if (currAccHasDeleteEXClaims)
+                                efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                            else XtraMessageBox.Show("Xərci Silmə Yetkiniz yoxdur!");
                         else
-                            MessageBox.Show("Xərc Yetkiniz yoxdur!");
+                            XtraMessageBox.Show("Xərc Yetkiniz yoxdur!");
+
+                if (efMethods.InstallmentsExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
+                    if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Qaimə üzrə olan kreditləri də Silirsiniz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeleteInvoiceIS"] } }) == DialogResult.OK)
+                        if (currAccHasDeleteISClaims)
+                            efMethods.DeleteInstallmentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
+                        else
+                            XtraMessageBox.Show("Kredit Silmə Yetkiniz yoxdur!");
 
                 efMethods.DeleteInvoice(trInvoiceHeader.InvoiceHeaderId);
 

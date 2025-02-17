@@ -502,8 +502,12 @@ namespace Foxoft
         {
             if (efMethods.ProductExist(dcProduct.ProductCode))
             {
-                if (MessageBox.Show("Silmek Isteyirsiz? \n " + dcProduct.ProductDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Silmek Isteyirsiz? \n " + dcProduct.ProductDesc, Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["actions_delete"] } }) == DialogResult.OK)
                 {
+                    if (efMethods.BarcodeExistByProduct(dcProduct.ProductCode))
+                        if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Barkodları da Silmək istəyirsiz? \n " + dcProduct.ProductDesc, Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["barcode"] } }) == DialogResult.OK)
+                            efMethods.DeleteBarcodesByProduct(dcProduct.ProductCode);
+
                     efMethods.DeleteProduct(dcProduct);
 
                     if (CustomExtensions.DirectoryExist(productsFolder))
@@ -660,6 +664,5 @@ namespace Foxoft
         private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
         {
         }
-
     }
 }

@@ -33,6 +33,9 @@ namespace Foxoft
             : this()
         {
             dcCurrAcc.CurrAccCode = currAccCode;
+
+            CurrAccCodeTextEdit.Properties.ReadOnly = true;
+            CurrAccCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
         public FormCurrAcc(byte currAccTypeCode)
@@ -44,6 +47,7 @@ namespace Foxoft
         private void FormCurrAcc_Load(object sender, EventArgs e)
         {
             LoadCurrAcc();
+
             dataLayoutControl1.IsValid(out List<string> errorList);
         }
 
@@ -55,10 +59,6 @@ namespace Foxoft
                 ClearControlsAddNew();
             else
             {
-                //dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                //                    .LoadAsync()
-                //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-
                 dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
                     .Load();
                 dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
@@ -78,6 +78,7 @@ namespace Foxoft
             dcCurrAcc.DataLanguageCode = "AZ";
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
+            CurrAccDescTextEdit.Select();
         }
 
         private void dcCurrAccsBindingSource_AddingNew(object sender, AddingNewEventArgs e)

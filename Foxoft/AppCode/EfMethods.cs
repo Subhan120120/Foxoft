@@ -75,8 +75,8 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            db.Set<T>().Remove(entity); 
-            return db.SaveChanges(); 
+            db.Set<T>().Remove(entity);
+            return db.SaveChanges();
         }
 
         public int DeleteEntityById<T>(params object[] keyValues) where T : class
@@ -562,6 +562,12 @@ namespace Foxoft
                                       .Any(x => x.RelatedInvoiceId == invoiceHeaderId);
         }
 
+        public bool InstallmentsExistByInvoiceId(Guid invoiceHeaderId)
+        {
+            using subContext db = new();
+            return db.TrInstallments.Any(x => x.InvoiceHeaderId == invoiceHeaderId);
+        }
+
         public void DeleteExpensesByInvoiceId(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -630,6 +636,14 @@ namespace Foxoft
                 product = db.DcProducts.Remove(dcProduct);
             }
 
+            return db.SaveChanges();
+        }
+
+        public int DeleteBarcodesByProduct(string product)
+        {
+            using subContext db = new();
+
+            db.TrProductBarcodes.RemoveRange(db.TrProductBarcodes.Where(x => x.ProductCode == product));
             return db.SaveChanges();
         }
 
@@ -1271,6 +1285,12 @@ namespace Foxoft
             using subContext db = new();
             return db.DcProducts.Where(x => x.IsDisabled == false)
                        .Any(x => x.ProductCode == productCode);
+        }
+
+        public bool BarcodeExistByProduct(string productCode)
+        {
+            using subContext db = new();
+            return db.TrProductBarcodes.Any(x => x.ProductCode == productCode);
         }
 
         public void InsertProduct(DcProduct dcProduct)

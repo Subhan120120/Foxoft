@@ -1,6 +1,4 @@
-﻿
-
-WITH PaymentLinesSum AS (
+﻿WITH PaymentLinesSum AS (
     SELECT
         ph.InvoiceHeaderId,
         ph.CurrAccCode,
@@ -9,6 +7,10 @@ WITH PaymentLinesSum AS (
         TrPaymentLines pl
     INNER JOIN
         TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId
+    INNER JOIN
+        TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
+    WHERE
+        ph.OperationDate > i.DocumentDate -- Filter payments after DocumentDate
     GROUP BY
         ph.InvoiceHeaderId, ph.CurrAccCode
 ),
@@ -23,6 +25,8 @@ InstallmentData AS (
         i.CurrencyCode,
         i.ExchangeRate,
         i.AmountLoc + i.Commission AS AmountWithComLoc,
+		ca.CurrAccDesc,
+		ca.PhoneNum,
         p.DurationInMonths,
         COALESCE(psum.PaymentLinesSum, 0) AS TotalPaid
     FROM
@@ -40,6 +44,8 @@ CalculatedData AS (
     SELECT
         InstallmentId,
         InvoiceHeaderId,
+		CurrAccDesc,
+		PhoneNum,
         DocumentDate,
         PaymentPlanCode,
         Amount,
@@ -57,6 +63,8 @@ CalculatedData AS (
 SELECT
     InstallmentId,
     InvoiceHeaderId,
+	CurrAccDesc,
+	PhoneNum,
     DocumentDate,
     PaymentPlanCode,
     Amount,

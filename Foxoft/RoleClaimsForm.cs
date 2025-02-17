@@ -9,56 +9,43 @@ namespace Foxoft
 {
     public partial class RoleClaimsForm : XtraForm
     {
-        private List<DcClaim> claims;
+        private subContext db = new subContext();
         private string selectedRoleCode;
-        subContext db = new subContext();
 
         public RoleClaimsForm()
         {
             InitializeComponent();
             LoadClaims();
-            btnEditRole.ButtonClick += BtnEditRole_ButtonClick;
-            btnSave.Click += BtnSave_Click;
         }
 
         private void LoadClaims()
         {
-            claims = new List<DcClaim>
-            {
-                new DcClaim { ClaimCode = "ButunHesabatlar", ClaimDesc = "Butun Hesabatlar", ClaimTypeId = 2 },
-                new DcClaim { ClaimCode = "CashRegs", ClaimDesc = "Kassalar", ClaimTypeId = 1 },
-                // Add all other claims here...
-            };
-
+            var claims = db.DcClaims.ToList();
             foreach (var claim in claims)
             {
-                var chk = new CheckBox
+                CheckBox checkBox = new CheckBox
                 {
                     Text = claim.ClaimDesc,
                     Tag = claim.ClaimCode,
                     AutoSize = true
                 };
-                chk.CheckedChanged += Chk_CheckedChanged;
-                flowLayoutPanel1.Controls.Add(chk);
+                checkBox.CheckedChanged += CheckBox_CheckedChanged;
+                flowLayoutPanel1.Controls.Add(checkBox);
             }
         }
 
-        private void BtnEditRole_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // Open a form or dialog to select a role and set selectedRoleCode
-            // For simplicity, let's assume we have a method to select a role
-            selectedRoleCode = SelectRole();
-            btnEditRole.Text = selectedRoleCode;
-        }
+            CheckBox checkBox = (CheckBox)sender;
+            string claimCode = checkBox.Tag.ToString();
 
-        private void Chk_CheckedChanged(object sender, EventArgs e)
-        {
-            var chk = sender as CheckBox;
-            var claimCode = chk.Tag.ToString();
-
-            if (chk.Checked)
+            if (checkBox.Checked)
             {
-                db.TrRoleClaims.Add(new TrRoleClaim { RoleClaimId = 1, RoleCode = selectedRoleCode, ClaimCode = claimCode });
+                if (!db.TrRoleClaims.Any(rc => rc.RoleCode == selectedRoleCode && rc.ClaimCode == claimCode))
+                {
+                    db.TrRoleClaims.Add(new TrRoleClaim { RoleCode = selectedRoleCode, ClaimCode = claimCode });
+                    db.SaveChanges();
+                }
             }
             else
             {
@@ -66,20 +53,32 @@ namespace Foxoft
                 if (roleClaim != null)
                 {
                     db.TrRoleClaims.Remove(roleClaim);
+                    db.SaveChanges();
                 }
             }
         }
 
-        private void BtnSave_Click(object sender, EventArgs e)
+        private void buttonEditRole_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
-            db.SaveChanges();
-            XtraMessageBox.Show("Changes saved successfully!");
+            ButtonEdit buttonEdit = (ButtonEdit)sender;
+            using (FormCommonList<DcRole> form = new FormCommonList<DcRole>("", nameof(DcRole.RoleCode), buttonEdit.EditValue?.ToString()))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    selectedRoleCode = form.Value_Id.ToString();
+                    buttonEdit.EditValue = selectedRoleCode;
+                    UpdateCheckBoxes(selectedRoleCode);
+                }
+            }
         }
 
-        private string SelectRole()
+        private void UpdateCheckBoxes(string roleCode)
         {
-            // Implement role selection logic here
-            return "Admin"; // Placeholder
+            var roleClaims = db.TrRoleClaims.Where(rc => rc.RoleCode == roleCode).Select(rc => rc.ClaimCode).ToList();
+            foreach (CheckBox checkBox in flowLayoutPanel1.Controls)
+            {
+                checkBox.Checked = roleClaims.Contains(checkBox.Tag.ToString());
+            }
         }
     }
 }

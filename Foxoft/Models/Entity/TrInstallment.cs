@@ -36,8 +36,6 @@ namespace Foxoft.Models
         [Display(Name = "Ümumi Məbləğ (YPV)")]
         public decimal AmountLoc { get { return Math.Round(Amount / (decimal)ExchangeRate, 4); } set { } }
 
-
-
         [ForeignKey("DcCurrency")]
         [Display(Name = "Valyuta")]
         public string CurrencyCode { get; set; }
@@ -45,6 +43,7 @@ namespace Foxoft.Models
         [Display(Name = "Valyuta Kursu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public float ExchangeRate { get; set; }
+
 
 
         [NotMapped]

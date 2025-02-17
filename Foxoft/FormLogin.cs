@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraBars;
+﻿using DevExpress.Utils.Svg;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -165,11 +166,13 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            UCNumberPad xtraForm1 = new();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
 
-            xtraForm1.Dock = DockStyle.Fill;
-            this.Controls.Add(xtraForm1);
-            xtraForm1.Show();
+            XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Custom Icon Message", Text = "This is a message with a custom icon.", Buttons = new[] { DialogResult.OK }, ImageOptions = new MessageBoxImageOptions() { SvgImage = (SvgImage)resources.GetObject("btn_ERP.ImageOptions.SvgImage") } });
+
+            RoleClaimsForm xtraForm1 = new();
+
+            xtraForm1.ShowDialog();
         }
 
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)

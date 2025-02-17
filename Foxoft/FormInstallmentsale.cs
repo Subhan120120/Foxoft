@@ -141,12 +141,7 @@ namespace Foxoft
 
         private void LoadData()
         {
-            object dataSource = null;
-
-            DcReport dcReport = null;
-
-
-            dcReport = efMethods.SelectReportByName("Report_Embedded_Installmentsale");
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_Installmentsale");
 
             if (dcReport is not null)
             {
@@ -160,11 +155,9 @@ namespace Foxoft
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
-                        dataSource = dt;
+                        bindingSourceTrInstallmentsale.DataSource = dt;
                 }
             }
-
-            bindingSourceTrInstallmentsale.DataSource = dataSource;
 
             if (gridView1.FocusedRowHandle >= 0)
                 trInstallmentViewModel = gridView1.GetFocusedRow() as TrInstallmentViewModel;

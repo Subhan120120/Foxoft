@@ -151,6 +151,8 @@ namespace Foxoft
             dcProduct.DefaultUnitOfMeasureId = settingStore.DefaultUnitOfMeasureId;
 
             dcProductsBindingSource.DataSource = dcProduct;
+
+            ProductDescTextEdit.Select();
         }
 
         private void dcCurrAccsBindingSource_AddingNew(object sender, AddingNewEventArgs e)
