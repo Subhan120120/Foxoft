@@ -30,6 +30,10 @@ namespace Foxoft
             ReportTypeIdLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcReportType>();
             ReportTypeIdLookUpEdit.Properties.ValueMember = "ReportTypeId";
             ReportTypeIdLookUpEdit.Properties.DisplayMember = "ReportTypeDesc";
+
+            ReportCategoryIdLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcReportCategory>();
+            ReportCategoryIdLookUpEdit.Properties.ValueMember = "ReportCategoryId";
+            ReportCategoryIdLookUpEdit.Properties.DisplayMember = "ReportCategoryDesc";
         }
 
         private void FormQueryEditor_Load(object sender, EventArgs e)

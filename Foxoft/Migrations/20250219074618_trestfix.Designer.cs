@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20250219074618_trestfix")]
+    partial class trestfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1838,8 +1841,6 @@ namespace Foxoft.Migrations
 
                     b.HasKey("ReportId");
 
-                    b.HasIndex("ReportCategoryId");
-
                     b.HasIndex("ReportTypeId");
 
                     b.ToTable("DcReports");
@@ -2003,96 +2004,6 @@ namespace Foxoft.Migrations
                             ReportName = "Məhsul Qalığı",
                             ReportQuery = "\r\n\r\nselect * From ProductBalanceSerialNumber\r\n\r\n",
                             ReportTypeId = (byte)1
-                        });
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcReportCategory", b =>
-                {
-                    b.Property<int>("ReportCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportCategoryId"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<string>("ReportCategoryDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ReportCategoryId");
-
-                    b.ToTable("DcReportCategory");
-
-                    b.HasData(
-                        new
-                        {
-                            ReportCategoryId = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReportCategoryDesc = "Satış və Müştəri Hesabatları"
-                        },
-                        new
-                        {
-                            ReportCategoryId = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReportCategoryDesc = "Satınalma və Təchizatçı Hesabatları"
-                        },
-                        new
-                        {
-                            ReportCategoryId = 3,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReportCategoryDesc = "Məhsul və Stok Hesabatları"
-                        },
-                        new
-                        {
-                            ReportCategoryId = 4,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReportCategoryDesc = "İstehsal Hesabatları"
-                        },
-                        new
-                        {
-                            ReportCategoryId = 5,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReportCategoryDesc = "Maliyyə Hesabatları"
-                        },
-                        new
-                        {
-                            ReportCategoryId = 6,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReportCategoryDesc = "Kadr və İnsan Resursları Hesabatları"
-                        },
-                        new
-                        {
-                            ReportCategoryId = 7,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReportCategoryDesc = "Mənfəət/Zərər və Rentabellik Hesabatları"
                         });
                 });
 
@@ -4710,18 +4621,11 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcReportCategory", "DcReportCategory")
-                        .WithMany("DcReports")
-                        .HasForeignKey("ReportCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Foxoft.Models.DcReportType", "DcReportType")
                         .WithMany("DcReports")
                         .HasForeignKey("ReportTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DcReportCategory");
 
                     b.Navigation("DcReportType");
                 });
@@ -5461,11 +5365,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrFormReports");
 
                     b.Navigation("TrReportSubQueries");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.DcReportCategory", b =>
-                {
-                    b.Navigation("DcReports");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReportType", b =>

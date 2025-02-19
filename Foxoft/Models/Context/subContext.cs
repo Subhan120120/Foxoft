@@ -60,6 +60,7 @@ namespace Foxoft.Models
         public DbSet<DcReportType> DcReportTypes { get; set; }
         public DbSet<DcReportVariable> DcReportVariables { get; set; }
         public DbSet<DcReportVariableType> dcReportVariableTypes { get; set; }
+        //public DbSet<DcReportCategory> DcReportCategories { get; set; }
         public DbSet<TrReportSubQuery> TrReportSubQueries { get; set; }
         public DbSet<TrReportSubQueryRelationColumn> TrReportSubQueryRelationColumns { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
@@ -614,15 +615,15 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 4, ReportTypeId = 0, ReportName = "Report_Embedded_InvoiceReport", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_InvoiceReport.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 5, ReportTypeId = 0, ReportName = "Report_Embedded_Barcode", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_Barcode.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 6, ReportTypeId = 0, ReportName = "Report_Embedded_Installmentsale", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Embedded_Installmentsale.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 11, ReportTypeId = 1, ReportName = "Xərclər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 12, ReportTypeId = 1, ReportName = "Pulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 13, ReportTypeId = 1, ReportName = "Cari Hesab ilə Əməliyatlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 14, ReportTypeId = 1, ReportName = "Məhsulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductMovements.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 15, ReportTypeId = 1, ReportName = "Gəlir", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Profit.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 16, ReportTypeId = 1, ReportName = "Son Gələn Mallar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_RecentGoods.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 17, ReportTypeId = 1, ReportName = "Depoların Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 18, ReportTypeId = 2, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" },
-                new DcReport { ReportId = 19, ReportTypeId = 1, ReportName = "Məhsul Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductBalanceSerialNumber.sql"), ReportLayout = "" }
+                new DcReport { ReportId = 11, ReportTypeId = 1, ReportCategoryId = 5, ReportName = "Xərclər", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Expenses.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 12, ReportTypeId = 1, ReportCategoryId = 5, ReportName = "Pulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MoneyMovements.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 13, ReportTypeId = 1, ReportCategoryId = 1, ReportName = "Cari Hesab ilə Əməliyatlar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_MovementsWithAccounts.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 14, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Məhsulun Hərəkəti", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductMovements.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 15, ReportTypeId = 1, ReportCategoryId = 7, ReportName = "Gəlir", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_Profit.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 16, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Son Gələn Mallar", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_RecentGoods.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 17, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Depoların Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 18, ReportTypeId = 2, ReportCategoryId = 3, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" },
+                new DcReport { ReportId = 19, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Məhsul Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductBalanceSerialNumber.sql"), ReportLayout = "" }
                 // reportlarin layoutlarin FormLogin de duzelt
                );
 
@@ -636,6 +637,16 @@ namespace Foxoft.Models
                 new DcReportVariable { VariableId = 2, ReportId = 13, VariableTypeId = 2, VariableProperty = "CurrAccCode", Representative = "{CurrAccCode}", VariableValue = "c-0000001", VariableOperator = "=", VariableValueType = "System.String" },
                 new DcReportVariable { VariableId = 3, ReportId = 17, VariableTypeId = 2, VariableProperty = "DocumentDate", Representative = "{StartDate}", VariableValue = "08.01.2030", VariableOperator = "<=", VariableValueType = "System.DateTime" }
                );
+
+            modelBuilder.Entity<DcReportCategory>().HasData(
+                new DcReportCategory { ReportCategoryId = 1, ReportCategoryDesc = "Satış və Müştəri Hesabatları" },
+                new DcReportCategory { ReportCategoryId = 2, ReportCategoryDesc = "Satınalma və Təchizatçı Hesabatları" },
+                new DcReportCategory { ReportCategoryId = 3, ReportCategoryDesc = "Məhsul və Stok Hesabatları" },
+                new DcReportCategory { ReportCategoryId = 4, ReportCategoryDesc = "İstehsal Hesabatları" },
+                new DcReportCategory { ReportCategoryId = 5, ReportCategoryDesc = "Maliyyə Hesabatları" },
+                new DcReportCategory { ReportCategoryId = 6, ReportCategoryDesc = "Kadr və İnsan Resursları Hesabatları" },
+                new DcReportCategory { ReportCategoryId = 7, ReportCategoryDesc = "Mənfəət/Zərər və Rentabellik Hesabatları" }
+            );
 
             modelBuilder.Entity<DcOffice>().HasData(
                new DcOffice { OfficeCode = "ofs01", OfficeDesc = "Mərkəz Ofisi" }

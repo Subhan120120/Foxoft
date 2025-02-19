@@ -109,6 +109,8 @@ namespace Foxoft
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             timer1 = new System.Windows.Forms.Timer(components);
+            accordionControlElement1 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
@@ -641,6 +643,7 @@ namespace Foxoft
             // 
             // aCE_Reports
             // 
+            aCE_Reports.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { accordionControlElement1 });
             aCE_Reports.Expanded = true;
             aCE_Reports.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Reports.ImageOptions.SvgImage");
             aCE_Reports.Name = "aCE_Reports";
@@ -678,6 +681,19 @@ namespace Foxoft
             // 
             timer1.Interval = 5000;
             timer1.Tick += timer1_Tick;
+            // 
+            // accordionControlElement1
+            // 
+            accordionControlElement1.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { accordionControlElement2 });
+            accordionControlElement1.Expanded = true;
+            accordionControlElement1.Name = "accordionControlElement1";
+            accordionControlElement1.Text = "Element1";
+            // 
+            // accordionControlElement2
+            // 
+            accordionControlElement2.Name = "accordionControlElement2";
+            accordionControlElement2.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            accordionControlElement2.Text = "Element2";
             // 
             // FormERP
             // 
@@ -791,5 +807,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_RetailsaleReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_WholesaleReturnCustom;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentsaleReturnCustom;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement1;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement2;
     }
 }

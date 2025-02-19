@@ -38,7 +38,13 @@ namespace Foxoft.Models
         [Display(Name = "Xarici Filter")]
         public string? ReportFilter { get; set; }
 
+        [Display(Name = "Hesabat Kateqoriya Id")]
+        [ForeignKey("DcReportCategory")]
+        public int? ReportCategoryId { get; set; }
+
+
         public virtual DcReportType DcReportType { get; set; }
+        public virtual DcReportCategory DcReportCategory { get; set; }
         //public virtual ICollection<DcQueryParam> DcQueryParams { get; set; }
         public virtual ICollection<DcReportVariable> DcReportVariables { get; set; }
         public virtual ICollection<TrClaimReport> TrClaimReports { get; set; }
