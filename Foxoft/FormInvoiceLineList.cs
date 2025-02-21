@@ -1,4 +1,6 @@
-﻿using DevExpress.Data.Linq;
+﻿
+using DevExpress.Data.Filtering;
+using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
@@ -86,6 +88,7 @@ namespace Foxoft
                             x.Price,
                             x.CurrencyCode,
                             x.PriceLoc,
+                            x.SerialNumberCode,
                             x.TrInvoiceHeader.DcCurrAcc.CurrAccDesc,
                             x.InvoiceHeaderId,
                             x.TrInvoiceHeader.CreatedDate,
@@ -209,6 +212,7 @@ namespace Foxoft
                 if (!gV.FindPanelVisible)
                     gV.ShowFindPanel();
                 gV.ShowFindPanel();
+                gV.OptionsFind.ShowFindButton = false;
             }
             isFirstPaint = false;
         }
@@ -224,6 +228,27 @@ namespace Foxoft
             }
             else
                 trInvoiceLine = null;
+        }
+
+        private void BtnEdit_FindBarcode_EditValueChanged(object sender, EventArgs e)
+        {
+            ButtonEdit buttonEdit = (ButtonEdit)sender;
+            string barcode = buttonEdit.EditValue?.ToString();
+
+            string product = efMethods.SelectProductByBarcode(barcode)?.ProductCode;
+
+            if (String.IsNullOrEmpty(barcode))
+            {
+                gV_InvoiceLineList.ActiveFilterCriteria = new BinaryOperator(colProductCode.FieldName, "", BinaryOperatorType.NotEqual);
+            }
+            else
+            {
+                CriteriaOperator filterCriteria = new BinaryOperator(colProductCode.FieldName, product);
+                gV_InvoiceLineList.ActiveFilterCriteria = filterCriteria;
+            }
+
+            gV_InvoiceLineList.RefreshData();
+
         }
     }
 }

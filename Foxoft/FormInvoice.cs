@@ -1831,6 +1831,10 @@ namespace Foxoft
                                         string captionPosDiscount = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.PosDiscount);
                                         if (column.ColumnName == captionPosDiscount)
                                             gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_PosDiscount, row[captionPosDiscount].ToString());
+
+                                        string captionSerialNumber = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.SerialNumberCode);
+                                        if (column.ColumnName == captionSerialNumber)
+                                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colSerialNumberCode, row[captionSerialNumber].ToString());
                                     }
                                 }
                                 catch (ArgumentException ae)

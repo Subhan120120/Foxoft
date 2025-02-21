@@ -34,7 +34,7 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             gC_InvoiceHeaderList = new DevExpress.XtraGrid.GridControl();
-            trInvoiceHeadersBindingSource = new System.Windows.Forms.BindingSource(components);
+            trInvoiceHeadersBindingSource = new BindingSource(components);
             gV_InvoiceHeaderList = new DevExpress.XtraGrid.Views.Grid.GridView();
             colDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             colIsReturn = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -63,11 +63,11 @@ namespace Foxoft
             // gC_InvoiceHeaderList
             // 
             gC_InvoiceHeaderList.DataSource = trInvoiceHeadersBindingSource;
-            gC_InvoiceHeaderList.Dock = System.Windows.Forms.DockStyle.Fill;
-            gC_InvoiceHeaderList.Location = new System.Drawing.Point(0, 0);
+            gC_InvoiceHeaderList.Dock = DockStyle.Fill;
+            gC_InvoiceHeaderList.Location = new Point(0, 0);
             gC_InvoiceHeaderList.MainView = gV_InvoiceHeaderList;
             gC_InvoiceHeaderList.Name = "gC_InvoiceHeaderList";
-            gC_InvoiceHeaderList.Size = new System.Drawing.Size(972, 475);
+            gC_InvoiceHeaderList.Size = new Size(972, 475);
             gC_InvoiceHeaderList.TabIndex = 0;
             gC_InvoiceHeaderList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceHeaderList });
             gC_InvoiceHeaderList.Paint += gC_InvoiceHeaderList_Paint;
@@ -80,7 +80,7 @@ namespace Foxoft
             // gV_InvoiceHeaderList
             // 
             gV_InvoiceHeaderList.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colDocumentNumber, colIsReturn, colDocumentDate, colCurrAccCode, colDocumentTime, colOperationDate, colOperationTime, colStoreCode, colTotalNetAmount, colCurrAccDesc, colWarehouseCode, colToWarehouseCode, colPrintCount, colDescription, colIsOpen, colIsMainTF, colInvoiceHeaderId, colIsSent, colCustomsDocumentNumber });
-            gV_InvoiceHeaderList.CustomizationFormBounds = new System.Drawing.Rectangle(622, 285, 264, 272);
+            gV_InvoiceHeaderList.CustomizationFormBounds = new Rectangle(622, 285, 264, 272);
             gV_InvoiceHeaderList.GridControl = gC_InvoiceHeaderList;
             gV_InvoiceHeaderList.Name = "gV_InvoiceHeaderList";
             gV_InvoiceHeaderList.OptionsFind.AlwaysVisible = true;
@@ -210,12 +210,12 @@ namespace Foxoft
             // 
             // FormInvoiceHeaderList
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(972, 475);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(972, 475);
             Controls.Add(gC_InvoiceHeaderList);
             Name = "FormInvoiceHeaderList";
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "FormInvoiceHeaderList";
             Activated += FormInvoiceHeaderList_Activated;
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceHeaderList).EndInit();
