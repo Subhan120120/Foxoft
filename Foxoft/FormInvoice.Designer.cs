@@ -492,6 +492,7 @@ namespace Foxoft
             checkEdit_IsReturn.Enabled = false;
             checkEdit_IsReturn.Location = new Point(12, 354);
             checkEdit_IsReturn.Name = "checkEdit_IsReturn";
+            checkEdit_IsReturn.Properties.Appearance.Options.UseForeColor = true;
             checkEdit_IsReturn.Properties.Caption = "Geri Qaytarma";
             checkEdit_IsReturn.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             checkEdit_IsReturn.Size = new Size(100, 20);

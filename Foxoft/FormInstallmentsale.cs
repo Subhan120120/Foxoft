@@ -170,8 +170,8 @@ namespace Foxoft
 
         public void RepoBtnEdit_Payment_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            colInvoiceHeaderId = gridView1.Columns[nameof(TrInstallmentViewModel.InvoiceHeaderId)];
-            colMonthlyPayment = gridView1.Columns[nameof(TrInstallmentViewModel.MonthlyPayment)];
+            colInvoiceHeaderId = gridView1.Columns[nameof(TrInstallment.InvoiceHeaderId)];
+            colMonthlyPayment = gridView1.Columns[nameof(TrInstallment.MonthlyPayment)];
 
             Guid invoiceHeaderId = (Guid)gridView1.GetFocusedRowCellValue(colInvoiceHeaderId);
             Decimal monthlyPayment = (Decimal)gridView1.GetFocusedRowCellValue(colMonthlyPayment);
@@ -185,7 +185,7 @@ namespace Foxoft
 
         private void MakePayment(decimal pay, TrInvoiceHeader trInvoiceHeader, bool autoPayment)
         {
-            using FormPayment formPayment = new(1, pay, trInvoiceHeader, new byte[] { 1, 2 }, autoPayment);
+            using FormPayment formPayment = new(1, Math.Round(pay, 2), trInvoiceHeader, new byte[] { 1, 2 }, autoPayment);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {

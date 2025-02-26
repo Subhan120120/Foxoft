@@ -84,7 +84,11 @@ namespace Foxoft
             this.relatedInvoiceId = relatedInvoiceId;
 
             if (isReturn.HasValue)
+            {
                 this.isReturn = (bool)isReturn;
+
+                checkEdit_IsReturn.Properties.Appearance.ForeColor = (bool)isReturn ? Color.Red : Color.Empty;
+            }
 
             this.Text = dcProcess.ProcessDesc;
             BEI_PrinterName.EditValue = settingStore.PrinterName;

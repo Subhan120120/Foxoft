@@ -399,6 +399,13 @@ namespace Foxoft
                 }
 
                 DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
+
+                if (dcCurrAcc is null)
+                {
+                    XtraMessageBox.Show("Cari Hesab Seçilməyib");
+                    return;
+                }
+
                 if (String.IsNullOrEmpty(dcCurrAcc.IdentityNum))
                 {
                     XtraMessageBox.Show("Cari Hesabın Şəxsiyyət Vəsiqəsinin Nömrəsi yoxdur");

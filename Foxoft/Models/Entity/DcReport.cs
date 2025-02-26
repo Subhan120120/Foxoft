@@ -14,7 +14,7 @@ namespace Foxoft.Models
             DcReportVariables = new HashSet<DcReportVariable>();
             TrClaimReports = new HashSet<TrClaimReport>();
             TrFormReports = new HashSet<TrFormReport>();
-            //DcQueryParams = new HashSet<DcQueryParam>();
+            TrReportCustomizations = new HashSet<TrReportCustomization>();
             TrReportSubQueries = new HashSet<TrReportSubQuery>();
         }
 
@@ -45,11 +45,11 @@ namespace Foxoft.Models
 
         public virtual DcReportType DcReportType { get; set; }
         public virtual DcReportCategory DcReportCategory { get; set; }
-        //public virtual ICollection<DcQueryParam> DcQueryParams { get; set; }
         public virtual ICollection<DcReportVariable> DcReportVariables { get; set; }
         public virtual ICollection<TrClaimReport> TrClaimReports { get; set; }
         public virtual ICollection<TrFormReport> TrFormReports { get; set; }
         public virtual ICollection<TrReportSubQuery> TrReportSubQueries { get; set; }
+        public virtual ICollection<TrReportCustomization> TrReportCustomizations { get; set; }
 
     }
 }

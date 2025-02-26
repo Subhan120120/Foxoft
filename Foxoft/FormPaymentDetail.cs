@@ -41,6 +41,7 @@ namespace Foxoft
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
             repoLUE_PaymentTypeCode.DataSource = efMethods.SelectEntities<DcPaymentType>();
+            repoLUE_PaymentTypeCode.ReadOnly = true;
 
             ClearControlsAddNew();
         }

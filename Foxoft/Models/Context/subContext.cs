@@ -29,8 +29,6 @@ namespace Foxoft.Models
         public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
         public DbSet<DcPaymentPlan> DcPaymentPlans { get; set; }
         public DbSet<TrInstallment> TrInstallments { get; set; }
-
-        //public DbSet<TrInvoiceHeaderDeleted> TrInvoiceHeaderDeleteds { get; set; }
         public DbSet<DcProcess> DcProcesses { get; set; }
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<SiteProduct> SiteProducts { get; set; }
@@ -60,9 +58,10 @@ namespace Foxoft.Models
         public DbSet<DcReportType> DcReportTypes { get; set; }
         public DbSet<DcReportVariable> DcReportVariables { get; set; }
         public DbSet<DcReportVariableType> dcReportVariableTypes { get; set; }
-        //public DbSet<DcReportCategory> DcReportCategories { get; set; }
+        public DbSet<DcReportCategory> DcReportCategories { get; set; }
         public DbSet<TrReportSubQuery> TrReportSubQueries { get; set; }
         public DbSet<TrReportSubQueryRelationColumn> TrReportSubQueryRelationColumns { get; set; }
+        public DbSet<TrReportCustomization> TrReportCustomizations { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<SettingStore> SettingStores { get; set; }
         public DbSet<DcVariable> DcVariables { get; set; }
@@ -427,6 +426,20 @@ namespace Foxoft.Models
                     .WithMany(x => x.TrFormReports)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+
+            modelBuilder.Entity<TrReportCustomization>(entity =>
+            {
+                entity.HasOne(x => x.DcReport)
+                    .WithMany(x => x.TrReportCustomizations)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrReportCustomization>(entity =>
+            {
+                entity.HasOne(x => x.DcCurrAcc)
+                    .WithMany(x => x.TrReportCustomizations)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
 
         private static void InitializeHasData(ModelBuilder modelBuilder)
@@ -505,10 +518,12 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "DeleteInvoiceRS", ClaimDesc = "Pərakəndə Satış Fakturası Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteInvoiceWS", ClaimDesc = "Topdan Satış Fakturası Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteInvoiceIS", ClaimDesc = "Kredit Satış Fakturası Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteInvoiceEX", ClaimDesc = "Xərc Fakturası Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteLineRP", ClaimDesc = "Alış Fakturası Sətiri Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteLineRS", ClaimDesc = "Pərakəndə Satış Sətiri Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteLineWS", ClaimDesc = "Topdan Satış Sətiri Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "DeleteLineIS", ClaimDesc = "Kredit Satış Sətiri Silmə", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "DeleteLineEX", ClaimDesc = "Xərc Sətiri Silmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "PurchaseReturnCustom", ClaimDesc = "Alış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "RetailsaleReturnCustom", ClaimDesc = "Pərakəndə Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "WholesaleReturnCustom", ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
@@ -576,18 +591,20 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 31, RoleCode = "Admin", ClaimCode = "DeleteInvoiceRS" },
                 new TrRoleClaim { RoleClaimId = 32, RoleCode = "Admin", ClaimCode = "DeleteInvoiceWS" },
                 new TrRoleClaim { RoleClaimId = 33, RoleCode = "Admin", ClaimCode = "DeleteInvoiceIS" },
-                new TrRoleClaim { RoleClaimId = 34, RoleCode = "Admin", ClaimCode = "DeleteLineRP" },
-                new TrRoleClaim { RoleClaimId = 35, RoleCode = "Admin", ClaimCode = "DeleteLineRS" },
-                new TrRoleClaim { RoleClaimId = 36, RoleCode = "Admin", ClaimCode = "DeleteLineWS" },
-                new TrRoleClaim { RoleClaimId = 37, RoleCode = "Admin", ClaimCode = "DeleteLineIS" },
-                new TrRoleClaim { RoleClaimId = 38, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturn" },
-                new TrRoleClaim { RoleClaimId = 39, RoleCode = "Admin", ClaimCode = "PurchaseReturnCustom" },
-                new TrRoleClaim { RoleClaimId = 40, RoleCode = "Admin", ClaimCode = "RetailsaleReturnCustom" },
-                new TrRoleClaim { RoleClaimId = 41, RoleCode = "Admin", ClaimCode = "WholesaleReturnCustom" },
-                new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturnCustom" },
-                new TrRoleClaim { RoleClaimId = 43, RoleCode = "Admin", ClaimCode = "Installments" },
-                new TrRoleClaim { RoleClaimId = 44, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
-                new TrRoleClaim { RoleClaimId = 45, RoleCode = "Admin", ClaimCode = "EditLockedPayment" }
+                new TrRoleClaim { RoleClaimId = 34, RoleCode = "Admin", ClaimCode = "DeleteInvoiceEX" },
+                new TrRoleClaim { RoleClaimId = 35, RoleCode = "Admin", ClaimCode = "DeleteLineRP" },
+                new TrRoleClaim { RoleClaimId = 36, RoleCode = "Admin", ClaimCode = "DeleteLineRS" },
+                new TrRoleClaim { RoleClaimId = 37, RoleCode = "Admin", ClaimCode = "DeleteLineWS" },
+                new TrRoleClaim { RoleClaimId = 38, RoleCode = "Admin", ClaimCode = "DeleteLineIS" },
+                new TrRoleClaim { RoleClaimId = 39, RoleCode = "Admin", ClaimCode = "DeleteLineEX" },
+                new TrRoleClaim { RoleClaimId = 40, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturn" },
+                new TrRoleClaim { RoleClaimId = 41, RoleCode = "Admin", ClaimCode = "PurchaseReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 42, RoleCode = "Admin", ClaimCode = "RetailsaleReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 43, RoleCode = "Admin", ClaimCode = "WholesaleReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 44, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturnCustom" },
+                new TrRoleClaim { RoleClaimId = 45, RoleCode = "Admin", ClaimCode = "Installments" },
+                new TrRoleClaim { RoleClaimId = 46, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
+                new TrRoleClaim { RoleClaimId = 47, RoleCode = "Admin", ClaimCode = "EditLockedPayment" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

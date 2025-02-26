@@ -1,26 +1,17 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.Data.Filtering.Helpers;
 using DevExpress.DataAccess.Excel;
-using DevExpress.Office.Utils;
 using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
-using DevExpress.XtraGantt;
 using Foxoft.AppCode;
 using Foxoft.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
 using Microsoft.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using System.Globalization;
+using System.Collections;
+using System.ComponentModel;
+using System.Data;
 
 namespace Foxoft
 {
@@ -42,11 +33,7 @@ namespace Foxoft
                 if (CustomExtensions.DirectoryExist(settingStore.ImageFolder))
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
 
-            ComponentResourceManager resources = new(typeof(FormReportFilter));
-
-            SvgImage ımage = (SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-
-            SvgBitmap bm = new(ımage);
+            SvgBitmap bm = new(svgImageCollection1["xls"]);
             Image img = bm.Render(null, 0.5);
             filterControl_Outer.MyIcon = img;
             filterControl_Outer.ExcelButtonClick += new ExcelButtonFilterControl.ExcelButtonEventHandler(this.ExcelButtonFilterControl_ExcelButtonClick);
@@ -208,7 +195,6 @@ namespace Foxoft
         {
             MessageBox.Show("Item clicked");
         }
-
 
         private BinaryOperatorType ConvertOperatorType(string filterOperatorType)
         {
