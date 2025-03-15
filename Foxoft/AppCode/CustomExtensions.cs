@@ -87,12 +87,14 @@ namespace Foxoft
                 "SB" => true,
                 "CI" => true,
                 "WI" => true,
+                "RPO" => true,
                 "IT" => false,
                 "RS" => false,
                 "WS" => false,
                 "IS" => false,
                 "CO" => false,
                 "WO" => false,
+                "RSO" => false,
                 _ => null
             };
         }

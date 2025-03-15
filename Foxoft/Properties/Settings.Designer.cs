@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Foxoft.Models;
+
 namespace Foxoft.Properties {
     
     
@@ -189,6 +191,18 @@ namespace Foxoft.Properties {
             }
             set {
                 this["CompanyId"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public List<TrReportCustomization> TrReportCustomizations {
+            get {
+                return ((List<TrReportCustomization>)(this["TrReportCustomizations"]));
+            }
+            set {
+                this["TrReportCustomizations"] = value;
             }
         }
     }

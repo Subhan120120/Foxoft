@@ -6,6 +6,7 @@ using DevExpress.XtraBars.Ribbon.ViewInfo;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
@@ -57,6 +58,18 @@ namespace Foxoft
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+
+            bool currAccHasClaimsRP = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailPurchaseInvoice");
+            if (!currAccHasClaimsRP)
+                ItemForPurchasePrice.Visibility = LayoutVisibility.Never;
+
+            bool currAccHasClaimsRS = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "RetailSaleInvoice");
+            if (!currAccHasClaimsRS)
+                ItemForRetailPrice.Visibility = LayoutVisibility.Never;
+
+            bool currAccHasClaimsWS = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "WholesaleInvoice");
+            if (!currAccHasClaimsWS)
+                ItemForWholesalePrice.Visibility = LayoutVisibility.Never;
         }
 
         public FormProduct(byte productTypeCode, string productCode)

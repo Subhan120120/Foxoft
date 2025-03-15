@@ -37,7 +37,7 @@ namespace Foxoft.AppCode
                 ClauseNode clauseNode = li.Owner as ClauseNode;
 
                 if (li.Owner.Elements[0].ElementType != ElementType.Group && 
-                    (clauseNode.Operation == ClauseType.AnyOf || clauseNode.Operation == ClauseType.NoneOf))
+                    (clauseNode?.Operation == ClauseType.AnyOf || clauseNode?.Operation == ClauseType.NoneOf))
                     if (li.NodeWidth < e.X)
                         if (ExcelButtonClick != null)
                             ExcelButtonClick(this, new ExcelButtonEventArgs(li));
@@ -76,7 +76,7 @@ namespace Foxoft.AppCode
                 ClauseNode clauseNode = node as ClauseNode;
 
                 if (node.Elements[0].ElementType != ElementType.Group &&
-                    (clauseNode.Operation == ClauseType.AnyOf || clauseNode.Operation == ClauseType.NoneOf))
+                    (clauseNode?.Operation == ClauseType.AnyOf || clauseNode?.Operation == ClauseType.NoneOf))
                 {
                     Point p = new Point(labelInfo.NodeBounds.X + labelInfo.NodeBounds.Width,
                        labelInfo.NodeBounds.Y + (labelInfo.NodeBounds.Height - fControl.MyIcon.Height) / 2 + 2);

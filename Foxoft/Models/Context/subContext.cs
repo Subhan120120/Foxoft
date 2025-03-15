@@ -350,6 +350,13 @@ namespace Foxoft.Models
                    .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<TrRoleClaim>(entity =>
+            {
+                entity.HasOne(x => x.DcRole)
+                   .WithMany(x => x.TrRoleClaims)
+                   .OnDelete(DeleteBehavior.Cascade);
+            });
+
             modelBuilder.Entity<DcSerialNumber>(entity =>
             {
                 entity.HasOne(x => x.DcProduct)

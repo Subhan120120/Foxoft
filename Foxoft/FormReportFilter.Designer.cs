@@ -49,7 +49,7 @@ namespace Foxoft
             filterControl_Inner = new NotEditableFilterControl();
             btn_ShowReport = new DevExpress.XtraEditors.SimpleButton();
             filterControl_Outer = new ExcelButtonFilterControl();
-            buttonEdit1 = new DevExpress.XtraEditors.ButtonEdit();
+            BtnEdit_DesignFileFullPath = new DevExpress.XtraEditors.ButtonEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -63,7 +63,7 @@ namespace Foxoft
             layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LUE_ReportCustomization.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)buttonEdit1.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BtnEdit_DesignFileFullPath.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
@@ -80,7 +80,7 @@ namespace Foxoft
             layoutControl1.Controls.Add(filterControl_Inner);
             layoutControl1.Controls.Add(btn_ShowReport);
             layoutControl1.Controls.Add(filterControl_Outer);
-            layoutControl1.Controls.Add(buttonEdit1);
+            layoutControl1.Controls.Add(BtnEdit_DesignFileFullPath);
             layoutControl1.Dock = DockStyle.Fill;
             layoutControl1.Location = new Point(0, 158);
             layoutControl1.Name = "layoutControl1";
@@ -96,10 +96,14 @@ namespace Foxoft
             LUE_ReportCustomization.MenuManager = ribbonControl1;
             LUE_ReportCustomization.Name = "LUE_ReportCustomization";
             LUE_ReportCustomization.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_ReportCustomization.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationId", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCustomizationDesc", "") });
+            LUE_ReportCustomization.Properties.DisplayMember = "ReportCustomizationDesc";
             LUE_ReportCustomization.Properties.NullText = "";
+            LUE_ReportCustomization.Properties.ValueMember = "ReportCustomizationId";
             LUE_ReportCustomization.Size = new Size(968, 20);
             LUE_ReportCustomization.StyleController = layoutControl1;
             LUE_ReportCustomization.TabIndex = 2;
+            LUE_ReportCustomization.EditValueChanged += LUE_ReportCustomization_EditValueChanged;
             // 
             // ribbonControl1
             // 
@@ -142,6 +146,7 @@ namespace Foxoft
             BBI_ReportCustomAdd.Id = 8;
             BBI_ReportCustomAdd.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomAdd.ImageOptions.SvgImage");
             BBI_ReportCustomAdd.Name = "BBI_ReportCustomAdd";
+            BBI_ReportCustomAdd.ItemClick += BBI_ReportCustomAdd_ItemClick;
             // 
             // BBI_ReportCustomSave
             // 
@@ -149,6 +154,7 @@ namespace Foxoft
             BBI_ReportCustomSave.Id = 9;
             BBI_ReportCustomSave.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomSave.ImageOptions.SvgImage");
             BBI_ReportCustomSave.Name = "BBI_ReportCustomSave";
+            BBI_ReportCustomSave.ItemClick += BBI_ReportCustomSave_ItemClick;
             // 
             // BBI_ReportCustomDelete
             // 
@@ -156,6 +162,7 @@ namespace Foxoft
             BBI_ReportCustomDelete.Id = 10;
             BBI_ReportCustomDelete.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_ReportCustomDelete.ImageOptions.SvgImage");
             BBI_ReportCustomDelete.Name = "BBI_ReportCustomDelete";
+            BBI_ReportCustomDelete.ItemClick += BBI_ReportCustomDelete_ItemClick;
             // 
             // ribbonPage1
             // 
@@ -200,9 +207,11 @@ namespace Foxoft
             // 
             // btn_ShowReport
             // 
-            btn_ShowReport.Location = new Point(12, 482);
+            btn_ShowReport.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+            btn_ShowReport.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ShowReport.ImageOptions.SvgImage");
+            btn_ShowReport.Location = new Point(12, 468);
             btn_ShowReport.Name = "btn_ShowReport";
-            btn_ShowReport.Size = new Size(968, 22);
+            btn_ShowReport.Size = new Size(968, 36);
             btn_ShowReport.StyleController = layoutControl1;
             btn_ShowReport.TabIndex = 4;
             btn_ShowReport.Text = "Göstər";
@@ -215,20 +224,20 @@ namespace Foxoft
             filterControl_Outer.Name = "filterControl_Outer";
             filterControl_Outer.NodeSeparatorHeight = 2;
             filterControl_Outer.ShowActionButtonMode = DevExpress.XtraEditors.ShowActionButtonMode.Default;
-            filterControl_Outer.Size = new Size(968, 207);
+            filterControl_Outer.Size = new Size(968, 193);
             filterControl_Outer.TabIndex = 3;
             filterControl_Outer.Text = "filterControlOuter";
             filterControl_Outer.CustomValueEditor += filterControl_Outer_CustomValueEditor;
             // 
-            // buttonEdit1
+            // BtnEdit_DesignFileFullPath
             // 
-            buttonEdit1.Location = new Point(81, 458);
-            buttonEdit1.MenuManager = ribbonControl1;
-            buttonEdit1.Name = "buttonEdit1";
-            buttonEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo) });
-            buttonEdit1.Size = new Size(899, 20);
-            buttonEdit1.StyleController = layoutControl1;
-            buttonEdit1.TabIndex = 5;
+            BtnEdit_DesignFileFullPath.Location = new Point(81, 444);
+            BtnEdit_DesignFileFullPath.MenuManager = ribbonControl1;
+            BtnEdit_DesignFileFullPath.Name = "BtnEdit_DesignFileFullPath";
+            BtnEdit_DesignFileFullPath.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo) });
+            BtnEdit_DesignFileFullPath.Size = new Size(899, 20);
+            BtnEdit_DesignFileFullPath.StyleController = layoutControl1;
+            BtnEdit_DesignFileFullPath.TabIndex = 5;
             // 
             // Root
             // 
@@ -244,16 +253,16 @@ namespace Foxoft
             layoutControlItem3.Control = filterControl_Outer;
             layoutControlItem3.Location = new Point(0, 235);
             layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(972, 211);
+            layoutControlItem3.Size = new Size(972, 197);
             layoutControlItem3.TextSize = new Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             layoutControlItem4.Control = btn_ShowReport;
-            layoutControlItem4.Location = new Point(0, 470);
+            layoutControlItem4.Location = new Point(0, 456);
             layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new Size(972, 26);
+            layoutControlItem4.Size = new Size(972, 40);
             layoutControlItem4.TextSize = new Size(0, 0);
             layoutControlItem4.TextVisible = false;
             // 
@@ -286,8 +295,8 @@ namespace Foxoft
             // 
             // layoutControlItem5
             // 
-            layoutControlItem5.Control = buttonEdit1;
-            layoutControlItem5.Location = new Point(0, 446);
+            layoutControlItem5.Control = BtnEdit_DesignFileFullPath;
+            layoutControlItem5.Location = new Point(0, 432);
             layoutControlItem5.Name = "layoutControlItem5";
             layoutControlItem5.Size = new Size(972, 24);
             layoutControlItem5.Text = "Dizayn Faylı";
@@ -320,7 +329,7 @@ namespace Foxoft
             layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)LUE_ReportCustomization.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)buttonEdit1.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BtnEdit_DesignFileFullPath.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
@@ -351,7 +360,6 @@ namespace Foxoft
       private DevExpress.XtraBars.BarButtonItem bBI_ReportDelete;
       private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
       private NotEditableFilterControl filterControl_Inner;
-        private DevExpress.XtraEditors.LookUpEdit lookUpEdit1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraEditors.SeparatorControl separatorControl1;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
@@ -365,5 +373,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.ButtonEdit buttonEdit1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private DevExpress.XtraEditors.ButtonEdit BtnEdit_DesignFileFullPath;
     }
 }

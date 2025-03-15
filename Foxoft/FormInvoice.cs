@@ -125,8 +125,12 @@ namespace Foxoft
                 {
                     LayoutControlItem controlItem = item as LayoutControlItem;
                     if (controlItem != null)
-                        if (controlItem.Control is BaseEdit baseEdit)
+                    {
+                        if (controlItem.Control is LookUpEdit lookUpEdit)
+                            lookUpEdit.EditValueChanged += item_Leave;
+                        else if (controlItem.Control is BaseEdit baseEdit)
                             baseEdit.Leave += item_Leave;
+                    }
                 }
             }
         }

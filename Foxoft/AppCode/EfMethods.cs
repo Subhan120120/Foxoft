@@ -45,11 +45,13 @@ namespace Foxoft
             return db.DcCompanies.ToList();
         }
 
-        public int InsertEntity<T>(T entity) where T : class
+        public T InsertEntity<T>(T entity) where T : class
         {
             using subContext db = new();
             db.Set<T>().Add(entity);
-            return db.SaveChanges();
+            db.SaveChanges();
+
+            return entity;
         }
 
         public int UpdateEntity<T>(T entity) where T : class
@@ -1368,6 +1370,13 @@ namespace Foxoft
                                .FirstOrDefault(x => x.ReportId == id);
         }
 
+        public List<TrReportCustomization> SelectReportCustomizationByCurrAcc(string currAccCode)
+        {
+            using subContext db = new();
+            return db.TrReportCustomizations.Where(x => x.CurrAccCode == currAccCode)
+                               .ToList();
+        }
+
         public DcReport SelectReportByName(string name)
         {
             using subContext db = new();
@@ -1446,7 +1455,7 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateReportFilter(int id, string prop, string value)
+        public int UpdateReportVariableValue(int id, string prop, string value)
         {
             using subContext db = new();
             DcReportVariable dcReportVariable = db.DcReportVariables.FirstOrDefault(x => x.VariableProperty == prop && x.ReportId == id);

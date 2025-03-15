@@ -8,7 +8,9 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Filtering;
 using Foxoft.AppCode;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
@@ -52,6 +54,9 @@ namespace Foxoft
 
             filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types
             filterControl_Inner.FilterCriteria = GetFiltersFromDatabase(dcReport.DcReportVariables);
+
+            LUE_ReportCustomization.Properties.DataSource = efMethods.SelectReportCustomizationByCurrAcc(Authorization.CurrAccCode);
+            LUE_ReportCustomization.EditValue = Settings.Default.TrReportCustomizations.FirstOrDefault(x => x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode)?.ReportCustomizationId;
         }
 
         private DataTable opToDt(GroupOperator groupOperand)
@@ -182,7 +187,6 @@ namespace Foxoft
             }
         }
 
-
         private BarButtonItem CreateItem()
         {
             BarButtonItem item = new();
@@ -278,7 +282,7 @@ namespace Foxoft
             {
                 foreach (var item in dcReport.DcReportVariables)
                 {
-                    efMethods.UpdateReportFilter(dcReport.ReportId, e.PropertyName, e.Value.ToString());
+                    efMethods.UpdateReportVariableValue(dcReport.ReportId, e.PropertyName, e.Value.ToString());
                 }
 
                 this.dcReport = efMethods.SelectReport(dcReport.ReportId); // reload dcReport
@@ -354,9 +358,77 @@ namespace Foxoft
             return table;
         }
 
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        private void BBI_ReportCustomAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
+            String name = Interaction.InputBox("Dizayn Adını daxil edin", "Diqqət");
 
+            string filterCriteria = filterControl_Outer?.FilterCriteria?.ToString();
+
+            var entity = efMethods.InsertEntity<TrReportCustomization>(new TrReportCustomization()
+            {
+                CurrAccCode = Authorization.CurrAccCode,
+                ReportCustomizationDesc = name,
+                ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString(),
+                ReportFilter = filterCriteria,
+                ReportId = dcReport.ReportId
+            });
+
+            List<TrReportCustomization> dataSource = (List<TrReportCustomization>)LUE_ReportCustomization.Properties.DataSource;
+
+            dataSource.Add(entity);
+
+            LUE_ReportCustomization.Properties.DataSource = dataSource;
+            LUE_ReportCustomization.Refresh();
+        }
+
+        private void BBI_ReportCustomDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            TrReportCustomization selectedEntity = LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
+
+            if (selectedEntity != null)
+            {
+                var dataSource = LUE_ReportCustomization.Properties.DataSource as List<TrReportCustomization>;
+
+                if (dataSource != null)
+                {
+                    dataSource.Remove(selectedEntity);
+
+                    LUE_ReportCustomization.Refresh();
+                }
+
+                efMethods.DeleteEntity<TrReportCustomization>(selectedEntity);
+            }
+            else
+            {
+                MessageBox.Show("Please select a customization to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void BBI_ReportCustomSave_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            TrReportCustomization selectedEntity = LUE_ReportCustomization.GetSelectedDataRow() as TrReportCustomization;
+
+            selectedEntity.ReportFilter = filterControl_Outer?.FilterCriteria?.ToString();
+            selectedEntity.ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();
+
+            efMethods.UpdateEntity<TrReportCustomization>(selectedEntity);
+        }
+
+        private void LUE_ReportCustomization_EditValueChanged(object sender, EventArgs e)
+        {
+            LookUpEdit lookUpEdit = (LookUpEdit)sender;
+
+            int ina = Convert.ToInt32(lookUpEdit?.EditValue);
+            TrReportCustomization entity = efMethods.SelectEntityById<TrReportCustomization>(ina);
+            BtnEdit_DesignFileFullPath.EditValue = entity.ReportDesignFileName;
+            filterControl_Outer.FilterString = entity.ReportFilter;
+
+            var asd = Settings.Default.TrReportCustomizations.ToList();
+
+            asd.RemoveAll(x => x.ReportId == dcReport.ReportId);
+            asd.Add(entity);
+
+            Settings.Default.TrReportCustomizations = asd;
         }
     }
 
