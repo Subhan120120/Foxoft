@@ -14,7 +14,9 @@ using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
+using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -35,6 +37,9 @@ namespace Foxoft
 
             gridView1.PopulateColumns();
             LoadLayout();
+
+            HyperLinkColumns();
+
             gridView1.Columns.Add(col_Buttons);
             col_Buttons.VisibleIndex = gridView1.Columns.Count - 1;
             gridView1.BestFitColumns();
@@ -116,6 +121,162 @@ namespace Foxoft
             gridView1.FormatRules.Add(formatRuleGreater);
         }
 
+        private void HyperLinkColumns()
+        {
+            GridColumn col_DocumentNumber = gridView1.Columns["DocumentNumber"];
+            if (col_DocumentNumber is not null)
+            {
+                RepositoryItemHyperLinkEdit HLE_DocumentNum = new();
+                HLE_DocumentNum.SingleClick = true;
+                HLE_DocumentNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
+                col_DocumentNumber.ColumnEdit = HLE_DocumentNum;
+            }
+
+            GridColumn col_InvoiceNum = gridView1.Columns["InvoiceNumber"];
+            if (col_InvoiceNum is not null)
+            {
+                RepositoryItemHyperLinkEdit HLE_InvoiceNum = new();
+                HLE_InvoiceNum.SingleClick = true;
+                HLE_InvoiceNum.OpenLink += repoHLE_DocumentNumber_OpenLink;
+                col_InvoiceNum.ColumnEdit = HLE_InvoiceNum;
+            }
+
+            GridColumn col_CurrAccCode = gridView1.Columns["CurrAccCode"];
+            if (col_CurrAccCode is not null)
+            {
+                RepositoryItemHyperLinkEdit HLE_CurrAccCode = new();
+                HLE_CurrAccCode.SingleClick = true;
+                HLE_CurrAccCode.OpenLink += repoHLE_CurrAccCode_OpenLink;
+                col_CurrAccCode.ColumnEdit = HLE_CurrAccCode;
+            }
+        }
+
+        GridColumn prevColumn = null; // Disable the Immediate Edit Cell
+        int prevRow = -1;
+        private void gV_Report_ShowingEditor(object sender, CancelEventArgs e)
+        {
+            GridView view = sender as GridView;
+
+            // Disable the Immediate Edit Cell
+            if (prevColumn != view.FocusedColumn || prevRow != view.FocusedRowHandle)
+                e.Cancel = true;
+            prevColumn = view.FocusedColumn;
+            prevRow = view.FocusedRowHandle;
+        }
+
+        private void repoHLE_CurrAccCode_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            object objCurrAccCode = gridView1.GetFocusedRowCellValue("CurrAccCode");
+            string currAccCode = objCurrAccCode?.ToString();
+            if (!String.IsNullOrEmpty(currAccCode))
+                OpenFormCurrAcc(currAccCode);
+        }
+
+        private void OpenFormCurrAcc(string currAccCode)
+        {
+            FormCurrAcc formCurrAcc = new(currAccCode);
+            if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
+            {
+                LoadData();
+            }
+        }
+
+        private void repoHLE_DocumentNumber_OpenLink(object sender, OpenLinkEventArgs e)
+        {
+            object objDocNum = gridView1.GetFocusedValue();
+            string strDocNum = objDocNum?.ToString();
+
+            if (!String.IsNullOrEmpty(strDocNum))
+            {
+                bool isOpen = InvoiceIsOpen(strDocNum);
+
+                if (!isOpen)
+                    OpenFormInvoice(strDocNum);
+            }
+        }
+
+        private bool InvoiceIsOpen(string docNum)
+        {
+            bool isOpen = false;
+            Process[]? processes = Process.GetProcessesByName("Foxoft");
+            foreach (Process? process in processes)
+            {
+                List<WindowInfo> childWindows = WindowsAPI.GetMDIChildWindowsOfProcess(process);
+                foreach (WindowInfo? window in childWindows)
+                {
+                    if (window.Tag == docNum)
+                    {
+                        isOpen = true;
+                        XtraMessageBox.Show("Qaimə açıqdır.");
+                    }
+
+                    // Close the window if necessary
+                    // CloseWindow(window.Handle);
+                }
+            }
+
+            return isOpen;
+        }
+
+        private void OpenFormInvoice(string strDocNum)
+        {
+            TrPaymentHeader trPaymentHeader = efMethods.SelectPaymentHeaderByDocNum(strDocNum);
+            TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeaderByDocNum(strDocNum);
+
+            if (trInvoiceHeader is not null)
+            {
+                string claim = CustomExtensions.GetClaim(trInvoiceHeader.ProcessCode);
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+
+                byte[] bytes = CustomExtensions.GetProductTypeArray(trInvoiceHeader.ProcessCode);
+
+                FormInvoice frm = new(trInvoiceHeader.ProcessCode, null, bytes, null, trInvoiceHeader.InvoiceHeaderId);
+                FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                frm.MdiParent = formERP;
+                frm.WindowState = FormWindowState.Maximized;
+                frm.Show();
+                formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+            }
+            else if (trPaymentHeader is not null)
+            {
+                string claim = CustomExtensions.GetClaim(trPaymentHeader.ProcessCode);
+
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                if (!currAccHasClaims)
+                {
+                    MessageBox.Show("Yetkiniz yoxdur! ");
+                    return;
+                }
+
+                if (trPaymentHeader.ProcessCode == "PA")
+                {
+                    FormPaymentDetail frm = new(trPaymentHeader.PaymentHeaderId);
+                    FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    if (formERP.parentRibbonControl.MergedPages.Count > 0)
+                        formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+                else if (trPaymentHeader.ProcessCode == "CT")
+                {
+                    FormMoneyTransfer frm = new(trPaymentHeader.PaymentHeaderId);
+                    FormERP formERP = Application.OpenForms[nameof(FormERP)] as FormERP;
+                    frm.MdiParent = formERP;
+                    frm.WindowState = FormWindowState.Maximized;
+                    frm.Show();
+                    formERP.parentRibbonControl.SelectedPage = formERP.parentRibbonControl.MergedPages[0];
+                }
+            }
+            else
+                MessageBox.Show("Belə bir sənəd yoxdur.");
+        }
 
         private void ReloadData()
         {

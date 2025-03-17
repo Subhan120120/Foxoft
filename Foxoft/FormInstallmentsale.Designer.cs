@@ -74,6 +74,7 @@ namespace Foxoft
             gridView1.OptionsView.ShowAutoFilterRow = true;
             gridView1.RowHeight = 18;
             gridView1.PopupMenuShowing += gridView1_PopupMenuShowing;
+            gridView1.ShowingEditor += gV_Report_ShowingEditor;
             // 
             // repoBtnEdit_Payment
             // 

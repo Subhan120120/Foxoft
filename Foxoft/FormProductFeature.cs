@@ -30,7 +30,7 @@ namespace Foxoft
 
             foreach (DcFeatureType feature in dcFeatures)
             {
-                TrProductFeature proFea = efMethods.SelectEntityById<TrProductFeature>(dcProduct.ProductCode, feature.FeatureTypeId);
+                TrProductFeature proFea = efMethods.SelectProductFeature(dcProduct.ProductCode, feature.FeatureTypeId);
 
                 ButtonEdit btn = new();
                 btn.Name = feature.FeatureTypeId.ToString();
@@ -68,6 +68,12 @@ namespace Foxoft
                     DialogResult = DialogResult.OK;
                 }
             }
+        }
+
+        private void FormProductFeature_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

@@ -37,8 +37,6 @@ namespace Foxoft
 
             colCurrAccCode = gV_CashRegList.Columns["CurrAccCode"];
 
-            bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
-
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
             cM.AddReports(BSI_Reports, "CashRegisters", nameof(TrPaymentLine.CashRegisterCode), gV_CashRegList);
@@ -250,11 +248,6 @@ namespace Foxoft
             }
         }
 
-        private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            this.Close();
-        }
-
         private void gV_CurrAccList_ColumnFilterChanged(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
@@ -400,6 +393,12 @@ namespace Foxoft
 
         private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
         {
+        }
+
+        private void FormCashRegisterList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

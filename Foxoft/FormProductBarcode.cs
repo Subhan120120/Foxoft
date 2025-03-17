@@ -262,5 +262,11 @@ namespace Foxoft
             form.WindowState = FormWindowState.Maximized;
             form.Show();
         }
+
+        private void FormProductBarcode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
     }
 }

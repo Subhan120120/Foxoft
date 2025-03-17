@@ -32,7 +32,7 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportGrid));
             gC_Report = new MyGridControl();
-            gV_Report = new MyGridView(this);
+            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
             bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
@@ -40,7 +40,6 @@ namespace Foxoft
             bBI_DesignClear = new DevExpress.XtraBars.BarButtonItem();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_Refresh = new DevExpress.XtraBars.BarButtonItem();
-            bBI_Quit = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
             BBI_PrintPreview = new DevExpress.XtraBars.BarButtonItem();
@@ -62,7 +61,7 @@ namespace Foxoft
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)gC_Report).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gV_Report).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
@@ -72,26 +71,25 @@ namespace Foxoft
             // 
             gC_Report.Dock = DockStyle.Fill;
             gC_Report.Location = new Point(0, 158);
-            gC_Report.MainView = gV_Report;
+            gC_Report.MainView = gridView1;
             gC_Report.Name = "gC_Report";
             gC_Report.Size = new Size(820, 420);
             gC_Report.TabIndex = 0;
-            gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Report });
+            gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             gC_Report.ProcessGridKey += gC_Report_ProcessGridKey;
             // 
-            // gV_Report
+            // gridView1
             // 
-            gV_Report.GridControl = gC_Report;
-            gV_Report.Name = "gV_Report";
+            gridView1.GridControl = gC_Report;
+            gridView1.Name = "gridView1";
             // 
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, bBI_Quit, barButtonItem2, BBI_ExportExcel, BBI_PrintPreview, barButtonItem1, barSubItem1, BBI_AddColumnString, BBI_AddColumnInt32, BBI_AddColumnBoolean, BBI_AddColumnDateTime, BBI_AddColumnTimeSpan, BBI_AddColumnDecimal, BBI_AddColumnObject });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_LayoutSave, bBI_LayoutLoad, bBI_GridOptions, bBI_DesignClear, bBI_ExportXlsx, bBI_Refresh, barButtonItem2, BBI_ExportExcel, BBI_PrintPreview, barButtonItem1, barSubItem1, BBI_AddColumnString, BBI_AddColumnInt32, BBI_AddColumnBoolean, BBI_AddColumnDateTime, BBI_AddColumnTimeSpan, BBI_AddColumnDecimal, BBI_AddColumnObject });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 25;
             ribbonControl1.Name = "ribbonControl1";
-            ribbonControl1.PageHeaderItemLinks.Add(bBI_Quit);
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(820, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
@@ -145,14 +143,6 @@ namespace Foxoft
             bBI_Refresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Refresh.ImageOptions.SvgImage");
             bBI_Refresh.Name = "bBI_Refresh";
             bBI_Refresh.ItemClick += bBI_Refresh_ItemClick;
-            // 
-            // bBI_Quit
-            // 
-            bBI_Quit.Id = 8;
-            bBI_Quit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_Quit.ImageOptions.SvgImage");
-            bBI_Quit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.Escape);
-            bBI_Quit.Name = "bBI_Quit";
-            bBI_Quit.ItemClick += bBI_Quit_ItemClick;
             // 
             // barButtonItem2
             // 
@@ -302,14 +292,16 @@ namespace Foxoft
             Controls.Add(gC_Report);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
+            KeyPreview = true;
             Name = "FormReportGrid";
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
             StatusBar = ribbonStatusBar1;
             Text = "Form1";
             FormClosing += FormReportGrid_FormClosing;
+            KeyDown += FormReportGrid_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_Report).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gV_Report).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
@@ -334,7 +326,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem bBI_Refresh;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
-        private DevExpress.XtraBars.BarButtonItem bBI_Quit;
         private DevExpress.XtraBars.BarButtonItem BBI_AddColumn;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
@@ -350,5 +341,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_AddColumnTimeSpan;
         private DevExpress.XtraBars.BarButtonItem BBI_AddColumnDecimal;
         private DevExpress.XtraBars.BarButtonItem BBI_AddColumnObject;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
     }
 }

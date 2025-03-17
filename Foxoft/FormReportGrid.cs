@@ -292,12 +292,6 @@ namespace Foxoft
                 e.Cancel = true;
             prevColumn = view.FocusedColumn;
             prevRow = view.FocusedRowHandle;
-
-            // hiperLinkedit
-            //if (view.FocusedColumn.FieldName == "InvoiceNumber" || view.FocusedColumn.FieldName == "Faktura Nömrəsi")
-            //   e.Cancel = true; //icine girmesin
-            //else if (view.FocusedColumn.FieldName == "DocumentNumber" || view.FocusedColumn.FieldName == "Ödəniş Nömrəsi")
-            //   e.Cancel = true; //icine girmesin
         }
 
 
@@ -464,11 +458,6 @@ namespace Foxoft
         private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             LoadData();
-        }
-
-        private void bBI_Quit_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            Close();
         }
 
         private void gC_Report_ProcessGridKey(object sender, KeyEventArgs e)
@@ -763,6 +752,12 @@ namespace Foxoft
 
         private void FormReportGrid_FormClosing(object sender, FormClosingEventArgs e)
         {
+        }
+
+        private void FormReportGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

@@ -109,7 +109,6 @@ namespace Foxoft
             BBI_Show.ItemClick += BBI_Show_ItemClick;
             BBI_ProductNew.ItemClick += BBI_ProductNew_ItemClick;
             bBI_ExportExcel.ItemClick += bBI_ExportExcel_ItemClick;
-            bBI_quit.ItemClick += bBI_quit_ItemClick;
             bBI_ProductDelete.ItemClick += bBI_ProductDelete_ItemClick;
             bBI_ProductRefresh.ItemClick += bBI_ProductRefresh_ItemClick;
             barButtonItem2.ItemClick += barButtonItem2_ItemClick;
@@ -424,11 +423,6 @@ namespace Foxoft
             CustomExtensions.ExportToExcel(this, Text, gC_ProductList);
         }
 
-        private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            this.Close();
-        }
-
         private void gV_ProductList_ColumnFilterChanged(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
@@ -663,6 +657,12 @@ namespace Foxoft
 
         private void popupMenuReports_BeforePopup(object sender, CancelEventArgs e)
         {
+        }
+
+        private void FormProductList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

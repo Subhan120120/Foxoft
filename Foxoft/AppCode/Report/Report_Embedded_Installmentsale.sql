@@ -20,13 +20,14 @@ InstallmentData AS (
         i.InvoiceHeaderId,
         i.DocumentDate,
         i.PaymentPlanCode,
-        i.Amount,
-        i.AmountLoc,
+        i.Amount + COALESCE(ril.NetAmount, 0) AS Amount,
+        i.AmountLoc + COALESCE(ril.NetAmountLoc, 0) AS AmountLoc, -- Geri qaytarma məbləğini çıxırıq
         i.CurrencyCode,
         i.ExchangeRate,
-        i.AmountLoc + i.Commission AS AmountWithComLoc,
-		ca.CurrAccDesc,
-		ca.PhoneNum,
+        (i.AmountLoc + i.Commission) + COALESCE(ril.NetAmountLoc, 0) AS AmountWithComLoc, -- Geri qaytarma məbləğini çıxırıq
+		ih.DocumentNumber,
+        ca.CurrAccDesc,
+        ca.PhoneNum,
         p.DurationInMonths,
         COALESCE(psum.PaymentLinesSum, 0) AS TotalPaid
     FROM
@@ -39,6 +40,10 @@ InstallmentData AS (
         DcPaymentPlans p ON i.PaymentPlanCode = p.PaymentPlanCode
     LEFT JOIN
         PaymentLinesSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId AND ih.CurrAccCode = psum.CurrAccCode
+    LEFT JOIN
+        TrInvoiceHeaders rih ON rih.RelatedInvoiceId = i.InvoiceHeaderId AND rih.IsReturn = 1 
+    LEFT JOIN
+        TrInvoiceLines ril ON ril.InvoiceHeaderId = rih.InvoiceHeaderId
 ),
 CalculatedData AS (
     SELECT
@@ -46,6 +51,7 @@ CalculatedData AS (
         InvoiceHeaderId,
 		CurrAccDesc,
 		PhoneNum,
+        DocumentNumber,
         DocumentDate,
         PaymentPlanCode,
         Amount,
@@ -65,20 +71,22 @@ SELECT
     InvoiceHeaderId,
 	CurrAccDesc,
 	PhoneNum,
+	DocumentNumber,
     DocumentDate,
     PaymentPlanCode,
     Amount,
-    AmountWithComLoc,
+    [Tutar Faizi ilə] = AmountWithComLoc,
     CurrencyCode,
     ExchangeRate,
-    TotalPaid,
-    RemainingBalance,
-    MonthlyPayment,
-    TotalPaid - (DATEDIFF(DAY, DocumentDate, GETDATE()) / 30) * MonthlyPayment AS DueAmount,
-    OverdueDate,
-    CASE 
+    [Toplam Ödəniş] = TotalPaid,
+    [Qalıq] = RemainingBalance,
+    [Aylıq Ödəniş] = MonthlyPayment,
+	MonthlyPayment,
+    [Ödənilməli məbləğ] = TotalPaid - (DATEDIFF(DAY, DocumentDate, GETDATE()) / 30) * MonthlyPayment,
+    [Gecikmə tarixi] = OverdueDate,
+    [Gecikmiş Günlər] = CASE 
         WHEN GETDATE() > OverdueDate THEN DATEDIFF(DAY, OverdueDate, GETDATE())
         ELSE 0
-    END AS OverdueDays
+    END
 FROM
     CalculatedData;

@@ -43,7 +43,6 @@ namespace Foxoft
             bBI_Refresh.ImageOptions.SvgImage = svgImageCollection1["refresh"];
             BBI_query.ImageOptions.SvgImage = svgImageCollection1["queryedit"];
             bBI_ExportExcel.ImageOptions.SvgImage = svgImageCollection1["sendxlsx"];
-            BBI_Quit.ImageOptions.SvgImage = svgImageCollection1["delete"];
 
             LoadLayout();
 
@@ -422,6 +421,12 @@ namespace Foxoft
 
         private void gridView1_RowLoaded(object sender, RowEventArgs e)
         {
+        }
+
+        private void FormCommonList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

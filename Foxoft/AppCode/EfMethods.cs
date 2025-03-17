@@ -212,15 +212,15 @@ namespace Foxoft
             return featureTypes;
         }
 
-        //public TrProductFeature SelectProductFeature(int featureTypeId, string productCode)
-        //{
-        //    using subContext db = new();
+        public TrProductFeature SelectProductFeature(string productCode, int featureTypeId)
+        {
+            using subContext db = new();
 
-        //    TrProductFeature dc = db.TrProductFeatures
-        //             .Where(x => x.FeatureTypeId == featureTypeId)
-        //             .FirstOrDefault(x => x.ProductCode == productCode);
-        //    return dc;
-        //}
+            TrProductFeature dc = db.TrProductFeatures
+                     .Where(x => x.FeatureTypeId == featureTypeId)
+                     .FirstOrDefault(x => x.ProductCode == productCode);
+            return dc;
+        }
 
 
         //public DcFeatureType SelectFeatureType(int featureTypeId)
@@ -1370,10 +1370,10 @@ namespace Foxoft
                                .FirstOrDefault(x => x.ReportId == id);
         }
 
-        public List<TrReportCustomization> SelectReportCustomizationByCurrAcc(string currAccCode)
+        public List<TrReportCustomization> SelectReportCustomizationByCurrAcc(int reportId, string currAccCode)
         {
             using subContext db = new();
-            return db.TrReportCustomizations.Where(x => x.CurrAccCode == currAccCode)
+            return db.TrReportCustomizations.Where(x => x.ReportId == reportId && x.CurrAccCode == currAccCode)
                                .ToList();
         }
 

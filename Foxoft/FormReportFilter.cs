@@ -55,7 +55,7 @@ namespace Foxoft
             filterControl_Inner.SourceControl = GetColumnsFromDatabase(dcReport.DcReportVariables); //For Column Types
             filterControl_Inner.FilterCriteria = GetFiltersFromDatabase(dcReport.DcReportVariables);
 
-            LUE_ReportCustomization.Properties.DataSource = efMethods.SelectReportCustomizationByCurrAcc(Authorization.CurrAccCode);
+            LUE_ReportCustomization.Properties.DataSource = efMethods.SelectReportCustomizationByCurrAcc(dcReport.ReportId ,Authorization.CurrAccCode);
             LUE_ReportCustomization.EditValue = Settings.Default.TrReportCustomizations.FirstOrDefault(x => x.ReportId == dcReport.ReportId && x.CurrAccCode == Authorization.CurrAccCode)?.ReportCustomizationId;
         }
 

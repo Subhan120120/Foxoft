@@ -59,10 +59,10 @@ namespace Foxoft
             colQty = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             BBI_PrintBarcode = new DevExpress.XtraBars.BarButtonItem();
-            repositoryItemLookUpEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            repositoryItemLookUpEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             ((System.ComponentModel.ISupportInitialize)GC_ProductBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceProductBarcode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_ProductBarcode).BeginInit();
@@ -70,8 +70,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeType).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_ProductCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit2).BeginInit();
             SuspendLayout();
             // 
             // GC_ProductBarcode
@@ -206,13 +206,6 @@ namespace Foxoft
             BBI_PrintBarcode.Name = "BBI_PrintBarcode";
             BBI_PrintBarcode.ItemClick += BBI_PrintBarcode_ItemClick;
             // 
-            // repositoryItemLookUpEdit2
-            // 
-            repositoryItemLookUpEdit2.AutoHeight = false;
-            repositoryItemLookUpEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repositoryItemLookUpEdit2.Name = "repositoryItemLookUpEdit2";
-            repositoryItemLookUpEdit2.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
-            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
@@ -231,6 +224,13 @@ namespace Foxoft
             repositoryItemLookUpEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             repositoryItemLookUpEdit1.Name = "repositoryItemLookUpEdit1";
             // 
+            // repositoryItemLookUpEdit2
+            // 
+            repositoryItemLookUpEdit2.AutoHeight = false;
+            repositoryItemLookUpEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repositoryItemLookUpEdit2.Name = "repositoryItemLookUpEdit2";
+            repositoryItemLookUpEdit2.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard;
+            // 
             // FormProductBarcode
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -238,9 +238,11 @@ namespace Foxoft
             ClientSize = new Size(800, 450);
             Controls.Add(GC_ProductBarcode);
             Controls.Add(ribbonControl1);
+            KeyPreview = true;
             Name = "FormProductBarcode";
             Ribbon = ribbonControl1;
             Text = "FormBarcode";
+            KeyDown += FormProductBarcode_KeyDown;
             ((System.ComponentModel.ISupportInitialize)GC_ProductBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceProductBarcode).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_ProductBarcode).EndInit();
@@ -248,8 +250,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_BarcodeType).EndInit();
             ((System.ComponentModel.ISupportInitialize)RepoBtnEdit_ProductCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit2).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repositoryItemLookUpEdit2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

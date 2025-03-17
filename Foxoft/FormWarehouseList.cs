@@ -25,7 +25,6 @@ namespace Foxoft
         public FormWarehouseList()
         {
             InitializeComponent();
-            bBI_quit.ItemShortcut = new BarShortcut(Keys.Escape);
 
             byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
             MemoryStream stream = new(byteArray);
@@ -165,11 +164,6 @@ namespace Foxoft
             isFirstPaint = false;
         }
 
-        private void bBI_quit_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            this.Close();
-        }
-
         private void gV_WarehouseList_ColumnFilterChanged(object sender, EventArgs e)
         {
             GridView view = sender as GridView;
@@ -234,6 +228,12 @@ namespace Foxoft
         private void bBI_WarehouseRefresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             UpdateGridViewData();
+        }
+
+        private void FormWarehouseList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

@@ -221,6 +221,9 @@ namespace Foxoft
 
 
             Tag = btnEdit_DocNum.EditValue;
+
+            SetLayoutGroupReadOnly(LCG_Invoice, trInvoiceHeader.IsLocked);
+
             //checkEdit_IsReturn.Enabled = false;
         }
 

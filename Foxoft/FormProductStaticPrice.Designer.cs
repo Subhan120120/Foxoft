@@ -29,7 +29,7 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductFeature));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductStaticPrice));
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             simpleButtonOk = new DevExpress.XtraEditors.SimpleButton();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -83,7 +83,7 @@ namespace Foxoft
             layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
-            // FormProductFeature
+            // FormProductStaticPrice
             // 
             AcceptButton = simpleButtonOk;
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -91,9 +91,11 @@ namespace Foxoft
             AutoSize = true;
             ClientSize = new Size(298, 136);
             Controls.Add(layoutControl1);
-            Name = "FormProductFeature";
+            KeyPreview = true;
+            Name = "FormProductStaticPrice";
             Text = "Məhsul Özəllikləri";
             Load += FormProductStaticPrice_Load;
+            KeyDown += FormProductStaticPrice_KeyDown;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();

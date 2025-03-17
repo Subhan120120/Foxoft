@@ -91,9 +91,11 @@ namespace Foxoft
             AutoSize = true;
             ClientSize = new Size(298, 136);
             Controls.Add(layoutControl1);
+            KeyPreview = true;
             Name = "FormProductFeature";
             Text = "Məhsul Özəllikləri";
             Load += FormProductFeature_Load;
+            KeyDown += FormProductFeature_KeyDown;
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
             layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();

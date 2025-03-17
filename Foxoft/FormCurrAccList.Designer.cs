@@ -63,7 +63,6 @@ namespace Foxoft
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_CurrAccNew = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccEdit = new DevExpress.XtraBars.BarButtonItem();
-            bBI_quit = new DevExpress.XtraBars.BarButtonItem();
             bBI_ExportXlsx = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurrAccDelete = new DevExpress.XtraBars.BarButtonItem();
             bBI_CurAccRefresh = new DevExpress.XtraBars.BarButtonItem();
@@ -71,7 +70,6 @@ namespace Foxoft
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             BBI_test = new DevExpress.XtraBars.BarButtonItem();
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
-            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             BSI_Reports = new DevExpress.XtraBars.BarSubItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -79,6 +77,7 @@ namespace Foxoft
             ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
@@ -257,11 +256,10 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_quit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BSI_Reports });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BSI_Reports });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 31;
             ribbonControl1.Name = "ribbonControl1";
-            ribbonControl1.PageHeaderItemLinks.Add(bBI_quit);
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage3 });
             ribbonControl1.Size = new Size(858, 158);
             ribbonControl1.StatusBar = ribbonStatusBar1;
@@ -283,14 +281,6 @@ namespace Foxoft
             bBI_CurAccEdit.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F2);
             bBI_CurAccEdit.Name = "bBI_CurAccEdit";
             bBI_CurAccEdit.ItemClick += bBI_CurrAccEdit_ItemClick;
-            // 
-            // bBI_quit
-            // 
-            bBI_quit.Caption = "Bağla";
-            bBI_quit.Id = 4;
-            bBI_quit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_quit.ImageOptions.SvgImage");
-            bBI_quit.Name = "bBI_quit";
-            bBI_quit.ItemClick += bBI_quit_ItemClick;
             // 
             // bBI_ExportXlsx
             // 
@@ -347,12 +337,6 @@ namespace Foxoft
             BBI_query.Name = "BBI_query";
             BBI_query.ItemClick += BBI_query_ItemClick;
             // 
-            // popupMenuReports
-            // 
-            popupMenuReports.Name = "popupMenuReports";
-            popupMenuReports.Ribbon = ribbonControl1;
-            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
-            // 
             // BSI_Reports
             // 
             BSI_Reports.Caption = "Hesabat";
@@ -401,6 +385,12 @@ namespace Foxoft
             ribbonStatusBar1.Ribbon = ribbonControl1;
             ribbonStatusBar1.Size = new Size(858, 24);
             // 
+            // popupMenuReports
+            // 
+            popupMenuReports.Name = "popupMenuReports";
+            popupMenuReports.Ribbon = ribbonControl1;
+            popupMenuReports.BeforePopup += popupMenuReports_BeforePopup;
+            // 
             // ribbonPage2
             // 
             ribbonPage2.Name = "ribbonPage2";
@@ -414,6 +404,7 @@ namespace Foxoft
             Controls.Add(gC_CurrAccList);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
+            KeyPreview = true;
             Name = "FormCurrAccList";
             Ribbon = ribbonControl1;
             StartPosition = FormStartPosition.CenterScreen;
@@ -422,6 +413,7 @@ namespace Foxoft
             Activated += FormCurrAccList_Activated;
             Load += FormCurrAccList_Load;
             VisibleChanged += FormCurrAccList_VisibleChanged;
+            KeyDown += FormCurrAccList_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).EndInit();
@@ -443,7 +435,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
         private DevExpress.XtraBars.BarButtonItem bBI_CurrAccNew;
         private DevExpress.XtraBars.BarButtonItem bBI_CurAccEdit;
-        private DevExpress.XtraBars.BarButtonItem bBI_quit;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem bBI_ExportXlsx;
         private System.Windows.Forms.BindingSource dcCurrAccsBindingSource;

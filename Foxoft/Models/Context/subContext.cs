@@ -276,6 +276,9 @@ namespace Foxoft.Models
                         .HasIndex(u => new { u.ProcessCode, u.PriceTypeCode })
                         .IsUnique();
 
+            modelBuilder.Entity<DcHierarchy>().ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta verir 
+            modelBuilder.Entity<DcProduct>().ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta verir 
+
             modelBuilder.Entity<TrInvoiceHeader>(entity =>
             {
                 entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta verir 
