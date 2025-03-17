@@ -1,12 +1,14 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
+using DevExpress.XtraReports;
 using DevExpress.XtraSpreadsheet.Model;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 
 namespace Foxoft
 {
@@ -78,24 +80,11 @@ namespace Foxoft
                 if (autoMakePayment)
                     SavePayment(true);
 
-            lCG_Cash.Enabled = paymentTypes.Contains((byte)1) ? true : false;
-            lCG_Cashless.Enabled = paymentTypes.Contains((byte)2) ? true : false;
-            LCG_Installment.Enabled = paymentTypes.Contains((byte)3) ? true : false;
+            lCG_Cash.Visibility = paymentTypes.Contains((byte)1) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            lCG_Cashless.Visibility = paymentTypes.Contains((byte)2) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            LCG_Installment.Visibility = paymentTypes.Contains((byte)3) ? LayoutVisibility.Always : LayoutVisibility.Never;
             //lCG_CustomerBonus.Enabled = paymentTypes.Contains((byte)4) ? true : false;
 
-        }
-
-        private void btn_Num_Click(object sender, EventArgs e)
-        {
-            string key = (sender as SimpleButton).Text;
-
-            switch (key)
-            {
-                case "←": SendKeys.Send("{BACKSPACE}"); break;
-                case "C": SendKeys.Send("^A"); SendKeys.Send("{BACKSPACE}"); break;
-                case "↵": btn_Ok.PerformClick(); break;
-                default: SendKeys.Send(key); break;
-            }
         }
 
         private void PaymentDefaults(byte paymentType, TrInvoiceHeader trInvoiceHeader)
@@ -214,7 +203,6 @@ namespace Foxoft
                 LUE_PaymentPlan.Properties.DataSource = paymentPlans;
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Always);
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, LayoutVisibility.Always);
-
 
                 LUE_PaymentPlan.EditValue = efMethods.SelectPaymentPlanDefault(dcPaymentMethod.PaymentMethodId)?.PaymentPlanCode;
             }
@@ -352,11 +340,16 @@ namespace Foxoft
         private void LUE_InstallmentCurrency_EditValueChanged(object sender, EventArgs e)
         {
             trInstallment.CurrencyCode = LUE_InstallmentCurrency.EditValue.ToString();
-            trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
+
+            if (LUE_InstallmentCurrency.Visible)
+                trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
         }
 
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
         {
+            if (efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentCommissionChange"))
+                txt_InstallmentCommission.Enabled = true;
+
             object row = LUE_InstallmentPlan.Properties.GetDataSourceRowByKeyValue(LUE_InstallmentPlan.EditValue);
             trInstallment.PaymentPlanCode = ((DcPaymentPlan)row).PaymentPlanCode;
 
@@ -365,6 +358,8 @@ namespace Foxoft
                 float commisionRate = ((DcPaymentPlan)row).CommissionRate;
                 txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
             }
+
+
         }
 
         private void btn_Ok_Click(object sender, EventArgs e)

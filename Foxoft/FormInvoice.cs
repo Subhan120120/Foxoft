@@ -1062,7 +1062,8 @@ namespace Foxoft
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
             decimal pay = Math.Max(Math.Round(Math.Abs(summaryInvoice) - Math.Abs(prePaid), 4), 0);
 
-            using FormPayment formPayment = new(1, pay, trInvoiceHeader, new byte[] { 1, 2, 3, 4 }, autoPayment);
+            byte[] paymentTypes = dcProcess.ProcessCode == "IS" ? new byte[] { 1, 2, 3, 4 } : new byte[] { 1, 2 };
+            using FormPayment formPayment = new(1, pay, trInvoiceHeader, paymentTypes, autoPayment);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {

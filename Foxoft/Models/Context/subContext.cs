@@ -539,6 +539,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "WholesaleReturnCustom", ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "InstallmentsaleReturnCustom", ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "Installments", ClaimDesc = "Kreditlər", ClaimTypeId = 1 },
+                new DcClaim { ClaimCode = "InstallmentCommissionChange", ClaimDesc = "Kreditin Kamissiyasını Dəyişmə", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "EditLockedInvoice", ClaimDesc = "Kilidli Fakturanı Dəyiş", ClaimTypeId = 1 },
                 new DcClaim { ClaimCode = "EditLockedPayment", ClaimDesc = "Kilidli Ödənişi Dəyiş", ClaimTypeId = 1 }
                 );
@@ -613,8 +614,9 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 43, RoleCode = "Admin", ClaimCode = "WholesaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 44, RoleCode = "Admin", ClaimCode = "InstallmentsaleReturnCustom" },
                 new TrRoleClaim { RoleClaimId = 45, RoleCode = "Admin", ClaimCode = "Installments" },
-                new TrRoleClaim { RoleClaimId = 46, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
-                new TrRoleClaim { RoleClaimId = 47, RoleCode = "Admin", ClaimCode = "EditLockedPayment" }
+                new TrRoleClaim { RoleClaimId = 46, RoleCode = "Admin", ClaimCode = "InstallmentCommissionChange" },
+                new TrRoleClaim { RoleClaimId = 47, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
+                new TrRoleClaim { RoleClaimId = 48, RoleCode = "Admin", ClaimCode = "EditLockedPayment" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

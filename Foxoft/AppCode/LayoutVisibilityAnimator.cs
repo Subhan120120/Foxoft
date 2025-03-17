@@ -1,10 +1,16 @@
 ﻿using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 public static class LayoutControlAnimator
 {
     public static void SetVisibilityWithAnimation(LayoutControlItem layoutControlItem, LayoutVisibility visibility)
     {
+        layoutControlItem.SizeConstraintsType = SizeConstraintsType.Custom;
+        layoutControlItem.MinSize = new Size(163, 1);
+
         if (layoutControlItem.Visibility != visibility)
         {
             if (visibility == LayoutVisibility.Never)
@@ -12,13 +18,21 @@ public static class LayoutControlAnimator
                 AnimateLayoutControlItem(layoutControlItem, false, () =>
                 {
                     layoutControlItem.Visibility = visibility;
+                    layoutControlItem.SizeConstraintsType = SizeConstraintsType.Default;
                 });
             }
             else
             {
                 layoutControlItem.Visibility = visibility;
-                AnimateLayoutControlItem(layoutControlItem, true);
+                AnimateLayoutControlItem(layoutControlItem, true, () =>
+                {
+                    layoutControlItem.SizeConstraintsType = SizeConstraintsType.Default;
+                });
             }
+        }
+        else
+        {
+            layoutControlItem.SizeConstraintsType = SizeConstraintsType.Default;
         }
     }
 
