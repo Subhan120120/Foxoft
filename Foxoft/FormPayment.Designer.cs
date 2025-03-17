@@ -529,10 +529,8 @@ namespace Foxoft
             // 
             LCI_PaymentPlan.Control = LUE_PaymentPlan;
             LCI_PaymentPlan.Location = new Point(0, 102);
-            LCI_PaymentPlan.MinSize = new Size(163, 1);
             LCI_PaymentPlan.Name = "LCI_PaymentPlan";
-            LCI_PaymentPlan.Size = new Size(342, 25);
-            LCI_PaymentPlan.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            LCI_PaymentPlan.Size = new Size(294, 24);
             LCI_PaymentPlan.Text = "Ödəmə Planı";
             LCI_PaymentPlan.TextSize = new Size(157, 16);
             LCI_PaymentPlan.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
