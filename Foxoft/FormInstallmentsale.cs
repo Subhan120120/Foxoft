@@ -341,12 +341,12 @@ namespace Foxoft
             TrInvoiceHeader trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
 
-            MakePayment(monthlyPayment, trInvoiceHeader, false);
+            MakePayment(monthlyPayment, trInvoiceHeader);
         }
 
-        private void MakePayment(decimal pay, TrInvoiceHeader trInvoiceHeader, bool autoPayment)
+        private void MakePayment(decimal pay, TrInvoiceHeader trInvoiceHeader)
         {
-            using FormPayment formPayment = new(1, Math.Round(pay, 2), trInvoiceHeader, new byte[] { 1, 2 }, autoPayment);
+            using FormPayment formPayment = new(1, Math.Round(pay, 2), trInvoiceHeader, new byte[] { 1, 2 }, true);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {

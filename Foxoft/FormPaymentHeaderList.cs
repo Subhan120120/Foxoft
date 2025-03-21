@@ -106,7 +106,7 @@ namespace Foxoft
                                                                OperationTime = x.OperationTime,
                                                                CurrAccCode = x.CurrAccCode,
                                                                Description = x.Description,
-                                                               OperationType = x.OperationType,
+                                                               PaymentKindId = x.PaymentKindId,
                                                                CompanyCode = x.CompanyCode,
                                                                OfficeCode = x.OfficeCode,
                                                                StoreCode = x.StoreCode,

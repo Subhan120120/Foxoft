@@ -207,10 +207,10 @@
 			<property name="UnboundDataTypeName" />
 		</property>
 		<property name="Item14" isnull="true" iskey="true">
-			<property name="Name">colOperationType</property>
+			<property name="Name">colPaymentKindId</property>
 			<property name="ImageAlignment">Near</property>
 			<property name="ImageIndex">-1</property>
-			<property name="FieldName">OperationType</property>
+			<property name="FieldName">PaymentKindId</property>
 			<property name="ColumnEditName" />
 			<property name="Width">106</property>
 			<property name="MinWidth">20</property>

@@ -26,6 +26,7 @@ namespace Foxoft.Models
         public DbSet<DcPersonalType> DcPersonalTypes { get; set; }
         public DbSet<DcOffice> DcOffices { get; set; }
         public DbSet<DcPaymentType> DcPaymentTypes { get; set; }
+        public DbSet<DcPaymentKind> DcPaymentKinds { get; set; }
         public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
         public DbSet<DcPaymentPlan> DcPaymentPlans { get; set; }
         public DbSet<TrInstallment> TrInstallments { get; set; }
@@ -680,6 +681,13 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcOffice>().HasData(
                new DcOffice { OfficeCode = "ofs01", OfficeDesc = "Mərkəz Ofisi" }
                );
+
+            modelBuilder.Entity<DcPaymentKind>().HasData(
+                new DcPaymentKind { PaymentKindId = 0, PaymentKindDesc = "Unknown" },
+                new DcPaymentKind { PaymentKindId = 1, PaymentKindDesc = "Payment" },
+                new DcPaymentKind { PaymentKindId = 2, PaymentKindDesc = "Invoice" },
+                new DcPaymentKind { PaymentKindId = 3, PaymentKindDesc = "Installment" }
+                );
 
             modelBuilder.Entity<DcPaymentType>().HasData(
                 new DcPaymentType { PaymentTypeCode = 1, PaymentTypeDesc = "Nağd" },

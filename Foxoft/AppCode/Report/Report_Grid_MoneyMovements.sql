@@ -17,7 +17,7 @@ select  PaymentLineId
 , TrPaymentHeaders.DocumentTime
 , TrPaymentHeaders.OperationDate
 , TrPaymentHeaders.OperationTime
-, OperationType
+, PaymentKindId
 , TrPaymentHeaders.CurrAccCode
 , CashRegisterCode
 , FirstName

@@ -989,10 +989,6 @@ namespace Foxoft
 
             bool invoiceExist = trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader != null;
 
-            string operType = "payment";
-            if (invoiceExist)
-                operType = "invoice";
-
             trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
             trPaymentHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
             trPaymentHeader.ProcessCode = dcProcess.ProcessCode;
@@ -1003,8 +999,14 @@ namespace Foxoft
             trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
             trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
             if (invoiceExist)
+            {
                 trPaymentHeader.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
-            trPaymentHeader.OperationType = operType;
+                trPaymentHeader.PaymentKindId = 2;
+            }
+            else
+                trPaymentHeader.PaymentKindId = 1;
+
+            trPaymentHeader.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
             trPaymentHeader.OperationDate = trInvoiceHeader.DocumentDate;
             trPaymentHeader.OperationTime = trInvoiceHeader.DocumentTime;
 
@@ -1057,13 +1059,13 @@ namespace Foxoft
             }
         }
 
-        private void MakePayment(decimal summaryInvoice, bool autoPayment)
+        private void MakePayment(decimal summaryInvoice)
         {
             decimal prePaid = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
             decimal pay = Math.Max(Math.Round(Math.Abs(summaryInvoice) - Math.Abs(prePaid), 4), 0);
 
             byte[] paymentTypes = dcProcess.ProcessCode == "IS" ? new byte[] { 1, 2, 3, 4 } : new byte[] { 1, 2 };
-            using FormPayment formPayment = new(1, pay, trInvoiceHeader, paymentTypes, autoPayment);
+            using FormPayment formPayment = new(1, pay, trInvoiceHeader, paymentTypes);
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, formPayment.Name);
             if (!currAccHasClaims)
             {
@@ -1134,7 +1136,7 @@ namespace Foxoft
                 decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
 
                 if (summaryInvoice != 0)
-                    MakePayment(summaryInvoice, false);
+                    MakePayment(summaryInvoice);
 
             }
             else

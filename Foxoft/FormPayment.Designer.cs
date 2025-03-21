@@ -160,14 +160,14 @@ namespace Foxoft
             // 
             // ucNumberPad
             // 
-            ucNumberPad.Location = new Point(339, 69);
+            ucNumberPad.Location = new Point(339, 45);
             ucNumberPad.Name = "ucNumberPad";
-            ucNumberPad.Size = new Size(398, 457);
+            ucNumberPad.Size = new Size(398, 505);
             ucNumberPad.TabIndex = 1;
             // 
             // txt_CashlessCommission
             // 
-            txt_CashlessCommission.Location = new Point(110, 260);
+            txt_CashlessCommission.Location = new Point(110, 284);
             txt_CashlessCommission.Name = "txt_CashlessCommission";
             txt_CashlessCommission.Size = new Size(201, 20);
             txt_CashlessCommission.StyleController = lC_Root;
@@ -176,7 +176,7 @@ namespace Foxoft
             // 
             // LUE_PaymentPlan
             // 
-            LUE_PaymentPlan.Location = new Point(110, 236);
+            LUE_PaymentPlan.Location = new Point(110, 260);
             LUE_PaymentPlan.Name = "LUE_PaymentPlan";
             LUE_PaymentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_PaymentPlan.Properties.NullText = "";
@@ -187,7 +187,7 @@ namespace Foxoft
             // 
             // lUE_CashlessCurrency
             // 
-            lUE_CashlessCurrency.Location = new Point(226, 150);
+            lUE_CashlessCurrency.Location = new Point(226, 174);
             lUE_CashlessCurrency.Name = "lUE_CashlessCurrency";
             lUE_CashlessCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_CashlessCurrency.Properties.Appearance.Options.UseFont = true;
@@ -205,7 +205,7 @@ namespace Foxoft
             // 
             // btnEdit_BankAccout
             // 
-            btnEdit_BankAccout.Location = new Point(110, 212);
+            btnEdit_BankAccout.Location = new Point(110, 236);
             btnEdit_BankAccout.Name = "btnEdit_BankAccout";
             btnEdit_BankAccout.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_BankAccout.Size = new Size(201, 20);
@@ -218,7 +218,7 @@ namespace Foxoft
             // 
             // btnEdit_CashRegister
             // 
-            btnEdit_CashRegister.Location = new Point(110, 81);
+            btnEdit_CashRegister.Location = new Point(110, 105);
             btnEdit_CashRegister.Name = "btnEdit_CashRegister";
             btnEdit_CashRegister.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_CashRegister.Size = new Size(201, 20);
@@ -232,7 +232,7 @@ namespace Foxoft
             // dateEdit_Date
             // 
             dateEdit_Date.EditValue = null;
-            dateEdit_Date.Location = new Point(413, 12);
+            dateEdit_Date.Location = new Point(98, 12);
             dateEdit_Date.Name = "dateEdit_Date";
             dateEdit_Date.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dateEdit_Date.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -241,14 +241,14 @@ namespace Foxoft
             dateEdit_Date.Properties.EditFormat.FormatString = "";
             dateEdit_Date.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             dateEdit_Date.Properties.MaskSettings.Set("mask", "");
-            dateEdit_Date.Size = new Size(336, 20);
+            dateEdit_Date.Size = new Size(225, 20);
             dateEdit_Date.StyleController = lC_Root;
             dateEdit_Date.TabIndex = 0;
             dateEdit_Date.EditValueChanged += dateEdit_Date_EditValueChanged;
             // 
             // txtEdit_Cash
             // 
-            txtEdit_Cash.Location = new Point(110, 45);
+            txtEdit_Cash.Location = new Point(110, 69);
             txtEdit_Cash.Name = "txtEdit_Cash";
             txtEdit_Cash.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Cash.Properties.Appearance.Options.UseFont = true;
@@ -265,7 +265,7 @@ namespace Foxoft
             // 
             // txtEdit_Cashless
             // 
-            txtEdit_Cashless.Location = new Point(110, 150);
+            txtEdit_Cashless.Location = new Point(110, 174);
             txtEdit_Cashless.Name = "txtEdit_Cashless";
             txtEdit_Cashless.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Cashless.Properties.Appearance.Options.UseFont = true;
@@ -282,7 +282,7 @@ namespace Foxoft
             // 
             // txtEdit_Bonus
             // 
-            txtEdit_Bonus.Location = new Point(110, 329);
+            txtEdit_Bonus.Location = new Point(110, 353);
             txtEdit_Bonus.Name = "txtEdit_Bonus";
             txtEdit_Bonus.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_Bonus.Properties.Appearance.Options.UseFont = true;
@@ -299,7 +299,7 @@ namespace Foxoft
             // 
             // txtEdit_CustomerBonus
             // 
-            txtEdit_CustomerBonus.Location = new Point(110, 365);
+            txtEdit_CustomerBonus.Location = new Point(110, 389);
             txtEdit_CustomerBonus.Name = "txtEdit_CustomerBonus";
             txtEdit_CustomerBonus.Properties.Appearance.Font = new Font("Tahoma", 16F);
             txtEdit_CustomerBonus.Properties.Appearance.Options.UseFont = true;
@@ -312,9 +312,9 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(651, 542);
+            btn_Cancel.Location = new Point(651, 566);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(98, 74);
+            btn_Cancel.Size = new Size(98, 50);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 18;
             btn_Cancel.Text = "simpleButton1";
@@ -323,9 +323,9 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(550, 542);
+            btn_Ok.Location = new Point(550, 566);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(97, 74);
+            btn_Ok.Size = new Size(97, 50);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 17;
             btn_Ok.Text = "Ödə";
@@ -333,7 +333,7 @@ namespace Foxoft
             // 
             // lUE_cashCurrency
             // 
-            lUE_cashCurrency.Location = new Point(226, 45);
+            lUE_cashCurrency.Location = new Point(226, 69);
             lUE_cashCurrency.Name = "lUE_cashCurrency";
             lUE_cashCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_cashCurrency.Properties.Appearance.Options.UseFont = true;
@@ -352,7 +352,7 @@ namespace Foxoft
             // 
             // lUE_PaymentMethod
             // 
-            lUE_PaymentMethod.Location = new Point(110, 186);
+            lUE_PaymentMethod.Location = new Point(110, 210);
             lUE_PaymentMethod.Name = "lUE_PaymentMethod";
             lUE_PaymentMethod.Properties.Appearance.Font = new Font("Tahoma", 10F);
             lUE_PaymentMethod.Properties.Appearance.Options.UseFont = true;
@@ -370,7 +370,7 @@ namespace Foxoft
             // 
             // TxtEdit_Installment
             // 
-            TxtEdit_Installment.Location = new Point(110, 446);
+            TxtEdit_Installment.Location = new Point(110, 470);
             TxtEdit_Installment.Name = "TxtEdit_Installment";
             TxtEdit_Installment.Properties.Appearance.Font = new Font("Tahoma", 16F);
             TxtEdit_Installment.Properties.Appearance.Options.UseFont = true;
@@ -385,7 +385,7 @@ namespace Foxoft
             // 
             // LUE_InstallmentCurrency
             // 
-            LUE_InstallmentCurrency.Location = new Point(226, 446);
+            LUE_InstallmentCurrency.Location = new Point(226, 470);
             LUE_InstallmentCurrency.Name = "LUE_InstallmentCurrency";
             LUE_InstallmentCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             LUE_InstallmentCurrency.Properties.Appearance.Options.UseFont = true;
@@ -403,7 +403,7 @@ namespace Foxoft
             // 
             // LUE_InstallmentPlan
             // 
-            LUE_InstallmentPlan.Location = new Point(110, 482);
+            LUE_InstallmentPlan.Location = new Point(110, 506);
             LUE_InstallmentPlan.Name = "LUE_InstallmentPlan";
             LUE_InstallmentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_InstallmentPlan.Properties.NullText = "";
@@ -415,7 +415,7 @@ namespace Foxoft
             // txt_InstallmentCommission
             // 
             txt_InstallmentCommission.Enabled = false;
-            txt_InstallmentCommission.Location = new Point(110, 506);
+            txt_InstallmentCommission.Location = new Point(110, 530);
             txt_InstallmentCommission.Name = "txt_InstallmentCommission";
             txt_InstallmentCommission.Size = new Size(201, 20);
             txt_InstallmentCommission.StyleController = lC_Root;
@@ -426,7 +426,7 @@ namespace Foxoft
             // 
             lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             lCG_Root.GroupBordersVisible = false;
-            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCG_Cash, lCG_Cashless, lCG_CustomerBonus, lCI_Cancel, lCI_Ok, emptySpaceItem1, LCG_Installment, lCI_Date, LCG_InputPad });
+            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCG_Cash, lCG_Cashless, lCG_CustomerBonus, lCI_Cancel, lCI_Ok, emptySpaceItem1, LCG_Installment, LCG_InputPad, lCI_Date });
             lCG_Root.Name = "Root";
             lCG_Root.Size = new Size(761, 628);
             lCG_Root.TextVisible = false;
@@ -435,7 +435,7 @@ namespace Foxoft
             // 
             lCG_Cash.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_Cash.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Cash, lCI_CashRegister, lCI_CashCurrency });
-            lCG_Cash.Location = new Point(0, 0);
+            lCG_Cash.Location = new Point(0, 24);
             lCG_Cash.Name = "layoutControlGroupCash";
             lCG_Cash.Size = new Size(315, 105);
             lCG_Cash.Text = "Nağd";
@@ -473,7 +473,7 @@ namespace Foxoft
             // 
             lCG_Cashless.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_Cashless.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Cashless, lCI_BankCurrAcc, lCI_CashlessCurrency, lCI_PaymentMethod, LCI_PaymentPlan, LCI_CashlessCommission });
-            lCG_Cashless.Location = new Point(0, 105);
+            lCG_Cashless.Location = new Point(0, 129);
             lCG_Cashless.Name = "layoutControlGroupCashless";
             lCG_Cashless.Size = new Size(315, 179);
             lCG_Cashless.Text = "Nağdsız";
@@ -541,7 +541,7 @@ namespace Foxoft
             lCG_CustomerBonus.Enabled = false;
             lCG_CustomerBonus.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_CustomerBonus.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_CustomerBonus, lCI_CusBonus });
-            lCG_CustomerBonus.Location = new Point(0, 284);
+            lCG_CustomerBonus.Location = new Point(0, 308);
             lCG_CustomerBonus.Name = "layoutControlGroupCustomerBonus";
             lCG_CustomerBonus.Size = new Size(315, 117);
             lCG_CustomerBonus.Text = "Bonus";
@@ -568,10 +568,10 @@ namespace Foxoft
             // lCI_Cancel
             // 
             lCI_Cancel.Control = btn_Cancel;
-            lCI_Cancel.Location = new Point(639, 530);
+            lCI_Cancel.Location = new Point(639, 554);
             lCI_Cancel.MinSize = new Size(78, 26);
             lCI_Cancel.Name = "layoutControlItemCancel";
-            lCI_Cancel.Size = new Size(102, 78);
+            lCI_Cancel.Size = new Size(102, 54);
             lCI_Cancel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cancel.TextSize = new Size(0, 0);
             lCI_Cancel.TextVisible = false;
@@ -579,10 +579,10 @@ namespace Foxoft
             // lCI_Ok
             // 
             lCI_Ok.Control = btn_Ok;
-            lCI_Ok.Location = new Point(538, 530);
+            lCI_Ok.Location = new Point(538, 554);
             lCI_Ok.MinSize = new Size(78, 26);
             lCI_Ok.Name = "layoutControlItemOk";
-            lCI_Ok.Size = new Size(101, 78);
+            lCI_Ok.Size = new Size(101, 54);
             lCI_Ok.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Ok.TextSize = new Size(0, 0);
             lCI_Ok.TextVisible = false;
@@ -590,16 +590,16 @@ namespace Foxoft
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new Point(0, 530);
+            emptySpaceItem1.Location = new Point(0, 554);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(538, 78);
+            emptySpaceItem1.Size = new Size(538, 54);
             emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // LCG_Installment
             // 
             LCG_Installment.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             LCG_Installment.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_Installment, LCI_PayPlan, LCI_InstallmentCurrency, LCI_InstallmentCommission });
-            LCG_Installment.Location = new Point(0, 401);
+            LCG_Installment.Location = new Point(0, 425);
             LCG_Installment.Name = "LCG_Installment";
             LCG_Installment.Size = new Size(315, 129);
             LCG_Installment.Text = "Daxili Kredit";
@@ -643,9 +643,9 @@ namespace Foxoft
             // lCI_Date
             // 
             lCI_Date.Control = dateEdit_Date;
-            lCI_Date.Location = new Point(315, 0);
+            lCI_Date.Location = new Point(0, 0);
             lCI_Date.Name = "lCI_Date";
-            lCI_Date.Size = new Size(426, 24);
+            lCI_Date.Size = new Size(315, 24);
             lCI_Date.Text = "Tarix";
             lCI_Date.TextSize = new Size(74, 13);
             // 
@@ -653,9 +653,9 @@ namespace Foxoft
             // 
             LCG_InputPad.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             LCG_InputPad.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_InpudPad });
-            LCG_InputPad.Location = new Point(315, 24);
+            LCG_InputPad.Location = new Point(315, 0);
             LCG_InputPad.Name = "LCG_InputPad2";
-            LCG_InputPad.Size = new Size(426, 506);
+            LCG_InputPad.Size = new Size(426, 554);
             LCG_InputPad.Text = "Giriş Paneli";
             // 
             // LCI_InpudPad
@@ -663,7 +663,7 @@ namespace Foxoft
             LCI_InpudPad.Control = ucNumberPad;
             LCI_InpudPad.Location = new Point(0, 0);
             LCI_InpudPad.Name = "layoutControlItem1";
-            LCI_InpudPad.Size = new Size(402, 461);
+            LCI_InpudPad.Size = new Size(402, 509);
             LCI_InpudPad.TextSize = new Size(0, 0);
             LCI_InpudPad.TextVisible = false;
             // 

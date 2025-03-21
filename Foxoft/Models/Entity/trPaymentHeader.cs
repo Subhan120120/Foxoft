@@ -82,6 +82,10 @@ namespace Foxoft.Models
         [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? OperationType { get; set; }
 
+        [ForeignKey("DcPaymentKind")]
+        [Display(Name = "Ödəmə növü")]
+        public byte PaymentKindId { get; set; }
+
         [DefaultValue("0")]
         [Display(Name = "Şirkət")]
         public string? CompanyCode { get; set; }
@@ -130,6 +134,7 @@ namespace Foxoft.Models
         public virtual DcCurrAcc DcStore { get; set; }
         public virtual DcProcess DcProcess { get; set; }
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
+        public virtual DcPaymentKind DcPaymentKind { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
 
         //public virtual TrPaymentHeader RelatedPayment { get; set; } // Navigation property to the related line

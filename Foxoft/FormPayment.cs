@@ -60,7 +60,7 @@ namespace Foxoft
             lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 });
         }
 
-        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes)
+        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader)
            : this()
         {
             this.trInvoiceHeader = trInvoiceHeader;
@@ -73,18 +73,28 @@ namespace Foxoft
             trPaymentLineCash.Payment = Math.Abs(pay);
         }
 
-        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes, bool autoMakePayment)
-           : this(paymentType, pay, trInvoiceHeader, paymentTypes)
+        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, bool autoMakePayment)
+           : this(paymentType, pay, trInvoiceHeader)
         {
             if (trPaymentLineCash.Payment > 0)
                 if (autoMakePayment)
-                    SavePayment(true);
+                    SavePayment(autoMakePayment);
+        }
 
+        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes)
+           : this(paymentType, pay, trInvoiceHeader)
+        {
             lCG_Cash.Visibility = paymentTypes.Contains((byte)1) ? LayoutVisibility.Always : LayoutVisibility.Never;
             lCG_Cashless.Visibility = paymentTypes.Contains((byte)2) ? LayoutVisibility.Always : LayoutVisibility.Never;
             LCG_Installment.Visibility = paymentTypes.Contains((byte)3) ? LayoutVisibility.Always : LayoutVisibility.Never;
             //lCG_CustomerBonus.Enabled = paymentTypes.Contains((byte)4) ? true : false;
+        }
 
+        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes, bool installmentPayment)
+           : this(paymentType, pay, trInvoiceHeader, new byte[] { 1, 2 })
+        {
+            if (installmentPayment)
+                trPaymentHeader.PaymentKindId = 3;
         }
 
         private void PaymentDefaults(byte paymentType, TrInvoiceHeader trInvoiceHeader)
@@ -92,10 +102,6 @@ namespace Foxoft
             PaymentHeaderId = Guid.NewGuid();
 
             bool invoiceExist = trInvoiceHeader.InvoiceHeaderId != Guid.Empty && trInvoiceHeader != null;
-
-            string operType = "payment";
-            if (invoiceExist)
-                operType = "invoice";
 
             trPaymentHeader.PaymentHeaderId = PaymentHeaderId;
             trPaymentHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
@@ -105,9 +111,15 @@ namespace Foxoft
             trPaymentHeader.ProcessCode = "PA";
             trPaymentHeader.DocumentDate = trInvoiceHeader.DocumentDate;
             trPaymentHeader.DocumentTime = trInvoiceHeader.DocumentTime;
+
             if (invoiceExist)
+            {
                 trPaymentHeader.InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId;
-            trPaymentHeader.OperationType = operType;
+                trPaymentHeader.PaymentKindId = 2;
+            }
+            else
+                trPaymentHeader.PaymentKindId = 1;
+
             trPaymentHeader.OperationDate = DateTime.Now;
             trPaymentHeader.IsMainTF = true;
 
@@ -460,7 +472,7 @@ namespace Foxoft
                             trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
                             trPaymentHeader2.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
                             trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode?.ToString();
-                            trPaymentHeader2.OperationType = "payment";
+                            trPaymentHeader2.PaymentKindId = 1;
                             efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader2);
 
                             TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
