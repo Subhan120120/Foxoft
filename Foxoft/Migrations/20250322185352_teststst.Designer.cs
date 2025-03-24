@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20250322185352_teststst")]
+    partial class teststst
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,12 +144,6 @@ namespace Foxoft.Migrations
                     b.Property<byte>("ClaimTypeId")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.HasKey("ClaimCode");
 
                     b.HasIndex("CategoryId");
@@ -161,632 +158,553 @@ namespace Foxoft.Migrations
                             ClaimCode = "ButunHesabatlar",
                             CategoryId = 1,
                             ClaimDesc = "Butun Hesabatlar",
-                            ClaimTypeId = (byte)2,
-                            Id = 0
+                            ClaimTypeId = (byte)2
                         },
                         new
                         {
                             ClaimCode = "Products",
                             CategoryId = 18,
                             ClaimDesc = "Məhsullar",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "CurrAccs",
                             CategoryId = 19,
                             ClaimDesc = "Cari Hesablar",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "CashRegs",
                             CategoryId = 21,
                             ClaimDesc = "Kassalar",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "CashTransfer",
                             CategoryId = 21,
                             ClaimDesc = "Pul Transferi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InventoryTransfer",
                             CategoryId = 14,
                             ClaimDesc = "Mal Transferi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "Expense",
                             CategoryId = 9,
                             ClaimDesc = "Xərc",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailPurchaseInvoice",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Fakturası",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholePurchaseInvoice",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alış Fakturası",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailSaleInvoice",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satış Fakturası",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholesaleInvoice",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satış Fakturası",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentPurchaseInvoice",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alışı",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentSaleInvoice",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satışı",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "CountIn",
                             CategoryId = 10,
                             ClaimDesc = "Sayım Artırma",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "CountOut",
                             CategoryId = 11,
                             ClaimDesc = "Sayım Azaltma",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WaybillIn",
                             CategoryId = 12,
                             ClaimDesc = "Təhvil Alma",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WaybillOut",
                             CategoryId = 13,
                             ClaimDesc = "Təhvil Vermə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailPurchaseOrder",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Sifarişi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholePurchaseOrder",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alış Sifarişi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailSaleOrder",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satış Sifarişi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholesaleOrder",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satış Sifarişi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentPurchaseOrder",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alış Sifarişi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentSaleOrder",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satış Sifarişi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailPurchaseReturn",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alışın Qaytarılması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholePurchaseReturn",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alışın Qaytarılması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailSaleReturn",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satışın Qaytarılması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholesaleReturn",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satışın Qaytarılması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentPurchaseReturn",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alış Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentSaleReturn",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satış Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceRP",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceWP",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alış Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceRS",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satış Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceWS",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satış Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceIP",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alış Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceIS",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satış Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceEX",
                             CategoryId = 9,
                             ClaimDesc = "Xərc Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceCI",
                             CategoryId = 10,
                             ClaimDesc = "Sayım Artırma Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceCO",
                             CategoryId = 11,
                             ClaimDesc = "Sayım Azaltma Fakturası Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceRPO",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Sifarişi Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceWPO",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alış Sifarişi Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceRSO",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satış Sifarişi Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceWSO",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satış Sifarişi Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceIPO",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alış Sifarişi Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteInvoiceISO",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satış Sifarişi Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineRP",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Fakturası Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineWP",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alış Fakturası Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineRS",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satış Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineWS",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satış Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineIP",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alış Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineIS",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satış Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineEX",
                             CategoryId = 9,
                             ClaimDesc = "Xərc Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineCI",
                             CategoryId = 10,
                             ClaimDesc = "Sayım Artırma Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineCO",
                             CategoryId = 11,
                             ClaimDesc = "Sayım Azaltma Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineRPO",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Sifarişi Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineWPO",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alış Sifarişi Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineRSO",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satış Sifarişi Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineWSO",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satış Sifarişi Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineIPO",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alış Sifarişi Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "DeleteLineISO",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satış Sifarişi Sətiri Silmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailPurchaseReturnCustom",
                             CategoryId = 3,
                             ClaimDesc = "Pərakəndə Alış Xüsusi Geri Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholePurchaseReturnCustom",
                             CategoryId = 4,
                             ClaimDesc = "Topdan Alış Xüsusi Geri Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "RetailSaleReturnCustom",
                             CategoryId = 5,
                             ClaimDesc = "Pərakəndə Satış Xüsusi Geri Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "WholesaleReturnCustom",
                             CategoryId = 6,
                             ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentPurchaseReturnCustom",
                             CategoryId = 7,
                             ClaimDesc = "Kredit Alış Xüsusi Geri Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentSaleReturnCustom",
                             CategoryId = 8,
                             ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "Column_ProductCost",
                             CategoryId = 18,
                             ClaimDesc = "Maya Dəyəri",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "ProductDiscountList",
                             CategoryId = 18,
                             ClaimDesc = "Endirim Siyahısı",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "PaymentDetail",
                             CategoryId = 21,
                             ClaimDesc = "Ödəmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "PosDiscount",
                             CategoryId = 2,
                             ClaimDesc = "POS Endirimi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "PriceList",
                             CategoryId = 18,
                             ClaimDesc = "Qiymət Cədvəli",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "ProductFeatureType",
                             CategoryId = 18,
                             ClaimDesc = "Məhsul Özəlliyi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "HierarchyFeatureType",
                             CategoryId = 18,
                             ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "CurrAccClaim",
                             CategoryId = 15,
                             ClaimDesc = "Cari hesab yetkisi",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "Session",
                             CategoryId = 15,
                             ClaimDesc = "Sessiya",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "ExpenseOfInvoice",
                             CategoryId = 2,
                             ClaimDesc = "Faktura Xərci",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "Installments",
                             CategoryId = 8,
                             ClaimDesc = "Kreditlər",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "InstallmentCommissionChange",
                             CategoryId = 8,
                             ClaimDesc = "Kreditin Kamissiyasını Dəyişmə",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "EditLockedInvoice",
                             CategoryId = 2,
                             ClaimDesc = "Kilidli Fakturanı Dəyiş",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         },
                         new
                         {
                             ClaimCode = "EditLockedPayment",
                             CategoryId = 2,
                             ClaimDesc = "Kilidli Ödənişi Dəyiş",
-                            ClaimTypeId = (byte)1,
-                            Id = 0
+                            ClaimTypeId = (byte)1
                         });
                 });
 
@@ -805,7 +723,7 @@ namespace Foxoft.Migrations
                     b.Property<int>("CategoryLevel")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryParentId")
+                    b.Property<int?>("CategoryParentCode")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -861,7 +779,7 @@ namespace Foxoft.Migrations
                             CategoryId = 3,
                             CategoryDesc = "Pərakəndə Alış",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -871,7 +789,7 @@ namespace Foxoft.Migrations
                             CategoryId = 4,
                             CategoryDesc = "Topdan Alış",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -881,7 +799,7 @@ namespace Foxoft.Migrations
                             CategoryId = 5,
                             CategoryDesc = "Pərakəndə Satış",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -891,7 +809,7 @@ namespace Foxoft.Migrations
                             CategoryId = 6,
                             CategoryDesc = "Topdan Satış",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -901,7 +819,7 @@ namespace Foxoft.Migrations
                             CategoryId = 7,
                             CategoryDesc = "Kredit Alış",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -911,7 +829,7 @@ namespace Foxoft.Migrations
                             CategoryId = 8,
                             CategoryDesc = "Kredit Satış",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -921,7 +839,7 @@ namespace Foxoft.Migrations
                             CategoryId = 9,
                             CategoryDesc = "Xərc",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -931,7 +849,7 @@ namespace Foxoft.Migrations
                             CategoryId = 10,
                             CategoryDesc = "Sayım Artırma",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -941,7 +859,7 @@ namespace Foxoft.Migrations
                             CategoryId = 11,
                             CategoryDesc = "Sayım Azaltma",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -951,7 +869,7 @@ namespace Foxoft.Migrations
                             CategoryId = 12,
                             CategoryDesc = "Təhvil Alma",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -961,7 +879,7 @@ namespace Foxoft.Migrations
                             CategoryId = 13,
                             CategoryDesc = "Təhvil Vermə",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -971,7 +889,7 @@ namespace Foxoft.Migrations
                             CategoryId = 14,
                             CategoryDesc = "Məhsul Transferi",
                             CategoryLevel = 1,
-                            CategoryParentId = 2,
+                            CategoryParentCode = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Order = 0
@@ -4034,9 +3952,6 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
                         .HasDefaultValueSql("0");
-
-                    b.Property<string>("WorkerCode")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("InvoiceLineId");
 

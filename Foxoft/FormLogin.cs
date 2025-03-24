@@ -168,11 +168,9 @@ namespace Foxoft
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
 
-            XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Custom Icon Message", Text = "This is a message with a custom icon.", Buttons = new[] { DialogResult.OK }, ImageOptions = new MessageBoxImageOptions() { SvgImage = (SvgImage)resources.GetObject("btn_ERP.ImageOptions.SvgImage") } });
+            //XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Custom Icon Message", Text = "This is a message with a custom icon.", Buttons = new[] { DialogResult.OK }, ImageOptions = new MessageBoxImageOptions() { SvgImage = (SvgImage)resources.GetObject("btn_ERP.ImageOptions.SvgImage") } });
 
-            RoleClaimsForm xtraForm1 = new();
 
-            xtraForm1.ShowDialog();
         }
 
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
@@ -239,6 +237,12 @@ namespace Foxoft
         private void FormLogin_Load(object sender, EventArgs e)
         {
             //lC_Root.RegisterUserCustomizationForm(typeof(Form1));
+        }
+
+        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormClaimCategoryList formClaimCategoryList = new FormClaimCategoryList("Admin");
+            formClaimCategoryList.Show();
         }
     }
 }

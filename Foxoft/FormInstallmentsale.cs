@@ -1,12 +1,14 @@
 ﻿using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Localization;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports;
@@ -23,13 +25,13 @@ using System.Text.RegularExpressions;
 
 namespace Foxoft
 {
-    public partial class FormInstallmentsale : RibbonForm
+    public partial class FormInstallmentSale : RibbonForm
     {
         EfMethods efMethods = new();
         TrInstallmentViewModel trInstallmentViewModel;
         DcReport dcReport;
 
-        public FormInstallmentsale()
+        public FormInstallmentSale()
         {
             InitializeComponent();
 
@@ -44,11 +46,13 @@ namespace Foxoft
             col_Buttons.VisibleIndex = gridView1.Columns.Count - 1;
             gridView1.BestFitColumns();
             ApplyConditionalFormatting();
+
+            GridLocalizer.Active = new MyGridLocalizer();
         }
 
         private void LoadLayout()
         {
-            dcReport = efMethods.SelectReportByName("Report_Embedded_Installmentsale");
+            dcReport = efMethods.SelectReportByName("Report_Embedded_InstallmentSale");
             if (!string.IsNullOrEmpty(dcReport?.ReportLayout) && dcReport?.ReportId > 0)
             {
                 byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
@@ -302,7 +306,7 @@ namespace Foxoft
 
         private void LoadData()
         {
-            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_Installmentsale");
+            DcReport dcReport = efMethods.SelectReportByName("Report_Embedded_InstallmentSale");
 
             if (dcReport is not null)
             {
@@ -316,7 +320,7 @@ namespace Foxoft
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
-                        bindingSourceTrInstallmentsale.DataSource = dt;
+                        bindingSourceTrInstallmentSale.DataSource = dt;
                 }
             }
 
@@ -393,6 +397,36 @@ namespace Foxoft
             if (info == null) return;
 
             SaveLayout();
+        }
+
+        public class MyGridLocalizer : GridLocalizer
+        {
+            public override string GetLocalizedString(GridStringId id)
+            {
+                if (id == GridStringId.MenuFooterMaxFormat)
+                    return "{0}";
+                if (id == GridStringId.MenuFooterMinFormat)
+                    return "{0}";
+                if (id == GridStringId.MenuFooterSumFormat)
+                    return "{0}";
+                if (id == GridStringId.MenuFooterCountFormat)
+                    return "{0}";
+                if (id == GridStringId.MenuFooterAverageFormat)
+                    return "{0}";
+
+                return base.GetLocalizedString(id);
+            }
+        }
+
+        private void BBI_GridOptions_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormReportGridOptions gridSetting = new(gridView1);
+            gridSetting.ShowDialog();
+        }
+
+        private void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ReloadData();
         }
     }
 }

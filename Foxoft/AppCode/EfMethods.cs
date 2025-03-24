@@ -428,6 +428,17 @@ namespace Foxoft
             return roleClaims;
         }
 
+        public TrRoleClaim SelectRoleClaim(string roleCode, string claimCode)
+        {
+            using subContext db = new();
+
+            TrRoleClaim roleClaims = db.TrRoleClaims.Include(x => x.DcRole)
+                                                                  .Where(x => x.RoleCode == roleCode)
+                                                                  .Where(x => x.ClaimCode == claimCode)
+                                                                  .FirstOrDefault();
+            return roleClaims;
+        }
+
         public List<TrFormReport> SelectFormReports(string formCode)
         {
             using subContext db = new();
@@ -445,6 +456,36 @@ namespace Foxoft
                 .Include(x => x.TrHierarchyFeatureTypes)
                     .ThenInclude(x => x.DcFeatureType)
                 .OrderBy(x => x.Order).ToList();
+        }
+
+        public List<DcClaimCategoryViewModel> SelectDcClaimCategories(string roleCode)
+        {
+            using subContext db = new();
+
+            var data = db.DcClaimCategories.Include(x => x.DcClaims)
+                .Select(x => new DcClaimCategoryViewModel()
+                {
+                    CategoryId = x.CategoryId,
+                    CategoryParentId = x.CategoryParentId,
+                    CategoryDesc = x.CategoryDesc,
+                    IsSelected = x.DcClaims.Where(x => x.TrRoleClaims.Any(x => x.RoleCode == roleCode)).Count() == x.DcClaims.Count() ? true : false,
+                    IsCategory = true
+                }).ToList();
+
+
+
+            var data2 = db.DcClaims.Include(x => x.DcClaimCategory)
+                .Select(x => new DcClaimCategoryViewModel()
+                {
+                    CategoryId = x.Id + 1000, // Safe to use First() because we filtered out empty collections
+                    CategoryParentId = x.CategoryId,
+                    CategoryDesc = x.ClaimDesc,
+                    IsSelected = x.TrRoleClaims.Any(x => x.RoleCode == roleCode),
+                    IsCategory = false
+                }).ToList();
+
+            data.AddRange(data2);
+            return data;
         }
 
         public TrInvoiceHeader SelectInvoiceHeaderByDocNum(string documentNumber)
@@ -1056,6 +1097,14 @@ namespace Foxoft
                                 .FirstOrDefault(x => x.CurrAccCode == currAccCode);
         }
 
+        public DcCurrAcc SelectWorker(string currAccCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccs.Where(x => x.IsDisabled == false)
+                                .Where(x => x.PersonalTypeCode == 3)
+                                .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+        }
+
         public decimal SelectCurrAccBalance(string currAccCode, DateTime documentDate)
         {
             using subContext db = new();
@@ -1111,6 +1160,12 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcCurrencies.FirstOrDefault(x => x.CurrencyDesc == currencyDesc);
+        }
+
+        public DcClaim SelectDcClaimByIdentity(int Id)
+        {
+            using subContext db = new();
+            return db.DcClaims.FirstOrDefault(x => x.Id == Id);
         }
 
         public List<DcPaymentMethod> SelectPaymentMethodsByPaymentTypes(byte[] paymentTypes)
@@ -1287,6 +1342,13 @@ namespace Foxoft
             using subContext db = new();
             return db.DcProducts.Where(x => x.IsDisabled == false)
                        .Any(x => x.ProductCode == productCode);
+        }
+
+        public bool TrRoleClaimExist(string roleCode, string claimCode)
+        {
+            using subContext db = new();
+            return db.TrRoleClaims.Where(x => x.RoleCode == roleCode)
+                       .Any(x => x.ClaimCode == claimCode);
         }
 
         public bool BarcodeExistByProduct(string productCode)

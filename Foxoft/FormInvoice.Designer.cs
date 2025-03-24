@@ -154,6 +154,7 @@ namespace Foxoft
             colUnitOfMeasureId = new GridColumn();
             repoLUE_UnitOfMeasure = new RepositoryItemLookUpEdit();
             col_TotalBenefit = new GridColumn();
+            colWorkerCode = new GridColumn();
             repoBtnEdit_UnitOfMeasure = new RepositoryItemButtonEdit();
             LCI_SalesPerson = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_SalesPersonDesc = new DevExpress.XtraLayout.LayoutControlItem();
@@ -195,6 +196,7 @@ namespace Foxoft
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
+            repoBtnEdit_WorkerCode = new RepositoryItemButtonEdit();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -270,7 +272,12 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_WorkerCode).BeginInit();
             SuspendLayout();
+            // 
+            // trInvoiceLinesBindingSource
+            // 
+            trInvoiceLinesBindingSource.DataSource = typeof(TrInvoiceLine);
             // 
             // dataLayoutControl1
             // 
@@ -1027,7 +1034,7 @@ namespace Foxoft
             gC_InvoiceLine.Location = new Point(12, 108);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
-            gC_InvoiceLine.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure });
+            gC_InvoiceLine.RepositoryItems.AddRange(new RepositoryItem[] { repoBtnEdit_ProductCode, repoBtnEdit_SalesPersonCode, repoCalcEdit_Price, repoLUE_CurrencyCode, repoCalcEdit_PriceLoc, repoBtnEdit_SerialNumberCode, repoBtnEdit_UnitOfMeasure, repoLUE_UnitOfMeasure, repoBtnEdit_WorkerCode });
             gC_InvoiceLine.Size = new Size(1122, 242);
             gC_InvoiceLine.TabIndex = 10;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
@@ -1038,7 +1045,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, colUnitOfMeasureId, col_TotalBenefit });
+            gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, colBalance, colQty, colQtyIn, colQtyOut, colPriceLoc, col_Price, colCurrencyCode, colExchangeRate, col_Amount, col_PosDiscount, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_ProductDesc, colAmountLoc, colNetAmountLoc, colBenefit, colBarcode, colCreatedDate, colCreatedUserName, colLastUpdatedDate, colLastUpdatedUserName, colProductCost, colSerialNumberCode, colUnitOfMeasureId, col_TotalBenefit, colWorkerCode });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(760, 184, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -1344,6 +1351,12 @@ namespace Foxoft
             // 
             col_TotalBenefit.FieldName = "TotalBenefit";
             col_TotalBenefit.Name = "col_TotalBenefit";
+            // 
+            // colWorkerCode
+            // 
+            colWorkerCode.ColumnEdit = repoBtnEdit_WorkerCode;
+            colWorkerCode.FieldName = "WorkerCode";
+            colWorkerCode.Name = "colWorkerCode";
             // 
             // repoBtnEdit_UnitOfMeasure
             // 
@@ -1725,6 +1738,13 @@ namespace Foxoft
             alertControl1.AutoFormDelay = 3000;
             alertControl1.FormDisplaySpeed = DevExpress.XtraBars.Alerter.AlertFormDisplaySpeed.Fast;
             // 
+            // repoBtnEdit_WorkerCode
+            // 
+            repoBtnEdit_WorkerCode.AutoHeight = false;
+            repoBtnEdit_WorkerCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_WorkerCode.Name = "repoBtnEdit_WorkerCode";
+            repoBtnEdit_WorkerCode.ButtonPressed += repoBtnEdit_WorkerCode_ButtonPressed;
+            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -1815,6 +1835,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_WorkerCode).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1997,5 +2018,7 @@ namespace Foxoft
         private PopupMenu popupMenu1;
         private BarButtonItem barButtonItem5;
         private BarButtonItem BBI_EditInvoice;
+        private GridColumn colWorkerCode;
+        private RepositoryItemButtonEdit repoBtnEdit_WorkerCode;
     }
 }

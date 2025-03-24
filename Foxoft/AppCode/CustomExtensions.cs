@@ -120,7 +120,7 @@ namespace Foxoft
                 "RP" => "RetailPurchaseInvoice",
                 "RS" => "RetailSaleInvoice",
                 "WS" => "WholesaleInvoice",
-                "IS" => "InstallmentsaleInvoice",
+                "IS" => "InstallmentSaleInvoice",
                 "EX" => "Expense",
                 "EI" => "ExpenseOfInvoice",
                 "PA" => "PaymentDetail",

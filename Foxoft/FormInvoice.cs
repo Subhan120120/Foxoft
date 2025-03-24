@@ -641,6 +641,25 @@ namespace Foxoft
                     e.Value = null;
                 }
             }
+
+            if (column == colWorkerCode)
+            {
+                string eValue = (e.Value ??= String.Empty).ToString();
+
+                if (!String.IsNullOrEmpty(eValue))
+                {
+                    DcCurrAcc dcCurrAcc = efMethods.SelectWorker(eValue);
+                    if (dcCurrAcc is null || dcCurrAcc?.CurrAccTypeCode != 3)
+                    {
+                        e.ErrorText = "Belə bir usta yoxdur";
+                        e.Valid = false;
+                    }
+                }
+                else
+                {
+                    e.Value = null;
+                }
+            }
         }
 
         private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
@@ -698,6 +717,11 @@ namespace Foxoft
         private void repoBtnEdit_SalesPersonCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             SelectSalesPerson(sender);
+        }
+
+        private void repoBtnEdit_WorkerCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            SelectWorker(sender);
         }
 
         private void repoBtnEdit_SerialNumberCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -774,6 +798,8 @@ namespace Foxoft
                     SelectProduct(sender);
                 else if (info.Column == col_SalesPersonCode)
                     SelectSalesPerson(sender);
+                else if (info.Column == colWorkerCode)
+                    SelectWorker(sender);
             }
         }
 
@@ -784,6 +810,20 @@ namespace Foxoft
             string value = editor.EditValue?.ToString();
 
             using FormCurrAccList form = new(new byte[] { 3 }, value, new byte[] { 1 });
+
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                editor.EditValue = form.dcCurrAcc.CurrAccCode;
+            }
+        }
+
+        private void SelectWorker(object sender)
+        {
+            ButtonEdit editor = (ButtonEdit)sender;
+
+            string value = editor.EditValue?.ToString();
+
+            using FormCurrAccList form = new(new byte[] { 3 }, value, new byte[] { 3 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -1256,7 +1296,8 @@ namespace Foxoft
                 else if (XtraMessageBox.Show("Ödəmə 0a bərabərdir! \n Fakturaya qayıtmaq istəyirsiz? ", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 {
                     Close();
-                };
+                }
+                ;
             }
             else
             {

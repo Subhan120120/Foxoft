@@ -109,7 +109,7 @@ namespace Foxoft
             this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
             this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
             this.aCE_WholesaleInvoice.Name = "WholesaleInvoice";
-            this.aCE_InstallmentsaleInvoice.Name = "InstallmentsaleInvoice";
+            this.aCE_InstallmentSaleInvoice.Name = "InstallmentSaleInvoice";
             this.aCE_InventoryTransfer.Name = "InventoryTransfer";
             this.ACE_RetailPurchaseOrder.Name = "RetailPurchaseOrder";
             this.ACE_RetailSaleOrder.Name = "RetailSaleOrder";
@@ -117,12 +117,12 @@ namespace Foxoft
             this.ACE_PurchaseReturn.Name = "RetailPurchaseReturn";
             this.ACE_RetailSaleReturn.Name = "RetailSaleReturn";
             this.aCE_WholesaleReturn.Name = "WholesaleReturn";
-            this.ACE_InstallmentsaleReturn.Name = "InstallmentsaleReturn";
+            this.ACE_InstallmentSaleReturn.Name = "InstallmentSaleReturn";
 
             this.ACE_PurchaseReturnCustom.Name = "PurchaseReturnCustom";
             this.ACE_RetailsaleReturnCustom.Name = "RetailsaleReturnCustom";
             this.ACE_WholesaleReturnCustom.Name = "WholesaleReturnCustom";
-            this.ACE_InstallmentsaleReturnCustom.Name = "InstallmentsaleReturnCustom";
+            this.ACE_InstallmentSaleReturnCustom.Name = "InstallmentSaleReturnCustom";
 
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
@@ -136,7 +136,7 @@ namespace Foxoft
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
             this.ACE_PriceList.Name = "PriceList";
-            this.ACE_Discounts.Name = "DiscountList";
+            this.ACE_ProductDiscounts.Name = "ProductDiscountList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
             this.ACE_HierarchyFeatureType.Name = "HierarchyFeatureType";
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
@@ -337,7 +337,7 @@ namespace Foxoft
             ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null);
         }
 
-        private void ACE_InstallmentsaleInvoice_Click(object sender, EventArgs e)
+        private void ACE_InstallmentSaleInvoice_Click(object sender, EventArgs e)
         {
             ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null);
         }
@@ -377,7 +377,7 @@ namespace Foxoft
             ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null);
         }
 
-        private void ACE_InstallmentsaleReturnCustom_Click(object sender, EventArgs e)
+        private void ACE_InstallmentSaleReturnCustom_Click(object sender, EventArgs e)
         {
             ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null);
         }
@@ -407,7 +407,7 @@ namespace Foxoft
             ShowExistForm<FormReturn>("WS");
         }
 
-        private void ACE_InstallmentsaleReturn_Click(object sender, EventArgs e)
+        private void ACE_InstallmentSaleReturn_Click(object sender, EventArgs e)
         {
             ShowExistForm<FormReturn>("IS");
         }
@@ -419,7 +419,7 @@ namespace Foxoft
 
         private void ACE_Installments_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormInstallmentsale>();
+            ShowExistForm<FormInstallmentSale>();
         }
 
         private void ACE_PricList_Click(object sender, EventArgs e)

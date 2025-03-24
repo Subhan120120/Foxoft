@@ -24,7 +24,6 @@ namespace Foxoft.Models
         [ForeignKey("RelatedLine")]
         public Guid? RelatedLineId { get; set; }
 
-
         [Display(Name = "Məhsul Kodu")]
         [ForeignKey("DcProduct")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
@@ -148,6 +147,9 @@ namespace Foxoft.Models
         [Display(Name = "Satıcı")]
         [ForeignKey("DcCurrAcc")]
         public string? SalesPersonCode { get; set; }
+
+        [Display(Name = "Usta")]
+        public string? WorkerCode { get; set; }
 
         [Display(Name = "Maya Dəyəri")]
         //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]

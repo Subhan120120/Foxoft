@@ -27,7 +27,6 @@ namespace Foxoft
             col_RoleDesc.Caption = ReflectionExt.GetDisplayName<DcRole>(x => x.RoleDesc);
 
             LoadCurrAccRole(null);
-            LoadRoleClaim(null);
         }
 
         private void LoadCurrAccRole(string currAccCode)
@@ -36,14 +35,6 @@ namespace Foxoft
             gridControl1.DataSource = currAccRoles;
 
             gV_CurrAccRole.BestFitColumns();
-        }
-
-        private void LoadRoleClaim(string roleCode)
-        {
-            List<TrRoleClaim> roleClaims = efMethods.SelectRoleClaim(roleCode);
-            gridControl2.DataSource = roleClaims;
-
-            gv_RoleClaim.BestFitColumns();
         }
 
         private void btnEdit_CurrAccCode_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
@@ -73,9 +64,9 @@ namespace Foxoft
 
         private void btnEdit_RoleCode_EditValueChanged(object sender, EventArgs e)
         {
-            ButtonEdit buttonEdit = (ButtonEdit)sender;
-            string roleCode = buttonEdit.EditValue?.ToString();
-            LoadRoleClaim(roleCode);
+            //ButtonEdit buttonEdit = (ButtonEdit)sender;
+            //string roleCode = buttonEdit.EditValue?.ToString();
+            //LoadRoleClaim(roleCode);
         }
 
         private void gV_CurrAccRole_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
@@ -133,34 +124,6 @@ namespace Foxoft
             btnEdit_RoleCode.EditValue = role;
         }
 
-        private void BBI_AddRoleClaim_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            FormCommon<TrRoleClaim> common = new("", true, nameof(TrRoleClaim.RoleClaimId), "", nameof(DcRole.RoleCode), btnEdit_RoleCode.EditValue?.ToString());
-            if (DialogResult.OK == common.ShowDialog())
-                LoadRoleClaim(btnEdit_RoleCode.EditValue?.ToString());
-        }
-
-        private void BBI_DeleteRoleClaim_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (XtraMessageBox.Show("Silmək istədiyinizə əminmisiniz?", "Diqqət", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                int roleClaimId = Convert.ToInt32(gv_RoleClaim.GetFocusedRowCellValue(colRoleClaimId));
-
-                efMethods.DeleteEntityById<TrRoleClaim>(roleClaimId);
-
-                LoadRoleClaim(btnEdit_CurrAccCode.EditValue?.ToString());
-            }
-        }
-
-        private void BBI_EditRoleClaim_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            string roleClaimId = gv_RoleClaim.GetFocusedRowCellValue(colRoleClaimId)?.ToString();
-
-            FormCommon<TrRoleClaim> common = new("", false, nameof(TrRoleClaim.RoleClaimId), roleClaimId);
-            if (DialogResult.OK == common.ShowDialog())
-                LoadRoleClaim(btnEdit_RoleCode.EditValue?.ToString());
-        }
-
         private void btn_Save_Click(object sender, EventArgs e)
         {
             if (txtEdit_NewPassword.EditValue?.ToString() != txtEdit_ConfirmPassword.EditValue.ToString())
@@ -178,5 +141,15 @@ namespace Foxoft
             if (dcCurrAcc is not null && txtEdit_NewPassword.EditValue is not null)
                 efMethods.UpdateCurrAccPassword(dcCurrAcc.CurrAccCode, txtEdit_NewPassword.EditValue?.ToString());
         }
+
+        private void Btn_ClaimCategoryList_Click(object sender, EventArgs e)
+        {
+            if (btnEdit_RoleCode.EditValue is not null)
+            {
+                FormClaimCategoryList formClaimCategoryList = new(btnEdit_RoleCode.EditValue?.ToString());
+                formClaimCategoryList.Show();
+            }
+        }
+
     }
 }

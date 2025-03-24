@@ -10,7 +10,7 @@
     INNER JOIN
         TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
     WHERE
-        ph.OperationDate > i.DocumentDate -- payments without downpayments
+        ph.PaymentKindId = 3 -- payments without downpayments
     GROUP BY
         ph.InvoiceHeaderId, ph.CurrAccCode
 ),
@@ -25,7 +25,7 @@ DownPaymentSum AS (
     INNER JOIN
         TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
     WHERE
-        ph.OperationDate <= i.DocumentDate -- only downpayments
+        ph.PaymentKindId != 3 -- only downpayments
     GROUP BY
         i.InvoiceHeaderId
 ),

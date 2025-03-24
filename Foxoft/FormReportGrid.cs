@@ -261,19 +261,6 @@ namespace Foxoft
         {
             FormReportGridOptions gridSetting = new FormReportGridOptions(gV_Report);
             gridSetting.ShowDialog();
-
-            //Stream str = new MemoryStream();
-            //OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-            //gV_Report.SaveLayoutToStream(str, option);
-
-            //using (FormReportGridOptions2 formGridOptions = new(str, gV_Report))
-            //{
-            //    if (formGridOptions.ShowDialog(this) == DialogResult.OK)
-            //    {
-            //        formGridOptions.stream.Seek(0, SeekOrigin.Begin);
-            //        gV_Report.RestoreLayoutFromStream(formGridOptions.stream, option);
-            //    }
-            //}
         }
 
         private void bBI_DesignClear_ItemClick(object sender, ItemClickEventArgs e)

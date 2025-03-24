@@ -432,6 +432,7 @@ namespace Foxoft
                 {
                     string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
                     trPaymentHeader.DocumentNumber = NewDocNum;
+                    trPaymentHeader.Description = TxtEdit_Description.EditValue?.ToString();
 
                     if (autoPayment)
                     {
@@ -501,6 +502,7 @@ namespace Foxoft
                     if (!string.IsNullOrEmpty(trInstallment.PaymentPlanCode))
                     {
                         trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
+                        trInstallment.DocumentDate = Convert.ToDateTime(dateEdit_Date.EditValue);
                         efMethods.InsertEntity<TrInstallment>(trInstallment);
                     }
                 }

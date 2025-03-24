@@ -84,7 +84,7 @@
     <EmbeddedResource Include="AppCode\GvListDefaultLayout.xml" />
     <EmbeddedResource Include="AppCode\Report\Report_Detail_ProductCard.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_Barcode.sql" />
-    <EmbeddedResource Include="AppCode\Report\Report_Embedded_Installmentsale.sql" />
+    <EmbeddedResource Include="AppCode\Report\Report_Embedded_InstallmentSale.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_CashRegList.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_CurrAccList.sql" />
     <EmbeddedResource Include="AppCode\Report\Report_Embedded_InvoiceReport.sql" />
@@ -148,6 +148,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UcClaimCategoryList.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FormInvoiceLineUndeliveredList.cs">
       <SubType>Form</SubType>
     </Compile>

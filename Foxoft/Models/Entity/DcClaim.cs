@@ -27,8 +27,16 @@ namespace Foxoft.Models
         [ForeignKey("DcClaimType")]
         public byte ClaimTypeId { get; set; }
 
+        [ForeignKey("DcClaimCategory")]
+        public int CategoryId { get; set; }
+
+        [Display(Name = "Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
 
         public virtual DcClaimType DcClaimType { get; set; }
+        public virtual DcClaimCategory DcClaimCategory { get; set; }
         public virtual ICollection<TrRoleClaim> TrRoleClaims { get; set; }
         public virtual ICollection<TrClaimReport> TrClaimReports { get; set; }
     }

@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using Foxoft.Models;
+
+namespace Foxoft
 {
     partial class FormCurrAccProfile
     {
@@ -34,9 +36,6 @@
             BBI_Add = new DevExpress.XtraBars.BarButtonItem();
             BBI_Delete = new DevExpress.XtraBars.BarButtonItem();
             BBI_EditCurrAccRole = new DevExpress.XtraBars.BarButtonItem();
-            BBI_AddRoleClaim = new DevExpress.XtraBars.BarButtonItem();
-            BBI_EditRoleClaim = new DevExpress.XtraBars.BarButtonItem();
-            BBI_DeleteRoleClaim = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -63,17 +62,13 @@
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             splitterControl1 = new DevExpress.XtraEditors.SplitterControl();
             layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
-            gridControl2 = new DevExpress.XtraGrid.GridControl();
-            bindingSource2 = new BindingSource(components);
-            gv_RoleClaim = new DevExpress.XtraGrid.Views.Grid.GridView();
-            colRoleClaimId = new DevExpress.XtraGrid.Columns.GridColumn();
-            colRoleCode1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            colClaimCode = new DevExpress.XtraGrid.Columns.GridColumn();
             btnEdit_RoleCode = new DevExpress.XtraEditors.ButtonEdit();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             Rol = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            bindingSource2 = new BindingSource(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
+            btn_ClaimCategoryList = new DevExpress.XtraEditors.SimpleButton();
+            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
@@ -92,20 +87,18 @@
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl2).BeginInit();
             layoutControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)gridControl2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gv_RoleClaim).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_RoleCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Rol).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
             SuspendLayout();
             // 
             // ribbon
             // 
             ribbon.ExpandCollapseItem.Id = 0;
-            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, BBI_Add, BBI_Delete, BBI_EditCurrAccRole, BBI_AddRoleClaim, BBI_EditRoleClaim, BBI_DeleteRoleClaim });
+            ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbon.ExpandCollapseItem, BBI_Add, BBI_Delete, BBI_EditCurrAccRole });
             ribbon.Location = new Point(0, 0);
             ribbon.MaxItemId = 9;
             ribbon.Name = "ribbon";
@@ -137,30 +130,6 @@
             BBI_EditCurrAccRole.Name = "BBI_EditCurrAccRole";
             BBI_EditCurrAccRole.ItemClick += BBI_EditCurrAccRole_ItemClick;
             // 
-            // BBI_AddRoleClaim
-            // 
-            BBI_AddRoleClaim.Caption = "Əlavə Et";
-            BBI_AddRoleClaim.Id = 6;
-            BBI_AddRoleClaim.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_AddRoleClaim.ImageOptions.SvgImage");
-            BBI_AddRoleClaim.Name = "BBI_AddRoleClaim";
-            BBI_AddRoleClaim.ItemClick += BBI_AddRoleClaim_ItemClick;
-            // 
-            // BBI_EditRoleClaim
-            // 
-            BBI_EditRoleClaim.Caption = "Dəyiş";
-            BBI_EditRoleClaim.Id = 7;
-            BBI_EditRoleClaim.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_EditRoleClaim.ImageOptions.SvgImage");
-            BBI_EditRoleClaim.Name = "BBI_EditRoleClaim";
-            BBI_EditRoleClaim.ItemClick += BBI_EditRoleClaim_ItemClick;
-            // 
-            // BBI_DeleteRoleClaim
-            // 
-            BBI_DeleteRoleClaim.Caption = "Sil";
-            BBI_DeleteRoleClaim.Id = 8;
-            BBI_DeleteRoleClaim.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_DeleteRoleClaim.ImageOptions.SvgImage");
-            BBI_DeleteRoleClaim.Name = "BBI_DeleteRoleClaim";
-            BBI_DeleteRoleClaim.ItemClick += BBI_DeleteRoleClaim_ItemClick;
-            // 
             // ribbonPage1
             // 
             ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2 });
@@ -177,9 +146,6 @@
             // 
             // ribbonPageGroup2
             // 
-            ribbonPageGroup2.ItemLinks.Add(BBI_AddRoleClaim);
-            ribbonPageGroup2.ItemLinks.Add(BBI_EditRoleClaim);
-            ribbonPageGroup2.ItemLinks.Add(BBI_DeleteRoleClaim);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Rol Yetkisi";
             // 
@@ -261,7 +227,7 @@
             // 
             // bindingSource1
             // 
-            bindingSource1.DataSource = typeof(Models.TrCurrAccRole);
+            bindingSource1.DataSource = typeof(TrCurrAccRole);
             // 
             // gV_CurrAccRole
             // 
@@ -380,7 +346,7 @@
             // 
             // layoutControl2
             // 
-            layoutControl2.Controls.Add(gridControl2);
+            layoutControl2.Controls.Add(btn_ClaimCategoryList);
             layoutControl2.Controls.Add(btnEdit_RoleCode);
             layoutControl2.Dock = DockStyle.Fill;
             layoutControl2.Location = new Point(639, 158);
@@ -390,46 +356,6 @@
             layoutControl2.Size = new Size(681, 366);
             layoutControl2.TabIndex = 7;
             layoutControl2.Text = "layoutControl2";
-            // 
-            // gridControl2
-            // 
-            gridControl2.DataSource = bindingSource2;
-            gridControl2.Location = new Point(12, 36);
-            gridControl2.MainView = gv_RoleClaim;
-            gridControl2.MenuManager = ribbon;
-            gridControl2.Name = "gridControl2";
-            gridControl2.Size = new Size(657, 318);
-            gridControl2.TabIndex = 5;
-            gridControl2.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gv_RoleClaim });
-            // 
-            // bindingSource2
-            // 
-            bindingSource2.DataSource = typeof(Models.TrRoleClaim);
-            // 
-            // gv_RoleClaim
-            // 
-            gv_RoleClaim.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colRoleClaimId, colRoleCode1, colClaimCode });
-            gv_RoleClaim.GridControl = gridControl2;
-            gv_RoleClaim.Name = "gv_RoleClaim";
-            // 
-            // colRoleClaimId
-            // 
-            colRoleClaimId.FieldName = "RoleClaimId";
-            colRoleClaimId.Name = "colRoleClaimId";
-            // 
-            // colRoleCode1
-            // 
-            colRoleCode1.FieldName = "RoleCode";
-            colRoleCode1.Name = "colRoleCode1";
-            colRoleCode1.Visible = true;
-            colRoleCode1.VisibleIndex = 0;
-            // 
-            // colClaimCode
-            // 
-            colClaimCode.FieldName = "ClaimCode";
-            colClaimCode.Name = "colClaimCode";
-            colClaimCode.Visible = true;
-            colClaimCode.VisibleIndex = 1;
             // 
             // btnEdit_RoleCode
             // 
@@ -447,7 +373,7 @@
             // 
             layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { Rol, layoutControlItem4 });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { Rol, layoutControlItem6 });
             layoutControlGroup1.Name = "Root";
             layoutControlGroup1.Size = new Size(681, 366);
             layoutControlGroup1.TextVisible = false;
@@ -460,18 +386,32 @@
             Rol.Size = new Size(661, 24);
             Rol.TextSize = new Size(15, 13);
             // 
-            // layoutControlItem4
+            // bindingSource2
             // 
-            layoutControlItem4.Control = gridControl2;
-            layoutControlItem4.Location = new Point(0, 24);
-            layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new Size(661, 322);
-            layoutControlItem4.TextSize = new Size(0, 0);
-            layoutControlItem4.TextVisible = false;
+            bindingSource2.DataSource = typeof(TrRoleClaim);
             // 
             // dxErrorProvider1
             // 
             dxErrorProvider1.ContainerControl = this;
+            // 
+            // btn_ClaimCategoryList
+            // 
+            btn_ClaimCategoryList.Location = new Point(12, 36);
+            btn_ClaimCategoryList.Name = "btn_ClaimCategoryList";
+            btn_ClaimCategoryList.Size = new Size(657, 22);
+            btn_ClaimCategoryList.StyleController = layoutControl2;
+            btn_ClaimCategoryList.TabIndex = 10;
+            btn_ClaimCategoryList.Text = "Yetkiler";
+            btn_ClaimCategoryList.Click += Btn_ClaimCategoryList_Click;
+            // 
+            // layoutControlItem6
+            // 
+            layoutControlItem6.Control = btn_ClaimCategoryList;
+            layoutControlItem6.Location = new Point(0, 24);
+            layoutControlItem6.Name = "layoutControlItem6";
+            layoutControlItem6.Size = new Size(661, 322);
+            layoutControlItem6.TextSize = new Size(0, 0);
+            layoutControlItem6.TextVisible = false;
             // 
             // FormCurrAccProfile
             // 
@@ -486,7 +426,7 @@
             Name = "FormCurrAccProfile";
             Ribbon = ribbon;
             StatusBar = ribbonStatusBar;
-            Text = "FormCurrAccRole";
+            Text = "FormCurrAccProfile";
             ((System.ComponentModel.ISupportInitialize)ribbon).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).EndInit();
@@ -505,14 +445,12 @@
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl2).EndInit();
             layoutControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)gridControl2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gv_RoleClaim).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_RoleCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Rol).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource2).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -541,7 +479,6 @@
         private DevExpress.XtraEditors.SplitterControl splitterControl1;
         private DevExpress.XtraLayout.LayoutControl layoutControl2;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraGrid.GridControl gridControl2;
         private DevExpress.XtraGrid.Views.Grid.GridView gv_RoleClaim;
         private DevExpress.XtraEditors.ButtonEdit btnEdit_RoleCode;
         private DevExpress.XtraLayout.LayoutControlItem Rol;
@@ -563,5 +500,10 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private FormClaimCategoryList UcClaimCategory;
+        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+        private DevExpress.XtraEditors.SimpleButton btn_ClaimCategoryList;
     }
 }

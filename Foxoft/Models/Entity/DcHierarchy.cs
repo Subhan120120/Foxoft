@@ -25,7 +25,7 @@ namespace Foxoft.Models
         [Display(Name = "İyerarxiya Səviyyəsi")]
         public int HierarchyLevel { get; set; }
 
-        [Display(Name = "Üst İyerarxiya Kodu")]
+        [Display(Name = "Ana İyerarxiya Kodu")]
         public string? HierarchyParentCode { get; set; }
 
         [Display(Name = "Sıra")]
