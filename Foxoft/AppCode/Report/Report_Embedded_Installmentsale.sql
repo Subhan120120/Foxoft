@@ -10,7 +10,7 @@
     INNER JOIN
         TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
     WHERE
-        ph.PaymentKindId = 3 -- payments without downpayments
+        ph.OperationDate > i.DocumentDate -- payments without downpayments
     GROUP BY
         ph.InvoiceHeaderId, ph.CurrAccCode
 ),
@@ -25,7 +25,7 @@ DownPaymentSum AS (
     INNER JOIN
         TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
     WHERE
-        ph.PaymentKindId != 3 -- only downpayments
+        ph.OperationDate <= i.DocumentDate -- only downpayments
     GROUP BY
         i.InvoiceHeaderId
 ),
@@ -80,7 +80,9 @@ CalculatedData AS (
         AmountWithComLoc - TotalPaid AS RemainingBalance,
         (AmountWithComLoc / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,
         FLOOR(TotalPaid / (AmountWithComLoc / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
-        DATEADD(MONTH, FLOOR(TotalPaid / (AmountWithComLoc / NULLIF(DurationInMonths, 0))) + 1, DocumentDate) AS OverdueDate
+		DATEADD(MONTH, 
+		    FLOOR(TotalPaid / COALESCE(NULLIF(AmountWithComLoc / NULLIF(DurationInMonths, 0), 0), 1)) + 1, DocumentDate
+		) AS OverdueDate
     FROM
         InstallmentData
 )

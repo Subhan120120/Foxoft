@@ -45,6 +45,8 @@ namespace Foxoft
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             btn_POS = new DevExpress.XtraEditors.SimpleButton();
             txtEdit_UserName = new DevExpress.XtraEditors.TextEdit();
             txtEdit_Password = new DevExpress.XtraEditors.TextEdit();
@@ -61,8 +63,6 @@ namespace Foxoft
             layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LUE_Terminal.Properties).BeginInit();
@@ -194,6 +194,20 @@ namespace Foxoft
             BBI_GetKey.Id = 2;
             BBI_GetKey.Name = "BBI_GetKey";
             BBI_GetKey.ItemClick += BBI_GetKey_ItemClick;
+            // 
+            // barButtonItem3
+            // 
+            barButtonItem3.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            barButtonItem3.Caption = "barButtonItem3";
+            barButtonItem3.Id = 3;
+            barButtonItem3.Name = "barButtonItem3";
+            // 
+            // barButtonItem4
+            // 
+            barButtonItem4.Caption = "run";
+            barButtonItem4.Id = 4;
+            barButtonItem4.Name = "barButtonItem4";
+            barButtonItem4.ItemClick += barButtonItem4_ItemClick;
             // 
             // btn_POS
             // 
@@ -360,20 +374,6 @@ namespace Foxoft
             toolbarFormControl1.TitleItemLinks.Add(barButtonItem3);
             toolbarFormControl1.TitleItemLinks.Add(barButtonItem4);
             toolbarFormControl1.ToolbarForm = this;
-            // 
-            // barButtonItem3
-            // 
-            barButtonItem3.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            barButtonItem3.Caption = "barButtonItem3";
-            barButtonItem3.Id = 3;
-            barButtonItem3.Name = "barButtonItem3";
-            // 
-            // barButtonItem4
-            // 
-            barButtonItem4.Caption = "cap2";
-            barButtonItem4.Id = 4;
-            barButtonItem4.Name = "barButtonItem4";
-            barButtonItem4.ItemClick += barButtonItem4_ItemClick;
             // 
             // FormLogin
             // 
