@@ -131,6 +131,11 @@ namespace Foxoft
                         localAddress == CustomExtensions.GetPhiscalAdress() &&
                         dateTime > DateTime.Now;
                 }
+                catch (FormatException ex)
+                {
+                    XtraMessageBox.Show($"Lisenziya tarixi etibarsızdır: {ex.Message}");
+                    return false;
+                }
                 catch (Exception)
                 {
                     return false;

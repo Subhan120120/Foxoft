@@ -84,7 +84,7 @@ namespace Foxoft.Models
 
         [ForeignKey("DcPaymentKind")]
         [Display(Name = "Ödəmə növü")]
-        public byte PaymentKindId { get; set; }
+        public byte? PaymentKindId { get; set; }
 
         [DefaultValue("0")]
         [Display(Name = "Şirkət")]

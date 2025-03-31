@@ -11,7 +11,7 @@ namespace Foxoft.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(
-            @"CREATE OR ALTER VIEW ProductBalance
+            @"CREATE OR ALTER VIEW [dbo].ProductBalance
                 AS 
                 									
                 select * from (
@@ -31,7 +31,7 @@ namespace Foxoft.Migrations
                 );
 
             migrationBuilder.Sql(
-            @"CREATE OR ALTER VIEW ProductBalanceSerialNumber
+            @"CREATE OR ALTER VIEW [dbo].ProductBalanceSerialNumber
                 AS 
                 									
                 select * from (

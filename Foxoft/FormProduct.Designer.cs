@@ -34,7 +34,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges8 = new DevExpress.Skins.SkinPaddingEdges();
+            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges1 = new DevExpress.Skins.SkinPaddingEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProduct));
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             galleryControl1 = new GalleryControl();
@@ -50,7 +50,7 @@ namespace Foxoft
             ProductDescTextEdit = new DevExpress.XtraEditors.TextEdit();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
-            ProductTypeCodeLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            LUE_ProductTypeCode = new DevExpress.XtraEditors.LookUpEdit();
             PurchasePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
             WholesalePriceTextEdit = new DevExpress.XtraEditors.TextEdit();
             RetailPriceTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -65,39 +65,7 @@ namespace Foxoft
             txtEdit_Rating = new DevExpress.XtraEditors.TextEdit();
             btnEdit_Slug = new DevExpress.XtraEditors.ButtonEdit();
             btn_Apply = new DevExpress.XtraEditors.SimpleButton();
-            ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForPromotionCode2 = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForTaxRate = new DevExpress.XtraLayout.LayoutControlItem();
-            Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            ItemForPosDiscount = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForBalance = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForProductCode = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
-            ProductCode2 = new DevExpress.XtraLayout.LayoutControlItem();
-            lCI_hierarchyCode = new DevExpress.XtraLayout.LayoutControlItem();
-            tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
-            autoGroupForQiymətlər = new DevExpress.XtraLayout.LayoutControlGroup();
-            ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
-            emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-            gridControl1 = new DevExpress.XtraGrid.GridControl();
-            gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            LUE_DefaultUnitOfMeasureId = new DevExpress.XtraEditors.LookUpEdit();
             barManager1 = new DevExpress.XtraBars.BarManager(components);
             bar1 = new DevExpress.XtraBars.Bar();
             BBI_ProductFeature = new DevExpress.XtraBars.BarButtonItem();
@@ -113,6 +81,40 @@ namespace Foxoft
             BBI_GalleryDelete = new DevExpress.XtraBars.BarButtonItem();
             BBI_GalleryPaste = new DevExpress.XtraBars.BarButtonItem();
             BBI_GalleryCopy = new DevExpress.XtraBars.BarButtonItem();
+            ItemForUsePos = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPromotionCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPromotionCode2 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForTaxRate = new DevExpress.XtraLayout.LayoutControlItem();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForPosDiscount = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForBalance = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForProductCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForProductTypeCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForProductDesc = new DevExpress.XtraLayout.LayoutControlItem();
+            ProductCode2 = new DevExpress.XtraLayout.LayoutControlItem();
+            lCI_hierarchyCode = new DevExpress.XtraLayout.LayoutControlItem();
+            tabbedControlGroup1 = new DevExpress.XtraLayout.TabbedControlGroup();
+            layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
+            autoGroupForQiymətlər = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForPurchasePrice = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForWholesalePrice = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForRetailPrice = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForUseInternet = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForIsDisabled = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+            emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
+            ItemForDefaultUnitOfMeasureId = new DevExpress.XtraLayout.LayoutControlItem();
+            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             popupMenu_Gallery = new DevExpress.XtraBars.PopupMenu(components);
             svgImageCollection1 = new SvgImageCollection(components);
@@ -129,7 +131,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)TaxRateTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ProductDescTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ProductTypeCodeLookUpEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_ProductTypeCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PurchasePriceTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)WholesalePriceTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RetailPriceTextEdit.Properties).BeginInit();
@@ -143,6 +145,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)txtEdit_Desc.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Rating.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_Slug.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_DefaultUnitOfMeasureId.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)barManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).BeginInit();
@@ -158,15 +162,15 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ProductCode2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tabbedControlGroup1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)autoGroupForQiymətlər).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)autoGroupForQiymətlər).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseInternet).BeginInit();
@@ -174,9 +178,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem10).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDefaultUnitOfMeasureId).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)barManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu_Gallery).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
@@ -194,7 +198,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(ProductDescTextEdit);
             dataLayoutControl1.Controls.Add(btn_Ok);
             dataLayoutControl1.Controls.Add(btn_Cancel);
-            dataLayoutControl1.Controls.Add(ProductTypeCodeLookUpEdit);
+            dataLayoutControl1.Controls.Add(LUE_ProductTypeCode);
             dataLayoutControl1.Controls.Add(PurchasePriceTextEdit);
             dataLayoutControl1.Controls.Add(WholesalePriceTextEdit);
             dataLayoutControl1.Controls.Add(RetailPriceTextEdit);
@@ -209,6 +213,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(txtEdit_Rating);
             dataLayoutControl1.Controls.Add(btnEdit_Slug);
             dataLayoutControl1.Controls.Add(btn_Apply);
+            dataLayoutControl1.Controls.Add(LUE_DefaultUnitOfMeasureId);
             dataLayoutControl1.DataSource = dcProductsBindingSource;
             dataLayoutControl1.Dock = DockStyle.Fill;
             dataLayoutControl1.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForUsePos, ItemForPromotionCode, ItemForPromotionCode2, ItemForTaxRate });
@@ -230,19 +235,19 @@ namespace Foxoft
             galleryControl1.Gallery.ImageSize = new Size(90, 60);
             galleryControl1.Gallery.ItemCheckMode = DevExpress.XtraBars.Ribbon.Gallery.ItemCheckMode.SingleCheck;
             galleryControl1.Gallery.ItemImageLayout = ImageLayoutMode.ZoomInside;
-            skinPaddingEdges8.All = -5;
-            skinPaddingEdges8.Bottom = -5;
-            skinPaddingEdges8.Left = -5;
-            skinPaddingEdges8.Right = -5;
-            skinPaddingEdges8.Top = -5;
-            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges8;
+            skinPaddingEdges1.All = -5;
+            skinPaddingEdges1.Bottom = -5;
+            skinPaddingEdges1.Left = -5;
+            skinPaddingEdges1.Right = -5;
+            skinPaddingEdges1.Top = -5;
+            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges1;
             galleryControl1.Gallery.Orientation = Orientation.Horizontal;
             galleryControl1.Gallery.ShowGroupCaption = false;
-            galleryControl1.Location = new Point(253, 227);
+            galleryControl1.Location = new Point(314, 203);
             galleryControl1.Name = "galleryControl1";
-            galleryControl1.Size = new Size(208, 92);
+            galleryControl1.Size = new Size(147, 140);
             galleryControl1.StyleController = dataLayoutControl1;
-            galleryControl1.TabIndex = 12;
+            galleryControl1.TabIndex = 14;
             galleryControl1.Text = "galleryControl1";
             galleryControl1.MouseDoubleClick += GalleryControl1_MouseDoubleClick;
             galleryControl1.MouseDown += galleryControl1_MouseDown;
@@ -256,14 +261,14 @@ namespace Foxoft
             // 
             galleryControlClient1.GalleryControl = galleryControl1;
             galleryControlClient1.Location = new Point(2, 2);
-            galleryControlClient1.Size = new Size(204, 71);
+            galleryControlClient1.Size = new Size(143, 119);
             // 
             // ProductCodeTextEdit
             // 
             ProductCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductCode", true));
             ProductCodeTextEdit.Location = new Point(123, 12);
             ProductCodeTextEdit.Name = "ProductCodeTextEdit";
-            ProductCodeTextEdit.Size = new Size(126, 20);
+            ProductCodeTextEdit.Size = new Size(111, 20);
             ProductCodeTextEdit.StyleController = dataLayoutControl1;
             ProductCodeTextEdit.TabIndex = 0;
             // 
@@ -315,13 +320,13 @@ namespace Foxoft
             // IsDisabledCheckEdit
             // 
             IsDisabledCheckEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "IsDisabled", true));
-            IsDisabledCheckEdit.Location = new Point(12, 299);
+            IsDisabledCheckEdit.Location = new Point(12, 323);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
             IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
             IsDisabledCheckEdit.Properties.GlyphAlignment = HorzAlignment.Default;
-            IsDisabledCheckEdit.Size = new Size(81, 20);
+            IsDisabledCheckEdit.Size = new Size(147, 20);
             IsDisabledCheckEdit.StyleController = dataLayoutControl1;
-            IsDisabledCheckEdit.TabIndex = 13;
+            IsDisabledCheckEdit.TabIndex = 15;
             // 
             // ProductDescTextEdit
             // 
@@ -337,11 +342,11 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(387, 323);
+            btn_Ok.Location = new Point(387, 347);
             btn_Ok.Name = "btn_Ok";
             btn_Ok.Size = new Size(74, 62);
             btn_Ok.StyleController = dataLayoutControl1;
-            btn_Ok.TabIndex = 17;
+            btn_Ok.TabIndex = 19;
             btn_Ok.Text = "simpleButton1";
             btn_Ok.Click += btn_Ok_Click;
             // 
@@ -349,114 +354,116 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(309, 323);
+            btn_Cancel.Location = new Point(309, 347);
             btn_Cancel.Name = "btn_Cancel";
             btn_Cancel.Size = new Size(74, 62);
             btn_Cancel.StyleController = dataLayoutControl1;
-            btn_Cancel.TabIndex = 16;
+            btn_Cancel.TabIndex = 18;
             btn_Cancel.Text = "simpleButton2";
             // 
-            // ProductTypeCodeLookUpEdit
+            // LUE_ProductTypeCode
             // 
-            ProductTypeCodeLookUpEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductTypeCode", true));
-            ProductTypeCodeLookUpEdit.Location = new Point(364, 12);
-            ProductTypeCodeLookUpEdit.Name = "ProductTypeCodeLookUpEdit";
-            ProductTypeCodeLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
-            ProductTypeCodeLookUpEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
-            ProductTypeCodeLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            ProductTypeCodeLookUpEdit.Properties.NullText = "";
-            ProductTypeCodeLookUpEdit.Size = new Size(97, 20);
-            ProductTypeCodeLookUpEdit.StyleController = dataLayoutControl1;
-            ProductTypeCodeLookUpEdit.TabIndex = 2;
+            LUE_ProductTypeCode.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductTypeCode", true));
+            LUE_ProductTypeCode.Location = new Point(349, 12);
+            LUE_ProductTypeCode.Name = "LUE_ProductTypeCode";
+            LUE_ProductTypeCode.Properties.Appearance.Options.UseTextOptions = true;
+            LUE_ProductTypeCode.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
+            LUE_ProductTypeCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_ProductTypeCode.Properties.DisplayMember = "ProductTypeDesc";
+            LUE_ProductTypeCode.Properties.NullText = "";
+            LUE_ProductTypeCode.Properties.ValueMember = "ProductTypeCode";
+            LUE_ProductTypeCode.Size = new Size(112, 20);
+            LUE_ProductTypeCode.StyleController = dataLayoutControl1;
+            LUE_ProductTypeCode.TabIndex = 2;
             // 
             // PurchasePriceTextEdit
             // 
             PurchasePriceTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "PurchasePrice", true));
-            PurchasePriceTextEdit.Location = new Point(135, 191);
+            PurchasePriceTextEdit.Location = new Point(135, 215);
             PurchasePriceTextEdit.Name = "PurchasePriceTextEdit";
             PurchasePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             PurchasePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             PurchasePriceTextEdit.Properties.Mask.EditMask = "G";
             PurchasePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             PurchasePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            PurchasePriceTextEdit.Size = new Size(102, 20);
+            PurchasePriceTextEdit.Size = new Size(163, 20);
             PurchasePriceTextEdit.StyleController = dataLayoutControl1;
-            PurchasePriceTextEdit.TabIndex = 9;
+            PurchasePriceTextEdit.TabIndex = 1;
             // 
             // WholesalePriceTextEdit
             // 
             WholesalePriceTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "WholesalePrice", true));
-            WholesalePriceTextEdit.Location = new Point(135, 215);
+            WholesalePriceTextEdit.Location = new Point(135, 239);
             WholesalePriceTextEdit.Name = "WholesalePriceTextEdit";
             WholesalePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             WholesalePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             WholesalePriceTextEdit.Properties.Mask.EditMask = "G";
             WholesalePriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             WholesalePriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            WholesalePriceTextEdit.Size = new Size(102, 20);
+            WholesalePriceTextEdit.Size = new Size(163, 20);
             WholesalePriceTextEdit.StyleController = dataLayoutControl1;
-            WholesalePriceTextEdit.TabIndex = 10;
+            WholesalePriceTextEdit.TabIndex = 1;
             // 
             // RetailPriceTextEdit
             // 
             RetailPriceTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "RetailPrice", true));
-            RetailPriceTextEdit.Location = new Point(135, 239);
+            RetailPriceTextEdit.Location = new Point(135, 263);
             RetailPriceTextEdit.Name = "RetailPriceTextEdit";
             RetailPriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             RetailPriceTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             RetailPriceTextEdit.Properties.Mask.EditMask = "G";
             RetailPriceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             RetailPriceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            RetailPriceTextEdit.Size = new Size(102, 20);
+            RetailPriceTextEdit.Size = new Size(163, 20);
             RetailPriceTextEdit.StyleController = dataLayoutControl1;
-            RetailPriceTextEdit.TabIndex = 11;
+            RetailPriceTextEdit.TabIndex = 1;
             // 
             // PosDiscountTextEdit
             // 
             PosDiscountTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "PosDiscount", true));
-            PosDiscountTextEdit.Location = new Point(123, 60);
+            PosDiscountTextEdit.Location = new Point(123, 84);
             PosDiscountTextEdit.Name = "PosDiscountTextEdit";
             PosDiscountTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             PosDiscountTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             PosDiscountTextEdit.Properties.Mask.EditMask = "F";
             PosDiscountTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             PosDiscountTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            PosDiscountTextEdit.Size = new Size(126, 20);
+            PosDiscountTextEdit.Size = new Size(187, 20);
             PosDiscountTextEdit.StyleController = dataLayoutControl1;
             PosDiscountTextEdit.TabIndex = 4;
             // 
             // UseInternetCheckEdit
             // 
             UseInternetCheckEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "UseInternet", true));
-            UseInternetCheckEdit.Location = new Point(97, 299);
+            UseInternetCheckEdit.Location = new Point(163, 323);
             UseInternetCheckEdit.Name = "UseInternetCheckEdit";
             UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
             UseInternetCheckEdit.Properties.GlyphAlignment = HorzAlignment.Default;
-            UseInternetCheckEdit.Size = new Size(152, 20);
+            UseInternetCheckEdit.Size = new Size(147, 20);
             UseInternetCheckEdit.StyleController = dataLayoutControl1;
-            UseInternetCheckEdit.TabIndex = 14;
+            UseInternetCheckEdit.TabIndex = 16;
             // 
             // BalanceTextEdit
             // 
             BalanceTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "Balance", true));
-            BalanceTextEdit.Location = new Point(123, 84);
+            BalanceTextEdit.Location = new Point(123, 108);
             BalanceTextEdit.Name = "BalanceTextEdit";
             BalanceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             BalanceTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
             BalanceTextEdit.Properties.Mask.EditMask = "N0";
             BalanceTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             BalanceTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            BalanceTextEdit.Size = new Size(126, 20);
+            BalanceTextEdit.Size = new Size(187, 20);
             BalanceTextEdit.StyleController = dataLayoutControl1;
             BalanceTextEdit.TabIndex = 5;
             // 
             // pictureEdit
             // 
-            pictureEdit.Location = new Point(253, 60);
+            pictureEdit.Location = new Point(314, 60);
             pictureEdit.Name = "pictureEdit";
             pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
             pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            pictureEdit.Size = new Size(208, 163);
+            pictureEdit.Size = new Size(147, 139);
             pictureEdit.StyleController = dataLayoutControl1;
             pictureEdit.TabIndex = 1;
             pictureEdit.PopupMenuShowing += pictureEdit_PopupMenuShowing;
@@ -466,19 +473,19 @@ namespace Foxoft
             // textEdit_ProductCode2
             // 
             textEdit_ProductCode2.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductCode2", true));
-            textEdit_ProductCode2.Location = new Point(123, 108);
+            textEdit_ProductCode2.Location = new Point(123, 132);
             textEdit_ProductCode2.Name = "textEdit_ProductCode2";
-            textEdit_ProductCode2.Size = new Size(126, 20);
+            textEdit_ProductCode2.Size = new Size(187, 20);
             textEdit_ProductCode2.StyleController = dataLayoutControl1;
             textEdit_ProductCode2.TabIndex = 6;
             // 
             // btnEdit_Hierarchy
             // 
             btnEdit_Hierarchy.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "HierarchyCode", true));
-            btnEdit_Hierarchy.Location = new Point(123, 132);
+            btnEdit_Hierarchy.Location = new Point(123, 156);
             btnEdit_Hierarchy.Name = "btnEdit_Hierarchy";
             btnEdit_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_Hierarchy.Size = new Size(126, 20);
+            btnEdit_Hierarchy.Size = new Size(187, 20);
             btnEdit_Hierarchy.StyleController = dataLayoutControl1;
             btnEdit_Hierarchy.TabIndex = 7;
             btnEdit_Hierarchy.ButtonPressed += btnEdit_Hierarchy_ButtonPressed;
@@ -487,347 +494,69 @@ namespace Foxoft
             // txtEdit_Price
             // 
             txtEdit_Price.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Price", true));
-            txtEdit_Price.Location = new Point(135, 191);
+            txtEdit_Price.Location = new Point(135, 215);
             txtEdit_Price.Name = "txtEdit_Price";
-            txtEdit_Price.Size = new Size(102, 20);
+            txtEdit_Price.Size = new Size(163, 20);
             txtEdit_Price.StyleController = dataLayoutControl1;
-            txtEdit_Price.TabIndex = 1;
+            txtEdit_Price.TabIndex = 10;
             // 
             // txtEdit_Desc
             // 
             txtEdit_Desc.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Desc", true));
-            txtEdit_Desc.Location = new Point(135, 215);
+            txtEdit_Desc.Location = new Point(135, 239);
             txtEdit_Desc.Name = "txtEdit_Desc";
-            txtEdit_Desc.Size = new Size(102, 20);
+            txtEdit_Desc.Size = new Size(163, 20);
             txtEdit_Desc.StyleController = dataLayoutControl1;
-            txtEdit_Desc.TabIndex = 1;
+            txtEdit_Desc.TabIndex = 11;
             // 
             // txtEdit_Rating
             // 
             txtEdit_Rating.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Rating", true));
-            txtEdit_Rating.Location = new Point(135, 263);
+            txtEdit_Rating.Location = new Point(135, 287);
             txtEdit_Rating.Name = "txtEdit_Rating";
-            txtEdit_Rating.Size = new Size(102, 20);
+            txtEdit_Rating.Size = new Size(163, 20);
             txtEdit_Rating.StyleController = dataLayoutControl1;
-            txtEdit_Rating.TabIndex = 1;
+            txtEdit_Rating.TabIndex = 13;
             // 
             // btnEdit_Slug
             // 
             btnEdit_Slug.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Slug", true));
-            btnEdit_Slug.Location = new Point(135, 239);
+            btnEdit_Slug.Location = new Point(135, 263);
             btnEdit_Slug.Name = "btnEdit_Slug";
             btnEdit_Slug.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus) });
-            btnEdit_Slug.Size = new Size(102, 20);
+            btnEdit_Slug.Size = new Size(163, 20);
             btnEdit_Slug.StyleController = dataLayoutControl1;
-            btnEdit_Slug.TabIndex = 1;
+            btnEdit_Slug.TabIndex = 12;
             btnEdit_Slug.ButtonPressed += BtnEdit_Slug_ButtonPressed;
             // 
             // btn_Apply
             // 
             btn_Apply.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Apply.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Apply.ImageOptions.SvgImage");
-            btn_Apply.Location = new Point(231, 323);
+            btn_Apply.Location = new Point(231, 347);
             btn_Apply.Name = "btn_Apply";
             btn_Apply.Size = new Size(74, 62);
             btn_Apply.StyleController = dataLayoutControl1;
-            btn_Apply.TabIndex = 15;
+            btn_Apply.TabIndex = 17;
             btn_Apply.Text = "Yadda saxla";
             btn_Apply.Click += btn_Apply_Click;
             // 
-            // ItemForUsePos
-            // 
-            ItemForUsePos.Control = UsePosCheckEdit;
-            ItemForUsePos.Location = new Point(304, 141);
-            ItemForUsePos.Name = "ItemForUsePos";
-            ItemForUsePos.Size = new Size(121, 27);
-            ItemForUsePos.Text = "Use Pos";
-            ItemForUsePos.TextSize = new Size(0, 0);
-            ItemForUsePos.TextVisible = false;
-            // 
-            // ItemForPromotionCode
-            // 
-            ItemForPromotionCode.Control = PromotionCodeTextEdit;
-            ItemForPromotionCode.Location = new Point(0, 120);
-            ItemForPromotionCode.Name = "ItemForPromotionCode";
-            ItemForPromotionCode.Size = new Size(304, 24);
-            ItemForPromotionCode.Text = "Promotion Code";
-            ItemForPromotionCode.TextSize = new Size(93, 13);
-            // 
-            // ItemForPromotionCode2
-            // 
-            ItemForPromotionCode2.Control = PromotionCode2TextEdit;
-            ItemForPromotionCode2.Location = new Point(0, 120);
-            ItemForPromotionCode2.Name = "ItemForPromotionCode2";
-            ItemForPromotionCode2.Size = new Size(304, 48);
-            ItemForPromotionCode2.Text = "Promotion Code2";
-            ItemForPromotionCode2.TextSize = new Size(93, 13);
-            // 
-            // ItemForTaxRate
-            // 
-            ItemForTaxRate.Control = TaxRateTextEdit;
-            ItemForTaxRate.Location = new Point(0, 24);
-            ItemForTaxRate.Name = "ItemForTaxRate";
-            ItemForTaxRate.Size = new Size(304, 72);
-            ItemForTaxRate.Text = "Tax Rate";
-            ItemForTaxRate.TextSize = new Size(93, 13);
-            // 
-            // Root
-            // 
-            Root.EnableIndentsWithoutBorders = DefaultBoolean.True;
-            Root.GroupBordersVisible = false;
-            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
-            Root.Name = "Root";
-            Root.Size = new Size(473, 397);
-            Root.TextVisible = false;
-            // 
-            // layoutControlGroup1
-            // 
-            layoutControlGroup1.AllowDrawBackground = false;
-            layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPosDiscount, ItemForBalance, layoutControlItem4, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ProductCode2, lCI_hierarchyCode, tabbedControlGroup1, layoutControlItem2, layoutControlItem1, ItemForUseInternet, ItemForIsDisabled, layoutControlItem3, layoutControlItem10, emptySpaceItem2 });
-            layoutControlGroup1.Location = new Point(0, 0);
-            layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(453, 377);
-            // 
-            // ItemForPosDiscount
-            // 
-            ItemForPosDiscount.Control = PosDiscountTextEdit;
-            ItemForPosDiscount.Location = new Point(0, 48);
-            ItemForPosDiscount.Name = "ItemForPosDiscount";
-            ItemForPosDiscount.Size = new Size(241, 24);
-            ItemForPosDiscount.Text = "Pos Endirimi";
-            ItemForPosDiscount.TextSize = new Size(99, 13);
-            // 
-            // ItemForBalance
-            // 
-            ItemForBalance.Control = BalanceTextEdit;
-            ItemForBalance.Location = new Point(0, 72);
-            ItemForBalance.Name = "ItemForBalance";
-            ItemForBalance.Size = new Size(241, 24);
-            ItemForBalance.Text = "Qalıq";
-            ItemForBalance.TextSize = new Size(99, 13);
-            // 
-            // layoutControlItem4
-            // 
-            layoutControlItem4.Control = pictureEdit;
-            layoutControlItem4.Location = new Point(241, 48);
-            layoutControlItem4.MinSize = new Size(24, 24);
-            layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new Size(212, 167);
-            layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem4.TextSize = new Size(0, 0);
-            layoutControlItem4.TextVisible = false;
-            // 
-            // ItemForProductCode
-            // 
-            ItemForProductCode.Control = ProductCodeTextEdit;
-            ItemForProductCode.Location = new Point(0, 0);
-            ItemForProductCode.Name = "ItemForProductCode";
-            ItemForProductCode.Size = new Size(241, 24);
-            ItemForProductCode.Text = "Məhsul Kodu";
-            ItemForProductCode.TextSize = new Size(99, 13);
-            // 
-            // ItemForProductTypeCode
-            // 
-            ItemForProductTypeCode.Control = ProductTypeCodeLookUpEdit;
-            ItemForProductTypeCode.Location = new Point(241, 0);
-            ItemForProductTypeCode.Name = "ItemForProductTypeCode";
-            ItemForProductTypeCode.Size = new Size(212, 24);
-            ItemForProductTypeCode.Text = "Məhsul Tipi";
-            ItemForProductTypeCode.TextSize = new Size(99, 13);
-            // 
-            // ItemForProductDesc
-            // 
-            ItemForProductDesc.Control = ProductDescTextEdit;
-            ItemForProductDesc.Location = new Point(0, 24);
-            ItemForProductDesc.Name = "ItemForProductDesc";
-            ItemForProductDesc.Size = new Size(453, 24);
-            ItemForProductDesc.Text = "Məhsul Adı";
-            ItemForProductDesc.TextSize = new Size(99, 13);
-            // 
-            // ProductCode2
-            // 
-            ProductCode2.Control = textEdit_ProductCode2;
-            ProductCode2.Location = new Point(0, 96);
-            ProductCode2.Name = "ProductCode2";
-            ProductCode2.Size = new Size(241, 24);
-            ProductCode2.TextSize = new Size(99, 13);
-            // 
-            // lCI_hierarchyCode
-            // 
-            lCI_hierarchyCode.Control = btnEdit_Hierarchy;
-            lCI_hierarchyCode.Location = new Point(0, 120);
-            lCI_hierarchyCode.Name = "lCI_hierarchyCode";
-            lCI_hierarchyCode.Size = new Size(241, 24);
-            lCI_hierarchyCode.TextSize = new Size(99, 13);
-            // 
-            // tabbedControlGroup1
-            // 
-            tabbedControlGroup1.Location = new Point(0, 144);
-            tabbedControlGroup1.Name = "tabbedControlGroup1";
-            tabbedControlGroup1.SelectedTabPage = autoGroupForQiymətlər;
-            tabbedControlGroup1.Size = new Size(241, 143);
-            tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { autoGroupForQiymətlər, layoutControlGroup2 });
-            // 
-            // autoGroupForQiymətlər
-            // 
-            autoGroupForQiymətlər.GroupStyle = GroupStyle.Light;
-            autoGroupForQiymətlər.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPurchasePrice, ItemForWholesalePrice, ItemForRetailPrice });
-            autoGroupForQiymətlər.Location = new Point(0, 0);
-            autoGroupForQiymətlər.Name = "autoGroupForQiymətlər";
-            autoGroupForQiymətlər.Size = new Size(217, 96);
-            autoGroupForQiymətlər.Text = "Qiymətlər";
-            // 
-            // ItemForPurchasePrice
-            // 
-            ItemForPurchasePrice.Control = PurchasePriceTextEdit;
-            ItemForPurchasePrice.Location = new Point(0, 0);
-            ItemForPurchasePrice.Name = "ItemForPurchasePrice";
-            ItemForPurchasePrice.Size = new Size(217, 24);
-            ItemForPurchasePrice.TextSize = new Size(99, 13);
-            // 
-            // ItemForWholesalePrice
-            // 
-            ItemForWholesalePrice.Control = WholesalePriceTextEdit;
-            ItemForWholesalePrice.Location = new Point(0, 24);
-            ItemForWholesalePrice.Name = "ItemForWholesalePrice";
-            ItemForWholesalePrice.Size = new Size(217, 24);
-            ItemForWholesalePrice.TextSize = new Size(99, 13);
-            // 
-            // ItemForRetailPrice
-            // 
-            ItemForRetailPrice.Control = RetailPriceTextEdit;
-            ItemForRetailPrice.Location = new Point(0, 48);
-            ItemForRetailPrice.Name = "ItemForRetailPrice";
-            ItemForRetailPrice.Size = new Size(217, 48);
-            ItemForRetailPrice.TextSize = new Size(99, 13);
-            // 
-            // layoutControlGroup2
-            // 
-            layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem6, layoutControlItem7, layoutControlItem9, layoutControlItem11 });
-            layoutControlGroup2.Location = new Point(0, 0);
-            layoutControlGroup2.Name = "layoutControlGroup2";
-            layoutControlGroup2.Size = new Size(217, 96);
-            layoutControlGroup2.Text = "Sayt";
-            // 
-            // layoutControlItem6
-            // 
-            layoutControlItem6.Control = txtEdit_Price;
-            layoutControlItem6.Location = new Point(0, 0);
-            layoutControlItem6.Name = "layoutControlItem6";
-            layoutControlItem6.Size = new Size(217, 24);
-            layoutControlItem6.TextSize = new Size(99, 13);
-            // 
-            // layoutControlItem7
-            // 
-            layoutControlItem7.Control = txtEdit_Desc;
-            layoutControlItem7.Location = new Point(0, 24);
-            layoutControlItem7.Name = "layoutControlItem7";
-            layoutControlItem7.Size = new Size(217, 24);
-            layoutControlItem7.TextSize = new Size(99, 13);
-            // 
-            // layoutControlItem9
-            // 
-            layoutControlItem9.Control = txtEdit_Rating;
-            layoutControlItem9.Location = new Point(0, 72);
-            layoutControlItem9.Name = "layoutControlItem9";
-            layoutControlItem9.Size = new Size(217, 24);
-            layoutControlItem9.TextSize = new Size(99, 13);
-            // 
-            // layoutControlItem11
-            // 
-            layoutControlItem11.Control = btnEdit_Slug;
-            layoutControlItem11.Location = new Point(0, 48);
-            layoutControlItem11.Name = "layoutControlItem11";
-            layoutControlItem11.Size = new Size(217, 24);
-            layoutControlItem11.TextSize = new Size(99, 13);
-            // 
-            // layoutControlItem2
-            // 
-            layoutControlItem2.Control = btn_Cancel;
-            layoutControlItem2.Location = new Point(297, 311);
-            layoutControlItem2.MaxSize = new Size(78, 66);
-            layoutControlItem2.MinSize = new Size(78, 66);
-            layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new Size(78, 66);
-            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new Size(0, 0);
-            layoutControlItem2.TextVisible = false;
-            // 
-            // layoutControlItem1
-            // 
-            layoutControlItem1.Control = btn_Ok;
-            layoutControlItem1.Location = new Point(375, 311);
-            layoutControlItem1.MaxSize = new Size(78, 66);
-            layoutControlItem1.MinSize = new Size(78, 66);
-            layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(78, 66);
-            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem1.TextSize = new Size(0, 0);
-            layoutControlItem1.TextVisible = false;
-            // 
-            // ItemForUseInternet
-            // 
-            ItemForUseInternet.Control = UseInternetCheckEdit;
-            ItemForUseInternet.Location = new Point(85, 287);
-            ItemForUseInternet.Name = "ItemForUseInternet";
-            ItemForUseInternet.Size = new Size(156, 24);
-            ItemForUseInternet.Text = "İnternetdə İstifadə Et";
-            ItemForUseInternet.TextSize = new Size(0, 0);
-            ItemForUseInternet.TextVisible = false;
-            // 
-            // ItemForIsDisabled
-            // 
-            ItemForIsDisabled.Control = IsDisabledCheckEdit;
-            ItemForIsDisabled.Location = new Point(0, 287);
-            ItemForIsDisabled.Name = "ItemForIsDisabled";
-            ItemForIsDisabled.Size = new Size(85, 24);
-            ItemForIsDisabled.Text = "Is Disabled";
-            ItemForIsDisabled.TextSize = new Size(0, 0);
-            ItemForIsDisabled.TextVisible = false;
-            // 
-            // layoutControlItem3
-            // 
-            layoutControlItem3.Control = galleryControl1;
-            layoutControlItem3.Location = new Point(241, 215);
-            layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(212, 96);
-            layoutControlItem3.TextSize = new Size(0, 0);
-            layoutControlItem3.TextVisible = false;
-            // 
-            // layoutControlItem10
-            // 
-            layoutControlItem10.Control = btn_Apply;
-            layoutControlItem10.Location = new Point(219, 311);
-            layoutControlItem10.MaxSize = new Size(78, 66);
-            layoutControlItem10.MinSize = new Size(78, 66);
-            layoutControlItem10.Name = "layoutControlItem10";
-            layoutControlItem10.Size = new Size(78, 66);
-            layoutControlItem10.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem10.TextSize = new Size(0, 0);
-            layoutControlItem10.TextVisible = false;
-            // 
-            // emptySpaceItem2
-            // 
-            emptySpaceItem2.AllowHotTrack = false;
-            emptySpaceItem2.Location = new Point(0, 311);
-            emptySpaceItem2.Name = "emptySpaceItem2";
-            emptySpaceItem2.Size = new Size(219, 66);
-            emptySpaceItem2.TextSize = new Size(0, 0);
-            // 
-            // gridControl1
-            // 
-            gridControl1.Location = new Point(0, 0);
-            gridControl1.MainView = gridView2;
-            gridControl1.Name = "gridControl1";
-            gridControl1.Size = new Size(400, 200);
-            gridControl1.TabIndex = 0;
-            gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView2 });
-            // 
-            // gridView2
-            // 
-            gridView2.GridControl = gridControl1;
-            gridView2.Name = "gridView2";
+            // LUE_DefaultUnitOfMeasureId
+            // 
+            LUE_DefaultUnitOfMeasureId.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "DefaultUnitOfMeasureId", true));
+            LUE_DefaultUnitOfMeasureId.Location = new Point(123, 60);
+            LUE_DefaultUnitOfMeasureId.MenuManager = barManager1;
+            LUE_DefaultUnitOfMeasureId.Name = "LUE_DefaultUnitOfMeasureId";
+            LUE_DefaultUnitOfMeasureId.Properties.Appearance.Options.UseTextOptions = true;
+            LUE_DefaultUnitOfMeasureId.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
+            LUE_DefaultUnitOfMeasureId.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            LUE_DefaultUnitOfMeasureId.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureId", "UnitOfMeasureId"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("UnitOfMeasureDesc", "UnitOfMeasureDesc") });
+            LUE_DefaultUnitOfMeasureId.Properties.DisplayMember = "UnitOfMeasureDesc";
+            LUE_DefaultUnitOfMeasureId.Properties.NullText = "";
+            LUE_DefaultUnitOfMeasureId.Properties.ValueMember = "UnitOfMeasureId";
+            LUE_DefaultUnitOfMeasureId.Size = new Size(187, 20);
+            LUE_DefaultUnitOfMeasureId.StyleController = dataLayoutControl1;
+            LUE_DefaultUnitOfMeasureId.TabIndex = 8;
             // 
             // barManager1
             // 
@@ -968,6 +697,309 @@ namespace Foxoft
             BBI_GalleryCopy.Name = "BBI_GalleryCopy";
             BBI_GalleryCopy.ItemClick += BBI_GalleryCopy_ItemClick;
             // 
+            // ItemForUsePos
+            // 
+            ItemForUsePos.Control = UsePosCheckEdit;
+            ItemForUsePos.Location = new Point(304, 141);
+            ItemForUsePos.Name = "ItemForUsePos";
+            ItemForUsePos.Size = new Size(121, 27);
+            ItemForUsePos.Text = "Use Pos";
+            ItemForUsePos.TextSize = new Size(0, 0);
+            ItemForUsePos.TextVisible = false;
+            // 
+            // ItemForPromotionCode
+            // 
+            ItemForPromotionCode.Control = PromotionCodeTextEdit;
+            ItemForPromotionCode.Location = new Point(0, 120);
+            ItemForPromotionCode.Name = "ItemForPromotionCode";
+            ItemForPromotionCode.Size = new Size(304, 24);
+            ItemForPromotionCode.Text = "Promotion Code";
+            ItemForPromotionCode.TextSize = new Size(93, 13);
+            // 
+            // ItemForPromotionCode2
+            // 
+            ItemForPromotionCode2.Control = PromotionCode2TextEdit;
+            ItemForPromotionCode2.Location = new Point(0, 120);
+            ItemForPromotionCode2.Name = "ItemForPromotionCode2";
+            ItemForPromotionCode2.Size = new Size(304, 48);
+            ItemForPromotionCode2.Text = "Promotion Code2";
+            ItemForPromotionCode2.TextSize = new Size(93, 13);
+            // 
+            // ItemForTaxRate
+            // 
+            ItemForTaxRate.Control = TaxRateTextEdit;
+            ItemForTaxRate.Location = new Point(0, 24);
+            ItemForTaxRate.Name = "ItemForTaxRate";
+            ItemForTaxRate.Size = new Size(304, 72);
+            ItemForTaxRate.Text = "Tax Rate";
+            ItemForTaxRate.TextSize = new Size(93, 13);
+            // 
+            // Root
+            // 
+            Root.EnableIndentsWithoutBorders = DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Name = "Root";
+            Root.Size = new Size(473, 421);
+            Root.TextVisible = false;
+            // 
+            // layoutControlGroup1
+            // 
+            layoutControlGroup1.AllowDrawBackground = false;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPosDiscount, ItemForBalance, layoutControlItem4, ItemForProductCode, ItemForProductTypeCode, ItemForProductDesc, ProductCode2, lCI_hierarchyCode, tabbedControlGroup1, layoutControlItem2, layoutControlItem1, ItemForUseInternet, ItemForIsDisabled, layoutControlItem3, layoutControlItem10, emptySpaceItem2, ItemForDefaultUnitOfMeasureId });
+            layoutControlGroup1.Location = new Point(0, 0);
+            layoutControlGroup1.Name = "autoGeneratedGroup0";
+            layoutControlGroup1.Size = new Size(453, 401);
+            // 
+            // ItemForPosDiscount
+            // 
+            ItemForPosDiscount.Control = PosDiscountTextEdit;
+            ItemForPosDiscount.Location = new Point(0, 72);
+            ItemForPosDiscount.Name = "ItemForPosDiscount";
+            ItemForPosDiscount.Size = new Size(302, 24);
+            ItemForPosDiscount.Text = "Pos Endirimi";
+            ItemForPosDiscount.TextSize = new Size(99, 13);
+            // 
+            // ItemForBalance
+            // 
+            ItemForBalance.Control = BalanceTextEdit;
+            ItemForBalance.Location = new Point(0, 96);
+            ItemForBalance.Name = "ItemForBalance";
+            ItemForBalance.Size = new Size(302, 24);
+            ItemForBalance.Text = "Qalıq";
+            ItemForBalance.TextSize = new Size(99, 13);
+            // 
+            // layoutControlItem4
+            // 
+            layoutControlItem4.Control = pictureEdit;
+            layoutControlItem4.Location = new Point(302, 48);
+            layoutControlItem4.MinSize = new Size(24, 24);
+            layoutControlItem4.Name = "layoutControlItem4";
+            layoutControlItem4.Size = new Size(151, 143);
+            layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem4.TextSize = new Size(0, 0);
+            layoutControlItem4.TextVisible = false;
+            // 
+            // ItemForProductCode
+            // 
+            ItemForProductCode.Control = ProductCodeTextEdit;
+            ItemForProductCode.Location = new Point(0, 0);
+            ItemForProductCode.Name = "ItemForProductCode";
+            ItemForProductCode.Size = new Size(226, 24);
+            ItemForProductCode.Text = "Məhsul Kodu";
+            ItemForProductCode.TextSize = new Size(99, 13);
+            // 
+            // ItemForProductTypeCode
+            // 
+            ItemForProductTypeCode.Control = LUE_ProductTypeCode;
+            ItemForProductTypeCode.Location = new Point(226, 0);
+            ItemForProductTypeCode.Name = "ItemForProductTypeCode";
+            ItemForProductTypeCode.Size = new Size(227, 24);
+            ItemForProductTypeCode.Text = "Məhsul Tipi";
+            ItemForProductTypeCode.TextSize = new Size(99, 13);
+            // 
+            // ItemForProductDesc
+            // 
+            ItemForProductDesc.Control = ProductDescTextEdit;
+            ItemForProductDesc.Location = new Point(0, 24);
+            ItemForProductDesc.Name = "ItemForProductDesc";
+            ItemForProductDesc.Size = new Size(453, 24);
+            ItemForProductDesc.Text = "Məhsul Adı";
+            ItemForProductDesc.TextSize = new Size(99, 13);
+            // 
+            // ProductCode2
+            // 
+            ProductCode2.Control = textEdit_ProductCode2;
+            ProductCode2.Location = new Point(0, 120);
+            ProductCode2.Name = "ProductCode2";
+            ProductCode2.Size = new Size(302, 24);
+            ProductCode2.TextSize = new Size(99, 13);
+            // 
+            // lCI_hierarchyCode
+            // 
+            lCI_hierarchyCode.Control = btnEdit_Hierarchy;
+            lCI_hierarchyCode.Location = new Point(0, 144);
+            lCI_hierarchyCode.Name = "lCI_hierarchyCode";
+            lCI_hierarchyCode.Size = new Size(302, 24);
+            lCI_hierarchyCode.TextSize = new Size(99, 13);
+            // 
+            // tabbedControlGroup1
+            // 
+            tabbedControlGroup1.Location = new Point(0, 168);
+            tabbedControlGroup1.Name = "tabbedControlGroup1";
+            tabbedControlGroup1.SelectedTabPage = layoutControlGroup2;
+            tabbedControlGroup1.Size = new Size(302, 143);
+            tabbedControlGroup1.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { autoGroupForQiymətlər, layoutControlGroup2 });
+            // 
+            // layoutControlGroup2
+            // 
+            layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem6, layoutControlItem7, layoutControlItem9, layoutControlItem11 });
+            layoutControlGroup2.Location = new Point(0, 0);
+            layoutControlGroup2.Name = "layoutControlGroup2";
+            layoutControlGroup2.Size = new Size(278, 96);
+            layoutControlGroup2.Text = "Sayt";
+            // 
+            // layoutControlItem6
+            // 
+            layoutControlItem6.Control = txtEdit_Price;
+            layoutControlItem6.Location = new Point(0, 0);
+            layoutControlItem6.Name = "layoutControlItem6";
+            layoutControlItem6.Size = new Size(278, 24);
+            layoutControlItem6.TextSize = new Size(99, 13);
+            // 
+            // layoutControlItem7
+            // 
+            layoutControlItem7.Control = txtEdit_Desc;
+            layoutControlItem7.Location = new Point(0, 24);
+            layoutControlItem7.Name = "layoutControlItem7";
+            layoutControlItem7.Size = new Size(278, 24);
+            layoutControlItem7.TextSize = new Size(99, 13);
+            // 
+            // layoutControlItem9
+            // 
+            layoutControlItem9.Control = txtEdit_Rating;
+            layoutControlItem9.Location = new Point(0, 72);
+            layoutControlItem9.Name = "layoutControlItem9";
+            layoutControlItem9.Size = new Size(278, 24);
+            layoutControlItem9.TextSize = new Size(99, 13);
+            // 
+            // layoutControlItem11
+            // 
+            layoutControlItem11.Control = btnEdit_Slug;
+            layoutControlItem11.Location = new Point(0, 48);
+            layoutControlItem11.Name = "layoutControlItem11";
+            layoutControlItem11.Size = new Size(278, 24);
+            layoutControlItem11.TextSize = new Size(99, 13);
+            // 
+            // autoGroupForQiymətlər
+            // 
+            autoGroupForQiymətlər.GroupStyle = GroupStyle.Light;
+            autoGroupForQiymətlər.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForPurchasePrice, ItemForWholesalePrice, ItemForRetailPrice });
+            autoGroupForQiymətlər.Location = new Point(0, 0);
+            autoGroupForQiymətlər.Name = "autoGroupForQiymətlər";
+            autoGroupForQiymətlər.Size = new Size(278, 96);
+            autoGroupForQiymətlər.Text = "Qiymətlər";
+            // 
+            // ItemForPurchasePrice
+            // 
+            ItemForPurchasePrice.Control = PurchasePriceTextEdit;
+            ItemForPurchasePrice.Location = new Point(0, 0);
+            ItemForPurchasePrice.Name = "ItemForPurchasePrice";
+            ItemForPurchasePrice.Size = new Size(278, 24);
+            ItemForPurchasePrice.TextSize = new Size(99, 13);
+            // 
+            // ItemForWholesalePrice
+            // 
+            ItemForWholesalePrice.Control = WholesalePriceTextEdit;
+            ItemForWholesalePrice.Location = new Point(0, 24);
+            ItemForWholesalePrice.Name = "ItemForWholesalePrice";
+            ItemForWholesalePrice.Size = new Size(278, 24);
+            ItemForWholesalePrice.TextSize = new Size(99, 13);
+            // 
+            // ItemForRetailPrice
+            // 
+            ItemForRetailPrice.Control = RetailPriceTextEdit;
+            ItemForRetailPrice.Location = new Point(0, 48);
+            ItemForRetailPrice.Name = "ItemForRetailPrice";
+            ItemForRetailPrice.Size = new Size(278, 48);
+            ItemForRetailPrice.TextSize = new Size(99, 13);
+            // 
+            // layoutControlItem2
+            // 
+            layoutControlItem2.Control = btn_Cancel;
+            layoutControlItem2.Location = new Point(297, 335);
+            layoutControlItem2.MaxSize = new Size(78, 66);
+            layoutControlItem2.MinSize = new Size(78, 66);
+            layoutControlItem2.Name = "layoutControlItem2";
+            layoutControlItem2.Size = new Size(78, 66);
+            layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem2.TextSize = new Size(0, 0);
+            layoutControlItem2.TextVisible = false;
+            // 
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = btn_Ok;
+            layoutControlItem1.Location = new Point(375, 335);
+            layoutControlItem1.MaxSize = new Size(78, 66);
+            layoutControlItem1.MinSize = new Size(78, 66);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new Size(78, 66);
+            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem1.TextSize = new Size(0, 0);
+            layoutControlItem1.TextVisible = false;
+            // 
+            // ItemForUseInternet
+            // 
+            ItemForUseInternet.Control = UseInternetCheckEdit;
+            ItemForUseInternet.Location = new Point(151, 311);
+            ItemForUseInternet.Name = "ItemForUseInternet";
+            ItemForUseInternet.Size = new Size(151, 24);
+            ItemForUseInternet.Text = "İnternetdə İstifadə Et";
+            ItemForUseInternet.TextSize = new Size(0, 0);
+            ItemForUseInternet.TextVisible = false;
+            // 
+            // ItemForIsDisabled
+            // 
+            ItemForIsDisabled.Control = IsDisabledCheckEdit;
+            ItemForIsDisabled.Location = new Point(0, 311);
+            ItemForIsDisabled.Name = "ItemForIsDisabled";
+            ItemForIsDisabled.Size = new Size(151, 24);
+            ItemForIsDisabled.Text = "Is Disabled";
+            ItemForIsDisabled.TextSize = new Size(0, 0);
+            ItemForIsDisabled.TextVisible = false;
+            // 
+            // layoutControlItem3
+            // 
+            layoutControlItem3.Control = galleryControl1;
+            layoutControlItem3.Location = new Point(302, 191);
+            layoutControlItem3.Name = "layoutControlItem3";
+            layoutControlItem3.Size = new Size(151, 144);
+            layoutControlItem3.TextSize = new Size(0, 0);
+            layoutControlItem3.TextVisible = false;
+            // 
+            // layoutControlItem10
+            // 
+            layoutControlItem10.Control = btn_Apply;
+            layoutControlItem10.Location = new Point(219, 335);
+            layoutControlItem10.MaxSize = new Size(78, 66);
+            layoutControlItem10.MinSize = new Size(78, 66);
+            layoutControlItem10.Name = "layoutControlItem10";
+            layoutControlItem10.Size = new Size(78, 66);
+            layoutControlItem10.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem10.TextSize = new Size(0, 0);
+            layoutControlItem10.TextVisible = false;
+            // 
+            // emptySpaceItem2
+            // 
+            emptySpaceItem2.AllowHotTrack = false;
+            emptySpaceItem2.Location = new Point(0, 335);
+            emptySpaceItem2.Name = "emptySpaceItem2";
+            emptySpaceItem2.Size = new Size(219, 66);
+            emptySpaceItem2.TextSize = new Size(0, 0);
+            // 
+            // ItemForDefaultUnitOfMeasureId
+            // 
+            ItemForDefaultUnitOfMeasureId.Control = LUE_DefaultUnitOfMeasureId;
+            ItemForDefaultUnitOfMeasureId.Location = new Point(0, 48);
+            ItemForDefaultUnitOfMeasureId.Name = "ItemForDefaultUnitOfMeasureId";
+            ItemForDefaultUnitOfMeasureId.Size = new Size(302, 24);
+            ItemForDefaultUnitOfMeasureId.TextSize = new Size(99, 13);
+            // 
+            // gridControl1
+            // 
+            gridControl1.Location = new Point(0, 0);
+            gridControl1.MainView = gridView2;
+            gridControl1.Name = "gridControl1";
+            gridControl1.Size = new Size(400, 200);
+            gridControl1.TabIndex = 0;
+            gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView2 });
+            // 
+            // gridView2
+            // 
+            gridView2.GridControl = gridControl1;
+            gridView2.Name = "gridView2";
+            // 
             // layoutControlItem8
             // 
             layoutControlItem8.Location = new Point(102, 335);
@@ -1013,7 +1045,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)TaxRateTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)IsDisabledCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ProductDescTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ProductTypeCodeLookUpEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_ProductTypeCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PurchasePriceTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)WholesalePriceTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)RetailPriceTextEdit.Properties).EndInit();
@@ -1027,6 +1059,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)txtEdit_Desc.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtEdit_Rating.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_Slug.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LUE_DefaultUnitOfMeasureId.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)barManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUsePos).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPromotionCode2).EndInit();
@@ -1042,15 +1076,15 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ProductCode2).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_hierarchyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)tabbedControlGroup1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)autoGroupForQiymətlər).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem7).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem9).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)autoGroupForQiymətlər).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPurchasePrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForWholesalePrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForRetailPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForUseInternet).EndInit();
@@ -1058,9 +1092,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem10).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDefaultUnitOfMeasureId).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)barManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem8).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu_Gallery).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
@@ -1093,7 +1127,7 @@ namespace Foxoft
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-        private DevExpress.XtraEditors.LookUpEdit ProductTypeCodeLookUpEdit;
+        private DevExpress.XtraEditors.LookUpEdit LUE_ProductTypeCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductTypeCode;
         private DevExpress.XtraEditors.TextEdit ProductCodeTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForProductCode;
@@ -1157,5 +1191,8 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_ProductStaticPriceList;
         private DevExpress.XtraEditors.SimpleButton btn_Apply;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
+        private DevExpress.XtraEditors.LookUpEdit DefaultUnitOfMeasureIdLookUpEdit;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDefaultUnitOfMeasureId;
+        private DevExpress.XtraEditors.LookUpEdit LUE_DefaultUnitOfMeasureId;
     }
 }

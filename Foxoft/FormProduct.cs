@@ -52,9 +52,8 @@ namespace Foxoft
                 BBI_ProductStaticPriceList.Enabled = true;
             }
 
-            ProductTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
-            ProductTypeCodeLookUpEdit.Properties.ValueMember = "ProductTypeCode";
-            ProductTypeCodeLookUpEdit.Properties.DisplayMember = "ProductTypeDesc";
+            LUE_ProductTypeCode.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
+            LUE_DefaultUnitOfMeasureId.Properties.DataSource = efMethods.SelectEntities<DcUnitOfMeasure>();
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;

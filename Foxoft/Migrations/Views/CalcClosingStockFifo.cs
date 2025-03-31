@@ -10,7 +10,7 @@ namespace Foxoft.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"CREATE OR ALTER VIEW CalcClosingStockFifo AS
+            migrationBuilder.Sql(@"CREATE OR ALTER VIEW [dbo].CalcClosingStockFifo AS
 SELECT 
     TOP 1 WITH TIES *
     , closing_stock_sum = SUM(closing_stock) OVER (PARTITION BY ProductCode)
