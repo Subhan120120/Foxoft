@@ -117,20 +117,22 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormCashRegisterList.xml";
-            string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
+            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
+            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
 
-            if (!Directory.Exists(layoutFileDir))
-                Directory.CreateDirectory(layoutFileDir);
+            if (!Directory.Exists(layoutFilePath))
+                Directory.CreateDirectory(layoutFilePath);
 
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-            gV_CashRegList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName), option);
+            gV_CashRegList.SaveLayoutToXml(Path.Combine(layoutFilePath, fileName), option);
         }
 
         private void LoadLayout()
         {
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             string fileName = "FormCashRegisterList.xml";
-            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
+            //string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
 
             if (File.Exists(layoutFilePath))
                 gV_CashRegList.RestoreLayoutFromXml(layoutFilePath, option);

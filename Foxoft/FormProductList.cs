@@ -149,7 +149,9 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormProductList.xml";
-            string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
+            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
+            string layoutFileDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
+
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
 
@@ -168,7 +170,9 @@ namespace Foxoft
             gV_ProductList.OptionsFind.FindNullPrompt = "Axtarın...";
 
             string fileName = "FormProductList.xml";
-            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
+            //string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
 
             if (File.Exists(layoutFilePath))

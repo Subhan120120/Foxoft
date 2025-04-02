@@ -221,7 +221,7 @@ namespace Foxoft
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(1070, 296, 514, 400);
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(490, 353);
+            dataLayoutControl1.Size = new Size(490, 376);
             dataLayoutControl1.TabIndex = 0;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
@@ -644,7 +644,7 @@ namespace Foxoft
             // 
             barDockControlBottom.CausesValidation = false;
             barDockControlBottom.Dock = DockStyle.Bottom;
-            barDockControlBottom.Location = new Point(0, 353);
+            barDockControlBottom.Location = new Point(0, 376);
             barDockControlBottom.Manager = barManager1;
             barDockControlBottom.Size = new Size(490, 61);
             // 
@@ -654,7 +654,7 @@ namespace Foxoft
             barDockControlLeft.Dock = DockStyle.Left;
             barDockControlLeft.Location = new Point(0, 0);
             barDockControlLeft.Manager = barManager1;
-            barDockControlLeft.Size = new Size(0, 353);
+            barDockControlLeft.Size = new Size(0, 376);
             // 
             // barDockControlRight
             // 
@@ -662,7 +662,7 @@ namespace Foxoft
             barDockControlRight.Dock = DockStyle.Right;
             barDockControlRight.Location = new Point(490, 0);
             barDockControlRight.Manager = barManager1;
-            barDockControlRight.Size = new Size(0, 353);
+            barDockControlRight.Size = new Size(0, 376);
             // 
             // BBI_GalleryLoad
             // 
@@ -1023,7 +1023,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(490, 414);
+            ClientSize = new Size(490, 437);
             Controls.Add(dataLayoutControl1);
             Controls.Add(barDockControlLeft);
             Controls.Add(barDockControlRight);

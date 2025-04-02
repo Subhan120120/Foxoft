@@ -157,21 +157,15 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "FormCurrAccList.xml";
-            string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
+            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
 
-            if (!Directory.Exists(layoutFileDir))
-                Directory.CreateDirectory(layoutFileDir);
-            //CreateDirectory(layoutFileDir, Environment.UserName);
+            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
 
-            //string fullName = Path.Combine(layoutFileDir, fileName);
-            //
-            //DirectoryInfo dInfo = new DirectoryInfo(fullName);
-            //DirectorySecurity dSecurity = dInfo.GetAccessControl();
-            //dSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
-            //dInfo.SetAccessControl(dSecurity);
+            if (!Directory.Exists(layoutFilePath))
+                Directory.CreateDirectory(layoutFilePath);
 
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
-            gV_CurrAccList.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName), option);
+            gV_CurrAccList.SaveLayoutToXml(Path.Combine(layoutFilePath, fileName), option);
         }
 
         public void CreateDirectory(string DirectoryName, string UserAccount)
@@ -194,7 +188,8 @@ namespace Foxoft
         {
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             string fileName = "FormCurrAccList.xml";
-            string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
+            //string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
 
             if (File.Exists(layoutFilePath))
                 gV_CurrAccList.RestoreLayoutFromXml(layoutFilePath, option);

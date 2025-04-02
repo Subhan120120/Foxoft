@@ -1624,11 +1624,17 @@ namespace Foxoft
                 RPG_Installment.Visible = true;
             }
 
-            string layoutHeaderPath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
+            //string layoutHeaderPath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
+
+            string layoutHeaderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", "InvoiceHeader" + dcProcess.ProcessCode + "Layout.xml");
+
             if (File.Exists(layoutHeaderPath))
                 dataLayoutControl1.RestoreLayoutFromXml(layoutHeaderPath);
 
-            string layoutLineFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml");
+            //string layoutLineFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml");
+            string layoutLineFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml");
+
+
             if (File.Exists(layoutLineFilePath))
                 gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
 
@@ -1681,7 +1687,9 @@ namespace Foxoft
         private void SaveLayout()
         {
             string fileName = "InvoiceLine" + dcProcess.ProcessCode + "Layout.xml";
-            string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
+            //string layoutFileDir = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files");
+            string layoutFileDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
+
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
             gV_InvoiceLine.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));

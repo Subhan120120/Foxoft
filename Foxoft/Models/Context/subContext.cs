@@ -22,6 +22,8 @@ namespace Foxoft.Models
         public DbSet<DcClaimType> DcClaimTypes { get; set; }
         public DbSet<TrClaimReport> TrClaimReports { get; set; }
         public DbSet<DcClaimCategory> DcClaimCategories { get; set; }
+        public DbSet<DcCurrAccContactDetail> DcCurrAccContactDetails { get; set; }
+        public DbSet<DcContactType> DcContactType { get; set; }
         public DbSet<DcCurrAcc> DcCurrAccs { get; set; }
         public DbSet<DcCurrAccType> DcCurrAccTypes { get; set; }
         public DbSet<DcPersonalType> DcPersonalTypes { get; set; }
@@ -75,6 +77,9 @@ namespace Foxoft.Models
         public DbSet<DcFeature> DcFeatures { get; set; }
         public DbSet<DcFeatureType> DcFeatureTypes { get; set; }
         public DbSet<TrProductFeature> TrProductFeatures { get; set; }
+        public DbSet<DcCurrAccFeature> DcCurrAccFeatures { get; set; }
+        public DbSet<DcCurrAccFeatureType> DcCurrAccFeatureTypes { get; set; }
+        public DbSet<TrCurrAccFeature> TrCurrAccFeatures { get; set; }
         public DbSet<DcPriceType> DcPriceTypes { get; set; }
         public DbSet<TrProcessPriceType> TrProcessPriceTypes { get; set; }
         public DbSet<TrPriceListHeader> TrPriceListHeaders { get; set; }
@@ -247,6 +252,34 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcFeature>()
                         .HasKey(bc => new { bc.FeatureCode, bc.FeatureTypeId });
 
+            modelBuilder.Entity<DcFeature>()
+                        .HasMany(e => e.TrProductFeatures)
+                        .WithOne(e => e.DcFeature)
+                        .HasForeignKey(e => new { e.FeatureCode, e.FeatureTypeId });
+
+
+            modelBuilder.Entity<TrProductFeature>(entity =>
+            {
+                entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta vermesin deye
+            });
+
+            modelBuilder.Entity<TrProductFeature>()
+                        .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId, bc.FeatureCode });
+
+            modelBuilder.Entity<TrHierarchyFeatureType>()
+                        .HasKey(bc => new { bc.HierarchyCode, bc.FeatureTypeId });
+
+            modelBuilder.Entity<DcCurrAccFeature>()
+                        .HasKey(bc => new { bc.CurrAccFeatureCode, bc.CurrAccFeatureTypeId });
+
+            modelBuilder.Entity<DcCurrAccFeature>()
+                        .HasMany(e => e.TrCurrAccFeatures)
+                        .WithOne(e => e.DcCurrAccFeature)
+                        .HasForeignKey(e => new { e.CurrAccFeatureCode, e.CurrAccFeatureTypeId });
+
+            modelBuilder.Entity<TrCurrAccFeature>()
+                        .HasKey(bc => new { bc.CurrAccCode, bc.CurrAccFeatureTypeId, bc.CurrAccFeatureCode });
+
             modelBuilder.Entity<DcProductStaticPrice>()
                         .HasKey(bc => new { bc.ProductCode, bc.PriceTypeCode });
 
@@ -256,19 +289,8 @@ namespace Foxoft.Models
             modelBuilder.Entity<TrPaymentMethodDiscount>()
                         .HasKey(bc => new { bc.DiscountId, bc.PaymentMethodId });
 
-            modelBuilder.Entity<TrProductFeature>()
-                        .HasKey(bc => new { bc.ProductCode, bc.FeatureTypeId, bc.FeatureCode });
-
-            modelBuilder.Entity<DcFeature>()
-                        .HasMany(e => e.TrProductFeatures)
-                        .WithOne(e => e.DcFeature)
-                        .HasForeignKey(e => new { e.FeatureCode, e.FeatureTypeId });
-
             modelBuilder.Entity<TrFormReport>()
                        .HasKey(bc => new { bc.FormCode, bc.ReportId });
-
-            modelBuilder.Entity<TrHierarchyFeatureType>()
-                        .HasKey(bc => new { bc.HierarchyCode, bc.FeatureTypeId });
 
             modelBuilder.Entity<TrProductBarcode>()
                         .HasIndex(u => u.Barcode)
@@ -299,23 +321,10 @@ namespace Foxoft.Models
                       .ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<TrProductFeature>(entity =>
-            {
-                entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta vermesin deye
-            });
-
             modelBuilder.Entity<DcPriceType>(entity =>
             {
                 entity.ToTable(tb => tb.UseSqlOutputClause(false)); // triggere gore xeta vermesin deye
             });
-
-            //modelBuilder.Entity<TrProductFeature>()
-            //            .Property(bc => bc.ProductCode)
-            //            .ValueGeneratedNever();
-
-            //modelBuilder.Entity<TrInvoiceLine>()
-            //.Property(a => a.ProductCost)
-            //.HasComputedColumnSql("[dbo].[GetProductCost]([ProductCode])");
 
             modelBuilder.Entity<MigrationHistory>(entity =>
             {
@@ -347,11 +356,17 @@ namespace Foxoft.Models
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
 
-
             modelBuilder.Entity<TrProductFeature>(entity =>
             {
                 entity.HasOne(x => x.DcProduct)
                    .WithMany(x => x.TrProductFeatures)
+                   .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrCurrAccFeature>(entity =>
+            {
+                entity.HasOne(x => x.DcCurrAcc)
+                   .WithMany(x => x.TrCurrAccFeatures)
                    .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -491,6 +506,13 @@ namespace Foxoft.Models
                 new DcCurrAccType { CurrAccTypeCode = 5, CurrAccTypeDesc = "Kassa" }
                 );
 
+            modelBuilder.Entity<DcContactType>().HasData(
+                new DcContactType { Id = 1, ContactTypeDesc = "Telefon" },
+                new DcContactType { Id = 2, ContactTypeDesc = "Adres" },
+                new DcContactType { Id = 3, ContactTypeDesc = "Email" },
+                new DcContactType { Id = 4, ContactTypeDesc = "Sosial Media" }
+                );
+
             modelBuilder.Entity<DcPersonalType>().HasData(
                 new DcPersonalType { PersonalTypeCode = 1, PersonalTypeDesc = "Satıcı" }
                 );
@@ -585,14 +607,14 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "WholesaleReturnCustom", ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1, CategoryId = 6 },
                 new DcClaim { ClaimCode = "InstallmentPurchaseReturnCustom", ClaimDesc = "Kredit Alış Xüsusi Geri Qaytarması", ClaimTypeId = 1, CategoryId = 7 },
                 new DcClaim { ClaimCode = "InstallmentSaleReturnCustom", ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması", ClaimTypeId = 1, CategoryId = 8 },
-                new DcClaim { ClaimCode = "InventoryTransferReturnCustom", ClaimDesc = "Məhsul Transferi Qaytarması", ClaimTypeId = 1, CategoryId = 14 },
+                new DcClaim { ClaimCode = "InventoryTransferReturnCustom", ClaimDesc = "Məhsul Transferi Xüsusi Qaytarması", ClaimTypeId = 1, CategoryId = 14 },
                 new DcClaim { ClaimCode = "Column_ProductCost", ClaimDesc = "Maya Dəyəri", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "ProductDiscountList", ClaimDesc = "Endirim Siyahısı", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "PaymentDetail", ClaimDesc = "Ödəmə", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1, CategoryId = 18 },
-                new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəlliyi", ClaimTypeId = 1, CategoryId = 18 },
-                new DcClaim { ClaimCode = "HierarchyFeatureType", ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama", ClaimTypeId = 1, CategoryId = 18 },
+                new DcClaim { ClaimCode = "CurrAccFeatureType", ClaimDesc = "Cari Hesab Özəlliyi", ClaimTypeId = 1, CategoryId = 19 },
+                new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəllik Tipləri", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "ExpenseOfInvoice", ClaimDesc = "Faktura Xərci", ClaimTypeId = 1, CategoryId = 2 },
@@ -673,7 +695,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 45, RoleCode = "Admin", ClaimCode = "Installments" },
                 new TrRoleClaim { RoleClaimId = 46, RoleCode = "Admin", ClaimCode = "InstallmentCommissionChange" },
                 new TrRoleClaim { RoleClaimId = 47, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
-                new TrRoleClaim { RoleClaimId = 48, RoleCode = "Admin", ClaimCode = "EditLockedPayment" }
+                new TrRoleClaim { RoleClaimId = 48, RoleCode = "Admin", ClaimCode = "EditLockedPayment" },
+                new TrRoleClaim { RoleClaimId = 49, RoleCode = "Admin", ClaimCode = "CurrAccFeatureType" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

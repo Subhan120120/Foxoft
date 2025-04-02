@@ -222,6 +222,16 @@ namespace Foxoft
             return dc;
         }
 
+        public TrCurrAccFeature SelectCurrAccFeature(string currAccCode, int featureTypeId)
+        {
+            using subContext db = new();
+
+            TrCurrAccFeature dc = db.TrCurrAccFeatures
+                     .Where(x => x.CurrAccFeatureTypeId == featureTypeId)
+                     .FirstOrDefault(x => x.CurrAccCode == currAccCode);
+            return dc;
+        }
+
 
         //public DcFeatureType SelectFeatureType(int featureTypeId)
         //{
@@ -1512,6 +1522,35 @@ namespace Foxoft
                     FeatureCode = value
                 };
                 db.TrProductFeatures.Add(pf);
+            }
+
+            return db.SaveChanges();
+        }
+
+        public int UpdateDcFeatureCurrAcc_Value(byte featureTypeId, string currAccCode, string value)
+        {
+            using subContext db = new();
+            TrCurrAccFeature pf = db.TrCurrAccFeatures.FirstOrDefault(x => x.CurrAccFeatureTypeId == featureTypeId && x.CurrAccCode == currAccCode);
+
+            if (pf is not null) // update
+            {
+                if (pf.CurrAccFeatureCode != value)
+                {
+                    //3u de composite key olduguna gore update alinmadi
+                    db.TrCurrAccFeatures.Remove(pf);
+                    db.SaveChanges();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(value) && pf?.CurrAccFeatureCode != value)
+            {
+                pf = new TrCurrAccFeature()
+                {
+                    CurrAccFeatureTypeId = featureTypeId,
+                    CurrAccCode = currAccCode,
+                    CurrAccFeatureCode = value
+                };
+                db.TrCurrAccFeatures.Add(pf);
             }
 
             return db.SaveChanges();

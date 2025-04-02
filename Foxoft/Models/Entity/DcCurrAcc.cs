@@ -23,6 +23,8 @@ namespace Foxoft.Models
             DcStoreTrPaymentHeaders = new HashSet<TrPaymentHeader>();
             TrPaymentLines = new HashSet<TrPaymentLine>();
             TrReportCustomizations = new HashSet<TrReportCustomization>();
+            TrCurrAccFeatures = new HashSet<TrCurrAccFeature>();
+            DcCurrAccContactDetails = new HashSet<DcCurrAccContactDetail>();
         }
 
         [Key]
@@ -166,5 +168,9 @@ namespace Foxoft.Models
         public virtual ICollection<DcPaymentMethod> CashRegDcPaymentMethods { get; set; }
         public virtual ICollection<DcPaymentMethod> CurrAccDcPaymentMethods { get; set; }
         public virtual ICollection<TrReportCustomization> TrReportCustomizations { get; set; }
+
+        public virtual ICollection<TrCurrAccFeature> TrCurrAccFeatures { get; set; }
+
+        public virtual ICollection<DcCurrAccContactDetail> DcCurrAccContactDetails { get; set; }
     }
 }

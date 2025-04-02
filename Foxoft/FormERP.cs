@@ -138,7 +138,7 @@ namespace Foxoft
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_ProductDiscounts.Name = "ProductDiscountList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
-            this.ACE_HierarchyFeatureType.Name = "HierarchyFeatureType";
+            this.ACE_CurrAccFeatureType.Name = "CurrAccFeatureType";
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
             this.bBI_Session.Name = "Session";
             this.ACE_Installments.Name = "Installments";
@@ -429,7 +429,7 @@ namespace Foxoft
 
         private void ACE_Discounts_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormCommonList<DcDiscount>>("", "DiscountId");
+            ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId));
         }
 
         private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
@@ -447,11 +447,6 @@ namespace Foxoft
             ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null);
         }
 
-        private void ACE_ProductFeatureTypes_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void BBI_Test_ItemClick(object sender, ItemClickEventArgs e)
         {
 
@@ -462,9 +457,14 @@ namespace Foxoft
             ShowExistForm<FormCurrAccSession>();
         }
 
-        private void ACE_HierarchyFeatureType_Click(object sender, EventArgs e)
+        private void ACE_ProductFeatureTypes_Click(object sender, EventArgs e)
         {
             ShowExistForm<FormHierarchyFeatureType>();
+        }
+
+        private void ACE_CurrAccFeatureTypes_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId));
         }
 
         private void aCE_CurrAccRole_Click(object sender, EventArgs e)

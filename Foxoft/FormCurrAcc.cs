@@ -116,5 +116,17 @@ namespace Foxoft
                 XtraMessageBox.Show(combinedString);
             }
         }
+
+        private void BBI_CurrAccFeatures_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            FormCurrAccFeature frm = new(dcCurrAcc.CurrAccCode);
+            frm.ShowDialog();
+        }
+
+        private void BBI_ContactDetail_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            FormCommonList<DcCurrAccContactDetail> formCommonList = new FormCommonList<DcCurrAccContactDetail>("", nameof(DcCurrAccContactDetail.Id), null, nameof(dcCurrAcc.CurrAccCode), dcCurrAcc.CurrAccCode);
+            formCommonList.ShowDialog();
+        }
     }
 }

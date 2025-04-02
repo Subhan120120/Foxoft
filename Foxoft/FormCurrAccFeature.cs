@@ -4,36 +4,36 @@ using Foxoft.Models;
 
 namespace Foxoft
 {
-    public partial class FormProductFeature : XtraForm
+    public partial class FormCurrAccFeature : XtraForm
     {
         EfMethods efMethods = new();
-        DcProduct dcProduct = new();
+        DcCurrAcc dcCurrAcc = new();
 
-        public FormProductFeature()
+        public FormCurrAccFeature()
         {
             InitializeComponent();
             //AcceptButton = simpleButtonOk;
         }
 
-        public FormProductFeature(string productCode)
+        public FormCurrAccFeature(string currAccCode)
            : this()
         {
-            dcProduct = efMethods.SelectProduct(productCode);
+            dcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
         }
 
-        private void FormProductFeature_Load(object sender, EventArgs e)
+        private void FormCurrAccFeature_Load(object sender, EventArgs e)
         {
-            List<DcFeatureType> dcFeatures = efMethods.SelectFeatureTypesByHierarchy(dcProduct.HierarchyCode);
+            List<DcCurrAccFeatureType> dcFeatures = efMethods.SelectEntities<DcCurrAccFeatureType>();
 
-            foreach (DcFeatureType feature in dcFeatures)
+            foreach (DcCurrAccFeatureType feature in dcFeatures)
             {
-                TrProductFeature proFea = efMethods.SelectProductFeature(dcProduct.ProductCode, feature.FeatureTypeId);
+                TrCurrAccFeature currAccFea = efMethods.SelectCurrAccFeature(dcCurrAcc.CurrAccCode, feature.CurrAccFeatureTypeId);
 
                 ButtonEdit btn = new();
-                btn.Name = feature.FeatureTypeId.ToString();
+                btn.Name = feature.CurrAccFeatureTypeId.ToString();
                 btn.StyleController = this.layoutControl1;
-                if (proFea is not null)
-                    btn.EditValue = proFea.FeatureCode;
+                if (currAccFea is not null)
+                    btn.EditValue = currAccFea.CurrAccFeatureCode;
                 btn.ButtonPressed += new(this.btnEdit_ButtonPressed);
 
                 LayoutControlItem lCI = new();
@@ -48,7 +48,7 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            FormCommonList<DcFeature> frm = new("F", "FeatureCode", editor.EditValue, "FeatureTypeId", Convert.ToInt32(editor.Name));
+            FormCommonList<DcCurrAccFeature> frm = new("F", nameof(DcCurrAccFeature.CurrAccFeatureCode), editor.EditValue, nameof(DcCurrAccFeature.CurrAccFeatureTypeId), Convert.ToInt32(editor.Name));
             if (DialogResult.OK == frm.ShowDialog())
                 editor.EditValue = frm.Value_Id;
         }
@@ -61,13 +61,13 @@ namespace Foxoft
 
                 if (edit is ButtonEdit && edit is not null && edit.EditValue is not null)
                 {
-                    efMethods.UpdateDcFeature_Value(Convert.ToByte(edit.Name), dcProduct.ProductCode, edit.EditValue.ToString().Trim());
+                    efMethods.UpdateDcFeatureCurrAcc_Value(Convert.ToByte(edit.Name), dcCurrAcc.CurrAccCode, edit.EditValue.ToString().Trim());
                     DialogResult = DialogResult.OK;
                 }
             }
         }
 
-        private void FormProductFeature_KeyDown(object sender, KeyEventArgs e)
+        private void FormCurrAccFeature_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
                 Close();

@@ -1,8 +1,8 @@
-﻿WITH PaymentLinesSum AS (
+﻿WITH InstallmentPaymentSum AS (
     SELECT
         ph.InvoiceHeaderId,
         ph.CurrAccCode,
-        SUM(pl.PaymentLoc) AS PaymentLinesSum
+        SUM(pl.PaymentLoc) AS InstallmentPaymentSum
     FROM
         TrPaymentLines pl
     INNER JOIN
@@ -10,7 +10,7 @@
     INNER JOIN
         TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
     WHERE
-        ph.OperationDate > i.DocumentDate -- payments without downpayments
+        ph.PaymentKindId = 3
     GROUP BY
         ph.InvoiceHeaderId, ph.CurrAccCode
 ),
@@ -25,7 +25,7 @@ DownPaymentSum AS (
     INNER JOIN
         TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
     WHERE
-        ph.OperationDate <= i.DocumentDate -- only downpayments
+        ph.PaymentKindId != 3
     GROUP BY
         i.InvoiceHeaderId
 ),
@@ -43,7 +43,7 @@ InstallmentData AS (
         ca.CurrAccDesc,
         ca.PhoneNum,
         pp.DurationInMonths,
-        COALESCE(psum.PaymentLinesSum, 0) AS TotalPaid,
+        COALESCE(psum.InstallmentPaymentSum, 0) AS TotalPaid,
         COALESCE(dps.DownPaymentSum, 0) AS DownPayment
     FROM
         TrInstallments i
@@ -54,7 +54,7 @@ InstallmentData AS (
     INNER JOIN
         DcPaymentPlans pp ON i.PaymentPlanCode = pp.PaymentPlanCode
     LEFT JOIN
-        PaymentLinesSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId AND ih.CurrAccCode = psum.CurrAccCode
+        InstallmentPaymentSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId AND ih.CurrAccCode = psum.CurrAccCode
     LEFT JOIN
         DownPaymentSum dps ON i.InvoiceHeaderId = dps.InvoiceHeaderId
     LEFT JOIN
