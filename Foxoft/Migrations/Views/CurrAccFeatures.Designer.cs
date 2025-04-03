@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20240821201852_initial")]
+    [Migration("20340627140650_CurrAccFeatures")]
     partial class initial
     {
         /// <inheritdoc />

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace Foxoft
 {
@@ -24,7 +25,6 @@ namespace Foxoft
             CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcCurrAccType>();
             OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
-
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
         }
@@ -104,10 +104,11 @@ namespace Foxoft
             {
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
-                if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if invoiceHeader doesnt exist
+                if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if doesnt exist
                     efMethods.InsertEntity<DcCurrAcc>(dcCurrAcc);
                 else
                     dbContext.SaveChanges();
+
                 DialogResult = DialogResult.OK;
             }
             else
@@ -125,6 +126,21 @@ namespace Foxoft
 
         private void BBI_ContactDetail_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            //var exist = efMethods.CurrAccContactDetailsExistByCurrAcc(dcCurrAcc.CurrAccCode);
+
+            //if (!exist)
+            //{
+            //    DcCurrAccContactDetail dcCurrAccContactDetail = new DcCurrAccContactDetail()
+            //    {
+            //        Id = 1,
+            //        CurrAccCode = dcCurrAcc.CurrAccCode,
+            //        ContactDesc = "",
+            //        ContactTypeId = 1,
+            //    };
+
+            //    efMethods.InsertEntity<DcCurrAccContactDetail>(dcCurrAccContactDetail);
+            //}
+
             FormCommonList<DcCurrAccContactDetail> formCommonList = new FormCommonList<DcCurrAccContactDetail>("", nameof(DcCurrAccContactDetail.Id), null, nameof(dcCurrAcc.CurrAccCode), dcCurrAcc.CurrAccCode);
             formCommonList.ShowDialog();
         }

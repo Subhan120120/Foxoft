@@ -1367,6 +1367,12 @@ namespace Foxoft
             return db.TrProductBarcodes.Any(x => x.ProductCode == productCode);
         }
 
+        public bool CurrAccContactDetailsExistByCurrAcc(string currAccCode)
+        {
+            using subContext db = new();
+            return db.DcCurrAccContactDetails.Any(x => x.CurrAccCode == currAccCode);
+        }
+
         public void InsertProduct(DcProduct dcProduct)
         {
             using subContext db = new();
