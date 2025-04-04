@@ -121,6 +121,13 @@ namespace Foxoft.Models
             {
                 if (entry.Entity is TrInvoiceHeader header)
                 {
+                    var modifiedProps = entry.Properties
+                        .Where(p => p.IsModified && !p.Metadata.IsPrimaryKey())
+                        .Select(p => p.Metadata.Name);
+
+                    if (!modifiedProps.Any() || (modifiedProps.Count() == 1 && modifiedProps.First() == nameof(TrInvoiceHeader.IsLocked)))
+                        continue; // Skip updating last updated fields
+
                     header.LastUpdatedUserName = currAccCode;
                     header.LastUpdatedDate = DateTime.Now;
                 }

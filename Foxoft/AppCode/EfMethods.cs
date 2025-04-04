@@ -183,11 +183,13 @@ namespace Foxoft
         {
             using subContext db = new();
             var latestUserNameFromHeader = db.TrInvoiceHeaders
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                 .OrderByDescending(h => h.LastUpdatedDate)
                 .Select(h => new { h.LastUpdatedDate, h.LastUpdatedUserName })
                 .FirstOrDefault();
 
             var latestUserNameFromLine = db.TrInvoiceLines
+                .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                 .OrderByDescending(l => l.LastUpdatedDate)
                 .Select(l => new { l.LastUpdatedDate, l.LastUpdatedUserName })
                 .FirstOrDefault();
