@@ -196,21 +196,14 @@ namespace Foxoft
 
         private void btn_Num_Click(object sender, EventArgs e)
         {
-            SimpleButton simpleButton = sender as SimpleButton;
-            string key = simpleButton.Text;
+            string key = (sender as SimpleButton).Text;
 
             switch (key)
             {
-                case "←":
-                    SendKeys.Send("{BACKSPACE}");
-                    break;
-                case "C":
-                    SendKeys.Send("^A");
-                    SendKeys.Send("{BACKSPACE}");
-                    break;
-                default:
-                    SendKeys.Send(key);
-                    break;
+                case "←": SendKeys.Send("{BACKSPACE}"); break;
+                case "C": SendKeys.Send("^A{DELETE}"); break;
+                case "↵": SendKeys.Send("{ENTER}"); break;
+                default: SendKeys.Send(key); break;
             }
         }
 

@@ -80,11 +80,11 @@ namespace Foxoft
         {
             string key = (sender as SimpleButton).Text;
 
-           switch (key)
+            switch (key)
             {
                 case "←": SendKeys.Send("{BACKSPACE}"); break;
-                case "C": SendKeys.Send("^A"); SendKeys.Send("{BACKSPACE}"); break;
-                //case "↵": btn_Ok.PerformClick(); break;
+                case "C": SendKeys.Send("^A{DELETE}"); break;
+                case "↵": SendKeys.Send("{ENTER}"); break;
                 default: SendKeys.Send(key); break;
             }
         }

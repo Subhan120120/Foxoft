@@ -166,7 +166,7 @@ namespace Foxoft
             lCI_Cash = new LayoutControlItem();
             lCI_Cashless = new LayoutControlItem();
             lCI_CustomerBonus = new LayoutControlItem();
-            layoutControlGroup2 = new LayoutControlGroup();
+            LCG_Total = new LayoutControlGroup();
             ((ISupportInitialize)lC_InvoiceLine).BeginInit();
             lC_InvoiceLine.SuspendLayout();
             ((ISupportInitialize)txtEdit_Barcode.Properties).BeginInit();
@@ -221,7 +221,7 @@ namespace Foxoft
             ((ISupportInitialize)lCI_Cash).BeginInit();
             ((ISupportInitialize)lCI_Cashless).BeginInit();
             ((ISupportInitialize)lCI_CustomerBonus).BeginInit();
-            ((ISupportInitialize)layoutControlGroup2).BeginInit();
+            ((ISupportInitialize)LCG_Total).BeginInit();
             SuspendLayout();
             // 
             // lC_InvoiceLine
@@ -275,7 +275,7 @@ namespace Foxoft
             // btn_Star
             // 
             btn_Star.AllowFocus = false;
-            btn_Star.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Star.Appearance.Font = new Font("Tahoma", 16F);
             btn_Star.Appearance.Options.UseFont = true;
             btn_Star.Location = new Point(436, 325);
             btn_Star.Name = "btn_Star";
@@ -289,7 +289,7 @@ namespace Foxoft
             // btn_Comma
             // 
             btn_Comma.AllowFocus = false;
-            btn_Comma.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Comma.Appearance.Font = new Font("Tahoma", 16F);
             btn_Comma.Appearance.Options.UseFont = true;
             btn_Comma.Location = new Point(592, 325);
             btn_Comma.Name = "btn_Comma";
@@ -303,7 +303,7 @@ namespace Foxoft
             // btn_Num0
             // 
             btn_Num0.AllowFocus = false;
-            btn_Num0.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num0.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num0.Appearance.Options.UseFont = true;
             btn_Num0.Location = new Point(514, 325);
             btn_Num0.Name = "btn_Num0";
@@ -317,7 +317,7 @@ namespace Foxoft
             // btn_Num1
             // 
             btn_Num1.AllowFocus = false;
-            btn_Num1.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num1.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num1.Appearance.Options.UseFont = true;
             btn_Num1.Location = new Point(436, 255);
             btn_Num1.Name = "btn_Num1";
@@ -331,7 +331,7 @@ namespace Foxoft
             // btn_Num2
             // 
             btn_Num2.AllowFocus = false;
-            btn_Num2.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num2.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num2.Appearance.Options.UseFont = true;
             btn_Num2.Location = new Point(514, 255);
             btn_Num2.Name = "btn_Num2";
@@ -345,7 +345,7 @@ namespace Foxoft
             // btn_Num3
             // 
             btn_Num3.AllowFocus = false;
-            btn_Num3.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num3.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num3.Appearance.Options.UseFont = true;
             btn_Num3.Location = new Point(592, 255);
             btn_Num3.Name = "btn_Num3";
@@ -359,7 +359,7 @@ namespace Foxoft
             // btn_Num4
             // 
             btn_Num4.AllowFocus = false;
-            btn_Num4.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num4.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num4.Appearance.Options.UseFont = true;
             btn_Num4.Location = new Point(436, 185);
             btn_Num4.Name = "btn_Num4";
@@ -373,7 +373,7 @@ namespace Foxoft
             // btn_Num6
             // 
             btn_Num6.AllowFocus = false;
-            btn_Num6.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num6.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num6.Appearance.Options.UseFont = true;
             btn_Num6.Location = new Point(592, 185);
             btn_Num6.Name = "btn_Num6";
@@ -387,7 +387,7 @@ namespace Foxoft
             // btn_Num8
             // 
             btn_Num8.AllowFocus = false;
-            btn_Num8.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num8.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num8.Appearance.Options.UseFont = true;
             btn_Num8.Location = new Point(514, 115);
             btn_Num8.Name = "btn_Num8";
@@ -401,7 +401,7 @@ namespace Foxoft
             // btn_Num9
             // 
             btn_Num9.AllowFocus = false;
-            btn_Num9.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num9.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num9.Appearance.Options.UseFont = true;
             btn_Num9.Location = new Point(592, 115);
             btn_Num9.Name = "btn_Num9";
@@ -415,7 +415,7 @@ namespace Foxoft
             // btn_Num7
             // 
             btn_Num7.AllowFocus = false;
-            btn_Num7.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num7.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num7.Appearance.Options.UseFont = true;
             btn_Num7.Location = new Point(436, 115);
             btn_Num7.Name = "btn_Num7";
@@ -428,7 +428,7 @@ namespace Foxoft
             // 
             // btn_Enter
             // 
-            btn_Enter.Appearance.Font = new Font("Tahoma", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_Enter.Appearance.Font = new Font("Tahoma", 20F, FontStyle.Bold);
             btn_Enter.Appearance.Options.UseFont = true;
             btn_Enter.Location = new Point(670, 255);
             btn_Enter.Name = "btn_Enter";
@@ -442,7 +442,7 @@ namespace Foxoft
             // btn_C
             // 
             btn_C.AllowFocus = false;
-            btn_C.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_C.Appearance.Font = new Font("Tahoma", 16F);
             btn_C.Appearance.Options.UseFont = true;
             btn_C.Location = new Point(670, 185);
             btn_C.Name = "btn_C";
@@ -456,7 +456,7 @@ namespace Foxoft
             // btn_BackSpace
             // 
             btn_BackSpace.AllowFocus = false;
-            btn_BackSpace.Appearance.Font = new Font("Tahoma", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_BackSpace.Appearance.Font = new Font("Tahoma", 15.75F, FontStyle.Bold);
             btn_BackSpace.Appearance.Options.UseFont = true;
             btn_BackSpace.Location = new Point(670, 115);
             btn_BackSpace.Name = "btn_BackSpace";
@@ -471,7 +471,7 @@ namespace Foxoft
             // 
             txtEdit_Barcode.Location = new Point(514, 61);
             txtEdit_Barcode.Name = "txtEdit_Barcode";
-            txtEdit_Barcode.Properties.Appearance.Font = new Font("Tahoma", 17F, FontStyle.Regular, GraphicsUnit.Point);
+            txtEdit_Barcode.Properties.Appearance.Font = new Font("Tahoma", 17F);
             txtEdit_Barcode.Properties.Appearance.Options.UseFont = true;
             txtEdit_Barcode.Size = new Size(230, 34);
             txtEdit_Barcode.StyleController = lC_InvoiceLine;
@@ -482,7 +482,7 @@ namespace Foxoft
             imageComboEdit_Barcode.Location = new Point(436, 60);
             imageComboEdit_Barcode.Name = "imageComboEdit_Barcode";
             imageComboEdit_Barcode.Properties.AllowFocused = false;
-            imageComboEdit_Barcode.Properties.Appearance.Font = new Font("Tahoma", 15F, FontStyle.Regular, GraphicsUnit.Point);
+            imageComboEdit_Barcode.Properties.Appearance.Font = new Font("Tahoma", 15F);
             imageComboEdit_Barcode.Properties.Appearance.Options.UseFont = true;
             imageComboEdit_Barcode.Properties.Buttons.AddRange(new EditorButton[] { new EditorButton(ButtonPredefines.Combo) });
             imageComboEdit_Barcode.Properties.ContextImageOptions.Alignment = ContextImageAlignment.Far;
@@ -507,11 +507,11 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Appearance.FooterPanel.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            gV_InvoiceLine.Appearance.FooterPanel.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.HideSelectionRow.BackColor = Color.FromArgb(206, 221, 245);
             gV_InvoiceLine.Appearance.HideSelectionRow.Options.UseBackColor = true;
-            gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
             gV_InvoiceLine.Columns.AddRange(new GridColumn[] { col_ProductDesc, col_Qty, col_Price, col_NetAmount, col_Barcode, col_PosDiscount, col_Amount, col_VatRate, col_SalesPersonCode });
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
@@ -908,7 +908,7 @@ namespace Foxoft
             // btn_Num5
             // 
             btn_Num5.AllowFocus = false;
-            btn_Num5.Appearance.Font = new Font("Tahoma", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            btn_Num5.Appearance.Font = new Font("Tahoma", 16F);
             btn_Num5.Appearance.Options.UseFont = true;
             btn_Num5.Location = new Point(514, 185);
             btn_Num5.Name = "btn_Num5";
@@ -923,7 +923,7 @@ namespace Foxoft
             // 
             lCG_Root.EnableIndentsWithoutBorders = DefaultBoolean.True;
             lCG_Root.GroupBordersVisible = false;
-            lCG_Root.Items.AddRange(new BaseLayoutItem[] { lCG_Barcode, lCG_Invoice, lCG_Function, lCG_Customer, lCG_Payment, layoutControlGroup2 });
+            lCG_Root.Items.AddRange(new BaseLayoutItem[] { lCG_Barcode, lCG_Invoice, lCG_Function, lCG_Customer, lCG_Payment, LCG_Total });
             lCG_Root.Name = "Root";
             lCG_Root.Size = new Size(1142, 719);
             lCG_Root.TextVisible = false;
@@ -1579,13 +1579,13 @@ namespace Foxoft
             lCI_CustomerBonus.TextSize = new Size(0, 0);
             lCI_CustomerBonus.TextVisible = false;
             // 
-            // layoutControlGroup2
+            // LCG_Total
             // 
-            layoutControlGroup2.CustomizationFormText = "layoutControlGroup1";
-            layoutControlGroup2.Location = new Point(412, 396);
-            layoutControlGroup2.Name = "layoutControlGroup2";
-            layoutControlGroup2.Size = new Size(336, 303);
-            layoutControlGroup2.Text = "layoutControlGroup1";
+            LCG_Total.CustomizationFormText = "layoutControlGroup1";
+            LCG_Total.Location = new Point(412, 396);
+            LCG_Total.Name = "LCG_Total";
+            LCG_Total.Size = new Size(336, 303);
+            LCG_Total.Text = "Toplam";
             // 
             // UcSale
             // 
@@ -1649,7 +1649,7 @@ namespace Foxoft
             ((ISupportInitialize)lCI_Cash).EndInit();
             ((ISupportInitialize)lCI_Cashless).EndInit();
             ((ISupportInitialize)lCI_CustomerBonus).EndInit();
-            ((ISupportInitialize)layoutControlGroup2).EndInit();
+            ((ISupportInitialize)LCG_Total).EndInit();
             ResumeLayout(false);
         }
 
@@ -1736,7 +1736,7 @@ namespace Foxoft
         private LayoutControlItem lCI_Cash;
         private LayoutControlItem lCI_Cashless;
         private LayoutControlItem lCI_CustomerBonus;
-        private LayoutControlGroup layoutControlGroup2;
+        private LayoutControlGroup LCG_Total;
         private SimpleButton btn_Print;
         private LayoutControlItem lCI_Print;
         private SimpleButton btn_PrintDesign;
