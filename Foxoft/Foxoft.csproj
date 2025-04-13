@@ -151,7 +151,7 @@
     <Compile Update="FormCurrAccFeature.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UcClaimCategoryList.cs">
+    <Compile Update="FormClaimCategoryList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormInvoiceLineUndeliveredList.cs">

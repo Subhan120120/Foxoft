@@ -1,15 +1,10 @@
 ﻿using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
-using Microsoft.EntityFrameworkCore;
+using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
-using DevExpress.XtraLayout.Utils;
 
 namespace Foxoft
 {

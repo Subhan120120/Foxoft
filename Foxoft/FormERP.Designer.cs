@@ -30,6 +30,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -110,6 +111,7 @@ namespace Foxoft
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             timer1 = new System.Windows.Forms.Timer(components);
+            ACE_Parameters = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
@@ -634,7 +636,7 @@ namespace Foxoft
             // 
             // ACE_ProductFeatureType
             // 
-            ACE_ProductFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_HierarchyFeatureType.ImageOptions.SvgImage");
+            ACE_ProductFeatureType.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_ProductFeatureType.ImageOptions.SvgImage");
             ACE_ProductFeatureType.Name = "ACE_ProductFeatureType";
             ACE_ProductFeatureType.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_ProductFeatureType.Text = "Məhsul Özəllik Tipləri";
@@ -671,7 +673,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, accordionControlSeparator2 });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, accordionControlSeparator2, ACE_Parameters });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -693,6 +695,14 @@ namespace Foxoft
             // 
             timer1.Interval = 5000;
             timer1.Tick += timer1_Tick;
+            // 
+            // accordionControlElement3
+            // 
+            ACE_Parameters.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement3.ImageOptions.SvgImage");
+            ACE_Parameters.Name = "accordionControlElement3";
+            ACE_Parameters.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Parameters.Text = "Parametrlər";
+            ACE_Parameters.Click += ACE_Parameters_Click;
             // 
             // FormERP
             // 
@@ -808,5 +818,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement accordionControlElement2;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrAccFeatureType;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ProductFeatureType;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Parameters;
     }
 }

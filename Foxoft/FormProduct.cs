@@ -175,15 +175,6 @@ namespace Foxoft
             //e.NewObject = dcCurrAcc;
         }
 
-        private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
-        {
-            if (e.FieldName == "ModifiedDate")
-            {
-                e.Visible = false;
-                e.Handled = true;
-            }
-        }
-
         private void SaveImage()
         {
             try

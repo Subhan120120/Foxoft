@@ -1,18 +1,14 @@
 ﻿using DevExpress.Utils;
-using DevExpress.Xpo;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -20,6 +16,7 @@ namespace Foxoft
     {
         public static bool IsValid(this DataLayoutControl dataLayoutControl, out List<string> errorList)
         {
+            DXErrorProvider provider = new();
             errorList = new();
 
             foreach (Control ctrl in dataLayoutControl.Controls)
@@ -29,13 +26,17 @@ namespace Foxoft
                 {
                     baseEdit.IsModified = true;
 
-                    //if (baseEdit is LookUpEdit && ((LookUpEdit)baseEdit).EditValue?.ToString() == "depo-06")
-                    //{
-                    bool validated = baseEdit.DoValidate();
-                    if (baseEdit.ErrorText != string.Empty)
-                        errorList.Add(baseEdit.ErrorText);
+                    //baseEdit.DoValidate(); 
 
-                    //}
+                    string error = baseEdit.ErrorText;
+
+                    if (error != string.Empty)
+                    {
+                        errorList.Add(error);
+                        provider.SetError(baseEdit, error); // just notify
+                    }
+                    else
+                        provider.SetError(baseEdit, string.Empty); // clear previous error
                 }
             }
 

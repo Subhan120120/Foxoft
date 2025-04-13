@@ -13,7 +13,7 @@ namespace Foxoft.Models
         [Display(Name = "Cədvəl Dizaynı")]
         public string? GridViewLayout { get; set; }
 
-        [Display(Name = "Print Edilsin")]
+        [Display(Name = "Çap Edilsin")]
         public bool GetPrint { get; set; }
 
         [Display(Name = "Printer Adı")]

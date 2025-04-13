@@ -37,6 +37,7 @@
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             btn_Clear = new Button();
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
+            btn_Claims = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)treeList1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             SuspendLayout();
@@ -109,23 +110,31 @@
             btn_Save.Text = "Yadda Saxla";
             btn_Save.Click += Btn_Save_Click;
             // 
+            // btn_Claims
+            // 
+            btn_Claims.Location = new Point(130, 255);
+            btn_Claims.Name = "btn_Claims";
+            btn_Claims.Size = new Size(75, 23);
+            btn_Claims.TabIndex = 3;
+            btn_Claims.Text = "Yetkilər";
+            btn_Claims.Click += Btn_Claims_Click;
+            // 
             // FormClaimCategoryList
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(379, 290);
+            Controls.Add(btn_Claims);
             Controls.Add(btn_Save);
             Controls.Add(btn_Clear);
             Controls.Add(treeList1);
             Name = "FormClaimCategoryList";
             Text = "Form1";
-            //Activated += FormTreeView_Activated;
             Load += FormTreeView_Load;
             ((System.ComponentModel.ISupportInitialize)treeList1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ResumeLayout(false);
         }
-
 
         #endregion
 
@@ -138,5 +147,7 @@
         private Button btn_Clear;
         private DevExpress.XtraTreeList.Columns.TreeListColumn treeListColumn1;
         private DevExpress.XtraEditors.SimpleButton btn_Save;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btn_Claims;
     }
 }

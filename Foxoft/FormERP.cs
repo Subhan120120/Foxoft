@@ -135,6 +135,7 @@ namespace Foxoft
             this.ACE_WaybillOut.Name = "WaybillOut";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
+            this.ACE_Parameters.Name = "Parameters";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_ProductDiscounts.Name = "ProductDiscountList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
@@ -485,6 +486,11 @@ namespace Foxoft
         private void ACE_WaybillOut_Click(object sender, EventArgs e)
         {
             ShowNewForm<FormInvoice>("WO", false, new byte[] { 1 }, null);
+        }
+
+        private void ACE_Parameters_Click(object sender, EventArgs e)
+        {
+            ShowExistForm<FormAppSetting>();
         }
 
         private void BBI_DatabaseRebuildIndexes_ItemClick(object sender, ItemClickEventArgs e)

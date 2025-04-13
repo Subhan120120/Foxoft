@@ -137,14 +137,18 @@ namespace Foxoft
             }
         }
 
+        private void Btn_Claims_Click(object sender, EventArgs e)
+        {
+            FormCommonList<DcClaim> formCommonList = new FormCommonList<DcClaim>("", nameof(DcClaim.ClaimCode));
+            formCommonList.ShowDialog();
+        }
+
+
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-
             // Call the method with the root nodes
             SaveNodesToDb(treeList1.Nodes);
             //DialogResult = DialogResult.OK;
-
-
         }
 
         private void SaveNodesToDb(IEnumerable<TreeListNode> nodes)
