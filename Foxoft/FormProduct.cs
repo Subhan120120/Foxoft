@@ -42,7 +42,7 @@ namespace Foxoft
 
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;
-            
+
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
             if (!isNew)
@@ -186,19 +186,23 @@ namespace Foxoft
 
         private void SaveImage()
         {
-            if (!Directory.Exists(productFolder))
-                Directory.CreateDirectory(productFolder);
-
             try
             {
                 //bitmap = pictureEdit.Image
                 if (pictureEdit.Image is not null)
                 {
+                    if (!Directory.Exists(productFolder))
+                        Directory.CreateDirectory(productFolder);
+
                     pictureEdit.Image.Save(imageFilePath);
                     GC.Collect();
                 }
                 else
+                {
                     File.Delete(imageFilePath);
+                    Directory.Delete(productFolder);
+                }
+
 
             }
             catch (Exception ex)

@@ -621,6 +621,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "PosDiscount", ClaimDesc = "POS Endirimi", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "PriceList", ClaimDesc = "Qiymət Cədvəli", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "CurrAccFeatureType", ClaimDesc = "Cari Hesab Özəlliyi", ClaimTypeId = 1, CategoryId = 19 },
+                new DcClaim { ClaimCode = "CurrAccCreditLimit", ClaimDesc = "Cari Hesab Kredit Limiti", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "ProductFeatureType", ClaimDesc = "Məhsul Özəllik Tipləri", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "CurrAccClaim", ClaimDesc = "Cari hesab yetkisi", ClaimTypeId = 1, CategoryId = 15 },
                 new DcClaim { ClaimCode = "Session", ClaimDesc = "Sessiya", ClaimTypeId = 1, CategoryId = 15 },
@@ -703,7 +704,8 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 46, RoleCode = "Admin", ClaimCode = "InstallmentCommissionChange" },
                 new TrRoleClaim { RoleClaimId = 47, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
                 new TrRoleClaim { RoleClaimId = 48, RoleCode = "Admin", ClaimCode = "EditLockedPayment" },
-                new TrRoleClaim { RoleClaimId = 49, RoleCode = "Admin", ClaimCode = "CurrAccFeatureType" }
+                new TrRoleClaim { RoleClaimId = 49, RoleCode = "Admin", ClaimCode = "CurrAccFeatureType" },
+                new TrRoleClaim { RoleClaimId = 50, RoleCode = "Admin", ClaimCode = "CurrAccCreditLimit" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

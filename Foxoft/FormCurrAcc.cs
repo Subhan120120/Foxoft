@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using DevExpress.XtraLayout.Utils;
 
 namespace Foxoft
 {
@@ -27,6 +28,10 @@ namespace Foxoft
             StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+
+            bool currAccHasClaimCreditLimit = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "CurrAccCreditLimit");
+            if (!currAccHasClaimCreditLimit)
+                ItemForCreditLimit.Visibility = LayoutVisibility.Never;
         }
 
         public FormCurrAcc(string currAccCode)
