@@ -124,6 +124,7 @@ namespace Foxoft
                     LayoutControlItem controlItem = item as LayoutControlItem;
                     if (controlItem != null)
                     {
+
                         if (controlItem.Control is LookUpEdit lookUpEdit)
                             lookUpEdit.EditValueChanged += LookUpEdit_EditValueChanged;
                         else if (controlItem.Control is BaseEdit baseEdit)
@@ -158,8 +159,9 @@ namespace Foxoft
 
                 if (trInvoiceHeader is not null)
                 {
-                    trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
-
+                    if (lUE_StoreCode == lookUpEdit)
+                        trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
+                    
                     if (dbContext != null
                         && dataLayoutControl1.IsValid(out _)
                         && Settings.Default.AppSetting.AutoSave
