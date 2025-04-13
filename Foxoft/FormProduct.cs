@@ -587,7 +587,7 @@ namespace Foxoft
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 dcProduct = dcProductsBindingSource.Current as DcProduct;
-                if (isNew) //if invoiceHeader doesnt exist
+                if (isNew)
                     if (!efMethods.ProductExist(dcProduct.ProductCode))
                         efMethods.InsertProduct(dcProduct);
                     else
@@ -611,7 +611,7 @@ namespace Foxoft
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
                 dcProduct = dcProductsBindingSource.Current as DcProduct;
-                if (isNew) //if invoiceHeader doesnt exist
+                if (isNew)
                     if (!efMethods.ProductExist(dcProduct.ProductCode))
                         efMethods.InsertProduct(dcProduct);
                     else
@@ -626,6 +626,8 @@ namespace Foxoft
                 BBI_ProductDiscount.Enabled = true;
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
+
+                dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
             }
             else
             {
