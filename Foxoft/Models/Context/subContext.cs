@@ -845,8 +845,8 @@ namespace Foxoft.Models
             );
 
             modelBuilder.Entity<DcBarcodeType>().HasData(
-                new DcBarcodeType { BarcodeTypeCode = "Serbest", BarcodeTypeDesc = "Sərbəst" },
-                new DcBarcodeType { BarcodeTypeCode = "EAN13", BarcodeTypeDesc = "EAN13" }
+                new DcBarcodeType { BarcodeTypeCode = "Serbest", BarcodeTypeDesc = "Sərbəst", DefaultBarcodeType = false },
+                new DcBarcodeType { BarcodeTypeCode = "EAN13", BarcodeTypeDesc = "EAN13", DefaultBarcodeType = true }
             );
 
             modelBuilder.Entity<DcProductType>().HasData(

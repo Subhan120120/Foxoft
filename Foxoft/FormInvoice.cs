@@ -6,10 +6,8 @@ using DevExpress.DataAccess.Native.Excel;
 using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
-using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
-using DevExpress.XtraCharts.Design;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Filtering;
@@ -135,39 +133,6 @@ namespace Foxoft
             }
         }
 
-        private void LookUpEdit_EditValueChanged(object? sender, EventArgs e)
-        {
-            if (sender is LookUpEdit lookUpEdit)
-            {
-                trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
-                if (trInvoiceHeader is not null)
-                {
-                    trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
-
-                    if (dbContext != null
-                        && dataLayoutControl1.IsValid(out _) 
-                        && Settings.Default.AppSetting.AutoSave 
-                        && gV_InvoiceLine.DataRowCount > 0)
-                        SaveInvoice();
-                }
-
-
-
-            }
-        }
-
-
-        private void Control_Leave(object sender, EventArgs e)
-        {
-            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
-            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out _))
-                if (Settings.Default.AppSetting.AutoSave)
-                    if (gV_InvoiceLine.DataRowCount > 0)
-                        SaveInvoice();
-        }
-
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
             : this(processCode, isReturn, productTypeArr, relatedInvoiceId)
         {
@@ -183,6 +148,35 @@ namespace Foxoft
         private void FormInvoice_Shown(object sender, EventArgs e)
         {
             gC_InvoiceLine.Focus();
+        }
+
+        private void LookUpEdit_EditValueChanged(object? sender, EventArgs e)
+        {
+            if (sender is LookUpEdit lookUpEdit)
+            {
+                trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+                if (trInvoiceHeader is not null)
+                {
+                    trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
+
+                    if (dbContext != null
+                        && dataLayoutControl1.IsValid(out _)
+                        && Settings.Default.AppSetting.AutoSave
+                        && gV_InvoiceLine.DataRowCount > 0)
+                        SaveInvoice();
+                }
+            }
+        }
+
+        private void Control_Leave(object sender, EventArgs e)
+        {
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out _))
+                if (Settings.Default.AppSetting.AutoSave)
+                    if (gV_InvoiceLine.DataRowCount > 0)
+                        SaveInvoice();
         }
 
         protected override void WndProc(ref Message m)
@@ -1169,13 +1163,6 @@ namespace Foxoft
             form.Show();
         }
 
-        private XtraReport GetInvoiceReport(string fileName)
-        {
-            DsMethods dsMethods = new();
-            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-            return reportClass.GetReport("invoice", fileName, new SqlQuery[] { sqlQuerySale });
-        }
-
         private void bBI_Save_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
@@ -2062,7 +2049,7 @@ namespace Foxoft
             alertControl1.Show(this, "Print Göndərilir...", "Printer: " + printerName, "", (Image)null, null);
 
             if (trInvoiceHeader is not null)
-                await Task.Run(() => GetPrintToWarehouse(trInvoiceHeader.InvoiceHeaderId, printerName));
+                await Task.Run(() => GetPrint(trInvoiceHeader.InvoiceHeaderId, printerName));
             else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
 
             Task task = Task.Run((Action)ShowPrintCount);
@@ -2070,7 +2057,7 @@ namespace Foxoft
             alertControl1.Show(this, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
         }
 
-        private void GetPrintToWarehouse(Guid invoiceHeaderId, string printerName)
+        private void GetPrint(Guid invoiceHeaderId, string printerName)
         {
             XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
             report.PrinterName = printerName;
@@ -2082,6 +2069,13 @@ namespace Foxoft
                 efMethods.UpdateInvoicePrintCount(invoiceHeaderId);
             }
             report.Dispose();
+        }
+
+        private XtraReport GetInvoiceReport(string fileName)
+        {
+            DsMethods dsMethods = new();
+            SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
+            return reportClass.GetReport("invoice", fileName, new SqlQuery[] { sqlQuerySale });
         }
 
         private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)

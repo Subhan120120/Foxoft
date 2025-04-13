@@ -42,7 +42,7 @@ namespace Foxoft
 
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;
-
+            
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
 
             if (!isNew)

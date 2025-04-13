@@ -12,7 +12,7 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            UcSale ucSale = new();
+            UcRetailSale ucSale = new();
             ucSale.Dock = DockStyle.Fill;
             navPage_Sale.Controls.Add(ucSale);
 

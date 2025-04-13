@@ -249,34 +249,77 @@ namespace Foxoft
             if (string.IsNullOrEmpty(barCode))
                 return null;
             using subContext db = new();
-            return db.TrProductBarcodes
-                .Where(x => x.Barcode == barCode)
+            //var asd = db.TrProductBarcodes
+            //    .Where(x => x.Barcode == barCode)
+            //    .Select(x => new DcProduct
+            //    {
+            //        //Balance = x.DcProduct.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+            //        //                                          .Sum(l => l.QtyIn - l.QtyOut),
+            //        ProductCost = SqlFunctions.GetProductCost(x.DcProduct.ProductCode, null),
+            //        ProductCode = x.DcProduct.ProductCode,
+            //        ProductDesc = x.DcProduct.ProductDesc,
+            //        PosDiscount = x.DcProduct.PosDiscount,
+            //        RetailPrice = x.DcProduct.RetailPrice,
+            //        PurchasePrice = x.DcProduct.PurchasePrice,
+            //        ProductTypeCode = x.DcProduct.ProductTypeCode,
+            //        WholesalePrice = x.DcProduct.WholesalePrice,
+            //        UsePos = x.DcProduct.UsePos,
+            //        UseInternet = x.DcProduct.UseInternet,
+            //        CreatedDate = x.DcProduct.CreatedDate,
+            //        CreatedUserName = x.DcProduct.CreatedUserName,
+            //        LastUpdatedDate = x.DcProduct.LastUpdatedDate,
+            //        LastUpdatedUserName = x.DcProduct.LastUpdatedUserName,
+            //        HierarchyCode = x.DcProduct.HierarchyCode,
+            //        TrProductFeatures = x.DcProduct.TrProductFeatures,
+            //        SiteProduct = x.DcProduct.SiteProduct,
+            //        DcHierarchy = x.DcProduct.DcHierarchy,
+            //        TrProductDiscounts = x.DcProduct.TrProductDiscounts,
+            //        DcSerialNumbers = x.DcProduct.DcSerialNumbers,
+            //        DefaultUnitOfMeasureId = x.DcProduct.DefaultUnitOfMeasureId
+            //    })
+            //    .FirstOrDefault();
+
+            return db.DcProducts
+                .Include(x => x.TrProductBarcodes.Where(x => x.Barcode == barCode))
+                .Where(x => x.TrProductBarcodes.Any(x => x.Barcode == barCode))
                 .Select(x => new DcProduct
                 {
-                    //Balance = x.DcProduct.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                    //Balance = x.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
                     //                                          .Sum(l => l.QtyIn - l.QtyOut),
-                    ProductCost = SqlFunctions.GetProductCost(x.DcProduct.ProductCode, null),
-                    ProductCode = x.DcProduct.ProductCode,
-                    ProductDesc = x.DcProduct.ProductDesc,
-                    PosDiscount = x.DcProduct.PosDiscount,
-                    RetailPrice = x.DcProduct.RetailPrice,
-                    PurchasePrice = x.DcProduct.PurchasePrice,
-                    ProductTypeCode = x.DcProduct.ProductTypeCode,
-                    WholesalePrice = x.DcProduct.WholesalePrice,
-                    UsePos = x.DcProduct.UsePos,
-                    UseInternet = x.DcProduct.UseInternet,
-                    CreatedDate = x.DcProduct.CreatedDate,
-                    CreatedUserName = x.DcProduct.CreatedUserName,
-                    LastUpdatedDate = x.DcProduct.LastUpdatedDate,
-                    LastUpdatedUserName = x.DcProduct.LastUpdatedUserName,
-                    HierarchyCode = x.DcProduct.HierarchyCode,
-                    TrProductFeatures = x.DcProduct.TrProductFeatures,
-                    SiteProduct = x.DcProduct.SiteProduct,
-                    DcHierarchy = x.DcProduct.DcHierarchy,
-                    TrProductDiscounts = x.DcProduct.TrProductDiscounts,
-                    DcSerialNumbers = x.DcProduct.DcSerialNumbers,
-                    DefaultUnitOfMeasureId = x.DcProduct.DefaultUnitOfMeasureId
-                })
+                    ProductCost = SqlFunctions.GetProductCost(x.ProductCode, null),
+                    ProductCode = x.ProductCode,
+                    ProductDesc = x.ProductDesc,
+                    PosDiscount = x.PosDiscount,
+                    RetailPrice = x.RetailPrice,
+                    PurchasePrice = x.PurchasePrice,
+                    ProductTypeCode = x.ProductTypeCode,
+                    WholesalePrice = x.WholesalePrice,
+                    UsePos = x.UsePos,
+                    UseInternet = x.UseInternet,
+                    CreatedDate = x.CreatedDate,
+                    CreatedUserName = x.CreatedUserName,
+                    LastUpdatedDate = x.LastUpdatedDate,
+                    LastUpdatedUserName = x.LastUpdatedUserName,
+                    HierarchyCode = x.HierarchyCode,
+                    TrProductFeatures = x.TrProductFeatures,
+                    SiteProduct = x.SiteProduct,
+                    DcHierarchy = x.DcHierarchy,
+                    TrProductDiscounts = x.TrProductDiscounts,
+                    DcSerialNumbers = x.DcSerialNumbers,
+                    DefaultUnitOfMeasureId = x.DefaultUnitOfMeasureId,
+                    TrProductBarcodes = x.TrProductBarcodes
+                }).FirstOrDefault();
+        }
+
+        public TrProductBarcode SelectProductBarcode(string barCode)
+        {
+            using subContext db = new();
+
+            if (string.IsNullOrEmpty(barCode))
+                return null;
+            return db.TrProductBarcodes
+                .Where(x => x.Barcode == barCode)
+                .Include(x => x.DcProduct)
                 .FirstOrDefault();
         }
 
@@ -579,35 +622,29 @@ namespace Foxoft
                                     .ToList();
         }
 
-        public int InsertInvoiceLine(DcProduct dcProduct, Guid invoiceHeaderId)
+        public int InsertInvoiceLine(DcProduct dcProduct, Guid invoiceHeaderId, decimal qty)
         {
             using subContext db = new();
 
-            IQueryable<DcProduct> dcProducts = db.DcProducts.AsQueryable();
+            TrInvoiceHeader trInvoiceHeader = SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
 
-            if (!string.IsNullOrEmpty(dcProduct.ProductCode))
-                dcProducts = dcProducts.Where(x => x.ProductCode == dcProduct.ProductCode);
-
-            DcProduct product = dcProducts.FirstOrDefault();
-
-            if (product is not null)
+            TrInvoiceLine trInvoiceLine = new()
             {
-                TrInvoiceLine trInvoiceLine = new()
-                {
-                    InvoiceLineId = Guid.NewGuid(),
-                    InvoiceHeaderId = invoiceHeaderId,
-                    ProductCode = product.ProductCode,
-                    Price = product.RetailPrice,
-                    Amount = Convert.ToDecimal(product.RetailPrice),
-                    PosDiscount = Convert.ToDecimal(product.PosDiscount),
-                    NetAmount = Convert.ToDecimal(product.RetailPrice)
-                };
+                TrInvoiceHeader = trInvoiceHeader,
+                InvoiceLineId = Guid.NewGuid(),
+                InvoiceHeaderId = invoiceHeaderId,
+                ProductCode = dcProduct.ProductCode,
+                Price = dcProduct.RetailPrice,
+                Amount = Convert.ToDecimal(dcProduct.RetailPrice),
+                PosDiscount = Convert.ToDecimal(dcProduct.PosDiscount),
+                NetAmount = Convert.ToDecimal(dcProduct.RetailPrice),
+                Qty = qty,
+            };
 
-                db.TrInvoiceLines.Add(trInvoiceLine);
-                return db.SaveChanges();
-            }
-            else
-                return -1;
+            trInvoiceLine.TrInvoiceHeader = null;
+
+            db.TrInvoiceLines.Add(trInvoiceLine);
+            return db.SaveChanges();
         }
 
         public bool ExpensesExistByInvoiceId(Guid invoiceHeaderId)
@@ -829,12 +866,12 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
-        public int UpdateInvoicePosDiscount(TrInvoiceLine trInvoiceLine)
+        public int UpdateInvoiceLine_PosDiscount(TrInvoiceLine trInvoiceLine)
         {
             using subContext db = new();
 
             db.Entry(trInvoiceLine).Property(x => x.PosDiscount).IsModified = true;
-            db.Entry(trInvoiceLine).Property(x => x.NetAmount).IsModified = true;
+            //db.Entry(trInvoiceLine).Property(x => x.NetAmount).IsModified = true;
             return db.SaveChanges();
         }
 
