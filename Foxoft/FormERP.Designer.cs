@@ -48,12 +48,9 @@ namespace Foxoft
             BSI_CompanyDesc = new DevExpress.XtraBars.BarStaticItem();
             bBI_Session = new DevExpress.XtraBars.BarButtonItem();
             BSI_Report = new DevExpress.XtraBars.BarSubItem();
-            BBI_DatabaseRebuildIndexes = new DevExpress.XtraBars.BarButtonItem();
             ribbonPage_Home = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGr_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
             repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -110,8 +107,8 @@ namespace Foxoft
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
-            timer1 = new System.Windows.Forms.Timer(components);
             ACE_Parameters = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_Stores = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
@@ -124,11 +121,11 @@ namespace Foxoft
             // parentRibbonControl
             // 
             parentRibbonControl.ExpandCollapseItem.Id = 0;
-            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName, BSI_CompanyDesc, bBI_Session, BSI_Report, BBI_DatabaseRebuildIndexes });
+            parentRibbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] { parentRibbonControl.ExpandCollapseItem, skinRibbonGalleryBarItem, skinPaletteDropDownButtonItem, bBI_MdiChildrenList, bBI_CloseWindows, bBI_POS, bSI_UserName, BSI_StoreDesc, BBI_ChangeUser, barSubItem1, BBI_ModeMouse, BBI_ModeTouch, bSI_TerminalName, BSI_CompanyDesc, bBI_Session, BSI_Report });
             parentRibbonControl.Location = new Point(0, 0);
             parentRibbonControl.MaxItemId = 38;
             parentRibbonControl.Name = "parentRibbonControl";
-            parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage_Home, ribbonPage1 });
+            parentRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage_Home });
             parentRibbonControl.QuickToolbarItemLinks.Add(skinRibbonGalleryBarItem);
             parentRibbonControl.QuickToolbarItemLinks.Add(skinPaletteDropDownButtonItem);
             parentRibbonControl.QuickToolbarItemLinks.Add(bBI_POS);
@@ -250,14 +247,6 @@ namespace Foxoft
             BSI_Report.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BSI_Report.ImageOptions.SvgImage");
             BSI_Report.Name = "BSI_Report";
             // 
-            // BBI_DatabaseRebuildIndexes
-            // 
-            BBI_DatabaseRebuildIndexes.Caption = "0";
-            BBI_DatabaseRebuildIndexes.Id = 37;
-            BBI_DatabaseRebuildIndexes.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_DatabaseRebuildIndexes.ImageOptions.SvgImage");
-            BBI_DatabaseRebuildIndexes.Name = "BBI_DatabaseRebuildIndexes";
-            BBI_DatabaseRebuildIndexes.ItemClick += BBI_DatabaseRebuildIndexes_ItemClick;
-            // 
             // ribbonPage_Home
             // 
             ribbonPage_Home.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGr_Control, ribbonPageGroup1 });
@@ -278,18 +267,6 @@ namespace Foxoft
             ribbonPageGroup1.ItemLinks.Add(bBI_Session);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
             ribbonPageGroup1.Text = "Nəzarət";
-            // 
-            // ribbonPage1
-            // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup4 });
-            ribbonPage1.Name = "ribbonPage1";
-            ribbonPage1.Text = "Ayarlar";
-            // 
-            // ribbonPageGroup4
-            // 
-            ribbonPageGroup4.ItemLinks.Add(BBI_DatabaseRebuildIndexes);
-            ribbonPageGroup4.Name = "ribbonPageGroup4";
-            ribbonPageGroup4.Text = "Şirkət Ayarları";
             // 
             // repositoryItemImageComboBox1
             // 
@@ -673,7 +650,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, accordionControlSeparator2, ACE_Parameters });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_Stores, accordionControlSeparator2, ACE_Parameters });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -691,18 +668,21 @@ namespace Foxoft
             // 
             accordionControlSeparator2.Name = "accordionControlSeparator2";
             // 
-            // timer1
+            // ACE_Parameters
             // 
-            timer1.Interval = 5000;
-            timer1.Tick += timer1_Tick;
-            // 
-            // accordionControlElement3
-            // 
-            ACE_Parameters.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement3.ImageOptions.SvgImage");
-            ACE_Parameters.Name = "accordionControlElement3";
+            ACE_Parameters.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Parameters.ImageOptions.SvgImage");
+            ACE_Parameters.Name = "ACE_Parameters";
             ACE_Parameters.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_Parameters.Text = "Parametrlər";
             ACE_Parameters.Click += ACE_Parameters_Click;
+            // 
+            // ACE_Stores
+            // 
+            ACE_Stores.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement3.ImageOptions.SvgImage");
+            ACE_Stores.Name = "ACE_Stores";
+            ACE_Stores.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Stores.Text = "Mağazalar";
+            ACE_Stores.Click += ACE_Stores_Click;
             // 
             // FormERP
             // 
@@ -803,10 +783,6 @@ namespace Foxoft
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private DevExpress.XtraBars.PopupMenu popupMenu2;
         private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_InstallmentSaleInvoice;
-        private DevExpress.XtraBars.BarButtonItem BBI_DatabaseRebuildIndexes;
-        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage1;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
-        private System.Windows.Forms.Timer timer1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_InstallmentSaleReturn;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Installments;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_PurchaseReturnCustom;
@@ -819,5 +795,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrAccFeatureType;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ProductFeatureType;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Parameters;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Stores;
     }
 }

@@ -333,7 +333,6 @@ namespace Foxoft
             ProductDescTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductDesc", true));
             ProductDescTextEdit.Location = new Point(123, 36);
             ProductDescTextEdit.Name = "ProductDescTextEdit";
-            ProductDescTextEdit.Properties.AllowNullInput = DefaultBoolean.False;
             ProductDescTextEdit.Size = new Size(338, 20);
             ProductDescTextEdit.StyleController = dataLayoutControl1;
             ProductDescTextEdit.TabIndex = 3;
@@ -1023,6 +1022,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoValidate = AutoValidate.EnableAllowFocusChange;
             ClientSize = new Size(490, 437);
             Controls.Add(dataLayoutControl1);
             Controls.Add(barDockControlLeft);

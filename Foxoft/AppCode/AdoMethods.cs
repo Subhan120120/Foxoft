@@ -79,66 +79,89 @@ namespace Foxoft
             return dt;
         }
 
-        public DataTable SelectInvoiceLines(DateTime StartDate, DateTime EndDate)
+        public string DatabaseAVGFragmentationPercent()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            string str = "Foxoft.AppCode.Qry_Sales.sql";
-            string qry = "";
+            string queryGetFragAvg = @"
+                    Select COALESCE(ROUND(AVG(avg_fragmentation_in_percent), 2), 0) as [FragAvg] From (
+                    
+                    SELECT 
+                        dbschemas.name AS SchemaName,
+                        dbtables.name AS TableName,
+                        dbindexes.name AS IndexName,
+                        indexstats.avg_fragmentation_in_percent,
+                        indexstats.page_count
+                    FROM 
+                        sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, 'LIMITED') AS indexstats
+                    INNER JOIN 
+                        sys.tables dbtables ON indexstats.object_id = dbtables.object_id
+                    INNER JOIN 
+                        sys.schemas dbschemas ON dbtables.schema_id = dbschemas.schema_id
+                    INNER JOIN 
+                        sys.indexes AS dbindexes ON indexstats.object_id = dbindexes.object_id 
+                        AND indexstats.index_id = dbindexes.index_id
+                    WHERE 
+                        dbindexes.type > 0  -- 0 = Heap, 1 = Clustered, 2 = Nonclustered
+                        AND indexstats.page_count > 0 -- Ignore small tables
+                     AND indexstats.avg_fragmentation_in_percent > 0
+                    
+                    --ORDER BY 
+                    --    indexstats.avg_fragmentation_in_percent DESC
+                    ) as ortalama";
 
-            using Stream stream = assembly.GetManifestResourceStream(str);
-            using StreamReader reader = new(stream);
-            qry = reader.ReadToEnd();
 
-
-            paramArray = new SqlParameter[]
-            {
-                new SqlParameter("@StartDate", StartDate),
-                new SqlParameter("@EndDate", EndDate)
-            };
-
-            DataTable dt = SqlGetDt(qry, paramArray);
-            dt.TableName = "trInvoiceLines";
-            return dt;
+            DataTable? asda = SqlGetDt(queryGetFragAvg);
+            return asda.Rows[0][0].ToString();
         }
 
-        public DataTable SelectPaymentLines(DateTime StartDate, DateTime EndDate)
+        public void RebuldOrReorganizeDatabase()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            string str = "Foxoft.AppCode.Qry_Payments.sql";
-            string qry = "";
+            string queryRebuldOrReorganize = @"
+                DECLARE @SchemaName NVARCHAR(MAX);
+                DECLARE @TableName NVARCHAR(MAX);
+                DECLARE @IndexName NVARCHAR(MAX);
+                DECLARE @Fragmentation FLOAT;
+                DECLARE @SQL NVARCHAR(MAX);
+                
+                DECLARE IndexCursor CURSOR FOR
+                SELECT 
+                    dbschemas.name AS SchemaName,
+                    dbtables.name AS TableName,
+                    dbindexes.name AS IndexName,
+                    indexstats.avg_fragmentation_in_percent
+                FROM 
+                    sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, 'LIMITED') AS indexstats
+                INNER JOIN 
+                    sys.tables dbtables ON indexstats.object_id = dbtables.object_id
+                INNER JOIN 
+                    sys.schemas dbschemas ON dbtables.schema_id = dbschemas.schema_id
+                INNER JOIN 
+                    sys.indexes AS dbindexes ON indexstats.object_id = dbindexes.object_id 
+                    AND indexstats.index_id = dbindexes.index_id
+                WHERE 
+                    dbindexes.type > 0  -- Exclude heaps
+                    AND indexstats.page_count > 0;  -- Ignore small tables
+                
+                OPEN IndexCursor;
+                
+                FETCH NEXT FROM IndexCursor INTO @SchemaName, @TableName, @IndexName, @Fragmentation;
+                
+                WHILE @@FETCH_STATUS = 0
+                BEGIN
+                    IF @Fragmentation > 0
+					BEGIN
+						SET @SQL = 'ALTER INDEX [' + @IndexName + '] ON [' + @SchemaName + '].[' + @TableName + '] REBUILD PARTITION = ALL WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ';
+						PRINT @SQL;  -- Optional for logging
+						EXEC sp_executesql @SQL;	
+					END
+                
+                    FETCH NEXT FROM IndexCursor INTO @SchemaName, @TableName, @IndexName, @Fragmentation;
+                END
+                
+                CLOSE IndexCursor;
+                DEALLOCATE IndexCursor;
+                ";
 
-            using Stream stream = assembly.GetManifestResourceStream(str);
-            using StreamReader reader = new(stream);
-            qry = reader.ReadToEnd();
-
-            paramArray = new SqlParameter[]
-            {
-                new SqlParameter("@StartDate", StartDate),
-                new SqlParameter("@EndDate", EndDate)
-            };
-
-            DataTable dt = SqlGetDt(qry, paramArray);
-            dt.TableName = "trPaymentLines";
-            return dt;
-        }
-
-        public DataTable SelectDebts(DateTime StartDate, DateTime EndDate)
-        {
-            string qry = "";
-            paramArray = new SqlParameter[]
-            {
-                new SqlParameter("@StartDate", StartDate),
-                new SqlParameter("@EndDate", EndDate)
-            };
-
-            DataTable dt = SqlGetDt(qry, paramArray);
-            dt.TableName = "trPaymentLines";
-            return dt;
-        }
-
-        public void customUpdateQry()
-        {
-            SqlExec("update report");
+            SqlExec(queryRebuldOrReorganize);
         }
     }
 }

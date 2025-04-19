@@ -191,7 +191,7 @@ namespace Foxoft
                 else
                 {
                     File.Delete(imageFilePath);
-                    Directory.Delete(productFolder);
+                    //Directory.Delete(productFolder); // access danied
                 }
 
 

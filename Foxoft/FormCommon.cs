@@ -63,7 +63,6 @@ namespace Foxoft
         {
             RetrieveFields();
 
-
             FillDataLayout();
         }
 
@@ -231,6 +230,19 @@ namespace Foxoft
             }
         }
 
+        private readonly Dictionary<string, Type> buttonEditFields = new()
+        {
+            { nameof(DcCurrAcc.CurrAccCode), typeof(DcCurrAcc) },
+            { nameof(DcDiscount.DiscountId), typeof(DcDiscount) },
+            { nameof(DcReport.ReportId), typeof(DcReport) },
+            { nameof(DcRole.RoleCode), typeof(DcRole) },
+            { nameof(DcForm.FormCode), typeof(DcForm) },
+            { nameof(DcHierarchy.HierarchyCode), typeof(DcHierarchy) },
+            { nameof(DcFeatureType.FeatureTypeId), typeof(DcFeatureType) },
+            { nameof(DcClaim.ClaimCode), typeof(DcClaim) },
+            { nameof(DcClaimCategory.CategoryId), typeof(DcClaimCategory) },
+        };
+
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
         {
             var entityType = dbContext.Model.FindEntityType(typeof(T));
@@ -256,6 +268,7 @@ namespace Foxoft
             else if (e.FieldName == nameof(DcHierarchy.HierarchyCode)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcFeatureType.FeatureTypeId)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcClaim.ClaimCode)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcClaimCategory.CategoryId)) e.EditorType = typeof(ButtonEdit);
 
             e.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             e.Handled = true;
@@ -318,19 +331,24 @@ namespace Foxoft
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCode_ButtonPressed);
             }
+            if (e.FieldName == nameof(DcClaimCategory.CategoryId))// add FieldRetrieving too
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCategoryId_ButtonPressed);
+            }
         }
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string productCode = editor.EditValue?.ToString();
+            string productCode = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormProductList form = new(new byte[] { 1, 3 }, productCode);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.dcProduct.ProductCode;
+                    ((ButtonEdit)sender).EditValue = form.dcProduct.ProductCode;
             }
             catch (Exception ex)
             {
@@ -340,15 +358,14 @@ namespace Foxoft
 
         private void repoBtnEdit_CurrAccCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string currAccCode = editor.EditValue?.ToString();
+            string currAccCode = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCurrAccList form = new(new byte[] { 1, 2, 3 }, currAccCode);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.dcCurrAcc.CurrAccCode;
+                    ((ButtonEdit)sender).EditValue = form.dcCurrAcc.CurrAccCode;
             }
             catch (Exception ex)
             {
@@ -358,15 +375,14 @@ namespace Foxoft
 
         private void repoBtnEdit_DiscountId_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string value = editor.EditValue?.ToString();
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcDiscount> form = new("", nameof(DcDiscount.DiscountId), value);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.Value_Id;
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {
@@ -376,15 +392,14 @@ namespace Foxoft
 
         private void repoBtnEdit_ReportId_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string value = editor.EditValue?.ToString();
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcReport> form = new("", nameof(DcReport.ReportId), value, new string[] { "ReportQuery", "ReportTypeId", "ReportLayout", "ReportFilter" });
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.Value_Id;
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {
@@ -394,15 +409,14 @@ namespace Foxoft
 
         private void repoBtnEdit_RoleCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string value = editor.EditValue?.ToString();
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcRole> form = new("", nameof(DcRole.RoleCode), value);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.Value_Id;
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {
@@ -412,15 +426,14 @@ namespace Foxoft
 
         private void repoBtnEdit_FormCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string value = editor.EditValue?.ToString();
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcForm> form = new("", nameof(DcForm.FormCode), value);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.Value_Id;
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {
@@ -430,15 +443,14 @@ namespace Foxoft
 
         private void repoBtnEdit_HierarchyCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string value = editor.EditValue?.ToString();
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcHierarchy> form = new("", nameof(DcHierarchy.HierarchyCode), value);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.Value_Id;
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {
@@ -448,15 +460,14 @@ namespace Foxoft
 
         private void repoBtnEdit_FeatureTypeId_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string value = editor.EditValue?.ToString();
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcFeatureType> form = new("", nameof(DcFeatureType.FeatureTypeId), value);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.Value_Id;
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {
@@ -466,15 +477,31 @@ namespace Foxoft
 
         private void repoBtnEdit_ClaimCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            string value = editor.EditValue?.ToString();
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcClaim> form = new("", nameof(DcClaim.ClaimCode), value);
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
-                    editor.EditValue = form.Value_Id;
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_ClaimCategoryId_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
+
+            using FormCommonList<DcClaimCategory> form = new("", nameof(DcClaimCategory.CategoryId), value);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
             }
             catch (Exception ex)
             {

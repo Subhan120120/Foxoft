@@ -43,7 +43,6 @@ namespace Foxoft
         {
             InitializeComponent();
 
-
             colCurrAccCode = gV_CurrAccList.Columns["CurrAccCode"];
         }
 
@@ -56,7 +55,6 @@ namespace Foxoft
 
             cM.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
 
-            UpdateGridViewData();
             gV_CurrAccList.PopulateColumns();
             LoadLayout();
         }

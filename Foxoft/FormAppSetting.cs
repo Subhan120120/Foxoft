@@ -9,6 +9,7 @@ namespace Foxoft
     {
         subContext dbContext = new();
         AppSetting AppSetting;
+        AdoMethods adoMethods = new();
 
         public FormAppSetting()
         {
@@ -18,6 +19,8 @@ namespace Foxoft
         private void FormAppSetting_Load(object sender, EventArgs e)
         {
             FillDataLayout();
+
+            btn_OptimizeDatabaseIndexes.Text = "Verilənlər bazası indekslərini optimallaşdırın (" + adoMethods.DatabaseAVGFragmentationPercent() + "%)";
         }
 
 
@@ -35,5 +38,14 @@ namespace Foxoft
             dbContext.SaveChanges();
         }
 
+        private void Btn_OptimizeDatabaseIndexes_Click(object sender, EventArgs e)
+        {
+            adoMethods.RebuldOrReorganizeDatabase();
+            btn_OptimizeDatabaseIndexes.Text = "Verilənlər bazası indekslərini optimallaşdırın (" + adoMethods.DatabaseAVGFragmentationPercent() + "%)";
+        }
+
+        private void ShowDatabaseFragPercent()
+        {
+        }
     }
 }

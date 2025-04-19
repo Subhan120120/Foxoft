@@ -16,7 +16,6 @@ namespace Foxoft
     {
         public static bool IsValid(this DataLayoutControl dataLayoutControl, out List<string> errorList)
         {
-            DXErrorProvider provider = new();
             errorList = new();
 
             foreach (Control ctrl in dataLayoutControl.Controls)
@@ -24,19 +23,14 @@ namespace Foxoft
                 BaseEdit baseEdit = ctrl as BaseEdit;
                 if (baseEdit != null)
                 {
-                    baseEdit.IsModified = true;
+                    //baseEdit.IsModified = true;
 
                     //baseEdit.DoValidate(); 
 
                     string error = baseEdit.ErrorText;
 
                     if (error != string.Empty)
-                    {
                         errorList.Add(error);
-                        provider.SetError(baseEdit, error); // just notify
-                    }
-                    else
-                        provider.SetError(baseEdit, string.Empty); // clear previous error
                 }
             }
 
