@@ -1,10 +1,16 @@
-﻿using DevExpress.XtraDataLayout;
+﻿using DevExpress.Data.Mask;
+using DevExpress.Utils;
+using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
+using System.Text;
 
 namespace Foxoft
 {
@@ -12,6 +18,7 @@ namespace Foxoft
     {
         subContext dbContext;
         EfMethods efMethods = new();
+        bool isCustomer;
         public DcCurrAcc dcCurrAcc = new();
 
         public FormCurrAcc()
@@ -38,15 +45,29 @@ namespace Foxoft
             CurrAccCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
+        public FormCurrAcc(string currAccCode, bool isCustomer)
+            : this(currAccCode)
+        {
+            this.isCustomer = isCustomer;
+        }
+
         public FormCurrAcc(byte currAccTypeCode)
             : this()
         {
             dcCurrAcc.CurrAccTypeCode = currAccTypeCode;
         }
 
+        public FormCurrAcc(byte currAccTypeCode, bool isCustomer)
+            : this(currAccTypeCode)
+        {
+            this.isCustomer = isCustomer;
+        }
+
         private void FormCurrAcc_Load(object sender, EventArgs e)
         {
             LoadCurrAcc();
+
+            LoadLayout();
 
             dataLayoutControl1.IsValid(out List<string> errorList);
         }
@@ -63,6 +84,18 @@ namespace Foxoft
                     .Load();
                 dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
             }
+        }
+
+        private void LoadLayout()
+        {
+            string fileName = "FormCurrAcc.xml";
+            if (isCustomer)
+                fileName = "FormCustomer.xml";
+
+            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+
+            if (File.Exists(layoutFilePath))
+                dataLayoutControl1.RestoreLayoutFromXml(layoutFilePath);
         }
 
         private void ClearControlsAddNew()
@@ -126,21 +159,6 @@ namespace Foxoft
 
         private void BBI_ContactDetail_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //var exist = efMethods.CurrAccContactDetailsExistByCurrAcc(dcCurrAcc.CurrAccCode);
-
-            //if (!exist)
-            //{
-            //    DcCurrAccContactDetail dcCurrAccContactDetail = new DcCurrAccContactDetail()
-            //    {
-            //        Id = 1,
-            //        CurrAccCode = dcCurrAcc.CurrAccCode,
-            //        ContactDesc = "",
-            //        ContactTypeId = 1,
-            //    };
-
-            //    efMethods.InsertEntity<DcCurrAccContactDetail>(dcCurrAccContactDetail);
-            //}
-
             FormCommonList<DcCurrAccContactDetail> formCommonList = new FormCommonList<DcCurrAccContactDetail>("", nameof(DcCurrAccContactDetail.Id), null, nameof(dcCurrAcc.CurrAccCode), dcCurrAcc.CurrAccCode);
             formCommonList.ShowDialog();
         }

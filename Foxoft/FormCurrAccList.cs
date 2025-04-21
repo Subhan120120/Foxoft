@@ -186,7 +186,6 @@ namespace Foxoft
         {
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             string fileName = "FormCurrAccList.xml";
-            //string layoutFilePath = Path.Combine(AppContext.BaseDirectory, "Layout Xml Files", fileName);
             string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
 
             if (File.Exists(layoutFilePath))

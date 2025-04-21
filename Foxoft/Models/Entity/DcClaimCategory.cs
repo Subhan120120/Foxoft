@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "İyerarxiya Kateqoriyası")]
+    [Display(Name = "Kateqoriya İyerarxiyası")]
     public partial class DcClaimCategory : BaseEntity
     {
         public DcClaimCategory()

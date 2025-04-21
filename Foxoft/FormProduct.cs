@@ -126,9 +126,6 @@ namespace Foxoft
                                     .Include(x => x.SiteProduct)
                                     .Load();
 
-                dbContext.DcProducts.Local.ForEach(x => x.Balance = x.TrInvoiceLines.Where(l => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(l.TrInvoiceHeader.ProcessCode))
-                                                                                    .Sum(l => l.QtyIn - l.QtyOut));
-
                 dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
             }
         }
@@ -190,7 +187,8 @@ namespace Foxoft
                 }
                 else
                 {
-                    File.Delete(imageFilePath);
+                    if (File.Exists(productFolder))
+                        File.Delete(imageFilePath);
                     //Directory.Delete(productFolder); // access danied
                 }
 
@@ -622,7 +620,7 @@ namespace Foxoft
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
 
-                dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList();
+                FillDataLayout();
             }
             else
             {

@@ -25,9 +25,6 @@ namespace Foxoft
         public UcRetailSale()
         {
             InitializeComponent();
-            btn_CustomerAdd.BorderStyle = BorderStyles.UltraFlat;
-            btn_CustomerSearch.BorderStyle = BorderStyles.UltraFlat;
-            btn_CustomerEdit.BorderStyle = BorderStyles.UltraFlat;
 
             ActiveControl = txtEdit_Barcode;
 
@@ -271,42 +268,55 @@ namespace Foxoft
             else XtraMessageBox.Show("Ödəmə 0a bərabərdir");
         }
 
-        private void btn_Customer_Click(object sender, EventArgs e)
+        private void btn_CustomerAdd_Click(object sender, EventArgs e)
         {
-            SimpleButton simpleButton = (SimpleButton)sender;
-            DcCurrAcc DcCurrAcc = new();
-
-            if (simpleButton.Name == "btn_CustomerEdit")
-            {
-                if (!string.IsNullOrEmpty(txtEdit_CustomerCode.Text))
-                {
-                    string currAccCode = txtEdit_CustomerCode.Text;
-                    DcCurrAcc = efMethods.SelectCurrAcc(currAccCode);
-                }
-                else
-                {
-                    XtraMessageBox.Show("Müştəri seçin");
-                    return; // return btn_Customer_Click
-                }
-            }
-
-            using (FormCustomer formCustomer = new(DcCurrAcc))
+            using (FormCurrAcc formCustomer = new((byte)1, true))
             {
                 if (formCustomer.ShowDialog(this) == DialogResult.OK)
                 {
                     if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
                         InsertInvoiceHeader();
 
-                    int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, formCustomer.DcCurrAcc.CurrAccCode);
+                    int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, formCustomer.dcCurrAcc.CurrAccCode);
 
                     if (result >= 0)
                     {
-                        trInvoiceHeader.CurrAccCode = formCustomer.DcCurrAcc.CurrAccCode;
+                        trInvoiceHeader.CurrAccCode = formCustomer.dcCurrAcc.CurrAccCode;
                         LoadCurrAcc();
                     }
                 }
             }
         }
+
+        private void Btn_CustomerEdit_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(CurrAccCodeTextEdit.Text))
+            {
+                using (FormCurrAcc formCustomer = new(CurrAccCodeTextEdit.Text, true))
+                {
+                    if (formCustomer.ShowDialog(this) == DialogResult.OK)
+                    {
+                        if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
+                            InsertInvoiceHeader();
+
+                        int result = efMethods.UpdateInvoiceCurrAccCode(invoiceHeaderId, formCustomer.dcCurrAcc.CurrAccCode);
+
+                        if (result >= 0)
+                        {
+                            trInvoiceHeader.CurrAccCode = formCustomer.dcCurrAcc.CurrAccCode;
+                            LoadCurrAcc();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                XtraMessageBox.Show("Müştəri seçin");
+                return; // return btn_Customer_Click
+            }
+
+        }
+
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
