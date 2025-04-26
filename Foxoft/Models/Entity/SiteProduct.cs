@@ -48,6 +48,11 @@ namespace Foxoft.Models
         [Display(Name = "Baxış Sayı")]
         public int ViewCount { get; set; }
 
+        [Display(Name = "Saytda Göstər")]
+        public bool UseInSite { get; set; }
+
+
+
 
         [ForeignKey("ProductCode")]
         public virtual DcProduct DcProduct { get; set; }

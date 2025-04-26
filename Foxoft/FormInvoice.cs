@@ -1776,29 +1776,6 @@ namespace Foxoft
             //efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
         }
 
-        private void BBI_ReportPriceList_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ColumnView View = gC_InvoiceLine.MainView as ColumnView;
-            List<TrInvoiceLine> mydata = GetFilteredData<TrInvoiceLine>(View).ToList();
-
-            XtraReport xtraReport = reportClass.CreateReport(mydata, "");
-
-            if (xtraReport is not null)
-            {
-                ReportDesignTool printTool = new(xtraReport);
-                printTool.ShowRibbonDesigner();
-            }
-        }
-
-        public static List<T> GetFilteredData<T>(ColumnView view)
-        {
-            List<T> resp = new List<T>();
-            for (int i = 0; i < view.DataRowCount; i++)
-                resp.Add((T)view.GetRow(i));
-
-            return resp;
-        }
-
         private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
         {
             CustomExtensions.ExportToExcel(this, dcProcess.ProcessDesc, gC_InvoiceLine);

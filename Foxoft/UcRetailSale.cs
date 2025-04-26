@@ -1,5 +1,6 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
+using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
@@ -36,7 +37,6 @@ namespace Foxoft
         {
             this.ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
 
-
             LoadCurrAcc();
         }
 
@@ -53,7 +53,6 @@ namespace Foxoft
             dbContext.DcCurrAccs.Where(x => x.CurrAccCode == trInvoiceHeader.CurrAccCode)
                 .Load();
             dcCurrAccBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
-
         }
 
         private void dcCurrAccBindingSource_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs e)
@@ -92,9 +91,7 @@ namespace Foxoft
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
                     if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                    {
                         InsertInvoiceHeader();
-                    }
 
                     DcProduct DcProduct = formProductList.dcProduct;
                     int result = efMethods.InsertInvoiceLine(DcProduct, invoiceHeaderId, 1);
@@ -358,7 +355,16 @@ namespace Foxoft
                 await Task.Run(() => GetPrint(trInvoiceHeader.InvoiceHeaderId, printerName));
             else MessageBox.Show("Çap olunmaq üçün qaimə yoxdur");
 
+            Task task = Task.Run((Action)ShowPrintCount);
+
             alertControl1.Show(this.ParentForm, "Print Göndərildi.", "Printer: " + printerName, "", (Image)null, null);
+        }
+
+        private void ShowPrintCount()
+        {
+            int printCount = efMethods.SelectEntityById<TrInvoiceHeader>(trInvoiceHeader?.InvoiceHeaderId).PrintCount;
+
+            txt_PrintCount.Text = printCount.ToString();
         }
 
         private void GetPrint(Guid invoiceHeaderId, string printerName)
@@ -400,9 +406,22 @@ namespace Foxoft
             form.Show();
         }
 
+        private void ShowZetPreview()
+        {
+            DcReport dcReport = efMethods.SelectReportByName("Gun Sonu");
+
+            foreach (var item in dcReport.DcReportVariables)
+                if (item.VariableProperty == nameof(TrInvoiceHeader.InvoiceHeaderId))
+                    item.VariableValue = trInvoiceHeader.InvoiceHeaderId.ToString();
+
+            FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+        }
+
         private void btn_ReportZ_Click(object sender, EventArgs e)
         {
-
+            ShowZetPreview();
         }
 
         private void btn_SalesPerson_Click(object sender, EventArgs e)
@@ -459,7 +478,6 @@ namespace Foxoft
                     }
                 }
                 else XtraMessageBox.Show("Barkod Tapılmadı", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
 
             }
             ActiveControl = txtEdit_Barcode;
