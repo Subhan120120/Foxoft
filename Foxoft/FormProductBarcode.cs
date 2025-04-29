@@ -115,7 +115,7 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            using FormProductList form = new(new byte[] { 1, 3 }, editor.EditValue?.ToString());
+            using FormProductList form = new(new byte[] { 1, 3 }, false, editor.EditValue?.ToString());
 
             try
             {

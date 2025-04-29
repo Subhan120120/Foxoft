@@ -343,7 +343,7 @@ namespace Foxoft
         {
             string productCode = ((ButtonEdit)sender).EditValue?.ToString();
 
-            using FormProductList form = new(new byte[] { 1, 3 }, productCode);
+            using FormProductList form = new(new byte[] { 1, 3 }, false, productCode);
 
             try
             {

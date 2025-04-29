@@ -249,43 +249,12 @@ namespace Foxoft
             if (string.IsNullOrEmpty(barCode))
                 return null;
             using subContext db = new();
-            //var asd = db.TrProductBarcodes
-            //    .Where(x => x.Barcode == barCode)
-            //    .Select(x => new DcProduct
-            //    {
-            //        //Balance = x.DcProduct.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
-            //        //                                          .Sum(l => l.QtyIn - l.QtyOut),
-            //        ProductCost = SqlFunctions.GetProductCost(x.DcProduct.ProductCode, null),
-            //        ProductCode = x.DcProduct.ProductCode,
-            //        ProductDesc = x.DcProduct.ProductDesc,
-            //        PosDiscount = x.DcProduct.PosDiscount,
-            //        RetailPrice = x.DcProduct.RetailPrice,
-            //        PurchasePrice = x.DcProduct.PurchasePrice,
-            //        ProductTypeCode = x.DcProduct.ProductTypeCode,
-            //        WholesalePrice = x.DcProduct.WholesalePrice,
-            //        UsePos = x.DcProduct.UsePos,
-            //        UseInternet = x.DcProduct.UseInternet,
-            //        CreatedDate = x.DcProduct.CreatedDate,
-            //        CreatedUserName = x.DcProduct.CreatedUserName,
-            //        LastUpdatedDate = x.DcProduct.LastUpdatedDate,
-            //        LastUpdatedUserName = x.DcProduct.LastUpdatedUserName,
-            //        HierarchyCode = x.DcProduct.HierarchyCode,
-            //        TrProductFeatures = x.DcProduct.TrProductFeatures,
-            //        SiteProduct = x.DcProduct.SiteProduct,
-            //        DcHierarchy = x.DcProduct.DcHierarchy,
-            //        TrProductDiscounts = x.DcProduct.TrProductDiscounts,
-            //        DcSerialNumbers = x.DcProduct.DcSerialNumbers,
-            //        DefaultUnitOfMeasureId = x.DcProduct.DefaultUnitOfMeasureId
-            //    })
-            //    .FirstOrDefault();
 
             return db.DcProducts
                 .Include(x => x.TrProductBarcodes.Where(x => x.Barcode == barCode))
                 .Where(x => x.TrProductBarcodes.Any(x => x.Barcode == barCode))
                 .Select(x => new DcProduct
                 {
-                    //Balance = x.TrInvoiceLines.Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                    //                                          .Sum(l => l.QtyIn - l.QtyOut),
                     ProductCost = SqlFunctions.GetProductCost(x.ProductCode, null),
                     ProductCode = x.ProductCode,
                     ProductDesc = x.ProductDesc,
@@ -311,16 +280,12 @@ namespace Foxoft
                 }).FirstOrDefault();
         }
 
-        public TrProductBarcode SelectProductBarcode(string barCode)
+        public DcProduct SelectProductById(int id)
         {
             using subContext db = new();
 
-            if (string.IsNullOrEmpty(barCode))
-                return null;
-            return db.TrProductBarcodes
-                .Where(x => x.Barcode == barCode)
-                .Include(x => x.DcProduct)
-                .FirstOrDefault();
+            return db.DcProducts
+                .FirstOrDefault(x => x.ProductId == id);
         }
 
         public DcProduct SelectProductBySerialNumber(string serialNumberCode)
@@ -348,7 +313,7 @@ namespace Foxoft
             return product;
         }
 
-        public List<DcProduct> SelectProducts()
+        public List<DcProduct> SelectProducts(bool? isDisabled)
         {
             using subContext db = new();
             return QueryableSelectProducts(db).ToList();
@@ -416,15 +381,21 @@ namespace Foxoft
                                     .Sum(x => x.QtyIn - x.QtyOut);
         }
 
-        public List<DcProduct> SelectProductsByTypeByFilter(byte[] productTypeArr, CriteriaOperator filterCriteria)
+        public List<DcProduct> SelectProductsByTypeByFilter(byte[] productTypeArr, bool? isDisabled, CriteriaOperator filterCriteria)
         {
             using subContext db = new();
 
-            IQueryable<DcProduct> DcProducts = QueryableSelectProducts(db).Where(x => productTypeArr.Contains(x.ProductTypeCode));
+            IQueryable<DcProduct> DcProducts = QueryableSelectProducts(db)
+                .Where(x => productTypeArr.Contains(x.ProductTypeCode));
+
+            if (isDisabled.HasValue)
+                DcProducts = DcProducts.Where(x => x.IsDisabled == isDisabled.Value);
+
             IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), filterCriteria) as IQueryable<DcProduct>;
 
-            return DcProducts.ToList();
+            return filteredData.ToList();
         }
+
 
         public TrInvoiceHeader SelectInvoiceHeader(Guid invoiceHeaderId)
         {

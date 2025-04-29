@@ -112,7 +112,7 @@ namespace Foxoft
 
             string value = editor.EditValue?.ToString();
 
-            using (FormProductList form = new(new byte[] { 1, 3 }, value))
+            using (FormProductList form = new(new byte[] { 1, 3 }, false, value))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
                     editor.EditValue = form.dcProduct.ProductCode;

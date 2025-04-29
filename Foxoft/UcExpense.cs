@@ -41,10 +41,17 @@ namespace Foxoft
             trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
             trInvoiceHeader.ProcessCode = "EX";
 
+            dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
+                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                                    .OrderBy(x => x.CreatedDate)
+                                    .LoadAsync()
+                                    .ContinueWith(loadTask =>
+                                    {
+                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                                        gV_InvoiceLine.Focus();
 
-            dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
-                        .LoadAsync()
-                        .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+                                    }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -95,23 +102,6 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanging(object sender, CellValueChangedEventArgs e)
         {
-            object objPrice = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "Price");
-            object objQty = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "Qty");
-            object objPosDiscount = gV_InvoiceLine.GetRowCellValue(e.RowHandle, "PosDiscount");
-
-            if (e.Column.FieldName == "Price")
-                objPrice = e.Value;
-            if (e.Column.FieldName == "Qty")
-                objQty = e.Value;
-            if (e.Column.FieldName == "PosDiscount")
-                objPosDiscount = e.Value;
-
-            decimal Price = objPrice.IsNumeric() ? Convert.ToDecimal(objPrice) : 0;
-            decimal Qty = objQty.IsNumeric() ? Convert.ToDecimal(objQty) : 0;
-            decimal PosDiscount = objPosDiscount.IsNumeric() ? Convert.ToDecimal(objPosDiscount) : 0;
-
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "Amount", Qty * Price);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "NetAmount", Qty * Price - PosDiscount);
         }
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -120,7 +110,7 @@ namespace Foxoft
             int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
             if (buttonIndex == 0)
             {
-                using (FormProductList form = new FormProductList(new byte[] { 2 }))
+                using (FormProductList form = new(new byte[] { 2 }, false))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {

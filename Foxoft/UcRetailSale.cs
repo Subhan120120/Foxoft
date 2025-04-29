@@ -86,7 +86,7 @@ namespace Foxoft
 
         private void btn_ProductSearch_Click(object sender, EventArgs e)
         {
-            using (FormProductList formProductList = new(new byte[] { 1 }))
+            using (FormProductList formProductList = new(new byte[] { 1 }, false))
             {
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
@@ -459,27 +459,55 @@ namespace Foxoft
 
         protected virtual void OnEnterKeyPressed()
         {
-            if (txtEdit_Barcode.EditValue != null)
+            if (txtEdit_Barcode.EditValue == null)
+                return;
+
+            string barcode = txtEdit_Barcode.EditValue.ToString()?.Trim() ?? "";
+            if (string.IsNullOrEmpty(barcode))
+                return;
+
+            DcProduct dcProductByBarcode = efMethods.SelectProductByBarcode(barcode);
+            DcProduct dcProductScales = null;
+            decimal qty = 0;
+
+            if (barcode.Length == 13 && barcode.All(char.IsDigit))
             {
-                DcProduct dcProduct = efMethods.SelectProductByBarcode(txtEdit_Barcode.EditValue?.ToString());
-
-                if (dcProduct is not null)
-                {
-                    if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                        InsertInvoiceHeader();
-
-                    int result = efMethods.InsertInvoiceLine(dcProduct, invoiceHeaderId, dcProduct.TrProductBarcodes.FirstOrDefault().Qty);
-
-                    if (result > 0)
-                    {
-                        gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
-                        gV_InvoiceLine.MoveLast();
-                        txtEdit_Barcode.EditValue = string.Empty;
-                    }
-                }
-                else XtraMessageBox.Show("Barkod Tapılmadı", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+                int productId = int.Parse(barcode.Substring(1, 6));
+                dcProductScales = efMethods.SelectProductById(productId);
+                qty = int.Parse(barcode.Substring(7, 6)) / 10m;
             }
+
+            DcProduct selectedProduct = dcProductByBarcode ?? dcProductScales;
+
+            if (dcProductByBarcode != null && dcProductScales != null)
+            {
+                using var formProductList = new FormProductList(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductScales.ProductCode });
+                if (formProductList.ShowDialog(this) == DialogResult.OK)
+                {
+                    selectedProduct = formProductList.dcProduct;
+
+                    if (selectedProduct?.ProductCode == dcProductByBarcode.ProductCode)
+                        qty = dcProductByBarcode.TrProductBarcodes.FirstOrDefault()?.Qty ?? qty;
+                }
+            }
+
+            if (selectedProduct != null)
+            {
+                if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId))
+                    InsertInvoiceHeader();
+
+                if (efMethods.InsertInvoiceLine(selectedProduct, invoiceHeaderId, qty) > 0)
+                {
+                    gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
+                    gV_InvoiceLine.MoveLast();
+                    txtEdit_Barcode.EditValue = string.Empty;
+                }
+            }
+            else
+            {
+                XtraMessageBox.Show("Barkod Tapılmadı", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             ActiveControl = txtEdit_Barcode;
         }
 

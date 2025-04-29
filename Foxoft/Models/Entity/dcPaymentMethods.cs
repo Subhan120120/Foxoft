@@ -35,6 +35,9 @@ namespace Foxoft.Models
         [Display(Name = "Default Cari Hesab")]
         public string? DefaultCurrAccCode { get; set; }
 
+        [Display(Name = "Default Cari Hesab")]
+        public bool IsDefault { get; set; }
+
 
         [ForeignKey("DefaultCashRegCode")]
         public virtual DcCurrAcc DcCashReg { get; set; }

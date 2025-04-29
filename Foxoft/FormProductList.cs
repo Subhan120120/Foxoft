@@ -36,7 +36,9 @@ namespace Foxoft
         string barcodeDesignFile = @"Barcode.repx";
         public byte[] productTypeArr;
         public DcProduct dcProduct { get; set; }
-        public string productCode { get; set; }
+        public string focusedProductCode { get; set; }
+        public string[] productCodes { get; set; }
+        public bool? isDisabled { get; set; }
 
         GridColumn colImage = new();
         GridColumn colProductCode = new();
@@ -79,10 +81,11 @@ namespace Foxoft
             ribbonControl1.Minimized = true;
         }
 
-        public FormProductList(byte[] productTypeArr)
+        public FormProductList(byte[] productTypeArr, bool? isDisabled)
             : this()
         {
             this.productTypeArr = productTypeArr;
+            this.isDisabled = isDisabled;
             LoadProducts(productTypeArr);
             gV_ProductList.PopulateColumns();
             LoadLayout();
@@ -90,15 +93,21 @@ namespace Foxoft
             gV_ProductList.BestFitColumns();
         }
 
-        public FormProductList(byte[] productTypeArr, string productCode)
-            : this(productTypeArr)
+        public FormProductList(byte[] productTypeArr, bool? isDisabled, string focusedProductCode)
+            : this(productTypeArr, isDisabled)
         {
-            this.productCode = productCode;
+            this.focusedProductCode = focusedProductCode;
+        }
+
+        public FormProductList(byte[] productTypeArr, bool? isDisabled, string[] productCodes)
+            : this(productTypeArr, isDisabled)
+        {
+            this.productCodes = productCodes;
         }
 
         private void FormProductList_Load(object sender, EventArgs e)
         {
-            FocusValue(productCode);
+            FocusValue(focusedProductCode);
         }
 
         private void RegisterEvents()
@@ -250,11 +259,23 @@ namespace Foxoft
             {
                 if (!String.IsNullOrEmpty(dcReport.ReportQuery))
                 {
-                    string ts = String.Join(",", productTypeArr);
-                    string filter = "[ProductTypeCode] in (" + ts + ") ";
+                    string tArr = String.Join(",", productTypeArr);
+                    string filtered = "[ProductTypeCode] IN (" + tArr + ") ";
+
+                    if (productCodes is not null && productCodes.Length > 0)
+                    {
+                        string pArr = String.Join(",", productCodes.Select(x => $"'{x.Replace("'", "''")}'"));
+                        filtered += " AND [ProductCode] IN (" + pArr + ") ";
+                    }
+
+                    if (isDisabled.HasValue)
+                    {
+                        string dbValue = (bool)isDisabled ? "1" : "0";
+                        filtered = filtered + $"AND IsDisabled = {dbValue}";
+                    }
 
                     SqlParameter[] sqlParameters;
-                    string sql = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
+                    string sql = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filtered, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(sql, sqlParameters);
                     if (dt.Rows.Count > 0)
@@ -265,9 +286,9 @@ namespace Foxoft
             if (dataSource is null)
             {
                 if (productTypeArr != null && productTypeArr.Length > 0)
-                    dataSource = efMethods.SelectProductsByTypeByFilter(productTypeArr, gV_ProductList.ActiveFilterCriteria);
+                    dataSource = efMethods.SelectProductsByTypeByFilter(productTypeArr, isDisabled, gV_ProductList.ActiveFilterCriteria);
                 else if (productTypeArr == null)
-                    dataSource = efMethods.SelectProducts();
+                    dataSource = efMethods.SelectProducts(isDisabled);
             }
 
             dcProductsBindingSource.DataSource = dataSource;
@@ -415,7 +436,8 @@ namespace Foxoft
                         {
                             Clipboard.SetImage(img);
                         }
-                    };
+                    }
+                    ;
 
                     e.Handled = true;
                 }

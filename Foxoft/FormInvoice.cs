@@ -161,7 +161,7 @@ namespace Foxoft
                 {
                     if (lUE_StoreCode == lookUpEdit)
                         trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
-                    
+
                     if (dbContext != null
                         && dataLayoutControl1.IsValid(out _)
                         && Settings.Default.AppSetting.AutoSave
@@ -858,7 +858,7 @@ namespace Foxoft
 
             ButtonEdit editor = (ButtonEdit)sender;
 
-            using FormProductList form = new(productTypeArr, productCode);
+            using FormProductList form = new(productTypeArr, false, productCode);
 
             try
             {
@@ -1574,16 +1574,6 @@ namespace Foxoft
             }
         }
 
-        private void bbi_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            XtraMessageBox.Show($"\nEnvironment.CurrentDirectory: from \n{Environment.CurrentDirectory}"
-            + $"\n\nAppDomain.CurrentDomain.BaseDirectory: \n{AppDomain.CurrentDomain.BaseDirectory}"
-            + $"\n\nAppContext.BaseDirectory: \n{AppContext.BaseDirectory}"
-            + $"\n\nAssembly.GetEntryAssembly().Location: \n{Assembly.GetEntryAssembly().Location}"
-            + $"\n\nPath.GetDirectoryName(Assembly.GetExecutingAssembly().Location): \n{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}"
-            + $"\n\nPath.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName): \n{Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)}");
-        }
-
         private void LoadLayout()
         {
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
@@ -2248,7 +2238,7 @@ namespace Foxoft
                     BarButtonItem BBI = new();
                     BBI.Caption = printer;
                     BBI.Name = printer;
-                    BBI.ImageOptions.SvgImage = svgImageCollection1["print"]; ;
+                    BBI.ImageOptions.SvgImage = svgImageCollection1["print"];
                     BBI.ItemClick += async (sender, e) =>
                     {
                         await PrintFast(printer);

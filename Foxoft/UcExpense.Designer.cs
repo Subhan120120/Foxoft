@@ -42,22 +42,16 @@ namespace Foxoft
             colQty = new DevExpress.XtraGrid.Columns.GridColumn();
             colPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             colAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-            colPosDiscount = new DevExpress.XtraGrid.Columns.GridColumn();
-            colDiscountCampaign = new DevExpress.XtraGrid.Columns.GridColumn();
             colNetAmount = new DevExpress.XtraGrid.Columns.GridColumn();
-            colVatRate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLineDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             colSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             colExchangeRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            colReturnQty = new DevExpress.XtraGrid.Columns.GridColumn();
-            colRemainingQty = new DevExpress.XtraGrid.Columns.GridColumn();
-            colTrInvoiceHeader = new DevExpress.XtraGrid.Columns.GridColumn();
-            colDcProduct = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colCreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             colLastUpdatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
+            colUnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
             btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
@@ -74,7 +68,6 @@ namespace Foxoft
             ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
-            colUnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
@@ -121,11 +114,11 @@ namespace Foxoft
             // gC_InvoiceLine
             // 
             gC_InvoiceLine.DataSource = trInvoiceLinesBindingSource;
-            gC_InvoiceLine.Location = new Point(12, 90);
+            gC_InvoiceLine.Location = new Point(12, 84);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
             gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtnEdit_ProductCode });
-            gC_InvoiceLine.Size = new Size(994, 366);
+            gC_InvoiceLine.Size = new Size(994, 372);
             gC_InvoiceLine.TabIndex = 11;
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
             // 
@@ -135,7 +128,7 @@ namespace Foxoft
             // 
             // gV_InvoiceLine
             // 
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colPrice, colAmount, colPosDiscount, colDiscountCampaign, colNetAmount, colVatRate, colLineDescription, colSalesPersonCode, colCurrencyCode, colExchangeRate, colReturnQty, colRemainingQty, colTrInvoiceHeader, colDcProduct, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colUnitOfMeasureId });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colInvoiceLineId, colInvoiceHeaderId, colRelatedLineId, colProductCode, colQty, colPrice, colAmount, colNetAmount, colLineDescription, colSalesPersonCode, colCurrencyCode, colExchangeRate, colCreatedUserName, colCreatedDate, colLastUpdatedUserName, colLastUpdatedDate, colUnitOfMeasureId });
             gV_InvoiceLine.CustomizationFormBounds = new Rectangle(1167, 397, 264, 272);
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
@@ -196,25 +189,10 @@ namespace Foxoft
             colAmount.Visible = true;
             colAmount.VisibleIndex = 3;
             // 
-            // colPosDiscount
-            // 
-            colPosDiscount.FieldName = "PosDiscount";
-            colPosDiscount.Name = "colPosDiscount";
-            // 
-            // colDiscountCampaign
-            // 
-            colDiscountCampaign.FieldName = "DiscountCampaign";
-            colDiscountCampaign.Name = "colDiscountCampaign";
-            // 
             // colNetAmount
             // 
             colNetAmount.FieldName = "NetAmount";
             colNetAmount.Name = "colNetAmount";
-            // 
-            // colVatRate
-            // 
-            colVatRate.FieldName = "VatRate";
-            colVatRate.Name = "colVatRate";
             // 
             // colLineDescription
             // 
@@ -238,26 +216,6 @@ namespace Foxoft
             colExchangeRate.FieldName = "ExchangeRate";
             colExchangeRate.Name = "colExchangeRate";
             // 
-            // colReturnQty
-            // 
-            colReturnQty.FieldName = "ReturnQty";
-            colReturnQty.Name = "colReturnQty";
-            // 
-            // colRemainingQty
-            // 
-            colRemainingQty.FieldName = "RemainingQty";
-            colRemainingQty.Name = "colRemainingQty";
-            // 
-            // colTrInvoiceHeader
-            // 
-            colTrInvoiceHeader.FieldName = "TrInvoiceHeader";
-            colTrInvoiceHeader.Name = "colTrInvoiceHeader";
-            // 
-            // colDcProduct
-            // 
-            colDcProduct.FieldName = "DcProduct";
-            colDcProduct.Name = "colDcProduct";
-            // 
             // colCreatedUserName
             // 
             colCreatedUserName.FieldName = "CreatedUserName";
@@ -278,6 +236,13 @@ namespace Foxoft
             colLastUpdatedDate.FieldName = "LastUpdatedDate";
             colLastUpdatedDate.Name = "colLastUpdatedDate";
             // 
+            // colUnitOfMeasureId
+            // 
+            colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
+            colUnitOfMeasureId.MinWidth = 25;
+            colUnitOfMeasureId.Name = "colUnitOfMeasureId";
+            colUnitOfMeasureId.Width = 94;
+            // 
             // btn_Save
             // 
             btn_Save.Location = new Point(12, 460);
@@ -295,7 +260,7 @@ namespace Foxoft
             btnEdit_DocNum.Name = "btnEdit_DocNum";
             btnEdit_DocNum.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             btnEdit_DocNum.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_DocNum.Size = new Size(395, 22);
+            btnEdit_DocNum.Size = new Size(395, 20);
             btnEdit_DocNum.StyleController = dataLayoutControl1;
             btnEdit_DocNum.TabIndex = 4;
             btnEdit_DocNum.ButtonPressed += btnEdit_DocNum_ButtonPressed;
@@ -308,11 +273,11 @@ namespace Foxoft
             // 
             dateEdit_DocDate.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentDate", true));
             dateEdit_DocDate.EditValue = null;
-            dateEdit_DocDate.Location = new Point(611, 38);
+            dateEdit_DocDate.Location = new Point(611, 36);
             dateEdit_DocDate.Name = "dateEdit_DocDate";
             dateEdit_DocDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dateEdit_DocDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateEdit_DocDate.Size = new Size(395, 22);
+            dateEdit_DocDate.Size = new Size(395, 20);
             dateEdit_DocDate.StyleController = dataLayoutControl1;
             dateEdit_DocDate.TabIndex = 12;
             // 
@@ -320,21 +285,21 @@ namespace Foxoft
             // 
             dateEdit_DocTime.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentTime", true));
             dateEdit_DocTime.EditValue = TimeSpan.Parse("00:00:00");
-            dateEdit_DocTime.Location = new Point(611, 64);
+            dateEdit_DocTime.Location = new Point(611, 60);
             dateEdit_DocTime.Name = "dateEdit_DocTime";
             dateEdit_DocTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateEdit_DocTime.Size = new Size(395, 22);
+            dateEdit_DocTime.Size = new Size(395, 20);
             dateEdit_DocTime.StyleController = dataLayoutControl1;
             dateEdit_DocTime.TabIndex = 13;
             // 
             // memoEdit_InvoiceDesc
             // 
             memoEdit_InvoiceDesc.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
-            memoEdit_InvoiceDesc.Location = new Point(112, 38);
+            memoEdit_InvoiceDesc.Location = new Point(112, 36);
             memoEdit_InvoiceDesc.Name = "memoEdit_InvoiceDesc";
             memoEdit_InvoiceDesc.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             memoEdit_InvoiceDesc.Properties.LinesCount = 2;
-            memoEdit_InvoiceDesc.Size = new Size(395, 48);
+            memoEdit_InvoiceDesc.Size = new Size(395, 44);
             memoEdit_InvoiceDesc.StyleController = dataLayoutControl1;
             memoEdit_InvoiceDesc.TabIndex = 7;
             // 
@@ -344,7 +309,7 @@ namespace Foxoft
             btnEdit_CurrAccCode.Location = new Point(611, 12);
             btnEdit_CurrAccCode.Name = "btnEdit_CurrAccCode";
             btnEdit_CurrAccCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_CurrAccCode.Size = new Size(395, 22);
+            btnEdit_CurrAccCode.Size = new Size(395, 20);
             btnEdit_CurrAccCode.StyleController = dataLayoutControl1;
             btnEdit_CurrAccCode.TabIndex = 8;
             btnEdit_CurrAccCode.ButtonClick += btnEdit_CurrAccCode_ButtonClick;
@@ -372,16 +337,16 @@ namespace Foxoft
             ItemForDocumentNumber.Control = btnEdit_DocNum;
             ItemForDocumentNumber.Location = new Point(0, 0);
             ItemForDocumentNumber.Name = "ItemForDocumentNumber";
-            ItemForDocumentNumber.Size = new Size(499, 26);
+            ItemForDocumentNumber.Size = new Size(499, 24);
             ItemForDocumentNumber.Text = "Document Number";
             ItemForDocumentNumber.TextSize = new Size(88, 13);
             // 
             // ItemForDescription
             // 
             ItemForDescription.Control = memoEdit_InvoiceDesc;
-            ItemForDescription.Location = new Point(0, 26);
+            ItemForDescription.Location = new Point(0, 24);
             ItemForDescription.Name = "ItemForDescription";
-            ItemForDescription.Size = new Size(499, 52);
+            ItemForDescription.Size = new Size(499, 48);
             ItemForDescription.Text = "Description";
             ItemForDescription.TextSize = new Size(88, 13);
             // 
@@ -399,9 +364,9 @@ namespace Foxoft
             // layoutControlItem1
             // 
             layoutControlItem1.Control = gC_InvoiceLine;
-            layoutControlItem1.Location = new Point(0, 78);
+            layoutControlItem1.Location = new Point(0, 72);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(998, 370);
+            layoutControlItem1.Size = new Size(998, 376);
             layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
@@ -410,34 +375,27 @@ namespace Foxoft
             ItemForCurrAccCode.Control = btnEdit_CurrAccCode;
             ItemForCurrAccCode.Location = new Point(499, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new Size(499, 26);
+            ItemForCurrAccCode.Size = new Size(499, 24);
             ItemForCurrAccCode.Text = "Curr Acc Code";
             ItemForCurrAccCode.TextSize = new Size(88, 13);
             // 
             // ItemForDocumentDate
             // 
             ItemForDocumentDate.Control = dateEdit_DocDate;
-            ItemForDocumentDate.Location = new Point(499, 26);
+            ItemForDocumentDate.Location = new Point(499, 24);
             ItemForDocumentDate.Name = "ItemForDocumentDate";
-            ItemForDocumentDate.Size = new Size(499, 26);
+            ItemForDocumentDate.Size = new Size(499, 24);
             ItemForDocumentDate.Text = "Document Date";
             ItemForDocumentDate.TextSize = new Size(88, 13);
             // 
             // ItemForDocumentTime
             // 
             ItemForDocumentTime.Control = dateEdit_DocTime;
-            ItemForDocumentTime.Location = new Point(499, 52);
+            ItemForDocumentTime.Location = new Point(499, 48);
             ItemForDocumentTime.Name = "ItemForDocumentTime";
-            ItemForDocumentTime.Size = new Size(499, 26);
+            ItemForDocumentTime.Size = new Size(499, 24);
             ItemForDocumentTime.Text = "Document Time";
             ItemForDocumentTime.TextSize = new Size(88, 13);
-            // 
-            // colUnitOfMeasureId
-            // 
-            colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
-            colUnitOfMeasureId.MinWidth = 25;
-            colUnitOfMeasureId.Name = "colUnitOfMeasureId";
-            colUnitOfMeasureId.Width = 94;
             // 
             // UcExpense
             // 

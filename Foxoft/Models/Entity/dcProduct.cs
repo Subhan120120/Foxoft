@@ -32,6 +32,10 @@ namespace Foxoft.Models
         [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public string? ProductCode2 { get; set; }
 
+        [Display(Name = "Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ProductId { get; set; }
+
         [Display(Name = "Məhsul Adı")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]

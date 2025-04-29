@@ -117,12 +117,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             BarcodeTypeCode = "Serbest",
-                            BarcodeTypeDesc = "Sərbəst"
+                            BarcodeTypeDesc = "Sərbəst",
+                            DefaultBarcodeType = false
                         },
                         new
                         {
                             BarcodeTypeCode = "EAN13",
-                            BarcodeTypeDesc = "EAN13"
+                            BarcodeTypeDesc = "EAN13",
+                            DefaultBarcodeType = true
                         });
                 });
 
@@ -750,6 +752,14 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ClaimCode = "CurrAccCreditLimit",
+                            CategoryId = 19,
+                            ClaimDesc = "Cari Hesab Kredit Limiti",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
                             ClaimCode = "ProductFeatureType",
                             CategoryId = 18,
                             ClaimDesc = "Məhsul Özəllik Tipləri",
@@ -809,6 +819,22 @@ namespace Foxoft.Migrations
                             ClaimCode = "EditLockedPayment",
                             CategoryId = 2,
                             ClaimDesc = "Kilidli Ödənişi Dəyiş",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Parameters",
+                            CategoryId = 15,
+                            ClaimDesc = "Parametrlər",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "StoreList",
+                            CategoryId = 22,
+                            ClaimDesc = "Mağaza Siyahısı",
                             ClaimTypeId = (byte)1,
                             Id = 0
                         });
@@ -1040,6 +1066,15 @@ namespace Foxoft.Migrations
                         {
                             CategoryId = 21,
                             CategoryDesc = "Ödəniş",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 22,
+                            CategoryDesc = "Mağaza",
                             CategoryLevel = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1873,6 +1908,9 @@ namespace Foxoft.Migrations
                     b.Property<string>("DefaultCurrAccCode")
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PaymentMethodDesc")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1895,12 +1933,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentMethodId = 1,
+                            IsDefault = false,
                             PaymentMethodDesc = "Nağd",
                             PaymentTypeCode = (byte)1
                         },
                         new
                         {
                             PaymentMethodId = 2,
+                            IsDefault = false,
                             PaymentMethodDesc = "Daxili Kredit",
                             PaymentTypeCode = (byte)3
                         },
@@ -1908,18 +1948,21 @@ namespace Foxoft.Migrations
                         {
                             PaymentMethodId = 3,
                             DefaultCurrAccCode = "C-000006",
+                            IsDefault = false,
                             PaymentMethodDesc = "Bir Kart",
                             PaymentTypeCode = (byte)2
                         },
                         new
                         {
                             PaymentMethodId = 4,
+                            IsDefault = false,
                             PaymentMethodDesc = "Çatdırılma zamanı nağd ödə",
                             PaymentTypeCode = (byte)1
                         },
                         new
                         {
                             PaymentMethodId = 5,
+                            IsDefault = false,
                             PaymentMethodDesc = "Saytda nağd ödə",
                             PaymentTypeCode = (byte)2
                         });
@@ -2373,6 +2416,12 @@ namespace Foxoft.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+
                     b.Property<byte>("ProductTypeCode")
                         .HasColumnType("tinyint");
 
@@ -2437,6 +2486,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "Test Məhsul 01",
+                            ProductId = 0,
                             ProductTypeCode = (byte)1,
                             PurchasePrice = 0m,
                             RetailPrice = 4.5m,
@@ -2455,6 +2505,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "Test Məhsul 01",
+                            ProductId = 0,
                             ProductTypeCode = (byte)1,
                             PurchasePrice = 0m,
                             RetailPrice = 2.5m,
@@ -2473,6 +2524,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "Yol Xərci",
+                            ProductId = 0,
                             ProductTypeCode = (byte)2,
                             PurchasePrice = 0m,
                             RetailPrice = 0m,
@@ -2491,6 +2543,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "İşıq Pulu",
+                            ProductId = 0,
                             ProductTypeCode = (byte)2,
                             PurchasePrice = 0m,
                             RetailPrice = 0m,
@@ -3627,6 +3680,9 @@ namespace Foxoft.Migrations
                     b.Property<string>("Slug")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("UseInSite")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ViewCount")
                         .HasColumnType("int");
@@ -5164,7 +5220,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             RoleClaimId = 23,
-                            ClaimCode = "HierarchyFeatureType",
+                            ClaimCode = "CurrAccFeatureType",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
@@ -5372,7 +5428,15 @@ namespace Foxoft.Migrations
                         new
                         {
                             RoleClaimId = 49,
-                            ClaimCode = "CurrAccFeatureType",
+                            ClaimCode = "CurrAccCreditLimit",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 50,
+                            ClaimCode = "Parameters",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"

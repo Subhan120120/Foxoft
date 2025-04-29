@@ -314,7 +314,7 @@ namespace Foxoft
 
         private void aCE_Products_Click(object sender, EventArgs e)
         {
-            ShowExistForm<FormProductList>(new byte[] { 1 });
+            ShowExistForm<FormProductList>(new byte[] { 1 }, false);
         }
 
         private void aCE_CurrAccs_Click(object sender, EventArgs e)

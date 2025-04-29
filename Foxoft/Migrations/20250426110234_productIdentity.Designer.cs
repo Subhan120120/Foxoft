@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    [Migration("20340627140650_CurrAccFeatures")]
-    partial class CurrAccFeature
+    [Migration("20250426110234_productIdentity")]
+    partial class productIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,11 +47,17 @@ namespace Foxoft.Migrations
                     b.Property<string>("GridViewLayout")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InvoiceEditGraceDays")
+                        .HasColumnType("int");
+
                     b.Property<string>("License")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocalCurrencyCode")
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<int?>("PaymentEditGraceDays")
+                        .HasColumnType("int");
 
                     b.Property<string>("PrintDesignPath")
                         .HasColumnType("nvarchar(max)");
@@ -62,9 +68,6 @@ namespace Foxoft.Migrations
                     b.Property<string>("PrinterName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TwilioInstanceId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TwilioToken")
                         .HasColumnType("nvarchar(max)");
 
@@ -72,6 +75,9 @@ namespace Foxoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValueSql("0");
+
+                    b.Property<string>("WhatsappChromeProfileName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -103,6 +109,9 @@ namespace Foxoft.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool?>("DefaultBarcodeType")
+                        .HasColumnType("bit");
+
                     b.HasKey("BarcodeTypeCode");
 
                     b.ToTable("DcBarcodeTypes");
@@ -111,12 +120,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             BarcodeTypeCode = "Serbest",
-                            BarcodeTypeDesc = "Sərbəst"
+                            BarcodeTypeDesc = "Sərbəst",
+                            DefaultBarcodeType = false
                         },
                         new
                         {
                             BarcodeTypeCode = "EAN13",
-                            BarcodeTypeDesc = "EAN13"
+                            BarcodeTypeDesc = "EAN13",
+                            DefaultBarcodeType = true
                         });
                 });
 
@@ -125,6 +136,9 @@ namespace Foxoft.Migrations
                     b.Property<string>("ClaimCode")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ClaimDesc")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -132,7 +146,15 @@ namespace Foxoft.Migrations
                     b.Property<byte>("ClaimTypeId")
                         .HasColumnType("tinyint");
 
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.HasKey("ClaimCode");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ClaimTypeId");
 
@@ -142,170 +164,924 @@ namespace Foxoft.Migrations
                         new
                         {
                             ClaimCode = "ButunHesabatlar",
+                            CategoryId = 1,
                             ClaimDesc = "Butun Hesabatlar",
-                            ClaimTypeId = (byte)2
-                        },
-                        new
-                        {
-                            ClaimCode = "CashRegs",
-                            ClaimDesc = "Kassalar",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "CashTransfer",
-                            ClaimDesc = "Pul Transferi",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "Column_ProductCost",
-                            ClaimDesc = "Son Alış Qiyməti",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "CountIn",
-                            ClaimDesc = "Sayım Artırma",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "CountOut",
-                            ClaimDesc = "Sayım Azaltma",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "WaybillIn",
-                            ClaimDesc = "Təhvil Alma",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "WaybillOut",
-                            ClaimDesc = "Təhvil Vermə",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "CurrAccs",
-                            ClaimDesc = "Cari Hesablar",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "DiscountList",
-                            ClaimDesc = "Endirim Siyahısı",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "Expense",
-                            ClaimDesc = "Xərc",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "InventoryTransfer",
-                            ClaimDesc = "Mal Transferi",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "PaymentDetail",
-                            ClaimDesc = "Ödəmə",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "PosDiscount",
-                            ClaimDesc = "POS Endirimi",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "PriceList",
-                            ClaimDesc = "Qiymət Cədvəli",
-                            ClaimTypeId = (byte)1
+                            ClaimTypeId = (byte)2,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "Products",
+                            CategoryId = 18,
                             ClaimDesc = "Məhsullar",
-                            ClaimTypeId = (byte)1
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
-                            ClaimCode = "ReportZet",
-                            ClaimDesc = "Gün Sonu Hesabatı",
-                            ClaimTypeId = (byte)1
+                            ClaimCode = "CurrAccs",
+                            CategoryId = 19,
+                            ClaimDesc = "Cari Hesablar",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CashRegs",
+                            CategoryId = 21,
+                            ClaimDesc = "Kassalar",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CashTransfer",
+                            CategoryId = 21,
+                            ClaimDesc = "Pul Transferi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InventoryTransfer",
+                            CategoryId = 14,
+                            ClaimDesc = "Mal Transferi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Expense",
+                            CategoryId = 9,
+                            ClaimDesc = "Xərc",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "RetailPurchaseInvoice",
-                            ClaimDesc = "Alış Fakturası",
-                            ClaimTypeId = (byte)1
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alış Fakturası",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WholePurchaseInvoice",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alış Fakturası",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "RetailSaleInvoice",
-                            ClaimDesc = "Satış Fakturası",
-                            ClaimTypeId = (byte)1
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satış Fakturası",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "WholesaleInvoice",
-                            ClaimDesc = "Topdan Satışın Qaytarılması",
-                            ClaimTypeId = (byte)1
+                            CategoryId = 6,
+                            ClaimDesc = "Topdan Satış Fakturası",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentPurchaseInvoice",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alışı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentSaleInvoice",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satışı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CountIn",
+                            CategoryId = 10,
+                            ClaimDesc = "Sayım Artırma",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CountOut",
+                            CategoryId = 11,
+                            ClaimDesc = "Sayım Azaltma",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WaybillIn",
+                            CategoryId = 12,
+                            ClaimDesc = "Təhvil Alma",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WaybillOut",
+                            CategoryId = 13,
+                            ClaimDesc = "Təhvil Vermə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "RetailPurchaseOrder",
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alış Sifarişi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WholePurchaseOrder",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alış Sifarişi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "RetailSaleOrder",
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satış Sifarişi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WholesaleOrder",
+                            CategoryId = 6,
+                            ClaimDesc = "Topdan Satış Sifarişi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentPurchaseOrder",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alış Sifarişi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentSaleOrder",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satış Sifarişi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "RetailPurchaseReturn",
-                            ClaimDesc = "Alışın Qaytarılması",
-                            ClaimTypeId = (byte)1
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alışın Qaytarılması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WholePurchaseReturn",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alışın Qaytarılması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "RetailSaleReturn",
-                            ClaimDesc = "Satışın Qaytarılması",
-                            ClaimTypeId = (byte)1
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satışın Qaytarılması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "WholesaleReturn",
+                            CategoryId = 6,
                             ClaimDesc = "Topdan Satışın Qaytarılması",
-                            ClaimTypeId = (byte)1
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentPurchaseReturn",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alış Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentSaleReturn",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satış Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceRP",
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alış Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceWP",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alış Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceRS",
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satış Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceWS",
+                            CategoryId = 6,
+                            ClaimDesc = "Topdan Satış Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceIP",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alış Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceIS",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satış Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceEX",
+                            CategoryId = 9,
+                            ClaimDesc = "Xərc Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceCI",
+                            CategoryId = 10,
+                            ClaimDesc = "Sayım Artırma Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceCO",
+                            CategoryId = 11,
+                            ClaimDesc = "Sayım Azaltma Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceIT",
+                            CategoryId = 14,
+                            ClaimDesc = "Transfer Fakturası Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceRPO",
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alış Sifarişi Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceWPO",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alış Sifarişi Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceRSO",
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satış Sifarişi Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceWSO",
+                            CategoryId = 6,
+                            ClaimDesc = "Topdan Satış Sifarişi Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceIPO",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alış Sifarişi Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteInvoiceISO",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satış Sifarişi Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineRP",
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alış Fakturası Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineWP",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alış Fakturası Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineRS",
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satış Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineWS",
+                            CategoryId = 6,
+                            ClaimDesc = "Topdan Satış Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineIP",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alış Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineIS",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satış Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineEX",
+                            CategoryId = 9,
+                            ClaimDesc = "Xərc Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineCI",
+                            CategoryId = 10,
+                            ClaimDesc = "Sayım Artırma Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineCO",
+                            CategoryId = 11,
+                            ClaimDesc = "Sayım Azaltma Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineIT",
+                            CategoryId = 14,
+                            ClaimDesc = "Məhsul Transfer Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineRPO",
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alış Sifarişi Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineWPO",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alış Sifarişi Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineRSO",
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satış Sifarişi Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineWSO",
+                            CategoryId = 6,
+                            ClaimDesc = "Topdan Satış Sifarişi Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineIPO",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alış Sifarişi Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "DeleteLineISO",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satış Sifarişi Sətiri Silmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "RetailPurchaseReturnCustom",
+                            CategoryId = 3,
+                            ClaimDesc = "Pərakəndə Alış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WholePurchaseReturnCustom",
+                            CategoryId = 4,
+                            ClaimDesc = "Topdan Alış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "RetailSaleReturnCustom",
+                            CategoryId = 5,
+                            ClaimDesc = "Pərakəndə Satış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "WholesaleReturnCustom",
+                            CategoryId = 6,
+                            ClaimDesc = "Topdan Satış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentPurchaseReturnCustom",
+                            CategoryId = 7,
+                            ClaimDesc = "Kredit Alış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentSaleReturnCustom",
+                            CategoryId = 8,
+                            ClaimDesc = "Kredit Satış Xüsusi Geri Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InventoryTransferReturnCustom",
+                            CategoryId = 14,
+                            ClaimDesc = "Məhsul Transferi Xüsusi Qaytarması",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Column_ProductCost",
+                            CategoryId = 18,
+                            ClaimDesc = "Maya Dəyəri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "ProductDiscountList",
+                            CategoryId = 18,
+                            ClaimDesc = "Endirim Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "PaymentDetail",
+                            CategoryId = 21,
+                            ClaimDesc = "Ödəmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "PosDiscount",
+                            CategoryId = 2,
+                            ClaimDesc = "POS Endirimi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "PriceList",
+                            CategoryId = 18,
+                            ClaimDesc = "Qiymət Cədvəli",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CurrAccFeatureType",
+                            CategoryId = 19,
+                            ClaimDesc = "Cari Hesab Özəlliyi",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "CurrAccCreditLimit",
+                            CategoryId = 19,
+                            ClaimDesc = "Cari Hesab Kredit Limiti",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "ProductFeatureType",
-                            ClaimDesc = "Məhsul Özəlliyi",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "HierarchyFeatureType",
-                            ClaimDesc = "Özəlliyi İyerarxiyaya Bağlama",
-                            ClaimTypeId = (byte)1
+                            CategoryId = 18,
+                            ClaimDesc = "Məhsul Özəllik Tipləri",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "CurrAccClaim",
+                            CategoryId = 15,
                             ClaimDesc = "Cari hesab yetkisi",
-                            ClaimTypeId = (byte)1
-                        },
-                        new
-                        {
-                            ClaimCode = "ExpenseOfInvoice",
-                            ClaimDesc = "Faktura Xərci",
-                            ClaimTypeId = (byte)1
+                            ClaimTypeId = (byte)1,
+                            Id = 0
                         },
                         new
                         {
                             ClaimCode = "Session",
+                            CategoryId = 15,
                             ClaimDesc = "Sessiya",
-                            ClaimTypeId = (byte)1
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "ExpenseOfInvoice",
+                            CategoryId = 2,
+                            ClaimDesc = "Faktura Xərci",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Installments",
+                            CategoryId = 8,
+                            ClaimDesc = "Kreditlər",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "InstallmentCommissionChange",
+                            CategoryId = 8,
+                            ClaimDesc = "Kreditin Kamissiyasını Dəyişmə",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EditLockedInvoice",
+                            CategoryId = 2,
+                            ClaimDesc = "Kilidli Fakturanı Dəyiş",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "EditLockedPayment",
+                            CategoryId = 2,
+                            ClaimDesc = "Kilidli Ödənişi Dəyiş",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "Parameters",
+                            CategoryId = 15,
+                            ClaimDesc = "Parametrlər",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        },
+                        new
+                        {
+                            ClaimCode = "StoreList",
+                            CategoryId = 22,
+                            ClaimDesc = "Mağaza Siyahısı",
+                            ClaimTypeId = (byte)1,
+                            Id = 0
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcClaimCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryParentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("DcClaimCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryDesc = "Hesabatlar",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryDesc = "Fakturalar",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryDesc = "Pərakəndə Alış",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            CategoryDesc = "Topdan Alış",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            CategoryDesc = "Pərakəndə Satış",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            CategoryDesc = "Topdan Satış",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            CategoryDesc = "Kredit Alış",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            CategoryDesc = "Kredit Satış",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            CategoryDesc = "Xərc",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 10,
+                            CategoryDesc = "Sayım Artırma",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 11,
+                            CategoryDesc = "Sayım Azaltma",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 12,
+                            CategoryDesc = "Təhvil Alma",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 13,
+                            CategoryDesc = "Təhvil Vermə",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 14,
+                            CategoryDesc = "Məhsul Transferi",
+                            CategoryLevel = 1,
+                            CategoryParentId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 15,
+                            CategoryDesc = "Təhlükəsizlik",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 18,
+                            CategoryDesc = "Məhsul",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 19,
+                            CategoryDesc = "Cari Hesab",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 20,
+                            CategoryDesc = "Kassa",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 21,
+                            CategoryDesc = "Ödəniş",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
+                        },
+                        new
+                        {
+                            CategoryId = 22,
+                            CategoryDesc = "Mağaza",
+                            CategoryLevel = 0,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Order = 0
                         });
                 });
 
@@ -327,7 +1103,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             ClaimTypeId = (byte)1,
-                            ClaimTypeDesc = "Embaded"
+                            ClaimTypeDesc = "Embedded"
                         },
                         new
                         {
@@ -338,6 +1114,51 @@ namespace Foxoft.Migrations
                         {
                             ClaimTypeId = (byte)3,
                             ClaimTypeDesc = "Column"
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcContactType", b =>
+                {
+                    b.Property<byte>("Id")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("ContactTypeDesc")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DefaultValue")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneNumberFormat")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DcContactType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            ContactTypeDesc = "Telefon"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            ContactTypeDesc = "Adres"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            ContactTypeDesc = "Email"
+                        },
+                        new
+                        {
+                            Id = (byte)4,
+                            ContactTypeDesc = "Sosial Media"
                         });
                 });
 
@@ -460,7 +1281,7 @@ namespace Foxoft.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<Guid>("RowGuid")
+                    b.Property<Guid?>("RowGuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("StoreCode")
@@ -504,7 +1325,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "0519678909",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -523,7 +1343,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -542,7 +1361,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -561,7 +1379,6 @@ namespace Foxoft.Migrations
                             NewPassword = "123",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -578,7 +1395,22 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "123",
                             OfficeCode = "ofs01",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
+                            StoreCode = "mgz01"
+                        },
+                        new
+                        {
+                            CurrAccCode = "C-000006",
+                            CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreditLimit = 0m,
+                            CurrAccDesc = "Birbank",
+                            CurrAccTypeCode = (byte)1,
+                            CustomerPosDiscountRate = 0.0,
+                            IsDefault = true,
+                            IsDisabled = false,
+                            IsVip = false,
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            NewPassword = "",
+                            OfficeCode = "ofs01",
                             StoreCode = "mgz01"
                         },
                         new
@@ -596,7 +1428,6 @@ namespace Foxoft.Migrations
                             NewPassword = "456",
                             OfficeCode = "ofs01",
                             PhoneNum = "",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         },
                         new
@@ -613,9 +1444,79 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NewPassword = "456",
                             OfficeCode = "ofs01",
-                            RowGuid = new Guid("00000000-0000-0000-0000-000000000000"),
                             StoreCode = "mgz01"
                         });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccContactDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("ContactTypeId")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactTypeId");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.ToTable("DcCurrAccContactDetails");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccFeature", b =>
+                {
+                    b.Property<string>("CurrAccFeatureCode")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(0);
+
+                    b.Property<int>("CurrAccFeatureTypeId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("FeatureDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CurrAccFeatureCode", "CurrAccFeatureTypeId");
+
+                    b.HasIndex("CurrAccFeatureTypeId");
+
+                    b.ToTable("DcCurrAccFeatures");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccFeatureType", b =>
+                {
+                    b.Property<int>("CurrAccFeatureTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CurrAccFeatureTypeId"));
+
+                    b.Property<string>("FeatureTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Filterable")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("CurrAccFeatureTypeId");
+
+                    b.ToTable("DcCurrAccFeatureTypes");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAccType", b =>
@@ -807,17 +1708,27 @@ namespace Foxoft.Migrations
                         new
                         {
                             FormCode = "CurrAccs",
-                            FormDesc = "CurrAccs"
+                            FormDesc = "Cari Hesablar"
                         },
                         new
                         {
                             FormCode = "Products",
-                            FormDesc = "Products"
+                            FormDesc = "Məhsullar"
+                        },
+                        new
+                        {
+                            FormCode = "CashRegisters",
+                            FormDesc = "Kassalar"
                         },
                         new
                         {
                             FormCode = "PaymentDetails",
                             FormDesc = "Payment Details"
+                        },
+                        new
+                        {
+                            FormCode = "ERP",
+                            FormDesc = "ERP"
                         });
                 });
 
@@ -874,6 +1785,8 @@ namespace Foxoft.Migrations
                     b.HasKey("HierarchyCode");
 
                     b.ToTable("DcHierarchies");
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
 
                     b.HasData(
                         new
@@ -947,6 +1860,43 @@ namespace Foxoft.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcPaymentKind", b =>
+                {
+                    b.Property<byte>("PaymentKindId")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("PaymentKindDesc")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("PaymentKindId");
+
+                    b.ToTable("DcPaymentKinds");
+
+                    b.HasData(
+                        new
+                        {
+                            PaymentKindId = (byte)0,
+                            PaymentKindDesc = "Unknown"
+                        },
+                        new
+                        {
+                            PaymentKindId = (byte)1,
+                            PaymentKindDesc = "Payment"
+                        },
+                        new
+                        {
+                            PaymentKindId = (byte)2,
+                            PaymentKindDesc = "Invoice"
+                        },
+                        new
+                        {
+                            PaymentKindId = (byte)3,
+                            PaymentKindDesc = "Installment"
+                        });
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcPaymentMethod", b =>
                 {
                     b.Property<int>("PaymentMethodId")
@@ -956,6 +1906,9 @@ namespace Foxoft.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentMethodId"));
 
                     b.Property<string>("DefaultCashRegCode")
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("DefaultCurrAccCode")
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("PaymentMethodDesc")
@@ -969,6 +1922,8 @@ namespace Foxoft.Migrations
                     b.HasKey("PaymentMethodId");
 
                     b.HasIndex("DefaultCashRegCode");
+
+                    b.HasIndex("DefaultCurrAccCode");
 
                     b.HasIndex("PaymentTypeCode");
 
@@ -984,20 +1939,166 @@ namespace Foxoft.Migrations
                         new
                         {
                             PaymentMethodId = 2,
-                            PaymentMethodDesc = "Çatdırılma zamanı nağd ödə",
-                            PaymentTypeCode = (byte)1
+                            PaymentMethodDesc = "Daxili Kredit",
+                            PaymentTypeCode = (byte)3
                         },
                         new
                         {
                             PaymentMethodId = 3,
-                            PaymentMethodDesc = "Saytda nağd ödə",
+                            DefaultCurrAccCode = "C-000006",
+                            PaymentMethodDesc = "Bir Kart",
                             PaymentTypeCode = (byte)2
                         },
                         new
                         {
                             PaymentMethodId = 4,
-                            PaymentMethodDesc = "Bir Kart",
+                            PaymentMethodDesc = "Çatdırılma zamanı nağd ödə",
+                            PaymentTypeCode = (byte)1
+                        },
+                        new
+                        {
+                            PaymentMethodId = 5,
+                            PaymentMethodDesc = "Saytda nağd ödə",
                             PaymentTypeCode = (byte)2
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcPaymentPlan", b =>
+                {
+                    b.Property<string>("PaymentPlanCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float>("CommissionRate")
+                        .HasColumnType("real");
+
+                    b.Property<int>("DurationInMonths")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentPlanDesc")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("PaymentPlanCode");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.ToTable("DcPaymentPlans");
+
+                    b.HasData(
+                        new
+                        {
+                            PaymentPlanCode = "M03",
+                            CommissionRate = 0f,
+                            DurationInMonths = 3,
+                            IsDefault = false,
+                            PaymentMethodId = 2,
+                            PaymentPlanDesc = "3 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "M06",
+                            CommissionRate = 0f,
+                            DurationInMonths = 6,
+                            IsDefault = false,
+                            PaymentMethodId = 2,
+                            PaymentPlanDesc = "6 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "M09",
+                            CommissionRate = 0f,
+                            DurationInMonths = 9,
+                            IsDefault = false,
+                            PaymentMethodId = 2,
+                            PaymentPlanDesc = "9 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "M12",
+                            CommissionRate = 0f,
+                            DurationInMonths = 12,
+                            IsDefault = false,
+                            PaymentMethodId = 2,
+                            PaymentPlanDesc = "12 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "M18",
+                            CommissionRate = 0f,
+                            DurationInMonths = 18,
+                            IsDefault = false,
+                            PaymentMethodId = 2,
+                            PaymentPlanDesc = "18 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "M24",
+                            CommissionRate = 0f,
+                            DurationInMonths = 24,
+                            IsDefault = false,
+                            PaymentMethodId = 2,
+                            PaymentPlanDesc = "24 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "B03",
+                            CommissionRate = 0f,
+                            DurationInMonths = 3,
+                            IsDefault = false,
+                            PaymentMethodId = 3,
+                            PaymentPlanDesc = "3 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "B06",
+                            CommissionRate = 0f,
+                            DurationInMonths = 6,
+                            IsDefault = false,
+                            PaymentMethodId = 3,
+                            PaymentPlanDesc = "6 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "B09",
+                            CommissionRate = 0f,
+                            DurationInMonths = 9,
+                            IsDefault = false,
+                            PaymentMethodId = 3,
+                            PaymentPlanDesc = "9 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "B12",
+                            CommissionRate = 0f,
+                            DurationInMonths = 12,
+                            IsDefault = false,
+                            PaymentMethodId = 3,
+                            PaymentPlanDesc = "12 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "B18",
+                            CommissionRate = 0f,
+                            DurationInMonths = 18,
+                            IsDefault = false,
+                            PaymentMethodId = 3,
+                            PaymentPlanDesc = "18 AY"
+                        },
+                        new
+                        {
+                            PaymentPlanCode = "B24",
+                            CommissionRate = 0f,
+                            DurationInMonths = 24,
+                            IsDefault = false,
+                            PaymentMethodId = 3,
+                            PaymentPlanDesc = "24 AY"
                         });
                 });
 
@@ -1025,6 +2126,21 @@ namespace Foxoft.Migrations
                         {
                             PaymentTypeCode = (byte)2,
                             PaymentTypeDesc = "Nağdsız"
+                        },
+                        new
+                        {
+                            PaymentTypeCode = (byte)3,
+                            PaymentTypeDesc = "Daxili Kredit"
+                        },
+                        new
+                        {
+                            PaymentTypeCode = (byte)4,
+                            PaymentTypeDesc = "Bonus"
+                        },
+                        new
+                        {
+                            PaymentTypeCode = (byte)5,
+                            PaymentTypeDesc = "Komissiya"
                         });
                 });
 
@@ -1067,6 +2183,8 @@ namespace Foxoft.Migrations
                     b.HasKey("PriceTypeCode");
 
                     b.ToTable("DcPriceTypes");
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
 
                     b.HasData(
                         new
@@ -1220,6 +2338,12 @@ namespace Foxoft.Migrations
                             ProcessCode = "PL",
                             ProcessDesc = "Qiymət Cədvəli",
                             ProcessDir = (byte)0
+                        },
+                        new
+                        {
+                            ProcessCode = "IS",
+                            ProcessDesc = "Kredit Satışı",
+                            ProcessDir = (byte)2
                         });
                 });
 
@@ -1228,6 +2352,9 @@ namespace Foxoft.Migrations
                     b.Property<string>("ProductCode")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<decimal>("BalanceWarningLevel")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -1239,6 +2366,9 @@ namespace Foxoft.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<int>("DefaultUnitOfMeasureId")
+                        .HasColumnType("int");
 
                     b.Property<string>("HierarchyCode")
                         .HasColumnType("nvarchar(450)");
@@ -1280,6 +2410,12 @@ namespace Foxoft.Migrations
                     b.Property<string>("ProductFeature")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
                     b.Property<byte>("ProductTypeCode")
                         .HasColumnType("tinyint");
@@ -1324,21 +2460,28 @@ namespace Foxoft.Migrations
 
                     b.HasKey("ProductCode");
 
+                    b.HasIndex("DefaultUnitOfMeasureId");
+
                     b.HasIndex("HierarchyCode");
 
                     b.HasIndex("ProductTypeCode");
 
                     b.ToTable("DcProducts");
 
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+
                     b.HasData(
                         new
                         {
                             ProductCode = "test01",
+                            BalanceWarningLevel = 0m,
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "Test Məhsul 01",
+                            ProductId = 0,
                             ProductTypeCode = (byte)1,
                             PurchasePrice = 0m,
                             RetailPrice = 4.5m,
@@ -1350,11 +2493,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             ProductCode = "test02",
+                            BalanceWarningLevel = 0m,
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "Test Məhsul 01",
+                            ProductId = 0,
                             ProductTypeCode = (byte)1,
                             PurchasePrice = 0m,
                             RetailPrice = 2.5m,
@@ -1366,11 +2512,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             ProductCode = "xerc01",
+                            BalanceWarningLevel = 0m,
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "Yol Xərci",
+                            ProductId = 0,
                             ProductTypeCode = (byte)2,
                             PurchasePrice = 0m,
                             RetailPrice = 0m,
@@ -1382,11 +2531,14 @@ namespace Foxoft.Migrations
                         new
                         {
                             ProductCode = "xerc02",
+                            BalanceWarningLevel = 0m,
                             CreatedDate = new DateTime(1901, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DefaultUnitOfMeasureId = 1,
                             IsDisabled = false,
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosDiscount = 0.0,
                             ProductDesc = "İşıq Pulu",
+                            ProductId = 0,
                             ProductTypeCode = (byte)2,
                             PurchasePrice = 0m,
                             RetailPrice = 0m,
@@ -1395,6 +2547,48 @@ namespace Foxoft.Migrations
                             UsePos = false,
                             WholesalePrice = 0m
                         });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
+                {
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("PriceTypeCode")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductCode", "PriceTypeCode");
+
+                    b.HasIndex("PriceTypeCode");
+
+                    b.ToTable("DcProductStaticPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductType", b =>
@@ -1459,6 +2653,9 @@ namespace Foxoft.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
 
+                    b.Property<int?>("ReportCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReportFilter")
                         .HasColumnType("nvarchar(max)");
 
@@ -1476,6 +2673,8 @@ namespace Foxoft.Migrations
 
                     b.HasKey("ReportId");
 
+                    b.HasIndex("ReportCategoryId");
+
                     b.HasIndex("ReportTypeId");
 
                     b.ToTable("DcReports");
@@ -1488,7 +2687,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_ProductList",
-                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n--declare @StartDate date = dateadd(DAY, 1, getdate())\r\n--declare @StartTime time =  '00:00:00.000'\r\n\r\nselect * from (\r\n\r\nSelect pro.ProductCode\r\n		, pro.HierarchyCode\r\n		, [M?hsulun Genis Adi]= isnull(pro.HierarchyCode + ' ','')  + ProductDesc \r\n			+ isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') + isnull(' ' + Feature06,'') + isnull(' ' +Feature07,'')\r\n			+ isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') + isnull(' ' + Feature11,'')\r\n			+ isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n			+ isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')\r\n			+ isnull(' ' + Feature23,'') + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') \r\n			+ isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		, ProductDesc\r\n		, Balance = isnull(ProductBalance.[depo-01],0)\r\n		, WholesalePrice\r\n		, HierarchyDesc\r\n		, ProductTypeCode\r\n		--, ProductId	\r\n		, ProductCost = dbo.GetProductCost(pro.ProductCode, null)\r\n		, CalcClosingStockFifo.FIFO_CORG\r\n		\r\nfrom DcProducts pro\r\n\r\nleft join DcHierarchies on pro.HierarchyCode = DcHierarchies.HierarchyCode\r\n--left join SiteProducts on SiteProducts.ProductCode = pro.ProductCode\r\nleft join ProductFeatures ON pro.ProductCode = ProductFeatures.ProductCode \r\nleft join ProductBalance on ProductBalance.ProductCode = pro.ProductCode\r\nleft join CalcClosingStockFifo on CalcClosingStockFifo.ProductCode = pro.ProductCode\r\n\r\n	--where ProductTypeCode = 1\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--	(CAST(@StartDate AS DATETIME) + CAST(@StartTime AS DATETIME))\r\n	--and il.ProductCode = '5503'\r\n\r\n) as tablo \r\n	order by \r\ntablo.HierarchyCode \r\n, tablo.ProductDesc \r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n--declare @StartDate date = dateadd(DAY, 1, getdate())\r\n--declare @StartTime time =  '00:00:00.000'\r\n\r\nselect * from (\r\n\r\nSelect pro.ProductCode\r\n		, pro.HierarchyCode\r\n		, [Məhsulun Genis Adi]= isnull(pro.HierarchyCode + ' ','')  + ProductDesc \r\n			+ isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') + isnull(' ' + Feature06,'') + isnull(' ' +Feature07,'')\r\n			+ isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') + isnull(' ' + Feature11,'')\r\n			+ isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n			+ isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')\r\n			+ isnull(' ' + Feature23,'') + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') \r\n			+ isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		, ProductDesc\r\n		, Balance = CAST(isnull(ProductBalance.[depo-01],0) AS INT)\r\n		, WholesalePrice\r\n		, HierarchyDesc\r\n		, ProductTypeCode\r\n		--, ProductId	\r\n		, ProductCost = dbo.GetProductCost(pro.ProductCode, null)\r\n		, CalcClosingStockFifo.FIFO_CORG\r\n		\r\nfrom DcProducts pro\r\n\r\nleft join DcHierarchies on pro.HierarchyCode = DcHierarchies.HierarchyCode\r\n--left join SiteProducts on SiteProducts.ProductCode = pro.ProductCode\r\nleft join ProductFeatures ON pro.ProductCode = ProductFeatures.ProductCode \r\nleft join ProductBalance on ProductBalance.ProductCode = pro.ProductCode\r\nleft join CalcClosingStockFifo on CalcClosingStockFifo.ProductCode = pro.ProductCode\r\n\r\n	--where ProductTypeCode = 1\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--	(CAST(@StartDate AS DATETIME) + CAST(@StartTime AS DATETIME))\r\n	--and il.ProductCode = '5503'\r\n\r\n) as tablo \r\n	order by \r\ntablo.HierarchyCode \r\n, tablo.ProductDesc \r\n\r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -1498,7 +2697,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CurrAccList",
-                            ReportQuery = "\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, Balance =ISNULL(SUM(CAST(Amount as money)),0)\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\nfrom \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n	where 1=1 \r\n	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\nwhere 1 = 1 \r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\norder by CurrAccDesc",
+                            ReportQuery = "\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, Balance =ISNULL(SUM(CAST(Amount as money)),0)\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\nfrom \r\nDcCurrAccs \r\nleft join \r\n(\r\n	select CurrAccCode\r\n	, Amount = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )\r\n	--and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n\r\n	UNION ALL \r\n	\r\n	select CurrAccCode\r\n	, Amount = PaymentLoc -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n	where 1=1 AND pl.PaymentTypeCode != 5\r\n	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=\r\n	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))\r\n) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode\r\nwhere 1 = 1 \r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\norder by CurrAccDesc",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -1508,7 +2707,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_CashRegList",
-                            ReportQuery = "\r\n\r\n\r\n\r\nselect DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\nfrom \r\nDcCurrAccs \r\nleft join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode\r\nwhere CurrAccTypeCode = 5 and IsDisabled = 0 and PaymentTypeCode = 1 \r\n	--and DcCurrAccs.IsVIP = 1 \r\n	--and balance.CurrAccCode = '1403'\r\ngroup by DcCurrAccs.CurrAccCode\r\n, CurrAccDesc\r\n, PhoneNum\r\n, IsVIP\r\n, CurrAccTypeCode\r\norder by CurrAccDesc\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n	select CashRegisterCode = DcCurrAccs.CurrAccCode\r\n	, [Kassa Adı] = CurrAccDesc\r\n	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	from \r\n	DcCurrAccs \r\n	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1\r\n	where CurrAccTypeCode = 5 and IsDisabled = 0\r\n		--and DcCurrAccs.IsVIP = 1 \r\n		--and balance.CurrAccCode = '1403'\r\n	group by DcCurrAccs.CurrAccCode\r\n	, CurrAccDesc\r\n	, PhoneNum\r\n	, IsVIP\r\n	, CurrAccTypeCode\r\n	, CashRegisterCode \r\n	order by CurrAccDesc",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -1518,7 +2717,7 @@ namespace Foxoft.Migrations
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ReportLayout = "",
                             ReportName = "Report_Embedded_InvoiceReport",
-                            ReportQuery = "\r\n\r\n--Declare @invoiceHeader nvarchar(50) = 'dd6927e4-d33c-4dc7-929c-1410c299e0a9'\r\n\r\n	select  TrInvoiceLines.InvoiceLineId\r\n			,	[Marka] = isnull(' ' +  Feature02Desc,'')\r\n		  , [Ceki] = isnull(' ' + Feature04Desc,'')\r\n		  , [Reng] = isnull(' ' + Feature05Desc,'')\r\n		  , [Məhsul Tipi] = isnull(' ' + Feature06Desc,'')\r\n		  , [Soyutma Tipi] = isnull(' ' + Feature07Desc,'')\r\n		  , [BTU] = isnull(' ' + Feature09Desc,'')\r\n		  , [Ekran Ölçüsü] = isnull(' ' + Feature10Desc,'')\r\n		  , [Ekran İcazəsi] = isnull(' ' + Feature11Desc,'')\r\n		  , [Motorun Növü] = isnull(' ' + Feature12Desc,'')\r\n		  , [Həcmi] = isnull(' ' + Feature13Desc,'')\r\n		  , [Soyuducu Kameranın Həcmi] = isnull(' ' + Feature14Desc,'')\r\n		  , [Dondurucu Kameranın Həcmi] = isnull(' ' + Feature15Desc,'')\r\n		  , [Istehsalçı Ölkə] = isnull(' ' + Feature16Desc,'')\r\n		  , [Məhsuldarlıq] = isnull(' ' + Feature17Desc,'')\r\n		  , [Güc] = isnull(' ' + Feature18Desc,'')\r\n		  , [Tərtib Edən İstifadəçi] =( select CurrAccDesc from DcCurrAccs where CurrAccCode = TrInvoiceHeaders.CreatedUserName)\r\n	, TrInvoiceHeaders.InvoiceHeaderId\r\n	, DcProducts.ProductCode\r\n	, ProductDesc\r\n	, QtyIn = QtyIn\r\n	, QtyOut = QtyOut\r\n	, Price\r\n	, TrInvoiceLines.PosDiscount\r\n	, TrInvoiceHeaders.ProcessCode\r\n	, ProcessDesc\r\n	, TrInvoiceLines.CurrencyCode\r\n	, DcProducts.HierarchyCode\r\n	, HierarchyDesc\r\n	, IsReturn\r\n	, CustomsDocumentNumber\r\n	, PrintCount\r\n	, NetAmount\r\n	, LineDescription\r\n	, PriceLoc\r\n	, PriceDiscounted\r\n	, TrInvoiceLines.ExchangeRate\r\n	, NetAmountLoc = (QtyIn-QtyOut) * PriceDiscounted\r\n	, DocumentNumber\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, DcCurrAccs.CurrAccCode\r\n	, DcCurrAccs.CurrAccDesc\r\n	, DcCurrAccs.FirstName\r\n	, DcCurrAccs.PhoneNum\r\n	, HeaderCreatedDate = TrInvoiceHeaders.CreatedDate\r\n	, LineCreatedDate = TrInvoiceLines.CreatedDate\r\n	, TrInvoiceHeaders.CreatedUserName\r\n	, CurrAccBalance = dbo.CurrAccBalance(TrInvoiceHeaders.CurrAccCode, CAST(DocumentDate as Datetime) + CAST(DocumentTime as Datetime))\r\n	, BalanceCode = 'M' + Convert(nvarchar, Format((select SUM(QtyIn - QtyOut) ProductBalance\r\n						from TrInvoiceLines il \r\n						left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n						where il.ProductCode = TrInvoiceLines.ProductCode and WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n						and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )),'000')) \r\n						\r\n	, TrInvoiceHeaders.WarehouseCode\r\n	, TrInvoiceHeaders.ToWarehouseCode\r\n	, [Depodan] = wareIn.WarehouseDesc\r\n	, [Depoya] = wareOut.WarehouseDesc\r\n	, Description\r\n	, TrInvoiceHeaders.StoreCode\r\n	, PaymentLoc = ISNULL((	select sum(PaymentLoc) from TrPaymentLines pl \r\n							join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n							where ph.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId), 0)\r\n	, ProductCost\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n	from TrInvoiceLines\r\n	left join TrInvoiceLineExts on TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId\r\n	left join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\n	left join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n	left join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\n	left join DcHierarchies on DcHierarchies.HierarchyCode = DcProducts.HierarchyCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = TrInvoiceLines.CurrencyCode\r\n	left join DcWarehouses wareIn on wareIn.WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n	left join DcWarehouses wareOut on wareOut.WarehouseCode = TrInvoiceHeaders.ToWarehouseCode\r\n	left join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n	left join DcCurrAccs store on store.CurrAccCode = TrInvoiceHeaders.StoreCode\r\n\r\n	where TrInvoiceHeaders.InvoiceHeaderId = @invoiceHeader\r\n\r\n\r\n	order by TrInvoiceLines.CreatedDate\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n--Declare @invoiceHeader nvarchar(50) = 'dd6927e4-d33c-4dc7-929c-1410c299e0a9'\r\n\r\n	select  TrInvoiceLines.InvoiceLineId\r\n			,	[Marka] = isnull(' ' +  Feature02Desc,'')\r\n		  , [Ceki] = isnull(' ' + Feature04Desc,'')\r\n		  , [Reng] = isnull(' ' + Feature05Desc,'')\r\n		  , [Məhsul Tipi] = isnull(' ' + Feature06Desc,'')\r\n		  , [Soyutma Tipi] = isnull(' ' + Feature07Desc,'')\r\n		  , [BTU] = isnull(' ' + Feature09Desc,'')\r\n		  , [Ekran Ölçüsü] = isnull(' ' + Feature10Desc,'')\r\n		  , [Ekran İcazəsi] = isnull(' ' + Feature11Desc,'')\r\n		  , [Motorun Növü] = isnull(' ' + Feature12Desc,'')\r\n		  , [Həcmi] = isnull(' ' + Feature13Desc,'')\r\n		  , [Soyuducu Kameranın Həcmi] = isnull(' ' + Feature14Desc,'')\r\n		  , [Dondurucu Kameranın Həcmi] = isnull(' ' + Feature15Desc,'')\r\n		  , [Istehsalçı Ölkə] = isnull(' ' + Feature16Desc,'')\r\n		  , [Məhsuldarlıq] = isnull(' ' + Feature17Desc,'')\r\n		  , [Güc] = isnull(' ' + Feature18Desc,'')\r\n		  , [Tərtib Edən İstifadəçi] =( select CurrAccDesc from DcCurrAccs where CurrAccCode = TrInvoiceHeaders.CreatedUserName)\r\n	, TrInvoiceHeaders.InvoiceHeaderId\r\n	, DcProducts.ProductCode\r\n	, ProductDesc\r\n	, QtyIn = QtyIn\r\n	, QtyOut = QtyOut\r\n	, Price\r\n	, TrInvoiceLines.PosDiscount\r\n	, TrInvoiceHeaders.ProcessCode\r\n	, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)\r\n	, TrInvoiceLines.CurrencyCode\r\n	, DcProducts.HierarchyCode\r\n	, HierarchyDesc\r\n	, IsReturn\r\n	, CustomsDocumentNumber\r\n	, PrintCount\r\n	, NetAmount\r\n	, LineDescription\r\n	, PriceLoc\r\n	, PriceDiscounted\r\n	, PriceDiscountedLoc\r\n	, TrInvoiceLines.ExchangeRate\r\n	, NetAmountLoc = (QtyIn-QtyOut) * PriceDiscountedLoc\r\n	, DocumentNumber\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, DcCurrAccs.CurrAccCode\r\n	, DcCurrAccs.CurrAccDesc\r\n	, DcCurrAccs.FirstName\r\n	, DcCurrAccs.PhoneNum\r\n	, HeaderCreatedDate = TrInvoiceHeaders.CreatedDate\r\n	, LineCreatedDate = TrInvoiceLines.CreatedDate\r\n	, TrInvoiceHeaders.CreatedUserName\r\n	, CurrAccBalance = dbo.CurrAccBalance(TrInvoiceHeaders.CurrAccCode, CAST(DocumentDate as Datetime) + CAST(DocumentTime as Datetime))\r\n	, BalanceCode = 'M' + Convert(nvarchar, Format((select SUM(QtyIn - QtyOut) ProductBalance\r\n						from TrInvoiceLines il \r\n						left join TrInvoiceHeaders ih on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n						where il.ProductCode = TrInvoiceLines.ProductCode and WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n						and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )),'000')) \r\n						\r\n	, TrInvoiceHeaders.WarehouseCode\r\n	, TrInvoiceHeaders.ToWarehouseCode\r\n	, [Depodan] = wareIn.WarehouseDesc\r\n	, [Depoya] = wareOut.WarehouseDesc\r\n	, Description\r\n	, TrInvoiceHeaders.StoreCode\r\n	, PaymentLoc = ISNULL((	select sum(PaymentLoc) from TrPaymentLines pl \r\n							join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId\r\n							where ph.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId), 0)\r\n	, ProductCost\r\n	, StorePhoneNum = store.PhoneNum\r\n	, StoreAddress = store.Address\r\n	from TrInvoiceLines\r\n	left join TrInvoiceLineExts on TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId\r\n	left join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\n	left join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n	left join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\n	left join DcHierarchies on DcHierarchies.HierarchyCode = DcProducts.HierarchyCode\r\n	left join DcCurrencies on DcCurrencies.CurrencyCode = TrInvoiceLines.CurrencyCode\r\n	left join DcWarehouses wareIn on wareIn.WarehouseCode = TrInvoiceHeaders.WarehouseCode\r\n	left join DcWarehouses wareOut on wareOut.WarehouseCode = TrInvoiceHeaders.ToWarehouseCode\r\n	left join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n	left join DcCurrAccs store on store.CurrAccCode = TrInvoiceHeaders.StoreCode\r\n\r\n	where TrInvoiceHeaders.InvoiceHeaderId = @InvoiceHeaderId\r\n\r\n\r\n	order by TrInvoiceLines.CreatedDate\r\n\r\n\r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)0
                         },
                         new
@@ -1533,9 +2732,20 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
+                            ReportId = 6,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportLayout = "",
+                            ReportName = "Report_Embedded_InstallmentSale",
+                            ReportQuery = "WITH InstallmentPaymentSum AS (\r\n    SELECT\r\n        ph.InvoiceHeaderId,\r\n        ph.CurrAccCode,\r\n        SUM(pl.PaymentLoc) AS InstallmentPaymentSum\r\n    FROM\r\n        TrPaymentLines pl\r\n    INNER JOIN\r\n        TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId\r\n    INNER JOIN\r\n        TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId\r\n    WHERE\r\n        ph.PaymentKindId = 3\r\n    GROUP BY\r\n        ph.InvoiceHeaderId, ph.CurrAccCode\r\n),\r\nDownPaymentSum AS (\r\n    SELECT\r\n        i.InvoiceHeaderId,\r\n        SUM(pl.PaymentLoc) AS DownPaymentSum\r\n    FROM\r\n        TrPaymentLines pl\r\n    INNER JOIN\r\n        TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId\r\n    INNER JOIN\r\n        TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId\r\n    WHERE\r\n        ph.PaymentKindId != 3\r\n    GROUP BY\r\n        i.InvoiceHeaderId\r\n),\r\nInstallmentData AS (\r\n    SELECT\r\n        i.InstallmentId,\r\n        i.InvoiceHeaderId,\r\n        i.DocumentDate,\r\n        i.Amount + COALESCE(ril.NetAmount, 0) AS Amount,\r\n        i.AmountLoc + COALESCE(ril.NetAmountLoc, 0) AS AmountLoc, \r\n        i.CurrencyCode,\r\n        i.ExchangeRate,\r\n        (i.AmountLoc + i.Commission) + COALESCE(ril.NetAmountLoc, 0) AS AmountWithComLoc,\r\n        ih.DocumentNumber,\r\n        ca.CurrAccDesc,\r\n        ca.PhoneNum,\r\n        pp.DurationInMonths,\r\n        COALESCE(psum.InstallmentPaymentSum, 0) AS TotalPaid,\r\n        COALESCE(dps.DownPaymentSum, 0) AS DownPayment\r\n    FROM\r\n        TrInstallments i\r\n    INNER JOIN\r\n        TrInvoiceHeaders ih ON i.InvoiceHeaderId = ih.InvoiceHeaderId\r\n    INNER JOIN\r\n        DcCurrAccs ca ON ih.CurrAccCode = ca.CurrAccCode\r\n    INNER JOIN\r\n        DcPaymentPlans pp ON i.PaymentPlanCode = pp.PaymentPlanCode\r\n    LEFT JOIN\r\n        InstallmentPaymentSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId AND ih.CurrAccCode = psum.CurrAccCode\r\n    LEFT JOIN\r\n        DownPaymentSum dps ON i.InvoiceHeaderId = dps.InvoiceHeaderId\r\n    LEFT JOIN\r\n        TrInvoiceHeaders rih ON rih.RelatedInvoiceId = i.InvoiceHeaderId AND rih.IsReturn = 1 \r\n    LEFT JOIN\r\n        TrInvoiceLines ril ON ril.InvoiceHeaderId = rih.InvoiceHeaderId\r\n),\r\nCalculatedData AS (\r\n    SELECT\r\n        InstallmentId,\r\n        InvoiceHeaderId,\r\n        CurrAccDesc,\r\n        PhoneNum,\r\n        DocumentNumber,\r\n        DocumentDate,\r\n        Amount,\r\n        AmountWithComLoc,\r\n        CurrencyCode,\r\n        ExchangeRate,\r\n        DownPayment,\r\n        TotalPaid,\r\n		DurationInMonths,\r\n        AmountWithComLoc - TotalPaid AS RemainingBalance,\r\n        (AmountWithComLoc / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,\r\n        FLOOR(TotalPaid / (AmountWithComLoc / NULLIF(DurationInMonths, 0))) AS MonthsPaid,\r\n		DATEADD(MONTH, \r\n		    FLOOR(TotalPaid / COALESCE(NULLIF(AmountWithComLoc / NULLIF(DurationInMonths, 0), 0), 1)) + 1, DocumentDate\r\n		) AS OverdueDate\r\n    FROM\r\n        InstallmentData\r\n)\r\nSELECT\r\n    InstallmentId,\r\n    InvoiceHeaderId,\r\n    CurrAccDesc,\r\n    PhoneNum,\r\n    DocumentNumber,\r\n    DocumentDate,\r\n    Amount,\r\n    CurrencyCode,\r\n    ExchangeRate,\r\n    MonthlyPayment,\r\n    [Tutar Faizi ilə] = AmountWithComLoc,\r\n	[Ay] = DurationInMonths,\r\n    [İlkin Ödəniş] = DownPayment,  -- Showing Down Payment Separately\r\n    [Toplam Ödəniş] = TotalPaid,   -- Payments excluding downpayment\r\n    [Qalıq] = RemainingBalance,\r\n    [Aylıq Ödəniş] = MonthlyPayment,\r\n    [Ödənilməli məbləğ] = TotalPaid - (DATEDIFF(DAY, DocumentDate, GETDATE()) / 30) * MonthlyPayment,\r\n    [Gecikmə tarixi] = OverdueDate,\r\n    [Gecikmiş Günlər] = CASE \r\n        WHEN GETDATE() > OverdueDate THEN DATEDIFF(DAY, OverdueDate, GETDATE())\r\n        ELSE 0\r\n    END\r\nFROM\r\n    CalculatedData;\r\n",
+                            ReportTypeId = (byte)0
+                        },
+                        new
+                        {
                             ReportId = 11,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 5,
                             ReportLayout = "",
                             ReportName = "Xərclər",
                             ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nselect Price\r\n, ProductDesc\r\n, CurrencyCode\r\n, NetAmountLoc\r\n, DocumentDate \r\n, LineDescription\r\n, StoreCode\r\nfrom TrInvoiceLines\r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nwhere ProcessCode = 'EX'",
@@ -1546,9 +2756,10 @@ namespace Foxoft.Migrations
                             ReportId = 12,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 5,
                             ReportLayout = "",
                             ReportName = "Pulun Hərəkəti",
-                            ReportQuery = "\r\n\r\n\r\n\r\nselect  PaymentLineId\r\n, TrPaymentHeaders.PaymentHeaderId\r\n, TrPaymentHeaders.InvoiceHeaderId\r\n, InvoiceNumber = tph.DocumentNumber\r\n, DcPaymentTypes.PaymentTypeCode\r\n, PaymentTypeDesc\r\n, PaymentLoc\r\n, Payment\r\n, CurrencyCode\r\n, LineDescription\r\n, TrPaymentHeaders.DocumentNumber\r\n, TrPaymentHeaders.DocumentDate\r\n, TrPaymentHeaders.DocumentTime\r\n, TrPaymentHeaders.OperationDate\r\n, TrPaymentHeaders.OperationTime\r\n, OperationType\r\n, TrPaymentHeaders.CurrAccCode\r\n, CashRegisterCode\r\n, FirstName\r\n, DcCurrAccs.CurrAccDesc\r\n, TrPaymentHeaders.StoreCode\r\n, tpl.CreatedDate\r\n, tpl.CreatedUserName\r\n, [Cari Hesab Balansı] = (	(select sum ((QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	where DcCurrAccs.CurrAccCode = ih.CurrAccCode\r\n	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	(CAST(tph.DocumentDate AS DATETIME) + CAST(tph.DocumentTime AS DATETIME)))\r\n		+ \r\n(select Sum(PaymentLoc) -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n	where DcCurrAccs.CurrAccCode = ph.CurrAccCode \r\n			and (CAST(ph.DocumentDate AS DATETIME) + CAST(ph.DocumentTime AS DATETIME)) <=\r\n			(CAST(tph.DocumentDate AS DATETIME) + CAST(tph.DocumentTime AS DATETIME)))\r\n		)\r\n\r\n from TrPaymentLines tpl\r\nleft join TrPaymentHeaders on tpl.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\r\nleft join TrInvoiceHeaders tph on TrPaymentHeaders.InvoiceHeaderId = tph.InvoiceHeaderId\r\nleft Join DcCurrAccs on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcPaymentTypes on tpl.PaymentTypeCode = DcPaymentTypes.PaymentTypeCode\r\norder by TrPaymentHeaders.OperationDate asc, TrPaymentHeaders.OperationTime asc\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n\r\n\r\nselect  PaymentLineId\r\n, TrPaymentHeaders.PaymentHeaderId\r\n, TrPaymentHeaders.InvoiceHeaderId\r\n, InvoiceNumber = tph.DocumentNumber\r\n, DcPaymentTypes.PaymentTypeCode\r\n, PaymentTypeDesc\r\n, PaymentLoc\r\n, Payment\r\n, CurrencyCode\r\n, LineDescription\r\n, TrPaymentHeaders.DocumentNumber\r\n, TrPaymentHeaders.DocumentDate\r\n, TrPaymentHeaders.DocumentTime\r\n, TrPaymentHeaders.OperationDate\r\n, TrPaymentHeaders.OperationTime\r\n, PaymentKindId\r\n, TrPaymentHeaders.CurrAccCode\r\n, CashRegisterCode\r\n, FirstName\r\n, DcCurrAccs.CurrAccDesc\r\n, TrPaymentHeaders.StoreCode\r\n, tpl.CreatedDate\r\n, tpl.CreatedUserName\r\n, [Cari Hesab Balansı] = (	(select sum ((QtyIn - QtyOut) * (PriceLoc - (PriceLoc * PosDiscount / 100)))  -- (-2) * 100 = -200 usd\r\n	--, Amount = NetAmountLoc  -- (-2) * 100 = -200 usd\r\n	from TrInvoiceLines il\r\n	left join TrInvoiceHeaders ih  on il.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	where DcCurrAccs.CurrAccCode = ih.CurrAccCode\r\n	and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n	(CAST(tph.DocumentDate AS DATETIME) + CAST(tph.DocumentTime AS DATETIME)))\r\n		+ \r\n(select Sum(PaymentLoc) -- 200 usd\r\n	from TrPaymentLines pl\r\n	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	\r\n	where DcCurrAccs.CurrAccCode = ph.CurrAccCode \r\n			and (CAST(ph.DocumentDate AS DATETIME) + CAST(ph.DocumentTime AS DATETIME)) <=\r\n			(CAST(tph.DocumentDate AS DATETIME) + CAST(tph.DocumentTime AS DATETIME)))\r\n		)\r\n\r\n from TrPaymentLines tpl\r\nleft join TrPaymentHeaders on tpl.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\r\nleft join TrInvoiceHeaders tph on TrPaymentHeaders.InvoiceHeaderId = tph.InvoiceHeaderId\r\nleft Join DcCurrAccs on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcPaymentTypes on tpl.PaymentTypeCode = DcPaymentTypes.PaymentTypeCode\r\norder by TrPaymentHeaders.OperationDate asc, TrPaymentHeaders.OperationTime asc\r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -1556,9 +2767,10 @@ namespace Foxoft.Migrations
                             ReportId = 13,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 1,
                             ReportLayout = "",
                             ReportName = "Cari Hesab ilə Əməliyatlar",
-                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\nselect 	CurrAccDesc\r\n	--, ProductDesc\r\n	, NetAmountLoc\r\n	, PaymentLoc\r\n	, [Ara Toplam] = sum(Summary) OVER (ORDER BY DocumentDate, DocumentTime )\r\n	, ProcessDesc\r\n	, DocumentNumber\r\n	, CurrAccCode\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, InvoiceHeaderId\r\n	, PaymentHeaderId\r\n	, LineDescription\r\n	, IsReturn\r\n	, StoreCode\r\n	--, LineId\r\nfrom (\r\n	select FirstName\r\n	, CurrAccDesc\r\n	--, ProductDesc\r\n	, ih.InvoiceHeaderId\r\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, PaymentLoc= 0\r\n	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, ProcessDesc = ProcessDesc\r\n	, DocumentNumber\r\n	, ih.StoreCode\r\n	, ih.CurrAccCode\r\n	, ih.DocumentDate\r\n	, ih.DocumentTime\r\n	, LineDescription = ih.Description\r\n	, ih.ProcessCode\r\n	, IsReturn\r\n	--, LineId = InvoiceLineId\r\n	from TrInvoiceLines \r\n	left join TrInvoiceHeaders ih on TrInvoiceLines.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	left join DcCurrAccs on ih.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ih.ProcessCode\r\n	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT' )\r\n	group by FirstName\r\n			, CurrAccDesc\r\n			, ProcessDesc\r\n			, DocumentNumber\r\n			, ih.InvoiceHeaderId\r\n			, ih.CurrAccCode\r\n			, ih.DocumentDate	\r\n			, ih.DocumentTime\r\n			, ih.Description\r\n			, ih.StoreCode\r\n			, ih.ProcessCode\r\n			, IsReturn\r\n	\r\n	UNION ALL \r\n	\r\n	select FirstName\r\n	--, ProductCode = ''\r\n	, CurrAccDesc = CurrAccDesc\r\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, TrPaymentHeaders.PaymentHeaderId\r\n	, NetAmountLoc = 0\r\n	, PaymentLoc\r\n	, Summary = PaymentLoc\r\n	, ProcessDesc = N'Ödəniş'\r\n	, DocumentNumber\r\n	, TrPaymentHeaders.StoreCode\r\n	, TrPaymentHeaders.CurrAccCode\r\n	, DocumentDate = TrPaymentHeaders.OperationDate\r\n	, DocumentTime = TrPaymentHeaders.OperationTime\r\n	, LineDescription\r\n	, ProcessCode = 'PA'\r\n	, IsReturn = CAST(0 as bit)\r\n	--, LineId = PaymentLineId\r\n	from TrPaymentLines\r\n	left join TrPaymentHeaders on TrPaymentLines.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\r\n	left join DcCurrAccs  on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode	\r\n\r\n) as CurrAccExtra where 1=1 {CurrAccCode}\r\n\r\norder by DocumentDate, DocumentTime",
+                            ReportQuery = "\r\n\r\n\r\n\r\n\r\n\r\nselect 	CurrAccDesc\r\n	--, ProductDesc\r\n	, NetAmountLoc\r\n	, PaymentLoc\r\n	, [Ara Toplam] = sum(Summary) OVER (ORDER BY DocumentDate, DocumentTime )\r\n	, ProcessDesc\r\n	, DocumentNumber\r\n	, CurrAccCode\r\n	, DocumentDate\r\n	, DocumentTime\r\n	, InvoiceHeaderId\r\n	, PaymentHeaderId\r\n	, LineDescription\r\n	, IsReturn\r\n	, StoreCode\r\n	--, LineId\r\nfrom (\r\n	select FirstName\r\n	, CurrAccDesc\r\n	--, ProductDesc\r\n	, ih.InvoiceHeaderId\r\n	, PaymentHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, NetAmountLoc = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, PaymentLoc= 0\r\n	, Summary = sum((QtyIn - QtyOut) * (PriceLoc * (100 - PosDiscount) / 100))  -- (-2) * 100 = -200 usd\r\n	, ProcessDesc = ProcessDesc\r\n	, DocumentNumber\r\n	, ih.StoreCode\r\n	, ih.CurrAccCode\r\n	, ih.DocumentDate\r\n	, ih.DocumentTime\r\n	, LineDescription = ih.Description\r\n	, ih.ProcessCode\r\n	, IsReturn\r\n	--, LineId = InvoiceLineId\r\n	from TrInvoiceLines \r\n	left join TrInvoiceHeaders ih on TrInvoiceLines.InvoiceHeaderId = ih.InvoiceHeaderId\r\n	left join DcCurrAccs on ih.CurrAccCode = DcCurrAccs.CurrAccCode\r\n	left join DcProcesses on DcProcesses.ProcessCode = ih.ProcessCode\r\n	--left join DcProducts on DcProducts.ProductCode = TrInvoiceLines.ProductCode\r\n	where ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT' )\r\n	group by FirstName\r\n			, CurrAccDesc\r\n			, ProcessDesc\r\n			, DocumentNumber\r\n			, ih.InvoiceHeaderId\r\n			, ih.CurrAccCode\r\n			, ih.DocumentDate	\r\n			, ih.DocumentTime\r\n			, ih.Description\r\n			, ih.StoreCode\r\n			, ih.ProcessCode\r\n			, IsReturn\r\n	\r\n	UNION ALL \r\n	\r\n	select FirstName\r\n	--, ProductCode = ''\r\n	, CurrAccDesc = CurrAccDesc\r\n	, InvoiceHeaderId = cast(cast(0 as binary) as uniqueidentifier)\r\n	, TrPaymentHeaders.PaymentHeaderId\r\n	, NetAmountLoc = 0\r\n	, PaymentLoc\r\n	, Summary = PaymentLoc\r\n	, ProcessDesc = N'Ödəniş'\r\n	, DocumentNumber\r\n	, TrPaymentHeaders.StoreCode\r\n	, TrPaymentHeaders.CurrAccCode\r\n	, DocumentDate = TrPaymentHeaders.OperationDate\r\n	, DocumentTime = TrPaymentHeaders.OperationTime\r\n	, LineDescription\r\n	, ProcessCode = 'PA'\r\n	, IsReturn = CAST(0 as bit)\r\n	--, LineId = PaymentLineId\r\n	from TrPaymentLines\r\n	left join TrPaymentHeaders on TrPaymentLines.PaymentHeaderId = TrPaymentHeaders.PaymentHeaderId\r\n	left join DcCurrAccs  on TrPaymentHeaders.CurrAccCode = DcCurrAccs.CurrAccCode	\r\n\r\n) as CurrAccExtra where 1=1 {CurrAccCode}\r\n\r\norder by DocumentDate, DocumentTime",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -1566,9 +2778,10 @@ namespace Foxoft.Migrations
                             ReportId = 14,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 3,
                             ReportLayout = "",
                             ReportName = "Məhsulun Hərəkəti",
-                            ReportQuery = "\r\n\r\n\r\n\r\n\r\nselect  InvoiceLineId\r\n, TrInvoiceHeaders.InvoiceHeaderId\r\n, TrInvoiceLines.ProductCode\r\n, [Məhsulun Geniş Adı] = isnull(DcProducts.HierarchyCode + ' ','')  + ProductDesc +  isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') \r\n		  + isnull(' ' + Feature06,'') + isnull(' ' + Feature07,'') + isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') \r\n		  + isnull(' ' + Feature11,'') + isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n		  + isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')+ isnull(' ' + Feature23,'')\r\n		  + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') + isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		  + isnull(' ' + Feature29,'') \r\n\r\n\r\n, ProductDesc\r\n, QtyIn\r\n, QtyOut\r\n, Price\r\n, PriceLoc\r\n, Net = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * TrInvoiceLines.PosDiscount / 100))\r\n, [Qiymət End.li] = Price * (1 - (TrInvoiceLines.PosDiscount / 100))\r\n, Amount\r\n, NetAmountLoc\r\n, [Qaime Üzrə Ödəniş] = (select sum(TrPaymentLines.PaymentLoc) from TrPaymentLines \r\n		join TrPaymentHeaders on TrPaymentHeaders.PaymentHeaderId = TrPaymentLines.PaymentHeaderId\r\n		where TrPaymentHeaders.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId)\r\n, LineDescription\r\n, SalesPersonCode\r\n, CurrencyCode\r\n, ExchangeRate\r\n, TrInvoiceHeaders.ProcessCode\r\n, ProcessDesc\r\n, DocumentNumber\r\n, IsReturn\r\n, ProductCost\r\n, Benefit = (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)\r\n, DocumentDate\r\n, DocumentTime\r\n, OperationDate\r\n, OperationTime\r\n, Description\r\n, TrInvoiceLines.PosDiscount\r\n, TrInvoiceHeaders.CurrAccCode\r\n, DcCurrAccs .CurrAccDesc\r\n, DcCurrAccTypes.CurrAccTypeDesc\r\n, DcCurrAccs.CurrAccTypeCode\r\n, TrInvoiceHeaders.OfficeCode\r\n, TrInvoiceHeaders.StoreCode\r\n, WarehouseCode\r\n, CustomsDocumentNumber\r\n, PosTerminalId\r\n, IsSuspended\r\n, IsCompleted\r\n, PrintCount\r\n, IsSalesViaInternet\r\n, IsLocked\r\n, DcProducts.ProductTypeCode\r\n, ProductTypeDesc\r\n, UsePos\r\n, PromotionCode\r\n, TaxRate\r\n, RetailPrice\r\n, PurchasePrice\r\n, WholesalePrice\r\n, TrInvoiceLines.CreatedDate\r\n, Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il \r\n					left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n					where il.ProductCode = TrInvoiceLines.ProductCode\r\n					and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT'))\r\n, TrInvoiceHeaders.CreatedUserName\r\n, ImagePath\r\n--, ROW_NUMBER() OVER (ORDER BY DocumentDate DESC) AS RowNum  \r\n\r\nfrom TrInvoiceLines \r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nleft join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\nleft join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\nleft join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\nleft join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode\r\nleft join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n\r\n\r\norder by DocumentDate, DocumentTime\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n\r\n\r\n\r\nselect  InvoiceLineId\r\n, TrInvoiceHeaders.InvoiceHeaderId\r\n, TrInvoiceLines.ProductCode\r\n, [Məhsulun Geniş Adı] = isnull(DcProducts.HierarchyCode + ' ','')  + ProductDesc +  isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') \r\n		  + isnull(' ' + Feature06,'') + isnull(' ' + Feature07,'') + isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') \r\n		  + isnull(' ' + Feature11,'') + isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n		  + isnull(' ' + Feature18,'') + isnull(' ' + Feature19 + 'x' + Feature20 + 'x' + Feature21,'') + isnull(' ' + Feature22,'')+ isnull(' ' + Feature23,'')\r\n		  + isnull(' ' + Feature24,'') + isnull(' ' + Feature25,'') + isnull(' ' + Feature26,'') + isnull(' ' + Feature27,'') + isnull(' ' + Feature28,'') \r\n		  + isnull(' ' + Feature29,'') \r\n\r\n\r\n, ProductDesc\r\n, QtyIn\r\n, QtyOut\r\n, Price\r\n, PriceLoc\r\n, Net = (QtyIn - QtyOut) * (PriceLoc - (PriceLoc * TrInvoiceLines.PosDiscount / 100))\r\n, [Qiymət End.li] = Price * (1 - (TrInvoiceLines.PosDiscount / 100))\r\n, Amount\r\n, NetAmountLoc\r\n, [Qaime Üzrə Ödəniş] = (select sum(TrPaymentLines.PaymentLoc) from TrPaymentLines \r\n		join TrPaymentHeaders on TrPaymentHeaders.PaymentHeaderId = TrPaymentLines.PaymentHeaderId\r\n		where TrPaymentHeaders.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId)\r\n, LineDescription\r\n, SalesPersonCode\r\n, CurrencyCode\r\n, ExchangeRate\r\n, TrInvoiceHeaders.ProcessCode\r\n, ProcessDesc = IIF(IsReturn = 1, ProcessDesc + ' - Geri Qaytarma', ProcessDesc)\r\n, DocumentNumber\r\n, IsReturn\r\n, ProductCost\r\n, Benefit = (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)\r\n, DocumentDate\r\n, DocumentTime\r\n, OperationDate\r\n, OperationTime\r\n, Description\r\n, TrInvoiceLines.PosDiscount\r\n, TrInvoiceHeaders.CurrAccCode\r\n, DcCurrAccs .CurrAccDesc\r\n, DcCurrAccTypes.CurrAccTypeDesc\r\n, DcCurrAccs.CurrAccTypeCode\r\n, TrInvoiceHeaders.OfficeCode\r\n, TrInvoiceHeaders.StoreCode\r\n, WarehouseCode\r\n, CustomsDocumentNumber\r\n, PosTerminalId\r\n, IsSuspended\r\n, IsCompleted\r\n, PrintCount\r\n, IsSalesViaInternet\r\n, IsLocked\r\n, DcProducts.ProductTypeCode\r\n, ProductTypeDesc\r\n, UsePos\r\n, PromotionCode\r\n, TaxRate\r\n, RetailPrice\r\n, PurchasePrice\r\n, WholesalePrice\r\n, TrInvoiceLines.CreatedDate\r\n, Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il \r\n					left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n					where il.ProductCode = TrInvoiceLines.ProductCode\r\n					and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT'))\r\n, TrInvoiceHeaders.CreatedUserName\r\n, ImagePath\r\n--, ROW_NUMBER() OVER (ORDER BY DocumentDate DESC) AS RowNum  \r\n\r\nfrom TrInvoiceLines \r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nleft join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\nleft join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\nleft join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\nleft join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode\r\nleft join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n\r\n\r\norder by DocumentDate, DocumentTime\r\n\r\n\r\n",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -1576,9 +2789,10 @@ namespace Foxoft.Migrations
                             ReportId = 15,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 7,
                             ReportLayout = "",
                             ReportName = "Gəlir",
-                            ReportQuery = "\r\n\r\n\r\nSELECT Maya = (-1)*(case when Dvijok.ProcessCode in ('RS', 'WS') then (Dvijok.QtyIn - Dvijok.QtyOut) * ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0) else 0 end)\r\n, Menfeet = (-1)*(case when ProcessCode in ('RS', 'WS') then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end)\r\n, [Net Menfeet] = (-1)*(case when ProcessCode in ('RS', 'WS') then (Dvijok.QtyIn - Dvijok.QtyOut) * ((Dvijok.PriceLoc * (100 - PosDiscount) / 100) - ISNULL(ISNULL(NULLIF(SonQiymet, 0), ProductCost),0)) else 0 end) - Xərc\r\n, *\r\nFROM (\r\nselect  InvoiceLineId\r\n, TrInvoiceHeaders.InvoiceHeaderId\r\n, TrInvoiceLines.ProductCode\r\n, ProductDesc\r\n, Qty = (QtyIn-QtyOut)*(-1)\r\n, Price\r\n, PriceLoc\r\n, Amount\r\n, TrInvoiceLines.PosDiscount\r\n, QtyIn\r\n, QtyOut\r\n, Xərc = case when TrInvoiceHeaders.ProcessCode = 'EX' then NetAmountLoc else 0 end\r\n, Satis = (-1)*(case when TrInvoiceHeaders.ProcessCode in ('RS', 'WS') then (QtyIn - QtyOut) * ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100)) else 0 end)\r\n, Artirma = case when TrInvoiceHeaders.ProcessCode = 'CI' then NetAmountLoc else 0 end\r\n, Silinme = case when TrInvoiceHeaders.ProcessCode = 'CO' then NetAmountLoc else 0 end\r\n, ProductCost\r\n, SonQiymet = (select top 1 toplam = il.PriceLoc * (1 - (il.PosDiscount / 100))  \r\n					from TrInvoiceLines il\r\n					join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n					where il.ProductCode = TrInvoiceLines.ProductCode\r\n					and (ih.ProcessCode = 'RP' or ih.ProcessCode = 'CI')\r\n					and ih.IsReturn = 0\r\n					and (CAST(ih.DocumentDate AS DATETIME) + CAST(ih.DocumentTime AS DATETIME)) <=\r\n						 (CAST(TrInvoiceHeaders.DocumentDate AS DATETIME) + CAST(TrInvoiceHeaders.DocumentTime AS DATETIME))\r\n					ORDER BY ih.DocumentDate desc\r\n					, il.CreatedDate desc )	\r\n\r\n, LineDescription\r\n, SalesPersonCode\r\n, CurrencyCode\r\n, ExchangeRate\r\n, TrInvoiceHeaders.ProcessCode\r\n, ProcessDesc\r\n, InvoiceNumber = DocumentNumber\r\n, Faiz =Round( ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)  / NULLIF(ProductCost,0) * 100,2)\r\n, DocumentDate\r\n, DocumentTime\r\n, OperationDate\r\n, OperationTime\r\n, Description\r\n, TrInvoiceHeaders.CurrAccCode\r\n, DcCurrAccs.CurrAccDesc\r\n, DcCurrAccTypes.CurrAccTypeDesc\r\n, DcCurrAccs.CurrAccTypeCode\r\n, TrInvoiceHeaders.OfficeCode\r\n, TrInvoiceHeaders.StoreCode\r\n, WarehouseCode\r\n, CustomsDocumentNumber\r\n, PosTerminalId\r\n, IsSuspended\r\n, IsCompleted\r\n, IsSalesViaInternet\r\n, IsLocked\r\n, DcProducts.ProductTypeCode\r\n, ProductTypeDesc\r\n, UsePos\r\n, PromotionCode\r\n, TaxRate\r\n, RetailPrice\r\n, PurchasePrice\r\n, WholesalePrice\r\n, TrInvoiceLines.CreatedDate\r\n\r\nfrom TrInvoiceLines \r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nleft join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\nleft join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\nleft join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\nleft join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode	\r\n\r\nwhere TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'RS', 'WS', 'EX')\r\n--and DocumentNumber = 'RS-000012'\r\n) Dvijok\r\norder by Dvijok.DocumentDate\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\nSELECT \r\n Menfeet = Satis - Maya\r\n, [Net Menfeet] = Satis - Maya - Xərc\r\n, *\r\nFROM  (\r\nselect  TrInvoiceLines.InvoiceLineId\r\n, TrInvoiceHeaders.InvoiceHeaderId\r\n, TrInvoiceLines.ProductCode\r\n, ProductDesc\r\n, Price\r\n, PriceLoc\r\n, Amount\r\n, NetAmountLoc\r\n, TrInvoiceLines.PosDiscount\r\n, QtyIn\r\n, QtyOut\r\n, Satis = case when TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') then NetAmountLoc else 0 end\r\n, Maya = CASE WHEN TrInvoiceHeaders.ProcessCode IN ('WS', 'RS', 'IS') THEN (QtyOut - QtyIn) * COALESCE(ProductCost, 0) ELSE 0 END\r\n, Xərc = case when TrInvoiceHeaders.ProcessCode = 'EX' then NetAmountLoc else 0 end\r\n, Artirma = case when TrInvoiceHeaders.ProcessCode = 'CI' then NetAmountLoc else 0 end\r\n, Silinme = case when TrInvoiceHeaders.ProcessCode = 'CO' then NetAmountLoc else 0 end\r\n, IsReturn\r\n, ProductCost\r\n--, SonQiymet = dbo.GetProductCost(TrInvoiceLines.ProductCode, CAST(TrInvoiceHeaders.DocumentDate AS DATETIME) + CAST(TrInvoiceHeaders.DocumentTime AS DATETIME))\r\n, LineDescription\r\n, SalesPersonCode\r\n, CurrencyCode\r\n, ExchangeRate\r\n, TrInvoiceHeaders.ProcessCode\r\n, ProcessDesc\r\n, InvoiceNumber = DocumentNumber\r\n--, Faiz =Round( ((PriceLoc * (100 - TrInvoiceLines.PosDiscount) / 100) - ProductCost)  / NULLIF(ProductCost,0) * 100,2)\r\n, DocumentDate\r\n, DocumentTime\r\n, OperationDate\r\n, OperationTime\r\n, Description\r\n, TrInvoiceHeaders.CurrAccCode\r\n, DcCurrAccs.CurrAccDesc\r\n, DcCurrAccTypes.CurrAccTypeDesc\r\n, DcCurrAccs.CurrAccTypeCode\r\n, TrInvoiceHeaders.OfficeCode\r\n, TrInvoiceHeaders.StoreCode\r\n, WarehouseCode\r\n, CustomsDocumentNumber\r\n, PosTerminalId\r\n, IsSuspended\r\n, IsCompleted\r\n, IsSalesViaInternet\r\n, IsLocked\r\n, DcProducts.ProductTypeCode\r\n, ProductTypeDesc\r\n, UsePos\r\n, PromotionCode\r\n, TaxRate\r\n, RetailPrice\r\n, PurchasePrice\r\n, WholesalePrice\r\n, TrInvoiceLines.CreatedDate\r\n, TrInvoiceLines.CreatedUserName\r\n, TrInvoiceLineExts.PriceDiscountedLoc\r\n\r\nfrom TrInvoiceLines \r\nleft join TrInvoiceHeaders on TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nleft join TrInvoiceLineExts on TrInvoiceLineExts.InvoiceLineId = TrInvoiceLines.InvoiceLineId\r\nleft join DcProducts on TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\nleft join DcProductTypes on DcProducts.ProductTypeCode = DcProductTypes.ProductTypeCode\r\nleft join DcCurrAccs on TrInvoiceHeaders.CurrAccCode = DcCurrAccs.CurrAccCode\r\nleft join DcCurrAccTypes on DcCurrAccs.CurrAccTypeCode = DcCurrAccTypes.CurrAccTypeCode\r\nleft join DcProcesses on TrInvoiceHeaders.ProcessCode = DcProcesses.ProcessCode\r\nleft join DcCurrAccs as SalesPerson on TrInvoiceLines.SalesPersonCode = SalesPerson.CurrAccCode	\r\n\r\nwhere TrInvoiceHeaders.ProcessCode IN ('CI', 'CO', 'WS', 'RS', 'IS', 'EX')\r\n--and DocumentNumber = 'RS-000012'\r\n) Dvijok\r\norder by Dvijok.DocumentDate\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -1586,9 +2800,10 @@ namespace Foxoft.Migrations
                             ReportId = 16,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 3,
                             ReportLayout = "",
                             ReportName = "Son Gələn Mallar",
-                            ReportQuery = "\r\n\r\n\r\nselect \r\n [Topdan Sat. Qiy.] =  Round(WholesalePrice, 0)\r\n, [Maya Dəyəri.] =  Round(ProductCost, 0)\r\n, [%] =CONVERT(int, Round((1 - (PivotTable.ProductCost / NULLIF(PivotTable.WholesalePrice,0))) * 100, 0)) \r\n, *\r\nfrom (\r\n	select prdcts.ProductCode\r\n	, LastUpdatedDate\r\n	, UseInternet\r\n	, ProductDesc \r\n	, HierarchyCode \r\n	, FeatureCode\r\n	, FeatureTypeId\r\n	, WholesalePrice\r\n	, ProductCost = (select top 1  PriceLoc * (1 - (PosDiscount / 100))	\r\n								from TrInvoiceLines il\r\n								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n								where il.ProductCode = prdcts.ProductCode\r\n								and ih.ProcessCode IN ('RP', 'CI') \r\n								and ih.IsReturn = 0\r\n								order by ih.DocumentDate desc\r\n										, ih.CreatedDate desc\r\n								)\r\n	, [Son Alış Günü] = (select top 1  il.LastUpdatedDate	\r\n								from TrInvoiceLines il\r\n								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n								where il.ProductCode = prdcts.ProductCode\r\n								and ih.ProcessCode IN ('RP') \r\n								and ih.IsReturn = 0\r\n								order by ih.DocumentDate desc\r\n										, ih.CreatedDate desc\r\n								)\r\n	, Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il \r\n								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n								where il.ProductCode = prdcts.ProductCode\r\n								and ih.WarehouseCode = 'depo-01'\r\n								and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT'))\r\n	from DcProducts prdcts\r\n	left join TrProductFeatures on TrProductFeatures.ProductCode = prdcts.ProductCode\r\n\r\n	where ProductTypeCode = 1\r\n	) pro\r\nPIVOT (Max(FeatureCode) FOR FeatureTypeId IN ([3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25]) \r\n) AS PivotTable \r\norder by PivotTable.[Son Alış Günü] \r\n\r\n\r\n\r\n",
+                            ReportQuery = "\r\n\r\n\r\nselect \r\n [Topdan Sat. Qiy.] =  Round(WholesalePrice, 0)\r\n, [Maya Dəyəri.] =  Round(ProductCost, 0)\r\n, [%] =CONVERT(int, Round((1 - (PivotTable.ProductCost / NULLIF(PivotTable.WholesalePrice,0))) * 100, 0)) \r\n, *\r\nfrom (\r\n	select prdcts.ProductCode\r\n	, LastUpdatedDate\r\n	, UseInternet\r\n	, ProductDesc \r\n	, HierarchyCode \r\n	, FeatureCode\r\n	, FeatureTypeId\r\n	, WholesalePrice\r\n	, ProductCost = (select top 1  PriceLoc * (1 - (PosDiscount / 100))	\r\n								from TrInvoiceLines il\r\n								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n								where il.ProductCode = prdcts.ProductCode\r\n								and ih.ProcessCode IN ('RP', 'CI') \r\n								and ih.IsReturn = 0\r\n								order by ih.DocumentDate desc\r\n										, ih.CreatedDate desc\r\n								)\r\n	, [Son Alış Günü] = (select top 1  il.LastUpdatedDate	\r\n								from TrInvoiceLines il\r\n								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n								where il.ProductCode = prdcts.ProductCode\r\n								and ih.ProcessCode IN ('RP') \r\n								and ih.IsReturn = 0\r\n								order by ih.DocumentDate desc\r\n										, ih.CreatedDate desc\r\n								)\r\n	, Balance = (Select sum(QtyIn - QtyOut) from TrInvoiceLines il \r\n								left join TrInvoiceHeaders ih on ih.InvoiceHeaderId = il.InvoiceHeaderId\r\n								where il.ProductCode = prdcts.ProductCode\r\n								and ih.WarehouseCode = 'depo-01'\r\n								and ih.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT'))\r\n	from DcProducts prdcts\r\n	left join TrProductFeatures on TrProductFeatures.ProductCode = prdcts.ProductCode\r\n\r\n	where ProductTypeCode = 1\r\n	) pro\r\nPIVOT (Max(FeatureCode) FOR FeatureTypeId IN ([3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25]) \r\n) AS PivotTable \r\norder by PivotTable.[Son Alış Günü] \r\n\r\n\r\n\r\n",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -1596,9 +2811,10 @@ namespace Foxoft.Migrations
                             ReportId = 17,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 3,
                             ReportLayout = "",
                             ReportName = "Depoların Qalığı",
-                            ReportQuery = "\r\n\r\nselect DcProducts.ProductCode\r\n	, DcProducts.ProductDesc\r\n	, TrInvoiceHeaders.WarehouseCode\r\n	, Balance = sum(QtyIn - QtyOut)\r\n	, ProductCost = (select top 1 PriceLoc * (100 - PosDiscount)/100\r\n					from TrInvoiceLines \r\n					left join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId\r\n					where TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n					and (ProcessCode = 'RP' or ProcessCode = 'CI') \r\n					{StartDate}\r\n					order by TrInvoiceHeaders.DocumentDate desc, TrInvoiceHeaders.DocumentTime desc\r\n					)\r\n	, Toplam = sum(QtyIn - QtyOut) * (select top 1 PriceLoc * (100 - PosDiscount)/100\r\n					from TrInvoiceLines \r\n					left join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId\r\n					where TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n					and (ProcessCode = 'RP' or ProcessCode = 'CI') \r\n					{StartDate}\r\n					order by TrInvoiceHeaders.DocumentDate desc, TrInvoiceHeaders.DocumentTime desc\r\n					)\r\nfrom TrInvoiceLines\r\nLEFT JOIN TrInvoiceHeaders \r\n	ON TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nLEFT JOIN DcProducts \r\n	on DcProducts.ProductCode = TrInvoiceLines.ProductCode\r\nwhere DcProducts.ProductTypeCode = 1 --and TrInvoiceHeaders.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'CI', 'CO', 'IT')\r\n\r\n{StartDate}\r\nGroup by DcProducts.ProductCode\r\n	, DcProducts.ProductDesc\r\n	, TrInvoiceHeaders.WarehouseCode\r\n\r\n",
+                            ReportQuery = "\r\n\r\nselect DcProducts.ProductCode\r\n	, DcProducts.ProductDesc\r\n	, TrInvoiceHeaders.WarehouseCode\r\n	, Balance = sum(QtyIn - QtyOut)\r\n	, ProductCost = (select top 1 PriceLoc * (100 - PosDiscount)/100\r\n					from TrInvoiceLines \r\n					left join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId\r\n					where TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n					and (ProcessCode = 'RP' or ProcessCode = 'CI') \r\n					{StartDate}\r\n					order by TrInvoiceHeaders.DocumentDate desc, TrInvoiceHeaders.DocumentTime desc\r\n					)\r\n	, Toplam = sum(QtyIn - QtyOut) * (select top 1 PriceLoc * (100 - PosDiscount)/100\r\n					from TrInvoiceLines \r\n					left join TrInvoiceHeaders on TrInvoiceHeaders.InvoiceHeaderId = TrInvoiceLines.InvoiceHeaderId\r\n					where TrInvoiceLines.ProductCode = DcProducts.ProductCode\r\n					and (ProcessCode = 'RP' or ProcessCode = 'CI') \r\n					{StartDate}\r\n					order by TrInvoiceHeaders.DocumentDate desc, TrInvoiceHeaders.DocumentTime desc\r\n					)\r\nfrom TrInvoiceLines\r\nLEFT JOIN TrInvoiceHeaders \r\n	ON TrInvoiceLines.InvoiceHeaderId = TrInvoiceHeaders.InvoiceHeaderId\r\nLEFT JOIN DcProducts \r\n	on DcProducts.ProductCode = TrInvoiceLines.ProductCode\r\nwhere DcProducts.ProductTypeCode = 1 --and TrInvoiceHeaders.ProcessCode in ('RP', 'WP', 'RS', 'WS', 'IS', 'CI', 'CO', 'IT')\r\n\r\n{StartDate}\r\nGroup by DcProducts.ProductCode\r\n	, DcProducts.ProductDesc\r\n	, TrInvoiceHeaders.WarehouseCode\r\n\r\n",
                             ReportTypeId = (byte)1
                         },
                         new
@@ -1606,6 +2822,7 @@ namespace Foxoft.Migrations
                             ReportId = 18,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 3,
                             ReportLayout = "",
                             ReportName = "Məhsul Kartı",
                             ReportQuery = "	--declare @StartDate date = dateadd(DAY, 1, getdate())\r\n	--declare @StartTime time =  '00:00:00.000'\r\n\r\nselect DcProducts.ProductCode\r\n, [Məhsulun Geniş Adı] = isnull(DcHierarchies.HierarchyCode + ' ','')  + ProductDesc \r\n		  + isnull(' ' + Feature01,'') + isnull(' ' + Feature02,'') + isnull(' ' + Feature03,'') + isnull(' ' + Feature04,'') + isnull(' ' + Feature05,'') \r\n		  + isnull(' ' + Feature06,'') + isnull(' ' + Feature07,'') + isnull(' ' + Feature08,'') + isnull(' ' + Feature09,'') + isnull(' ' + Feature10,'') \r\n		  + isnull(' ' + Feature11,'') + isnull(' ' + Feature12,'') + isnull(' ' + Feature13,'') + isnull(' ' + Feature16,'') + isnull(' ' + Feature17,'') \r\n		  + isnull(' ' + Feature18,'') + isnull(' ' + Feature19,'') + isnull(' ' + Feature20,'')\r\n, ProductDesc\r\n, WholesalePrice\r\n, DcHierarchies.HierarchyCode\r\n, HierarchyDesc\r\n, ProductTypeCode\r\n, [01] = isnull(' ' + Feature01Desc,'')\r\n, [02] = isnull(' ' + Feature02Desc,'')\r\n, [03] = isnull(' ' + Feature03Desc,'')\r\n, [04] = isnull(' ' + Feature04Desc,'')\r\n, [05] = isnull(' ' + Feature05Desc,'')\r\n, [06] = isnull(' ' + Feature06Desc,'')\r\n, [07] = isnull(' ' + Feature07Desc,'')\r\n, [09] = isnull(' ' + Feature09Desc,'')\r\n, [10] = isnull(' ' + Feature10Desc,'')\r\n, [11] = isnull(' ' + Feature11Desc,'')\r\n, [12] = isnull(' ' + Feature12Desc,'')\r\n, [13] = isnull(' ' + Feature13Desc,'')\r\n, [14] = isnull(' ' + Feature14Desc,'')\r\n, [15] = isnull(' ' + Feature15Desc,'')\r\n, [16] = isnull(' ' + Feature16Desc,'')\r\n, [17] = isnull(' ' + Feature17Desc,'')\r\n, [18] = isnull(' ' + Feature18Desc,'')\r\n, [19] = isnull(' ' + Feature22Desc,'')\r\n, [20] = isnull(' ' + Feature23Desc,'')\r\n\r\nfrom DcProducts\r\n\r\nleft join DcHierarchies on DcProducts.HierarchyCode = DcHierarchies.HierarchyCode\r\nleft join ProductFeatures on ProductFeatures.ProductCode = DcProducts.ProductCode\r\n\r\nwhere ProductTypeCode = 1\r\n			\r\norder by isnull(DcHierarchies.HierarchyCode + ' ','')  + ProductDesc\r\n",
@@ -1616,10 +2833,101 @@ namespace Foxoft.Migrations
                             ReportId = 19,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryId = 3,
                             ReportLayout = "",
                             ReportName = "Məhsul Qalığı",
-                            ReportQuery = "\n\nselect * From ProductBalanceSerialNumber\n\n",
+                            ReportQuery = "\r\n\r\nselect * From ProductBalanceSerialNumber\r\n\r\n",
                             ReportTypeId = (byte)1
+                        });
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcReportCategory", b =>
+                {
+                    b.Property<int>("ReportCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportCategoryId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("ReportCategoryDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ReportCategoryId");
+
+                    b.ToTable("DcReportCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            ReportCategoryId = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryDesc = "Satış və Müştəri Hesabatları"
+                        },
+                        new
+                        {
+                            ReportCategoryId = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryDesc = "Satınalma və Təchizatçı Hesabatları"
+                        },
+                        new
+                        {
+                            ReportCategoryId = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryDesc = "Məhsul və Stok Hesabatları"
+                        },
+                        new
+                        {
+                            ReportCategoryId = 4,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryDesc = "İstehsal Hesabatları"
+                        },
+                        new
+                        {
+                            ReportCategoryId = 5,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryDesc = "Maliyyə Hesabatları"
+                        },
+                        new
+                        {
+                            ReportCategoryId = 6,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryDesc = "Kadr və İnsan Resursları Hesabatları"
+                        },
+                        new
+                        {
+                            ReportCategoryId = 7,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReportCategoryDesc = "Mənfəət/Zərər və Rentabellik Hesabatları"
                         });
                 });
 
@@ -1717,6 +3025,17 @@ namespace Foxoft.Migrations
                         new
                         {
                             VariableId = 1,
+                            ReportId = 4,
+                            Representative = "@InvoiceHeaderId",
+                            VariableOperator = "",
+                            VariableProperty = "InvoiceHeaderId",
+                            VariableTypeId = (byte)1,
+                            VariableValue = "",
+                            VariableValueType = "System.Guid"
+                        },
+                        new
+                        {
+                            VariableId = 2,
                             ReportId = 13,
                             Representative = "{CurrAccCode}",
                             VariableOperator = "=",
@@ -1727,7 +3046,7 @@ namespace Foxoft.Migrations
                         },
                         new
                         {
-                            VariableId = 2,
+                            VariableId = 3,
                             ReportId = 17,
                             Representative = "{StartDate}",
                             VariableOperator = "<=",
@@ -1913,27 +3232,62 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
                 {
-                    b.Property<string>("UnitOfMeasureCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("UnitOfMeasureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UnitOfMeasureId"));
+
+                    b.Property<decimal>("ConversionRate")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<byte>("Level")
                         .HasColumnType("tinyint");
 
-                    b.HasKey("UnitOfMeasureCode");
+                    b.Property<int>("ParentUnitOfMeasureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitOfMeasureDesc")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("UnitOfMeasureId");
 
                     b.ToTable("DcUnitOfMeasures");
 
                     b.HasData(
                         new
                         {
-                            UnitOfMeasureCode = "Ədəd",
-                            Level = (byte)1
+                            UnitOfMeasureId = 1,
+                            ConversionRate = 0m,
+                            Level = (byte)0,
+                            ParentUnitOfMeasureId = 0,
+                            UnitOfMeasureDesc = "ədəd"
                         },
                         new
                         {
-                            UnitOfMeasureCode = "Qutu",
-                            Level = (byte)1
+                            UnitOfMeasureId = 2,
+                            ConversionRate = 0m,
+                            Level = (byte)0,
+                            ParentUnitOfMeasureId = 0,
+                            UnitOfMeasureDesc = "kq"
+                        },
+                        new
+                        {
+                            UnitOfMeasureId = 3,
+                            ConversionRate = 0m,
+                            Level = (byte)0,
+                            ParentUnitOfMeasureId = 0,
+                            UnitOfMeasureDesc = "metr"
+                        },
+                        new
+                        {
+                            UnitOfMeasureId = 4,
+                            ConversionRate = 0m,
+                            Level = (byte)0,
+                            ParentUnitOfMeasureId = 0,
+                            UnitOfMeasureDesc = "litr"
                         });
                 });
 
@@ -2054,6 +3408,11 @@ namespace Foxoft.Migrations
                         {
                             VariableCode = "CT",
                             VariableDesc = "Pul transferi"
+                        },
+                        new
+                        {
+                            VariableCode = "IS",
+                            VariableDesc = "Kredit Satışı"
                         });
                 });
 
@@ -2227,6 +3586,9 @@ namespace Foxoft.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("DefaultUnitOfMeasureId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DesignFileFolder")
                         .HasColumnType("nvarchar(max)");
 
@@ -2246,6 +3608,8 @@ namespace Foxoft.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DefaultUnitOfMeasureId");
+
                     b.HasIndex("StoreCode");
 
                     b.ToTable("SettingStores");
@@ -2254,6 +3618,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             Id = 1,
+                            DefaultUnitOfMeasureId = 1,
                             DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
                             ImageFolder = "C:\\Foxoft\\Foxoft Images",
                             SalesmanContinuity = false,
@@ -2310,6 +3675,9 @@ namespace Foxoft.Migrations
                     b.Property<string>("Slug")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("UseInSite")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ViewCount")
                         .HasColumnType("int");
@@ -2471,6 +3839,35 @@ namespace Foxoft.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrCurrAccFeature", b =>
+                {
+                    b.Property<string>("CurrAccCode")
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnOrder(0);
+
+                    b.Property<int>("CurrAccFeatureTypeId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("CurrAccFeatureCode")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(2);
+
+                    b.Property<int>("IdentityColumn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdentityColumn"));
+
+                    b.HasKey("CurrAccCode", "CurrAccFeatureTypeId", "CurrAccFeatureCode");
+
+                    b.HasIndex("CurrAccFeatureTypeId");
+
+                    b.HasIndex("CurrAccFeatureCode", "CurrAccFeatureTypeId");
+
+                    b.ToTable("TrCurrAccFeatures");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrCurrAccRole", b =>
                 {
                     b.Property<int>("CurrAccRoleId")
@@ -2563,6 +3960,53 @@ namespace Foxoft.Migrations
                     b.HasIndex("FeatureTypeId");
 
                     b.ToTable("TrHierarchyFeatureTypes");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrInstallment", b =>
+                {
+                    b.Property<int>("InstallmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstallmentId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AmountLoc")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Commission")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("DocumentDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<float>("ExchangeRate")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("InvoiceHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PaymentPlanCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("InstallmentId");
+
+                    b.HasIndex("CurrencyCode");
+
+                    b.HasIndex("InvoiceHeaderId");
+
+                    b.HasIndex("PaymentPlanCode");
+
+                    b.ToTable("TrInstallments");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
@@ -2799,14 +4243,17 @@ namespace Foxoft.Migrations
                     b.Property<decimal?>("ProductCost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("QtyIn")
+                    b.Property<int?>("ProductUnitOfMeasureId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("QtyIn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValueSql("0");
 
-                    b.Property<int>("QtyOut")
+                    b.Property<decimal>("QtyOut")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValueSql("0");
 
                     b.Property<Guid?>("RelatedLineId")
@@ -2819,13 +4266,13 @@ namespace Foxoft.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("UnitOfMeasure")
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<float>("VatRate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("real")
                         .HasDefaultValueSql("0");
+
+                    b.Property<string>("WorkerCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("InvoiceLineId");
 
@@ -2833,13 +4280,13 @@ namespace Foxoft.Migrations
 
                     b.HasIndex("ProductCode");
 
+                    b.HasIndex("ProductUnitOfMeasureId");
+
                     b.HasIndex("RelatedLineId");
 
                     b.HasIndex("SalesPersonCode");
 
                     b.HasIndex("SerialNumberCode");
-
-                    b.HasIndex("UnitOfMeasure");
 
                     b.HasIndex("InvoiceHeaderId", "ProductCode");
 
@@ -2950,6 +4397,9 @@ namespace Foxoft.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<byte?>("PaymentKindId")
+                        .HasColumnType("tinyint");
+
                     b.Property<short>("PosterminalId")
                         .HasColumnType("smallint");
 
@@ -2972,6 +4422,8 @@ namespace Foxoft.Migrations
                     b.HasIndex("CurrAccCode");
 
                     b.HasIndex("InvoiceHeaderId");
+
+                    b.HasIndex("PaymentKindId");
 
                     b.HasIndex("ProcessCode");
 
@@ -3072,50 +4524,6 @@ namespace Foxoft.Migrations
                     b.HasIndex("PaymentMethodId");
 
                     b.ToTable("TrPaymentMethodDiscounts");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrPrice", b =>
-                {
-                    b.Property<int>("PriceCode")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PriceCode"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("CreatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<DateTime>("LastUpdatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("getdate()");
-
-                    b.Property<string>("LastUpdatedUserName")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ProductCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("PriceCode");
-
-                    b.HasIndex("ProductCode");
-
-                    b.ToTable("TrPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
@@ -3366,9 +4774,9 @@ namespace Foxoft.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("Qty")
+                    b.Property<decimal>("Qty")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValueSql("1");
 
                     b.HasKey("Id");
@@ -3427,23 +4835,91 @@ namespace Foxoft.Migrations
                     b.HasIndex("FeatureCode", "FeatureTypeId");
 
                     b.ToTable("TrProductFeatures");
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrProductHierarchy", b =>
+            modelBuilder.Entity("Foxoft.Models.TrProductUnitOfMeasure", b =>
                 {
+                    b.Property<int>("ProductUnitOfMeasureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductUnitOfMeasureId"));
+
+                    b.Property<decimal>("ConversionRate")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("ProductCode")
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnOrder(1);
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("HierarchyCode")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(0);
+                    b.Property<int>("UnitOfMeasureId")
+                        .HasColumnType("int");
 
-                    b.HasKey("ProductCode", "HierarchyCode");
+                    b.HasKey("ProductUnitOfMeasureId");
 
-                    b.HasIndex("HierarchyCode");
+                    b.HasIndex("ProductCode");
 
-                    b.ToTable("TrProductHierarchies");
+                    b.HasIndex("UnitOfMeasureId");
+
+                    b.ToTable("TrProductUnitOfMeasures");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrReportCustomization", b =>
+                {
+                    b.Property<int>("ReportCustomizationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportCustomizationId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("CreatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("CurrAccCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("LastUpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("LastUpdatedUserName")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValueSql("substring(suser_name(),patindex('%\\%',suser_name())+(1),(20))");
+
+                    b.Property<string>("ReportCustomizationDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportDesignFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportFilter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReportId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReportCustomizationId");
+
+                    b.HasIndex("CurrAccCode");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("TrReportCustomizations");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
@@ -3627,7 +5103,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             RoleClaimId = 8,
-                            ClaimCode = "DiscountList",
+                            ClaimCode = "ProductDiscountList",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
@@ -3676,14 +5152,6 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 14,
                             ClaimCode = "Products",
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleCode = "Admin"
-                        },
-                        new
-                        {
-                            RoleClaimId = 15,
-                            ClaimCode = "ReportZet",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
@@ -3747,7 +5215,7 @@ namespace Foxoft.Migrations
                         new
                         {
                             RoleClaimId = 23,
-                            ClaimCode = "HierarchyFeatureType",
+                            ClaimCode = "CurrAccFeatureType",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
@@ -3788,6 +5256,182 @@ namespace Foxoft.Migrations
                         {
                             RoleClaimId = 28,
                             ClaimCode = "ExpenseOfInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 29,
+                            ClaimCode = "InstallmentSaleInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 30,
+                            ClaimCode = "DeleteInvoiceRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 31,
+                            ClaimCode = "DeleteInvoiceRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 32,
+                            ClaimCode = "DeleteInvoiceWS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 33,
+                            ClaimCode = "DeleteInvoiceIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 34,
+                            ClaimCode = "DeleteInvoiceEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 35,
+                            ClaimCode = "DeleteLineRP",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 36,
+                            ClaimCode = "DeleteLineRS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 37,
+                            ClaimCode = "DeleteLineWS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 38,
+                            ClaimCode = "DeleteLineIS",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 39,
+                            ClaimCode = "DeleteLineEX",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 40,
+                            ClaimCode = "InstallmentSaleReturn",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 41,
+                            ClaimCode = "RetailPurchaseReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 42,
+                            ClaimCode = "RetailsaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 43,
+                            ClaimCode = "WholesaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 44,
+                            ClaimCode = "InstallmentSaleReturnCustom",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 45,
+                            ClaimCode = "Installments",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 46,
+                            ClaimCode = "InstallmentCommissionChange",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 47,
+                            ClaimCode = "EditLockedInvoice",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 48,
+                            ClaimCode = "EditLockedPayment",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 49,
+                            ClaimCode = "CurrAccCreditLimit",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleCode = "Admin"
+                        },
+                        new
+                        {
+                            RoleClaimId = 50,
+                            ClaimCode = "Parameters",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastUpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleCode = "Admin"
@@ -3884,6 +5528,9 @@ namespace Foxoft.Migrations
                     b.Property<decimal>("PriceDiscounted")
                         .HasColumnType("money");
 
+                    b.Property<decimal>("PriceDiscountedLoc")
+                        .HasColumnType("money");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceLineId")
@@ -3904,11 +5551,19 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcClaim", b =>
                 {
+                    b.HasOne("Foxoft.Models.DcClaimCategory", "DcClaimCategory")
+                        .WithMany("DcClaims")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Foxoft.Models.DcClaimType", "DcClaimType")
                         .WithMany("DcClaims")
                         .HasForeignKey("ClaimTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("DcClaimCategory");
 
                     b.Navigation("DcClaimType");
                 });
@@ -3938,6 +5593,36 @@ namespace Foxoft.Migrations
                     b.Navigation("DcPersonalType");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccContactDetail", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcContactType", "DcContactType")
+                        .WithMany("DcContactDetails")
+                        .HasForeignKey("ContactTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("DcCurrAccContactDetails")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcContactType");
+
+                    b.Navigation("DcCurrAcc");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccFeature", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAccFeatureType", "DcCurrAccFeatureType")
+                        .WithMany()
+                        .HasForeignKey("CurrAccFeatureTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAccFeatureType");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcFeature", b =>
                 {
                     b.HasOne("Foxoft.Models.DcFeatureType", "DcFeatureType")
@@ -3951,9 +5636,14 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcPaymentMethod", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
-                        .WithMany("DcPaymentMethods")
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCashReg")
+                        .WithMany("CashRegDcPaymentMethods")
                         .HasForeignKey("DefaultCashRegCode")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("CurrAccDcPaymentMethods")
+                        .HasForeignKey("DefaultCurrAccCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Foxoft.Models.DcPaymentType", "DcPaymentType")
@@ -3962,9 +5652,22 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("DcCashReg");
+
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("DcPaymentType");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcPaymentPlan", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcPaymentMethod", "DcPaymentMethod")
+                        .WithMany("DcPaymentPlans")
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcPaymentMethod");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProcess", b =>
@@ -3979,6 +5682,12 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcProduct", b =>
                 {
+                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
+                        .WithMany("DcProducts")
+                        .HasForeignKey("DefaultUnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
                         .WithMany("DcProducts")
                         .HasForeignKey("HierarchyCode")
@@ -3993,15 +5702,43 @@ namespace Foxoft.Migrations
                     b.Navigation("DcHierarchy");
 
                     b.Navigation("DcProductType");
+
+                    b.Navigation("DcUnitOfMeasure");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcPriceType", "DcPriceType")
+                        .WithMany("TrStaticPrices")
+                        .HasForeignKey("PriceTypeCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
+                        .WithMany("TrStaticPrices")
+                        .HasForeignKey("ProductCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcPriceType");
+
+                    b.Navigation("DcProduct");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReport", b =>
                 {
+                    b.HasOne("Foxoft.Models.DcReportCategory", "DcReportCategory")
+                        .WithMany("DcReports")
+                        .HasForeignKey("ReportCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Foxoft.Models.DcReportType", "DcReportType")
                         .WithMany("DcReports")
                         .HasForeignKey("ReportTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("DcReportCategory");
 
                     b.Navigation("DcReportType");
                 });
@@ -4030,7 +5767,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
                         .WithMany("DcSerialNumbers")
                         .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcProduct");
@@ -4049,6 +5786,12 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.SettingStore", b =>
                 {
+                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
+                        .WithMany("SettingStores")
+                        .HasForeignKey("DefaultUnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcStore")
                         .WithMany("SettingStores")
                         .HasForeignKey("StoreCode")
@@ -4056,6 +5799,8 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.Navigation("DcStore");
+
+                    b.Navigation("DcUnitOfMeasure");
                 });
 
             modelBuilder.Entity("Foxoft.Models.SiteProduct", b =>
@@ -4086,6 +5831,33 @@ namespace Foxoft.Migrations
                     b.Navigation("DcClaim");
 
                     b.Navigation("DcReport");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrCurrAccFeature", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("TrCurrAccFeatures")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAccFeatureType", "DcCurrAccFeatureType")
+                        .WithMany("TrCurrAccFeatures")
+                        .HasForeignKey("CurrAccFeatureTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcCurrAccFeature", "DcCurrAccFeature")
+                        .WithMany("TrCurrAccFeatures")
+                        .HasForeignKey("CurrAccFeatureCode", "CurrAccFeatureTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcCurrAccFeature");
+
+                    b.Navigation("DcCurrAccFeatureType");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrCurrAccRole", b =>
@@ -4145,6 +5917,33 @@ namespace Foxoft.Migrations
                     b.Navigation("DcHierarchy");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.TrInstallment", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
+                        .WithMany("TrInstallments")
+                        .HasForeignKey("CurrencyCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
+                        .WithMany("TrPaymentPlans")
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcPaymentPlan", "DcPaymentPlan")
+                        .WithMany("TrPaymentPlans")
+                        .HasForeignKey("PaymentPlanCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrency");
+
+                    b.Navigation("DcPaymentPlan");
+
+                    b.Navigation("TrInvoiceHeader");
+                });
+
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
                 {
                     b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
@@ -4190,6 +5989,11 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Foxoft.Models.TrProductUnitOfMeasure", "TrProductUnitOfMeasure")
+                        .WithMany("TrInvoiceLines")
+                        .HasForeignKey("ProductUnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Foxoft.Models.TrInvoiceLine", "RelatedLine")
                         .WithMany("InverseRelatedLines")
                         .HasForeignKey("RelatedLineId")
@@ -4205,11 +6009,6 @@ namespace Foxoft.Migrations
                         .HasForeignKey("SerialNumberCode")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
-                        .WithMany("TrInvoiceLines")
-                        .HasForeignKey("UnitOfMeasure")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("DcCurrAcc");
 
                     b.Navigation("DcCurrency");
@@ -4218,11 +6017,11 @@ namespace Foxoft.Migrations
 
                     b.Navigation("DcSerialNumber");
 
-                    b.Navigation("DcUnitOfMeasure");
-
                     b.Navigation("RelatedLine");
 
                     b.Navigation("TrInvoiceHeader");
+
+                    b.Navigation("TrProductUnitOfMeasure");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentHeader", b =>
@@ -4234,6 +6033,11 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.TrInvoiceHeader", "TrInvoiceHeader")
                         .WithMany("TrPaymentHeaders")
                         .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Foxoft.Models.DcPaymentKind", "DcPaymentKind")
+                        .WithMany("TrPaymentHeaders")
+                        .HasForeignKey("PaymentKindId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Foxoft.Models.DcProcess", "DcProcess")
@@ -4254,6 +6058,8 @@ namespace Foxoft.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcPaymentKind");
 
                     b.Navigation("DcProcess");
 
@@ -4324,17 +6130,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcDiscount");
 
                     b.Navigation("DcPaymentMethod");
-                });
-
-            modelBuilder.Entity("Foxoft.Models.TrPrice", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                        .WithMany("TrPrices")
-                        .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcProduct");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
@@ -4459,23 +6254,42 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProduct");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.TrProductHierarchy", b =>
+            modelBuilder.Entity("Foxoft.Models.TrProductUnitOfMeasure", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcHierarchy", "DcHierarchy")
-                        .WithMany("TrProductHierarchies")
-                        .HasForeignKey("HierarchyCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                        .WithMany("TrProductHierarchies")
+                        .WithMany("TrProductUnitOfMeasures")
                         .HasForeignKey("ProductCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("DcHierarchy");
+                    b.HasOne("Foxoft.Models.DcUnitOfMeasure", "DcUnitOfMeasure")
+                        .WithMany("TrProductUnitOfMeasures")
+                        .HasForeignKey("UnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("DcProduct");
+
+                    b.Navigation("DcUnitOfMeasure");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrReportCustomization", b =>
+                {
+                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCurrAcc")
+                        .WithMany("TrReportCustomizations")
+                        .HasForeignKey("CurrAccCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Foxoft.Models.DcReport", "DcReport")
+                        .WithMany("TrReportCustomizations")
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DcCurrAcc");
+
+                    b.Navigation("DcReport");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
@@ -4511,7 +6325,7 @@ namespace Foxoft.Migrations
                     b.HasOne("Foxoft.Models.DcRole", "DcRole")
                         .WithMany("TrRoleClaims")
                         .HasForeignKey("RoleCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DcClaim");
@@ -4553,20 +6367,36 @@ namespace Foxoft.Migrations
                     b.Navigation("TrRoleClaims");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcClaimCategory", b =>
+                {
+                    b.Navigation("DcClaims");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcClaimType", b =>
                 {
                     b.Navigation("DcClaims");
                 });
 
+            modelBuilder.Entity("Foxoft.Models.DcContactType", b =>
+                {
+                    b.Navigation("DcContactDetails");
+                });
+
             modelBuilder.Entity("Foxoft.Models.DcCurrAcc", b =>
                 {
-                    b.Navigation("DcPaymentMethods");
+                    b.Navigation("CashRegDcPaymentMethods");
+
+                    b.Navigation("CurrAccDcPaymentMethods");
+
+                    b.Navigation("DcCurrAccContactDetails");
 
                     b.Navigation("DcStoreTrPaymentHeaders");
 
                     b.Navigation("SettingStores");
 
                     b.Navigation("ToCashRegTrPaymentHeaders");
+
+                    b.Navigation("TrCurrAccFeatures");
 
                     b.Navigation("TrCurrAccRoles");
 
@@ -4578,8 +6408,20 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrPaymentLines");
 
+                    b.Navigation("TrReportCustomizations");
+
                     b.Navigation("TrSession")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccFeature", b =>
+                {
+                    b.Navigation("TrCurrAccFeatures");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcCurrAccFeatureType", b =>
+                {
+                    b.Navigation("TrCurrAccFeatures");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcCurrAccType", b =>
@@ -4593,6 +6435,8 @@ namespace Foxoft.Migrations
                         .IsRequired();
 
                     b.Navigation("DcProcesses");
+
+                    b.Navigation("TrInstallments");
 
                     b.Navigation("TrInvoiceLines");
 
@@ -4630,15 +6474,25 @@ namespace Foxoft.Migrations
                     b.Navigation("DcProducts");
 
                     b.Navigation("TrHierarchyFeatureTypes");
+                });
 
-                    b.Navigation("TrProductHierarchies");
+            modelBuilder.Entity("Foxoft.Models.DcPaymentKind", b =>
+                {
+                    b.Navigation("TrPaymentHeaders");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcPaymentMethod", b =>
                 {
+                    b.Navigation("DcPaymentPlans");
+
                     b.Navigation("TrPaymentLines");
 
                     b.Navigation("TrPaymentMethodDiscounts");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcPaymentPlan", b =>
+                {
+                    b.Navigation("TrPaymentPlans");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcPaymentType", b =>
@@ -4658,6 +6512,8 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.DcPriceType", b =>
                 {
                     b.Navigation("TrPriceListHeaders");
+
+                    b.Navigation("TrStaticPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProcess", b =>
@@ -4681,15 +6537,15 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrPriceListLines");
 
-                    b.Navigation("TrPrices");
-
                     b.Navigation("TrProductBarcodes");
 
                     b.Navigation("TrProductDiscounts");
 
                     b.Navigation("TrProductFeatures");
 
-                    b.Navigation("TrProductHierarchies");
+                    b.Navigation("TrProductUnitOfMeasures");
+
+                    b.Navigation("TrStaticPrices");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductType", b =>
@@ -4705,7 +6561,14 @@ namespace Foxoft.Migrations
 
                     b.Navigation("TrFormReports");
 
+                    b.Navigation("TrReportCustomizations");
+
                     b.Navigation("TrReportSubQueries");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.DcReportCategory", b =>
+                {
+                    b.Navigation("DcReports");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcReportType", b =>
@@ -4732,7 +6595,11 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcUnitOfMeasure", b =>
                 {
-                    b.Navigation("TrInvoiceLines");
+                    b.Navigation("DcProducts");
+
+                    b.Navigation("SettingStores");
+
+                    b.Navigation("TrProductUnitOfMeasures");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceHeader", b =>
@@ -4742,6 +6609,8 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrPaymentHeaders");
+
+                    b.Navigation("TrPaymentPlans");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrInvoiceLine", b =>
@@ -4760,6 +6629,11 @@ namespace Foxoft.Migrations
             modelBuilder.Entity("Foxoft.Models.TrPriceListHeader", b =>
                 {
                     b.Navigation("TrPriceListLines");
+                });
+
+            modelBuilder.Entity("Foxoft.Models.TrProductUnitOfMeasure", b =>
+                {
+                    b.Navigation("TrInvoiceLines");
                 });
 
             modelBuilder.Entity("Foxoft.Models.TrReportSubQuery", b =>
