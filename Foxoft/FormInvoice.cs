@@ -40,7 +40,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using WaitForm_SetDescription;
+using Foxoft;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -124,7 +124,6 @@ namespace Foxoft
                     LayoutControlItem controlItem = item as LayoutControlItem;
                     if (controlItem != null)
                     {
-
                         if (controlItem.Control is LookUpEdit lookUpEdit)
                             lookUpEdit.EditValueChanged += LookUpEdit_EditValueChanged;
                         else if (controlItem.Control is BaseEdit baseEdit)
@@ -205,19 +204,6 @@ namespace Foxoft
             checkEdit_IsReturn.Properties.Caption = ReflectionExt.GetDisplayName<TrInvoiceHeader>(x => x.IsReturn);
         }
 
-        private void ChangeQtyByProcessDir() // if Isreturn Changed calculate Qty again
-        {
-            if (trInvoiceHeader is not null)
-            {
-                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                {
-                    decimal qtyIn = (decimal)gV_InvoiceLine.GetRowCellValue(i, (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode) ? colQtyIn : colQtyOut);
-                    decimal qtyInAbs = Math.Abs(qtyIn);
-                    gV_InvoiceLine.SetRowCellValue(i, colQty, qtyInAbs);
-                }
-            }
-        }
-
         private void ClearControlsAddNew()
         {
             dbContext = new subContext();
@@ -287,12 +273,6 @@ namespace Foxoft
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             gV_InvoiceLine.Focus();
-        }
-
-        private void item_EditValueChanging(object sender, ChangingEventArgs e)
-        {
-            if (e.OldValue != e.NewValue)
-                MessageBox.Show("EditValueChanging");
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -436,9 +416,7 @@ namespace Foxoft
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     if (form.dcCurrAcc.CreditLimit > Math.Abs(form.dcCurrAcc.Balance) || form.dcCurrAcc.CreditLimit == 0)
-                    {
                         btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
-                    }
                     else
                         XtraMessageBox.Show("Müştəri Kredit Limitin Aşır", "Diqqət");
                 }
@@ -544,6 +522,16 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
+            if (e.Column == col_ProductCode)
+            {
+                var row = gV_InvoiceLine.GetRow(e.RowHandle) as TrInvoiceLine;
+
+                if (row != null)
+                {
+                    row.DcProduct = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
+                    gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
+                }
+            }
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)

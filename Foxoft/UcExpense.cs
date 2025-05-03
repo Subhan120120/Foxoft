@@ -1,13 +1,14 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Mask;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using Microsoft.EntityFrameworkCore;
+using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Foxoft.Properties;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace Foxoft
 {
@@ -17,6 +18,7 @@ namespace Foxoft
 
         EfMethods efMethods = new EfMethods();
         TrInvoiceHeader trInvoiceHeader;
+        Guid invoiceHeaderId;
 
         public UcExpense()
         {
@@ -28,20 +30,92 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
+        private void trInvoiceHeadersBindingSource_AddingNew(object sender, AddingNewEventArgs e)
+        {
+            TrInvoiceHeader invoiceHeader = new();
+            invoiceHeader.InvoiceHeaderId = invoiceHeaderId;
+            string NewDocNum = efMethods.GetNextDocNum(true, "EX", "DocumentNumber", "TrInvoiceHeaders", 6);
+            invoiceHeader.DocumentNumber = NewDocNum;
+            invoiceHeader.DocumentDate = DateTime.Now;
+            invoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
+            invoiceHeader.ProcessCode = "EX";
+            invoiceHeader.OfficeCode = Authorization.OfficeCode;
+            invoiceHeader.StoreCode = Authorization.StoreCode;
+            invoiceHeader.CreatedUserName = Authorization.CurrAccCode;
+            invoiceHeader.IsMainTF = true;
+            invoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+
+            e.NewObject = invoiceHeader;
+        }
+
+        private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
+        {
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, nameof(TrInvoiceLine.InvoiceHeaderId), trInvoiceHeader.InvoiceHeaderId);
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, nameof(TrInvoiceLine.InvoiceLineId), Guid.NewGuid());
+            gV_InvoiceLine.SetRowCellValue(e.RowHandle, nameof(TrInvoiceLine.QtyIn), 1);
+
+            DcProcess dcProcess = efMethods.SelectEntityById<DcProcess>("EX");
+
+            string currencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            if (!string.IsNullOrEmpty(dcProcess.CustomCurrencyCode))
+                currencyCode = dcProcess.CustomCurrencyCode;
+            DcCurrency currency = efMethods.SelectEntityById<DcCurrency>(currencyCode);
+
+            if (currency is not null)
+            {
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colCurrencyCode, currency.CurrencyCode);
+                gV_InvoiceLine.SetRowCellValue(e.RowHandle, colExchangeRate, currency.ExchangeRate);
+            }
+        }
+
         private void ClearControlsAddNew()
         {
             dbContext = new subContext();
 
+            invoiceHeaderId = Guid.NewGuid();
+
+            dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
+                                      .Include(x => x.DcCurrAcc)
+                                      .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                      .Load();
+
+            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
-            string NewDocNum = efMethods.GetNextDocNum(true, "EX", "DocumentNumber", "TrInvoiceHeaders", 6);
-            trInvoiceHeader.InvoiceHeaderId = Guid.NewGuid();
-            trInvoiceHeader.DocumentNumber = NewDocNum;
-            trInvoiceHeader.DocumentDate = DateTime.Now;
-            trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-            trInvoiceHeader.ProcessCode = "EX";
+            dbContext.TrInvoiceLines.Include(x => x.DcProduct)
+                                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                                    .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                                    .LoadAsync()
+                                    .ContinueWith(loadTask =>
+                                    {
+                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                                        gV_InvoiceLine.Focus();
+                                    }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
+            dataLayoutControl1.IsValid(out List<string> errorList);
+
+
+            Tag = btnEdit_DocNum.EditValue;
+
+            //checkEdit_IsReturn.Enabled = false;
+        }
+
+
+        private void LoadInvoice()
+        {
+            SplashScreenManager.ShowForm(this.ParentForm, typeof(WaitForm), true, true, false);
+
+            dbContext = new subContext();
+
+            dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
+                                      .Load();
+
+            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+            dbContext.TrInvoiceLines.Include(o => o.DcProduct)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .OrderBy(x => x.CreatedDate)
@@ -49,40 +123,34 @@ namespace Foxoft
                                     .ContinueWith(loadTask =>
                                     {
                                         trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+
                                         gV_InvoiceLine.Focus();
 
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
-        }
 
-        private void gV_InvoiceLine_InitNewRow(object sender, InitNewRowEventArgs e)
-        {
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceHeaderId", trInvoiceHeader.InvoiceHeaderId);
-            gV_InvoiceLine.SetRowCellValue(e.RowHandle, "InvoiceLineId", Guid.NewGuid());
+            dataLayoutControl1.IsValid(out List<string> errorList);
+
+            Tag = btnEdit_DocNum.EditValue;
+
+            SplashScreenManager.CloseForm(false);
         }
 
         private void btnEdit_DocNum_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            using (FormInvoiceHeaderList form = new("EX", Guid.Empty))
+            using (FormInvoiceHeaderList form = new("EX", null))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     trInvoiceHeader.InvoiceHeaderId = form.trInvoiceHeader.InvoiceHeaderId;
 
-                    dbContext = new subContext();
-
-                    dbContext.TrInvoiceHeaders.Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId).Load();
-                    trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
-
-                    dbContext.TrInvoiceLines.Where(x => x.InvoiceHeaderId == form.trInvoiceHeader.InvoiceHeaderId)
-                                            .LoadAsync()
-                                            .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
+                    LoadInvoice();
                 }
             }
         }
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            using (FormCurrAccList form = new FormCurrAccList(new byte[] { 2 }))
+            using (FormCurrAccList form = new(new byte[] { 2 }))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;
@@ -97,6 +165,21 @@ namespace Foxoft
                     return;
                 GridView gV = sender as GridView;
                 gV.DeleteRow(gV.FocusedRowHandle);
+            }
+        }
+
+
+        private void GV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            if (e.Column == colProductCode)
+            {
+                var row = gV_InvoiceLine.GetRow(e.RowHandle) as TrInvoiceLine;
+
+                if (row != null)
+                {
+                    row.DcProduct = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
+                    gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
+                }
             }
         }
 
@@ -128,9 +211,22 @@ namespace Foxoft
             dbContext.SaveChanges();
             efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
-
             ClearControlsAddNew();
         }
 
+        private void gV_InvoiceLine_ShownEditor(object sender, EventArgs e)
+        {
+            if (new Type[] { typeof(decimal), typeof(float), typeof(Single) }.Contains(gV_InvoiceLine.FocusedColumn.ColumnType))
+            {
+                TextEdit? editor = gV_InvoiceLine.ActiveEditor as TextEdit;
+                if (editor != null)
+                {
+                    CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                    customCulture.NumberFormat.NumberDecimalSeparator = ".";
+                    editor.Properties.Mask.MaskType = MaskType.Numeric;
+                    editor.Properties.Mask.Culture = customCulture; // Ensure '.' is used
+                }
+            }
+        }
     }
 }

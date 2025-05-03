@@ -34,165 +34,163 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.toolbarFormControl1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormControl();
-            this.toolbarFormManager1 = new DevExpress.XtraBars.ToolbarForm.ToolbarFormManager(this.components);
-            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.bCI_invoice = new DevExpress.XtraBars.BarCheckItem();
-            this.bCI_return = new DevExpress.XtraBars.BarCheckItem();
-            this.bCI_expenses = new DevExpress.XtraBars.BarCheckItem();
-            this.navPage_Return = new DevExpress.XtraBars.Navigation.NavigationPage();
-            this.navPage_Sale = new DevExpress.XtraBars.Navigation.NavigationPage();
-            this.navigationFrame1 = new DevExpress.XtraBars.Navigation.NavigationFrame();
-            this.navPage_Expenses = new DevExpress.XtraBars.Navigation.NavigationPage();
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.navigationFrame1)).BeginInit();
-            this.navigationFrame1.SuspendLayout();
-            this.SuspendLayout();
+            components = new Container();
+            toolbarFormControl1 = new ToolbarFormControl();
+            toolbarFormManager1 = new ToolbarFormManager(components);
+            barDockControlTop = new BarDockControl();
+            barDockControlBottom = new BarDockControl();
+            barDockControlLeft = new BarDockControl();
+            barDockControlRight = new BarDockControl();
+            bCI_invoice = new BarCheckItem();
+            bCI_return = new BarCheckItem();
+            bCI_expenses = new BarCheckItem();
+            navPage_Return = new NavigationPage();
+            navPage_Sale = new NavigationPage();
+            navigationFrame1 = new NavigationFrame();
+            navPage_Expenses = new NavigationPage();
+            ((ISupportInitialize)toolbarFormControl1).BeginInit();
+            ((ISupportInitialize)toolbarFormManager1).BeginInit();
+            ((ISupportInitialize)navigationFrame1).BeginInit();
+            navigationFrame1.SuspendLayout();
+            SuspendLayout();
             // 
             // toolbarFormControl1
             // 
-            this.toolbarFormControl1.Location = new System.Drawing.Point(0, 0);
-            this.toolbarFormControl1.Manager = this.toolbarFormManager1;
-            this.toolbarFormControl1.Name = "toolbarFormControl1";
-            this.toolbarFormControl1.Size = new System.Drawing.Size(1242, 31);
-            this.toolbarFormControl1.TabIndex = 1;
-            this.toolbarFormControl1.TabStop = false;
-            this.toolbarFormControl1.TitleItemLinks.Add(this.bCI_invoice);
-            this.toolbarFormControl1.TitleItemLinks.Add(this.bCI_return);
-            this.toolbarFormControl1.TitleItemLinks.Add(this.bCI_expenses);
-            this.toolbarFormControl1.ToolbarForm = this;
+            toolbarFormControl1.Location = new Point(0, 0);
+            toolbarFormControl1.Manager = toolbarFormManager1;
+            toolbarFormControl1.Name = "toolbarFormControl1";
+            toolbarFormControl1.Size = new Size(1242, 31);
+            toolbarFormControl1.TabIndex = 1;
+            toolbarFormControl1.TabStop = false;
+            toolbarFormControl1.TitleItemLinks.Add(bCI_invoice);
+            toolbarFormControl1.TitleItemLinks.Add(bCI_return);
+            toolbarFormControl1.TitleItemLinks.Add(bCI_expenses);
+            toolbarFormControl1.ToolbarForm = this;
             // 
             // toolbarFormManager1
             // 
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlTop);
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlBottom);
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlLeft);
-            this.toolbarFormManager1.DockControls.Add(this.barDockControlRight);
-            this.toolbarFormManager1.Form = this;
-            this.toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.bCI_invoice,
-            this.bCI_return,
-            this.bCI_expenses});
-            this.toolbarFormManager1.MaxItemId = 25;
+            toolbarFormManager1.DockControls.Add(barDockControlTop);
+            toolbarFormManager1.DockControls.Add(barDockControlBottom);
+            toolbarFormManager1.DockControls.Add(barDockControlLeft);
+            toolbarFormManager1.DockControls.Add(barDockControlRight);
+            toolbarFormManager1.Form = this;
+            toolbarFormManager1.Items.AddRange(new BarItem[] { bCI_invoice, bCI_return, bCI_expenses });
+            toolbarFormManager1.MaxItemId = 25;
             // 
             // barDockControlTop
             // 
-            this.barDockControlTop.CausesValidation = false;
-            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barDockControlTop.Location = new System.Drawing.Point(0, 31);
-            this.barDockControlTop.Manager = this.toolbarFormManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1242, 0);
+            barDockControlTop.CausesValidation = false;
+            barDockControlTop.Dock = DockStyle.Top;
+            barDockControlTop.Location = new Point(0, 31);
+            barDockControlTop.Manager = toolbarFormManager1;
+            barDockControlTop.Size = new Size(1242, 0);
             // 
             // barDockControlBottom
             // 
-            this.barDockControlBottom.CausesValidation = false;
-            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 649);
-            this.barDockControlBottom.Manager = this.toolbarFormManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1242, 0);
+            barDockControlBottom.CausesValidation = false;
+            barDockControlBottom.Dock = DockStyle.Bottom;
+            barDockControlBottom.Location = new Point(0, 649);
+            barDockControlBottom.Manager = toolbarFormManager1;
+            barDockControlBottom.Size = new Size(1242, 0);
             // 
             // barDockControlLeft
             // 
-            this.barDockControlLeft.CausesValidation = false;
-            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
-            this.barDockControlLeft.Manager = this.toolbarFormManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 618);
+            barDockControlLeft.CausesValidation = false;
+            barDockControlLeft.Dock = DockStyle.Left;
+            barDockControlLeft.Location = new Point(0, 31);
+            barDockControlLeft.Manager = toolbarFormManager1;
+            barDockControlLeft.Size = new Size(0, 618);
             // 
             // barDockControlRight
             // 
-            this.barDockControlRight.CausesValidation = false;
-            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1242, 31);
-            this.barDockControlRight.Manager = this.toolbarFormManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 618);
+            barDockControlRight.CausesValidation = false;
+            barDockControlRight.Dock = DockStyle.Right;
+            barDockControlRight.Location = new Point(1242, 31);
+            barDockControlRight.Manager = toolbarFormManager1;
+            barDockControlRight.Size = new Size(0, 618);
             // 
             // bCI_invoice
             // 
-            this.bCI_invoice.BindableChecked = true;
-            this.bCI_invoice.Caption = "Satış";
-            this.bCI_invoice.Checked = true;
-            this.bCI_invoice.Id = 20;
-            this.bCI_invoice.Name = "bCI_invoice";
-            this.bCI_invoice.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.bCI_CheckedChanged);
-            this.bCI_invoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bCI_invoice_ItemClick);
+            bCI_invoice.BindableChecked = true;
+            bCI_invoice.Caption = "Satış";
+            bCI_invoice.Checked = true;
+            bCI_invoice.Id = 20;
+            bCI_invoice.Name = "bCI_invoice";
+            bCI_invoice.CheckedChanged += bCI_CheckedChanged;
+            bCI_invoice.ItemClick += bCI_invoice_ItemClick;
             // 
             // bCI_return
             // 
-            this.bCI_return.Caption = "Geri Qaytarma";
-            this.bCI_return.Id = 22;
-            this.bCI_return.Name = "bCI_return";
-            this.bCI_return.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.bCI_CheckedChanged);
-            this.bCI_return.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bCI_return_ItemClick);
+            bCI_return.Caption = "Geri Qaytarma";
+            bCI_return.Id = 22;
+            bCI_return.Name = "bCI_return";
+            bCI_return.CheckedChanged += bCI_CheckedChanged;
+            bCI_return.ItemClick += bCI_return_ItemClick;
             // 
             // bCI_expenses
             // 
-            this.bCI_expenses.Caption = "Xərclər";
-            this.bCI_expenses.Id = 24;
-            this.bCI_expenses.Name = "bCI_expenses";
-            this.bCI_expenses.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.bCI_CheckedChanged);
-            this.bCI_expenses.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bCI_expenses_ItemClick);
+            bCI_expenses.Caption = "Xərclər";
+            bCI_expenses.Id = 24;
+            bCI_expenses.Name = "bCI_expenses";
+            bCI_expenses.CheckedChanged += bCI_CheckedChanged;
+            bCI_expenses.ItemClick += bCI_expenses_ItemClick;
             // 
             // navPage_Return
             // 
-            this.navPage_Return.ControlName = "GeriQaytarma";
-            this.navPage_Return.Name = "navPage_Return";
-            this.navPage_Return.Size = new System.Drawing.Size(1242, 618);
+            navPage_Return.Caption = "navPage_Return";
+            navPage_Return.ControlName = "GeriQaytarma";
+            navPage_Return.Name = "navPage_Return";
+            navPage_Return.Size = new Size(1242, 618);
             // 
             // navPage_Sale
             // 
-            this.navPage_Sale.ControlName = "Satış";
-            this.navPage_Sale.Name = "navPage_Sale";
-            this.navPage_Sale.Size = new System.Drawing.Size(1242, 618);
+            navPage_Sale.Caption = "navPage_Sale";
+            navPage_Sale.ControlName = "Satış";
+            navPage_Sale.Name = "navPage_Sale";
+            navPage_Sale.Size = new Size(1242, 618);
             // 
             // navigationFrame1
             // 
-            this.navigationFrame1.Controls.Add(this.navPage_Sale);
-            this.navigationFrame1.Controls.Add(this.navPage_Return);
-            this.navigationFrame1.Controls.Add(this.navPage_Expenses);
-            this.navigationFrame1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.navigationFrame1.Location = new System.Drawing.Point(0, 31);
-            this.navigationFrame1.Name = "navigationFrame1";
-            this.navigationFrame1.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
-            this.navPage_Sale,
-            this.navPage_Return,
-            this.navPage_Expenses});
-            this.navigationFrame1.SelectedPage = this.navPage_Sale;
-            this.navigationFrame1.Size = new System.Drawing.Size(1242, 618);
-            this.navigationFrame1.TabIndex = 0;
-            this.navigationFrame1.Text = "navigationFrame1";
-            this.navigationFrame1.TransitionAnimationProperties.FrameInterval = 3000;
+            navigationFrame1.Controls.Add(navPage_Sale);
+            navigationFrame1.Controls.Add(navPage_Return);
+            navigationFrame1.Controls.Add(navPage_Expenses);
+            navigationFrame1.Dock = DockStyle.Fill;
+            navigationFrame1.Location = new Point(0, 31);
+            navigationFrame1.Name = "navigationFrame1";
+            navigationFrame1.Pages.AddRange(new NavigationPageBase[] { navPage_Sale, navPage_Return, navPage_Expenses });
+            navigationFrame1.SelectedPage = navPage_Sale;
+            navigationFrame1.Size = new Size(1242, 618);
+            navigationFrame1.TabIndex = 0;
+            navigationFrame1.Text = "navigationFrame1";
+            navigationFrame1.TransitionAnimationProperties.FrameInterval = 3000;
             // 
             // navPage_Expenses
             // 
-            this.navPage_Expenses.Name = "navPage_Expenses";
-            this.navPage_Expenses.Size = new System.Drawing.Size(1242, 618);
+            navPage_Expenses.Caption = "navPage_Expenses";
+            navPage_Expenses.Name = "navPage_Expenses";
+            navPage_Expenses.Size = new Size(1242, 618);
             // 
             // FormPOS
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1242, 649);
-            this.Controls.Add(this.navigationFrame1);
-            this.Controls.Add(this.barDockControlLeft);
-            this.Controls.Add(this.barDockControlRight);
-            this.Controls.Add(this.barDockControlBottom);
-            this.Controls.Add(this.barDockControlTop);
-            this.Controls.Add(this.toolbarFormControl1);
-            this.Name = "FormPOS";
-            this.ToolbarFormControl = this.toolbarFormControl1;
-            this.Load += new System.EventHandler(this.FormPOS_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.toolbarFormManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.navigationFrame1)).EndInit();
-            this.navigationFrame1.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1242, 649);
+            Controls.Add(navigationFrame1);
+            Controls.Add(barDockControlLeft);
+            Controls.Add(barDockControlRight);
+            Controls.Add(barDockControlBottom);
+            Controls.Add(barDockControlTop);
+            Controls.Add(toolbarFormControl1);
+            Name = "FormPOS";
+            ToolbarFormControl = toolbarFormControl1;
+            WindowState = FormWindowState.Maximized;
+            Load += FormPOS_Load;
+            ((ISupportInitialize)toolbarFormControl1).EndInit();
+            ((ISupportInitialize)toolbarFormManager1).EndInit();
+            ((ISupportInitialize)navigationFrame1).EndInit();
+            navigationFrame1.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

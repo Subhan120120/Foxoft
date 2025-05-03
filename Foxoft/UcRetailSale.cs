@@ -6,6 +6,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
+using Foxoft.Models.Entity;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
@@ -93,10 +94,27 @@ namespace Foxoft
                     if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
                         InsertInvoiceHeader();
 
-                    DcProduct DcProduct = formProductList.dcProduct;
-                    int result = efMethods.InsertInvoiceLine(DcProduct, invoiceHeaderId, 1);
+                    //TrInvoiceHeader trInvoiceHeader = efMethods.SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
 
-                    if (result > 0)
+                    TrInvoiceLine trInvoiceLine = new()
+                    {
+                        //TrInvoiceHeader = trInvoiceHeader, // qty duzgun hesablanamsina gore
+                        InvoiceLineId = Guid.NewGuid(),
+                        InvoiceHeaderId = invoiceHeaderId,
+                        ProductCode = formProductList.dcProduct.ProductCode,
+                        Price = formProductList.dcProduct.RetailPrice,
+                        Amount = Convert.ToDecimal(formProductList.dcProduct.RetailPrice),
+                        PosDiscount = Convert.ToDecimal(formProductList.dcProduct.PosDiscount),
+                        NetAmount = Convert.ToDecimal(formProductList.dcProduct.RetailPrice),
+                        QtyOut = 1,
+                        ProductCost = SqlFunctions.GetProductCost(formProductList.dcProduct.ProductCode, null)
+                    };
+
+                    //trInvoiceLine.TrInvoiceHeader = null;
+
+                    trInvoiceLine = efMethods.InsertEntity<TrInvoiceLine>(trInvoiceLine);
+
+                    if (trInvoiceLine is not null)
                     {
                         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
                         gV_InvoiceLine.MoveLast();
@@ -496,7 +514,27 @@ namespace Foxoft
                 if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId))
                     InsertInvoiceHeader();
 
-                if (efMethods.InsertInvoiceLine(selectedProduct, invoiceHeaderId, qty) > 0)
+                //TrInvoiceHeader trInvoiceHeader = efMethods.SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
+
+                TrInvoiceLine trInvoiceLine = new()
+                {
+                    //TrInvoiceHeader = trInvoiceHeader, // qty duzgun hesablanamsina gore
+                    InvoiceLineId = Guid.NewGuid(),
+                    InvoiceHeaderId = invoiceHeaderId,
+                    ProductCode = selectedProduct.ProductCode,
+                    Price = selectedProduct.RetailPrice,
+                    Amount = Convert.ToDecimal(selectedProduct.RetailPrice),
+                    PosDiscount = Convert.ToDecimal(selectedProduct.PosDiscount),
+                    NetAmount = Convert.ToDecimal(selectedProduct.RetailPrice),
+                    QtyOut = 1,
+                    ProductCost = SqlFunctions.GetProductCost(selectedProduct.ProductCode, null)
+                };
+
+                //trInvoiceLine.TrInvoiceHeader = null;
+
+                trInvoiceLine = efMethods.InsertEntity<TrInvoiceLine>(trInvoiceLine);
+
+                if (trInvoiceLine is not null)
                 {
                     gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
                     gV_InvoiceLine.MoveLast();

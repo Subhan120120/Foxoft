@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraWaitForm;
 
-namespace WaitForm_SetDescription
+namespace Foxoft
 {
     public partial class WaitForm : DevExpress.XtraWaitForm.WaitForm
     {

@@ -49,9 +49,12 @@ namespace Foxoft
         {
             using subContext db = new();
             db.Set<T>().Add(entity);
-            db.SaveChanges();
+            int rowAffected = db.SaveChanges();
 
-            return entity;
+            if (rowAffected > 0)
+                return entity;
+            else
+                return null;
         }
 
         public int UpdateEntity<T>(T entity) where T : class
@@ -591,31 +594,6 @@ namespace Foxoft
                                     .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                     .OrderBy(x => x.CreatedDate)
                                     .ToList();
-        }
-
-        public int InsertInvoiceLine(DcProduct dcProduct, Guid invoiceHeaderId, decimal qty)
-        {
-            using subContext db = new();
-
-            TrInvoiceHeader trInvoiceHeader = SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
-
-            TrInvoiceLine trInvoiceLine = new()
-            {
-                TrInvoiceHeader = trInvoiceHeader,
-                InvoiceLineId = Guid.NewGuid(),
-                InvoiceHeaderId = invoiceHeaderId,
-                ProductCode = dcProduct.ProductCode,
-                Price = dcProduct.RetailPrice,
-                Amount = Convert.ToDecimal(dcProduct.RetailPrice),
-                PosDiscount = Convert.ToDecimal(dcProduct.PosDiscount),
-                NetAmount = Convert.ToDecimal(dcProduct.RetailPrice),
-                Qty = qty,
-            };
-
-            trInvoiceLine.TrInvoiceHeader = null;
-
-            db.TrInvoiceLines.Add(trInvoiceLine);
-            return db.SaveChanges();
         }
 
         public bool ExpensesExistByInvoiceId(Guid invoiceHeaderId)

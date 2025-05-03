@@ -8,7 +8,7 @@
 // You can find sample updates and versions for different programming languages here:
 // http://www.devexpress.com/example=E3575
 
-namespace WaitForm_SetDescription
+namespace Foxoft
 {
     partial class WaitForm
     {
