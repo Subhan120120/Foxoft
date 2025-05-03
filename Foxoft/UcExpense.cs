@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Mask;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraSplashScreen;
@@ -8,6 +9,7 @@ using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Foxoft
@@ -159,15 +161,65 @@ namespace Foxoft
 
         private void gV_InvoiceLine_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            if (gV_InvoiceLine.SelectedRowsCount > 0)
             {
-                if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                    return;
-                GridView gV = sender as GridView;
-                gV.DeleteRow(gV.FocusedRowHandle);
+                if (e.KeyCode == Keys.Delete && gV_InvoiceLine.ActiveEditor == null)
+                {
+                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                        return;
+
+                    gV_InvoiceLine.DeleteSelectedRows();
+                }
+
+                if (e.KeyCode == Keys.C && e.Control)
+                {
+                    string cellValue = gV_InvoiceLine.GetFocusedValue()?.ToString();
+                    if (!string.IsNullOrEmpty(cellValue))
+                    {
+                        Clipboard.SetText(cellValue);
+                        e.Handled = true;
+                    }
+                }
+
+                if (e.KeyCode == Keys.F2)
+                {
+                    gV_InvoiceLine.FocusedColumn = colProductCode;
+                    gV_InvoiceLine.ShowEditor();
+                    if (gV_InvoiceLine.ActiveEditor is ButtonEdit)
+                        SelectProduct(gV_InvoiceLine.ActiveEditor);
+
+                    gV_InvoiceLine.CloseEditor();
+
+                    e.Handled = true;   // Stop the character from being entered into the control.
+                }
             }
         }
 
+        private void SelectProduct(object sender)
+        {
+            string productCode = gV_InvoiceLine.GetFocusedRowCellValue(colProductCode)?.ToString();
+
+            ButtonEdit editor = (ButtonEdit)sender;
+
+            using FormProductList form = new(new byte[] { 2 }, false, productCode);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    editor.EditValue = form.dcProduct.ProductCode;
+
+                    gV_InvoiceLine.CloseEditor();
+                    gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+                    gV_InvoiceLine.FocusedColumn = colPrice;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
         private void GV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
@@ -177,8 +229,16 @@ namespace Foxoft
 
                 if (row != null)
                 {
-                    row.DcProduct = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
+                    DcProduct product = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
+
+                    if (dbContext.Entry(product).State == EntityState.Detached) // dbContext.SaveChanges() metodunda DcProduct insert etmeye calismasin deye 
+                        dbContext.Attach(product);
+
+                    row.DcProduct = product;
+
                     gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
+
+
                 }
             }
         }
@@ -189,18 +249,7 @@ namespace Foxoft
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            ButtonEdit editor = (ButtonEdit)sender;
-            int buttonIndex = editor.Properties.Buttons.IndexOf(e.Button);
-            if (buttonIndex == 0)
-            {
-                using (FormProductList form = new(new byte[] { 2 }, false))
-                {
-                    if (form.ShowDialog(this) == DialogResult.OK)
-                    {
-                        editor.EditValue = form.dcProduct.ProductCode;
-                    }
-                }
-            }
+            SelectProduct(sender);
         }
 
         private void btn_Save_Click(object sender, EventArgs e)
@@ -228,5 +277,52 @@ namespace Foxoft
                 }
             }
         }
+
+        private void GV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
+        {
+            GridView view = sender as GridView;
+            GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
+
+            if (column == colBarcode || column == colProductCode)
+            {
+                string eValue = (e.Value ??= String.Empty).ToString();
+
+                if (!string.IsNullOrEmpty(eValue))
+                {
+                    DcProduct product = null;
+
+                    if (column == colBarcode)
+                        product = efMethods.SelectProductByBarcode(eValue);
+                    if (column == colProductCode)
+                    {
+                        product = efMethods.SelectExpense(eValue);
+                    }
+
+                    if (product is not null)
+                    {
+                        gV_InvoiceLine.SetRowCellValue(view.FocusedRowHandle, colProductCode, product.ProductCode);
+                        view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+
+                        view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
+                    }
+                    else
+                    {
+                        e.ErrorText = "Belə bir məhsul yoxdur";
+                        e.Valid = false;
+                    }
+                }
+                else
+                {
+                    e.Value = null;
+                }
+            }
+        }
+
+        private void GV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ExceptionMode = ExceptionMode.DisplayError;
+            e.WindowCaption = "Diqqət";
+        }
+
     }
 }

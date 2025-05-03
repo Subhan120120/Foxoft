@@ -308,6 +308,13 @@ namespace Foxoft
             return product;
         }
 
+        public DcProduct SelectExpense(string productCode)
+        {
+            using subContext db = new();
+            var product = QueryableSelectProducts(db).FirstOrDefault(x => x.ProductCode == productCode && x.ProductTypeCode == 2);
+            return product;
+        }
+
         public List<DcUnitOfMeasure> SelectUnitOfMeasuresByParentId(int parentMeasureId)
         {
             using subContext db = new();

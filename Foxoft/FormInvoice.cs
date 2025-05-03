@@ -522,16 +522,16 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
-            if (e.Column == col_ProductCode)
-            {
-                var row = gV_InvoiceLine.GetRow(e.RowHandle) as TrInvoiceLine;
+            //if (e.Column == col_ProductCode)
+            //{
+            //    var row = gV_InvoiceLine.GetRow(e.RowHandle) as TrInvoiceLine;
 
-                if (row != null)
-                {
-                    row.DcProduct = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
-                    gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
-                }
-            }
+            //    if (row != null)
+            //    {
+            //        row.DcProduct = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
+            //        gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
+            //    }
+            //}
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -2216,7 +2216,6 @@ namespace Foxoft
         private void popupMenuPrinters_BeforePopup(object sender, CancelEventArgs e)
         {
             PopupMenu menu = (sender as PopupMenu);
-
             menu.ItemLinks.Clear();
 
             try
