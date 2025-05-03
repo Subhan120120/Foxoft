@@ -64,7 +64,7 @@ namespace Foxoft
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e) // Parent Form Closing event
         {
             if (efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId))
-                efMethods.DeleteInvoice(invoiceHeaderId);                // delete incomplete invoice
+                efMethods.UpdateInvoiceIsSuspended(invoiceHeaderId, true);                // delete incomplete invoice
         }
 
         private void gV_InvoiceLine_CalcPreviewText(object sender, CalcPreviewTextEventArgs e)

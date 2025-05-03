@@ -748,6 +748,14 @@ namespace Foxoft
             return db.SaveChanges();
         }
 
+        public int UpdateInvoiceIsSuspended(Guid invoiceHeaderId, bool isSuspended)
+        {
+            using subContext db = new();
+            TrInvoiceHeader trInvoiceHeader = new() { InvoiceHeaderId = invoiceHeaderId, IsSuspended = isSuspended };
+            db.Entry(trInvoiceHeader).Property(x => x.IsSuspended).IsModified = true;
+            return db.SaveChanges();
+        }
+
         public int UpdateInvoiceIsLocked(Guid invoiceHeaderId, bool isLocked)
         {
             using subContext db = new();
