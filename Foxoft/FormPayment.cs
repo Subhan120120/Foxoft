@@ -59,7 +59,7 @@ namespace Foxoft
             lUE_CashlessCurrency.Properties.DataSource = currencies;
             lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 });
 
-            lUE_PaymentMethod.EditValue = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 }).FirstOrDefault(x => x.IsDefault == true).PaymentMethodId;
+            lUE_PaymentMethod.EditValue = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 }).FirstOrDefault(x => x.IsDefault == true)?.PaymentMethodId;
         }
 
         public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader)
@@ -72,7 +72,17 @@ namespace Foxoft
             if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode, trInvoiceHeader.IsReturn))
                 isNegativ = true;
 
-            trPaymentLineCash.Payment = Math.Abs(pay);
+            switch (paymentType)
+            {
+                case 1:
+                    trPaymentLineCash.Payment = Math.Abs(pay);
+                    break;
+                case 2:
+                    trPaymentLineCashless.Payment = Math.Abs(pay);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, bool autoMakePayment)
@@ -485,7 +495,7 @@ namespace Foxoft
                             trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_CashlessCommission.EditValue ?? 0m));
                             efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless2);
 
-                            if ((decimal)txt_CashlessCommission.EditValue > 0)
+                            if (Convert.ToDecimal(txt_CashlessCommission.EditValue ?? 0) > 0)
                             {
                                 TrPaymentLine trPaymentLineCommission = trPaymentLineCashless;
                                 trPaymentLineCommission.PaymentLineId = Guid.NewGuid();

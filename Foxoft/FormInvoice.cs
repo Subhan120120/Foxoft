@@ -312,8 +312,6 @@ namespace Foxoft
 
             LocalView<TrInvoiceHeader> lV_invoiceHeader = dbContext.TrInvoiceHeaders.Local;
 
-
-
             if (!lV_invoiceHeader.Any(x => x.DcCurrAcc is null))
                 lV_invoiceHeader.ForEach(x =>
                 {
@@ -555,7 +553,7 @@ namespace Foxoft
                 {
                     TrInvoiceLine trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
 
-                    if (efMethods.SelectProduct(trInvoiceLine?.ProductCode)?.ProductTypeCode != 3) // product is not service product
+                    if (efMethods.SelectEntityById<DcProduct>(trInvoiceLine?.ProductCode)?.ProductTypeCode != 3) // product is not service product
                     {
                         string wareHouse = lUE_WarehouseCode.EditValue.ToString();
                         if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")

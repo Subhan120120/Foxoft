@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors.Controls;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -16,6 +17,10 @@ namespace Foxoft
             InitializeComponent();
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
+
+            CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            txtEdit_Qty.Properties.Mask.Culture = customCulture;
         }
 
         public FormQty(decimal maxQty)

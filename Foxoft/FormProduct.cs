@@ -95,7 +95,7 @@ namespace Foxoft
 
         private void FormProduct_Load(object sender, EventArgs e)
         {
-            FillDataLayout();
+            LoadProduct();
             dataLayoutControl1.IsValid(out List<string> errorList);
 
             if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
@@ -108,7 +108,7 @@ namespace Foxoft
             LoadGalleryImages();
         }
 
-        private void FillDataLayout()
+        private void LoadProduct()
         {
             dbContext = new subContext();
 
@@ -620,7 +620,7 @@ namespace Foxoft
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
 
-                FillDataLayout();
+                LoadProduct();
             }
             else
             {

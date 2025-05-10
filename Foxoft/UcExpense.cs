@@ -237,8 +237,6 @@ namespace Foxoft
                     row.DcProduct = product;
 
                     gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
-
-
                 }
             }
         }
