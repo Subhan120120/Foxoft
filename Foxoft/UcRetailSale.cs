@@ -833,14 +833,14 @@ namespace Foxoft
 
                 if (row != null)
                 {
-                    DcProduct product = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
+                    var tracked = dbContext.TrInvoiceLines.Where(x => x.DcProduct.ProductCode == row.ProductCode).Select(x => x.DcProduct);
 
-                    if (dbContext.Entry(product).State == EntityState.Detached) // dbContext.SaveChanges() metodunda DcProduct insert etmeye calismasin deye 
-                        dbContext.Attach(product);
+                    //if (tracked == null) // already tracked xetasi vermesin deye
+                    //    dbContext.Attach(tracked); // dbsavechanges eliyende dcproductu insert elemeye calismasin deye
 
-                    row.DcProduct = product;
+                    row.DcProduct = tracked.FirstOrDefault();
 
-                    gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
+                    //gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
                 }
             }
         }

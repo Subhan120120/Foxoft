@@ -161,7 +161,7 @@ namespace Foxoft
 
             if (view.FocusedRowHandle >= 0)
             {
-                object currAccCode = view.GetFocusedRowCellValue(nameof(dcCurrAcc.CurrAccCode));
+                object currAccCode = view.GetFocusedRowCellValue("CashRegisterCode");
                 if (currAccCode is not null)
                     dcCurrAcc = efMethods.SelectCurrAcc(currAccCode.ToString());
             }

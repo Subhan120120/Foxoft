@@ -217,27 +217,34 @@ namespace Foxoft
         private void lUE_PaymentMethod_EditValueChanged(object sender, EventArgs e)
         {
             dcPaymentMethod = efMethods.SelectEntityById<DcPaymentMethod>(Convert.ToInt32(lUE_PaymentMethod.EditValue));
-
             trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
-            //btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
 
-            List<DcPaymentPlan> paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
-            if (paymentPlans.Count > 0)
+            bool isRedirected = dcPaymentMethod.IsRedirected;
+
+            LayoutControlAnimator.SetVisibilityWithAnimation(lCI_BankCurrAcc, isRedirected ? LayoutVisibility.Never : LayoutVisibility.Always);
+
+            if (isRedirected)
             {
-                LUE_PaymentPlan.Properties.DataSource = paymentPlans;
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Always);
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, LayoutVisibility.Always);
+                var paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
+                bool hasPlans = paymentPlans.Count > 0;
 
-                LUE_PaymentPlan.EditValue = efMethods.SelectPaymentPlanDefault(dcPaymentMethod.PaymentMethodId)?.PaymentPlanCode;
+                LUE_PaymentPlan.Properties.DataSource = hasPlans ? paymentPlans : null;
+                LUE_PaymentPlan.EditValue = hasPlans ? efMethods.SelectPaymentPlanDefault(dcPaymentMethod.PaymentMethodId)?.PaymentPlanCode : null;
+                txt_CashlessCommission.EditValue = hasPlans ? txt_CashlessCommission.EditValue : null;
+
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
+                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
             }
             else
             {
                 LUE_PaymentPlan.Properties.DataSource = null;
-                txt_CashlessCommission.EditValue = null;
                 LUE_PaymentPlan.EditValue = null;
+                txt_CashlessCommission.EditValue = null;
+
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Never);
                 LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, LayoutVisibility.Never);
             }
+
         }
 
         private void btnEdit_CashRegister_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -479,31 +486,37 @@ namespace Foxoft
                         {
                             trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
                             trPaymentLineCashless.Payment = isNegativ ? trPaymentLineCashless.Payment * (-1) : trPaymentLineCashless.Payment;
+
+                            if (dcPaymentMethod.IsRedirected)
+                                trPaymentLineCashless.CashRegisterCode = null;
                             efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless);
 
-                            TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
-                            trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
-                            trPaymentHeader2.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
-                            trPaymentHeader2.CurrAccCode = dcPaymentMethod.DefaultCurrAccCode?.ToString();
-                            trPaymentHeader2.PaymentKindId = 1;
-                            efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader2);
-
-                            TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
-                            trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
-                            trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                            trPaymentLineCashless2.CreatedDate = DateTime.Now;
-                            trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_CashlessCommission.EditValue ?? 0m));
-                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless2);
-
-                            if (Convert.ToDecimal(txt_CashlessCommission.EditValue ?? 0) > 0)
+                            if (dcPaymentMethod.IsRedirected)
                             {
-                                TrPaymentLine trPaymentLineCommission = trPaymentLineCashless;
-                                trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
-                                trPaymentLineCommission.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                                trPaymentLineCommission.PaymentTypeCode = 5;
-                                trPaymentLineCommission.LineDescription = LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
-                                trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
-                                efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCommission);
+                                TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
+                                trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
+                                trPaymentHeader2.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+                                trPaymentHeader2.CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString();
+                                trPaymentHeader2.PaymentKindId = 1;
+                                efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader2);
+
+                                TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
+                                trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
+                                trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
+                                trPaymentLineCashless2.CreatedDate = DateTime.Now;
+                                trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_CashlessCommission.EditValue ?? 0m));
+                                efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless2);
+
+                                if (Convert.ToDecimal(txt_CashlessCommission.EditValue ?? 0) > 0)
+                                {
+                                    TrPaymentLine trPaymentLineCommission = trPaymentLineCashless;
+                                    trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
+                                    trPaymentLineCommission.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
+                                    trPaymentLineCommission.PaymentTypeCode = 5;
+                                    trPaymentLineCommission.LineDescription = LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
+                                    trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
+                                    efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCommission);
+                                }
                             }
                         }
                     }

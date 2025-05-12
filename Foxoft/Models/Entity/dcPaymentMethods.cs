@@ -31,17 +31,22 @@ namespace Foxoft.Models
         [Display(Name = "Default Kassa")]
         public string? DefaultCashRegCode { get; set; }
 
-        [ForeignKey("DcCurrAcc")]
-        [Display(Name = "Default Cari Hesab")]
-        public string? DefaultCurrAccCode { get; set; }
 
-        [Display(Name = "Default Cari Hesab")]
+        //[ForeignKey("DcCashReg")]
+        [Display(Name = "Yönləndiriləndir")]
+        public bool IsRedirected { get; set; }
+
+        [ForeignKey("DcCurrAcc")]
+        [Display(Name = "Yönləndirilmiş Cari Hesab")]
+        public string? RedirectedCurrAccCode { get; set; }
+
+        [Display(Name = "Default Ödəmə Metodu")]
         public bool IsDefault { get; set; }
 
 
         [ForeignKey("DefaultCashRegCode")]
         public virtual DcCurrAcc DcCashReg { get; set; }
-        [ForeignKey("DefaultCurrAccCode")]
+        [ForeignKey("RedirectedCurrAccCode")]
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         [ForeignKey("PaymentTypeCode")]
         public virtual DcPaymentType DcPaymentType { get; set; }

@@ -243,7 +243,7 @@ namespace Foxoft.Models
             {
                 e.HasOne(field => field.DcCurrAcc)
                  .WithMany(fk => fk.CurrAccDcPaymentMethods)
-                 .HasForeignKey(fk => fk.DefaultCurrAccCode)
+                 .HasForeignKey(fk => fk.RedirectedCurrAccCode)
                  .OnDelete(DeleteBehavior.Restrict);
 
                 e.HasOne(field => field.DcCashReg)
@@ -791,7 +791,7 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcPaymentMethod>().HasData(
                 new DcPaymentMethod { PaymentMethodId = 1, PaymentTypeCode = 1, PaymentMethodDesc = "Nağd" },
                 new DcPaymentMethod { PaymentMethodId = 2, PaymentTypeCode = 3, PaymentMethodDesc = "Daxili Kredit" },// Internal Credit
-                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart", DefaultCurrAccCode = "C-000006" },
+                new DcPaymentMethod { PaymentMethodId = 3, PaymentTypeCode = 2, PaymentMethodDesc = "Bir Kart", IsRedirected = true, RedirectedCurrAccCode = "C-000006" },
                 new DcPaymentMethod { PaymentMethodId = 4, PaymentTypeCode = 1, PaymentMethodDesc = "Çatdırılma zamanı nağd ödə" },
                 new DcPaymentMethod { PaymentMethodId = 5, PaymentTypeCode = 2, PaymentMethodDesc = "Saytda nağd ödə" }
                 );
