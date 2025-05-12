@@ -219,6 +219,8 @@ namespace Foxoft
             dcPaymentMethod = efMethods.SelectEntityById<DcPaymentMethod>(Convert.ToInt32(lUE_PaymentMethod.EditValue));
             trPaymentLineCashless.PaymentMethodId = dcPaymentMethod.PaymentMethodId;
 
+            btnEdit_BankAccout.EditValue = dcPaymentMethod.DefaultCashRegCode;
+
             bool isRedirected = dcPaymentMethod.IsRedirected;
 
             LayoutControlAnimator.SetVisibilityWithAnimation(lCI_BankCurrAcc, isRedirected ? LayoutVisibility.Never : LayoutVisibility.Always);
