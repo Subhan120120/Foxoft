@@ -855,5 +855,11 @@ namespace Foxoft
 
             //dbContext = new subContext();
         }
+
+        private void Btn_NewInvoice_Click(object sender, EventArgs e)
+        {
+            ClearControlsAddNew();
+        }
+
     }
 }
