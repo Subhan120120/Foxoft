@@ -547,7 +547,7 @@ namespace Foxoft
                         //gV_InvoiceLine.MoveLast();
 
                         gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.QtyOut), formQty.qty);
-
+                        gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         SaveInvoice();
                     }
                 }

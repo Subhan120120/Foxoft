@@ -58,8 +58,6 @@ namespace Foxoft
             lUE_cashCurrency.Properties.DataSource = currencies;
             lUE_CashlessCurrency.Properties.DataSource = currencies;
             lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 });
-
-            lUE_PaymentMethod.EditValue = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 }).FirstOrDefault(x => x.IsDefault == true)?.PaymentMethodId;
         }
 
         public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader)
@@ -68,6 +66,8 @@ namespace Foxoft
             this.trInvoiceHeader = trInvoiceHeader;
 
             PaymentDefaults(paymentType, trInvoiceHeader);
+
+            lUE_PaymentMethod.EditValue = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 }).FirstOrDefault(x => x.IsDefault == true)?.PaymentMethodId;
 
             if ((bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode, trInvoiceHeader.IsReturn))
                 isNegativ = true;
