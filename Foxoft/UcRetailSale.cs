@@ -29,6 +29,9 @@ namespace Foxoft
         {
             InitializeComponent();
 
+            MouseWheelHelper.DisableMouseWheelForType<LookUpEdit>(this);
+            MouseWheelHelper.DisableMouseWheelForType<DateEdit>(this);
+
             ActiveControl = txtEdit_Barcode;
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);

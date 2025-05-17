@@ -76,6 +76,9 @@ namespace Foxoft
 
             InitializeComponent();
 
+            MouseWheelHelper.DisableMouseWheelForType<LookUpEdit>(this);
+            MouseWheelHelper.DisableMouseWheelForType<DateEdit>(this);
+
             InitializeColumnName();
 
             this.productTypeArr = productTypeArr;

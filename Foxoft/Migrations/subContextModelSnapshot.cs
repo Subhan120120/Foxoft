@@ -1953,7 +1953,7 @@ namespace Foxoft.Migrations
                         {
                             PaymentMethodId = 3,
                             IsDefault = false,
-                            IsRedirected = false,
+                            IsRedirected = true,
                             PaymentMethodDesc = "Bir Kart",
                             PaymentTypeCode = (byte)2,
                             RedirectedCurrAccCode = "C-000006"
@@ -2849,7 +2849,7 @@ namespace Foxoft.Migrations
                             ReportCategoryId = 3,
                             ReportLayout = "",
                             ReportName = "Məhsul Qalığı",
-                            ReportQuery = "\r\n\r\nselect * From ProductBalanceSerialNumber\r\n\r\n",
+                            ReportQuery = "\n\nselect * From ProductBalanceSerialNumber\n\n",
                             ReportTypeId = (byte)1
                         });
                 });
