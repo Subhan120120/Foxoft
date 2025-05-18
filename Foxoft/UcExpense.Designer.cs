@@ -53,6 +53,7 @@ namespace Foxoft
             colQtyIn = new DevExpress.XtraGrid.Columns.GridColumn();
             colProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
             btnEdit_DocNum = new DevExpress.XtraEditors.ButtonEdit();
             trInvoiceHeadersBindingSource = new BindingSource(components);
@@ -67,7 +68,6 @@ namespace Foxoft
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDocumentTime = new DevExpress.XtraLayout.LayoutControlItem();
-            colBarcode = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
@@ -235,6 +235,11 @@ namespace Foxoft
             gridColumn2.Visible = true;
             gridColumn2.VisibleIndex = 2;
             // 
+            // colBarcode
+            // 
+            colBarcode.Caption = "Barkod";
+            colBarcode.Name = "colBarcode";
+            // 
             // btn_Save
             // 
             btn_Save.Location = new Point(12, 460);
@@ -268,6 +273,7 @@ namespace Foxoft
             dateEdit_DocDate.EditValue = null;
             dateEdit_DocDate.Location = new Point(577, 12);
             dateEdit_DocDate.Name = "dateEdit_DocDate";
+            dateEdit_DocDate.Properties.AllowMouseWheel = false;
             dateEdit_DocDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dateEdit_DocDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dateEdit_DocDate.Size = new Size(361, 20);
@@ -280,6 +286,7 @@ namespace Foxoft
             dateEdit_DocTime.EditValue = TimeSpan.Parse("00:00:00");
             dateEdit_DocTime.Location = new Point(577, 36);
             dateEdit_DocTime.Name = "dateEdit_DocTime";
+            dateEdit_DocTime.Properties.AllowMouseWheel = false;
             dateEdit_DocTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dateEdit_DocTime.Size = new Size(361, 20);
             dateEdit_DocTime.StyleController = dataLayoutControl1;
@@ -369,11 +376,6 @@ namespace Foxoft
             ItemForDocumentTime.Size = new Size(465, 24);
             ItemForDocumentTime.Text = "Document Time";
             ItemForDocumentTime.TextSize = new Size(88, 13);
-            // 
-            // colBarcode
-            // 
-            colBarcode.Caption = "Barkod";
-            colBarcode.Name = "colBarcode";
             // 
             // UcExpense
             // 

@@ -545,6 +545,7 @@ namespace Foxoft
             OperationDateDateEdit.Location = new Point(98, 36);
             OperationDateDateEdit.MenuManager = ribbonControl1;
             OperationDateDateEdit.Name = "OperationDateDateEdit";
+            OperationDateDateEdit.Properties.AllowMouseWheel = false;
             OperationDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             OperationDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             OperationDateDateEdit.Size = new Size(349, 20);
@@ -559,6 +560,7 @@ namespace Foxoft
             OperationTimeTimeSpanEdit.Location = new Point(98, 60);
             OperationTimeTimeSpanEdit.MenuManager = ribbonControl1;
             OperationTimeTimeSpanEdit.Name = "OperationTimeTimeSpanEdit";
+            OperationTimeTimeSpanEdit.Properties.AllowMouseWheel = false;
             OperationTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             OperationTimeTimeSpanEdit.Size = new Size(349, 20);
             OperationTimeTimeSpanEdit.StyleController = dataLayoutControl1;
@@ -583,6 +585,7 @@ namespace Foxoft
             LUE_StoreCode.Location = new Point(537, 36);
             LUE_StoreCode.MenuManager = ribbonControl1;
             LUE_StoreCode.Name = "LUE_StoreCode";
+            LUE_StoreCode.Properties.AllowMouseWheel = false;
             LUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             LUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Mağaza Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Mağaza Adı") });

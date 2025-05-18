@@ -155,6 +155,7 @@ namespace Foxoft
             repoLUE_UnitOfMeasure = new RepositoryItemLookUpEdit();
             col_TotalBenefit = new GridColumn();
             colWorkerCode = new GridColumn();
+            repoBtnEdit_WorkerCode = new RepositoryItemButtonEdit();
             repoBtnEdit_UnitOfMeasure = new RepositoryItemButtonEdit();
             LCI_SalesPerson = new DevExpress.XtraLayout.LayoutControlItem();
             LCI_SalesPersonDesc = new DevExpress.XtraLayout.LayoutControlItem();
@@ -196,7 +197,6 @@ namespace Foxoft
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             adorneruıManager1 = new DevExpress.Utils.VisualEffects.AdornerUIManager(components);
             alertControl1 = new DevExpress.XtraBars.Alerter.AlertControl(components);
-            repoBtnEdit_WorkerCode = new RepositoryItemButtonEdit();
             ((System.ComponentModel.ISupportInitialize)behaviorManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trInvoiceLinesBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -232,6 +232,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SalesPersonCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SerialNumberCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_UnitOfMeasure).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_WorkerCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_UnitOfMeasure).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_SalesPerson).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).BeginInit();
@@ -272,7 +273,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_WorkerCode).BeginInit();
             SuspendLayout();
             // 
             // trInvoiceLinesBindingSource
@@ -512,6 +512,7 @@ namespace Foxoft
             DocumentDateDateEdit.EditValue = null;
             DocumentDateDateEdit.Location = new Point(122, 60);
             DocumentDateDateEdit.Name = "DocumentDateDateEdit";
+            DocumentDateDateEdit.Properties.AllowMouseWheel = false;
             DocumentDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DocumentDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DocumentDateDateEdit.Size = new Size(318, 20);
@@ -525,6 +526,7 @@ namespace Foxoft
             DocumentTimeTimeSpanEdit.EditValue = TimeSpan.Parse("00:00:00");
             DocumentTimeTimeSpanEdit.Location = new Point(444, 60);
             DocumentTimeTimeSpanEdit.Name = "DocumentTimeTimeSpanEdit";
+            DocumentTimeTimeSpanEdit.Properties.AllowMouseWheel = false;
             DocumentTimeTimeSpanEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DocumentTimeTimeSpanEdit.Size = new Size(137, 20);
             DocumentTimeTimeSpanEdit.StyleController = dataLayoutControl1;
@@ -561,6 +563,7 @@ namespace Foxoft
             memoEdit_Desc.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
             memoEdit_Desc.Location = new Point(122, 84);
             memoEdit_Desc.Name = "memoEdit_Desc";
+            memoEdit_Desc.Properties.AllowMouseWheel = false;
             memoEdit_Desc.Size = new Size(459, 20);
             memoEdit_Desc.StyleController = dataLayoutControl1;
             memoEdit_Desc.TabIndex = 9;
@@ -588,6 +591,7 @@ namespace Foxoft
             lUE_StoreCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "StoreCode", true));
             lUE_StoreCode.Location = new Point(695, 60);
             lUE_StoreCode.Name = "lUE_StoreCode";
+            lUE_StoreCode.Properties.AllowMouseWheel = false;
             lUE_StoreCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             lUE_StoreCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             lUE_StoreCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccCode", "Mağaza Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("CurrAccDesc", "Mağaza Adı") });
@@ -607,6 +611,7 @@ namespace Foxoft
             lUE_WarehouseCode.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "WarehouseCode", true));
             lUE_WarehouseCode.Location = new Point(695, 84);
             lUE_WarehouseCode.Name = "lUE_WarehouseCode";
+            lUE_WarehouseCode.Properties.AllowMouseWheel = false;
             lUE_WarehouseCode.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
             lUE_WarehouseCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             lUE_WarehouseCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("WarehouseCode", "Depo Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("WarehouseDesc", "Depo Adı") });
@@ -628,6 +633,7 @@ namespace Foxoft
             lUE_ToWarehouseCode.Location = new Point(695, 36);
             lUE_ToWarehouseCode.MenuManager = ribbonControl1;
             lUE_ToWarehouseCode.Name = "lUE_ToWarehouseCode";
+            lUE_ToWarehouseCode.Properties.AllowMouseWheel = false;
             lUE_ToWarehouseCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             lUE_ToWarehouseCode.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("WarehouseCode", "Depo Kodu"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("WarehouseDesc", "Depo Adı") });
             lUE_ToWarehouseCode.Properties.DisplayMember = "WarehouseDesc";
@@ -1358,6 +1364,13 @@ namespace Foxoft
             colWorkerCode.FieldName = "WorkerCode";
             colWorkerCode.Name = "colWorkerCode";
             // 
+            // repoBtnEdit_WorkerCode
+            // 
+            repoBtnEdit_WorkerCode.AutoHeight = false;
+            repoBtnEdit_WorkerCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            repoBtnEdit_WorkerCode.Name = "repoBtnEdit_WorkerCode";
+            repoBtnEdit_WorkerCode.ButtonPressed += repoBtnEdit_WorkerCode_ButtonPressed;
+            // 
             // repoBtnEdit_UnitOfMeasure
             // 
             repoBtnEdit_UnitOfMeasure.AutoHeight = false;
@@ -1738,13 +1751,6 @@ namespace Foxoft
             alertControl1.AutoFormDelay = 3000;
             alertControl1.FormDisplaySpeed = DevExpress.XtraBars.Alerter.AlertFormDisplaySpeed.Fast;
             // 
-            // repoBtnEdit_WorkerCode
-            // 
-            repoBtnEdit_WorkerCode.AutoHeight = false;
-            repoBtnEdit_WorkerCode.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            repoBtnEdit_WorkerCode.Name = "repoBtnEdit_WorkerCode";
-            repoBtnEdit_WorkerCode.ButtonPressed += repoBtnEdit_WorkerCode_ButtonPressed;
-            // 
             // FormInvoice
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -1795,6 +1801,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SalesPersonCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_SerialNumberCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoLUE_UnitOfMeasure).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_WorkerCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)repoBtnEdit_UnitOfMeasure).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_SalesPerson).EndInit();
             ((System.ComponentModel.ISupportInitialize)LCI_SalesPersonDesc).EndInit();
@@ -1835,7 +1842,6 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)adorneruıManager1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoBtnEdit_WorkerCode).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

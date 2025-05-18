@@ -79,6 +79,7 @@ namespace Foxoft
             ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             popupMenuReports = new DevExpress.XtraBars.PopupMenu(components);
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).BeginInit();
@@ -256,9 +257,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BSI_Reports });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_CurrAccNew, bBI_CurAccEdit, bBI_ExportXlsx, bBI_CurrAccDelete, bBI_CurAccRefresh, barButtonItem3, barButtonItem4, BBI_test, BBI_query, BSI_Reports, barButtonItem1 });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 31;
+            ribbonControl1.MaxItemId = 32;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage3 });
             ribbonControl1.Size = new Size(858, 158);
@@ -375,6 +376,7 @@ namespace Foxoft
             // ribbonPageGroup2
             // 
             ribbonPageGroup2.ItemLinks.Add(BBI_query);
+            ribbonPageGroup2.ItemLinks.Add(barButtonItem1);
             ribbonPageGroup2.Name = "ribbonPageGroup2";
             ribbonPageGroup2.Text = "Data";
             // 
@@ -395,6 +397,14 @@ namespace Foxoft
             // 
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "ribbonPage2";
+            // 
+            // barButtonItem1
+            // 
+            barButtonItem1.Caption = "test";
+            barButtonItem1.Id = 31;
+            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            barButtonItem1.Name = "barButtonItem1";
+            barButtonItem1.ItemClick += barButtonItem1_ItemClick;
             // 
             // FormCurrAccList
             // 
@@ -472,5 +482,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
         private DevExpress.XtraBars.PopupMenu popupMenuReports;
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
     }
 }

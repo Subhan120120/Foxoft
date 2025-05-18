@@ -56,7 +56,7 @@ namespace Foxoft
             cM.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
 
             gV_CurrAccList.PopulateColumns();
-            LoadLayout();
+
         }
 
         public FormCurrAccList(byte[] currAccTypeArr, string currAccCode)
@@ -87,6 +87,7 @@ namespace Foxoft
             }
 
             LoadCurrAccs(currAccTypeArr);
+            LoadLayout();
 
             //Focus Special Row
             int rowHandle = gV_CurrAccList.LocateByValue(0, colCurrAccCode, currAccCode);
@@ -485,6 +486,11 @@ namespace Foxoft
         {
             if (e.KeyCode == Keys.Escape)
                 Close();
+        }
+
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            LoadLayout();
         }
     }
 }

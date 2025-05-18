@@ -183,6 +183,7 @@ namespace Foxoft
             // 
             LUE_PaymentPlan.Location = new Point(110, 236);
             LUE_PaymentPlan.Name = "LUE_PaymentPlan";
+            LUE_PaymentPlan.Properties.AllowMouseWheel = false;
             LUE_PaymentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_PaymentPlan.Properties.NullText = "";
             LUE_PaymentPlan.Size = new Size(236, 20);
@@ -194,6 +195,7 @@ namespace Foxoft
             // 
             lUE_CashlessCurrency.Location = new Point(226, 150);
             lUE_CashlessCurrency.Name = "lUE_CashlessCurrency";
+            lUE_CashlessCurrency.Properties.AllowMouseWheel = false;
             lUE_CashlessCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_CashlessCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_CashlessCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -239,6 +241,7 @@ namespace Foxoft
             dateEdit_Date.EditValue = null;
             dateEdit_Date.Location = new Point(448, 12);
             dateEdit_Date.Name = "dateEdit_Date";
+            dateEdit_Date.Properties.AllowMouseWheel = false;
             dateEdit_Date.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dateEdit_Date.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dateEdit_Date.Properties.DisplayFormat.FormatString = "";
@@ -340,6 +343,7 @@ namespace Foxoft
             // 
             lUE_cashCurrency.Location = new Point(226, 45);
             lUE_cashCurrency.Name = "lUE_cashCurrency";
+            lUE_cashCurrency.Properties.AllowMouseWheel = false;
             lUE_cashCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             lUE_cashCurrency.Properties.Appearance.Options.UseFont = true;
             lUE_cashCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -359,6 +363,7 @@ namespace Foxoft
             // 
             lUE_PaymentMethod.Location = new Point(110, 186);
             lUE_PaymentMethod.Name = "lUE_PaymentMethod";
+            lUE_PaymentMethod.Properties.AllowMouseWheel = false;
             lUE_PaymentMethod.Properties.Appearance.Font = new Font("Tahoma", 10F);
             lUE_PaymentMethod.Properties.Appearance.Options.UseFont = true;
             lUE_PaymentMethod.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -392,6 +397,7 @@ namespace Foxoft
             // 
             LUE_InstallmentCurrency.Location = new Point(226, 446);
             LUE_InstallmentCurrency.Name = "LUE_InstallmentCurrency";
+            LUE_InstallmentCurrency.Properties.AllowMouseWheel = false;
             LUE_InstallmentCurrency.Properties.Appearance.Font = new Font("Tahoma", 16F);
             LUE_InstallmentCurrency.Properties.Appearance.Options.UseFont = true;
             LUE_InstallmentCurrency.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -410,6 +416,7 @@ namespace Foxoft
             // 
             LUE_InstallmentPlan.Location = new Point(110, 482);
             LUE_InstallmentPlan.Name = "LUE_InstallmentPlan";
+            LUE_InstallmentPlan.Properties.AllowMouseWheel = false;
             LUE_InstallmentPlan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             LUE_InstallmentPlan.Properties.NullText = "";
             LUE_InstallmentPlan.Size = new Size(236, 20);
