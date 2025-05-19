@@ -1461,7 +1461,9 @@ namespace Foxoft
         public DcReport SelectReportByName(string name)
         {
             using subContext db = new();
-            return db.DcReports.Include(x => x.DcReportVariables).FirstOrDefault(x => x.ReportName == name);
+            return db.DcReports.Include(x => x.DcReportVariables)
+                                .Include(x => x.TrReportSubQueries)
+                                .FirstOrDefault(x => x.ReportName == name);
         }
 
         public List<DcReport> SelectReportsByType(byte[] reportType)

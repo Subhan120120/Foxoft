@@ -37,10 +37,8 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using Foxoft;
 using PopupMenuShowingEventArgs = DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs;
 
 #endregion
@@ -1563,7 +1561,7 @@ namespace Foxoft
         private void LoadLayout()
         {
             //gV_InvoiceLine.OptionsNavigation.EnterMoveNextColumn = false;
-            if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+            if (new string[] { "EX", "EI", "IT" }.Contains(dcProcess.ProcessCode))
             {
                 BBI_InvoiceExpenses.Visibility = BarItemVisibility.Never;
                 RPG_Payment.Visible = false;

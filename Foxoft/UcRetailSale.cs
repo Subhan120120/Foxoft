@@ -622,48 +622,16 @@ namespace Foxoft
 
         private void ShowZetPreview()
         {
-            DcReport dcReport = efMethods.SelectReportByName("Gun Sonu");
+            DcReport dcReport = efMethods.SelectReportByName("ZET");
 
-            //foreach (var item in dcReport.DcReportVariables)
-            //    if (item.VariableProperty == nameof(TrInvoiceHeader.InvoiceHeaderId))
-            //        item.VariableValue = trInvoiceHeader.InvoiceHeaderId.ToString();
-
-            //FormReportPreview form = new(dcReport.ReportQuery, "", dcReport);
-            //form.WindowState = FormWindowState.Maximized;
-            //form.Show();
-
+            if (dcReport is null)
+                return;
 
             if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString()))
             {
                 MessageBox.Show("Yetkiniz yoxdur! ");
                 return;
             }
-
-            //string filter = "";
-            //if (gV_InvoiceLine != null)
-            //{
-            //    string columnValue = gV_InvoiceLine.GetFocusedRowCellValue(columnName)?.ToString();
-
-            //    if (!string.IsNullOrEmpty(columnValue))
-            //        filter = $"{columnName} = '{columnValue}'";
-            //    else
-            //    {
-            //        int rowCount = gV.DataRowCount;
-            //        if (rowCount > 0)
-            //        {
-            //            string[] columnValueArr = new string[rowCount];
-
-            //            for (int i = 0; i < rowCount; i++)
-            //            {
-            //                object value = gV.GetRowCellValue(i, columnName);
-            //                if (value != null)
-            //                    columnValueArr[i] = value.ToString();
-            //            }
-
-            //            string combinedValues = string.Join(",", columnValueArr.Select(value => $"'{value}'"));
-            //            filter = $"{columnName} IN ({combinedValues})";
-            //        }
-            //    }
 
             foreach (var item in dcReport.DcReportVariables.Where(x => x.ReportId == dcReport.ReportId))
             {
@@ -680,7 +648,10 @@ namespace Foxoft
                     //efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, item.VariableValue);
                 }
             }
-            ShowReportForm(dcReport, "", "");
+
+            reportClass.ShowReport(dcReport, "");
+
+            //ShowReportForm(dcReport, "", "");
         }
 
         private void ShowReportForm(DcReport dcReport, string filter, string activeFilterStr)
@@ -836,12 +807,10 @@ namespace Foxoft
 
                 if (row != null)
                 {
-                    var tracked = dbContext.TrInvoiceLines.Where(x => x.DcProduct.ProductCode == row.ProductCode).Select(x => x.DcProduct);
+                    row.DcProduct = dbContext.DcProducts.FirstOrDefault(x => x.ProductCode == row.ProductCode);
 
                     //if (tracked == null) // already tracked xetasi vermesin deye
                     //    dbContext.Attach(tracked); // dbsavechanges eliyende dcproductu insert elemeye calismasin deye
-
-                    row.DcProduct = tracked.FirstOrDefault();
 
                     //gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
                 }

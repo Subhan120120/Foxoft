@@ -50,7 +50,6 @@ namespace Foxoft
                     {
                         Process process = Process.GetProcessById(session.PID);
 
-
                         if (process.ProcessName.Equals("Foxoft.exe", StringComparison.InvariantCultureIgnoreCase) &&
                             session.CurrAccCode.Equals(user, StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -60,9 +59,8 @@ namespace Foxoft
                     }
                     catch (ArgumentException)
                     {
+                        efMethods.DeleteEntity<TrSession>(session);
                     }
-
-                    efMethods.DeleteEntity<TrSession>(session);
                 }
 
                 TrSession trSession = new()

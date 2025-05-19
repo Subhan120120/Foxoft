@@ -136,7 +136,6 @@ namespace Foxoft
 
         private void btn_ShowReport_Click(object sender, EventArgs e)
         {
-
             //CriteriaOperator groupOperator = new GroupOperator(GroupOperatorType.And, criteriaOperators);
 
             string filter = CriteriaToWhereClauseHelper.GetMsSqlWhere(filterControl_Outer.FilterCriteria);
