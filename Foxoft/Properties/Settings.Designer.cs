@@ -107,19 +107,22 @@ namespace Foxoft.Properties {
                 this["StoreCode"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string WarehouseCode {
-            get {
+        public string WarehouseCode
+        {
+            get
+            {
                 return ((string)(this["WarehouseCode"]));
             }
-            set {
+            set
+            {
                 this["WarehouseCode"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]

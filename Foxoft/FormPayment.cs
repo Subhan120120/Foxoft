@@ -19,6 +19,7 @@ namespace Foxoft
         private TrInvoiceHeader trInvoiceHeader { get; set; }
         private TrPaymentLine trPaymentLineCash = new();
         private TrPaymentLine trPaymentLineCashless = new();
+        private TrPaymentLine trPaymentLineCommission = new();
         private DcPaymentMethod dcPaymentMethod = new();
         private TrInstallment trInstallment = new();
         private EfMethods efMethods = new();
@@ -149,9 +150,16 @@ namespace Foxoft
             trPaymentLineCashless.ExchangeRate = 1;
             trPaymentLineCashless.CreatedUserName = Authorization.CurrAccCode;
 
+            trPaymentLineCommission.PaymentHeaderId = PaymentHeaderId;
+            trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
+            trPaymentLineCommission.PaymentTypeCode = 5;
+            trPaymentLineCommission.PaymentMethodId = 3;
+            trPaymentLineCommission.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            trPaymentLineCommission.ExchangeRate = 1;
+            trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
+
             trInstallment.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
             trInstallment.ExchangeRate = 1;
-
 
             string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
             if (!String.IsNullOrEmpty(cashReg))
@@ -176,7 +184,6 @@ namespace Foxoft
 
             txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
             lUE_CashlessCurrency.EditValue = trPaymentLineCashless.CurrencyCode;
-            btnEdit_BankAccout.EditValue = trPaymentLineCashless.CashRegisterCode;
 
             TxtEdit_Installment.EditValue = trInstallment.Amount;
             LUE_InstallmentCurrency.EditValue = trInstallment.CurrencyCode;
@@ -227,25 +234,27 @@ namespace Foxoft
 
             if (isRedirected)
             {
-                var paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
-                bool hasPlans = paymentPlans.Count > 0;
-
-                LUE_PaymentPlan.Properties.DataSource = hasPlans ? paymentPlans : null;
-                LUE_PaymentPlan.EditValue = hasPlans ? efMethods.SelectPaymentPlanDefault(dcPaymentMethod.PaymentMethodId)?.PaymentPlanCode : null;
-                txt_CashlessCommission.EditValue = hasPlans ? txt_CashlessCommission.EditValue : null;
-
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
+                btnEdit_BankAccout.EditValue = null;
             }
             else
             {
-                LUE_PaymentPlan.Properties.DataSource = null;
-                LUE_PaymentPlan.EditValue = null;
-                txt_CashlessCommission.EditValue = null;
-
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, LayoutVisibility.Never);
-                LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, LayoutVisibility.Never);
+                string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
+                if (!String.IsNullOrEmpty(cashReg))
+                {
+                    btnEdit_BankAccout.EditValue = cashReg;
+                }
             }
+
+            var paymentPlans = efMethods.SelectPaymentPlans(dcPaymentMethod.PaymentMethodId);
+            bool hasPlans = paymentPlans.Count > 0;
+
+            LUE_PaymentPlan.Properties.DataSource = paymentPlans;
+            LUE_PaymentPlan.EditValue = hasPlans ? efMethods.SelectPaymentPlanDefault(dcPaymentMethod.PaymentMethodId)?.PaymentPlanCode : null;
+
+            LayoutControlAnimator.SetVisibilityWithAnimation(LCI_PaymentPlan, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
+            LayoutControlAnimator.SetVisibilityWithAnimation(LCI_CashlessCommission, hasPlans ? LayoutVisibility.Always : LayoutVisibility.Never);
+
+
 
         }
 
@@ -347,10 +356,13 @@ namespace Foxoft
                 float commisionRate = ((DcPaymentPlan)row).CommissionRate;
                 txt_CashlessCommission.EditValue = trPaymentLineCashless.Payment * (decimal)commisionRate / 100;
             }
+
+            trPaymentLineCommission.LineDescription = LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
         }
 
         private void txt_CashlessCommission_EditValueChanged(object sender, EventArgs e)
         {
+            trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
         }
 
         private void txt_InstallmentCommission_EditValueChanged(object sender, EventArgs e)
@@ -402,6 +414,9 @@ namespace Foxoft
 
         private void SavePayment(bool autoPayment)
         {
+            if (trPaymentLineCash.PaymentLoc <= 0 && trPaymentLineCashless.PaymentLoc <= 0 && trInstallment.Amount <= 0)
+                return;
+
             if (trPaymentLineCashless.PaymentLoc > 0)// lUE_PaymentMethod Validation
             {
                 if (lUE_PaymentMethod.EditValue == null)
@@ -418,6 +433,7 @@ namespace Foxoft
                     }
                 }
             }
+
             if (trInstallment.Amount > 0)// lUE_PaymentMethod Validation
             {
                 if (LUE_InstallmentPlan.EditValue == null)
@@ -447,95 +463,79 @@ namespace Foxoft
                 }
             }
 
-            if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0 || trInstallment.Amount > 0)
+            if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
-                if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
+                string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
+                trPaymentHeader.DocumentNumber = NewDocNum;
+                trPaymentHeader.Description = TxtEdit_Description.EditValue?.ToString();
+
+                efMethods.InsertEntity(trPaymentHeader);
+
+                if (trPaymentLineCash.PaymentLoc > 0)
                 {
-                    string NewDocNum = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
-                    trPaymentHeader.DocumentNumber = NewDocNum;
-                    trPaymentHeader.Description = TxtEdit_Description.EditValue?.ToString();
+                    trPaymentLineCash.PaymentLineId = Guid.NewGuid();
+                    trPaymentLineCash.Payment = isNegativ ? -trPaymentLineCash.Payment : trPaymentLineCash.Payment;
+                    efMethods.InsertEntity(trPaymentLineCash);
+                }
 
-                    if (autoPayment)
+                if (trPaymentLineCashless.PaymentLoc > 0)
+                {
+                    trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
+                    trPaymentLineCashless.Payment = isNegativ ? -trPaymentLineCashless.Payment : trPaymentLineCashless.Payment;
+
+                    if (dcPaymentMethod.IsRedirected)
+                        trPaymentLineCashless.CashRegisterCode = null;
+
+                    efMethods.InsertEntity(trPaymentLineCashless);
+
+                    var hasCommission = Convert.ToDecimal(txt_CashlessCommission.EditValue ?? 0) > 0;
+
+                    if (!dcPaymentMethod.IsRedirected)
                     {
-                        efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-
-                        efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader);
-
-                        List<TrInvoiceLine> trInvoiceLines = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
-                        foreach (TrInvoiceLine il in trInvoiceLines)
-                        {
-                            trPaymentLineCash.PaymentLineId = Guid.NewGuid();
-                            trPaymentLineCash.Payment = isNegativ ? il.NetAmount * (-1) : il.NetAmount;
-                            trPaymentLineCash.CurrencyCode = il.CurrencyCode;
-                            trPaymentLineCash.ExchangeRate = il.ExchangeRate;
-                            trPaymentLineCash.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
-
-                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCash);
-                        }
+                        if (hasCommission)
+                            efMethods.InsertEntity(trPaymentLineCommission);
                     }
                     else
                     {
-                        efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader);
-
-                        if (trPaymentLineCash.PaymentLoc > 0)
+                        var redirectedHeader = new TrPaymentHeader
                         {
-                            trPaymentLineCash.PaymentLineId = Guid.NewGuid();
-                            trPaymentLineCash.Payment = isNegativ ? trPaymentLineCash.Payment * (-1) : trPaymentLineCash.Payment;
-                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCash);
-                        }
+                            PaymentHeaderId = Guid.NewGuid(),
+                            DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6),
+                            CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
+                            PaymentKindId = 1
+                        };
+                        efMethods.InsertEntity(redirectedHeader);
 
-                        if (trPaymentLineCashless.PaymentLoc > 0)
+                        var redirectedLine = new TrPaymentLine
                         {
-                            trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
-                            trPaymentLineCashless.Payment = isNegativ ? trPaymentLineCashless.Payment * (-1) : trPaymentLineCashless.Payment;
+                            PaymentLineId = Guid.NewGuid(),
+                            PaymentHeaderId = redirectedHeader.PaymentHeaderId,
+                            CreatedDate = DateTime.Now,
+                            Payment = -trPaymentLineCashless.Payment
+                        };
+                        efMethods.InsertEntity(redirectedLine);
 
-                            if (dcPaymentMethod.IsRedirected)
-                                trPaymentLineCashless.CashRegisterCode = null;
-                            efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless);
-
-                            if (dcPaymentMethod.IsRedirected)
-                            {
-                                TrPaymentHeader trPaymentHeader2 = trPaymentHeader;
-                                trPaymentHeader2.PaymentHeaderId = Guid.NewGuid();
-                                trPaymentHeader2.DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6);
-                                trPaymentHeader2.CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString();
-                                trPaymentHeader2.PaymentKindId = 1;
-                                efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader2);
-
-                                TrPaymentLine trPaymentLineCashless2 = trPaymentLineCashless;
-                                trPaymentLineCashless2.PaymentLineId = Guid.NewGuid();
-                                trPaymentLineCashless2.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                                trPaymentLineCashless2.CreatedDate = DateTime.Now;
-                                trPaymentLineCashless2.Payment = (-1) * (trPaymentLineCashless.Payment - (decimal)(txt_CashlessCommission.EditValue ?? 0m));
-                                efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCashless2);
-
-                                if (Convert.ToDecimal(txt_CashlessCommission.EditValue ?? 0) > 0)
-                                {
-                                    TrPaymentLine trPaymentLineCommission = trPaymentLineCashless;
-                                    trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
-                                    trPaymentLineCommission.PaymentHeaderId = trPaymentHeader2.PaymentHeaderId;
-                                    trPaymentLineCommission.PaymentTypeCode = 5;
-                                    trPaymentLineCommission.LineDescription = LUE_PaymentPlan.GetColumnValue(nameof(DcPaymentPlan.PaymentPlanDesc))?.ToString();
-                                    trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
-                                    efMethods.InsertEntity<TrPaymentLine>(trPaymentLineCommission);
-                                }
-                            }
+                        if (hasCommission)
+                        {
+                            trPaymentLineCommission.PaymentHeaderId = redirectedHeader.PaymentHeaderId;
+                            trPaymentLineCommission.Payment = -trPaymentLineCommission.Payment;
+                            efMethods.InsertEntity(trPaymentLineCommission);
                         }
                     }
                 }
-
-                if (trInstallment.Amount > 0)
-                {
-                    if (!string.IsNullOrEmpty(trInstallment.PaymentPlanCode))
-                    {
-                        trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
-                        trInstallment.DocumentDate = Convert.ToDateTime(dateEdit_Date.EditValue);
-                        efMethods.InsertEntity<TrInstallment>(trInstallment);
-                    }
-                }
-
-                DialogResult = DialogResult.OK;
             }
+
+            if (trInstallment.Amount > 0)
+            {
+                if (!string.IsNullOrEmpty(trInstallment.PaymentPlanCode))
+                {
+                    trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
+                    trInstallment.DocumentDate = Convert.ToDateTime(dateEdit_Date.EditValue);
+                    efMethods.InsertEntity<TrInstallment>(trInstallment);
+                }
+            }
+
+            DialogResult = DialogResult.OK;
         }
     }
 }

@@ -1163,7 +1163,7 @@ namespace Foxoft
             col_Price.FieldName = "Price";
             col_Price.Name = "col_Price";
             col_Price.Visible = true;
-            col_Price.VisibleIndex = 3;
+            col_Price.VisibleIndex = 4;
             col_Price.Width = 57;
             // 
             // repoCalcEdit_Price
@@ -1182,7 +1182,7 @@ namespace Foxoft
             colCurrencyCode.FieldName = "CurrencyCode";
             colCurrencyCode.Name = "colCurrencyCode";
             colCurrencyCode.Visible = true;
-            colCurrencyCode.VisibleIndex = 4;
+            colCurrencyCode.VisibleIndex = 5;
             colCurrencyCode.Width = 59;
             // 
             // repoLUE_CurrencyCode
@@ -1223,7 +1223,7 @@ namespace Foxoft
             col_PosDiscount.FieldName = "PosDiscount";
             col_PosDiscount.Name = "col_PosDiscount";
             col_PosDiscount.Visible = true;
-            col_PosDiscount.VisibleIndex = 5;
+            col_PosDiscount.VisibleIndex = 6;
             col_PosDiscount.Width = 89;
             // 
             // col_NetAmount
@@ -1234,7 +1234,7 @@ namespace Foxoft
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:n2}") });
             col_NetAmount.Visible = true;
-            col_NetAmount.VisibleIndex = 6;
+            col_NetAmount.VisibleIndex = 7;
             col_NetAmount.Width = 69;
             // 
             // col_LineDesc
@@ -1242,7 +1242,7 @@ namespace Foxoft
             col_LineDesc.FieldName = "LineDescription";
             col_LineDesc.Name = "col_LineDesc";
             col_LineDesc.Visible = true;
-            col_LineDesc.VisibleIndex = 7;
+            col_LineDesc.VisibleIndex = 8;
             col_LineDesc.Width = 97;
             // 
             // col_SalesPersonCode
@@ -1341,6 +1341,8 @@ namespace Foxoft
             colUnitOfMeasureId.ColumnEdit = repoLUE_UnitOfMeasure;
             colUnitOfMeasureId.FieldName = "UnitOfMeasureId";
             colUnitOfMeasureId.Name = "colUnitOfMeasureId";
+            colUnitOfMeasureId.Visible = true;
+            colUnitOfMeasureId.VisibleIndex = 3;
             // 
             // repoLUE_UnitOfMeasure
             // 
