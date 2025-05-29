@@ -15,7 +15,7 @@ namespace Foxoft.Models
     {
         public TrProductUnitOfMeasure()
         {
-            TrInvoiceLines = new HashSet<TrInvoiceLine>();
+            //TrInvoiceLines = new HashSet<TrInvoiceLine>();
         }
 
         [Key]
@@ -34,9 +34,9 @@ namespace Foxoft.Models
         public decimal ConversionRate { get; set; }
 
 
-        public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
-        public virtual DcProduct DcProduct { get; set; }
-        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
+        //public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
+        //public virtual DcProduct DcProduct { get; set; }
+        //public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
 
     }
 }

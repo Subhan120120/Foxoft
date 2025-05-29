@@ -40,7 +40,7 @@ namespace Foxoft.Models
         public DbSet<DcBarcodeType> DcBarcodeTypes { get; set; }
         public DbSet<DcSerialNumber> DcSerialNumbers { get; set; }
         public DbSet<DcUnitOfMeasure> DcUnitOfMeasures { get; set; }
-        public DbSet<TrProductUnitOfMeasure> TrProductUnitOfMeasures { get; set; }
+        //public DbSet<TrProductUnitOfMeasure> TrProductUnitOfMeasures { get; set; }
         public DbSet<DcDiscount> DcDiscounts { get; set; }
         public DbSet<TrProductDiscount> TrProductDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
@@ -877,7 +877,7 @@ namespace Foxoft.Models
             string gvListDefault = customMethods.GetDataFromFile("Foxoft.AppCode.GvListDefaultLayout.xml");
 
             modelBuilder.Entity<AppSetting>().HasData(
-                new AppSetting { Id = 1, GridViewLayout = gvListDefault });
+                new AppSetting { Id = 1, GridViewLayout = gvListDefault, DefaultUnitOfMeasureId = 1 });
 
             modelBuilder.Entity<DcVariable>().HasData(
                 new DcVariable { VariableCode = "20", VariableDesc = "Barkod" },

@@ -54,9 +54,17 @@ namespace Foxoft.Models
         [Display(Name = "Ödəniş Redaktə Üçün Möhlət Günləri")]
         public int? PaymentEditGraceDays { get; set; }
 
+        [Display(Name = "Çap sayı")]
+        [ForeignKey("DcUnitOfMeasure")]
+        public int DefaultUnitOfMeasureId { get; set; }
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }
+
+        [ForeignKey("DefaultUnitOfMeasureId")]
+        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
+
 
     }
 }

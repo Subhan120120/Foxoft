@@ -89,8 +89,8 @@ namespace Foxoft.Models
 
         //[DefaultValue(1)]
         [Display(Name = "Ölçü Vahidi")]
-        [ForeignKey("TrProductUnitOfMeasure")]
-        public int? ProductUnitOfMeasureId { get; set; }
+        [ForeignKey("DcUnitOfMeasure")]
+        public int? UnitOfMeasureId { get; set; }
 
         [Display(Name = "Valyuta")]
         [ForeignKey("DcCurrency")]
@@ -180,7 +180,7 @@ namespace Foxoft.Models
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
         public virtual DcSerialNumber DcSerialNumber { get; set; }
-        public virtual TrProductUnitOfMeasure TrProductUnitOfMeasure { get; set; }
+        public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual trInvoiceLineExt TrInvoiceLineExt { get; set; }
