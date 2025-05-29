@@ -483,8 +483,8 @@ namespace Foxoft
                     trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
                     trPaymentLineCashless.Payment = isNegativ ? -trPaymentLineCashless.Payment : trPaymentLineCashless.Payment;
 
-                    if (dcPaymentMethod.IsRedirected)
-                        trPaymentLineCashless.CashRegisterCode = null;
+                    //if (dcPaymentMethod.IsRedirected)
+                    //    trPaymentLineCashless.CashRegisterCode = null;
 
                     efMethods.InsertEntity(trPaymentLineCashless);
 
@@ -502,7 +502,16 @@ namespace Foxoft
                             PaymentHeaderId = Guid.NewGuid(),
                             DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6),
                             CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
-                            PaymentKindId = 1
+                            PaymentKindId = 1,
+                            CreatedUserName = Authorization.CurrAccCode,
+                            OfficeCode = Authorization.OfficeCode,
+                            StoreCode = Authorization.StoreCode,
+                            ProcessCode = "PA",
+                            DocumentDate = trInvoiceHeader.DocumentDate,
+                            DocumentTime = trInvoiceHeader.DocumentTime,
+                            InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
+                            OperationDate = DateTime.Now,
+                            IsMainTF = true,
                         };
                         efMethods.InsertEntity(redirectedHeader);
 
@@ -510,8 +519,12 @@ namespace Foxoft
                         {
                             PaymentLineId = Guid.NewGuid(),
                             PaymentHeaderId = redirectedHeader.PaymentHeaderId,
+                            PaymentTypeCode = 2,
+                            CurrencyCode = trPaymentLineCashless.CurrencyCode,
+                            ExchangeRate = trPaymentLineCashless.ExchangeRate,
                             CreatedDate = DateTime.Now,
-                            Payment = -trPaymentLineCashless.Payment
+                            Payment = -trPaymentLineCashless.Payment,
+                            CreatedUserName = Authorization.CurrAccCode,
                         };
                         efMethods.InsertEntity(redirectedLine);
 
@@ -531,7 +544,7 @@ namespace Foxoft
                 {
                     trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
                     trInstallment.DocumentDate = Convert.ToDateTime(dateEdit_Date.EditValue);
-                    efMethods.InsertEntity<TrInstallment>(trInstallment);
+                    efMethods.InsertEntity(trInstallment);
                 }
             }
 

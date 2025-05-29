@@ -49,7 +49,6 @@ namespace Foxoft.Models
 
         [Display(Name = "Kassa")]
         [ForeignKey("DcCurrAcc")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string? CashRegisterCode { get; set; }
 
         [Display(Name = "Ödəmə Metodu Kodu")]
