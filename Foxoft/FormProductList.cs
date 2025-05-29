@@ -278,7 +278,7 @@ namespace Foxoft
                     string sql = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filtered, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(sql, sqlParameters);
-                    if (dt.Rows.Count > 0)
+                    if (dt.Columns.Count > 0)
                         dataSource = dt;
                 }
             }
