@@ -34,7 +34,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges1 = new DevExpress.Skins.SkinPaddingEdges();
+            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges3 = new DevExpress.Skins.SkinPaddingEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProduct));
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             galleryControl1 = new GalleryControl();
@@ -231,15 +231,15 @@ namespace Foxoft
             galleryControl1.Gallery.ImageSize = new Size(90, 60);
             galleryControl1.Gallery.ItemCheckMode = DevExpress.XtraBars.Ribbon.Gallery.ItemCheckMode.SingleCheck;
             galleryControl1.Gallery.ItemImageLayout = ImageLayoutMode.ZoomInside;
-            skinPaddingEdges1.All = -5;
-            skinPaddingEdges1.Bottom = -5;
-            skinPaddingEdges1.Left = -5;
-            skinPaddingEdges1.Right = -5;
-            skinPaddingEdges1.Top = -5;
-            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges1;
+            skinPaddingEdges3.All = -5;
+            skinPaddingEdges3.Bottom = -5;
+            skinPaddingEdges3.Left = -5;
+            skinPaddingEdges3.Right = -5;
+            skinPaddingEdges3.Top = -5;
+            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges3;
             galleryControl1.Gallery.Orientation = Orientation.Horizontal;
             galleryControl1.Gallery.ShowGroupCaption = false;
-            galleryControl1.Location = new Point(293, 170);
+            galleryControl1.Location = new Point(293, 191);
             galleryControl1.Name = "galleryControl1";
             galleryControl1.Size = new Size(189, 128);
             galleryControl1.StyleController = dataLayoutControl1;
@@ -262,7 +262,7 @@ namespace Foxoft
             // ProductCodeTextEdit
             // 
             ProductCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductCode", true));
-            ProductCodeTextEdit.Location = new Point(123, -9);
+            ProductCodeTextEdit.Location = new Point(123, 12);
             ProductCodeTextEdit.Name = "ProductCodeTextEdit";
             ProductCodeTextEdit.Size = new Size(121, 20);
             ProductCodeTextEdit.StyleController = dataLayoutControl1;
@@ -316,7 +316,7 @@ namespace Foxoft
             // IsDisabledCheckEdit
             // 
             IsDisabledCheckEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "IsDisabled", true));
-            IsDisabledCheckEdit.Location = new Point(12, 278);
+            IsDisabledCheckEdit.Location = new Point(12, 299);
             IsDisabledCheckEdit.Name = "IsDisabledCheckEdit";
             IsDisabledCheckEdit.Properties.Caption = "Is Disabled";
             IsDisabledCheckEdit.Properties.GlyphAlignment = HorzAlignment.Default;
@@ -327,7 +327,7 @@ namespace Foxoft
             // ProductDescTextEdit
             // 
             ProductDescTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductDesc", true));
-            ProductDescTextEdit.Location = new Point(123, 15);
+            ProductDescTextEdit.Location = new Point(123, 36);
             ProductDescTextEdit.Name = "ProductDescTextEdit";
             ProductDescTextEdit.Size = new Size(359, 20);
             ProductDescTextEdit.StyleController = dataLayoutControl1;
@@ -337,7 +337,7 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(408, 302);
+            btn_Ok.Location = new Point(408, 323);
             btn_Ok.Name = "btn_Ok";
             btn_Ok.Size = new Size(74, 62);
             btn_Ok.StyleController = dataLayoutControl1;
@@ -349,7 +349,7 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(330, 302);
+            btn_Cancel.Location = new Point(330, 323);
             btn_Cancel.Name = "btn_Cancel";
             btn_Cancel.Size = new Size(74, 62);
             btn_Cancel.StyleController = dataLayoutControl1;
@@ -359,7 +359,7 @@ namespace Foxoft
             // LUE_ProductTypeCode
             // 
             LUE_ProductTypeCode.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductTypeCode", true));
-            LUE_ProductTypeCode.Location = new Point(359, -9);
+            LUE_ProductTypeCode.Location = new Point(359, 12);
             LUE_ProductTypeCode.Name = "LUE_ProductTypeCode";
             LUE_ProductTypeCode.Properties.Appearance.Options.UseTextOptions = true;
             LUE_ProductTypeCode.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
@@ -374,7 +374,7 @@ namespace Foxoft
             // PurchasePriceTextEdit
             // 
             PurchasePriceTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "PurchasePrice", true));
-            PurchasePriceTextEdit.Location = new Point(135, 170);
+            PurchasePriceTextEdit.Location = new Point(135, 191);
             PurchasePriceTextEdit.Name = "PurchasePriceTextEdit";
             PurchasePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             PurchasePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
@@ -388,7 +388,7 @@ namespace Foxoft
             // WholesalePriceTextEdit
             // 
             WholesalePriceTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "WholesalePrice", true));
-            WholesalePriceTextEdit.Location = new Point(135, 194);
+            WholesalePriceTextEdit.Location = new Point(135, 215);
             WholesalePriceTextEdit.Name = "WholesalePriceTextEdit";
             WholesalePriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             WholesalePriceTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
@@ -402,7 +402,7 @@ namespace Foxoft
             // RetailPriceTextEdit
             // 
             RetailPriceTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "RetailPrice", true));
-            RetailPriceTextEdit.Location = new Point(135, 218);
+            RetailPriceTextEdit.Location = new Point(135, 239);
             RetailPriceTextEdit.Name = "RetailPriceTextEdit";
             RetailPriceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             RetailPriceTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
@@ -416,7 +416,7 @@ namespace Foxoft
             // PosDiscountTextEdit
             // 
             PosDiscountTextEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "PosDiscount", true));
-            PosDiscountTextEdit.Location = new Point(123, 63);
+            PosDiscountTextEdit.Location = new Point(123, 84);
             PosDiscountTextEdit.Name = "PosDiscountTextEdit";
             PosDiscountTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             PosDiscountTextEdit.Properties.Appearance.TextOptions.HAlignment = HorzAlignment.Far;
@@ -430,7 +430,7 @@ namespace Foxoft
             // UseInternetCheckEdit
             // 
             UseInternetCheckEdit.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "UseInternet", true));
-            UseInternetCheckEdit.Location = new Point(161, 278);
+            UseInternetCheckEdit.Location = new Point(161, 299);
             UseInternetCheckEdit.Name = "UseInternetCheckEdit";
             UseInternetCheckEdit.Properties.Caption = "İnternetdə İstifadə Et";
             UseInternetCheckEdit.Properties.GlyphAlignment = HorzAlignment.Default;
@@ -440,7 +440,7 @@ namespace Foxoft
             // 
             // pictureEdit
             // 
-            pictureEdit.Location = new Point(293, 39);
+            pictureEdit.Location = new Point(293, 60);
             pictureEdit.Name = "pictureEdit";
             pictureEdit.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
             pictureEdit.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
@@ -454,7 +454,7 @@ namespace Foxoft
             // textEdit_ProductCode2
             // 
             textEdit_ProductCode2.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "ProductCode2", true));
-            textEdit_ProductCode2.Location = new Point(123, 87);
+            textEdit_ProductCode2.Location = new Point(123, 108);
             textEdit_ProductCode2.Name = "textEdit_ProductCode2";
             textEdit_ProductCode2.Size = new Size(166, 20);
             textEdit_ProductCode2.StyleController = dataLayoutControl1;
@@ -463,7 +463,7 @@ namespace Foxoft
             // btnEdit_Hierarchy
             // 
             btnEdit_Hierarchy.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "HierarchyCode", true));
-            btnEdit_Hierarchy.Location = new Point(123, 111);
+            btnEdit_Hierarchy.Location = new Point(123, 132);
             btnEdit_Hierarchy.Name = "btnEdit_Hierarchy";
             btnEdit_Hierarchy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
             btnEdit_Hierarchy.Size = new Size(166, 20);
@@ -475,7 +475,7 @@ namespace Foxoft
             // txtEdit_Price
             // 
             txtEdit_Price.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Price", true));
-            txtEdit_Price.Location = new Point(135, 170);
+            txtEdit_Price.Location = new Point(135, 191);
             txtEdit_Price.Name = "txtEdit_Price";
             txtEdit_Price.Size = new Size(142, 20);
             txtEdit_Price.StyleController = dataLayoutControl1;
@@ -484,7 +484,7 @@ namespace Foxoft
             // txtEdit_Desc
             // 
             txtEdit_Desc.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Desc", true));
-            txtEdit_Desc.Location = new Point(135, 194);
+            txtEdit_Desc.Location = new Point(135, 215);
             txtEdit_Desc.Name = "txtEdit_Desc";
             txtEdit_Desc.Size = new Size(142, 20);
             txtEdit_Desc.StyleController = dataLayoutControl1;
@@ -493,7 +493,7 @@ namespace Foxoft
             // txtEdit_Rating
             // 
             txtEdit_Rating.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Rating", true));
-            txtEdit_Rating.Location = new Point(135, 242);
+            txtEdit_Rating.Location = new Point(135, 263);
             txtEdit_Rating.Name = "txtEdit_Rating";
             txtEdit_Rating.Size = new Size(142, 20);
             txtEdit_Rating.StyleController = dataLayoutControl1;
@@ -502,7 +502,7 @@ namespace Foxoft
             // btnEdit_Slug
             // 
             btnEdit_Slug.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "SiteProduct.Slug", true));
-            btnEdit_Slug.Location = new Point(135, 218);
+            btnEdit_Slug.Location = new Point(135, 239);
             btnEdit_Slug.Name = "btnEdit_Slug";
             btnEdit_Slug.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus) });
             btnEdit_Slug.Size = new Size(142, 20);
@@ -514,7 +514,7 @@ namespace Foxoft
             // 
             btn_Apply.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Apply.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Apply.ImageOptions.SvgImage");
-            btn_Apply.Location = new Point(252, 302);
+            btn_Apply.Location = new Point(252, 323);
             btn_Apply.Name = "btn_Apply";
             btn_Apply.Size = new Size(74, 62);
             btn_Apply.StyleController = dataLayoutControl1;
@@ -525,7 +525,7 @@ namespace Foxoft
             // LUE_DefaultUnitOfMeasureId
             // 
             LUE_DefaultUnitOfMeasureId.DataBindings.Add(new Binding("EditValue", dcProductsBindingSource, "DefaultUnitOfMeasureId", true));
-            LUE_DefaultUnitOfMeasureId.Location = new Point(123, 39);
+            LUE_DefaultUnitOfMeasureId.Location = new Point(123, 60);
             LUE_DefaultUnitOfMeasureId.MenuManager = barManager1;
             LUE_DefaultUnitOfMeasureId.Name = "LUE_DefaultUnitOfMeasureId";
             LUE_DefaultUnitOfMeasureId.Properties.Appearance.Options.UseTextOptions = true;

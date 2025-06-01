@@ -8,6 +8,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data;
@@ -44,6 +45,9 @@ namespace Foxoft
             this.isNew = isNew;
 
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+
+            if (Settings.Default.AppSetting.UseScales)
+                BBI_Scales.Visibility = BarItemVisibility.Always;
 
             if (!isNew)
             {
