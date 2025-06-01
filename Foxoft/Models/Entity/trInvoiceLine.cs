@@ -38,38 +38,29 @@ namespace Foxoft.Models
         {
             get
             {
-                if (TrInvoiceHeader is not null)
-                {
-                    if ((bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
-                        if (TrInvoiceHeader.IsReturn)
-                            return QtyIn * (-1);
-                        else return QtyIn;
-
-                    else if (!(bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
-                        if (TrInvoiceHeader.IsReturn)
-                            return QtyOut * (-1);
-                        else return QtyOut;
-
-                    else
-                        return 0;
-                }
-                else
+                if (TrInvoiceHeader == null)
                     return 0;
+
+                bool isIn = (bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode);
+                bool isReturn = TrInvoiceHeader.IsReturn;
+
+                if (isIn)
+                    return isReturn ? -QtyIn : QtyIn;
+                else
+                    return isReturn ? -QtyOut : QtyOut;
             }
             set
             {
-                if (TrInvoiceHeader is not null)
-                {
-                    if ((bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
-                        if (TrInvoiceHeader.IsReturn)
-                            QtyIn = value * (-1);
-                        else QtyIn = value;
+                if (TrInvoiceHeader == null)
+                    return;
 
-                    else if (!(bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode))
-                        if (TrInvoiceHeader.IsReturn)
-                            QtyOut = value * (-1);
-                        else QtyOut = value;
-                }
+                bool isIn = (bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode);
+                bool isReturn = TrInvoiceHeader.IsReturn;
+
+                if (isIn)
+                    QtyIn = isReturn ? -value : value;
+                else
+                    QtyOut = isReturn ? -value : value;
             }
         }
 

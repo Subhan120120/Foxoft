@@ -315,12 +315,38 @@ namespace Foxoft
             return product;
         }
 
-        public List<DcUnitOfMeasure> SelectUnitOfMeasuresByParentId(int parentMeasureId)
+        public List<DcUnitOfMeasure> SelectUnitOfMeasuresAllRelated(int parentMeasureId)
         {
-            using subContext db = new();
-            var product = db.DcUnitOfMeasures.Where(x => x.UnitOfMeasureId == parentMeasureId || x.ParentUnitOfMeasureId == parentMeasureId)
-                .ToList();
-            return product;
+            using var db = new subContext();
+            var result = new List<DcUnitOfMeasure>();
+
+            void Collect(int? unitId)
+            {
+                if (result.Any(x => x.UnitOfMeasureId == unitId))
+                    return;
+
+                var unit = db.DcUnitOfMeasures.FirstOrDefault(x => x.UnitOfMeasureId == unitId);
+                if (unit == null)
+                    return;
+
+                result.Add(unit);
+
+                // Recurse to parent
+                if (unit.ParentUnitOfMeasureId != 0)
+                    Collect(unit.ParentUnitOfMeasureId);
+
+                // Recurse to children
+                var children = db.DcUnitOfMeasures
+                    .Where(x => x.ParentUnitOfMeasureId == unitId)
+                    .Select(x => x.UnitOfMeasureId)
+                    .ToList();
+
+                foreach (var childId in children)
+                    Collect(childId);
+            }
+
+            Collect(parentMeasureId);
+            return result;
         }
 
         public List<DcProduct> SelectProducts(bool? isDisabled)
@@ -1175,6 +1201,12 @@ namespace Foxoft
             return db.DcCurrencies.FirstOrDefault(x => x.CurrencyDesc == currencyDesc);
         }
 
+        public DcProductScale SelectProductScaleByProduct(string productCode)
+        {
+            using subContext db = new();
+            return db.DcProductScales.FirstOrDefault(x => x.ProductCode == productCode);
+        }
+
         public DcClaim SelectDcClaimByIdentity(int Id)
         {
             using subContext db = new();
@@ -1355,6 +1387,12 @@ namespace Foxoft
             using subContext db = new();
             return db.DcProducts.Where(x => x.IsDisabled == false)
                        .Any(x => x.ProductCode == productCode);
+        }
+
+        public bool ProductScaleExist(string productCode)
+        {
+            using subContext db = new();
+            return db.DcProductScales.Any(x => x.ProductCode == productCode);
         }
 
         public bool TrRoleClaimExist(string roleCode, string claimCode)

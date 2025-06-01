@@ -490,51 +490,51 @@ namespace Foxoft
 
                     var hasCommission = Convert.ToDecimal(txt_CashlessCommission.EditValue ?? 0) > 0;
 
-                    if (!dcPaymentMethod.IsRedirected)
-                    {
-                        if (hasCommission)
-                            efMethods.InsertEntity(trPaymentLineCommission);
-                    }
-                    else
-                    {
-                        var redirectedHeader = new TrPaymentHeader
+                        if (!dcPaymentMethod.IsRedirected)
                         {
-                            PaymentHeaderId = Guid.NewGuid(),
-                            DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6),
-                            CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
-                            PaymentKindId = 1,
-                            CreatedUserName = Authorization.CurrAccCode,
-                            OfficeCode = Authorization.OfficeCode,
-                            StoreCode = Authorization.StoreCode,
-                            ProcessCode = "PA",
-                            DocumentDate = trInvoiceHeader.DocumentDate,
-                            DocumentTime = trInvoiceHeader.DocumentTime,
-                            InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
-                            OperationDate = DateTime.Now,
-                            IsMainTF = true,
-                        };
-                        efMethods.InsertEntity(redirectedHeader);
-
-                        var redirectedLine = new TrPaymentLine
-                        {
-                            PaymentLineId = Guid.NewGuid(),
-                            PaymentHeaderId = redirectedHeader.PaymentHeaderId,
-                            PaymentTypeCode = 2,
-                            CurrencyCode = trPaymentLineCashless.CurrencyCode,
-                            ExchangeRate = trPaymentLineCashless.ExchangeRate,
-                            CreatedDate = DateTime.Now,
-                            Payment = -trPaymentLineCashless.Payment,
-                            CreatedUserName = Authorization.CurrAccCode,
-                        };
-                        efMethods.InsertEntity(redirectedLine);
-
-                        if (hasCommission)
-                        {
-                            trPaymentLineCommission.PaymentHeaderId = redirectedHeader.PaymentHeaderId;
-                            trPaymentLineCommission.Payment = -trPaymentLineCommission.Payment;
-                            efMethods.InsertEntity(trPaymentLineCommission);
+                            if (hasCommission)
+                                efMethods.InsertEntity(trPaymentLineCommission);
                         }
-                    }
+                        else
+                        {
+                            var redirectedHeader = new TrPaymentHeader
+                            {
+                                PaymentHeaderId = Guid.NewGuid(),
+                                DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6),
+                                CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
+                                PaymentKindId = 1,
+                                CreatedUserName = Authorization.CurrAccCode,
+                                OfficeCode = Authorization.OfficeCode,
+                                StoreCode = Authorization.StoreCode,
+                                ProcessCode = "PA",
+                                DocumentDate = trInvoiceHeader.DocumentDate,
+                                DocumentTime = trInvoiceHeader.DocumentTime,
+                                InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
+                                OperationDate = DateTime.Now,
+                                IsMainTF = true,
+                            };
+                            efMethods.InsertEntity(redirectedHeader);
+
+                            var redirectedLine = new TrPaymentLine
+                            {
+                                PaymentLineId = Guid.NewGuid(),
+                                PaymentHeaderId = redirectedHeader.PaymentHeaderId,
+                                PaymentTypeCode = 2,
+                                CurrencyCode = trPaymentLineCashless.CurrencyCode,
+                                ExchangeRate = trPaymentLineCashless.ExchangeRate,
+                                CreatedDate = DateTime.Now,
+                                Payment = -trPaymentLineCashless.Payment,
+                                CreatedUserName = Authorization.CurrAccCode,
+                            };
+                            efMethods.InsertEntity(redirectedLine);
+
+                            if (hasCommission)
+                            {
+                                trPaymentLineCommission.PaymentHeaderId = redirectedHeader.PaymentHeaderId;
+                                trPaymentLineCommission.Payment = -trPaymentLineCommission.Payment;
+                                efMethods.InsertEntity(trPaymentLineCommission);
+                            }
+                        }
                 }
             }
 

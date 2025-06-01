@@ -30,7 +30,7 @@ namespace Foxoft.Models
         public string UnitOfMeasureDesc { get; set; }
 
         [Display(Name = "Ana Ölçü Vahidi Id")]
-        public int ParentUnitOfMeasureId { get; set; }
+        public int? ParentUnitOfMeasureId { get; set; }
 
         [Display(Name = "Dəyişmə Nisbəti")]
         public decimal ConversionRate { get; set; }
@@ -38,12 +38,20 @@ namespace Foxoft.Models
         [Display(Name = "Ölçü Vahidi Səviyyəsi")]
         public byte Level { get; set; }
 
+        [Display(Name = "Ana Ölçü Vahididir")]
+        public bool IsBasic { get; set; }
+
 
         //public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual AppSetting AppSetting { get; set; }
         public virtual ICollection<DcProduct> DcProducts { get; set; }
         public virtual ICollection<SettingStore> SettingStores { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
+
+        [ForeignKey("ParentUnitOfMeasureId")]
+        public virtual DcUnitOfMeasure ParentUnitOfMeasure { get; set; }
+
+        public virtual ICollection<DcUnitOfMeasure> ChildUnitOfMeasures { get; set; }
 
     }
 }

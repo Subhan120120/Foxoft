@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20250530082706_IsBasic")]
+    partial class IsBasic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2569,37 +2572,6 @@ namespace Foxoft.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcProductScale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ProductCode")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("ScaleProductDesc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ScaleProductNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductCode")
-                        .IsUnique();
-
-                    b.HasIndex("ScaleProductNumber")
-                        .IsUnique()
-                        .HasFilter("[ScaleProductNumber] IS NOT NULL");
-
-                    b.ToTable("DcProductScales");
-                });
-
             modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
                 {
                     b.Property<string>("ProductCode")
@@ -3662,9 +3634,6 @@ namespace Foxoft.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<bool>("UseScales")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DefaultUnitOfMeasureId");
@@ -3681,8 +3650,7 @@ namespace Foxoft.Migrations
                             DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
                             ImageFolder = "C:\\Foxoft\\Foxoft Images",
                             SalesmanContinuity = false,
-                            StoreCode = "mgz01",
-                            UseScales = false
+                            StoreCode = "mgz01"
                         });
                 });
 
@@ -5746,17 +5714,6 @@ namespace Foxoft.Migrations
                     b.Navigation("DcUnitOfMeasure");
                 });
 
-            modelBuilder.Entity("Foxoft.Models.DcProductScale", b =>
-                {
-                    b.HasOne("Foxoft.Models.DcProduct", "DcProduct")
-                        .WithOne("DcProductScale")
-                        .HasForeignKey("Foxoft.Models.DcProductScale", "ProductCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("DcProduct");
-                });
-
             modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
                 {
                     b.HasOne("Foxoft.Models.DcPriceType", "DcPriceType")
@@ -6566,9 +6523,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.DcProduct", b =>
                 {
-                    b.Navigation("DcProductScale")
-                        .IsRequired();
-
                     b.Navigation("DcSerialNumbers");
 
                     b.Navigation("ProductBalance")

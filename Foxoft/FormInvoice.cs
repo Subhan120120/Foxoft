@@ -232,6 +232,7 @@ namespace Foxoft
 
             dbContext.TrInvoiceLines.Include(x => x.DcProduct)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                                    .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
                                     .Where(x => x.InvoiceHeaderId == trInvoiceHeader.InvoiceHeaderId)
                                     .LoadAsync()
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
@@ -331,6 +332,7 @@ namespace Foxoft
 
             dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
+                                    .Include(x => x.DcUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure).ThenInclude(x => x.ParentUnitOfMeasure)
                                     .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
                                     .OrderBy(x => x.CreatedDate)
                                     .LoadAsync()
@@ -2265,7 +2267,7 @@ namespace Foxoft
                 DcProduct product = efMethods.SelectProduct(productCode);
                 if (product is not null)
                 {
-                    List<DcUnitOfMeasure> unitOfMeasure = efMethods.SelectUnitOfMeasuresByParentId(product.DefaultUnitOfMeasureId);
+                    List<DcUnitOfMeasure> unitOfMeasure = efMethods.SelectUnitOfMeasuresAllRelated(product.DefaultUnitOfMeasureId);
                     lookupEdit.Properties.DataSource = unitOfMeasure;
                 }
             }

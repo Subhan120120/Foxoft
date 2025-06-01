@@ -33,6 +33,9 @@ namespace Foxoft.Models
         [Display(Name = "Satıcı Sətiri Kopyala")]
         public bool SalesmanContinuity { get; set; }
 
+        [Display(Name = "Tərəzi")]
+        public bool UseScales { get; set; }
+
         [Display(Name = "Default Ölçü Vahidi")]
         [ForeignKey("DcUnitOfMeasure")]
         public int DefaultUnitOfMeasureId { get; set; }

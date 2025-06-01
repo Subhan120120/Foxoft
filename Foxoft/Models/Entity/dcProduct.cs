@@ -123,9 +123,9 @@ namespace Foxoft.Models
         public decimal? LastSalePrice { get; set; }
 
         public virtual DcProductType DcProductType { get; set; }
-
         public virtual SiteProduct SiteProduct { get; set; }
         public virtual DcUnitOfMeasure DcUnitOfMeasure { get; set; }
+        public virtual DcProductScale DcProductScale { get; set; }
         public virtual DcHierarchy DcHierarchy { get; set; }
         public virtual ProductBalance ProductBalance { get; set; }
         public virtual ICollection<DcSerialNumber> DcSerialNumbers { get; set; }

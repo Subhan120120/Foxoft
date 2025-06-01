@@ -50,6 +50,7 @@ namespace Foxoft
                 BBI_ProductDiscount.Enabled = true;
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
+                BBI_Scales.Enabled = true;
             }
 
             LUE_ProductTypeCode.Properties.DataSource = efMethods.SelectEntities<DcProductType>();
@@ -554,7 +555,6 @@ namespace Foxoft
             else
                 BBI_GalleryPaste.Enabled = false;
 
-
             if (galleryControl1.Gallery.GetCheckedItemsCount() > 0)
             {
                 BBI_GalleryCopy.Enabled = true;
@@ -619,6 +619,7 @@ namespace Foxoft
                 BBI_ProductDiscount.Enabled = true;
                 BBI_ProductBarcode.Enabled = true;
                 BBI_ProductStaticPriceList.Enabled = true;
+                BBI_Scales.Enabled = true;
 
                 LoadProduct();
             }
@@ -627,6 +628,12 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
+        }
+
+        private void BBI_Scales_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormProductScales formProductScales = new(dcProduct);
+            formProductScales.ShowDialog();
         }
     }
 }

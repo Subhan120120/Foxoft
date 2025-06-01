@@ -44,6 +44,7 @@ namespace Foxoft.Models
         public DbSet<DcDiscount> DcDiscounts { get; set; }
         public DbSet<TrProductDiscount> TrProductDiscounts { get; set; }
         public DbSet<DcProductType> DcProductTypes { get; set; }
+        public DbSet<DcProductScale> DcProductScales { get; set; }
         public DbSet<DcRole> DcRoles { get; set; }
         public DbSet<DcForm> DcForms { get; set; }
         public DbSet<TrFormReport> TrFormReports { get; set; }
@@ -251,6 +252,13 @@ namespace Foxoft.Models
                  .HasForeignKey(fk => fk.DefaultCashRegCode)
                  .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // for using DcUnitOfMeasure.ParentUnitOfMeasure
+            modelBuilder.Entity<DcUnitOfMeasure>()
+                .HasOne(u => u.ParentUnitOfMeasure)
+                .WithMany(u => u.ChildUnitOfMeasures)
+                .HasForeignKey(u => u.ParentUnitOfMeasureId)
+                .OnDelete(DeleteBehavior.Restrict); // prevent cascade delete loops
 
             //EntityTypeBuilder deleted = modelBuilder.Entity<TrInvoiceHeaderDeleted>()
             //    .ToTable("TrInvoiceHeaderDeleteds")
@@ -745,7 +753,7 @@ namespace Foxoft.Models
                 new DcReport { ReportId = 17, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Depoların Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_WarehouseBalance.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 18, ReportTypeId = 2, ReportCategoryId = 3, ReportName = "Məhsul Kartı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Detail_ProductCard.sql"), ReportLayout = "" },
                 new DcReport { ReportId = 19, ReportTypeId = 1, ReportCategoryId = 3, ReportName = "Məhsul Qalığı", ReportQuery = cM.GetDataFromFile("Foxoft.AppCode.Report." + "Report_Grid_ProductBalanceSerialNumber.sql"), ReportLayout = "" }
-                // reportlarin layoutlarin FormLogin de duzelt
+               // reportlarin layoutlarin FormLogin de duzelt
                );
 
             modelBuilder.Entity<DcReportVariableType>().HasData(

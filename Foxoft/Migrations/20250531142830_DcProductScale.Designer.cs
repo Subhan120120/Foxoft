@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20250531142830_DcProductScale")]
+    partial class DcProductScale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2597,7 +2600,7 @@ namespace Foxoft.Migrations
                         .IsUnique()
                         .HasFilter("[ScaleProductNumber] IS NOT NULL");
 
-                    b.ToTable("DcProductScales");
+                    b.ToTable("dcProductScales");
                 });
 
             modelBuilder.Entity("Foxoft.Models.DcProductStaticPrice", b =>
@@ -3662,9 +3665,6 @@ namespace Foxoft.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<bool>("UseScales")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DefaultUnitOfMeasureId");
@@ -3681,8 +3681,7 @@ namespace Foxoft.Migrations
                             DesignFileFolder = "C:\\Foxoft\\Foxoft Design Files",
                             ImageFolder = "C:\\Foxoft\\Foxoft Images",
                             SalesmanContinuity = false,
-                            StoreCode = "mgz01",
-                            UseScales = false
+                            StoreCode = "mgz01"
                         });
                 });
 
