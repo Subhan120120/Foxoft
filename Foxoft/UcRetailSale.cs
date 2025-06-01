@@ -287,14 +287,14 @@ namespace Foxoft
             }
         }
 
-        private void AddNewRow(DcProduct dcProduct)
+        private void AddNewRow(DcProduct dcProduct, decimal qty)
         {
             gV_InvoiceLine.AddNewRow();
             int newRowHandle = gV_InvoiceLine.FocusedRowHandle; // get the handle of the new row
 
             gV_InvoiceLine.SetRowCellValue(newRowHandle, colProductCode, dcProduct.ProductCode);
             gV_InvoiceLine.SetRowCellValue(newRowHandle, col_Price, dcProduct.RetailPrice);
-            gV_InvoiceLine.SetRowCellValue(newRowHandle, colQtyOut, 1);
+            gV_InvoiceLine.SetRowCellValue(newRowHandle, colQtyOut, qty);
             gV_InvoiceLine.SetRowCellValue(newRowHandle, colProductCost, dcProduct.ProductCost);
 
             gV_InvoiceLine.UpdateCurrentRow(); // finalize changes
@@ -713,29 +713,26 @@ namespace Foxoft
 
         protected virtual void OnEnterKeyPressed()
         {
-            if (txtEdit_Barcode.EditValue == null)
+            if (string.IsNullOrWhiteSpace(txtEdit_Barcode.EditValue?.ToString()))
                 return;
 
-            string barcode = txtEdit_Barcode.EditValue.ToString()?.Trim() ?? "";
-            if (string.IsNullOrEmpty(barcode))
-                return;
-
-            DcProduct dcProductByBarcode = efMethods.SelectProductByBarcode(barcode);
-            DcProduct dcProduct = null;
+            string input = txtEdit_Barcode.EditValue.ToString().Trim();
+            DcProduct dcProductByBarcode = efMethods.SelectProductByBarcode(input);
+            DcProduct dcProductByScale = null;
             decimal qty = 0;
 
-            if (barcode.Length == 13 && barcode.All(char.IsDigit))
+            if (Settings.Default.AppSetting.UseScales && input.Length == 13 && input.All(char.IsDigit))
             {
-                int productId = int.Parse(barcode.Substring(1, 6));
-                dcProduct = efMethods.SelectProductById(productId);
-                qty = int.Parse(barcode.Substring(7, 6)) / 10m;
+                int productId = int.Parse(input.Substring(1, 6));
+                dcProductByScale = efMethods.SelectProductById(productId);
+                qty = int.Parse(input.Substring(7, 6)) / 10000m; //2 000003 02.0000
             }
 
-            DcProduct selectedProduct = dcProductByBarcode ?? dcProduct;
+            DcProduct selectedProduct = dcProductByBarcode ?? dcProductByScale;
 
-            if (dcProductByBarcode != null && dcProduct != null)
+            if (dcProductByBarcode != null && dcProductByScale != null)
             {
-                using var formProductList = new FormProductList(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProduct.ProductCode });
+                using var formProductList = new FormProductList(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductByScale.ProductCode });
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
                     selectedProduct = formProductList.dcProduct;
@@ -747,49 +744,9 @@ namespace Foxoft
 
             if (selectedProduct != null)
             {
-                //if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId))
-                //    InsertInvoiceHeader();
-
-                //TrInvoiceHeader trInvoiceHeader = efMethods.SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
-
-                //TrInvoiceLine trInvoiceLine = new()
-                //{
-                //    //TrInvoiceHeader = trInvoiceHeader, // qty duzgun hesablanamsina gore
-                //    InvoiceLineId = Guid.NewGuid(),
-                //    InvoiceHeaderId = invoiceHeaderId,
-                //    ProductCode = selectedProduct.ProductCode,
-                //    Price = selectedProduct.RetailPrice,
-                //    Amount = Convert.ToDecimal(selectedProduct.RetailPrice),
-                //    PosDiscount = Convert.ToDecimal(selectedProduct.PosDiscount),
-                //    NetAmount = Convert.ToDecimal(selectedProduct.RetailPrice),
-                //    QtyOut = 1,
-                //    ProductCost = selectedProduct.ProductCost,
-                //};
-
-                AddNewRow(selectedProduct);
-
-                //trInvoiceLinesBindingSource.Add(trInvoiceLine);
-
-                //gV_InvoiceLine.AddNewRow();
-                //FillRow(gV_InvoiceLine.FocusedRowHandle, formProductList.dcProduct);
-
+                AddNewRow(selectedProduct, qty);
                 SaveInvoice();
-
-                //dbContext.TrInvoiceLines.Local.Add(trInvoiceLine);
-                //gV_InvoiceLine.RefreshData();
-
-
                 txtEdit_Barcode.EditValue = string.Empty;
-
-                //trInvoiceLine.TrInvoiceHeader = null;
-
-                //trInvoiceLine = efMethods.InsertEntity<TrInvoiceLine>(trInvoiceLine);
-
-                //if (trInvoiceLine is not null)
-                //{
-                //    gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
-                //    gV_InvoiceLine.MoveLast();
-                //}
             }
             else
             {

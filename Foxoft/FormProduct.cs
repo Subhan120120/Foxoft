@@ -48,6 +48,8 @@ namespace Foxoft
 
             if (Settings.Default.AppSetting.UseScales)
                 BBI_Scales.Visibility = BarItemVisibility.Always;
+            else
+                BBI_Scales.Visibility = BarItemVisibility.OnlyInCustomizing;
 
             if (!isNew)
             {

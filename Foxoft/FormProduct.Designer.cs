@@ -34,7 +34,7 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges3 = new DevExpress.Skins.SkinPaddingEdges();
+            DevExpress.Skins.SkinPaddingEdges skinPaddingEdges1 = new DevExpress.Skins.SkinPaddingEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProduct));
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             galleryControl1 = new GalleryControl();
@@ -231,12 +231,12 @@ namespace Foxoft
             galleryControl1.Gallery.ImageSize = new Size(90, 60);
             galleryControl1.Gallery.ItemCheckMode = DevExpress.XtraBars.Ribbon.Gallery.ItemCheckMode.SingleCheck;
             galleryControl1.Gallery.ItemImageLayout = ImageLayoutMode.ZoomInside;
-            skinPaddingEdges3.All = -5;
-            skinPaddingEdges3.Bottom = -5;
-            skinPaddingEdges3.Left = -5;
-            skinPaddingEdges3.Right = -5;
-            skinPaddingEdges3.Top = -5;
-            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges3;
+            skinPaddingEdges1.All = -5;
+            skinPaddingEdges1.Bottom = -5;
+            skinPaddingEdges1.Left = -5;
+            skinPaddingEdges1.Right = -5;
+            skinPaddingEdges1.Top = -5;
+            galleryControl1.Gallery.ItemImagePadding = skinPaddingEdges1;
             galleryControl1.Gallery.Orientation = Orientation.Horizontal;
             galleryControl1.Gallery.ShowGroupCaption = false;
             galleryControl1.Location = new Point(293, 191);

@@ -117,6 +117,7 @@
             // 
             // FormProductScales
             // 
+            AcceptButton = btn_Save;
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(338, 197);

@@ -23,7 +23,6 @@ namespace Foxoft
         public FormProductScales()
         {
             InitializeComponent();
-            AcceptButton = btn_Save;
         }
         public FormProductScales(DcProduct dcProduct)
             : this()
@@ -74,6 +73,8 @@ namespace Foxoft
                 efMethods.InsertEntity(dcProductScale);
             else
                 dbContext.SaveChanges();
+
+            DialogResult = DialogResult.OK;
         }
 
         private void TextEdit_ScaleProductNumber_Validating(object sender, CancelEventArgs e)
