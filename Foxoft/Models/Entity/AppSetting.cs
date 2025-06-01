@@ -58,6 +58,9 @@ namespace Foxoft.Models
         [ForeignKey("DcUnitOfMeasure")]
         public int DefaultUnitOfMeasureId { get; set; }
 
+        [Display(Name = "Tərəzi")]
+        public bool UseScales { get; set; }
+
 
         [ForeignKey("LocalCurrencyCode")]
         public virtual DcCurrency DcCurrency { get; set; }

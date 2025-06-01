@@ -36,6 +36,7 @@
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)textEdit1.Properties).BeginInit();
@@ -43,6 +44,7 @@
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -72,11 +74,12 @@
             // textEdit1
             // 
             textEdit1.DataBindings.Add(new Binding("EditValue", dcProductScaleBindingSource, "ScaleProductNumber", true));
-            textEdit1.Location = new Point(106, 12);
+            textEdit1.Location = new Point(116, 12);
             textEdit1.Name = "textEdit1";
-            textEdit1.Size = new Size(220, 20);
+            textEdit1.Size = new Size(210, 20);
             textEdit1.StyleController = dataLayoutControl1;
             textEdit1.TabIndex = 4;
+            textEdit1.Validating += TextEdit_ScaleProductNumber_Validating;
             // 
             // dcProductScaleBindingSource
             // 
@@ -97,7 +100,7 @@
             layoutControlItem1.Location = new Point(0, 0);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(318, 24);
-            layoutControlItem1.TextSize = new Size(82, 13);
+            layoutControlItem1.TextSize = new Size(92, 13);
             // 
             // layoutControlItem2
             // 
@@ -107,6 +110,10 @@
             layoutControlItem2.Size = new Size(318, 153);
             layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
+            // 
+            // dxErrorProvider1
+            // 
+            dxErrorProvider1.ContainerControl = this;
             // 
             // FormProductScales
             // 
@@ -124,6 +131,7 @@
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
             ResumeLayout(false);
         }
 
@@ -136,5 +144,6 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraEditors.SimpleButton btn_Save;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
     }
 }

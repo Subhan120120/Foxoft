@@ -287,8 +287,8 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.DcProducts
-                .FirstOrDefault(x => x.ProductId == id);
+            return db.DcProducts.Include(x=>x.DcProductScale)
+                .FirstOrDefault(x => x.DcProductScale.ScaleProductNumber == id);
         }
 
         public DcProduct SelectProductBySerialNumber(string serialNumberCode)

@@ -721,21 +721,21 @@ namespace Foxoft
                 return;
 
             DcProduct dcProductByBarcode = efMethods.SelectProductByBarcode(barcode);
-            DcProduct dcProductScales = null;
+            DcProduct dcProduct = null;
             decimal qty = 0;
 
             if (barcode.Length == 13 && barcode.All(char.IsDigit))
             {
                 int productId = int.Parse(barcode.Substring(1, 6));
-                dcProductScales = efMethods.SelectProductById(productId);
+                dcProduct = efMethods.SelectProductById(productId);
                 qty = int.Parse(barcode.Substring(7, 6)) / 10m;
             }
 
-            DcProduct selectedProduct = dcProductByBarcode ?? dcProductScales;
+            DcProduct selectedProduct = dcProductByBarcode ?? dcProduct;
 
-            if (dcProductByBarcode != null && dcProductScales != null)
+            if (dcProductByBarcode != null && dcProduct != null)
             {
-                using var formProductList = new FormProductList(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductScales.ProductCode });
+                using var formProductList = new FormProductList(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProduct.ProductCode });
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
                     selectedProduct = formProductList.dcProduct;

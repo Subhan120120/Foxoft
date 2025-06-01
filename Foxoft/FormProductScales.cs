@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.DXErrorProvider;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -74,5 +75,36 @@ namespace Foxoft
             else
                 dbContext.SaveChanges();
         }
+
+        private void TextEdit_ScaleProductNumber_Validating(object sender, CancelEventArgs e)
+        {
+            var editor = sender as TextEdit;
+            string inputValue = editor.Text;
+
+            if (string.IsNullOrWhiteSpace(inputValue))
+                return;
+
+            if (!int.TryParse(inputValue, out int scaleProductNumber))
+            {
+                e.Cancel = true;
+                dxErrorProvider1.SetError(editor, "Ədəd daxil edin.");
+                return;
+            }
+
+            bool isDuplicate = dbContext.DcProductScales
+                .Any(x => x.ScaleProductNumber == scaleProductNumber
+                       && x.ProductCode != dcProduct.ProductCode); // optionally exclude current product
+
+            if (isDuplicate)
+            {
+                e.Cancel = true;
+                dxErrorProvider1.SetError(editor, "Bu kod istifadə olunub. Təkrarsız ədəd daxil edin.");
+            }
+            else
+            {
+                dxErrorProvider1.SetError(editor, string.Empty); // clear error
+            }
+        }
+
     }
 }
