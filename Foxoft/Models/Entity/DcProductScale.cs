@@ -31,6 +31,9 @@ namespace Foxoft.Models
         [Display(Name = "Tərəzi Məhsul Kodu")]
         public int? ScaleProductNumber { get; set; }
 
+        [Display(Name = "Tərəzi İstifadə Et")]
+        public bool UseInScale { get; set; }
+
 
         [ForeignKey("ProductCode")]
         public virtual DcProduct DcProduct{ get; set; }

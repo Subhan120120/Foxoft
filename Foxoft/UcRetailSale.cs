@@ -211,13 +211,6 @@ namespace Foxoft
             {
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
-                    //if (!efMethods.EntityExists<TrInvoiceHeader>(invoiceHeaderId)) //if invoiceHeader doesnt exist
-                    //    InsertInvoiceHeader();
-
-                    //TrInvoiceHeader trInvoiceHeader = efMethods.SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
-
-                    //TrInvoiceLine trInvoiceLine = gV_InvoiceLine.GetFocusedRow() as TrInvoiceLine;
-
                     if (formProductList.dcProduct is null)
                     {
                         XtraMessageBox.Show("Məhsul əlavə edilə bilmədi");
@@ -239,48 +232,7 @@ namespace Foxoft
                                 return;
                             }
                     }
-
-                    //TrInvoiceLine trInvoiceLine = new()
-                    //{
-                    //    //TrInvoiceHeader = trInvoiceHeader, // qty duzgun hesablanamsina gore
-                    //    InvoiceLineId = Guid.NewGuid(),
-                    //    InvoiceHeaderId = invoiceHeaderId,
-                    //    ProductCode = formProductList.dcProduct.ProductCode,
-                    //    Price = formProductList.dcProduct.RetailPrice,
-                    //    Amount = Convert.ToDecimal(formProductList.dcProduct.RetailPrice),
-                    //    PosDiscount = Convert.ToDecimal(formProductList.dcProduct.PosDiscount),
-                    //    NetAmount = Convert.ToDecimal(formProductList.dcProduct.RetailPrice),
-                    //    QtyOut = 1,
-                    //    ProductCost = formProductList.dcProduct.ProductCost
-                    //};
-
-                    //trInvoiceLine.TrInvoiceHeader = null;
-
-                    //trInvoiceLine = efMethods.InsertEntity<TrInvoiceLine>(trInvoiceLine);
-
-
-                    //TrInvoiceLine trInvoiceLine = new()
-                    //{
-                    //    TrInvoiceHeader = trInvoiceHeader, // qty duzgun hesablanamsina gore
-                    //    InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
-                    //    InvoiceLineId = Guid.NewGuid(),
-                    //    ProductCode = formProductList.dcProduct.ProductCode,
-                    //    QtyOut = 1,
-                    //    Price = formProductList.dcProduct.RetailPrice,
-                    //    Amount = Convert.ToDecimal(formProductList.dcProduct.RetailPrice),
-                    //    PosDiscount = Convert.ToDecimal(formProductList.dcProduct.PosDiscount),
-                    //    NetAmount = Convert.ToDecimal(formProductList.dcProduct.RetailPrice),
-                    //    ProductCost = formProductList.dcProduct.ProductCost,
-                    //};
-
-                    //dbContext.TrInvoiceLines.Local.Add(trInvoiceLine);
-
-                    AddNewRow(formProductList.dcProduct);
-
-                    //trInvoiceLinesBindingSource.Add(trInvoiceLine);
-
-                    //gV_InvoiceLine.AddNewRow();
-                    //FillRow(gV_InvoiceLine.FocusedRowHandle, formProductList.dcProduct);
+                    AddNewRow(formProductList.dcProduct, 1);
 
                     SaveInvoice();
                 }
@@ -718,17 +670,27 @@ namespace Foxoft
 
             string input = txtEdit_Barcode.EditValue.ToString().Trim();
             DcProduct dcProductByBarcode = efMethods.SelectProductByBarcode(input);
-            DcProduct dcProductByScale = null;
+
             decimal qty = 0;
+            DcProduct dcProductByScale = null;
 
             if (Settings.Default.AppSetting.UseScales && input.Length == 13 && input.All(char.IsDigit))
             {
                 int productId = int.Parse(input.Substring(1, 6));
                 dcProductByScale = efMethods.SelectProductById(productId);
-                qty = int.Parse(input.Substring(7, 6)) / 10000m; //2 000003 02.0000
             }
 
-            DcProduct selectedProduct = dcProductByBarcode ?? dcProductByScale;
+            DcProduct selectedProduct = null;
+            if (dcProductByBarcode != null)
+            {
+                selectedProduct = dcProductByBarcode;
+                qty = dcProductByBarcode.TrProductBarcodes.FirstOrDefault().Qty;
+            }
+            else if (dcProductByScale != null)
+            {
+                selectedProduct = dcProductByScale;
+                qty = int.Parse(input.Substring(7, 6)) / 10000m; //2 000003 02.0000
+            }
 
             if (dcProductByBarcode != null && dcProductByScale != null)
             {
@@ -738,7 +700,9 @@ namespace Foxoft
                     selectedProduct = formProductList.dcProduct;
 
                     if (selectedProduct?.ProductCode == dcProductByBarcode.ProductCode)
-                        qty = dcProductByBarcode.TrProductBarcodes.FirstOrDefault()?.Qty ?? qty;
+                        qty = dcProductByBarcode.TrProductBarcodes.FirstOrDefault().Qty;
+                    else if (selectedProduct?.ProductCode == dcProductByScale.ProductCode)
+                        qty = int.Parse(input.Substring(7, 6)) / 10000m; //2 000003 02.0000
                 }
             }
 
