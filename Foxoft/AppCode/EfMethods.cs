@@ -1319,18 +1319,16 @@ namespace Foxoft
             return wareCode;
         }
 
-        public string SelectCashRegByStore(string storeCode)
+        public string? SelectCashRegByStore(string storeCode)
         {
             using subContext db = new();
-            string cashReg = "";
 
             DcCurrAcc dcCurrAcc = db.DcCurrAccs.Where(x => x.IsDisabled == false && x.IsDefault == true && x.CurrAccTypeCode == 5)
                                   .FirstOrDefault(x => x.StoreCode == storeCode);
 
             if (dcCurrAcc is not null)
-                cashReg = dcCurrAcc.CurrAccCode;
-
-            return cashReg;
+                return dcCurrAcc.CurrAccCode;
+            return null;
         }
 
         public string SelectDefaultCashRegister(string storeCode)

@@ -113,26 +113,24 @@ namespace Foxoft
 
             ClearControlsAddNew();
 
-            //ChangeQtyByProcessDir();
-
-            foreach (BaseLayoutItem item in dataLayoutControl1.Items)
-            {
-                if (item is LayoutControlItem)
-                {
-                    LayoutControlItem controlItem = item as LayoutControlItem;
-                    if (controlItem != null)
-                    {
-                        if (controlItem.Control is LookUpEdit lookUpEdit)
-                        {
-                            lookUpEdit.EditValueChanged += LookUpEdit_EditValueChanged;
-                        }
-                        else if (controlItem.Control is BaseEdit baseEdit)
-                        {
-                            baseEdit.Leave += Control_Leave;
-                        }
-                    }
-                }
-            }
+            //foreach (BaseLayoutItem item in dataLayoutControl1.Items)
+            //{
+            //    if (item is LayoutControlItem)
+            //    {
+            //        LayoutControlItem controlItem = item as LayoutControlItem;
+            //        if (controlItem != null)
+            //        {
+            //            if (controlItem.Control is LookUpEdit lookUpEdit)
+            //            {
+            //                lookUpEdit.EditValueChanged += LookUpEdit_EditValueChanged;
+            //            }
+            //            else if (controlItem.Control is BaseEdit baseEdit)
+            //            {
+            //                baseEdit.Leave += Control_Leave;
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
@@ -154,34 +152,34 @@ namespace Foxoft
 
         private void LookUpEdit_EditValueChanged(object? sender, EventArgs e)
         {
-            if (sender is LookUpEdit lookUpEdit)
-            {
-                trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+            //if (sender is LookUpEdit lookUpEdit)
+            //{
+            //    trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
-                if (trInvoiceHeader is not null)
-                {
-                    if (lookUpEdit == lUE_StoreCode)
-                        trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
-                    if (lookUpEdit == lUE_ToWarehouseCode)
-                        trInvoiceHeader.ToWarehouseCode = lookUpEdit.EditValue?.ToString();
+            //    if (trInvoiceHeader is not null)
+            //    {
+            //        if (lookUpEdit == lUE_StoreCode)
+            //            trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
+            //        if (lookUpEdit == lUE_ToWarehouseCode)
+            //            trInvoiceHeader.ToWarehouseCode = lookUpEdit.EditValue?.ToString();
 
-                    if (dbContext != null
-                        && dataLayoutControl1.IsValid(out _)
-                        && Settings.Default.AppSetting.AutoSave
-                        && gV_InvoiceLine.DataRowCount > 0)
-                        SaveInvoice();
-                }
-            }
+            //        if (dbContext != null
+            //            && dataLayoutControl1.IsValid(out _)
+            //            && Settings.Default.AppSetting.AutoSave
+            //            && gV_InvoiceLine.DataRowCount > 0)
+            //            SaveInvoice();
+            //    }
+            //}
         }
 
         private void Control_Leave(object sender, EventArgs e)
         {
-            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+            //trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
-            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out _))
-                if (Settings.Default.AppSetting.AutoSave)
-                    if (gV_InvoiceLine.DataRowCount > 0)
-                        SaveInvoice();
+            //if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out _))
+            //    if (Settings.Default.AppSetting.AutoSave)
+            //        if (gV_InvoiceLine.DataRowCount > 0)
+            //            SaveInvoice();
         }
 
         protected override void WndProc(ref Message m)
@@ -277,6 +275,16 @@ namespace Foxoft
 
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
+            dataLayoutControl1.Validate();  // ensure editor loses focus and commits value
+            //dbContext.SaveChanges();
+
+            trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
+
+            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out _))
+                if (Settings.Default.AppSetting.AutoSave)
+                    if (gV_InvoiceLine.DataRowCount > 0)
+                        SaveInvoice();
+
             gV_InvoiceLine.Focus();
         }
 
