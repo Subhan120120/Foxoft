@@ -435,7 +435,6 @@ namespace Foxoft
                     SaveInvoice();
 
                     LoadCurrAcc();
-
                 }
             }
         }
@@ -474,7 +473,7 @@ namespace Foxoft
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
-            using (FormCurrAccList form = new(new byte[] { 1 }, trInvoiceHeader.CurrAccCode))
+            using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, trInvoiceHeader.CurrAccCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
