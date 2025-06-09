@@ -490,6 +490,7 @@ namespace Foxoft
             // 
             // trInvoiceHeadersBindingSource
             // 
+            trInvoiceHeadersBindingSource.DataSource = typeof(TrInvoiceHeader);
             trInvoiceHeadersBindingSource.AddingNew += trInvoiceHeadersBindingSource_AddingNew;
             trInvoiceHeadersBindingSource.CurrentItemChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
             // 

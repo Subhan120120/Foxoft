@@ -265,7 +265,7 @@ namespace Foxoft
 
         private DcCurrAcc SelectCurrAcc()
         {
-            using (FormCurrAccList form = new(new byte[] { 5 }, trPaymentHeader.CurrAccCode))
+            using (FormCashRegisterList form = new(trPaymentHeader.CurrAccCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {

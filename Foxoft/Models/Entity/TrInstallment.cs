@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Ödəmə Planı")]
+    [Display(Name = "Kredit")]
     public partial class TrInstallment
     {
         public TrInstallment() { }
 
         [Key]
-        [Display(Name = "Ödəmə Planı İd")]
+        [Display(Name = "Kredit İd")]
         public int InstallmentId { get; set; }
 
         [ForeignKey("TrInvoiceHeader")]

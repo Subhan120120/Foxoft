@@ -21,7 +21,6 @@ namespace Foxoft.Models
         {
             TrInvoiceLines = new HashSet<TrInvoiceLine>();
             TrPaymentHeaders = new HashSet<TrPaymentHeader>();
-            TrPaymentPlans = new HashSet<TrInstallment>();
             InverseRelatedHeaders = new HashSet<TrInvoiceHeader>();
         }
 
@@ -163,7 +162,7 @@ namespace Foxoft.Models
         public virtual DcProcess DcProcess { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
-        public virtual ICollection<TrInstallment> TrPaymentPlans { get; set; }
+        public virtual TrInstallment TrInstallment { get; set; }
 
         public virtual TrInvoiceHeader RelatedHeader { get; set; } // Navigation property to the related line
         public virtual ICollection<TrInvoiceHeader> InverseRelatedHeaders { get; set; } // Navigation property for the inverse relationship

@@ -36,6 +36,6 @@ namespace Foxoft.Models
 
         [ForeignKey("PaymentMethodId")]
         public virtual DcPaymentMethod DcPaymentMethod { get; set; }
-        public virtual ICollection<TrInstallment> TrPaymentPlans { get; set; }
+        public virtual ICollection<TrInstallment> TrInstallments { get; set; }
     }
 }
