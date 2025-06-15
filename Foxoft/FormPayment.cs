@@ -42,6 +42,7 @@ namespace Foxoft
                 new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
                 new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
                 new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
             });
 
             LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectPaymentPlans(2);
@@ -52,6 +53,7 @@ namespace Foxoft
                 new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
                 new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
                 new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
+                new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
             });
 
             List<DcCurrency> currencies = efMethods.SelectEntities<DcCurrency>();
@@ -154,8 +156,6 @@ namespace Foxoft
             trPaymentLineCommission.PaymentLineId = Guid.NewGuid();
             trPaymentLineCommission.PaymentTypeCode = 5;
             trPaymentLineCommission.PaymentMethodId = 3;
-            trPaymentLineCommission.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-            trPaymentLineCommission.ExchangeRate = 1;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
             trInstallment.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
@@ -483,58 +483,60 @@ namespace Foxoft
                     trPaymentLineCashless.PaymentLineId = Guid.NewGuid();
                     trPaymentLineCashless.Payment = isNegativ ? -trPaymentLineCashless.Payment : trPaymentLineCashless.Payment;
 
-                    //if (dcPaymentMethod.IsRedirected)
-                    //    trPaymentLineCashless.CashRegisterCode = null;
+                    if (dcPaymentMethod.IsRedirected)
+                        trPaymentLineCashless.CashRegisterCode = null;
 
                     efMethods.InsertEntity(trPaymentLineCashless);
 
                     var hasCommission = Convert.ToDecimal(txt_CashlessCommission.EditValue ?? 0) > 0;
 
-                        if (!dcPaymentMethod.IsRedirected)
+                    if (!dcPaymentMethod.IsRedirected)
+                    {
+                        if (hasCommission)
+                            efMethods.InsertEntity(trPaymentLineCommission);
+                    }
+                    else
+                    {
+                        var redirectedHeader = new TrPaymentHeader
                         {
-                            if (hasCommission)
-                                efMethods.InsertEntity(trPaymentLineCommission);
-                        }
-                        else
+                            PaymentHeaderId = Guid.NewGuid(),
+                            DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6),
+                            CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
+                            PaymentKindId = 1,
+                            CreatedUserName = Authorization.CurrAccCode,
+                            OfficeCode = Authorization.OfficeCode,
+                            StoreCode = Authorization.StoreCode,
+                            ProcessCode = "PA",
+                            DocumentDate = trInvoiceHeader.DocumentDate,
+                            DocumentTime = trInvoiceHeader.DocumentTime,
+                            InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
+                            OperationDate = DateTime.Now,
+                            IsMainTF = true,
+                        };
+                        efMethods.InsertEntity(redirectedHeader);
+
+                        var redirectedLine = new TrPaymentLine
                         {
-                            var redirectedHeader = new TrPaymentHeader
-                            {
-                                PaymentHeaderId = Guid.NewGuid(),
-                                DocumentNumber = efMethods.GetNextDocNum(true, "PA", "DocumentNumber", "TrPaymentHeaders", 6),
-                                CurrAccCode = dcPaymentMethod.RedirectedCurrAccCode?.ToString(),
-                                PaymentKindId = 1,
-                                CreatedUserName = Authorization.CurrAccCode,
-                                OfficeCode = Authorization.OfficeCode,
-                                StoreCode = Authorization.StoreCode,
-                                ProcessCode = "PA",
-                                DocumentDate = trInvoiceHeader.DocumentDate,
-                                DocumentTime = trInvoiceHeader.DocumentTime,
-                                InvoiceHeaderId = trInvoiceHeader.InvoiceHeaderId,
-                                OperationDate = DateTime.Now,
-                                IsMainTF = true,
-                            };
-                            efMethods.InsertEntity(redirectedHeader);
+                            PaymentLineId = Guid.NewGuid(),
+                            PaymentHeaderId = redirectedHeader.PaymentHeaderId,
+                            PaymentTypeCode = 2,
+                            CurrencyCode = trPaymentLineCashless.CurrencyCode,
+                            ExchangeRate = trPaymentLineCashless.ExchangeRate,
+                            CreatedDate = DateTime.Now,
+                            Payment = -trPaymentLineCashless.Payment,
+                            CreatedUserName = Authorization.CurrAccCode,
+                        };
+                        efMethods.InsertEntity(redirectedLine);
 
-                            var redirectedLine = new TrPaymentLine
-                            {
-                                PaymentLineId = Guid.NewGuid(),
-                                PaymentHeaderId = redirectedHeader.PaymentHeaderId,
-                                PaymentTypeCode = 2,
-                                CurrencyCode = trPaymentLineCashless.CurrencyCode,
-                                ExchangeRate = trPaymentLineCashless.ExchangeRate,
-                                CreatedDate = DateTime.Now,
-                                Payment = -trPaymentLineCashless.Payment,
-                                CreatedUserName = Authorization.CurrAccCode,
-                            };
-                            efMethods.InsertEntity(redirectedLine);
-
-                            if (hasCommission)
-                            {
-                                trPaymentLineCommission.PaymentHeaderId = redirectedHeader.PaymentHeaderId;
-                                trPaymentLineCommission.Payment = -trPaymentLineCommission.Payment;
-                                efMethods.InsertEntity(trPaymentLineCommission);
-                            }
+                        if (hasCommission)
+                        {
+                            trPaymentLineCommission.PaymentHeaderId = redirectedHeader.PaymentHeaderId;
+                            trPaymentLineCommission.Payment = -trPaymentLineCommission.Payment;
+                            trPaymentLineCommission.CurrencyCode = trPaymentLineCashless.CurrencyCode;
+                            trPaymentLineCommission.ExchangeRate = trPaymentLineCashless.ExchangeRate;
+                            efMethods.InsertEntity(trPaymentLineCommission);
                         }
+                    }
                 }
             }
 

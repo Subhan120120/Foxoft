@@ -174,8 +174,6 @@ namespace Foxoft
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
 
             //XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Custom Icon Message", Text = "This is a message with a custom icon.", Buttons = new[] { DialogResult.OK }, ImageOptions = new MessageBoxImageOptions() { SvgImage = (SvgImage)resources.GetObject("btn_ERP.ImageOptions.SvgImage") } });
-
-
         }
 
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
