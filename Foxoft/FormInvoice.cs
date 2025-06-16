@@ -28,6 +28,7 @@ using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.ComponentModel;
@@ -89,6 +90,7 @@ namespace Foxoft
             this.Text = dcProcess.ProcessDesc;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
+            LUE_PaymentPlan.Properties.DataSource = efMethods.SelectEntities<DcPaymentPlan>();
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
@@ -112,6 +114,9 @@ namespace Foxoft
                     AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore.ImageFolder);
 
             ClearControlsAddNew();
+
+            // ikinci dereceli entitylerde (TrInstallment.PaymentPlanCode) CurrentItemChanged islemir.
+            LUE_PaymentPlan.EditValueChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
 
             //foreach (BaseLayoutItem item in dataLayoutControl1.Items)
             //{
@@ -214,6 +219,7 @@ namespace Foxoft
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
                                       .Include(x => x.DcCurrAcc)
+                                      .Include(x => x.TrInstallment)
                                       .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                       .Load();
 
@@ -276,11 +282,18 @@ namespace Foxoft
         private void trInvoiceHeadersBindingSource_CurrentItemChanged(object sender, EventArgs e)
         {
             dataLayoutControl1.Validate();  // ensure editor loses focus and commits value
-            //dbContext.SaveChanges();
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
-            if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out _))
+            var lue = sender as LookUpEdit;
+
+            if (trInvoiceHeader is null)
+                return;
+
+            if (lue == LUE_PaymentPlan && !string.IsNullOrEmpty(LUE_PaymentPlan.EditValue?.ToString()))
+                trInvoiceHeader.TrInstallment.PaymentPlanCode = LUE_PaymentPlan.EditValue?.ToString();
+
+            if (dbContext != null && dataLayoutControl1.IsValid(out _))
                 if (Settings.Default.AppSetting.AutoSave)
                     if (gV_InvoiceLine.DataRowCount > 0)
                         SaveInvoice();
@@ -320,6 +333,7 @@ namespace Foxoft
 
             dbContext.TrInvoiceHeaders.Include(x => x.DcCurrAcc)
                                       .Include(x => x.DcProcess)
+                                      .Include(x => x.TrInstallment)
                                       .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
                                       .Load();
 
@@ -1763,7 +1777,6 @@ namespace Foxoft
 
         private void FormInvoice_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //efMethods.UpdateInvoiceIsOpen(trInvoiceHeader.DocumentNumber, false);
         }
 
         private void BBI_exportXLSX_ItemClick(object sender, ItemClickEventArgs e)
@@ -1966,8 +1979,8 @@ namespace Foxoft
 
                 if (dcWarehouse is not null && !dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader.WarehouseCode))
                 {
-                    trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                     lUE_WarehouseCode.EditValue = dcWarehouse.WarehouseCode;
+                    //trInvoiceHeader.WarehouseCode = dcWarehouse.WarehouseCode;
                 }
             }
         }
@@ -2000,12 +2013,22 @@ namespace Foxoft
 
                         if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
                         {
-                            trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
+                            //trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
                             lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
                         }
                     }
                 }
             }
+        }
+
+        private void lUE_WarehouseCode_EditValueChanged(object sender, EventArgs e)
+        {
+            trInvoiceHeader.WarehouseCode = lUE_WarehouseCode.EditValue?.ToString();
+        }
+
+        private void lUE_ToWarehouseCode_EditValueChanged(object sender, EventArgs e)
+        {
+            trInvoiceHeader.ToWarehouseCode = lUE_ToWarehouseCode.EditValue?.ToString();
         }
 
         private async void BBI_ReportPrintFast_ItemClick(object sender, ItemClickEventArgs e)
