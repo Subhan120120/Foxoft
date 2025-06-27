@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,7 +7,10 @@ namespace Foxoft.Models
     [Display(Name = "Kredit")]
     public partial class TrInstallment
     {
-        public TrInstallment() { }
+        public TrInstallment()
+        {
+            TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>();
+        }
 
         [Key]
         [Display(Name = "Kredit İd")]
@@ -20,35 +22,16 @@ namespace Foxoft.Models
 
         [Column(TypeName = "date")]
         [DefaultValue("getdate()")]
-        [Display(Name = "Faktura Tarixi")]
+        [Display(Name = "Kredit Tarixi")]
         public DateTime DocumentDate { get; set; }
 
         [Display(Name = "Ödəmə Planı Kodu")]
-        [ForeignKey("DcPaymentPlan")]
-        public string PaymentPlanCode { get; set; }
+        [ForeignKey("DcInstallmentPlan")]
+        public string InstallmentPlanCode { get; set; }
 
         [Display(Name = "Komissiya")]
         public decimal Commission { get; set; } // Interest rate associated with the plan, if applicable 
 
-        [Display(Name = "Ümumi Məbləğ")]
-        public decimal Amount { get; set; }
-
-        [Display(Name = "Ümumi Məbləğ (YPV)")]
-        public decimal AmountLoc { get { return Math.Round(Amount / (decimal)ExchangeRate, 4); } set { } }
-
-        [ForeignKey("DcCurrency")]
-        [Display(Name = "Valyuta")]
-        public string CurrencyCode { get; set; }
-
-        [Display(Name = "Valyuta Kursu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public float ExchangeRate { get; set; }
-
-
-
-        [NotMapped]
-        [Display(Name = "Cari Hesab")]
-        public string? CurrAccCode { get; set; }
 
         [NotMapped]
         [Display(Name = "Ödənişlərin Cəmi")]
@@ -74,12 +57,8 @@ namespace Foxoft.Models
         [Display(Name = "Gecikmə Tarixi")]
         public DateTime? OverdueDate { get; set; } // İlk gecikmə tarixi olaraq "OverdueDate" istifadə edildi
 
-
-
-
-        public virtual DcCurrency DcCurrency { get; set; }
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
-        public virtual DcPaymentPlan DcPaymentPlan { get; set; }
-
+        public virtual DcInstallmentPlan DcInstallmentPlan { get; set; }
+        public virtual ICollection<TrInstallmentGuarantor> TrInstallmentGuarantors { get; set; }
     }
 }

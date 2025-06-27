@@ -158,8 +158,8 @@ namespace Foxoft
             trPaymentLineCommission.PaymentMethodId = 3;
             trPaymentLineCommission.CreatedUserName = Authorization.CurrAccCode;
 
-            trInstallment.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
-            trInstallment.ExchangeRate = 1;
+            //trInstallment.CurrencyCode = Settings.Default.AppSetting.LocalCurrencyCode;
+            //trInstallment.ExchangeRate = 1;
 
             string cashReg = efMethods.SelectDefaultCashRegister(Authorization.StoreCode);
             if (!String.IsNullOrEmpty(cashReg))
@@ -185,9 +185,9 @@ namespace Foxoft
             txtEdit_Cashless.EditValue = trPaymentLineCashless.PaymentLoc;
             lUE_CashlessCurrency.EditValue = trPaymentLineCashless.CurrencyCode;
 
-            TxtEdit_Installment.EditValue = trInstallment.Amount;
-            LUE_InstallmentCurrency.EditValue = trInstallment.CurrencyCode;
-            LUE_InstallmentPlan.EditValue = trInstallment.PaymentPlanCode;
+            //TxtEdit_Installment.EditValue = trInstallment.Amount;
+            //LUE_InstallmentCurrency.EditValue = trInstallment.CurrencyCode;
+            LUE_InstallmentPlan.EditValue = trInstallment.InstallmentPlanCode;
         }
 
         private void dateEdit_Date_EditValueChanged(object sender, EventArgs e)
@@ -378,16 +378,16 @@ namespace Foxoft
 
         private void TxtEdit_Installment_EditValueChanged(object sender, EventArgs e)
         {
-            trInstallment.Amount = Convert.ToDecimal(TxtEdit_Installment.EditValue);
-            TxtEdit_Installment.DoValidate();
+            //trInstallment.Amount = Convert.ToDecimal(TxtEdit_Installment.EditValue);
+            //TxtEdit_Installment.DoValidate();
         }
 
         private void LUE_InstallmentCurrency_EditValueChanged(object sender, EventArgs e)
         {
-            trInstallment.CurrencyCode = LUE_InstallmentCurrency.EditValue.ToString();
+            //trInstallment.CurrencyCode = LUE_InstallmentCurrency.EditValue.ToString();
 
-            if (LUE_InstallmentCurrency.Visible)
-                trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
+            //if (LUE_InstallmentCurrency.Visible)
+            //    trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
         }
 
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
@@ -395,14 +395,14 @@ namespace Foxoft
             if (efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentCommissionChange"))
                 txt_InstallmentCommission.Enabled = true;
 
-            object row = LUE_InstallmentPlan.Properties.GetDataSourceRowByKeyValue(LUE_InstallmentPlan.EditValue);
-            trInstallment.PaymentPlanCode = ((DcPaymentPlan)row).PaymentPlanCode;
+            //object row = LUE_InstallmentPlan.Properties.GetDataSourceRowByKeyValue(LUE_InstallmentPlan.EditValue);
+            //trInstallment.InstallmentPlanCode = ((DcPaymentPlan)row).PaymentPlanCode;
 
-            if (row is not null)
-            {
-                float commisionRate = ((DcPaymentPlan)row).CommissionRate;
-                txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
-            }
+            //if (row is not null)
+            //{
+            //    float commisionRate = ((DcPaymentPlan)row).CommissionRate;
+            //    txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
+            //}
 
 
         }
@@ -414,7 +414,7 @@ namespace Foxoft
 
         private void SavePayment(bool autoPayment)
         {
-            if (trPaymentLineCash.PaymentLoc <= 0 && trPaymentLineCashless.PaymentLoc <= 0 && trInstallment.Amount <= 0)
+            if (trPaymentLineCash.PaymentLoc <= 0 && trPaymentLineCashless.PaymentLoc <= 0)
                 return;
 
             if (trPaymentLineCashless.PaymentLoc > 0)// lUE_PaymentMethod Validation
@@ -434,34 +434,34 @@ namespace Foxoft
                 }
             }
 
-            if (trInstallment.Amount > 0)// lUE_PaymentMethod Validation
-            {
-                if (LUE_InstallmentPlan.EditValue == null)
-                {
-                    dxErrorProvider1.SetError(LUE_InstallmentPlan, "Boş buraxıla bilməz!");
-                    return;
-                }
+            //if (trInstallment.Amount > 0)// lUE_PaymentMethod Validation
+            //{
+            //    if (LUE_InstallmentPlan.EditValue == null)
+            //    {
+            //        dxErrorProvider1.SetError(LUE_InstallmentPlan, "Boş buraxıla bilməz!");
+            //        return;
+            //    }
 
-                DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
+            //    DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
 
-                if (dcCurrAcc is null)
-                {
-                    XtraMessageBox.Show("Cari Hesab Seçilməyib");
-                    return;
-                }
+            //    if (dcCurrAcc is null)
+            //    {
+            //        XtraMessageBox.Show("Cari Hesab Seçilməyib");
+            //        return;
+            //    }
 
-                if (String.IsNullOrEmpty(dcCurrAcc.IdentityNum))
-                {
-                    XtraMessageBox.Show("Cari Hesabın Şəxsiyyət Vəsiqəsinin Nömrəsi yoxdur");
-                    return;
-                }
+            //    if (String.IsNullOrEmpty(dcCurrAcc.IdentityNum))
+            //    {
+            //        XtraMessageBox.Show("Cari Hesabın Şəxsiyyət Vəsiqəsinin Nömrəsi yoxdur");
+            //        return;
+            //    }
 
-                if (String.IsNullOrEmpty(dcCurrAcc.PhoneNum))
-                {
-                    XtraMessageBox.Show("Cari Hesabın Telefon Nömrəsi yoxdur");
-                    return;
-                }
-            }
+            //    if (String.IsNullOrEmpty(dcCurrAcc.PhoneNum))
+            //    {
+            //        XtraMessageBox.Show("Cari Hesabın Telefon Nömrəsi yoxdur");
+            //        return;
+            //    }
+            //}
 
             if (trPaymentLineCash.PaymentLoc > 0 || trPaymentLineCashless.PaymentLoc > 0)
             {
@@ -540,15 +540,15 @@ namespace Foxoft
                 }
             }
 
-            if (trInstallment.Amount > 0)
-            {
-                if (!string.IsNullOrEmpty(trInstallment.PaymentPlanCode))
-                {
-                    trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
-                    trInstallment.DocumentDate = Convert.ToDateTime(dateEdit_Date.EditValue);
-                    efMethods.InsertEntity(trInstallment);
-                }
-            }
+            //if (trInstallment.Amount > 0)
+            //{
+            //    if (!string.IsNullOrEmpty(trInstallment.InstallmentPlanCode))
+            //    {
+            //        trInstallment.InvoiceHeaderId = (Guid)trPaymentHeader.InvoiceHeaderId;
+            //        trInstallment.DocumentDate = Convert.ToDateTime(dateEdit_Date.EditValue);
+            //        efMethods.InsertEntity(trInstallment);
+            //    }
+            //}
 
             DialogResult = DialogResult.OK;
         }

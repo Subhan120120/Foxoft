@@ -25,6 +25,7 @@ namespace Foxoft.Models
             TrReportCustomizations = new HashSet<TrReportCustomization>();
             TrCurrAccFeatures = new HashSet<TrCurrAccFeature>();
             DcCurrAccContactDetails = new HashSet<DcCurrAccContactDetail>();
+            TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>();
         }
 
         [Key]
@@ -172,5 +173,6 @@ namespace Foxoft.Models
         public virtual ICollection<TrCurrAccFeature> TrCurrAccFeatures { get; set; }
 
         public virtual ICollection<DcCurrAccContactDetail> DcCurrAccContactDetails { get; set; }
+        public virtual ICollection<TrInstallmentGuarantor> TrInstallmentGuarantors { get; set; }
     }
 }

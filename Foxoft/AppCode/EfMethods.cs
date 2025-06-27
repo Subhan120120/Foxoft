@@ -287,7 +287,7 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            return db.DcProducts.Include(x=>x.DcProductScale)
+            return db.DcProducts.Include(x => x.DcProductScale)
                 .FirstOrDefault(x => x.DcProductScale.ScaleProductNumber == id && x.DcProductScale.UseInScale == true);
         }
 
@@ -978,81 +978,81 @@ namespace Foxoft
                                     .Sum(s => s.PaymentLoc);
         }
 
-        public decimal SelectInstallmentsSumByInvoice(Guid invoiceHeaderId)
-        {
-            using subContext db = new();
+        //public decimal SelectInstallmentsSumByInvoice(Guid invoiceHeaderId)
+        //{
+        //    using subContext db = new();
 
-            return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(s => s.AmountLoc);
-        }
+        //    return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+        //                            .Sum(s => s.AmountLoc);
+        //}
 
-        public decimal SelectInstallmentCommissionsSumByInvoice(Guid invoiceHeaderId)
-        {
-            using subContext db = new();
+        //public decimal SelectInstallmentCommissionsSumByInvoice(Guid invoiceHeaderId)
+        //{
+        //    using subContext db = new();
 
-            return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(s => s.Commission / (decimal)s.ExchangeRate);
-        }
+        //    return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+        //                            .Sum(s => s.Commission / (decimal)s.ExchangeRate);
+        //}
 
-        public decimal SelectInstallmentsTotalSumByInvoice(Guid invoiceHeaderId)
-        {
-            using subContext db = new();
+        //public decimal SelectInstallmentsTotalSumByInvoice(Guid invoiceHeaderId)
+        //{
+        //    using subContext db = new();
 
-            return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                    .Sum(s => s.AmountLoc + (s.Commission / (decimal)s.ExchangeRate));
-        }
+        //    return db.TrInstallments.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+        //                            .Sum(s => s.AmountLoc + (s.Commission / (decimal)s.ExchangeRate));
+        //}
 
-        public List<TrInstallmentViewModel> SelectInstallmentsVM()
-        {
-            using subContext db = new();
+        //public List<TrInstallmentViewModel> SelectInstallmentsVM()
+        //{
+        //    using subContext db = new();
 
-            DateTime currentDate = DateTime.Now;
+        //    DateTime currentDate = DateTime.Now;
 
-            var installments = db.TrInstallments
-                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
-                .Include(x => x.DcPaymentPlan)
-                .Select(installment => new
-                {
-                    Installment = installment,
-                    PaymentLinesSum = db.TrPaymentLines
-                        .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
-                                    x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
-                        .Sum(s => s.PaymentLoc)
-                })
-                .AsEnumerable() // Materialize query to client-side (switch from SQL to LINQ to Objects)
-                .Select(temp =>
-                {
-                    var installment = temp.Installment;
-                    var totalPaid = temp.PaymentLinesSum;
-                    var AmountWithComLoc = installment.AmountLoc + installment.Commission;
-                    var monthlyPayment = AmountWithComLoc / installment.DcPaymentPlan.DurationInMonths;
-                    var monthsPaid = (int)(totalPaid / monthlyPayment);
-                    var overdueDate = installment.DocumentDate.AddMonths(monthsPaid + 1);
-                    var overdueDays = currentDate > overdueDate ? (currentDate - overdueDate).Days : 0;
+        //    var installments = db.TrInstallments
+        //        .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+        //        .Include(x => x.DcInstallmentPlan)
+        //        .Select(installment => new
+        //        {
+        //            Installment = installment,
+        //            PaymentLinesSum = db.TrPaymentLines
+        //                .Where(x => x.TrPaymentHeader.InvoiceHeaderId == installment.InvoiceHeaderId &&
+        //                            x.TrPaymentHeader.CurrAccCode == installment.TrInvoiceHeader.CurrAccCode)
+        //                .Sum(s => s.PaymentLoc)
+        //        })
+        //        .AsEnumerable() // Materialize query to client-side (switch from SQL to LINQ to Objects)
+        //        .Select(temp =>
+        //        {
+        //            var installment = temp.Installment;
+        //            var totalPaid = temp.PaymentLinesSum;
+        //            var AmountWithComLoc = installment.AmountLoc + installment.Commission;
+        //            var monthlyPayment = AmountWithComLoc / installment.DcInstallmentPlan.DurationInMonths;
+        //            var monthsPaid = (int)(totalPaid / monthlyPayment);
+        //            var overdueDate = installment.DocumentDate.AddMonths(monthsPaid + 1);
+        //            var overdueDays = currentDate > overdueDate ? (currentDate - overdueDate).Days : 0;
 
-                    return new TrInstallmentViewModel
-                    {
-                        InstallmentId = installment.InstallmentId,
-                        InvoiceHeaderId = installment.InvoiceHeaderId,
-                        CurrAccCode = installment.TrInvoiceHeader.CurrAccCode,
-                        DocumentDate = installment.DocumentDate,
-                        PaymentPlanCode = installment.PaymentPlanCode,
-                        Amount = installment.Amount,
-                        AmountLoc = AmountWithComLoc,
-                        CurrencyCode = installment.CurrencyCode,
-                        ExchangeRate = installment.ExchangeRate,
-                        TotalPaid = totalPaid,
-                        RemainingBalance = AmountWithComLoc - totalPaid,
-                        MonthlyPayment = monthlyPayment,
-                        DueAmount = totalPaid - (currentDate - installment.DocumentDate).Days / 30 * monthlyPayment,
-                        OverdueDate = overdueDate,
-                        OverdueDays = overdueDays
-                    };
-                })
-                .ToList();
+        //            return new TrInstallmentViewModel
+        //            {
+        //                InstallmentId = installment.InstallmentId,
+        //                InvoiceHeaderId = installment.InvoiceHeaderId,
+        //                CurrAccCode = installment.TrInvoiceHeader.CurrAccCode,
+        //                DocumentDate = installment.DocumentDate,
+        //                PaymentPlanCode = installment.InstallmentPlanCode,
+        //                Amount = installment.Amount,
+        //                AmountLoc = AmountWithComLoc,
+        //                CurrencyCode = installment.CurrencyCode,
+        //                ExchangeRate = installment.ExchangeRate,
+        //                TotalPaid = totalPaid,
+        //                RemainingBalance = AmountWithComLoc - totalPaid,
+        //                MonthlyPayment = monthlyPayment,
+        //                DueAmount = totalPaid - (currentDate - installment.DocumentDate).Days / 30 * monthlyPayment,
+        //                OverdueDate = overdueDate,
+        //                OverdueDays = overdueDays
+        //            };
+        //        })
+        //        .ToList();
 
-            return installments;
-        }
+        //    return installments;
+        //}
 
         public List<DcCurrAcc> SelectCurrAccs(byte[] currAccTypeArr)
         {
@@ -1199,6 +1199,14 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.DcCurrencies.FirstOrDefault(x => x.CurrencyDesc == currencyDesc);
+        }
+
+        public List<TrInstallmentGuarantor> SelectInstaallmentGarantorByInstallment(int installmentId)
+        {
+            using subContext db = new();
+            return db.TrInstallmentGuarantors.Where(x => x.InstallmentId == installmentId)
+                .Include(x => x.DcCurrAcc)
+                .ToList();
         }
 
         public DcProductScale SelectProductScaleByProduct(string productCode)

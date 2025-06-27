@@ -1,4 +1,6 @@
-﻿WITH InstallmentPaymentSum AS (
+﻿
+
+WITH InstallmentPaymentSum AS (
     SELECT
         ph.InvoiceHeaderId,
         ph.CurrAccCode,

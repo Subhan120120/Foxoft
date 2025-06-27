@@ -33,6 +33,7 @@ namespace Foxoft.Models
         public DbSet<DcPaymentMethod> DcPaymentMethods { get; set; }
         public DbSet<DcPaymentPlan> DcPaymentPlans { get; set; }
         public DbSet<TrInstallment> TrInstallments { get; set; }
+        public DbSet<TrInstallmentGuarantor> TrInstallmentGuarantors { get; set; }
         public DbSet<DcProcess> DcProcesses { get; set; }
         public DbSet<DcProduct> DcProducts { get; set; }
         public DbSet<SiteProduct> SiteProducts { get; set; }
@@ -406,12 +407,19 @@ namespace Foxoft.Models
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            //modelBuilder.Entity<TrPaymentPlan>(entity =>
-            //{
-            //    entity.HasOne(x => x.TrPaymentLine)
-            //        .WithOne(x => x.TrPaymentPlan)
-            //        .OnDelete(DeleteBehavior.Cascade);
-            //});
+            modelBuilder.Entity<TrInstallment>(entity =>
+            {
+                entity.HasOne(x => x.TrInvoiceHeader)
+                    .WithOne(x => x.TrInstallment)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<TrInstallmentGuarantor>(entity =>
+            {
+                entity.HasOne(x => x.TrInstallment)
+                    .WithMany(x => x.TrInstallmentGuarantors)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity<TrPriceListLine>(entity =>
             {
