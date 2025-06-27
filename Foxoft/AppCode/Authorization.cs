@@ -44,14 +44,18 @@ namespace Foxoft
                 }
 
                 List<TrSession> trSessions = efMethods.SelectEntities<TrSession>();
+
                 foreach (var session in trSessions)
                 {
                     try
                     {
-                        Process process = Process.GetProcessById(session.PID);
+                        var process = Process.GetProcessById(session.PID);
 
-                        if (process.ProcessName.Equals("Foxoft.exe", StringComparison.InvariantCultureIgnoreCase) &&
-                            session.CurrAccCode.Equals(user, StringComparison.InvariantCultureIgnoreCase))
+                        if (!string.Equals(process.ProcessName, "Foxoft.exe", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            efMethods.DeleteEntity<TrSession>(session);
+                        }
+                        else if (string.Equals(session.CurrAccCode, user, StringComparison.InvariantCultureIgnoreCase))
                         {
                             XtraMessageBox.Show("Istifadəçi artıq sistemə daxil olub.");
                             return false;
@@ -63,14 +67,12 @@ namespace Foxoft
                     }
                 }
 
-                TrSession trSession = new()
+                efMethods.InsertEntity(new TrSession
                 {
                     CurrAccCode = user,
                     PID = Process.GetCurrentProcess().Id,
                     CreatedDate = DateTime.Now
-                };
-
-                efMethods.InsertEntity<TrSession>(trSession);
+                });
 
                 Authorization.CurrAccCode = user;
                 Authorization.DcRoles = efMethods.SelectRolesByCurrAcc(user);

@@ -89,6 +89,7 @@ namespace Foxoft
             barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             bindingSource1 = new BindingSource(components);
+            dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CurrAccCodeTextEdit.Properties).BeginInit();
@@ -139,6 +140,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)barManager1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)barAndDockingController1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -328,6 +330,7 @@ namespace Foxoft
             PhoneNumTextEdit.Size = new Size(165, 20);
             PhoneNumTextEdit.StyleController = dataLayoutControl1;
             PhoneNumTextEdit.TabIndex = 13;
+            PhoneNumTextEdit.Validating += PhoneNumTextEdit_Validating;
             // 
             // BirthDateDateEdit
             // 
@@ -766,6 +769,10 @@ namespace Foxoft
             // 
             bindingSource1.DataSource = typeof(Models.DcCurrAcc);
             // 
+            // dxErrorProvider1
+            // 
+            dxErrorProvider1.ContainerControl = this;
+            // 
             // FormCurrAcc
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -830,6 +837,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)barManager1).EndInit();
             ((System.ComponentModel.ISupportInitialize)barAndDockingController1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -901,5 +909,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_Contact;
         private DevExpress.XtraEditors.TextEdit TxtEdit_PhoneNumber;
         private DevExpress.XtraLayout.LayoutControlItem LCI_PhoneNumber;
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
     }
 }

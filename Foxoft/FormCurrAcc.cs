@@ -2,6 +2,7 @@
 using DevExpress.Utils;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
@@ -11,6 +12,7 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Foxoft
 {
@@ -161,6 +163,24 @@ namespace Foxoft
         {
             FormCommonList<DcCurrAccContactDetail> formCommonList = new FormCommonList<DcCurrAccContactDetail>("", nameof(DcCurrAccContactDetail.Id), null, nameof(dcCurrAcc.CurrAccCode), dcCurrAcc.CurrAccCode);
             formCommonList.ShowDialog();
+        }
+
+        private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)
+        {
+            string rawInput = PhoneNumTextEdit.Text;
+            string inputPhone = Regex.Replace(rawInput, @"\D", ""); // \D = non-digit characters
+
+            if (!string.IsNullOrEmpty(inputPhone))
+            {
+                if (efMethods.CurrAccExistByPhoneNum(inputPhone))
+                {
+                    dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə bazada mövcuddur.", ErrorType.Warning);
+                }
+                else
+                {
+                    dxErrorProvider1.ClearErrors();
+                }
+            }
         }
     }
 }

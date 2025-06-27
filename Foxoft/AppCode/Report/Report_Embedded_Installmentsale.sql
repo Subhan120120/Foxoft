@@ -36,25 +36,26 @@ InstallmentData AS (
         i.InstallmentId,
         i.InvoiceHeaderId,
         i.DocumentDate,
-        i.Amount + COALESCE(ril.NetAmount, 0) AS Amount,
-        i.AmountLoc + COALESCE(ril.NetAmountLoc, 0) AS AmountLoc, 
-        i.CurrencyCode,
-        i.ExchangeRate,
-        (i.AmountLoc + i.Commission) + COALESCE(ril.NetAmountLoc, 0) AS AmountWithComLoc,
+        SUM(il.NetAmountLoc) + COALESCE(SUM(ril.NetAmount), 0) AS Amount,
+        SUM(il.NetAmountLoc) + COALESCE(SUM(ril.NetAmountLoc), 0) AS AmountLoc, 
+        (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0) AS AmountWithComLoc,
+        (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0) - COALESCE(dps.DownPaymentSum, 0) AS InstallmentAmount,
         ih.DocumentNumber,
         ca.CurrAccDesc,
         ca.PhoneNum,
-        pp.DurationInMonths,
-        COALESCE(psum.InstallmentPaymentSum, 0) AS TotalPaid,
+        ip.DurationInMonths,
+        COALESCE(psum.InstallmentPaymentSum, 0) AS InstallmentPaid,
         COALESCE(dps.DownPaymentSum, 0) AS DownPayment
     FROM
         TrInstallments i
     INNER JOIN
         TrInvoiceHeaders ih ON i.InvoiceHeaderId = ih.InvoiceHeaderId
+    LEFT JOIN
+        TrInvoiceLines il ON il.InvoiceHeaderId = ih.InvoiceHeaderId
     INNER JOIN
         DcCurrAccs ca ON ih.CurrAccCode = ca.CurrAccCode
     INNER JOIN
-        DcPaymentPlans pp ON i.PaymentPlanCode = pp.PaymentPlanCode
+        DcInstallmentPlan ip ON i.InstallmentPlanCode = ip.InstallmentPlanCode
     LEFT JOIN
         InstallmentPaymentSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId AND ih.CurrAccCode = psum.CurrAccCode
     LEFT JOIN
@@ -62,7 +63,19 @@ InstallmentData AS (
     LEFT JOIN
         TrInvoiceHeaders rih ON rih.RelatedInvoiceId = i.InvoiceHeaderId AND rih.IsReturn = 1 
     LEFT JOIN
-        TrInvoiceLines ril ON ril.InvoiceHeaderId = rih.InvoiceHeaderId
+        TrInvoiceLines ril ON ril.InvoiceHeaderId = rih.InvoiceHeaderId AND ril.RelatedLineId = il.InvoiceLineId
+    GROUP BY 
+        i.InstallmentId,
+        i.InvoiceHeaderId,
+        i.DocumentDate,
+        ih.DocumentNumber,
+        ca.CurrAccDesc,
+        ca.PhoneNum,
+        ip.DurationInMonths,
+        i.Commission,
+        psum.InstallmentPaymentSum,
+        dps.DownPaymentSum
+
 ),
 CalculatedData AS (
     SELECT
@@ -74,16 +87,15 @@ CalculatedData AS (
         DocumentDate,
         Amount,
         AmountWithComLoc,
-        CurrencyCode,
-        ExchangeRate,
+        InstallmentAmount,
         DownPayment,
-        TotalPaid,
+        InstallmentPaid,
 		DurationInMonths,
-        AmountWithComLoc - TotalPaid AS RemainingBalance,
-        (AmountWithComLoc / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,
-        FLOOR(TotalPaid / (AmountWithComLoc / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
+        InstallmentAmount - InstallmentPaid AS RemainingBalance,
+        ((InstallmentAmount) / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,
+        FLOOR(InstallmentPaid / ((InstallmentAmount) / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
 		DATEADD(MONTH, 
-		    FLOOR(TotalPaid / COALESCE(NULLIF(AmountWithComLoc / NULLIF(DurationInMonths, 0), 0), 1)) + 1, DocumentDate
+		    FLOOR(InstallmentPaid / COALESCE(NULLIF((InstallmentAmount)/ NULLIF(DurationInMonths, 0), 0), 1)) + 1, DocumentDate
 		) AS OverdueDate
     FROM
         InstallmentData
@@ -96,16 +108,15 @@ SELECT
     DocumentNumber,
     DocumentDate,
     Amount,
-    CurrencyCode,
-    ExchangeRate,
     MonthlyPayment,
     [Tutar Faizi ilə] = AmountWithComLoc,
+    [Kredit Məbləği] = InstallmentAmount,
 	[Ay] = DurationInMonths,
     [İlkin Ödəniş] = DownPayment,  -- Showing Down Payment Separately
-    [Toplam Ödəniş] = TotalPaid,   -- Payments excluding downpayment
+    [Toplam Ödəniş] = InstallmentPaid,   -- Payments excluding downpayment
     [Qalıq] = RemainingBalance,
     [Aylıq Ödəniş] = MonthlyPayment,
-    [Ödənilməli məbləğ] = TotalPaid - (DATEDIFF(DAY, DocumentDate, GETDATE()) / 30) * MonthlyPayment,
+    [Ödənilməli məbləğ] = InstallmentPaid - (DATEDIFF(DAY, DocumentDate, GETDATE()) / 30) * MonthlyPayment,
     [Gecikmə tarixi] = OverdueDate,
     [Gecikmiş Günlər] = CASE 
         WHEN GETDATE() > OverdueDate THEN DATEDIFF(DAY, OverdueDate, GETDATE())
