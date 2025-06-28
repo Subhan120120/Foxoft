@@ -33,26 +33,26 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProductList));
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions13 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            SerializableAppearanceObject serializableAppearanceObject49 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject50 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject51 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject52 = new SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions14 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            SerializableAppearanceObject serializableAppearanceObject53 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject54 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject55 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject56 = new SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions15 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            SerializableAppearanceObject serializableAppearanceObject57 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject58 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject59 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject60 = new SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions16 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            SerializableAppearanceObject serializableAppearanceObject61 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject62 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject63 = new SerializableAppearanceObject();
-            SerializableAppearanceObject serializableAppearanceObject64 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject1 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject2 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject3 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject4 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject5 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject6 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject7 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject8 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject9 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject10 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject11 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject12 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject13 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject14 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject15 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject16 = new SerializableAppearanceObject();
             gC_ProductList = new MyGridControl();
             gV_ProductList = new MyGridView(this);
             dcProductsBindingSource = new BindingSource(components);
@@ -84,9 +84,10 @@ namespace Foxoft
             svgImageCollection1 = new SvgImageCollection(components);
             repositoryItemRibbonSearchEdit1 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
             repositoryItemRibbonSearchEdit2 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
+            txtEdit_BarcodeSearch = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gV_ProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
@@ -94,6 +95,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_BarcodeSearch.Properties).BeginInit();
             SuspendLayout();
             // 
             // gC_ProductList
@@ -297,8 +299,8 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit1.AllowFocused = false;
             repositoryItemRibbonSearchEdit1.AutoHeight = false;
             repositoryItemRibbonSearchEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            editorButtonImageOptions13.AllowGlyphSkinning = DefaultBoolean.True;
-            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions13, new KeyShortcut(Keys.None), serializableAppearanceObject49, serializableAppearanceObject50, serializableAppearanceObject51, serializableAppearanceObject52, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions14, new KeyShortcut(Keys.None), serializableAppearanceObject53, serializableAppearanceObject54, serializableAppearanceObject55, serializableAppearanceObject56, "", null, null, ToolTipAnchor.Default) });
+            editorButtonImageOptions1.AllowGlyphSkinning = DefaultBoolean.True;
+            repositoryItemRibbonSearchEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions1, new KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions2, new KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, ToolTipAnchor.Default) });
             repositoryItemRibbonSearchEdit1.Name = "repositoryItemRibbonSearchEdit1";
             repositoryItemRibbonSearchEdit1.NullText = "Search";
             // 
@@ -307,16 +309,26 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit2.AllowFocused = false;
             repositoryItemRibbonSearchEdit2.AutoHeight = false;
             repositoryItemRibbonSearchEdit2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            editorButtonImageOptions15.AllowGlyphSkinning = DefaultBoolean.True;
-            repositoryItemRibbonSearchEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions15, new KeyShortcut(Keys.None), serializableAppearanceObject57, serializableAppearanceObject58, serializableAppearanceObject59, serializableAppearanceObject60, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions16, new KeyShortcut(Keys.None), serializableAppearanceObject61, serializableAppearanceObject62, serializableAppearanceObject63, serializableAppearanceObject64, "", null, null, ToolTipAnchor.Default) });
+            editorButtonImageOptions3.AllowGlyphSkinning = DefaultBoolean.True;
+            repositoryItemRibbonSearchEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, true, editorButtonImageOptions3, new KeyShortcut(Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, ToolTipAnchor.Default), new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Clear, "", -1, true, false, false, editorButtonImageOptions4, new KeyShortcut(Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, ToolTipAnchor.Default) });
             repositoryItemRibbonSearchEdit2.Name = "repositoryItemRibbonSearchEdit2";
             repositoryItemRibbonSearchEdit2.NullText = "Search";
+            // 
+            // txtEdit_BarcodeSearch
+            // 
+            txtEdit_BarcodeSearch.Location = new Point(299, 164);
+            txtEdit_BarcodeSearch.MenuManager = ribbonControl1;
+            txtEdit_BarcodeSearch.Name = "txtEdit_BarcodeSearch";
+            txtEdit_BarcodeSearch.Size = new Size(150, 20);
+            txtEdit_BarcodeSearch.TabIndex = 3;
+            txtEdit_BarcodeSearch.Visible = false;
             // 
             // FormProductList
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1105, 663);
+            Controls.Add(txtEdit_BarcodeSearch);
             Controls.Add(gC_ProductList);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
@@ -337,6 +349,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtEdit_BarcodeSearch.Properties).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -378,5 +391,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit repositoryItemRibbonSearchEdit2;
         private DevExpress.XtraBars.PopupMenu popupMenuReports;
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
+        private DevExpress.XtraEditors.TextEdit txtEdit_BarcodeSearch;
     }
 }

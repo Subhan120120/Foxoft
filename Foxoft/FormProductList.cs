@@ -13,6 +13,7 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraReports.UI;
+using DevExpress.XtraVerticalGrid;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -108,6 +109,7 @@ namespace Foxoft
         private void FormProductList_Load(object sender, EventArgs e)
         {
             FocusValue(focusedProductCode);
+
         }
 
         private void RegisterEvents()
@@ -124,6 +126,7 @@ namespace Foxoft
             BBI_query.ItemClick += BBI_Query_ItemClick;
             btn_ProductEdit.ItemClick += btn_productEdit_ItemClick;
             gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
+            gC_ProductList.Resize += (s, e) => UpdateBarcodeSearchTextEditPosition();
             gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
             gV_ProductList.RowCellStyle += gV_ProductList_RowCellStyle;
             gV_ProductList.RowStyle += gV_ProductList_RowStyle;
@@ -132,7 +135,8 @@ namespace Foxoft
             gV_ProductList.FocusedRowChanged += gV_ProductList_FocusedRowChanged;
             gV_ProductList.ColumnFilterChanged += gV_ProductList_ColumnFilterChanged;
             gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
-            gV_ProductList.DoubleClick += gridView1_DoubleClick;
+            gV_ProductList.DoubleClick += gV_ProductList_DoubleClick;
+            gV_ProductList.Layout += (s, e) => UpdateBarcodeSearchTextEditPosition();
         }
 
         private void FocusValue(string productCode)
@@ -334,7 +338,7 @@ namespace Foxoft
                 dcProduct = null;
         }
 
-        private void gridView1_DoubleClick(object sender, EventArgs e)
+        private void gV_ProductList_DoubleClick(object sender, EventArgs e)
         {
             #region Comment
             //DXMouseEventArgs ea = e as DXMouseEventArgs;
@@ -689,6 +693,40 @@ namespace Foxoft
         {
             if (e.KeyCode == Keys.Escape)
                 Close();
+        }
+
+        private void UpdateBarcodeSearchTextEditPosition()
+        {
+            if (!gV_ProductList.IsFindPanelVisible)
+            {
+                txtEdit_BarcodeSearch.Visible = false;
+                return;
+            }
+
+            int findPanelHeight = 54; // typical height of DevExpress FindPanel (default)
+
+            int paddingLeft = 8;       // typical left padding/margin of the FindPanel
+            int defaultSearchWidth = 562; // approximate width of the default search box
+
+            Point gridControlScreenPoint = gC_ProductList.PointToScreen(Point.Empty);
+
+            Rectangle findPanelRect = new Rectangle(
+                gridControlScreenPoint.X,
+                gridControlScreenPoint.Y,
+                gC_ProductList.Width,
+                findPanelHeight
+            );
+
+            Point additionalEditorScreenPoint = new Point(
+                findPanelRect.Left + paddingLeft + defaultSearchWidth + 6, // next to default search box
+                findPanelRect.Top + (findPanelRect.Height - txtEdit_BarcodeSearch.Height) / 2
+            );
+
+            Point additionalEditorFormPoint = this.PointToClient(additionalEditorScreenPoint);
+
+            txtEdit_BarcodeSearch.Location = additionalEditorFormPoint;
+            txtEdit_BarcodeSearch.Visible = true;
+            txtEdit_BarcodeSearch.BringToFront();
         }
     }
 }
