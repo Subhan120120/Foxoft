@@ -2034,37 +2034,30 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_EditValueChanged(object sender, EventArgs e)
         {
-            DcCurrAcc curr = efMethods.SelectCurrAcc(btnEdit_CurrAccCode.EditValue?.ToString());
-            if (trInvoiceHeader is not null)
+            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(btnEdit_CurrAccCode.EditValue?.ToString());
+            if (trInvoiceHeader is null || curr is null)
+                return;
+
+            trInvoiceHeader.CurrAccCode = curr?.CurrAccCode;
+            lbl_CurrAccDesc.Text = curr?.CurrAccDesc + " " + curr?.FirstName + " " + curr?.LastName;
+
+            CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.OperationDate.Add(trInvoiceHeader.OperationTime)), 2);
+
+            if (Settings.Default.AppSetting.AutoSave)
+                efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
+
+            List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(trInvoiceHeader.CurrAccCode);
+            lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
+
+            if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
+                trInvoiceHeader.ToWarehouseCode = null;
+
+            if (dcWarehouses is not null)
             {
-                trInvoiceHeader.CurrAccCode = curr?.CurrAccCode;
-                lbl_CurrAccDesc.Text = curr?.CurrAccDesc + " " + curr?.FirstName + " " + curr?.LastName;
+                DcWarehouse dcWarehouse = dcWarehouses.FirstOrDefault(x => x.IsDefault == true);
 
-                if (curr is not null)
-                {
-                    CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.OperationDate.Add(trInvoiceHeader.OperationTime)), 2);
-
-                    if (Settings.Default.AppSetting.AutoSave)
-                        efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
-
-                    string storeCode = trInvoiceHeader.CurrAccCode;
-                    List<DcWarehouse> dcWarehouses = efMethods.SelectWarehousesByStoreIncludeDisabled(storeCode);
-                    lUE_ToWarehouseCode.Properties.DataSource = dcWarehouses;
-
-                    if (!dcWarehouses.Any(x => x.WarehouseCode == trInvoiceHeader?.ToWarehouseCode))
-                        trInvoiceHeader.ToWarehouseCode = null;
-
-                    if (dcWarehouses is not null)
-                    {
-                        DcWarehouse dcWarehouse = dcWarehouses.Where(x => x.IsDefault == true).FirstOrDefault();
-
-                        if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
-                        {
-                            //trInvoiceHeader.ToWarehouseCode = dcWarehouse.WarehouseCode;
-                            lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
-                        }
-                    }
-                }
+                if (dcWarehouse is not null && trInvoiceHeader?.ToWarehouseCode is null)
+                    lUE_ToWarehouseCode.EditValue = dcWarehouse.WarehouseCode;
             }
         }
 

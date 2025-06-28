@@ -21,7 +21,7 @@ namespace Foxoft
         private TrPaymentLine trPaymentLineCashless = new();
         private TrPaymentLine trPaymentLineCommission = new();
         private DcPaymentMethod dcPaymentMethod = new();
-        private TrInstallment trInstallment = new();
+        //private TrInstallment trInstallment = new();
         private EfMethods efMethods = new();
 
         private bool isNegativ = false;
@@ -45,19 +45,19 @@ namespace Foxoft
                 new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
             });
 
-            LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectPaymentPlans(2);
-            LUE_InstallmentPlan.Properties.ValueMember = nameof(DcPaymentPlan.PaymentPlanCode);
-            LUE_InstallmentPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
-            LUE_InstallmentPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
-            {
-                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
-                new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
-                new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
-                new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
-            });
+            //LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectPaymentPlans(2);
+            //LUE_InstallmentPlan.Properties.ValueMember = nameof(DcPaymentPlan.PaymentPlanCode);
+            //LUE_InstallmentPlan.Properties.DisplayMember = nameof(DcPaymentPlan.PaymentPlanDesc);
+            //LUE_InstallmentPlan.Properties.Columns.AddRange(new LookUpColumnInfo[]
+            //{
+            //    new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanCode), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanCode)),
+            //    new LookUpColumnInfo(nameof(DcPaymentPlan.PaymentPlanDesc), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.PaymentPlanDesc)),
+            //    new LookUpColumnInfo(nameof(DcPaymentPlan.DurationInMonths), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.DurationInMonths)),
+            //    new LookUpColumnInfo(nameof(DcPaymentPlan.CommissionRate), ReflectionExt.GetDisplayName<DcPaymentPlan>(x => x.CommissionRate)),
+            //});
 
             List<DcCurrency> currencies = efMethods.SelectEntities<DcCurrency>();
-            LUE_InstallmentCurrency.Properties.DataSource = currencies;
+            //LUE_InstallmentCurrency.Properties.DataSource = currencies;
             lUE_cashCurrency.Properties.DataSource = currencies;
             lUE_CashlessCurrency.Properties.DataSource = currencies;
             lUE_PaymentMethod.Properties.DataSource = efMethods.SelectPaymentMethodsByPaymentTypes(new byte[] { 2 });
@@ -101,14 +101,14 @@ namespace Foxoft
         {
             lCG_Cash.Visibility = paymentTypes.Contains((byte)1) ? LayoutVisibility.Always : LayoutVisibility.Never;
             lCG_Cashless.Visibility = paymentTypes.Contains((byte)2) ? LayoutVisibility.Always : LayoutVisibility.Never;
-            LCG_Installment.Visibility = paymentTypes.Contains((byte)3) ? LayoutVisibility.Always : LayoutVisibility.Never;
+            //LCG_Installment.Visibility = paymentTypes.Contains((byte)3) ? LayoutVisibility.Always : LayoutVisibility.Never;
             //lCG_CustomerBonus.Enabled = paymentTypes.Contains((byte)4) ? true : false;
         }
 
-        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes, bool installmentPayment)
+        public FormPayment(byte paymentType, decimal pay, TrInvoiceHeader trInvoiceHeader, byte[] paymentTypes, bool isInstallmentPayment)
            : this(paymentType, pay, trInvoiceHeader, new byte[] { 1, 2 })
         {
-            if (installmentPayment)
+            if (isInstallmentPayment)
                 trPaymentHeader.PaymentKindId = 3;
         }
 
@@ -187,7 +187,7 @@ namespace Foxoft
 
             //TxtEdit_Installment.EditValue = trInstallment.Amount;
             //LUE_InstallmentCurrency.EditValue = trInstallment.CurrencyCode;
-            LUE_InstallmentPlan.EditValue = trInstallment.InstallmentPlanCode;
+            //LUE_InstallmentPlan.EditValue = trInstallment.InstallmentPlanCode;
         }
 
         private void dateEdit_Date_EditValueChanged(object sender, EventArgs e)
@@ -365,10 +365,10 @@ namespace Foxoft
             trPaymentLineCommission.Payment = (-1) * (decimal)txt_CashlessCommission.EditValue;
         }
 
-        private void txt_InstallmentCommission_EditValueChanged(object sender, EventArgs e)
-        {
-            trInstallment.Commission = Convert.ToDecimal(txt_InstallmentCommission.EditValue);
-        }
+        //private void txt_InstallmentCommission_EditValueChanged(object sender, EventArgs e)
+        //{
+        //    trInstallment.Commission = Convert.ToDecimal(txt_InstallmentCommission.EditValue);
+        //}
 
         private void textEditBonus_EditValueChanged(object sender, EventArgs e) { }
 
@@ -376,36 +376,36 @@ namespace Foxoft
 
         private void textEditBonus_InvalidValue(object sender, InvalidValueExceptionEventArgs e) { }
 
-        private void TxtEdit_Installment_EditValueChanged(object sender, EventArgs e)
-        {
-            //trInstallment.Amount = Convert.ToDecimal(TxtEdit_Installment.EditValue);
-            //TxtEdit_Installment.DoValidate();
-        }
+        //private void TxtEdit_Installment_EditValueChanged(object sender, EventArgs e)
+        //{
+        //    //trInstallment.Amount = Convert.ToDecimal(TxtEdit_Installment.EditValue);
+        //    //TxtEdit_Installment.DoValidate();
+        //}
 
-        private void LUE_InstallmentCurrency_EditValueChanged(object sender, EventArgs e)
-        {
-            //trInstallment.CurrencyCode = LUE_InstallmentCurrency.EditValue.ToString();
+        //private void LUE_InstallmentCurrency_EditValueChanged(object sender, EventArgs e)
+        //{
+        //    //trInstallment.CurrencyCode = LUE_InstallmentCurrency.EditValue.ToString();
 
-            //if (LUE_InstallmentCurrency.Visible)
-            //    trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
-        }
+        //    //if (LUE_InstallmentCurrency.Visible)
+        //    //    trInstallment.ExchangeRate = (float)LUE_InstallmentCurrency.GetColumnValue(nameof(DcCurrency.ExchangeRate));
+        //}
 
-        private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
-        {
-            if (efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentCommissionChange"))
-                txt_InstallmentCommission.Enabled = true;
+        //private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
+        //{
+        //    if (efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "InstallmentCommissionChange"))
+        //        txt_InstallmentCommission.Enabled = true;
 
-            //object row = LUE_InstallmentPlan.Properties.GetDataSourceRowByKeyValue(LUE_InstallmentPlan.EditValue);
-            //trInstallment.InstallmentPlanCode = ((DcPaymentPlan)row).PaymentPlanCode;
+        //    //object row = LUE_InstallmentPlan.Properties.GetDataSourceRowByKeyValue(LUE_InstallmentPlan.EditValue);
+        //    //trInstallment.InstallmentPlanCode = ((DcPaymentPlan)row).PaymentPlanCode;
 
-            //if (row is not null)
-            //{
-            //    float commisionRate = ((DcPaymentPlan)row).CommissionRate;
-            //    txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
-            //}
+        //    //if (row is not null)
+        //    //{
+        //    //    float commisionRate = ((DcPaymentPlan)row).CommissionRate;
+        //    //    txt_InstallmentCommission.EditValue = trInstallment.AmountLoc * (decimal)commisionRate / 100;
+        //    //}
 
 
-        }
+        //}
 
         private void btn_Ok_Click(object sender, EventArgs e)
         {

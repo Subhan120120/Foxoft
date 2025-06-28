@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -42,6 +43,10 @@ namespace Foxoft.Models
 
         [Display(Name = "Default Ödəmə Metodu")]
         public bool IsDefault { get; set; }
+
+        [DefaultValue("0")]
+        [Display(Name = "Qeyri-Aktiv")]
+        public bool IsDisabled { get; set; }
 
 
         [ForeignKey("DefaultCashRegCode")]

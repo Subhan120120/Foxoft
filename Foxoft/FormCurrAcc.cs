@@ -167,19 +167,14 @@ namespace Foxoft
 
         private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)
         {
-            string rawInput = PhoneNumTextEdit.Text;
-            string inputPhone = Regex.Replace(rawInput, @"\D", ""); // \D = non-digit characters
+            string inputPhone = Regex.Replace(PhoneNumTextEdit.Text, @"\D", ""); // \D = non-digit characters
 
             if (!string.IsNullOrEmpty(inputPhone))
             {
                 if (efMethods.CurrAccExistByPhoneNum(inputPhone))
-                {
                     dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə bazada mövcuddur.", ErrorType.Warning);
-                }
                 else
-                {
                     dxErrorProvider1.ClearErrors();
-                }
             }
         }
     }

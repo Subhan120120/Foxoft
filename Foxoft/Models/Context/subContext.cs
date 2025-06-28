@@ -799,9 +799,8 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcPaymentType>().HasData(
                 new DcPaymentType { PaymentTypeCode = 1, PaymentTypeDesc = "Nağd" },
                 new DcPaymentType { PaymentTypeCode = 2, PaymentTypeDesc = "Nağdsız" },
-                new DcPaymentType { PaymentTypeCode = 3, PaymentTypeDesc = "Daxili Kredit" },
-                new DcPaymentType { PaymentTypeCode = 4, PaymentTypeDesc = "Bonus" },
-                new DcPaymentType { PaymentTypeCode = 5, PaymentTypeDesc = "Komissiya" }
+                new DcPaymentType { PaymentTypeCode = 3, PaymentTypeDesc = "Bonus" },
+                new DcPaymentType { PaymentTypeCode = 4, PaymentTypeDesc = "Komissiya" }
                 );
 
             modelBuilder.Entity<DcPaymentMethod>().HasData(
