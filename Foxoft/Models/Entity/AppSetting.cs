@@ -58,8 +58,11 @@ namespace Foxoft.Models
         [ForeignKey("DcUnitOfMeasure")]
         public int DefaultUnitOfMeasureId { get; set; }
 
-        [Display(Name = "Tərəzi")]
+        [Display(Name = "Tərəzi İstifadə Et")]
         public bool UseScales { get; set; }
+
+        [Display(Name = "Barkod İstifadə Et")]
+        public bool UseBarcode { get; set; }
 
 
         [ForeignKey("LocalCurrencyCode")]

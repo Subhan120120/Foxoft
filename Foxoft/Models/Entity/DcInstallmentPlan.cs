@@ -24,7 +24,7 @@ namespace Foxoft.Models
         public int DurationInMonths { get; set; } // Duration of the payment plan in months
 
         [Display(Name = "Kamisia Dədəcəsi")]
-        public float CommissionRate { get; set; }
+        public float InterestRate { get; set; }
 
         [Display(Name = "Varsayılandır")]
         public bool IsDefault { get; set; }

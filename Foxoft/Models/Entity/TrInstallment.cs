@@ -23,7 +23,7 @@ namespace Foxoft.Models
         [Column(TypeName = "date")]
         [DefaultValue("getdate()")]
         [Display(Name = "Kredit Tarixi")]
-        public DateTime DocumentDate { get; set; }
+        public DateTime InstallmentDate { get; set; }
 
         [Display(Name = "Ödəmə Planı Kodu")]
         [ForeignKey("DcInstallmentPlan")]
@@ -31,6 +31,10 @@ namespace Foxoft.Models
 
         [Display(Name = "Komissiya")]
         public decimal Commission { get; set; } // Interest rate associated with the plan, if applicable 
+
+        [Display(Name = "Faiz Dərəcəsi (%)")]
+        [Range(0, 100, ErrorMessage = "{0} 0 ilə 100 arasında olmalıdır \n")]
+        public float InterestRate { get; set; }
 
 
         [NotMapped]

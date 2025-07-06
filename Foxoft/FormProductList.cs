@@ -122,7 +122,6 @@ namespace Foxoft
             bBI_ExportExcel.ItemClick += bBI_ExportExcel_ItemClick;
             bBI_ProductDelete.ItemClick += bBI_ProductDelete_ItemClick;
             bBI_ProductRefresh.ItemClick += bBI_ProductRefresh_ItemClick;
-            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
             BBI_query.ItemClick += BBI_Query_ItemClick;
             btn_ProductEdit.ItemClick += btn_productEdit_ItemClick;
             gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
@@ -339,24 +338,6 @@ namespace Foxoft
 
         private void gV_ProductList_DoubleClick(object sender, EventArgs e)
         {
-            #region Comment
-            //DXMouseEventArgs ea = e as DXMouseEventArgs;
-            //GridView view = sender as GridView;
-            //GridHitInfo info = view.CalcHitInfo(ea.Location);
-            //if ((info.InRow || info.InRowCell) && view.FocusedRowHandle >= 0)
-            //{
-            //    //info.RowHandle
-            //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-            //    dcProduct = new DcProduct()
-            //    {
-            //        ProductCode = view.GetRowCellValue(view.FocusedRowHandle, view.Columns["ProductCode"]).ToString(),
-            //        Barcode = view.GetRowCellValue(view.FocusedRowHandle, view.Columns["Barcode"]).ToString(),
-            //        ProductDescription = view.GetRowCellValue(view.FocusedRowHandle, view.Columns["ProductDescription"]).ToString(),
-            //        RetailPrice = Convert.ToDouble(view.GetRowCellValue(view.FocusedRowHandle, view.Columns["RetailPrice"]))
-            //    };
-            //} 
-            #endregion
-
             DialogResult = DialogResult.OK;
         }
 
@@ -559,40 +540,6 @@ namespace Foxoft
             colImage.Width = gV.RowHeight;
         }
 
-        private void BarcodePrint_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ShowReportPreview();
-        }
-
-        private void ShowReportPreview()
-        {
-            XtraReport xtraReport = GetBarcodeReport();
-
-            if (xtraReport is not null)
-            {
-                ReportPrintTool printTool = new(xtraReport);
-                printTool.ShowRibbonPreview();
-            }
-        }
-
-        private XtraReport GetBarcodeReport()
-        {
-            DsMethods dsMethods = new();
-            DevExpress.DataAccess.Sql.SqlQuery sqlQuerySale = dsMethods.SelectProduct(dcProduct.ProductCode);
-            return reportClass.GetReport("Barcode", barcodeDesignFile, new DevExpress.DataAccess.Sql.SqlQuery[] { sqlQuerySale });
-        }
-
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            XtraReport xtraReport = GetBarcodeReport();
-
-            if (xtraReport is not null)
-            {
-                ReportDesignTool printTool = new(xtraReport);
-                printTool.ShowRibbonDesigner();
-            }
-        }
-
         private void gV_ProductList_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.MenuType == GridMenuType.Column)
@@ -696,31 +643,19 @@ namespace Foxoft
 
         private void UpdateBarcodeSearchTextEditPosition()
         {
-            if (!gV_ProductList.IsFindPanelVisible)
+            if (!Settings.Default.AppSetting.UseBarcode || !gV_ProductList.IsFindPanelVisible)
             {
                 btnEdit_BarcodeSearch.Visible = false;
                 return;
             }
 
             int findPanelHeight = 54; // typical height of DevExpress FindPanel (default)
-
             int paddingLeft = 8;       // typical left padding/margin of the FindPanel
             int defaultSearchWidth = 562; // approximate width of the default search box
 
             Point gridControlScreenPoint = gC_ProductList.PointToScreen(Point.Empty);
-
-            Rectangle findPanelRect = new Rectangle(
-                gridControlScreenPoint.X,
-                gridControlScreenPoint.Y,
-                gC_ProductList.Width,
-                findPanelHeight
-            );
-
-            Point additionalEditorScreenPoint = new Point(
-                findPanelRect.Left + paddingLeft + defaultSearchWidth + 6, // next to default search box
-                findPanelRect.Top + (findPanelRect.Height - btnEdit_BarcodeSearch.Height) / 2
-            );
-
+            Rectangle findPanelRect = new Rectangle(gridControlScreenPoint.X, gridControlScreenPoint.Y, gC_ProductList.Width, findPanelHeight);
+            Point additionalEditorScreenPoint = new Point(findPanelRect.Left + paddingLeft + defaultSearchWidth + 6, findPanelRect.Top + (findPanelRect.Height - btnEdit_BarcodeSearch.Height) / 2);
             Point additionalEditorFormPoint = this.PointToClient(additionalEditorScreenPoint);
 
             btnEdit_BarcodeSearch.Location = additionalEditorFormPoint;

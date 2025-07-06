@@ -45,7 +45,6 @@ namespace Foxoft
         {
             this.ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
 
-
             if (string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode))
             {
                 string defaultCustomer = efMethods.SelectDefaultCustomerByStore(Authorization.StoreCode);
@@ -127,7 +126,6 @@ namespace Foxoft
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
             LoadCurrAcc();
-            //dataLayoutControl1.IsValid(out List<string> errorList);
         }
 
         private void LoadInvoice(Guid InvoiceHeaderId)
@@ -753,5 +751,9 @@ namespace Foxoft
             ClearControlsAddNew();
         }
 
+        private void btn_IncomplatedInvoices_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

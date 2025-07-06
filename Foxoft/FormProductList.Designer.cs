@@ -67,7 +67,6 @@ namespace Foxoft
             bBI_ExportExcel = new DevExpress.XtraBars.BarButtonItem();
             bBI_ProductDelete = new DevExpress.XtraBars.BarButtonItem();
             bBI_ProductRefresh = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_query = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             txtEdit_filtercolumns = new DevExpress.XtraBars.BarEditItem();
@@ -122,7 +121,7 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_ProductDelete, bBI_ProductRefresh, barButtonItem2, BBI_query, barButtonItem4, txtEdit_filtercolumns, BBI_Save, BBI_Show, BSI_Reports });
+            ribbonControl1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ProductNew, btn_ProductEdit, bBI_ExportExcel, bBI_ProductDelete, bBI_ProductRefresh, BBI_query, barButtonItem4, txtEdit_filtercolumns, BBI_Save, BBI_Show, BSI_Reports });
             ribbonControl1.Location = new Point(0, 0);
             ribbonControl1.MaxItemId = 40;
             ribbonControl1.Name = "ribbonControl1";
@@ -169,13 +168,6 @@ namespace Foxoft
             bBI_ProductRefresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_ProductRefresh.ImageOptions.SvgImage");
             bBI_ProductRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(Keys.F5);
             bBI_ProductRefresh.Name = "bBI_ProductRefresh";
-            // 
-            // barButtonItem2
-            // 
-            barButtonItem2.Caption = "Barkod Dizayn";
-            barButtonItem2.Id = 22;
-            barButtonItem2.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem2.ImageOptions.SvgImage");
-            barButtonItem2.Name = "barButtonItem2";
             // 
             // BBI_query
             // 
@@ -257,7 +249,6 @@ namespace Foxoft
             // ribbonPageGroup5
             // 
             ribbonPageGroup5.ItemLinks.Add(BBI_query);
-            ribbonPageGroup5.ItemLinks.Add(barButtonItem2);
             ribbonPageGroup5.Name = "ribbonPageGroup5";
             ribbonPageGroup5.Text = "Data";
             // 
@@ -379,7 +370,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem bBI_ProductDelete;
         private DevExpress.XtraBars.BarButtonItem bBI_ProductRefresh;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
         private DevExpress.XtraBars.BarButtonItem BBI_query;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;

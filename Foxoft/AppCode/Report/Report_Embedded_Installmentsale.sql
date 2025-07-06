@@ -37,7 +37,7 @@ InstallmentData AS (
     SELECT
         i.InstallmentId,
         i.InvoiceHeaderId,
-        i.DocumentDate,
+        i.InstallmentDate,
         SUM(il.NetAmountLoc) + COALESCE(SUM(ril.NetAmount), 0) AS Amount,
         SUM(il.NetAmountLoc) + COALESCE(SUM(ril.NetAmountLoc), 0) AS AmountLoc, 
         (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0) AS AmountWithComLoc,
@@ -69,7 +69,7 @@ InstallmentData AS (
     GROUP BY 
         i.InstallmentId,
         i.InvoiceHeaderId,
-        i.DocumentDate,
+        i.InstallmentDate,
         ih.DocumentNumber,
         ca.CurrAccDesc,
         ca.PhoneNum,
@@ -86,7 +86,7 @@ CalculatedData AS (
         CurrAccDesc,
         PhoneNum,
         DocumentNumber,
-        DocumentDate,
+        InstallmentDate,
         Amount,
         AmountWithComLoc,
         InstallmentAmount,
@@ -97,7 +97,7 @@ CalculatedData AS (
         ((InstallmentAmount) / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,
         FLOOR(InstallmentPaid / ((InstallmentAmount) / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
 		DATEADD(MONTH, 
-		    FLOOR(InstallmentPaid / (NULLIF(InstallmentAmount / NULLIF(DurationInMonths, 0), 0))) + 1, DocumentDate
+		    FLOOR(InstallmentPaid / (NULLIF(InstallmentAmount / NULLIF(DurationInMonths, 0), 0))) + 1, InstallmentDate
 		) AS OverdueDate
     FROM
         InstallmentData
@@ -108,7 +108,7 @@ SELECT
     CurrAccDesc,
     PhoneNum,
     DocumentNumber,
-    DocumentDate,
+    InstallmentDate,
     Amount,
     MonthlyPayment,
     [Tutar Faizi ilə] = AmountWithComLoc,
@@ -118,7 +118,7 @@ SELECT
     [Toplam Ödəniş] = InstallmentPaid,   -- Payments excluding downpayment
     [Qalıq] = RemainingBalance,
     [Aylıq Ödəniş] = MonthlyPayment,
-    [Ödənilməli məbləğ] = InstallmentPaid - (DATEDIFF(DAY, DocumentDate, GETDATE()) / 30) * MonthlyPayment,
+    [Ödənilməli məbləğ] = InstallmentPaid - (DATEDIFF(DAY, InstallmentDate, GETDATE()) / 30) * MonthlyPayment,
     [Gecikmə tarixi] = OverdueDate,
     [Gecikmiş Günlər] = CASE 
         WHEN GETDATE() > OverdueDate THEN DATEDIFF(DAY, OverdueDate, GETDATE())
