@@ -18,14 +18,16 @@ WITH InstallmentPaymentSum AS (
 ),
 DownPaymentSum AS (
     SELECT
-        i.InvoiceHeaderId,
-        SUM(pl.PaymentLoc) AS DownPaymentSum
+        i.InvoiceHeaderId
+        , SUM(pl.PaymentLoc) AS DownPaymentSum
     FROM
-        TrPaymentLines pl
+        TrInstallments i
     INNER JOIN
-        TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId
+        TrInvoiceHeaders ih ON ih.InvoiceHeaderId = i.InvoiceHeaderId  
     INNER JOIN
-        TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
+        TrPaymentHeaders ph ON ih.InvoiceHeaderId = ph.InvoiceHeaderId AND ih.CurrAccCode = ph.CurrAccCode
+    INNER JOIN
+        TrPaymentLines pl ON ph.PaymentHeaderId = pl.PaymentHeaderId
     WHERE
         ph.PaymentKindId != 3
     GROUP BY
@@ -95,7 +97,7 @@ CalculatedData AS (
         ((InstallmentAmount) / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,
         FLOOR(InstallmentPaid / ((InstallmentAmount) / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
 		DATEADD(MONTH, 
-		    FLOOR(InstallmentPaid / COALESCE(NULLIF((InstallmentAmount)/ NULLIF(DurationInMonths, 0), 0), 1)) + 1, DocumentDate
+		    FLOOR(InstallmentPaid / (NULLIF(InstallmentAmount / NULLIF(DurationInMonths, 0), 0))) + 1, DocumentDate
 		) AS OverdueDate
     FROM
         InstallmentData

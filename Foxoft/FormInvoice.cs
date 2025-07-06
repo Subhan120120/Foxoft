@@ -2403,7 +2403,16 @@ namespace Foxoft
                     InstallmentId = trInvoiceHeader.TrInstallment.InstallmentId
                 };
 
-                dbContext2.Attach(form.dcCurrAcc); // TrInstallmentGuarantor.dcCurrAcc insert etmeye calismasin deye 
+                var existingEntity = dbContext2.ChangeTracker.Entries<DcCurrAcc>()
+                    .FirstOrDefault(e => e.Entity.CurrAccCode == form.dcCurrAcc.CurrAccCode);
+
+                if (existingEntity != null)
+                {
+                    XtraMessageBox.Show("Bu cari artıq əlavə olunub", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                dbContext2.Attach(form.dcCurrAcc);
 
                 trInstallmentGuarantorsBindingSource.Add(newGuarantor);
 

@@ -106,7 +106,10 @@ namespace Foxoft
             dataLayoutControl1.IsValid(out List<string> errorList);
 
             if (!CustomExtensions.DirectoryExist(settingStore?.ImageFolder))
-                Directory.CreateDirectory(settingStore?.ImageFolder);
+            {
+                try { Directory.CreateDirectory(settingStore?.ImageFolder); }
+                catch (UnauthorizedAccessException) { }
+            }
 
             productFolder = Path.Combine(settingStore.ImageFolder, "Products", dcProduct.ProductCode);
             imageFilePath = Path.Combine(productFolder, dcProduct.ProductCode + ".jpg");

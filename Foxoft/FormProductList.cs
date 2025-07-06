@@ -174,7 +174,6 @@ namespace Foxoft
 
         private void LoadLayout()
         {
-
             colProductCode = gV_ProductList.Columns[nameof(DcProduct.ProductCode)];
             colBalance = gV_ProductList.Columns[nameof(DcProduct.Balance)];
             colProductCost = gV_ProductList.Columns[nameof(DcProduct.ProductCost)];
@@ -699,7 +698,7 @@ namespace Foxoft
         {
             if (!gV_ProductList.IsFindPanelVisible)
             {
-                txtEdit_BarcodeSearch.Visible = false;
+                btnEdit_BarcodeSearch.Visible = false;
                 return;
             }
 
@@ -719,14 +718,30 @@ namespace Foxoft
 
             Point additionalEditorScreenPoint = new Point(
                 findPanelRect.Left + paddingLeft + defaultSearchWidth + 6, // next to default search box
-                findPanelRect.Top + (findPanelRect.Height - txtEdit_BarcodeSearch.Height) / 2
+                findPanelRect.Top + (findPanelRect.Height - btnEdit_BarcodeSearch.Height) / 2
             );
 
             Point additionalEditorFormPoint = this.PointToClient(additionalEditorScreenPoint);
 
-            txtEdit_BarcodeSearch.Location = additionalEditorFormPoint;
-            txtEdit_BarcodeSearch.Visible = true;
-            txtEdit_BarcodeSearch.BringToFront();
+            btnEdit_BarcodeSearch.Location = additionalEditorFormPoint;
+            btnEdit_BarcodeSearch.Visible = true;
+            btnEdit_BarcodeSearch.BringToFront();
+        }
+
+        private void btnEdit_BarcodeSearch_EditValueChanged(object sender, EventArgs e)
+        {
+            DcProduct? asd = efMethods.SelectProductByBarcode(btnEdit_BarcodeSearch.EditValue?.ToString());
+
+            if (asd != null)
+            {
+                gV_ProductList.SetAutoFilterValue(colProductCode, asd.ProductCode, AutoFilterCondition.Default);
+
+                gV_ProductList.FocusedRowHandle = gV_ProductList.GetVisibleRowHandle(0);
+            }
+
+            else
+                gV_ProductList.SetAutoFilterValue(colProductCode, null, AutoFilterCondition.Default);
+
         }
     }
 }

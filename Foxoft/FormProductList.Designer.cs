@@ -53,6 +53,11 @@ namespace Foxoft
             SerializableAppearanceObject serializableAppearanceObject14 = new SerializableAppearanceObject();
             SerializableAppearanceObject serializableAppearanceObject15 = new SerializableAppearanceObject();
             SerializableAppearanceObject serializableAppearanceObject16 = new SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions5 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            SerializableAppearanceObject serializableAppearanceObject17 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject18 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject19 = new SerializableAppearanceObject();
+            SerializableAppearanceObject serializableAppearanceObject20 = new SerializableAppearanceObject();
             gC_ProductList = new MyGridControl();
             gV_ProductList = new MyGridView(this);
             dcProductsBindingSource = new BindingSource(components);
@@ -84,7 +89,7 @@ namespace Foxoft
             svgImageCollection1 = new SvgImageCollection(components);
             repositoryItemRibbonSearchEdit1 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
             repositoryItemRibbonSearchEdit2 = new DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit();
-            txtEdit_BarcodeSearch = new DevExpress.XtraEditors.TextEdit();
+            btnEdit_BarcodeSearch = new DevExpress.XtraEditors.ButtonEdit();
             ((System.ComponentModel.ISupportInitialize)gC_ProductList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcProductsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_ProductList).BeginInit();
@@ -95,7 +100,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtEdit_BarcodeSearch.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_BarcodeSearch.Properties).BeginInit();
             SuspendLayout();
             // 
             // gC_ProductList
@@ -314,21 +319,24 @@ namespace Foxoft
             repositoryItemRibbonSearchEdit2.Name = "repositoryItemRibbonSearchEdit2";
             repositoryItemRibbonSearchEdit2.NullText = "Search";
             // 
-            // txtEdit_BarcodeSearch
+            // btnEdit_BarcodeSearch
             // 
-            txtEdit_BarcodeSearch.Location = new Point(299, 164);
-            txtEdit_BarcodeSearch.MenuManager = ribbonControl1;
-            txtEdit_BarcodeSearch.Name = "txtEdit_BarcodeSearch";
-            txtEdit_BarcodeSearch.Size = new Size(150, 20);
-            txtEdit_BarcodeSearch.TabIndex = 3;
-            txtEdit_BarcodeSearch.Visible = false;
+            btnEdit_BarcodeSearch.Location = new Point(374, 164);
+            btnEdit_BarcodeSearch.MenuManager = ribbonControl1;
+            btnEdit_BarcodeSearch.Name = "btnEdit_BarcodeSearch";
+            editorButtonImageOptions5.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions5.SvgImage");
+            editorButtonImageOptions5.SvgImageSize = new Size(16, 16);
+            btnEdit_BarcodeSearch.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions5, new KeyShortcut(Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "", null, null, ToolTipAnchor.Default) });
+            btnEdit_BarcodeSearch.Size = new Size(150, 24);
+            btnEdit_BarcodeSearch.TabIndex = 6;
+            btnEdit_BarcodeSearch.EditValueChanged += btnEdit_BarcodeSearch_EditValueChanged;
             // 
             // FormProductList
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1105, 663);
-            Controls.Add(txtEdit_BarcodeSearch);
+            Controls.Add(btnEdit_BarcodeSearch);
             Controls.Add(gC_ProductList);
             Controls.Add(ribbonStatusBar1);
             Controls.Add(ribbonControl1);
@@ -349,7 +357,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit1).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemRibbonSearchEdit2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtEdit_BarcodeSearch.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_BarcodeSearch.Properties).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -391,6 +399,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.Internal.RepositoryItemRibbonSearchEdit repositoryItemRibbonSearchEdit2;
         private DevExpress.XtraBars.PopupMenu popupMenuReports;
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
-        private DevExpress.XtraEditors.TextEdit txtEdit_BarcodeSearch;
+        private DevExpress.XtraEditors.ButtonEdit btnEdit_BarcodeSearch;
     }
 }
