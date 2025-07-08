@@ -1,6 +1,4 @@
-﻿
-
-WITH InstallmentPaymentSum AS (
+﻿WITH InstallmentPaymentSum AS (
     SELECT
         ph.InvoiceHeaderId,
         ph.CurrAccCode,
@@ -18,8 +16,8 @@ WITH InstallmentPaymentSum AS (
 ),
 DownPaymentSum AS (
     SELECT
-        i.InvoiceHeaderId
-        , SUM(pl.PaymentLoc) AS DownPaymentSum
+        i.InvoiceHeaderId,
+        SUM(pl.PaymentLoc) AS DownPaymentSum
     FROM
         TrInstallments i
     INNER JOIN
@@ -92,13 +90,14 @@ CalculatedData AS (
         InstallmentAmount,
         DownPayment,
         InstallmentPaid,
-		DurationInMonths,
+        DurationInMonths,
         InstallmentAmount - InstallmentPaid AS RemainingBalance,
         ((InstallmentAmount) / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,
-        FLOOR(InstallmentPaid / ((InstallmentAmount) / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
-		DATEADD(MONTH, 
-		    FLOOR(InstallmentPaid / (NULLIF(InstallmentAmount / NULLIF(DurationInMonths, 0), 0))) + 1, InstallmentDate
-		) AS OverdueDate
+        FLOOR(InstallmentPaid / (InstallmentAmount / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
+        CASE 
+            WHEN DurationInMonths = 0 THEN InstallmentDate
+            ELSE DATEADD(MONTH, FLOOR(InstallmentPaid / (NULLIF(InstallmentAmount / NULLIF(DurationInMonths, 0), 0))) + 1, InstallmentDate)
+        END AS OverdueDate
     FROM
         InstallmentData
 )
@@ -110,12 +109,13 @@ SELECT
     DocumentNumber,
     InstallmentDate,
     Amount,
+    MonthsPaid,
     MonthlyPayment,
     [Tutar Faizi ilə] = AmountWithComLoc,
     [Kredit Məbləği] = InstallmentAmount,
-	[Ay] = DurationInMonths,
-    [İlkin Ödəniş] = DownPayment,  -- Showing Down Payment Separately
-    [Toplam Ödəniş] = InstallmentPaid,   -- Payments excluding downpayment
+    [Ay] = DurationInMonths,
+    [İlkin Ödəniş] = DownPayment,
+    [Toplam Ödəniş] = InstallmentPaid,
     [Qalıq] = RemainingBalance,
     [Aylıq Ödəniş] = MonthlyPayment,
     [Ödənilməli məbləğ] = InstallmentPaid - (DATEDIFF(DAY, InstallmentDate, GETDATE()) / 30) * MonthlyPayment,

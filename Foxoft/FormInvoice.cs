@@ -2452,7 +2452,8 @@ namespace Foxoft
 
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
         {
-            trInvoiceHeader.TrInstallment.InterestRate = (float)LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
+            if (trInvoiceHeader is not null && trInvoiceHeader.ProcessCode == "IS")
+                trInvoiceHeader.TrInstallment.InterestRate = (float)LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
         }
     }
 }

@@ -150,7 +150,7 @@ namespace Foxoft
                                     .LoadAsync()
                                     .ContinueWith(loadTask =>
                                     {
-                                        dcCurrAccBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
+                                        trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList();
                                     }, TaskScheduler.FromCurrentSynchronizationContext());
 
             //dataLayoutControl1.IsValid(out List<string> errorList);
@@ -400,7 +400,7 @@ namespace Foxoft
                 {
                     if (formPayment.ShowDialog(this) == DialogResult.OK)
                     {
-                        efMethods.UpdateInvoiceIsCompleted(invoiceHeaderId);
+                        efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
                         if (Settings.Default.AppSetting.GetPrint == true)
                         {
@@ -408,7 +408,7 @@ namespace Foxoft
                             if (!File.Exists(designPath))
                                 designPath = reportClass.SelectDesign();
 
-                            ReportPrintTool printTool = new(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(invoiceHeaderId), designPath));
+                            ReportPrintTool printTool = new(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
                             printTool.Print();
                         }
 
@@ -753,7 +753,14 @@ namespace Foxoft
 
         private void btn_IncomplatedInvoices_Click(object sender, EventArgs e)
         {
+            using FormInvoiceHeaderList form = new("RS", false);
 
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                trInvoiceHeader = form.trInvoiceHeader;
+
+                LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
+            }
         }
     }
 }
