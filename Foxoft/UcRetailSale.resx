@@ -747,16 +747,16 @@
         Av/P/A+lEiBtvdkbbAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="simpleButton3.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btn_IncomplatedInvoices.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACw4AAAsOAUC+4UEAAAAPdEVYdFRpdGxlAEJ1eTtDYXJ0O9AMSZgAAAFMSURBVFhH
-        zZa7SgRBEEXHR6B/smsgiIGJiVB/Ul+xwaIGoiaKBir4WStYIKuBgmgkBqYjPSg0d24Ny0x3a3CSnuq+
-        Z7p6HlVd15Wp5GaJjDVUBQQ2TKX2KCFwiKGlBQxDSwpsRWHvprKKNbkFTiKBa3I9q0A4+Y+RwB6pySqw
-        E4W/msoyqckqcB4JXJLrDb8CMzydidnFYBTYJ5NS8extfywwIhNTcYahTCCQqw3hMLaCmUCONjx1fYhQ
-        oPOj0ZNTDETwMbwjiwxhGwMRFEjZhgcMY6BAyjYcYRgDBYawZiqfkcAmqWnBBPBO+nCPQR65BA4wyCOX
-        wBiDPJhAUTyBdVO5MpWPn1+pY1NZGVDn4gnckm1lfV20zoUJhHf3F1l43rOuk38pELghC08H1Ll4AuGt
-        dmEqb6byYioT53AtWufSCPwlrYHStAZK8w2t7QtuJ9AtLQAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAA90RVh0VGl0bGUAQnV5O0NhcnQ70AxJmAAAAUxJREFUWEfNlrtKBEEQRcdHoH+y
+        ayCIgYmJUH9SX7HBogaiJooGKvhZK1ggq4GCaCQGpiM9KDR3bg3LTHdrcJKe6r5nunoeVV3XlankZomM
+        NVQFBDZMpfYoIXCIoaUFDENLCmxFYe+msoo1uQVOIoFrcj2rQDj5j5HAHqnJKrAThb+ayjKpySpwHglc
+        kusNvwIzPJ2J2cVgFNgnk1Lx7G1/LDAiE1NxhqFMIJCrDeEwtoKZQI42PHV9iFCg86PRk1MMRPAxvCOL
+        DGEbAxEUSNmGBwxjoEDKNhxhGAMFhrBmKp+RwCapacEE8E76cI9BHrkEDjDII5fAGIM8mEBRPIF1U7ky
+        lY+fX6ljU1kZUOfiCdySbWV9XbTOhQmEd/cXWXjes66TfykQuCELTwfUuXgC4a12YSpvpvJiKhPncC1a
+        59II/CWtgdK0BkrzDa3tC24n0C0tAAAAAElFTkSuQmCC
 </value>
   </data>
   <metadata name="alertControl1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

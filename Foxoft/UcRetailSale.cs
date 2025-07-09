@@ -126,6 +126,8 @@ namespace Foxoft
                                     .ContinueWith(loadTask => trInvoiceLinesBindingSource.DataSource = dbContext.TrInvoiceLines.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
             LoadCurrAcc();
+
+            CalcPaidAmount();
         }
 
         private void LoadInvoice(Guid InvoiceHeaderId)
@@ -411,6 +413,8 @@ namespace Foxoft
                             ReportPrintTool printTool = new(reportClass.CreateReport(efMethods.SelectInvoiceLineForReport(trInvoiceHeader.InvoiceHeaderId), designPath));
                             printTool.Print();
                         }
+
+                        CalcPaidAmount();
 
                         ClearControlsAddNew();
                     }
@@ -761,6 +765,18 @@ namespace Foxoft
 
                 LoadInvoice(trInvoiceHeader.InvoiceHeaderId);
             }
+        }
+
+        private void CalcPaidAmount()
+        {
+            decimal cashSum = efMethods.SelectPaymentLinesCashSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+            lbl_InvoicePaidCashSum.Text = Math.Round(cashSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            decimal cashlessSum = efMethods.SelectPaymentLinesCashlessSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+            lbl_InvoicePaidCashlessSum.Text = Math.Round(cashlessSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+
+            decimal totalSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
+            lbl_InvoicePaidTotalSum.Text = Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
     }
 }
