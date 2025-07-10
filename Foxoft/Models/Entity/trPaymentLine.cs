@@ -48,7 +48,7 @@ namespace Foxoft.Models
         public float ExchangeRate { get; set; } = 1;
 
         [Display(Name = "Kassa")]
-        [ForeignKey("DcCurrAcc")]
+        [ForeignKey("DcCashRegister")]
         public string? CashRegisterCode { get; set; }
 
         [Display(Name = "Ödəmə Metodu Kodu")]
@@ -121,7 +121,7 @@ namespace Foxoft.Models
         public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual DcPaymentMethod DcPaymentMethod { get; set; }
         //public virtual TrPaymentPlan TrPaymentPlan { get; set; }
-        public virtual DcCurrAcc DcCurrAcc { get; set; }
+        public virtual DcCurrAcc DcCashRegister { get; set; }
         public virtual DcCurrency DcCurrency { get; set; }
 
     }

@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20250710030534_DcCashRegisterForeignKey2")]
+    partial class DcCashRegisterForeignKey2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4572,7 +4575,7 @@ namespace Foxoft.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CashRegisterCode")
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -4625,8 +4628,6 @@ namespace Foxoft.Migrations
                         .HasColumnType("tinyint");
 
                     b.HasKey("PaymentLineId");
-
-                    b.HasIndex("CashRegisterCode");
 
                     b.HasIndex("CurrencyCode");
 
@@ -6215,11 +6216,6 @@ namespace Foxoft.Migrations
 
             modelBuilder.Entity("Foxoft.Models.TrPaymentLine", b =>
                 {
-                    b.HasOne("Foxoft.Models.DcCurrAcc", "DcCashRegister")
-                        .WithMany("TrPaymentLines")
-                        .HasForeignKey("CashRegisterCode")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Foxoft.Models.DcCurrency", "DcCurrency")
                         .WithMany("TrPaymentLines")
                         .HasForeignKey("CurrencyCode")
@@ -6243,8 +6239,6 @@ namespace Foxoft.Migrations
                         .HasForeignKey("PaymentTypeCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DcCashRegister");
 
                     b.Navigation("DcCurrency");
 
@@ -6530,8 +6524,6 @@ namespace Foxoft.Migrations
                     b.Navigation("TrInvoiceLines");
 
                     b.Navigation("TrPaymentHeaders");
-
-                    b.Navigation("TrPaymentLines");
 
                     b.Navigation("TrReportCustomizations");
 

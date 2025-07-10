@@ -164,7 +164,7 @@ namespace Foxoft.Models
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> DcStoreTrPaymentHeaders { get; set; }
         public virtual ICollection<TrPaymentHeader> ToCashRegTrPaymentHeaders { get; set; }
-        public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
+        public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; } // as Cash register
         public virtual ICollection<TrCurrAccRole> TrCurrAccRoles { get; set; }
         public virtual ICollection<DcPaymentMethod> CashRegDcPaymentMethods { get; set; }
         public virtual ICollection<DcPaymentMethod> CurrAccDcPaymentMethods { get; set; }

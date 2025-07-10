@@ -65,6 +65,7 @@ namespace Foxoft
             lCG_CustomerBonus = new DevExpress.XtraLayout.LayoutControlGroup();
             lCI_CustomerBonus = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_CusBonus = new DevExpress.XtraLayout.LayoutControlItem();
+            emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
             lCI_Cancel = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_Ok = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -104,6 +105,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCG_CustomerBonus).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_CustomerBonus).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_CusBonus).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Ok).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
@@ -137,7 +139,7 @@ namespace Foxoft
             lC_Root.Name = "lC_Root";
             lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(716, 203, 645, 400);
             lC_Root.Root = lCG_Root;
-            lC_Root.Size = new Size(761, 490);
+            lC_Root.Size = new Size(761, 512);
             lC_Root.TabIndex = 0;
             lC_Root.Text = "layoutControl1";
             // 
@@ -145,7 +147,7 @@ namespace Foxoft
             // 
             ucNumberPad.Location = new Point(374, 93);
             ucNumberPad.Name = "ucNumberPad";
-            ucNumberPad.Size = new Size(363, 304);
+            ucNumberPad.Size = new Size(363, 314);
             ucNumberPad.TabIndex = 1;
             // 
             // txt_CashlessCommission
@@ -298,9 +300,9 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(651, 413);
+            btn_Cancel.Location = new Point(651, 423);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(98, 65);
+            btn_Cancel.Size = new Size(98, 77);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 18;
             btn_Cancel.Text = "simpleButton1";
@@ -309,9 +311,9 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(550, 413);
+            btn_Ok.Location = new Point(550, 423);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(97, 65);
+            btn_Ok.Size = new Size(97, 77);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 17;
             btn_Ok.Text = "Ödə";
@@ -368,9 +370,9 @@ namespace Foxoft
             // 
             lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             lCG_Root.GroupBordersVisible = false;
-            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCG_Cash, lCG_Cashless, lCG_CustomerBonus, lCI_Cancel, lCI_Ok, emptySpaceItem1, LCG_InputPad, lCI_Date, LCI_LineDescription });
+            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCG_Cash, lCG_Cashless, lCG_CustomerBonus, lCI_Cancel, lCI_Ok, emptySpaceItem1, LCG_InputPad, lCI_Date, LCI_LineDescription, emptySpaceItem2 });
             lCG_Root.Name = "Root";
-            lCG_Root.Size = new Size(761, 490);
+            lCG_Root.Size = new Size(761, 512);
             lCG_Root.TextVisible = false;
             // 
             // lCG_Cash
@@ -507,13 +509,21 @@ namespace Foxoft
             lCI_CusBonus.Text = "Puan";
             lCI_CusBonus.TextSize = new Size(74, 13);
             // 
+            // emptySpaceItem2
+            // 
+            emptySpaceItem2.AllowHotTrack = false;
+            emptySpaceItem2.Location = new Point(0, 401);
+            emptySpaceItem2.Name = "emptySpaceItem2";
+            emptySpaceItem2.Size = new Size(350, 10);
+            emptySpaceItem2.TextSize = new Size(0, 0);
+            // 
             // lCI_Cancel
             // 
             lCI_Cancel.Control = btn_Cancel;
-            lCI_Cancel.Location = new Point(639, 401);
+            lCI_Cancel.Location = new Point(639, 411);
             lCI_Cancel.MinSize = new Size(78, 26);
             lCI_Cancel.Name = "layoutControlItemCancel";
-            lCI_Cancel.Size = new Size(102, 69);
+            lCI_Cancel.Size = new Size(102, 81);
             lCI_Cancel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cancel.TextSize = new Size(0, 0);
             lCI_Cancel.TextVisible = false;
@@ -521,10 +531,10 @@ namespace Foxoft
             // lCI_Ok
             // 
             lCI_Ok.Control = btn_Ok;
-            lCI_Ok.Location = new Point(538, 401);
+            lCI_Ok.Location = new Point(538, 411);
             lCI_Ok.MinSize = new Size(78, 26);
             lCI_Ok.Name = "layoutControlItemOk";
-            lCI_Ok.Size = new Size(101, 69);
+            lCI_Ok.Size = new Size(101, 81);
             lCI_Ok.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Ok.TextSize = new Size(0, 0);
             lCI_Ok.TextVisible = false;
@@ -532,9 +542,9 @@ namespace Foxoft
             // emptySpaceItem1
             // 
             emptySpaceItem1.AllowHotTrack = false;
-            emptySpaceItem1.Location = new Point(0, 401);
+            emptySpaceItem1.Location = new Point(0, 411);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(538, 69);
+            emptySpaceItem1.Size = new Size(538, 81);
             emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // LCG_InputPad
@@ -543,7 +553,7 @@ namespace Foxoft
             LCG_InputPad.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_InpudPad });
             LCG_InputPad.Location = new Point(350, 48);
             LCG_InputPad.Name = "LCG_InputPad2";
-            LCG_InputPad.Size = new Size(391, 353);
+            LCG_InputPad.Size = new Size(391, 363);
             LCG_InputPad.Text = "Giriş Paneli";
             // 
             // LCI_InpudPad
@@ -551,7 +561,7 @@ namespace Foxoft
             LCI_InpudPad.Control = ucNumberPad;
             LCI_InpudPad.Location = new Point(0, 0);
             LCI_InpudPad.Name = "layoutControlItem1";
-            LCI_InpudPad.Size = new Size(367, 308);
+            LCI_InpudPad.Size = new Size(367, 318);
             LCI_InpudPad.TextSize = new Size(0, 0);
             LCI_InpudPad.TextVisible = false;
             // 
@@ -581,7 +591,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(761, 490);
+            ClientSize = new Size(761, 512);
             Controls.Add(lC_Root);
             Name = "FormPayment";
             StartPosition = FormStartPosition.CenterParent;
@@ -618,6 +628,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCG_CustomerBonus).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_CustomerBonus).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_CusBonus).EndInit();
+            ((System.ComponentModel.ISupportInitialize)emptySpaceItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Ok).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
@@ -673,5 +684,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraEditors.TextEdit TxtEdit_Description;
         private DevExpress.XtraLayout.LayoutControlItem LCI_LineDescription;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
     }
 }

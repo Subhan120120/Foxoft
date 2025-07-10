@@ -34,7 +34,6 @@ namespace Foxoft
         CustomMethods cM = new();
         ReportClass reportClass;
 
-        string barcodeDesignFile = @"Barcode.repx";
         public byte[] productTypeArr;
         public DcProduct dcProduct { get; set; }
         public string focusedProductCode { get; set; }
@@ -125,7 +124,7 @@ namespace Foxoft
             BBI_query.ItemClick += BBI_Query_ItemClick;
             btn_ProductEdit.ItemClick += btn_productEdit_ItemClick;
             gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
-            gC_ProductList.Resize += (s, e) => UpdateBarcodeSearchTextEditPosition();
+            gC_ProductList.Resize += (s, e) => btnEdit_BarcodeSearch_Layout();
             gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
             gV_ProductList.RowCellStyle += gV_ProductList_RowCellStyle;
             gV_ProductList.RowStyle += gV_ProductList_RowStyle;
@@ -135,7 +134,7 @@ namespace Foxoft
             gV_ProductList.ColumnFilterChanged += gV_ProductList_ColumnFilterChanged;
             gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
             gV_ProductList.DoubleClick += gV_ProductList_DoubleClick;
-            gV_ProductList.Layout += (s, e) => UpdateBarcodeSearchTextEditPosition();
+            gV_ProductList.Layout += (s, e) => btnEdit_BarcodeSearch_Layout();
         }
 
         private void FocusValue(string productCode)
@@ -219,7 +218,7 @@ namespace Foxoft
                 GridView view = sender as GridView;
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
-                fileName += @"/" + fileName + ".jpg";
+                fileName += @"\" + fileName + ".jpg";
                 if (CustomExtensions.DirectoryExist(productsFolder))
                 {
                     string path = productsFolder + @"\" + fileName;
@@ -307,19 +306,6 @@ namespace Foxoft
             gV_ProductList.BestFitColumns();
             gV_ProductList.MakeRowVisible(gV_ProductList.FocusedRowHandle);
 
-            //IQueryable<DcProduct> DcProducts = dbContext.DcProducts;
-            //CriteriaToExpressionConverter converter = new CriteriaToExpressionConverter();
-            //IQueryable<DcProduct> filteredData = DcProducts.AppendWhere(new CriteriaToExpressionConverter(), gV_ProductList.ActiveFilterCriteria) as IQueryable<DcProduct>;
-
-            //if (gV_ProductList.ActiveFilterCriteria is null)
-            //    filteredData = filteredData.Take(10);
-
-            //filteredData.Where(x => x.ProductTypeCode == productTypeCode)
-            //                .Include(x => x.TrInvoiceLines)
-            //                    .ThenInclude(x => x.TrInvoiceHeader)
-            //                .LoadAsync()
-            //                .ContinueWith(loadTask => dcProductsBindingSource.DataSource = dbContext.DcProducts.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
-
         }
 
         private void gV_ProductList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -365,6 +351,9 @@ namespace Foxoft
                     {
                         string path = productsFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
                         imageCache.Remove(path);
+
+                        Image img = GetImage(path);
+                        imageCache.Add(path, img);
                     }
 
                     LoadProducts(productTypeArr);
@@ -641,7 +630,7 @@ namespace Foxoft
                 Close();
         }
 
-        private void UpdateBarcodeSearchTextEditPosition()
+        private void btnEdit_BarcodeSearch_Layout()
         {
             if (!Settings.Default.AppSetting.UseBarcode || !gV_ProductList.IsFindPanelVisible)
             {

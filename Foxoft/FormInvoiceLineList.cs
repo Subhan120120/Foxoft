@@ -235,16 +235,15 @@ namespace Foxoft
             ButtonEdit buttonEdit = (ButtonEdit)sender;
             string barcode = buttonEdit.EditValue?.ToString();
 
-            string product = efMethods.SelectProductByBarcode(barcode)?.ProductCode;
+            string productCode = efMethods.SelectProductByBarcode(barcode)?.ProductCode;
 
             if (String.IsNullOrEmpty(barcode))
             {
-                gV_InvoiceLineList.ActiveFilterCriteria = new BinaryOperator(colProductCode.FieldName, "", BinaryOperatorType.NotEqual);
+                gV_InvoiceLineList.ActiveFilterCriteria = new BinaryOperator(colProductCode.FieldName, "");
             }
             else
             {
-                CriteriaOperator filterCriteria = new BinaryOperator(colProductCode.FieldName, product);
-                gV_InvoiceLineList.ActiveFilterCriteria = filterCriteria;
+                gV_InvoiceLineList.ActiveFilterCriteria = new BinaryOperator(colProductCode.FieldName, productCode);
             }
 
             gV_InvoiceLineList.RefreshData();

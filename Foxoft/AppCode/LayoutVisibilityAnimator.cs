@@ -8,6 +8,9 @@ public static class LayoutControlAnimator
 {
     public static void SetVisibilityWithAnimation(LayoutControlItem layoutControlItem, LayoutVisibility visibility)
     {
+        var h = layoutControlItem.Height;
+        var n = layoutControlItem.Name;
+
         layoutControlItem.SizeConstraintsType = SizeConstraintsType.Custom;
         layoutControlItem.MinSize = new Size(163, 1);
 
@@ -39,10 +42,12 @@ public static class LayoutControlAnimator
     private static void AnimateLayoutControlItem(LayoutControlItem layoutControlItem, bool show, Action onComplete = null)
     {
         System.Windows.Forms.Timer timer = new();
-        timer.Interval = 1;
+        timer.Interval = 15;
         int step = show ? 5 : -5;
         int initialHeight = show ? 1 : layoutControlItem.Height;
         int targetHeight = show ? 26 : 1;
+
+        string asd = layoutControlItem.ControlName;
 
         layoutControlItem.Height = initialHeight;
         if (layoutControlItem.Control != null)
@@ -52,6 +57,9 @@ public static class LayoutControlAnimator
 
         timer.Tick += (s, e) =>
         {
+            if (layoutControlItem.Height + step < 0) // layoutControlItem.Height menfi almasin deye 
+                return;
+
             layoutControlItem.Height += step;
 
             if (layoutControlItem.Control != null)
