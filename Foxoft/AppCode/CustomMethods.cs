@@ -136,60 +136,6 @@ namespace Foxoft.AppCode
             return query;
         }
 
-        public string AddFilterInsideQuery(string reportQuery, string filter)
-        {
-            if (string.IsNullOrWhiteSpace(filter))
-                return reportQuery;
-
-            reportQuery = RemoveComments(reportQuery);
-
-            // Find the last occurrences of FROM, WHERE, GROUP BY, and ORDER BY
-            int fromIndex = reportQuery.LastIndexOf("from", StringComparison.OrdinalIgnoreCase);
-            int whereIndex = reportQuery.LastIndexOf("where", StringComparison.OrdinalIgnoreCase);
-            int groupByIndex = reportQuery.LastIndexOf("group by", StringComparison.OrdinalIgnoreCase);
-            int orderByIndex = reportQuery.LastIndexOf("order by", StringComparison.OrdinalIgnoreCase);
-
-            string queryWithFilter;
-
-            // Check if GROUP BY exists after both FROM and WHERE (if WHERE exists)
-            bool groupByExistsAfterFrom = groupByIndex > fromIndex;
-            bool groupByExistsAfterWhere = whereIndex < 0 || (groupByIndex > whereIndex); // if WHERE doesn't exist, ignore its position
-
-            if (orderByIndex >= 0)
-            {
-                string queryBeforeOrderBy = reportQuery.Substring(0, orderByIndex).TrimEnd();
-
-                if (groupByExistsAfterFrom && groupByExistsAfterWhere)
-                {
-                    // If GROUP BY exists after both FROM and WHERE, insert filter before GROUP BY
-                    string queryBeforeGroupBy = reportQuery.Substring(0, groupByIndex).TrimEnd();
-                    bool hasWhereAfterFrom = queryBeforeGroupBy.IndexOf("where", fromIndex, StringComparison.OrdinalIgnoreCase) >= 0;
-                    string adjustedFilter = (hasWhereAfterFrom ? " AND " : " WHERE ") + filter.Trim();
-                    queryWithFilter = queryBeforeGroupBy + adjustedFilter + "\n" + reportQuery.Substring(groupByIndex);
-                }
-                else
-                {
-                    // If GROUP BY doesn't exist, or is wrongly placed, insert filter before ORDER BY
-                    bool hasWhereAfterFrom = queryBeforeOrderBy.IndexOf("where", fromIndex, StringComparison.OrdinalIgnoreCase) >= 0;
-                    string adjustedFilter = (hasWhereAfterFrom ? " AND " : " WHERE ") + filter.Trim();
-                    queryWithFilter = queryBeforeOrderBy + adjustedFilter + "\n" + reportQuery.Substring(orderByIndex);
-                }
-            }
-            else
-            {
-                // If no ORDER BY exists, check for WHERE and insert filter at the end of the query
-                bool hasWhereAfterFrom = reportQuery.IndexOf("where", fromIndex, StringComparison.OrdinalIgnoreCase) >= 0;
-                string adjustedFilter = (hasWhereAfterFrom ? " AND " : " WHERE ") + filter.Trim();
-                queryWithFilter = reportQuery.TrimEnd() + adjustedFilter;
-            }
-
-            return queryWithFilter;
-        }
-
-
-
-
-
         public string RemoveComments(string sql)
         {
             // Remove single-line comments (--) and multi-line comments (/* */)
