@@ -494,10 +494,10 @@ namespace Foxoft
         {
             if (efMethods.ProductExist(dcProduct.ProductCode))
             {
-                if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Silmek Isteyirsiz? \n " + dcProduct.ProductDesc, Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["actions_delete"] } }) == DialogResult.OK)
+                if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Silmek Isteyirsiz? \n " + dcProduct.ProductDesc, "actions_delete")) == DialogResult.OK)
                 {
                     if (efMethods.BarcodeExistByProduct(dcProduct.ProductCode))
-                        if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Barkodları da Silmək istəyirsiz? \n " + dcProduct.ProductDesc, Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["barcode"] } }) == DialogResult.OK)
+                        if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Barkodları da Silmək istəyirsiz? \n " + dcProduct.ProductDesc, "barcode")) == DialogResult.OK)
                             efMethods.DeleteBarcodesByProduct(dcProduct.ProductCode);
 
                     efMethods.DeleteProduct(dcProduct);
@@ -665,6 +665,18 @@ namespace Foxoft
             else
                 gV_ProductList.SetAutoFilterValue(colProductCode, null, AutoFilterCondition.Default);
 
+        }
+
+        private XtraMessageBoxArgs xtraMessageBox(string caption, string text, string imageName)
+        {
+            XtraMessageBoxArgs argsDeleteInvoice = new XtraMessageBoxArgs
+            {
+                Caption = caption,
+                Text = text,
+                Buttons = new[] { DialogResult.OK, DialogResult.Cancel },
+            };
+            argsDeleteInvoice.ImageOptions.SvgImage = svgImageCollection1[imageName];
+            return argsDeleteInvoice;
         }
     }
 }

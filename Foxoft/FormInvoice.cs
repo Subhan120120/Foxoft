@@ -1291,7 +1291,7 @@ namespace Foxoft
                 }
             }
 
-            if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Silmek Isteyirsiz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeleteInvoice"] } }) == DialogResult.OK)
+            if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Silmek Isteyirsiz?", "DeleteInvoice")) == DialogResult.OK)
             {
                 bool currAccHasPayClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "PaymentDetail");
                 bool currAccHasExpenceClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "Expense");
@@ -1301,14 +1301,14 @@ namespace Foxoft
                 if (efMethods.PaymentExistByInvoice(trInvoiceHeader.InvoiceHeaderId))
                     if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                         efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-                    else if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Qaimə üzrə olan ödənişləri də silirsiniz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeletePayment"] } }) == DialogResult.OK)
+                    else if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Qaimə üzrə olan ödənişləri də silirsiniz?", "DeletePayment")) == DialogResult.OK)
                         if (currAccHasPayClaims)
                             efMethods.DeletePaymentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
                         else
                             XtraMessageBox.Show("Ödəniş Yetkiniz yoxdur!");
 
                 if (efMethods.ExpensesExistByInvoiceId(trInvoiceHeader.InvoiceHeaderId))
-                    if (XtraMessageBox.Show(new XtraMessageBoxArgs { Caption = "Diqqət", Text = "Qaimə üzrə olan xərcləri də Silirsiniz?", Buttons = new[] { DialogResult.OK, DialogResult.Cancel }, ImageOptions = new MessageBoxImageOptions() { SvgImage = svgImageCollection1["DeleteExpenses"] } }) == DialogResult.OK)
+                    if (XtraMessageBox.Show(xtraMessageBox("Diqqət", "Qaimə üzrə olan xərcləri də Silirsiniz?", "DeleteExpenses")) == DialogResult.OK)
                         if (currAccHasExpenceClaims)
                             if (currAccHasDeleteEXClaims)
                                 efMethods.DeleteExpensesByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
@@ -1327,6 +1327,18 @@ namespace Foxoft
 
                 ClearControlsAddNew();
             }
+        }
+
+        private XtraMessageBoxArgs xtraMessageBox(string caption, string text, string imageName)
+        {
+            XtraMessageBoxArgs argsDeleteInvoice = new XtraMessageBoxArgs
+            {
+                Caption = caption,
+                Text = text,
+                Buttons = new[] { DialogResult.OK, DialogResult.Cancel },
+            };
+            argsDeleteInvoice.ImageOptions.SvgImage = svgImageCollection1[imageName];
+            return argsDeleteInvoice;
         }
 
         private void bBI_PaymentDelete_ItemClick(object sender, ItemClickEventArgs e)
