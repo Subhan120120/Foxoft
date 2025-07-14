@@ -31,7 +31,6 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        CustomMethods cM = new();
         ReportClass reportClass;
 
         public byte[] productTypeArr;
@@ -60,7 +59,7 @@ namespace Foxoft
             reportClass = new ReportClass(settingStore.DesignFileFolder);
 
             string activeFilterStr = "[StoreCode] = \'" + settingStore.StoreCode + "\'";
-            cM.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
+            reportClass.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_ProductList);
 
             AppDomain.CurrentDomain.SetData("DXResourceDirectory", settingStore?.ImageFolder);
 
@@ -276,7 +275,7 @@ namespace Foxoft
                     }
 
                     SqlParameter[] sqlParameters;
-                    string sql = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filtered, out sqlParameters);
+                    string sql = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, filtered, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(sql, sqlParameters);
                     if (dt.Columns.Count > 0)
@@ -397,7 +396,7 @@ namespace Foxoft
                         filter = $"{nameof(DcProduct.ProductCode)} = '{dcProduct.ProductCode}'";
 
                     SqlParameter[] sqlParameters;
-                    dcReport.ReportQuery = cM.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
+                    dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, filter, out sqlParameters);
                     DataTable? data = adoMethods.SqlGetDt(dcReport.ReportQuery);
 
                     XtraReport xtraReport = reportClass.CreateReport(data, dcReport.ReportName + ".repx");

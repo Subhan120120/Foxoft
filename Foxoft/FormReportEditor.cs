@@ -1,5 +1,9 @@
 ﻿using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.DXErrorProvider;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraTab;
 using Foxoft.AppCode;
@@ -14,7 +18,7 @@ namespace Foxoft
     {
         public DcReport dcReport = new();
         subContext dbContext = new();
-        CustomMethods cM = new();
+        ReportClass reportClass = new();
         EfMethods efMethods = new();
 
         public FormReportEditor(int reportId)
@@ -27,16 +31,10 @@ namespace Foxoft
             AcceptButton = btn_Ok;
 
             ReportTypeIdLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcReportType>();
-            ReportTypeIdLookUpEdit.Properties.ValueMember = "ReportTypeId";
-            ReportTypeIdLookUpEdit.Properties.DisplayMember = "ReportTypeDesc";
-
             ReportCategoryIdLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcReportCategory>();
-            ReportCategoryIdLookUpEdit.Properties.ValueMember = "ReportCategoryId";
-            ReportCategoryIdLookUpEdit.Properties.DisplayMember = "ReportCategoryDesc";
-
-
-            repoLUE_VariableType.DataSource = efMethods.SelectEntities<DcReportVariableType>();.;
-            repoLUE_VariableValueType.DataSource = efMethods.SelectEntities<DcInstallmentPlan>();
+            repoLUE_VariableType.DataSource = efMethods.SelectEntities<DcReportVariableType>();
+            repoLUE_VariableValueType.DataSource = reportClass.VariableValueTypes;
+            repoLUE_VariableOperator.DataSource = reportClass.VariableOperators;
         }
 
         private void FormQueryEditor_Load(object sender, EventArgs e)
@@ -71,7 +69,6 @@ namespace Foxoft
 
             foreach (var subQuery in subQueries)
             {
-                // Create new tab page and memo editor
                 MemoEdit memoEdit = new();
                 XtraTabPage xtraTabPage = new()
                 {
@@ -80,7 +77,6 @@ namespace Foxoft
                     Tag = subQuery.SubQueryId
                 };
 
-                // Bind to a new BindingSource for each subquery
                 BindingSource subQueryBindingSource = new();
                 subQueryBindingSource.DataSource = subQuery;
 
@@ -91,8 +87,6 @@ namespace Foxoft
                 xtraTabControl1.TabPages.Add(xtraTabPage);
             }
 
-
-            // Add "+" tab
             XtraTabPage addTabPage = new()
             {
                 Text = "+",
@@ -102,8 +96,6 @@ namespace Foxoft
 
             xtraTabControl1.TabPages.Add(addTabPage);
             xtraTabControl1.SelectedPageChanged += XtraTabControl1_SelectedPageChanged;
-
-
         }
 
         private void XtraTabControl1_SelectedPageChanged(object sender, DevExpress.XtraTab.TabPageChangedEventArgs e)
@@ -112,25 +104,21 @@ namespace Foxoft
             {
                 AddNewSubQueryTab();
 
-                // Return to the newly added tab (before the "+" tab)
                 xtraTabControl1.SelectedTabPageIndex = xtraTabControl1.TabPages.Count - 2;
             }
         }
 
         void AddNewSubQueryTab()
         {
-            // Create a new TrReportSubQuery (if using EF)
             TrReportSubQuery newSubQuery = new()
             {
                 SubQueryName = "New SubQuery",
                 SubQueryText = "-- SQL here"
             };
 
-            // Optionally add to selected DcReport
             DcReport? currentReport = dcReportsBindingSource.Current as DcReport;
             currentReport?.TrReportSubQueries.Add(newSubQuery);
 
-            // Create tab UI
             MemoEdit? memoEdit = new() { Dock = DockStyle.Fill, EditValue = newSubQuery.SubQueryText };
             XtraTabPage newPage = new()
             {
@@ -164,17 +152,25 @@ namespace Foxoft
 
             if (!String.IsNullOrEmpty(dcReport?.ReportQuery))
             {
-                SqlParameter[] sqlParameters;
-                string query = cM.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters); ;
+                try
+                {
+                    SqlParameter[] sqlParameters;
+                    string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
 
-                DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // if query is correct 
+                    DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // if query is correct 
 
-                if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
-                    efMethods.InsertEntity<DcReport>(dcReport);
-                else
-                    dbContext.SaveChanges();
+                    if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
+                        efMethods.InsertEntity<DcReport>(dcReport);
+                    else
+                        dbContext.SaveChanges();
 
-                DialogResult = DialogResult.OK;
+                    DialogResult = DialogResult.OK;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Foxoft Error Code: 1215451 ");
+                }
+
             }
         }
 
@@ -216,6 +212,142 @@ namespace Foxoft
 
             var newRow = (DcReportVariable)gv.GetRow(e.RowHandle);
             newRow.ReportId = dcReport.ReportId;
+        }
+
+        private void gridView1_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            //if (e.Column == colVariableTypeId || e.Column == colVariableProperty)
+            //{
+            //    object variableTypeId = gridView1.GetFocusedRowCellValue(colVariableTypeId);
+            //    object variableProperty = gridView1.GetFocusedRowCellValue(colVariableProperty);
+            //    object operatorValue = gridView1.GetFocusedRowCellValue(colVariableOperator);
+
+            //    if (variableProperty == null || variableTypeId == null)
+            //        return;
+
+            //    string variablePropertyStr = variableProperty.ToString();
+
+            //    if (variableTypeId.ToString() == "1")
+            //    {
+            //        gridView1.SetFocusedRowCellValue(colRepresentative, "@" + variablePropertyStr);
+            //        gridView1.SetFocusedRowCellValue(colVariableOperator, null);
+
+            //        colVariableOperator.OptionsColumn.AllowEdit = false;
+
+            //        gridView1.SetColumnError(colVariableOperator, "");
+            //    }
+            //    else if (variableTypeId.ToString() == "2")
+            //    {
+            //        gridView1.SetFocusedRowCellValue(colRepresentative, "{" + variablePropertyStr + "}");
+
+            //        colVariableOperator.OptionsColumn.AllowEdit = true;
+
+            //        if (operatorValue == null || string.IsNullOrWhiteSpace(operatorValue.ToString()))
+            //        {
+            //            gridView1.SetColumnError(colVariableOperator, "Boş buraxıla bilməz.");
+            //        }
+            //        else
+            //        {
+            //            gridView1.SetColumnError(colVariableOperator, "");
+            //        }
+            //    }
+            //}
+
+            //if (e.Column == colVariableOperator)
+            //{
+            //    object operatorValue = gridView1.GetFocusedRowCellValue(colVariableOperator);
+
+            //    if (operatorValue != null && !string.IsNullOrWhiteSpace(operatorValue.ToString()))
+            //    {
+            //        gridView1.SetColumnError(colVariableOperator, "");
+            //    }
+            //}
+        }
+
+        private void gridView1_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
+        {
+            if (e.Column == colVariableOperator)
+            {
+                var typeId = Convert.ToInt32(gridView1.GetFocusedRowCellValue(colVariableTypeId));
+                var variableProperty = Convert.ToString(gridView1.GetFocusedRowCellValue(colVariableProperty));
+
+                if (typeId == 1)
+                {
+                    repoLUE_VariableOperator.ReadOnly = true;
+                    gridView1.SetFocusedRowCellValue(colVariableOperator, null);
+
+                    if (!string.IsNullOrEmpty(variableProperty))
+                        gridView1.SetFocusedRowCellValue(colRepresentative, "@" + variableProperty);
+                }
+                else
+                {
+                    repoLUE_VariableOperator.ReadOnly = false;
+
+                    if (!string.IsNullOrEmpty(variableProperty))
+                        gridView1.SetFocusedRowCellValue(colRepresentative, $"{{{variableProperty}}}");
+                }
+
+                //e.RepositoryItem = repoLUE_VariableOperator;
+            }
+
+            if (e.Column == colVariableValue)
+            {
+                var valueType = Convert.ToString(gridView1.GetFocusedRowCellValue(colVariableValueType));
+                if (valueType == "System.DateTime")
+                {
+                    e.RepositoryItem = new RepositoryItemDateEdit();
+                }
+            }
+        }
+
+        private void gridView1_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
+        {
+            //GridView view = sender as GridView;
+
+            //if (view.FocusedColumn == colVariableOperator)
+            //{
+            //    var typeId = Convert.ToInt32(view.GetFocusedRowCellValue(colVariableTypeId));
+
+            //    if (typeId == 2) // Make required only if editable
+            //    {
+            //        if (e.Value == null || string.IsNullOrWhiteSpace(e.Value.ToString()))
+            //        {
+            //            e.Valid = false;
+            //            e.ErrorText = "This field is required.";
+            //        }
+            //    }
+            //}
+        }
+
+        private void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)
+        {
+            GridView view = sender as GridView;
+            var typeId = Convert.ToInt32(view.GetRowCellValue(e.RowHandle, colVariableTypeId));
+            var opValue = view.GetRowCellValue(e.RowHandle, colVariableOperator);
+
+            if (typeId == 2 && (opValue == null || string.IsNullOrWhiteSpace(opValue.ToString())))
+            {
+                e.Valid = false;
+                view.SetColumnError(colVariableOperator, "This field is required.");
+            }
+            else
+            {
+                view.SetColumnError(colVariableOperator, null); // clear error
+            }
+        }
+
+        private void DcReportVariablesGridControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (gridView1.SelectedRowsCount > 0)
+            {
+                if (e.KeyCode == Keys.Delete && gridView1.ActiveEditor == null)
+                {
+                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                        return;
+
+                    gridView1.DeleteSelectedRows();
+                }
+            }
         }
     }
 }

@@ -49,10 +49,13 @@ namespace Foxoft
             colVariableId = new DevExpress.XtraGrid.Columns.GridColumn();
             colReportId = new DevExpress.XtraGrid.Columns.GridColumn();
             colVariableTypeId = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLUE_VariableType = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colVariableProperty = new DevExpress.XtraGrid.Columns.GridColumn();
             colVariableValue = new DevExpress.XtraGrid.Columns.GridColumn();
             colVariableOperator = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLUE_VariableOperator = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colVariableValueType = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoLUE_VariableValueType = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             colRepresentative = new DevExpress.XtraGrid.Columns.GridColumn();
             colDcReport = new DevExpress.XtraGrid.Columns.GridColumn();
             colDcReportVariableType = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -65,11 +68,10 @@ namespace Foxoft
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForDcReportVariables = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForReportName = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_SubQueries = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForReportTypeId = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForReportCategoryId = new DevExpress.XtraLayout.LayoutControlItem();
-            LCI_SubQueries = new DevExpress.XtraLayout.LayoutControlItem();
-            repoLUE_VariableType = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-            repoLUE_VariableValueType = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            dxValidationProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(components);
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)xtraTabControl1).BeginInit();
@@ -82,6 +84,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DcReportVariablesGridControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcReportVariableBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableType).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableOperator).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableValueType).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ReportTypeIdLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ReportCategoryIdLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
@@ -91,11 +96,10 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDcReportVariables).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportName).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_SubQueries).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportTypeId).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportCategoryId).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_SubQueries).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableType).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableValueType).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dxValidationProvider1).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -123,10 +127,10 @@ namespace Foxoft
             xtraTabControl1.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InActiveTabPageHeader;
             xtraTabControl1.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Left;
             xtraTabControl1.HeaderOrientation = DevExpress.XtraTab.TabOrientation.Horizontal;
-            xtraTabControl1.Location = new Point(129, 60);
+            xtraTabControl1.Location = new Point(126, 60);
             xtraTabControl1.Name = "xtraTabControl1";
             xtraTabControl1.SelectedTabPage = xtraTabPage1;
-            xtraTabControl1.Size = new Size(729, 259);
+            xtraTabControl1.Size = new Size(732, 259);
             xtraTabControl1.TabIndex = 5;
             xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { xtraTabPage1 });
             xtraTabControl1.CloseButtonClick += xtraTabControl1_CloseButtonClick;
@@ -136,7 +140,7 @@ namespace Foxoft
             xtraTabPage1.Controls.Add(ReportQueryMemoEdit);
             xtraTabPage1.Name = "xtraTabPage1";
             xtraTabPage1.ShowCloseButton = DevExpress.Utils.DefaultBoolean.True;
-            xtraTabPage1.Size = new Size(670, 257);
+            xtraTabPage1.Size = new Size(673, 257);
             xtraTabPage1.Text = "Main";
             // 
             // ReportQueryMemoEdit
@@ -146,7 +150,7 @@ namespace Foxoft
             ReportQueryMemoEdit.EditValue = "";
             ReportQueryMemoEdit.Location = new Point(0, 0);
             ReportQueryMemoEdit.Name = "ReportQueryMemoEdit";
-            ReportQueryMemoEdit.Size = new Size(670, 257);
+            ReportQueryMemoEdit.Size = new Size(673, 257);
             ReportQueryMemoEdit.TabIndex = 6;
             // 
             // dcReportsBindingSource
@@ -179,23 +183,23 @@ namespace Foxoft
             // ReportIdTextEdit
             // 
             ReportIdTextEdit.DataBindings.Add(new Binding("EditValue", dcReportsBindingSource, "ReportId", true));
-            ReportIdTextEdit.Location = new Point(129, 12);
+            ReportIdTextEdit.Location = new Point(126, 12);
             ReportIdTextEdit.Name = "ReportIdTextEdit";
             ReportIdTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             ReportIdTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             ReportIdTextEdit.Properties.Mask.EditMask = "N0";
             ReportIdTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             ReportIdTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            ReportIdTextEdit.Size = new Size(126, 20);
+            ReportIdTextEdit.Size = new Size(129, 20);
             ReportIdTextEdit.StyleController = dataLayoutControl1;
             ReportIdTextEdit.TabIndex = 0;
             // 
             // ReportNameTextEdit
             // 
             ReportNameTextEdit.DataBindings.Add(new Binding("EditValue", dcReportsBindingSource, "ReportName", true));
-            ReportNameTextEdit.Location = new Point(129, 36);
+            ReportNameTextEdit.Location = new Point(373, 12);
             ReportNameTextEdit.Name = "ReportNameTextEdit";
-            ReportNameTextEdit.Size = new Size(729, 20);
+            ReportNameTextEdit.Size = new Size(485, 20);
             ReportNameTextEdit.StyleController = dataLayoutControl1;
             ReportNameTextEdit.TabIndex = 4;
             // 
@@ -205,10 +209,11 @@ namespace Foxoft
             DcReportVariablesGridControl.Location = new Point(12, 323);
             DcReportVariablesGridControl.MainView = gridView1;
             DcReportVariablesGridControl.Name = "DcReportVariablesGridControl";
-            DcReportVariablesGridControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_VariableType, repoLUE_VariableValueType });
+            DcReportVariablesGridControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_VariableType, repoLUE_VariableValueType, repoLUE_VariableOperator });
             DcReportVariablesGridControl.Size = new Size(846, 200);
             DcReportVariablesGridControl.TabIndex = 6;
             DcReportVariablesGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
+            DcReportVariablesGridControl.KeyDown += DcReportVariablesGridControl_KeyDown;
             // 
             // dcReportVariableBindingSource
             // 
@@ -223,7 +228,11 @@ namespace Foxoft
             gridView1.OptionsBehavior.EditingMode = GridEditingMode.Inplace;
             gridView1.OptionsNavigation.AutoFocusNewRow = true;
             gridView1.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
+            gridView1.CustomRowCellEdit += gridView1_CustomRowCellEdit;
             gridView1.InitNewRow += gridView1_InitNewRow;
+            gridView1.CellValueChanged += gridView1_CellValueChanged;
+            gridView1.ValidateRow += gridView1_ValidateRow;
+            gridView1.ValidatingEditor += gridView1_ValidatingEditor;
             // 
             // colVariableId
             // 
@@ -243,6 +252,16 @@ namespace Foxoft
             colVariableTypeId.Visible = true;
             colVariableTypeId.VisibleIndex = 0;
             // 
+            // repoLUE_VariableType
+            // 
+            repoLUE_VariableType.AutoHeight = false;
+            repoLUE_VariableType.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_VariableType.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("VariableTypeId", "Dəyişən Tipi Id"), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("VariableTypeDesc", "Dəyişən Tipi Adı") });
+            repoLUE_VariableType.DisplayMember = "VariableTypeDesc";
+            repoLUE_VariableType.Name = "repoLUE_VariableType";
+            repoLUE_VariableType.NullText = "";
+            repoLUE_VariableType.ValueMember = "VariableTypeId";
+            // 
             // colVariableProperty
             // 
             colVariableProperty.FieldName = "VariableProperty";
@@ -255,14 +274,22 @@ namespace Foxoft
             colVariableValue.FieldName = "VariableValue";
             colVariableValue.Name = "colVariableValue";
             colVariableValue.Visible = true;
-            colVariableValue.VisibleIndex = 2;
+            colVariableValue.VisibleIndex = 3;
             // 
             // colVariableOperator
             // 
+            colVariableOperator.ColumnEdit = repoLUE_VariableOperator;
             colVariableOperator.FieldName = "VariableOperator";
             colVariableOperator.Name = "colVariableOperator";
             colVariableOperator.Visible = true;
-            colVariableOperator.VisibleIndex = 3;
+            colVariableOperator.VisibleIndex = 4;
+            // 
+            // repoLUE_VariableOperator
+            // 
+            repoLUE_VariableOperator.AutoHeight = false;
+            repoLUE_VariableOperator.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_VariableOperator.Name = "repoLUE_VariableOperator";
+            repoLUE_VariableOperator.NullText = "";
             // 
             // colVariableValueType
             // 
@@ -270,7 +297,14 @@ namespace Foxoft
             colVariableValueType.FieldName = "VariableValueType";
             colVariableValueType.Name = "colVariableValueType";
             colVariableValueType.Visible = true;
-            colVariableValueType.VisibleIndex = 4;
+            colVariableValueType.VisibleIndex = 2;
+            // 
+            // repoLUE_VariableValueType
+            // 
+            repoLUE_VariableValueType.AutoHeight = false;
+            repoLUE_VariableValueType.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoLUE_VariableValueType.Name = "repoLUE_VariableValueType";
+            repoLUE_VariableValueType.NullText = "";
             // 
             // colRepresentative
             // 
@@ -292,29 +326,34 @@ namespace Foxoft
             // 
             // ReportTypeIdLookUpEdit
             // 
-            ReportTypeIdLookUpEdit.Location = new Point(737, 12);
+            ReportTypeIdLookUpEdit.DataBindings.Add(new Binding("EditValue", dcReportsBindingSource, "ReportTypeId", true));
+            ReportTypeIdLookUpEdit.Location = new Point(126, 36);
             ReportTypeIdLookUpEdit.Name = "ReportTypeIdLookUpEdit";
             ReportTypeIdLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
             ReportTypeIdLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             ReportTypeIdLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             ReportTypeIdLookUpEdit.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportTypeId", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportTypeDesc", "") });
+            ReportTypeIdLookUpEdit.Properties.DisplayMember = "ReportTypeDesc";
             ReportTypeIdLookUpEdit.Properties.NullText = "";
-            ReportTypeIdLookUpEdit.Size = new Size(121, 20);
+            ReportTypeIdLookUpEdit.Properties.ValueMember = "ReportTypeId";
+            ReportTypeIdLookUpEdit.Size = new Size(129, 20);
             ReportTypeIdLookUpEdit.StyleController = dataLayoutControl1;
             ReportTypeIdLookUpEdit.TabIndex = 3;
             // 
             // ReportCategoryIdLookUpEdit
             // 
             ReportCategoryIdLookUpEdit.DataBindings.Add(new Binding("EditValue", dcReportsBindingSource, "ReportCategoryId", true));
-            ReportCategoryIdLookUpEdit.Location = new Point(376, 12);
+            ReportCategoryIdLookUpEdit.Location = new Point(373, 36);
             ReportCategoryIdLookUpEdit.Name = "ReportCategoryIdLookUpEdit";
             ReportCategoryIdLookUpEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             ReportCategoryIdLookUpEdit.Properties.Appearance.Options.UseTextOptions = true;
             ReportCategoryIdLookUpEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             ReportCategoryIdLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             ReportCategoryIdLookUpEdit.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] { new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCategoryId", ""), new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ReportCategoryDesc", "") });
+            ReportCategoryIdLookUpEdit.Properties.DisplayMember = "ReportCategoryDesc";
             ReportCategoryIdLookUpEdit.Properties.NullText = "";
-            ReportCategoryIdLookUpEdit.Size = new Size(240, 20);
+            ReportCategoryIdLookUpEdit.Properties.ValueMember = "ReportCategoryId";
+            ReportCategoryIdLookUpEdit.Size = new Size(485, 20);
             ReportCategoryIdLookUpEdit.StyleController = dataLayoutControl1;
             ReportCategoryIdLookUpEdit.TabIndex = 2;
             // 
@@ -331,7 +370,7 @@ namespace Foxoft
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForReportId, layoutControlItem1, layoutControlItem2, ItemForDcReportVariables, ItemForReportName, ItemForReportTypeId, ItemForReportCategoryId, LCI_SubQueries });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForReportId, layoutControlItem1, layoutControlItem2, ItemForDcReportVariables, ItemForReportName, LCI_SubQueries, ItemForReportTypeId, ItemForReportCategoryId });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new Size(850, 624);
@@ -343,7 +382,7 @@ namespace Foxoft
             ItemForReportId.Name = "ItemForReportId";
             ItemForReportId.Size = new Size(247, 24);
             ItemForReportId.Text = "Report ID";
-            ItemForReportId.TextSize = new Size(105, 13);
+            ItemForReportId.TextSize = new Size(102, 13);
             // 
             // layoutControlItem1
             // 
@@ -382,28 +421,11 @@ namespace Foxoft
             // ItemForReportName
             // 
             ItemForReportName.Control = ReportNameTextEdit;
-            ItemForReportName.Location = new Point(0, 24);
+            ItemForReportName.Location = new Point(247, 0);
             ItemForReportName.Name = "ItemForReportName";
-            ItemForReportName.Size = new Size(850, 24);
+            ItemForReportName.Size = new Size(603, 24);
             ItemForReportName.Text = "Hesabat Adı";
-            ItemForReportName.TextSize = new Size(105, 13);
-            // 
-            // ItemForReportTypeId
-            // 
-            ItemForReportTypeId.Control = ReportTypeIdLookUpEdit;
-            ItemForReportTypeId.Location = new Point(608, 0);
-            ItemForReportTypeId.Name = "ItemForReportTypeId";
-            ItemForReportTypeId.Size = new Size(242, 24);
-            ItemForReportTypeId.TextSize = new Size(105, 13);
-            // 
-            // ItemForReportCategoryId
-            // 
-            ItemForReportCategoryId.Control = ReportCategoryIdLookUpEdit;
-            ItemForReportCategoryId.Location = new Point(247, 0);
-            ItemForReportCategoryId.Name = "ItemForReportCategoryId";
-            ItemForReportCategoryId.Size = new Size(361, 24);
-            ItemForReportCategoryId.Text = "Hesabat Kateqoriyası";
-            ItemForReportCategoryId.TextSize = new Size(105, 13);
+            ItemForReportName.TextSize = new Size(102, 13);
             // 
             // LCI_SubQueries
             // 
@@ -412,21 +434,24 @@ namespace Foxoft
             LCI_SubQueries.Name = "LCI_SubQueries";
             LCI_SubQueries.Size = new Size(850, 263);
             LCI_SubQueries.Text = "Alt Sorğular";
-            LCI_SubQueries.TextSize = new Size(105, 13);
+            LCI_SubQueries.TextSize = new Size(102, 13);
             // 
-            // repoLUE_VariableType
+            // ItemForReportTypeId
             // 
-            repoLUE_VariableType.AutoHeight = false;
-            repoLUE_VariableType.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_VariableType.Name = "repoLUE_VariableType";
-            repoLUE_VariableType.NullText = "";
+            ItemForReportTypeId.Control = ReportTypeIdLookUpEdit;
+            ItemForReportTypeId.Location = new Point(0, 24);
+            ItemForReportTypeId.Name = "ItemForReportTypeId";
+            ItemForReportTypeId.Size = new Size(247, 24);
+            ItemForReportTypeId.TextSize = new Size(102, 13);
             // 
-            // repoLUE_VariableValueType
+            // ItemForReportCategoryId
             // 
-            repoLUE_VariableValueType.AutoHeight = false;
-            repoLUE_VariableValueType.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            repoLUE_VariableValueType.Name = "repoLUE_VariableValueType";
-            repoLUE_VariableValueType.NullText = "";
+            ItemForReportCategoryId.Control = ReportCategoryIdLookUpEdit;
+            ItemForReportCategoryId.Location = new Point(247, 24);
+            ItemForReportCategoryId.Name = "ItemForReportCategoryId";
+            ItemForReportCategoryId.Size = new Size(603, 24);
+            ItemForReportCategoryId.Text = "Hesabat Kateqoriyası";
+            ItemForReportCategoryId.TextSize = new Size(102, 13);
             // 
             // FormReportEditor
             // 
@@ -450,6 +475,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)DcReportVariablesGridControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcReportVariableBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableType).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableOperator).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableValueType).EndInit();
             ((System.ComponentModel.ISupportInitialize)ReportTypeIdLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ReportCategoryIdLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)Root).EndInit();
@@ -459,11 +487,10 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForDcReportVariables).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportName).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_SubQueries).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportTypeId).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportCategoryId).EndInit();
-            ((System.ComponentModel.ISupportInitialize)LCI_SubQueries).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableType).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoLUE_VariableValueType).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dxValidationProvider1).EndInit();
             ResumeLayout(false);
         }
 
@@ -510,5 +537,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn colDcReportVariableType;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_VariableType;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_VariableValueType;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_VariableOperator;
+        private DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider dxValidationProvider1;
     }
 }

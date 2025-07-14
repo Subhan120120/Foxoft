@@ -22,7 +22,7 @@ namespace Foxoft
         readonly SettingStore settingStore;
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        CustomMethods cM = new();
+        ReportClass reportClass = new();
         DcReport dcReport = new();
 
         public FormReportFilter(DcReport Report)
@@ -47,7 +47,7 @@ namespace Foxoft
             this.Text = Report.ReportName;
 
             SqlParameter[] sqlParameters;
-            string qry = cM.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters, 1);
+            string qry = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters, 1);
 
             filterControl_Outer.SourceControl = adoMethods.SqlGetDt(qry, sqlParameters);
             filterControl_Outer.FilterString = dcReport.ReportFilter;

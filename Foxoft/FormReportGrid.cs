@@ -45,7 +45,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        CustomMethods cM = new();
+        ReportClass reportClass = new();
         DcReport dcReport = new();
         SqlParameter[] sqlParameters;
 
@@ -85,7 +85,7 @@ namespace Foxoft
             this.dcReport = dcReport;
             Text = dcReport.ReportName;
 
-            ReportQuery = cM.ApplyFilter(dcReport, query, filter, out sqlParameters);
+            ReportQuery = reportClass.ApplyFilter(dcReport, query, filter, out sqlParameters);
 
             LoadData();
             HyperLinkColumns();

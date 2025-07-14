@@ -312,11 +312,11 @@ namespace Foxoft
             {
                 if (!String.IsNullOrEmpty(dcReport.ReportQuery))
                 {
-                    CustomMethods cM = new();
+                    ReportClass reportClass = new();
                     AdoMethods adoMethods = new();
 
                     SqlParameter[] sqlParameters;
-                    string qryMaster = cM.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
+                    string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)

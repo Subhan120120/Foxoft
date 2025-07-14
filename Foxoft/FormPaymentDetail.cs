@@ -24,7 +24,7 @@ namespace Foxoft
     {
         private TrPaymentHeader trPaymentHeader;
         private EfMethods efMethods = new();
-        private CustomMethods cM = new();
+        private ReportClass reportClass = new();
 
         private subContext dbContext;
         private Guid paymentHeaderId;
@@ -36,7 +36,7 @@ namespace Foxoft
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-            cM.AddReports(BSI_Reports, "PaymentDetails", nameof(trPaymentHeader.PaymentHeaderId), gV_PaymentLine, activeFilterStr);
+            reportClass.AddReports(BSI_Reports, "PaymentDetails", nameof(trPaymentHeader.PaymentHeaderId), gV_PaymentLine, activeFilterStr);
 
             LUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
             repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();

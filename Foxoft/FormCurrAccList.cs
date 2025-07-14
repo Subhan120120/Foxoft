@@ -28,7 +28,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        CustomMethods cM = new();
+        ReportClass reportClass = new();
         public DcCurrAcc dcCurrAcc { get; set; }
         public byte[] currAccTypeArr;
         public byte[] personalTypes;
@@ -49,7 +49,7 @@ namespace Foxoft
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-            cM.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
+            reportClass.AddReports(BSI_Reports, "CurrAccs", nameof(DcCurrAcc.CurrAccCode), gV_CurrAccList);
 
             gV_CurrAccList.PopulateColumns();
 
@@ -119,7 +119,7 @@ namespace Foxoft
                     }
 
                     SqlParameter[] sqlParameters;
-                    string qryMaster = cM.ApplyFilter(dcReport, dcReport.ReportQuery, clause, out sqlParameters);
+                    string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, clause, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)

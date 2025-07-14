@@ -54,7 +54,6 @@ namespace Foxoft
         private subContext dbContext;
         private subContext dbContext2;
         subContext subContext = new(); // for CustomUnboundColumnData
-        CustomMethods cM = new();
 
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
@@ -97,8 +96,8 @@ namespace Foxoft
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-            cM.AddReports(BSI_Reports, "Invoice", nameof(TrInvoiceLine.InvoiceHeaderId), gV_InvoiceLine, activeFilterStr);
-            cM.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_InvoiceLine, activeFilterStr);
+            reportClass.AddReports(BSI_Reports, "Invoice", nameof(TrInvoiceLine.InvoiceHeaderId), gV_InvoiceLine, activeFilterStr);
+            reportClass.AddReports(BSI_Reports, "Products", nameof(DcProduct.ProductCode), gV_InvoiceLine, activeFilterStr);
 
             repoLUE_CurrencyCode.DataSource = efMethods.SelectEntities<DcCurrency>();
             repoLUE_UnitOfMeasure.DataSource = efMethods.SelectEntities<DcUnitOfMeasure>();
@@ -945,12 +944,12 @@ namespace Foxoft
 
             if (efMethods.ReturnExistByInvoiceLine(invoiceLineId))
             {
-                e.Cancel = true; // Cancel the deletion if validation fails
+                e.Cancel = true;
                 XtraMessageBox.Show("Bu məhsul üzrə geri qaytarma mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             if (efMethods.WaybillExistByInvoiceLine(invoiceLineId))
             {
-                e.Cancel = true; // Cancel the deletion if validation fails
+                e.Cancel = true;
                 XtraMessageBox.Show("Bu məhsul üzrə təhvil mövcuddur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -1339,15 +1338,6 @@ namespace Foxoft
             }
         }
 
-        private void BBI_InstallmentDelete_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //if (MessageBox.Show("Kreditləri Silmek Isteyirsiz?", "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
-            //{
-            //    efMethods.DeleteInstallmentsByInvoiceId(trInvoiceHeader.InvoiceHeaderId);
-            //    CalcInstallmentAmount();
-            //}
-        }
-
         private void repoLUE_CurrencyCode_EditValueChanged(object sender, EventArgs e)
         {
             LookUpEdit textEditor = (LookUpEdit)sender;
@@ -1436,8 +1426,8 @@ namespace Foxoft
                     item.VariableValue = trInvoiceHeader.InvoiceHeaderId.ToString();
 
             SqlParameter[] sqlParameters;
-            dcReport.ReportQuery = cM.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
-            List<QueryParameter> qryParams = cM.ConvertSqlParametersToQueryParameters(sqlParameters);
+            dcReport.ReportQuery = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, "", out sqlParameters);
+            List<QueryParameter> qryParams = reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
             CustomSqlQuery mainQuery = new("Main", dcReport.ReportQuery);
             mainQuery.Parameters.AddRange(qryParams);
             List<CustomSqlQuery> sqlQueries = new(new[] { mainQuery });

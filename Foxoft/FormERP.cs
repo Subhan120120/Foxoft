@@ -18,8 +18,8 @@ namespace Foxoft
         //IList<AdornerElement> adorners1;
 
         EfMethods efMethods = new();
-        CustomMethods cM = new CustomMethods();
-        AdoMethods adoMethods = new AdoMethods();
+        ReportClass reportClass = new();
+        AdoMethods adoMethods = new();
 
         public FormERP()
         {
@@ -28,7 +28,7 @@ namespace Foxoft
             InitComponentName();
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
-            cM.AddReports(BSI_Report, "ERP", null, null, activeFilterStr);
+            reportClass.AddReports(BSI_Report, "ERP", null, null, activeFilterStr);
 
             foreach (AccordionControlElement ACE_Groups in aC_Root.Elements)
                 foreach (AccordionControlElement? ACE_Element in ACE_Groups.Elements)

@@ -16,7 +16,7 @@ namespace Foxoft
     {
         private XtraReport xReport;
         private EfMethods efMethods = new();
-        private CustomMethods cM = new();
+        private ReportClass reportClass = new();
         readonly SettingStore settingStore;
 
         public FormReportPreview()
@@ -33,9 +33,9 @@ namespace Foxoft
 
             SqlParameter[] sqlParameters;
 
-            query = cM.ApplyFilter(dcReport, query, filter, out sqlParameters);
+            query = this.reportClass.ApplyFilter(dcReport, query, filter, out sqlParameters);
 
-            List<QueryParameter> qryParams = cM.ConvertSqlParametersToQueryParameters(sqlParameters);
+            List<QueryParameter> qryParams = this.reportClass.ConvertSqlParametersToQueryParameters(sqlParameters);
 
             CustomSqlQuery mainQuery = new("Main", query);
             mainQuery.Parameters.AddRange(qryParams);
@@ -45,11 +45,11 @@ namespace Foxoft
             foreach (TrReportSubQuery reportSubQuery in dcReport.TrReportSubQueries)
             {
                 SqlParameter[] sqlParameters1;
-                reportSubQuery.SubQueryText = cM.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
+                reportSubQuery.SubQueryText = this.reportClass.ApplyFilter(dcReport, reportSubQuery.SubQueryText, null, out sqlParameters1);
 
-                reportSubQuery.SubQueryText = cM.AddRelation(query, reportSubQuery);
+                reportSubQuery.SubQueryText = this.reportClass.AddRelation(query, reportSubQuery);
 
-                List<QueryParameter> subQryParams = cM.ConvertSqlParametersToQueryParameters(sqlParameters1);
+                List<QueryParameter> subQryParams = this.reportClass.ConvertSqlParametersToQueryParameters(sqlParameters1);
                 CustomSqlQuery subQuery = new(reportSubQuery.SubQueryName, reportSubQuery.SubQueryText);
                 subQuery.Parameters.AddRange(subQryParams);
 

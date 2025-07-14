@@ -26,7 +26,7 @@ namespace Foxoft
     {
         EfMethods efMethods = new();
         AdoMethods adoMethods = new();
-        CustomMethods cM = new();
+        ReportClass reportClass = new();
         public DcCurrAcc dcCurrAcc { get; set; }
         public byte cashRegPaymentTypeCode;
         public string cashRegCode;
@@ -39,7 +39,7 @@ namespace Foxoft
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
-            cM.AddReports(BSI_Reports, "CashRegisters", nameof(TrPaymentLine.CashRegisterCode), gV_CashRegList);
+            reportClass.AddReports(BSI_Reports, "CashRegisters", nameof(TrPaymentLine.CashRegisterCode), gV_CashRegList);
 
             UpdateGridViewData();
             gV_CashRegList.PopulateColumns();
@@ -92,7 +92,7 @@ namespace Foxoft
                 if (!String.IsNullOrEmpty(dcReport.ReportQuery))
                 {
                     SqlParameter[] sqlParameters;
-                    string qryMaster = cM.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
+                    string qryMaster = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
 
                     DataTable dt = adoMethods.SqlGetDt(qryMaster, sqlParameters);
                     if (dt.Rows.Count > 0)
