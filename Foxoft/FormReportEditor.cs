@@ -74,13 +74,15 @@ namespace Foxoft
                 {
                     Name = subQuery.SubQueryName,
                     Text = subQuery.SubQueryName,
-                    Tag = subQuery.SubQueryId
+                    Tag = subQuery.SubQueryId,
                 };
 
                 BindingSource subQueryBindingSource = new();
                 subQueryBindingSource.DataSource = subQuery;
 
                 memoEdit.Dock = DockStyle.Fill;
+                memoEdit.Properties.WordWrap = false;
+                memoEdit.Properties.ScrollBars = ScrollBars.Both;
                 memoEdit.DataBindings.Add("EditValue", subQueryBindingSource, nameof(subQuery.SubQueryText), true, DataSourceUpdateMode.OnPropertyChanged);
 
                 xtraTabPage.Controls.Add(memoEdit);
@@ -268,23 +270,23 @@ namespace Foxoft
         {
             if (e.Column == colVariableOperator)
             {
-                var typeId = Convert.ToInt32(gridView1.GetFocusedRowCellValue(colVariableTypeId));
-                var variableProperty = Convert.ToString(gridView1.GetFocusedRowCellValue(colVariableProperty));
+                var typeId = Convert.ToInt32(GV_ReportVariables.GetFocusedRowCellValue(colVariableTypeId));
+                var variableProperty = Convert.ToString(GV_ReportVariables.GetFocusedRowCellValue(colVariableProperty));
 
                 if (typeId == 1)
                 {
                     repoLUE_VariableOperator.ReadOnly = true;
-                    gridView1.SetFocusedRowCellValue(colVariableOperator, null);
+                    GV_ReportVariables.SetFocusedRowCellValue(colVariableOperator, null);
 
                     if (!string.IsNullOrEmpty(variableProperty))
-                        gridView1.SetFocusedRowCellValue(colRepresentative, "@" + variableProperty);
+                        GV_ReportVariables.SetFocusedRowCellValue(colRepresentative, "@" + variableProperty);
                 }
                 else
                 {
                     repoLUE_VariableOperator.ReadOnly = false;
 
                     if (!string.IsNullOrEmpty(variableProperty))
-                        gridView1.SetFocusedRowCellValue(colRepresentative, $"{{{variableProperty}}}");
+                        GV_ReportVariables.SetFocusedRowCellValue(colRepresentative, $"{{{variableProperty}}}");
                 }
 
                 //e.RepositoryItem = repoLUE_VariableOperator;
@@ -292,7 +294,7 @@ namespace Foxoft
 
             if (e.Column == colVariableValue)
             {
-                var valueType = Convert.ToString(gridView1.GetFocusedRowCellValue(colVariableValueType));
+                var valueType = Convert.ToString(GV_ReportVariables.GetFocusedRowCellValue(colVariableValueType));
                 if (valueType == "System.DateTime")
                     e.RepositoryItem = repoDateEdit_VariableValue;
                 else
@@ -338,14 +340,14 @@ namespace Foxoft
 
         private void DcReportVariablesGridControl_KeyDown(object sender, KeyEventArgs e)
         {
-            if (gridView1.SelectedRowsCount > 0)
+            if (GV_ReportVariables.SelectedRowsCount > 0)
             {
-                if (e.KeyCode == Keys.Delete && gridView1.ActiveEditor == null)
+                if (e.KeyCode == Keys.Delete && GV_ReportVariables.ActiveEditor == null)
                 {
                     if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return;
 
-                    gridView1.DeleteSelectedRows();
+                    GV_ReportVariables.DeleteSelectedRows();
                 }
             }
         }
