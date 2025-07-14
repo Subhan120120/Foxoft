@@ -72,6 +72,7 @@ namespace Foxoft
             ItemForReportTypeId = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForReportCategoryId = new DevExpress.XtraLayout.LayoutControlItem();
             dxValidationProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(components);
+            repoDateEdit_VariableValue = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)xtraTabControl1).BeginInit();
@@ -100,6 +101,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForReportTypeId).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportCategoryId).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dxValidationProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoDateEdit_VariableValue).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoDateEdit_VariableValue.CalendarTimeProperties).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -209,7 +212,7 @@ namespace Foxoft
             DcReportVariablesGridControl.Location = new Point(12, 323);
             DcReportVariablesGridControl.MainView = gridView1;
             DcReportVariablesGridControl.Name = "DcReportVariablesGridControl";
-            DcReportVariablesGridControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_VariableType, repoLUE_VariableValueType, repoLUE_VariableOperator });
+            DcReportVariablesGridControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoLUE_VariableType, repoLUE_VariableValueType, repoLUE_VariableOperator, repoDateEdit_VariableValue });
             DcReportVariablesGridControl.Size = new Size(846, 200);
             DcReportVariablesGridControl.TabIndex = 6;
             DcReportVariablesGridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
@@ -453,6 +456,13 @@ namespace Foxoft
             ItemForReportCategoryId.Text = "Hesabat Kateqoriyası";
             ItemForReportCategoryId.TextSize = new Size(102, 13);
             // 
+            // repoDateEdit_VariableValue
+            // 
+            repoDateEdit_VariableValue.AutoHeight = false;
+            repoDateEdit_VariableValue.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoDateEdit_VariableValue.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            repoDateEdit_VariableValue.Name = "repoDateEdit_VariableValue";
+            // 
             // FormReportEditor
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -491,6 +501,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)ItemForReportTypeId).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForReportCategoryId).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxValidationProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoDateEdit_VariableValue.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoDateEdit_VariableValue).EndInit();
             ResumeLayout(false);
         }
 
@@ -539,5 +551,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_VariableValueType;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repoLUE_VariableOperator;
         private DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider dxValidationProvider1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repoDateEdit_VariableValue;
     }
 }

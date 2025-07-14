@@ -294,9 +294,9 @@ namespace Foxoft
             {
                 var valueType = Convert.ToString(gridView1.GetFocusedRowCellValue(colVariableValueType));
                 if (valueType == "System.DateTime")
-                {
-                    e.RepositoryItem = new RepositoryItemDateEdit();
-                }
+                    e.RepositoryItem = repoDateEdit_VariableValue;
+                else
+                    e.RepositoryItem = null;
             }
         }
 
