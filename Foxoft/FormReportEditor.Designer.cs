@@ -43,8 +43,9 @@ namespace Foxoft
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             gridView1 = new GridView();
             layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_Relation = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_ReportQuery = new DevExpress.XtraLayout.LayoutControlItem();
+            splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             ReportIdTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -91,8 +92,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_Relation).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_ReportQuery).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ReportIdTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ReportNameTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)GC_ReportVariables).BeginInit();
@@ -143,10 +145,10 @@ namespace Foxoft
             xtraTabControl1.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InActiveTabPageHeader;
             xtraTabControl1.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Left;
             xtraTabControl1.HeaderOrientation = DevExpress.XtraTab.TabOrientation.Horizontal;
-            xtraTabControl1.Location = new Point(126, 60);
+            xtraTabControl1.Location = new Point(12, 60);
             xtraTabControl1.Name = "xtraTabControl1";
             xtraTabControl1.SelectedTabPage = xtraTabPage1;
-            xtraTabControl1.Size = new Size(732, 371);
+            xtraTabControl1.Size = new Size(846, 371);
             xtraTabControl1.TabIndex = 5;
             xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] { xtraTabPage1 });
             xtraTabControl1.CloseButtonClick += xtraTabControl1_CloseButtonClick;
@@ -156,7 +158,7 @@ namespace Foxoft
             xtraTabPage1.Controls.Add(layoutControl1);
             xtraTabPage1.Name = "xtraTabPage1";
             xtraTabPage1.ShowCloseButton = DevExpress.Utils.DefaultBoolean.True;
-            xtraTabPage1.Size = new Size(673, 369);
+            xtraTabPage1.Size = new Size(787, 369);
             xtraTabPage1.Text = "Main";
             // 
             // layoutControl1
@@ -166,8 +168,9 @@ namespace Foxoft
             layoutControl1.Dock = DockStyle.Fill;
             layoutControl1.Location = new Point(0, 0);
             layoutControl1.Name = "layoutControl1";
+            layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(905, 169, 650, 400);
             layoutControl1.Root = layoutControlGroup2;
-            layoutControl1.Size = new Size(673, 369);
+            layoutControl1.Size = new Size(787, 369);
             layoutControl1.TabIndex = 8;
             layoutControl1.Text = "layoutControl1";
             // 
@@ -175,11 +178,11 @@ namespace Foxoft
             // 
             ReportQueryMemoEdit.DataBindings.Add(new Binding("EditValue", dcReportsBindingSource, "ReportQuery", true));
             ReportQueryMemoEdit.EditValue = "";
-            ReportQueryMemoEdit.Location = new Point(12, 144);
+            ReportQueryMemoEdit.Location = new Point(12, 148);
             ReportQueryMemoEdit.Name = "ReportQueryMemoEdit";
             ReportQueryMemoEdit.Properties.ScrollBars = ScrollBars.Both;
             ReportQueryMemoEdit.Properties.WordWrap = false;
-            ReportQueryMemoEdit.Size = new Size(649, 213);
+            ReportQueryMemoEdit.Size = new Size(763, 209);
             ReportQueryMemoEdit.StyleController = layoutControl1;
             ReportQueryMemoEdit.TabIndex = 6;
             // 
@@ -192,7 +195,7 @@ namespace Foxoft
             gridControl1.Location = new Point(12, 12);
             gridControl1.MainView = gridView1;
             gridControl1.Name = "gridControl1";
-            gridControl1.Size = new Size(649, 128);
+            gridControl1.Size = new Size(763, 122);
             gridControl1.TabIndex = 7;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
@@ -205,26 +208,32 @@ namespace Foxoft
             // 
             layoutControlGroup2.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             layoutControlGroup2.GroupBordersVisible = false;
-            layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem3, layoutControlItem4 });
-            layoutControlGroup2.Name = "layoutControlGroup2";
-            layoutControlGroup2.Size = new Size(673, 369);
+            layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { LCI_Relation, LCI_ReportQuery, splitterItem1 });
+            layoutControlGroup2.Name = "Root";
+            layoutControlGroup2.Size = new Size(787, 369);
             layoutControlGroup2.TextVisible = false;
             // 
-            // layoutControlItem3
+            // LCI_Relation
             // 
-            layoutControlItem3.Control = gridControl1;
-            layoutControlItem3.Location = new Point(0, 0);
-            layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(653, 132);
-            layoutControlItem3.TextVisible = false;
+            LCI_Relation.Control = gridControl1;
+            LCI_Relation.Location = new Point(0, 0);
+            LCI_Relation.Name = "LCI_Relation";
+            LCI_Relation.Size = new Size(767, 126);
+            LCI_Relation.TextVisible = false;
             // 
-            // layoutControlItem4
+            // LCI_ReportQuery
             // 
-            layoutControlItem4.Control = ReportQueryMemoEdit;
-            layoutControlItem4.Location = new Point(0, 132);
-            layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new Size(653, 217);
-            layoutControlItem4.TextVisible = false;
+            LCI_ReportQuery.Control = ReportQueryMemoEdit;
+            LCI_ReportQuery.Location = new Point(0, 136);
+            LCI_ReportQuery.Name = "layoutControlItem4";
+            LCI_ReportQuery.Size = new Size(767, 213);
+            LCI_ReportQuery.TextVisible = false;
+            // 
+            // splitterItem1
+            // 
+            splitterItem1.Location = new Point(0, 126);
+            splitterItem1.Name = "splitterItem1";
+            splitterItem1.Size = new Size(767, 10);
             // 
             // btn_Cancel
             // 
@@ -507,7 +516,7 @@ namespace Foxoft
             LCI_SubQueries.Name = "LCI_SubQueries";
             LCI_SubQueries.Size = new Size(850, 375);
             LCI_SubQueries.Text = "Alt Sorğular";
-            LCI_SubQueries.TextSize = new Size(102, 13);
+            LCI_SubQueries.TextVisible = false;
             // 
             // ItemForReportTypeId
             // 
@@ -548,8 +557,9 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_Relation).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_ReportQuery).EndInit();
+            ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ReportIdTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)ReportNameTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)GC_ReportVariables).EndInit();
@@ -625,7 +635,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private DevExpress.XtraEditors.MemoEdit ReportQueryMemoEdit;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_Relation;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_ReportQuery;
+        private DevExpress.XtraLayout.SplitterItem splitterItem1;
     }
 }

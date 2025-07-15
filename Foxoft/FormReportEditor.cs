@@ -3,13 +3,18 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraLayout;
+using DevExpress.XtraPrinting.Export;
 using DevExpress.XtraTab;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.Data;
 
 namespace Foxoft
@@ -61,31 +66,106 @@ namespace Foxoft
                 dcReportVariableBindingSource.DataSource = dbContext.DcReportVariables.Local.ToBindingList();
             }
 
-            //xtraTabControl1.TabPages.Clear();
-
             List<TrReportSubQuery> subQueries = dbContext.DcReports.Local
                          .SelectMany(r => r.TrReportSubQueries)
                          .ToList();
 
-            foreach (var subQuery in subQueries)
+            foreach (TrReportSubQuery? subQuery in subQueries)
             {
                 MemoEdit memoEdit = new();
-                XtraTabPage xtraTabPage = new()
-                {
-                    Name = subQuery.SubQueryName,
-                    Text = subQuery.SubQueryName,
-                    Tag = subQuery.SubQueryId,
-                };
-
+                GridControl GC = new();
+                GridView GV = new();
+                LayoutControlGroup LCG = new();
+                LayoutControl LC = new();
                 BindingSource subQueryBindingSource = new();
+                BindingSource relationColumnBindingSource = new();
+                LayoutControlItem LCI_ME = new();
+                LayoutControlItem LCI_GC = new();
+                SplitterItem splitterItem = new();
+                XtraTabPage xtraTabPage = new();
+                GridColumn? colId = new();
+                GridColumn? colParent = new();
+                GridColumn? colSub = new();
+                GridColumn? colSubQueryId = new();
+
+                colId.FieldName = nameof(TrReportSubQueryRelationColumn.Id);
+                colId.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.Id);
+                colParent.FieldName = nameof(TrReportSubQueryRelationColumn.ParentColumnName);
+                colParent.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.ParentColumnName);
+                colParent.Visible = true;
+                colSub.FieldName = nameof(TrReportSubQueryRelationColumn.SubColumnName);
+                colSub.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.SubColumnName);
+                colSub.Visible = true;
+                colSubQueryId.FieldName = nameof(TrReportSubQueryRelationColumn.SubQueryId);
+                colSubQueryId.Caption = ReflectionExt.GetDisplayName<TrReportSubQueryRelationColumn>(x => x.SubQueryId);
+                //colSubQueryId.Visible = true;
+
                 subQueryBindingSource.DataSource = subQuery;
 
                 memoEdit.Dock = DockStyle.Fill;
                 memoEdit.Properties.WordWrap = false;
                 memoEdit.Properties.ScrollBars = ScrollBars.Both;
                 memoEdit.DataBindings.Add("EditValue", subQueryBindingSource, nameof(subQuery.SubQueryText), true, DataSourceUpdateMode.OnPropertyChanged);
+                memoEdit.StyleController = layoutControl1;
 
-                xtraTabPage.Controls.Add(memoEdit);
+                GC.MainView = GV;
+                GC.ViewCollection.Add(GV);
+                GC.DataSource = relationColumnBindingSource;
+
+                dbContext.TrReportSubQueryRelationColumns
+                    .Where(x => x.SubQueryId == subQuery.SubQueryId)
+                    .Load();
+
+                relationColumnBindingSource.DataSource = typeof(TrReportSubQueryRelationColumn);
+                relationColumnBindingSource.DataSource = dbContext.TrReportSubQueryRelationColumns.Local.ToBindingList();
+
+                GV.GridControl = GC;
+                GV.OptionsView.ShowGroupPanel = false;
+                GV.Columns.AddRange(new GridColumn[] { colId, colParent, colSub, colSubQueryId });
+                GV.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+                GV.OptionsBehavior.EditingMode = GridEditingMode.Inplace;
+                GV.OptionsNavigation.AutoFocusNewRow = true;
+                GV.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
+                GV.ActiveFilterString = $"[{nameof(TrReportSubQueryRelationColumn.SubQueryId)}] = {subQuery.SubQueryId}"; GV.ActiveFilterString = $"[{nameof(TrReportSubQueryRelationColumn.SubQueryId)}] = {subQuery.SubQueryId}";
+                GV.OptionsView.ShowFilterPanelMode = ShowFilterPanelMode.Never;
+                GV.InitNewRow += (s, e) =>
+                {
+                    GV.SetRowCellValue(e.RowHandle, colSubQueryId, subQuery.SubQueryId);
+                };
+                GV.KeyDown += (s, e) =>
+                {
+                    if (e.KeyCode == Keys.Delete && GV != null && !GV.IsNewItemRow(GV.FocusedRowHandle))
+                    {
+                        GV.DeleteSelectedRows();
+                    }
+                };
+
+                LC.Controls.Add(memoEdit);
+                LC.Controls.Add(GC);
+                LC.Dock = DockStyle.Fill;
+                LC.Root = LCG;
+
+                LCI_GC.Control = GC;
+                LCI_GC.TextVisible = false;
+                LCI_GC.SizeConstraintsType = SizeConstraintsType.Custom;
+                LCI_GC.MaxSize = new Size(1000, 100);
+
+                LCI_ME.Control = memoEdit;
+                LCI_ME.TextVisible = false;
+
+                LCG.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+                LCG.GroupBordersVisible = false;
+                LCG.TextVisible = false;
+
+                LCG.AddItem(LCI_GC);
+                LCG.AddItem(splitterItem);
+                LCG.AddItem(LCI_ME);
+
+                xtraTabPage.Name = subQuery.SubQueryName;
+                xtraTabPage.Text = subQuery.SubQueryName;
+                xtraTabPage.Tag = subQuery.SubQueryId;
+                xtraTabPage.Controls.Add(LC);
+
                 xtraTabControl1.TabPages.Add(xtraTabPage);
             }
 
@@ -100,7 +180,7 @@ namespace Foxoft
             xtraTabControl1.SelectedPageChanged += XtraTabControl1_SelectedPageChanged;
         }
 
-        private void XtraTabControl1_SelectedPageChanged(object sender, DevExpress.XtraTab.TabPageChangedEventArgs e)
+        private void XtraTabControl1_SelectedPageChanged(object sender, TabPageChangedEventArgs e)
         {
             if (e.Page.Tag?.ToString() == "AddNew")
             {
@@ -112,25 +192,17 @@ namespace Foxoft
 
         void AddNewSubQueryTab()
         {
-            TrReportSubQuery newSubQuery = new()
-            {
-                SubQueryName = "New SubQuery",
-                SubQueryText = "-- SQL here"
-            };
+            TrReportSubQuery newSubQuery = new() { SubQueryName = "New SubQuery", SubQueryText = "-- SQL here" };
 
             DcReport? currentReport = dcReportsBindingSource.Current as DcReport;
             currentReport?.TrReportSubQueries.Add(newSubQuery);
 
-            MemoEdit? memoEdit = new() { Dock = DockStyle.Fill, EditValue = newSubQuery.SubQueryText };
-            XtraTabPage newPage = new()
-            {
-                Text = newSubQuery.SubQueryName,
-                Tag = newSubQuery.SubQueryId
-            };
-
             BindingSource? subQueryBinding = new() { DataSource = newSubQuery };
+
+            MemoEdit? memoEdit = new() { Dock = DockStyle.Fill, EditValue = newSubQuery.SubQueryText };
             memoEdit.DataBindings.Add("EditValue", subQueryBinding, nameof(newSubQuery.SubQueryText), true, DataSourceUpdateMode.OnPropertyChanged);
 
+            XtraTabPage newPage = new() { Text = newSubQuery.SubQueryName, Tag = newSubQuery.SubQueryId };
             newPage.Controls.Add(memoEdit);
 
             // Insert before "+" tab
@@ -185,10 +257,8 @@ namespace Foxoft
             if (tabToClose?.Tag?.ToString() == "AddNew")
                 return; // Don't allow closing the "+" tab
 
-            // Confirm deletion
             if (MessageBox.Show($"Delete tab '{tabToClose.Text}'?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                // Remove from EF collection if needed
                 var subQueryId = tabToClose.Tag;
 
                 var report = dcReportsBindingSource.Current as DcReport;
@@ -218,52 +288,6 @@ namespace Foxoft
 
         private void gridView1_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
-            //if (e.Column == colVariableTypeId || e.Column == colVariableProperty)
-            //{
-            //    object variableTypeId = gridView1.GetFocusedRowCellValue(colVariableTypeId);
-            //    object variableProperty = gridView1.GetFocusedRowCellValue(colVariableProperty);
-            //    object operatorValue = gridView1.GetFocusedRowCellValue(colVariableOperator);
-
-            //    if (variableProperty == null || variableTypeId == null)
-            //        return;
-
-            //    string variablePropertyStr = variableProperty.ToString();
-
-            //    if (variableTypeId.ToString() == "1")
-            //    {
-            //        gridView1.SetFocusedRowCellValue(colRepresentative, "@" + variablePropertyStr);
-            //        gridView1.SetFocusedRowCellValue(colVariableOperator, null);
-
-            //        colVariableOperator.OptionsColumn.AllowEdit = false;
-
-            //        gridView1.SetColumnError(colVariableOperator, "");
-            //    }
-            //    else if (variableTypeId.ToString() == "2")
-            //    {
-            //        gridView1.SetFocusedRowCellValue(colRepresentative, "{" + variablePropertyStr + "}");
-
-            //        colVariableOperator.OptionsColumn.AllowEdit = true;
-
-            //        if (operatorValue == null || string.IsNullOrWhiteSpace(operatorValue.ToString()))
-            //        {
-            //            gridView1.SetColumnError(colVariableOperator, "Boş buraxıla bilməz.");
-            //        }
-            //        else
-            //        {
-            //            gridView1.SetColumnError(colVariableOperator, "");
-            //        }
-            //    }
-            //}
-
-            //if (e.Column == colVariableOperator)
-            //{
-            //    object operatorValue = gridView1.GetFocusedRowCellValue(colVariableOperator);
-
-            //    if (operatorValue != null && !string.IsNullOrWhiteSpace(operatorValue.ToString()))
-            //    {
-            //        gridView1.SetColumnError(colVariableOperator, "");
-            //    }
-            //}
         }
 
         private void gridView1_CustomRowCellEdit(object sender, CustomRowCellEditEventArgs e)
@@ -304,21 +328,6 @@ namespace Foxoft
 
         private void gridView1_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
         {
-            //GridView view = sender as GridView;
-
-            //if (view.FocusedColumn == colVariableOperator)
-            //{
-            //    var typeId = Convert.ToInt32(view.GetFocusedRowCellValue(colVariableTypeId));
-
-            //    if (typeId == 2) // Make required only if editable
-            //    {
-            //        if (e.Value == null || string.IsNullOrWhiteSpace(e.Value.ToString()))
-            //        {
-            //            e.Valid = false;
-            //            e.ErrorText = "This field is required.";
-            //        }
-            //    }
-            //}
         }
 
         private void gridView1_ValidateRow(object sender, ValidateRowEventArgs e)

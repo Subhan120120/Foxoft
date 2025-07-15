@@ -13,18 +13,18 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "İyerarxiya Kodu")]
+        [Display(Name = "İd")]
         public int Id { get; set; }
 
-        [Display(Name = "MainColumnName")]
+        [Display(Name = "Əsas Sorğu Kolonu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string ParentColumnName { get; set; }
 
-        [Display(Name = "SubColumnName")]
+        [Display(Name = "Alt Sorğu Kolonu")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string SubColumnName { get; set; }
 
-        [Display(Name = "Sorğu Kodu")]
+        [Display(Name = "Alt Sorğu Kodu")]
         [ForeignKey("TrReportSubQuery")]
         [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
         public int SubQueryId { get; set; }
