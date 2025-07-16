@@ -1,24 +1,16 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.DataAccess.ConnectionParameters;
-using DevExpress.DataAccess.DataFederation;
 using DevExpress.DataAccess.Sql;
-using DevExpress.Mvvm.POCO;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace Foxoft
 {

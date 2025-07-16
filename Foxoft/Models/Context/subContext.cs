@@ -372,6 +372,8 @@ namespace Foxoft.Models
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict; // NoAction
 
+
+
             modelBuilder.Entity<TrProductFeature>(entity =>
             {
                 entity.HasOne(x => x.DcProduct)
@@ -462,6 +464,16 @@ namespace Foxoft.Models
                     .WithMany(x => x.DcReportVariables)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+
+            modelBuilder.Entity<TrReportSubQuery>()
+                .HasOne(sq => sq.DcReport)
+                .WithMany(r => r.TrReportSubQueries)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TrReportSubQueryRelationColumn>()
+                .HasOne(sq => sq.TrReportSubQuery)
+                .WithMany(r => r.TrReportSubQueryRelationColumns)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<TrClaimReport>(entity =>
             {

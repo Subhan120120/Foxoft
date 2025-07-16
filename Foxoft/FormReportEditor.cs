@@ -1,20 +1,15 @@
-﻿using DevExpress.Utils.Extensions;
+﻿using DevExpress.Mvvm.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors.DXErrorProvider;
-using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraLayout;
-using DevExpress.XtraPrinting.Export;
 using DevExpress.XtraTab;
-using Foxoft.AppCode;
 using Foxoft.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using System.Data;
 
 namespace Foxoft
@@ -54,7 +49,7 @@ namespace Foxoft
             else
             {
                 dbContext.DcReports.Include(x => x.DcReportVariables)
-                                   .Include(x => x.TrReportSubQueries)
+                                   .Include(x => x.TrReportSubQueries).ThenInclude(x => x.TrReportSubQueryRelationColumns)
                                    .Where(x => x.ReportId == dcReport.ReportId)
                                    .Load();
 
@@ -112,10 +107,6 @@ namespace Foxoft
                 GC.ViewCollection.Add(GV);
                 GC.DataSource = relationColumnBindingSource;
 
-                dbContext.TrReportSubQueryRelationColumns
-                    .Where(x => x.SubQueryId == subQuery.SubQueryId)
-                    .Load();
-
                 relationColumnBindingSource.DataSource = typeof(TrReportSubQueryRelationColumn);
                 relationColumnBindingSource.DataSource = dbContext.TrReportSubQueryRelationColumns.Local.ToBindingList();
 
@@ -136,7 +127,8 @@ namespace Foxoft
                 {
                     if (e.KeyCode == Keys.Delete && GV != null && !GV.IsNewItemRow(GV.FocusedRowHandle))
                     {
-                        GV.DeleteSelectedRows();
+                        if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            GV.DeleteSelectedRows();
                     }
                 };
 
@@ -221,6 +213,7 @@ namespace Foxoft
         {
             EfMethods efMethods = new();
             AdoMethods adoMethods = new();
+            SqlParameter[] sqlParameters;
 
             dcReport = dcReportsBindingSource.Current as DcReport;
 
@@ -228,10 +221,17 @@ namespace Foxoft
             {
                 try
                 {
-                    SqlParameter[] sqlParameters;
                     string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
+                    DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
 
-                    DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // if query is correct 
+                    DcReport? report = dcReportsBindingSource.Current as DcReport;
+                    ICollection<TrReportSubQuery> subQueries = report.TrReportSubQueries;
+
+                    foreach (TrReportSubQuery? subQuery in subQueries)
+                    {
+                        string subQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters);
+                        DataTable dt2 = adoMethods.SqlGetDt(subQueryText, sqlParameters); // check query is correct 
+                    }
 
                     if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
                         efMethods.InsertEntity<DcReport>(dcReport);
@@ -268,9 +268,12 @@ namespace Foxoft
                     if (subQuery != null)
                     {
                         if (dbContext.Entry(subQuery).State != EntityState.Added)
-                            dbContext.TrReportSubQueries.Remove(subQuery); // DB-dən sil
+                        {
+                            //dbContext.TrReportSubQueries.Remove(subQuery); // DB-dən sil
+                            report.TrReportSubQueries.Remove(subQuery); // yaddaşdan sil
+                        }
                         else
-                            report.TrReportSubQueries.Remove(subQuery); // Sadəcə yaddaşdan sil
+                            report.TrReportSubQueries.Remove(subQuery); // yaddaşdan sil
                     }
                 }
 
@@ -353,10 +356,8 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete && GV_ReportVariables.ActiveEditor == null)
                 {
-                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                        return;
-
-                    GV_ReportVariables.DeleteSelectedRows();
+                    if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        GV_ReportVariables.DeleteSelectedRows();
                 }
             }
         }

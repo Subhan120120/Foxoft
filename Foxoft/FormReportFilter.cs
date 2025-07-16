@@ -99,37 +99,6 @@ namespace Foxoft
             return groupOperand;
         }
 
-        //private CriteriaOperator DoSomthing(CriteriaOperator criteriaOperator)
-        //{
-        //    if (criteriaOperator is GroupOperator)
-        //    {
-        //        var groupOperator = (GroupOperator)criteriaOperator;
-        //        CriteriaOperatorCollection operands = groupOperator.Operands;
-
-        //        var indexesToremove = new List<int>();
-        //        for (int i = 0; i < operands.Count; i++)
-        //        {
-        //            CriteriaOperator operand = operands[i];
-        //            if (operand.ToString() == matchString)
-        //            {
-        //                if (ReferenceEquals(replaceOperator, null))
-        //                    indexesToremove.Add(i);
-        //                else
-        //                    operands[i] = replaceOperator;
-        //            }
-        //            else
-        //            {
-        //                CriteriaOperator extract = operand;
-        //                operands.RemoveAt(i);
-        //                operands.Insert(i, extract);
-        //            }
-        //        }
-        //        foreach (int i in indexesToremove)
-        //            operands.RemoveAt(i);
-        //    }
-        //    return criteriaOperator;
-        //}
-
         private void FormReport_Load(object sender, EventArgs e)
         {
         }
@@ -429,19 +398,5 @@ namespace Foxoft
 
             Settings.Default.TrReportCustomizations = asd;
         }
-    }
-
-    public class TypedProperty<T> : Property where T : IConvertible
-    {
-        public T TypedValue
-        {
-            get { return (T)Convert.ChangeType(base.Value, typeof(T)); }
-            set { base.Value = value.ToString(); }
-        }
-    }
-
-    public class Property
-    {
-        public string Value { get; set; }
     }
 }
