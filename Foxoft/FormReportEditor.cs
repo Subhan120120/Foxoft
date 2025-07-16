@@ -213,7 +213,6 @@ namespace Foxoft
         {
             EfMethods efMethods = new();
             AdoMethods adoMethods = new();
-            SqlParameter[] sqlParameters;
 
             dcReport = dcReportsBindingSource.Current as DcReport;
 
@@ -221,6 +220,7 @@ namespace Foxoft
             {
                 try
                 {
+                    SqlParameter[] sqlParameters;
                     string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
                     DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
 
@@ -229,8 +229,13 @@ namespace Foxoft
 
                     foreach (TrReportSubQuery? subQuery in subQueries)
                     {
-                        string subQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters);
-                        DataTable dt2 = adoMethods.SqlGetDt(subQueryText, sqlParameters); // check query is correct 
+                        SqlParameter[] sqlParameters1;
+
+                        subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1);
+
+                        subQuery.SubQueryText= this.reportClass.AddRelation(query, subQuery);
+
+                        DataTable dt2 = adoMethods.SqlGetDt(subQuery.SubQueryText, sqlParameters1); // check query is correct 
                     }
 
                     if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
