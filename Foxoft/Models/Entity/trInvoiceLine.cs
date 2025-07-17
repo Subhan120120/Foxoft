@@ -74,14 +74,14 @@ namespace Foxoft.Models
         [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
         public decimal QtyOut { get; set; }
 
-        [Display(Name = "Qiymət")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        public decimal Price { get; set; }
-
         //[DefaultValue(1)]
         [Display(Name = "Ölçü Vahidi")]
         [ForeignKey("DcUnitOfMeasure")]
         public int? UnitOfMeasureId { get; set; }
+
+        [Display(Name = "Qiymət")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public decimal Price { get; set; }
 
         [Display(Name = "Valyuta")]
         [ForeignKey("DcCurrency")]
