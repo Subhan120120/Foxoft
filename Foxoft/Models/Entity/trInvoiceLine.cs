@@ -15,6 +15,35 @@ namespace Foxoft.Models
     [Display(Name = "Faktura Detalı")]
     public partial class TrInvoiceLine : BaseEntity
     {
+        private decimal ConvertToBasicUOM(decimal qty)
+        {
+            decimal multiplier = 1;
+            DcUnitOfMeasure currentUOM = this.DcUnitOfMeasure;
+
+            while (currentUOM != null && !currentUOM.IsBasic)
+            {
+                multiplier *= currentUOM.ConversionRate;
+                currentUOM = currentUOM.ParentUnitOfMeasure;
+            }
+
+            return qty * multiplier;
+        }
+
+        private decimal ConvertFromBasicUOM(decimal qtyIn)
+        {
+            decimal divider = 1;
+            DcUnitOfMeasure currentUOM = this.DcUnitOfMeasure;
+
+            while (currentUOM != null && !currentUOM.IsBasic)
+            {
+                divider *= currentUOM.ConversionRate;
+                currentUOM = currentUOM.ParentUnitOfMeasure;
+            }
+
+            return divider == 0 ? qtyIn : qtyIn / divider;
+        }
+
+
         [Key]
         public Guid InvoiceLineId { get; set; }
 
@@ -44,10 +73,11 @@ namespace Foxoft.Models
                 bool isIn = (bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode);
                 bool isReturn = TrInvoiceHeader.IsReturn;
 
-                if (isIn)
-                    return isReturn ? -QtyIn : QtyIn;
-                else
-                    return isReturn ? -QtyOut : QtyOut;
+                decimal qty = isIn
+                    ? (isReturn ? -QtyIn : QtyIn)
+                    : (isReturn ? -QtyOut : QtyOut);
+
+                return ConvertFromBasicUOM(qty);
             }
             set
             {
@@ -57,10 +87,12 @@ namespace Foxoft.Models
                 bool isIn = (bool)CustomExtensions.DirectionIsIn(TrInvoiceHeader.ProcessCode);
                 bool isReturn = TrInvoiceHeader.IsReturn;
 
+                decimal basicUOMQty = ConvertToBasicUOM(value);
+
                 if (isIn)
-                    QtyIn = isReturn ? -value : value;
+                    QtyIn = isReturn ? -basicUOMQty : basicUOMQty;
                 else
-                    QtyOut = isReturn ? -value : value;
+                    QtyOut = isReturn ? -basicUOMQty : basicUOMQty;
             }
         }
 
