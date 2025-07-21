@@ -221,7 +221,7 @@ namespace Foxoft
                 try
                 {
                     SqlParameter[] sqlParameters;
-                    string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters);
+                    string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters, 1);
                     DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
 
                     DcReport? report = dcReportsBindingSource.Current as DcReport;
@@ -231,9 +231,9 @@ namespace Foxoft
                     {
                         SqlParameter[] sqlParameters1;
 
-                        subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1);
+                        subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1, 1);
 
-                        subQuery.SubQueryText= this.reportClass.AddRelation(query, subQuery);
+                        subQuery.SubQueryText = this.reportClass.AddRelation(query, subQuery);
 
                         DataTable dt2 = adoMethods.SqlGetDt(subQuery.SubQueryText, sqlParameters1); // check query is correct 
                     }
