@@ -1,25 +1,27 @@
 ﻿
+using Foxoft.Models;
+
 namespace Foxoft
 {
-   partial class FormWaybill
+    partial class FormWaybill
     {
-      /// <summary> 
-      /// Required designer variable.
-      /// </summary>
-      private System.ComponentModel.IContainer components = null;
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-      /// <summary> 
-      /// Clean up any resources being used.
-      /// </summary>
-      /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-      protected override void Dispose(bool disposing)
-      {
-         if (disposing && (components != null))
-         {
-            components.Dispose();
-         }
-         base.Dispose(disposing);
-      }
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         #region Component Designer generated code
 
@@ -29,12 +31,13 @@ namespace Foxoft
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaybill));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             lC_Root = new DevExpress.XtraLayout.LayoutControl();
             gC_DeliveryInvoiceLine = new DevExpress.XtraGrid.GridControl();
             gV_ReturnInvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -50,6 +53,7 @@ namespace Foxoft
             col_RCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
+            UndeliveredBindingSource = new BindingSource(components);
             gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -65,47 +69,41 @@ namespace Foxoft
             col_LineDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_SalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_VatRate = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_Return = new DevExpress.XtraGrid.Columns.GridColumn();
-            repoBtn_ReturnLine = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            col_AddWaybill = new DevExpress.XtraGrid.Columns.GridColumn();
+            repoBtn_AddWaybill = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_DocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_CurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_DocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
             btn_Ok = new DevExpress.XtraEditors.SimpleButton();
             btn_Cancel = new DevExpress.XtraEditors.SimpleButton();
-            btnEdit_InvoiceHeader = new DevExpress.XtraEditors.ButtonEdit();
-            txt_CurrAccDesc = new DevExpress.XtraEditors.TextEdit();
             lCG_Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            lCG_InvoiceHeader = new DevExpress.XtraLayout.LayoutControlGroup();
-            lCI_InvoiceHeader = new DevExpress.XtraLayout.LayoutControlItem();
-            lbl_CurrAccDesc = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_Cancel = new DevExpress.XtraLayout.LayoutControlItem();
             lCI_Cash = new DevExpress.XtraLayout.LayoutControlItem();
             emptySpace_1 = new DevExpress.XtraLayout.EmptySpaceItem();
-            lCG_ReturnInvoiceLine = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             lCG_InvoiceLine = new DevExpress.XtraLayout.LayoutControlGroup();
             lCI_InvoiceLine = new DevExpress.XtraLayout.LayoutControlItem();
+            lCG_ReturnInvoiceLine = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
-            splitterItem2 = new DevExpress.XtraLayout.SplitterItem();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gC_DeliveryInvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_ReturnInvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UndeliveredBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repoBtn_ReturnLine).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)btnEdit_InvoiceHeader.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txt_CurrAccDesc.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtn_AddWaybill).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lCG_InvoiceHeader).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lCI_InvoiceHeader).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lbl_CurrAccDesc).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cash).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emptySpace_1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_InvoiceLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)splitterItem2).BeginInit();
             SuspendLayout();
             // 
             // lC_Root
@@ -114,24 +112,22 @@ namespace Foxoft
             lC_Root.Controls.Add(gC_InvoiceLine);
             lC_Root.Controls.Add(btn_Ok);
             lC_Root.Controls.Add(btn_Cancel);
-            lC_Root.Controls.Add(btnEdit_InvoiceHeader);
-            lC_Root.Controls.Add(txt_CurrAccDesc);
             lC_Root.Dock = DockStyle.Fill;
             lC_Root.Location = new Point(0, 0);
             lC_Root.Name = "lC_Root";
             lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(710, 0, 650, 400);
             lC_Root.Root = lCG_Root;
-            lC_Root.Size = new Size(1515, 649);
+            lC_Root.Size = new Size(1049, 649);
             lC_Root.TabIndex = 0;
             lC_Root.Text = "layoutControl1";
             // 
             // gC_DeliveryInvoiceLine
             // 
-            gC_DeliveryInvoiceLine.Location = new Point(24, 45);
+            gC_DeliveryInvoiceLine.Location = new Point(24, 431);
             gC_DeliveryInvoiceLine.MainView = gV_ReturnInvoiceLine;
             gC_DeliveryInvoiceLine.Name = "gC_DeliveryInvoiceLine";
-            gC_DeliveryInvoiceLine.Size = new Size(447, 570);
-            gC_DeliveryInvoiceLine.TabIndex = 0;
+            gC_DeliveryInvoiceLine.Size = new Size(1001, 168);
+            gC_DeliveryInvoiceLine.TabIndex = 2;
             gC_DeliveryInvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ReturnInvoiceLine });
             // 
             // gV_ReturnInvoiceLine
@@ -228,12 +224,13 @@ namespace Foxoft
             // 
             // gC_InvoiceLine
             // 
-            gC_InvoiceLine.Location = new Point(509, 150);
+            gC_InvoiceLine.DataSource = UndeliveredBindingSource;
+            gC_InvoiceLine.Location = new Point(24, 45);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
-            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtn_ReturnLine });
-            gC_InvoiceLine.Size = new Size(982, 388);
-            gC_InvoiceLine.TabIndex = 4;
+            gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtn_AddWaybill });
+            gC_InvoiceLine.Size = new Size(1001, 327);
+            gC_InvoiceLine.TabIndex = 0;
             gC_InvoiceLine.Tag = "Empty";
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
             // 
@@ -243,9 +240,14 @@ namespace Foxoft
             gV_InvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_Return });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate });
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
+            gV_InvoiceLine.OptionsBehavior.Editable = false;
+            gV_InvoiceLine.OptionsFind.AlwaysVisible = true;
+            gV_InvoiceLine.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
+            gV_InvoiceLine.OptionsFind.FindNullPrompt = "";
+            gV_InvoiceLine.OptionsFind.SearchInPreview = true;
             gV_InvoiceLine.OptionsView.AutoCalcPreviewLineCount = true;
             gV_InvoiceLine.OptionsView.ColumnHeaderAutoHeight = DevExpress.Utils.DefaultBoolean.True;
             gV_InvoiceLine.OptionsView.ShowGroupPanel = false;
@@ -253,41 +255,42 @@ namespace Foxoft
             gV_InvoiceLine.OptionsView.ShowPreview = true;
             gV_InvoiceLine.PreviewIndent = 10;
             gV_InvoiceLine.CalcPreviewText += gV_DeliveryInvoiceLine_CalcPreviewText;
+            gV_InvoiceLine.FocusedRowChanged += gV_InvoiceLine_FocusedRowChanged;
             // 
             // col_InvoiceLineId
             // 
             col_InvoiceLineId.Caption = "Sətir Kodu";
-            col_InvoiceLineId.FieldName = "InvoiceLineId";
+            col_InvoiceLineId.FieldName = "TrInvoiceLine.InvoiceLineId";
             col_InvoiceLineId.Name = "col_InvoiceLineId";
             col_InvoiceLineId.OptionsColumn.AllowEdit = false;
             // 
             // col_ProductCode
             // 
             col_ProductCode.Caption = "Məhsul Kodu";
-            col_ProductCode.FieldName = "ProductCode";
+            col_ProductCode.FieldName = "TrInvoiceLine.ProductCode";
             col_ProductCode.Name = "col_ProductCode";
             col_ProductCode.OptionsColumn.AllowEdit = false;
             col_ProductCode.Visible = true;
-            col_ProductCode.VisibleIndex = 0;
+            col_ProductCode.VisibleIndex = 4;
             col_ProductCode.Width = 68;
             // 
             // col_ProductDesc
             // 
             col_ProductDesc.Caption = "Məhsul Adı";
-            col_ProductDesc.FieldName = "DcProduct.ProductDesc";
+            col_ProductDesc.FieldName = "TrInvoiceLine.DcProduct.ProductDesc";
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.Visible = true;
-            col_ProductDesc.VisibleIndex = 1;
+            col_ProductDesc.VisibleIndex = 5;
             col_ProductDesc.Width = 393;
             // 
             // col_Qty
             // 
             col_Qty.Caption = "Say";
-            col_Qty.FieldName = "Qty";
+            col_Qty.FieldName = "TrInvoiceLine.Qty";
             col_Qty.Name = "col_Qty";
             col_Qty.OptionsColumn.AllowEdit = false;
             col_Qty.Visible = true;
-            col_Qty.VisibleIndex = 2;
+            col_Qty.VisibleIndex = 6;
             col_Qty.Width = 42;
             // 
             // col_ReturnQty
@@ -299,7 +302,7 @@ namespace Foxoft
             col_ReturnQty.OptionsColumn.AllowEdit = false;
             col_ReturnQty.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             col_ReturnQty.Visible = true;
-            col_ReturnQty.VisibleIndex = 3;
+            col_ReturnQty.VisibleIndex = 7;
             col_ReturnQty.Width = 49;
             // 
             // col_RemainingQty
@@ -309,100 +312,138 @@ namespace Foxoft
             col_RemainingQty.Name = "col_RemainingQty";
             col_RemainingQty.OptionsColumn.AllowEdit = false;
             col_RemainingQty.Visible = true;
-            col_RemainingQty.VisibleIndex = 7;
+            col_RemainingQty.VisibleIndex = 11;
             col_RemainingQty.Width = 38;
             // 
             // col_Price
             // 
             col_Price.Caption = "Qiymət";
-            col_Price.FieldName = "Price";
+            col_Price.FieldName = "TrInvoiceLine.Price";
             col_Price.Name = "col_Price";
             col_Price.OptionsColumn.AllowEdit = false;
             col_Price.Visible = true;
-            col_Price.VisibleIndex = 4;
+            col_Price.VisibleIndex = 8;
             col_Price.Width = 69;
             // 
             // col_Amount
             // 
             col_Amount.Caption = "Tutar";
-            col_Amount.FieldName = "Amount";
+            col_Amount.FieldName = "TrInvoiceLine.Amount";
             col_Amount.Name = "col_Amount";
             col_Amount.OptionsColumn.AllowEdit = false;
             // 
             // col_PosDiscount
             // 
             col_PosDiscount.Caption = "Pos Endirimi";
-            col_PosDiscount.FieldName = "PosDiscount";
+            col_PosDiscount.FieldName = "TrInvoiceLine.PosDiscount";
             col_PosDiscount.Name = "col_PosDiscount";
             col_PosDiscount.OptionsColumn.AllowEdit = false;
             // 
             // col_DiscountCampaign
             // 
             col_DiscountCampaign.Caption = "Endirim Kampaniyası";
-            col_DiscountCampaign.FieldName = "DiscountCampaign";
+            col_DiscountCampaign.FieldName = "TrInvoiceLine.DiscountCampaign";
             col_DiscountCampaign.Name = "col_DiscountCampaign";
             col_DiscountCampaign.OptionsColumn.AllowEdit = false;
             // 
             // col_NetAmount
             // 
             col_NetAmount.Caption = "Net Tutar";
-            col_NetAmount.FieldName = "NetAmount";
+            col_NetAmount.FieldName = "TrInvoiceLine.NetAmount";
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.OptionsColumn.AllowEdit = false;
             col_NetAmount.Visible = true;
-            col_NetAmount.VisibleIndex = 5;
+            col_NetAmount.VisibleIndex = 9;
             col_NetAmount.Width = 83;
             // 
             // col_LineDesc
             // 
             col_LineDesc.Caption = "Sətir Açıqlaması";
-            col_LineDesc.FieldName = "LineDescription";
+            col_LineDesc.FieldName = "TrInvoiceLine.LineDescription";
             col_LineDesc.Name = "col_LineDesc";
             col_LineDesc.OptionsColumn.AllowEdit = false;
             // 
             // col_SalesPersonCode
             // 
             col_SalesPersonCode.Caption = "Satıcı";
-            col_SalesPersonCode.FieldName = "SalesPersonCode";
+            col_SalesPersonCode.FieldName = "TrInvoiceLine.SalesPersonCode";
             col_SalesPersonCode.Name = "col_SalesPersonCode";
             col_SalesPersonCode.OptionsColumn.AllowEdit = false;
             // 
             // col_VatRate
             // 
             col_VatRate.Caption = "ƏDV";
-            col_VatRate.FieldName = "VatRate";
+            col_VatRate.FieldName = "TrInvoiceLine.VatRate";
             col_VatRate.Name = "col_VatRate";
             col_VatRate.OptionsColumn.AllowEdit = false;
             // 
-            // col_Return
+            // col_AddWaybill
             // 
-            col_Return.Caption = "Təhvil";
-            col_Return.ColumnEdit = repoBtn_ReturnLine;
-            col_Return.FieldName = "Return";
-            col_Return.Name = "col_Return";
-            col_Return.Visible = true;
-            col_Return.VisibleIndex = 6;
-            col_Return.Width = 31;
+            col_AddWaybill.Caption = "Əlavə Et";
+            col_AddWaybill.ColumnEdit = repoBtn_AddWaybill;
+            col_AddWaybill.FieldName = "AddWaybill";
+            col_AddWaybill.Name = "col_AddWaybill";
+            col_AddWaybill.Visible = true;
+            col_AddWaybill.VisibleIndex = 10;
+            col_AddWaybill.Width = 31;
             // 
-            // repoBtn_ReturnLine
+            // repoBtn_AddWaybill
             // 
-            repoBtn_ReturnLine.AutoHeight = false;
-            editorButtonImageOptions2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions2.SvgImage");
-            editorButtonImageOptions2.SvgImageSize = new Size(16, 16);
-            repoBtn_ReturnLine.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
-            repoBtn_ReturnLine.Name = "repoBtn_ReturnLine";
-            repoBtn_ReturnLine.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
-            repoBtn_ReturnLine.ButtonClick += repobtn_DeliveryLine_ButtonClick;
+            repoBtn_AddWaybill.AutoHeight = false;
+            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
+            editorButtonImageOptions1.SvgImageSize = new Size(16, 16);
+            repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            repoBtn_AddWaybill.Name = "repoBtn_AddWaybill";
+            repoBtn_AddWaybill.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+            repoBtn_AddWaybill.ButtonClick += repobtn_DeliveryLine_ButtonClick;
+            // 
+            // InvoiceHeaderId
+            // 
+            InvoiceHeaderId.Caption = "InvoiceHeaderId";
+            InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
+            InvoiceHeaderId.Name = "InvoiceHeaderId";
+            // 
+            // col_DocumentNumber
+            // 
+            col_DocumentNumber.Caption = "Sənəd Nömrəsi";
+            col_DocumentNumber.FieldName = "TrInvoiceHeader.DocumentNumber";
+            col_DocumentNumber.Name = "col_DocumentNumber";
+            col_DocumentNumber.Visible = true;
+            col_DocumentNumber.VisibleIndex = 1;
+            // 
+            // col_CurrAccCode
+            // 
+            col_CurrAccCode.Caption = "Cari Hesab Kodu";
+            col_CurrAccCode.FieldName = "TrInvoiceHeader.CurrAccCode";
+            col_CurrAccCode.Name = "col_CurrAccCode";
+            col_CurrAccCode.Visible = true;
+            col_CurrAccCode.VisibleIndex = 2;
+            // 
+            // col_CurrAccDesc
+            // 
+            col_CurrAccDesc.Caption = "Cari Hesab Adı";
+            col_CurrAccDesc.FieldName = "TrInvoiceHeader.DcCurrAcc.CurrAccDesc";
+            col_CurrAccDesc.Name = "col_CurrAccDesc";
+            col_CurrAccDesc.Visible = true;
+            col_CurrAccDesc.VisibleIndex = 3;
+            // 
+            // col_DocumentDate
+            // 
+            col_DocumentDate.Caption = "Sənəd Tarixi";
+            col_DocumentDate.FieldName = "TrInvoiceHeader.DocumentDate";
+            col_DocumentDate.Name = "col_DocumentDate";
+            col_DocumentDate.Visible = true;
+            col_DocumentDate.VisibleIndex = 0;
             // 
             // btn_Ok
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(1204, 554);
+            btn_Ok.Location = new Point(734, 615);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(130, 83);
+            btn_Ok.Size = new Size(132, 22);
             btn_Ok.StyleController = lC_Root;
-            btn_Ok.TabIndex = 6;
+            btn_Ok.TabIndex = 3;
             btn_Ok.Text = "simpleButton1";
             btn_Ok.Click += btn_Ok_Click;
             // 
@@ -410,125 +451,56 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(1338, 554);
+            btn_Cancel.Location = new Point(870, 615);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(165, 83);
+            btn_Cancel.Size = new Size(167, 22);
             btn_Cancel.StyleController = lC_Root;
-            btn_Cancel.TabIndex = 7;
+            btn_Cancel.TabIndex = 4;
             btn_Cancel.Text = "simpleButton2";
             btn_Cancel.Click += btn_Cancel_Click;
-            // 
-            // btnEdit_InvoiceHeader
-            // 
-            btnEdit_InvoiceHeader.Location = new Point(573, 45);
-            btnEdit_InvoiceHeader.Name = "btnEdit_InvoiceHeader";
-            btnEdit_InvoiceHeader.Properties.Appearance.Font = new Font("Tahoma", 12F);
-            btnEdit_InvoiceHeader.Properties.Appearance.Options.UseFont = true;
-            btnEdit_InvoiceHeader.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_InvoiceHeader.Size = new Size(918, 26);
-            btnEdit_InvoiceHeader.StyleController = lC_Root;
-            btnEdit_InvoiceHeader.TabIndex = 2;
-            btnEdit_InvoiceHeader.ButtonClick += btnEdit_InvoiceHeader_ButtonClick;
-            // 
-            // txt_CurrAccDesc
-            // 
-            txt_CurrAccDesc.Location = new Point(573, 75);
-            txt_CurrAccDesc.Name = "txt_CurrAccDesc";
-            txt_CurrAccDesc.Properties.Appearance.Font = new Font("Tahoma", 12F);
-            txt_CurrAccDesc.Properties.Appearance.Options.UseFont = true;
-            txt_CurrAccDesc.Properties.ReadOnly = true;
-            txt_CurrAccDesc.Size = new Size(918, 26);
-            txt_CurrAccDesc.StyleController = lC_Root;
-            txt_CurrAccDesc.TabIndex = 3;
             // 
             // lCG_Root
             // 
             lCG_Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             lCG_Root.GroupBordersVisible = false;
-            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCG_InvoiceHeader, lCI_Cancel, lCI_Cash, emptySpace_1, lCG_ReturnInvoiceLine, lCG_InvoiceLine, splitterItem1, splitterItem2 });
+            lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Cancel, lCI_Cash, emptySpace_1, lCG_InvoiceLine, lCG_ReturnInvoiceLine, splitterItem1 });
             lCG_Root.Name = "Root";
-            lCG_Root.Size = new Size(1515, 649);
+            lCG_Root.Size = new Size(1049, 649);
             lCG_Root.TextVisible = false;
-            // 
-            // lCG_InvoiceHeader
-            // 
-            lCG_InvoiceHeader.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_InvoiceHeader, lbl_CurrAccDesc });
-            lCG_InvoiceHeader.Location = new Point(485, 0);
-            lCG_InvoiceHeader.Name = "lCG_InvoiceHeader";
-            lCG_InvoiceHeader.Size = new Size(1010, 105);
-            lCG_InvoiceHeader.Text = "Faktura";
-            // 
-            // lCI_InvoiceHeader
-            // 
-            lCI_InvoiceHeader.Control = btnEdit_InvoiceHeader;
-            lCI_InvoiceHeader.Location = new Point(0, 0);
-            lCI_InvoiceHeader.Name = "lCI_InvoiceHeader";
-            lCI_InvoiceHeader.Size = new Size(986, 30);
-            lCI_InvoiceHeader.Text = "Faktura";
-            lCI_InvoiceHeader.TextSize = new Size(52, 13);
-            // 
-            // lbl_CurrAccDesc
-            // 
-            lbl_CurrAccDesc.Control = txt_CurrAccDesc;
-            lbl_CurrAccDesc.Location = new Point(0, 30);
-            lbl_CurrAccDesc.Name = "lbl_CurrAccDesc";
-            lbl_CurrAccDesc.Size = new Size(986, 30);
-            lbl_CurrAccDesc.Text = "Cari Hesab";
-            lbl_CurrAccDesc.TextSize = new Size(52, 13);
             // 
             // lCI_Cancel
             // 
             lCI_Cancel.Control = btn_Cancel;
-            lCI_Cancel.Location = new Point(1326, 542);
+            lCI_Cancel.Location = new Point(858, 603);
             lCI_Cancel.MinSize = new Size(78, 26);
             lCI_Cancel.Name = "lCI_Cancel";
-            lCI_Cancel.Size = new Size(169, 87);
+            lCI_Cancel.Size = new Size(171, 26);
             lCI_Cancel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            lCI_Cancel.TextSize = new Size(0, 0);
             lCI_Cancel.TextVisible = false;
             // 
             // lCI_Cash
             // 
             lCI_Cash.Control = btn_Ok;
-            lCI_Cash.Location = new Point(1192, 542);
+            lCI_Cash.Location = new Point(722, 603);
             lCI_Cash.MinSize = new Size(78, 26);
             lCI_Cash.Name = "lCI_Cash";
-            lCI_Cash.Size = new Size(134, 87);
+            lCI_Cash.Size = new Size(136, 26);
             lCI_Cash.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            lCI_Cash.TextSize = new Size(0, 0);
             lCI_Cash.TextVisible = false;
             // 
             // emptySpace_1
             // 
-            emptySpace_1.AllowHotTrack = false;
-            emptySpace_1.Location = new Point(485, 542);
+            emptySpace_1.Location = new Point(0, 603);
             emptySpace_1.Name = "emptySpace_1";
-            emptySpace_1.Size = new Size(707, 87);
-            emptySpace_1.TextSize = new Size(0, 0);
-            // 
-            // lCG_ReturnInvoiceLine
-            // 
-            lCG_ReturnInvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
-            lCG_ReturnInvoiceLine.Location = new Point(0, 0);
-            lCG_ReturnInvoiceLine.Name = "lCG_ReturnInvoiceLine";
-            lCG_ReturnInvoiceLine.Size = new Size(475, 619);
-            lCG_ReturnInvoiceLine.Text = "Geri Qaytarma";
-            // 
-            // layoutControlItem1
-            // 
-            layoutControlItem1.Control = gC_DeliveryInvoiceLine;
-            layoutControlItem1.Location = new Point(0, 0);
-            layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(451, 574);
-            layoutControlItem1.TextSize = new Size(0, 0);
-            layoutControlItem1.TextVisible = false;
+            emptySpace_1.Size = new Size(722, 26);
             // 
             // lCG_InvoiceLine
             // 
+            lCG_InvoiceLine.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_InvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_InvoiceLine });
-            lCG_InvoiceLine.Location = new Point(485, 105);
+            lCG_InvoiceLine.Location = new Point(0, 0);
             lCG_InvoiceLine.Name = "lCG_InvoiceLine";
-            lCG_InvoiceLine.Size = new Size(1010, 437);
+            lCG_InvoiceLine.Size = new Size(1029, 376);
             lCG_InvoiceLine.Text = "Məhsul";
             // 
             // lCI_InvoiceLine
@@ -536,29 +508,37 @@ namespace Foxoft
             lCI_InvoiceLine.Control = gC_InvoiceLine;
             lCI_InvoiceLine.Location = new Point(0, 0);
             lCI_InvoiceLine.Name = "lCI_InvoiceLine";
-            lCI_InvoiceLine.Size = new Size(986, 392);
-            lCI_InvoiceLine.TextSize = new Size(0, 0);
+            lCI_InvoiceLine.Size = new Size(1005, 331);
             lCI_InvoiceLine.TextVisible = false;
+            // 
+            // lCG_ReturnInvoiceLine
+            // 
+            lCG_ReturnInvoiceLine.GroupStyle = DevExpress.Utils.GroupStyle.Light;
+            lCG_ReturnInvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
+            lCG_ReturnInvoiceLine.Location = new Point(0, 386);
+            lCG_ReturnInvoiceLine.Name = "lCG_ReturnInvoiceLine";
+            lCG_ReturnInvoiceLine.Size = new Size(1029, 217);
+            lCG_ReturnInvoiceLine.Text = "Geri Qaytarma";
+            // 
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = gC_DeliveryInvoiceLine;
+            layoutControlItem1.Location = new Point(0, 0);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new Size(1005, 172);
+            layoutControlItem1.TextVisible = false;
             // 
             // splitterItem1
             // 
-            splitterItem1.AllowHotTrack = true;
-            splitterItem1.Location = new Point(475, 0);
+            splitterItem1.Location = new Point(0, 376);
             splitterItem1.Name = "splitterItem1";
-            splitterItem1.Size = new Size(10, 629);
-            // 
-            // splitterItem2
-            // 
-            splitterItem2.AllowHotTrack = true;
-            splitterItem2.Location = new Point(0, 619);
-            splitterItem2.Name = "splitterItem2";
-            splitterItem2.Size = new Size(475, 10);
+            splitterItem1.Size = new Size(1029, 10);
             // 
             // FormWaybill
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1515, 649);
+            ClientSize = new Size(1049, 649);
             Controls.Add(lC_Root);
             Name = "FormWaybill";
             Load += FormDelivery_Load;
@@ -567,76 +547,71 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_DeliveryInvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_ReturnInvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UndeliveredBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_InvoiceLine).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repoBtn_ReturnLine).EndInit();
-            ((System.ComponentModel.ISupportInitialize)btnEdit_InvoiceHeader.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txt_CurrAccDesc.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoBtn_AddWaybill).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_Root).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lCG_InvoiceHeader).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lCI_InvoiceHeader).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lbl_CurrAccDesc).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cancel).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_Cash).EndInit();
             ((System.ComponentModel.ISupportInitialize)emptySpace_1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_InvoiceLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)splitterItem2).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private DevExpress.XtraLayout.LayoutControl lC_Root;
-      private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
-      private DevExpress.XtraGrid.GridControl gC_InvoiceLine;
-      private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLine;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_InvoiceLine;
-      private DevExpress.XtraLayout.LayoutControlGroup lCG_InvoiceLine;
-      private DevExpress.XtraLayout.LayoutControlGroup lCG_InvoiceHeader;
-      private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceLineId;
-      private DevExpress.XtraGrid.Columns.GridColumn col_ProductCode;
-      private DevExpress.XtraGrid.Columns.GridColumn col_Qty;
-      private DevExpress.XtraGrid.Columns.GridColumn col_Price;
-      private DevExpress.XtraGrid.Columns.GridColumn col_Amount;
-      private DevExpress.XtraGrid.Columns.GridColumn col_PosDiscount;
-      private DevExpress.XtraGrid.Columns.GridColumn col_DiscountCampaign;
-      private DevExpress.XtraGrid.Columns.GridColumn col_NetAmount;
-      private DevExpress.XtraGrid.Columns.GridColumn col_LineDesc;
-      private DevExpress.XtraGrid.Columns.GridColumn col_SalesPersonCode;
-      private DevExpress.XtraGrid.Columns.GridColumn col_VatRate;
-      private DevExpress.XtraGrid.Columns.GridColumn col_Return;
-      private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn_ReturnLine;
-      private DevExpress.XtraEditors.SimpleButton btn_Ok;
-      private DevExpress.XtraEditors.SimpleButton btn_Cancel;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_Cancel;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_Cash;
-      private DevExpress.XtraLayout.EmptySpaceItem emptySpace_1;
-      private DevExpress.XtraGrid.Columns.GridColumn col_ReturnQty;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RemainingQty;
-      private DevExpress.XtraEditors.ButtonEdit btnEdit_InvoiceHeader;
-      private DevExpress.XtraLayout.LayoutControlItem lCI_InvoiceHeader;
-      private DevExpress.XtraGrid.GridControl gC_DeliveryInvoiceLine;
-      private DevExpress.XtraGrid.Views.Grid.GridView gV_ReturnInvoiceLine;
-      private DevExpress.XtraLayout.LayoutControlGroup lCG_ReturnInvoiceLine;
-      private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RInvoiceHeaderId;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RRelatedLineId;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RProductCode;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RQty;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RPrice;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RAmount;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RPosDiscount;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RNetAmount;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RVatRate;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RCurrencyCode;
-      private DevExpress.XtraGrid.Columns.GridColumn col_RSalesPersonCode;
-      private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
-      private DevExpress.XtraEditors.TextEdit txt_CurrAccDesc;
-      private DevExpress.XtraLayout.LayoutControlItem lbl_CurrAccDesc;
-      private DevExpress.XtraLayout.SplitterItem splitterItem1;
-      private DevExpress.XtraLayout.SplitterItem splitterItem2;
-   }
+        private DevExpress.XtraLayout.LayoutControlGroup lCG_Root;
+        private DevExpress.XtraGrid.GridControl gC_InvoiceLine;
+        private DevExpress.XtraGrid.Views.Grid.GridView gV_InvoiceLine;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_InvoiceLine;
+        private DevExpress.XtraLayout.LayoutControlGroup lCG_InvoiceLine;
+        private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceLineId;
+        private DevExpress.XtraGrid.Columns.GridColumn col_ProductCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_Qty;
+        private DevExpress.XtraGrid.Columns.GridColumn col_Price;
+        private DevExpress.XtraGrid.Columns.GridColumn col_Amount;
+        private DevExpress.XtraGrid.Columns.GridColumn col_PosDiscount;
+        private DevExpress.XtraGrid.Columns.GridColumn col_DiscountCampaign;
+        private DevExpress.XtraGrid.Columns.GridColumn col_NetAmount;
+        private DevExpress.XtraGrid.Columns.GridColumn col_LineDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn col_SalesPersonCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_VatRate;
+        private DevExpress.XtraGrid.Columns.GridColumn col_AddWaybill;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn_AddWaybill;
+        private DevExpress.XtraEditors.SimpleButton btn_Ok;
+        private DevExpress.XtraEditors.SimpleButton btn_Cancel;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_Cancel;
+        private DevExpress.XtraLayout.LayoutControlItem lCI_Cash;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpace_1;
+        private DevExpress.XtraGrid.Columns.GridColumn col_ReturnQty;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RemainingQty;
+        private DevExpress.XtraGrid.GridControl gC_DeliveryInvoiceLine;
+        private DevExpress.XtraGrid.Views.Grid.GridView gV_ReturnInvoiceLine;
+        private DevExpress.XtraLayout.LayoutControlGroup lCG_ReturnInvoiceLine;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RInvoiceHeaderId;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RRelatedLineId;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RProductCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RQty;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RAmount;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RPosDiscount;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RNetAmount;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RVatRate;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RCurrencyCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RSalesPersonCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
+        private DevExpress.XtraLayout.SplitterItem splitterItem1;
+        private BindingSource UndeliveredBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn InvoiceHeaderId;
+        private DevExpress.XtraGrid.Columns.GridColumn col_DocumentNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn col_DocumentDate;
+    }
 }

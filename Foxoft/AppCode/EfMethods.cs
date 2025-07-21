@@ -123,30 +123,32 @@ namespace Foxoft
             }
         }
 
-        public List<TrInvoiceLine> SelectInvoiceLinesForDelivery(Guid invoiceHeaderId)
+        public List<UnDeliveredViewModel> SelectInvoiceLinesForDelivery()
         {
             using subContext db = new();
             {
-                List<TrInvoiceLine> InvoiceLines = db.TrInvoiceLines.Include(x => x.DcProduct)
-                                                                  .Include(x => x.TrInvoiceHeader)
-                                                                  .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                                                                  .OrderBy(x => x.CreatedDate)
-                                                                  .ToList();
+                var result = db.TrInvoiceLines
+                    .Include(x => x.DcProduct)
+                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+                    //.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                    .OrderBy(x => x.CreatedDate)
+                    .Select(x => new UnDeliveredViewModel
+                    {
+                        TrInvoiceLine = x,
+                        TrInvoiceHeader = x.TrInvoiceHeader,
+                        ReturnQty = db.TrInvoiceLines
+                                     .Where(y => y.RelatedLineId == x.InvoiceLineId &&
+                                                 new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                                     .Sum(y => Math.Abs(y.QtyIn - y.QtyOut)),
 
+                        RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines
+                                     .Where(y => y.RelatedLineId == x.InvoiceLineId &&
+                                                 new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                                     .Sum(y => Math.Abs(y.QtyIn - y.QtyOut))
+                    })
+                    .ToList();
 
-                InvoiceLines.ForEach(x =>
-                {
-                    x.ReturnQty = db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
-                                                   .Where(y => new string[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-                                                   .Where(y => y.RelatedLineId == x.InvoiceLineId)
-                                                   .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
-                    x.RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines.Include(y => y.TrInvoiceHeader)
-                                                                                     .Where(y => y.RelatedLineId == x.InvoiceLineId)
-                                                                                     .Where(y => new string[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-                                                                                     .Sum(s => Math.Abs(s.QtyIn - s.QtyOut));
-                });
-
-                return InvoiceLines;
+                return result;
             }
         }
 

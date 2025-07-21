@@ -128,7 +128,7 @@ namespace Foxoft
 
         public string ApplyFilter(DcReport dcReport, string query, string filter, out SqlParameter[] sqlParameters, int topCount = int.MaxValue)
         {
-            string queryTop = AddTop(query, int.MaxValue);
+            string queryTop = AddTop(query, topCount);
 
             if (!string.IsNullOrEmpty(filter))
                 queryTop = AddFilter(queryTop, filter);

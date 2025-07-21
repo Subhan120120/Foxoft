@@ -6,6 +6,7 @@ using Foxoft.Models;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 
 namespace Foxoft
 {
@@ -22,12 +23,16 @@ namespace Foxoft
         public FormWaybill()
         {
             InitializeComponent();
+            ClearControls();
+            LoadInvoice();
+            gV_InvoiceLine.BestFitColumns();
         }
 
         public FormWaybill(string processCode)
            : this()
         {
             this.processCode = processCode;
+
         }
 
         private void FormDelivery_Load(object sender, EventArgs e)
@@ -55,29 +60,24 @@ namespace Foxoft
                     ClearControls();
 
                     if (efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId))
-                        efMethods.DeleteInvoice(deliveryInvoiceHeaderId);                // delete previous invoice
-
-                    deliveryInvoiceHeaderId = Guid.NewGuid();                   // create next invoice
+                        efMethods.DeleteInvoice(deliveryInvoiceHeaderId);                   // create next invoice
 
                     Guid invoiceHeaderId = form.trInvoiceLine.InvoiceHeaderId;
 
                     trInvoiceHeader = efMethods.SelectInvoiceHeader(invoiceHeaderId);
 
-                    btnEdit_InvoiceHeader.EditValue = trInvoiceHeader.DocumentNumber;
+                    //btnEdit_InvoiceHeader.EditValue = trInvoiceHeader.DocumentNumber;
 
-                    LoadInvoice(trInvoiceHeader);
+                    LoadInvoice();
                 }
             }
         }
 
-        private void LoadInvoice(TrInvoiceHeader invoiceHeader)
+        private void LoadInvoice()
         {
-            gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLinesForDelivery(invoiceHeader.InvoiceHeaderId);
+            gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLinesForDelivery();
 
-            if (invoiceHeader.DcCurrAcc is not null)
-                txt_CurrAccDesc.Text = invoiceHeader.DcCurrAcc.CurrAccDesc;
-
-            Tag = invoiceHeader.DocumentNumber;
+            //Tag = invoiceHeader.DocumentNumber;
         }
 
         private void repobtn_DeliveryLine_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -97,9 +97,9 @@ namespace Foxoft
 
                             deliveryInvoHeader = new();
                             deliveryInvoHeader.InvoiceHeaderId = deliveryInvoiceHeaderId;
-                            deliveryInvoHeader.RelatedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
+                            //deliveryInvoHeader.RelatedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
                             deliveryInvoHeader.DocumentNumber = NewDocNum;
-                            deliveryInvoHeader.ProcessCode = "WO";
+                            deliveryInvoHeader.ProcessCode = processCode;
                             deliveryInvoHeader.CurrAccCode = trInvoiceHeader.CurrAccCode;
                             deliveryInvoHeader.OfficeCode = Authorization.OfficeCode;
                             deliveryInvoHeader.StoreCode = Authorization.StoreCode;
@@ -135,7 +135,7 @@ namespace Foxoft
                         else
                             efMethods.UpdateInvoiceLineQtyOut(deliveryInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
 
-                        gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLinesForDelivery(trInvoiceHeader.InvoiceHeaderId);
+                        gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLinesForDelivery();
                     }
                 }
             }
@@ -159,8 +159,6 @@ namespace Foxoft
             trInvoiceHeader = null;
             gC_InvoiceLine.DataSource = null;
             gC_DeliveryInvoiceLine.DataSource = null;
-            btnEdit_InvoiceHeader.EditValue = null;
-            txt_CurrAccDesc.Text = null;
         }
 
         private void OpenFormInvoice(string strDocNum)
@@ -196,7 +194,7 @@ namespace Foxoft
             GridView view = sender as GridView;
             if (view == null) return;
 
-            string SalesPersonCode = view.GetRowCellDisplayText(e.RowHandle, view.Columns["SalesPersonCode"]);
+            string SalesPersonCode = view.GetRowCellDisplayText(e.RowHandle, col_SalesPersonCode);
 
             e.PreviewText = CustomExtensions.GetPreviewText(0, 0, 0, 0, String.Empty, SalesPersonCode);
         }
@@ -210,6 +208,11 @@ namespace Foxoft
 
                     ClearControls();
                 }
+
+        }
+
+        private void gV_InvoiceLine_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
 
         }
     }
