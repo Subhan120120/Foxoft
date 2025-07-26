@@ -33,11 +33,11 @@ namespace Foxoft
         {
             components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaybill));
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaybill));
             lC_Root = new DevExpress.XtraLayout.LayoutControl();
             gC_DeliveryInvoiceLine = new DevExpress.XtraGrid.GridControl();
             gV_ReturnInvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -52,6 +52,7 @@ namespace Foxoft
             col_RVatRate = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RCurrencyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RSalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_RProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             gC_InvoiceLine = new DevExpress.XtraGrid.GridControl();
             UndeliveredBindingSource = new BindingSource(components);
             gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -136,7 +137,7 @@ namespace Foxoft
             gV_ReturnInvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_ReturnInvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_ReturnInvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_ReturnInvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_RInvoiceHeaderId, col_RRelatedLineId, col_RProductCode, col_RQty, col_RPrice, col_RAmount, col_RPosDiscount, col_RNetAmount, col_RVatRate, col_RCurrencyCode, col_RSalesPersonCode });
+            gV_ReturnInvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_RInvoiceHeaderId, col_RRelatedLineId, col_RProductCode, col_RQty, col_RPrice, col_RAmount, col_RPosDiscount, col_RNetAmount, col_RVatRate, col_RCurrencyCode, col_RSalesPersonCode, col_RProductDesc });
             gV_ReturnInvoiceLine.GridControl = gC_DeliveryInvoiceLine;
             gV_ReturnInvoiceLine.Name = "gV_ReturnInvoiceLine";
             gV_ReturnInvoiceLine.OptionsBehavior.Editable = false;
@@ -174,15 +175,13 @@ namespace Foxoft
             col_RQty.FieldName = "Qty";
             col_RQty.Name = "col_RQty";
             col_RQty.Visible = true;
-            col_RQty.VisibleIndex = 1;
+            col_RQty.VisibleIndex = 2;
             // 
             // col_RPrice
             // 
             col_RPrice.Caption = "Qiymət";
             col_RPrice.FieldName = "Price";
             col_RPrice.Name = "col_RPrice";
-            col_RPrice.Visible = true;
-            col_RPrice.VisibleIndex = 2;
             // 
             // col_RAmount
             // 
@@ -202,8 +201,6 @@ namespace Foxoft
             col_RNetAmount.FieldName = "NetAmount";
             col_RNetAmount.Name = "col_RNetAmount";
             col_RNetAmount.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] { new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NetAmount", "{0:0.##}") });
-            col_RNetAmount.Visible = true;
-            col_RNetAmount.VisibleIndex = 3;
             // 
             // col_RVatRate
             // 
@@ -221,6 +218,14 @@ namespace Foxoft
             col_RSalesPersonCode.Caption = "Satıcı";
             col_RSalesPersonCode.FieldName = "SalesPersonCode";
             col_RSalesPersonCode.Name = "col_RSalesPersonCode";
+            // 
+            // col_RProductDesc
+            // 
+            col_RProductDesc.Caption = "Məhsul Adı";
+            col_RProductDesc.FieldName = "DcProduct.ProductDesc";
+            col_RProductDesc.Name = "col_RProductDesc";
+            col_RProductDesc.Visible = true;
+            col_RProductDesc.VisibleIndex = 1;
             // 
             // gC_InvoiceLine
             // 
@@ -243,7 +248,6 @@ namespace Foxoft
             gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate });
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
-            gV_InvoiceLine.OptionsBehavior.Editable = false;
             gV_InvoiceLine.OptionsFind.AlwaysVisible = true;
             gV_InvoiceLine.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             gV_InvoiceLine.OptionsFind.FindNullPrompt = "";
@@ -270,8 +274,6 @@ namespace Foxoft
             col_ProductCode.FieldName = "TrInvoiceLine.ProductCode";
             col_ProductCode.Name = "col_ProductCode";
             col_ProductCode.OptionsColumn.AllowEdit = false;
-            col_ProductCode.Visible = true;
-            col_ProductCode.VisibleIndex = 4;
             col_ProductCode.Width = 68;
             // 
             // col_ProductDesc
@@ -280,7 +282,7 @@ namespace Foxoft
             col_ProductDesc.FieldName = "TrInvoiceLine.DcProduct.ProductDesc";
             col_ProductDesc.Name = "col_ProductDesc";
             col_ProductDesc.Visible = true;
-            col_ProductDesc.VisibleIndex = 5;
+            col_ProductDesc.VisibleIndex = 3;
             col_ProductDesc.Width = 393;
             // 
             // col_Qty
@@ -290,7 +292,7 @@ namespace Foxoft
             col_Qty.Name = "col_Qty";
             col_Qty.OptionsColumn.AllowEdit = false;
             col_Qty.Visible = true;
-            col_Qty.VisibleIndex = 6;
+            col_Qty.VisibleIndex = 4;
             col_Qty.Width = 42;
             // 
             // col_ReturnQty
@@ -302,7 +304,7 @@ namespace Foxoft
             col_ReturnQty.OptionsColumn.AllowEdit = false;
             col_ReturnQty.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             col_ReturnQty.Visible = true;
-            col_ReturnQty.VisibleIndex = 7;
+            col_ReturnQty.VisibleIndex = 5;
             col_ReturnQty.Width = 49;
             // 
             // col_RemainingQty
@@ -312,7 +314,7 @@ namespace Foxoft
             col_RemainingQty.Name = "col_RemainingQty";
             col_RemainingQty.OptionsColumn.AllowEdit = false;
             col_RemainingQty.Visible = true;
-            col_RemainingQty.VisibleIndex = 11;
+            col_RemainingQty.VisibleIndex = 7;
             col_RemainingQty.Width = 38;
             // 
             // col_Price
@@ -321,8 +323,6 @@ namespace Foxoft
             col_Price.FieldName = "TrInvoiceLine.Price";
             col_Price.Name = "col_Price";
             col_Price.OptionsColumn.AllowEdit = false;
-            col_Price.Visible = true;
-            col_Price.VisibleIndex = 8;
             col_Price.Width = 69;
             // 
             // col_Amount
@@ -352,8 +352,6 @@ namespace Foxoft
             col_NetAmount.FieldName = "TrInvoiceLine.NetAmount";
             col_NetAmount.Name = "col_NetAmount";
             col_NetAmount.OptionsColumn.AllowEdit = false;
-            col_NetAmount.Visible = true;
-            col_NetAmount.VisibleIndex = 9;
             col_NetAmount.Width = 83;
             // 
             // col_LineDesc
@@ -384,18 +382,17 @@ namespace Foxoft
             col_AddWaybill.FieldName = "AddWaybill";
             col_AddWaybill.Name = "col_AddWaybill";
             col_AddWaybill.Visible = true;
-            col_AddWaybill.VisibleIndex = 10;
+            col_AddWaybill.VisibleIndex = 6;
             col_AddWaybill.Width = 31;
             // 
             // repoBtn_AddWaybill
             // 
             repoBtn_AddWaybill.AutoHeight = false;
-            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
             editorButtonImageOptions1.SvgImageSize = new Size(16, 16);
             repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
             repoBtn_AddWaybill.Name = "repoBtn_AddWaybill";
             repoBtn_AddWaybill.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
-            repoBtn_AddWaybill.ButtonClick += repobtn_DeliveryLine_ButtonClick;
+            repoBtn_AddWaybill.ButtonPressed += repoBtn_AddWaybill_ButtonPressed;
             // 
             // InvoiceHeaderId
             // 
@@ -416,8 +413,6 @@ namespace Foxoft
             col_CurrAccCode.Caption = "Cari Hesab Kodu";
             col_CurrAccCode.FieldName = "TrInvoiceHeader.CurrAccCode";
             col_CurrAccCode.Name = "col_CurrAccCode";
-            col_CurrAccCode.Visible = true;
-            col_CurrAccCode.VisibleIndex = 2;
             // 
             // col_CurrAccDesc
             // 
@@ -425,7 +420,7 @@ namespace Foxoft
             col_CurrAccDesc.FieldName = "TrInvoiceHeader.DcCurrAcc.CurrAccDesc";
             col_CurrAccDesc.Name = "col_CurrAccDesc";
             col_CurrAccDesc.Visible = true;
-            col_CurrAccDesc.VisibleIndex = 3;
+            col_CurrAccDesc.VisibleIndex = 2;
             // 
             // col_DocumentDate
             // 
@@ -541,6 +536,7 @@ namespace Foxoft
             ClientSize = new Size(1049, 649);
             Controls.Add(lC_Root);
             Name = "FormWaybill";
+            FormClosing += FormWaybill_FormClosing;
             Load += FormDelivery_Load;
             ((System.ComponentModel.ISupportInitialize)lC_Root).EndInit();
             lC_Root.ResumeLayout(false);
@@ -613,5 +609,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn col_DocumentDate;
+        private DevExpress.XtraGrid.Columns.GridColumn col_RProductDesc;
     }
 }

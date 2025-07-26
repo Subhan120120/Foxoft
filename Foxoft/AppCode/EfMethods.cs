@@ -10,6 +10,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace Foxoft
 {
@@ -49,6 +50,22 @@ namespace Foxoft
         {
             using subContext db = new();
             db.Set<T>().Add(entity);
+            int rowAffected = db.SaveChanges();
+
+            if (rowAffected > 0)
+                return entity;
+            else
+                return null;
+        }
+
+
+        public TrInvoiceLine InsertTrInvoiceLine(TrInvoiceLine entity)
+        {
+            using subContext db = new();
+
+            db.Attach(entity.DcProduct);
+
+            db.TrInvoiceLines.Add(entity);
             int rowAffected = db.SaveChanges();
 
             if (rowAffected > 0)
@@ -123,34 +140,113 @@ namespace Foxoft
             }
         }
 
-        public List<UnDeliveredViewModel> SelectInvoiceLinesForDelivery()
+        //public List<UnDeliveredViewModel> SelectInvoiceLinesForDelivery(Guid? invoiceHeader = null)
+        //{
+        //    using subContext db = new();
+
+        //    return db.TrInvoiceLines
+        //        .Include(x => x.DcProduct)
+        //        .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+        //        .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
+        //                    && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+        //        .Select(x => new
+        //        {
+        //            TrInvoiceLine = x,
+        //            TrInvoiceHeader = x.TrInvoiceHeader,
+        //            Returned = db.TrInvoiceLines
+        //                        .Where(y => y.RelatedLineId == x.InvoiceLineId &&
+        //                                    new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+        //                        .Sum(y => y.QtyIn - y.QtyOut),
+        //            Original = x.QtyIn - x.QtyOut
+        //        })
+        //        .Where(t => Math.Abs(t.Original) - Math.Abs(t.Returned) > 0)
+        //        .Select(t => new UnDeliveredViewModel
+        //        {
+        //            TrInvoiceLine = t.TrInvoiceLine,
+        //            TrInvoiceHeader = t.TrInvoiceHeader,
+        //            ReturnQty = Math.Abs(t.Returned),
+        //            RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
+        //        })
+        //        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+        //        .ToList();
+        //}
+
+        //public async Task<List<UnDeliveredViewModel>> SelectInvoiceLinesForDeliveryAsync(Guid? invoiceHeader = null)
+        //{
+        //    await using var db = new subContext();
+
+        //    var data = await db.TrInvoiceLines
+        //        .Include(x => x.DcProduct)
+        //        .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+        //        .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
+        //                    && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+        //        .Select(x => new
+        //        {
+        //            TrInvoiceLine = x,
+        //            TrInvoiceHeader = x.TrInvoiceHeader,
+        //            Returned = db.TrInvoiceLines
+        //                        .Where(y => y.RelatedLineId == x.InvoiceLineId &&
+        //                                    new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+        //                        .Sum(y => y.QtyIn - y.QtyOut),
+        //            Original = x.QtyIn - x.QtyOut
+        //        })
+        //        .Where(t => Math.Abs(t.Original) - Math.Abs(t.Returned) > 0)
+        //        .ToListAsync();
+
+        //    return data
+        //        .Select(t => new UnDeliveredViewModel
+        //        {
+        //            TrInvoiceLine = t.TrInvoiceLine,
+        //            TrInvoiceHeader = t.TrInvoiceHeader,
+        //            ReturnQty = Math.Abs(t.Returned),
+        //            RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
+        //        })
+        //        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+        //        .ToList();
+        //}
+
+        public async IAsyncEnumerable<UnDeliveredViewModel> StreamInvoiceLinesForDeliveryAsync(
+    Guid? invoiceHeader = null,
+    [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            using subContext db = new();
+            await using var db = new subContext();
+
+            var baseQuery = db.TrInvoiceLines
+                .Include(x => x.DcProduct)
+                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+                .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
+                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+                .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+                .AsAsyncEnumerable()
+                .WithCancellation(cancellationToken); // required
+
+            await foreach (var x in baseQuery)
             {
-                var result = db.TrInvoiceLines
-                    .Include(x => x.DcProduct)
-                    .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
-                    //.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
-                    .OrderBy(x => x.CreatedDate)
-                    .Select(x => new UnDeliveredViewModel
+                var asd = x.TrInvoiceHeader.DocumentNumber;
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var returned = await db.TrInvoiceLines
+                    .Where(y => y.RelatedLineId == x.InvoiceLineId &&
+                                new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                    .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
+
+                var original = x.QtyIn - x.QtyOut;
+
+                if (Math.Abs(original) - Math.Abs(returned) > 0)
+                {
+                    yield return new UnDeliveredViewModel
                     {
                         TrInvoiceLine = x,
                         TrInvoiceHeader = x.TrInvoiceHeader,
-                        ReturnQty = db.TrInvoiceLines
-                                     .Where(y => y.RelatedLineId == x.InvoiceLineId &&
-                                                 new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-                                     .Sum(y => Math.Abs(y.QtyIn - y.QtyOut)),
-
-                        RemainingQty = Math.Abs(x.QtyIn - x.QtyOut) - db.TrInvoiceLines
-                                     .Where(y => y.RelatedLineId == x.InvoiceLineId &&
-                                                 new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-                                     .Sum(y => Math.Abs(y.QtyIn - y.QtyOut))
-                    })
-                    .ToList();
-
-                return result;
+                        ReturnQty = Math.Abs(returned),
+                        RemainingQty = Math.Abs(original) - Math.Abs(returned)
+                    };
+                }
             }
         }
+
+
 
         public List<TrPriceListLine> SelectPriceListLines(Guid priceListHeaderId)
         {
@@ -588,6 +684,7 @@ namespace Foxoft
             using subContext db = new();
 
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Include(x => x.DcProduct)
                                     .FirstOrDefault(x => x.InvoiceLineId == invoiceLineId);
         }
 
