@@ -39,6 +39,20 @@ namespace Foxoft
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaybill));
             lC_Root = new DevExpress.XtraLayout.LayoutControl();
+            dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
+            DocumentNumberTextEdit = new DevExpress.XtraEditors.TextEdit();
+            trInvoiceHeadersBindingSource = new BindingSource(components);
+            DocumentDateDateEdit = new DevExpress.XtraEditors.DateEdit();
+            DescriptionTextEdit = new DevExpress.XtraEditors.TextEdit();
+            CurrAccCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            StoreCodeTextEdit = new DevExpress.XtraEditors.TextEdit();
+            Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            ItemForDocumentNumber = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDocumentDate = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForDescription = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForCurrAccCode = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForStoreCode = new DevExpress.XtraLayout.LayoutControlItem();
             gC_DeliveryInvoiceLine = new DevExpress.XtraGrid.GridControl();
             gV_ReturnInvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_RInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -87,9 +101,26 @@ namespace Foxoft
             lCI_InvoiceLine = new DevExpress.XtraLayout.LayoutControlItem();
             lCG_ReturnInvoiceLine = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
+            dataLayoutControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DocumentNumberTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties.CalendarTimeProperties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)CurrAccCodeTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StoreCodeTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Root).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForStoreCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_DeliveryInvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_ReturnInvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).BeginInit();
@@ -104,11 +135,13 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
             SuspendLayout();
             // 
             // lC_Root
             // 
+            lC_Root.Controls.Add(dataLayoutControl1);
             lC_Root.Controls.Add(gC_DeliveryInvoiceLine);
             lC_Root.Controls.Add(gC_InvoiceLine);
             lC_Root.Controls.Add(btn_Ok);
@@ -122,12 +155,139 @@ namespace Foxoft
             lC_Root.TabIndex = 0;
             lC_Root.Text = "layoutControl1";
             // 
+            // dataLayoutControl1
+            // 
+            dataLayoutControl1.Controls.Add(DocumentNumberTextEdit);
+            dataLayoutControl1.Controls.Add(DocumentDateDateEdit);
+            dataLayoutControl1.Controls.Add(DescriptionTextEdit);
+            dataLayoutControl1.Controls.Add(CurrAccCodeTextEdit);
+            dataLayoutControl1.Controls.Add(StoreCodeTextEdit);
+            dataLayoutControl1.DataSource = trInvoiceHeadersBindingSource;
+            dataLayoutControl1.Location = new Point(24, 364);
+            dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.Root = Root;
+            dataLayoutControl1.Size = new Size(1001, 92);
+            dataLayoutControl1.TabIndex = 5;
+            dataLayoutControl1.Text = "dataLayoutControl1";
+            // 
+            // DocumentNumberTextEdit
+            // 
+            DocumentNumberTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentNumber", true));
+            DocumentNumberTextEdit.Location = new Point(102, 12);
+            DocumentNumberTextEdit.Name = "DocumentNumberTextEdit";
+            DocumentNumberTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            DocumentNumberTextEdit.Size = new Size(396, 20);
+            DocumentNumberTextEdit.StyleController = dataLayoutControl1;
+            DocumentNumberTextEdit.TabIndex = 4;
+            // 
+            // trInvoiceHeadersBindingSource
+            // 
+            trInvoiceHeadersBindingSource.DataSource = typeof(TrInvoiceHeader);
+            // 
+            // DocumentDateDateEdit
+            // 
+            DocumentDateDateEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "DocumentDate", true));
+            DocumentDateDateEdit.EditValue = null;
+            DocumentDateDateEdit.Location = new Point(102, 36);
+            DocumentDateDateEdit.Name = "DocumentDateDateEdit";
+            DocumentDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DocumentDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            DocumentDateDateEdit.Size = new Size(396, 20);
+            DocumentDateDateEdit.StyleController = dataLayoutControl1;
+            DocumentDateDateEdit.TabIndex = 5;
+            // 
+            // DescriptionTextEdit
+            // 
+            DescriptionTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
+            DescriptionTextEdit.Location = new Point(102, 60);
+            DescriptionTextEdit.Name = "DescriptionTextEdit";
+            DescriptionTextEdit.Size = new Size(887, 20);
+            DescriptionTextEdit.StyleController = dataLayoutControl1;
+            DescriptionTextEdit.TabIndex = 6;
+            // 
+            // CurrAccCodeTextEdit
+            // 
+            CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "CurrAccCode", true));
+            CurrAccCodeTextEdit.Location = new Point(592, 12);
+            CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
+            CurrAccCodeTextEdit.Size = new Size(397, 20);
+            CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
+            CurrAccCodeTextEdit.TabIndex = 7;
+            // 
+            // StoreCodeTextEdit
+            // 
+            StoreCodeTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "StoreCode", true));
+            StoreCodeTextEdit.Location = new Point(592, 36);
+            StoreCodeTextEdit.Name = "StoreCodeTextEdit";
+            StoreCodeTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
+            StoreCodeTextEdit.Size = new Size(397, 20);
+            StoreCodeTextEdit.StyleController = dataLayoutControl1;
+            StoreCodeTextEdit.TabIndex = 8;
+            // 
+            // Root
+            // 
+            Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            Root.GroupBordersVisible = false;
+            Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
+            Root.Name = "Root";
+            Root.Size = new Size(1001, 92);
+            Root.TextVisible = false;
+            // 
+            // layoutControlGroup1
+            // 
+            layoutControlGroup1.AllowDrawBackground = false;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForDocumentNumber, ItemForDocumentDate, ItemForDescription, ItemForCurrAccCode, ItemForStoreCode });
+            layoutControlGroup1.Location = new Point(0, 0);
+            layoutControlGroup1.Name = "autoGeneratedGroup0";
+            layoutControlGroup1.Size = new Size(981, 72);
+            // 
+            // ItemForDocumentNumber
+            // 
+            ItemForDocumentNumber.Control = DocumentNumberTextEdit;
+            ItemForDocumentNumber.Location = new Point(0, 0);
+            ItemForDocumentNumber.Name = "ItemForDocumentNumber";
+            ItemForDocumentNumber.Size = new Size(490, 24);
+            ItemForDocumentNumber.TextSize = new Size(78, 13);
+            // 
+            // ItemForDocumentDate
+            // 
+            ItemForDocumentDate.Control = DocumentDateDateEdit;
+            ItemForDocumentDate.Location = new Point(0, 24);
+            ItemForDocumentDate.Name = "ItemForDocumentDate";
+            ItemForDocumentDate.Size = new Size(490, 24);
+            ItemForDocumentDate.TextSize = new Size(78, 13);
+            // 
+            // ItemForDescription
+            // 
+            ItemForDescription.Control = DescriptionTextEdit;
+            ItemForDescription.Location = new Point(0, 48);
+            ItemForDescription.Name = "ItemForDescription";
+            ItemForDescription.Size = new Size(981, 24);
+            ItemForDescription.TextSize = new Size(78, 13);
+            // 
+            // ItemForCurrAccCode
+            // 
+            ItemForCurrAccCode.Control = CurrAccCodeTextEdit;
+            ItemForCurrAccCode.Location = new Point(490, 0);
+            ItemForCurrAccCode.Name = "ItemForCurrAccCode";
+            ItemForCurrAccCode.Size = new Size(491, 24);
+            ItemForCurrAccCode.TextSize = new Size(78, 13);
+            // 
+            // ItemForStoreCode
+            // 
+            ItemForStoreCode.Control = StoreCodeTextEdit;
+            ItemForStoreCode.Location = new Point(490, 24);
+            ItemForStoreCode.Name = "ItemForStoreCode";
+            ItemForStoreCode.Size = new Size(491, 24);
+            ItemForStoreCode.TextSize = new Size(78, 13);
+            // 
             // gC_DeliveryInvoiceLine
             // 
-            gC_DeliveryInvoiceLine.Location = new Point(24, 431);
+            gC_DeliveryInvoiceLine.Location = new Point(24, 460);
             gC_DeliveryInvoiceLine.MainView = gV_ReturnInvoiceLine;
             gC_DeliveryInvoiceLine.Name = "gC_DeliveryInvoiceLine";
-            gC_DeliveryInvoiceLine.Size = new Size(1001, 168);
+            gC_DeliveryInvoiceLine.Size = new Size(1001, 139);
             gC_DeliveryInvoiceLine.TabIndex = 2;
             gC_DeliveryInvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ReturnInvoiceLine });
             // 
@@ -234,7 +394,7 @@ namespace Foxoft
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
             gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtn_AddWaybill });
-            gC_InvoiceLine.Size = new Size(1001, 327);
+            gC_InvoiceLine.Size = new Size(1001, 260);
             gC_InvoiceLine.TabIndex = 0;
             gC_InvoiceLine.Tag = "Empty";
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
@@ -495,7 +655,7 @@ namespace Foxoft
             lCG_InvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_InvoiceLine });
             lCG_InvoiceLine.Location = new Point(0, 0);
             lCG_InvoiceLine.Name = "lCG_InvoiceLine";
-            lCG_InvoiceLine.Size = new Size(1029, 376);
+            lCG_InvoiceLine.Size = new Size(1029, 309);
             lCG_InvoiceLine.Text = "Məhsul";
             // 
             // lCI_InvoiceLine
@@ -503,29 +663,37 @@ namespace Foxoft
             lCI_InvoiceLine.Control = gC_InvoiceLine;
             lCI_InvoiceLine.Location = new Point(0, 0);
             lCI_InvoiceLine.Name = "lCI_InvoiceLine";
-            lCI_InvoiceLine.Size = new Size(1005, 331);
+            lCI_InvoiceLine.Size = new Size(1005, 264);
             lCI_InvoiceLine.TextVisible = false;
             // 
             // lCG_ReturnInvoiceLine
             // 
             lCG_ReturnInvoiceLine.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            lCG_ReturnInvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem1 });
-            lCG_ReturnInvoiceLine.Location = new Point(0, 386);
+            lCG_ReturnInvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1 });
+            lCG_ReturnInvoiceLine.Location = new Point(0, 319);
             lCG_ReturnInvoiceLine.Name = "lCG_ReturnInvoiceLine";
-            lCG_ReturnInvoiceLine.Size = new Size(1029, 217);
+            lCG_ReturnInvoiceLine.Size = new Size(1029, 284);
             lCG_ReturnInvoiceLine.Text = "Geri Qaytarma";
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = gC_DeliveryInvoiceLine;
-            layoutControlItem1.Location = new Point(0, 0);
+            layoutControlItem1.Location = new Point(0, 96);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(1005, 172);
+            layoutControlItem1.Size = new Size(1005, 143);
             layoutControlItem1.TextVisible = false;
+            // 
+            // layoutControlItem2
+            // 
+            layoutControlItem2.Control = dataLayoutControl1;
+            layoutControlItem2.Location = new Point(0, 0);
+            layoutControlItem2.Name = "layoutControlItem2";
+            layoutControlItem2.Size = new Size(1005, 96);
+            layoutControlItem2.TextVisible = false;
             // 
             // splitterItem1
             // 
-            splitterItem1.Location = new Point(0, 376);
+            splitterItem1.Location = new Point(0, 309);
             splitterItem1.Name = "splitterItem1";
             splitterItem1.Size = new Size(1029, 10);
             // 
@@ -540,6 +708,22 @@ namespace Foxoft
             Load += FormDelivery_Load;
             ((System.ComponentModel.ISupportInitialize)lC_Root).EndInit();
             lC_Root.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).EndInit();
+            dataLayoutControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)DocumentNumberTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trInvoiceHeadersBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties.CalendarTimeProperties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DocumentDateDateEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DescriptionTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)CurrAccCodeTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StoreCodeTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Root).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentNumber).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDocumentDate).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForDescription).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForCurrAccCode).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForStoreCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)gC_DeliveryInvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_ReturnInvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)gC_InvoiceLine).EndInit();
@@ -554,6 +738,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCI_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
             ResumeLayout(false);
         }
@@ -610,5 +795,20 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;
         private DevExpress.XtraGrid.Columns.GridColumn col_DocumentDate;
         private DevExpress.XtraGrid.Columns.GridColumn col_RProductDesc;
+        private DevExpress.XtraDataLayout.DataLayoutControl dataLayoutControl1;
+        private BindingSource trInvoiceHeadersBindingSource;
+        private DevExpress.XtraLayout.LayoutControlGroup Root;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+        private DevExpress.XtraEditors.TextEdit DocumentNumberTextEdit;
+        private DevExpress.XtraEditors.DateEdit DocumentDateDateEdit;
+        private DevExpress.XtraEditors.TextEdit DescriptionTextEdit;
+        private DevExpress.XtraEditors.TextEdit CurrAccCodeTextEdit;
+        private DevExpress.XtraEditors.TextEdit StoreCodeTextEdit;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentNumber;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDocumentDate;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForStoreCode;
     }
 }

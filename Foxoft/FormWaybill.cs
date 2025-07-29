@@ -40,6 +40,17 @@ namespace Foxoft
             //LoadInvoiceLinesAsync();
 
             gV_InvoiceLine.BestFitColumns();
+
+            //Foxoft.Models.subContext dbContext = new Foxoft.Models.subContext();
+
+            //dbContext.TrInvoiceHeaders.LoadAsync().ContinueWith(loadTask =>
+            //{
+
+            //    trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+            //}, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+
+            //dataLayoutControl1.BestFit();
+            //dataLayoutControl1.Size = dataLayoutControl1.PreferredSize;
         }
 
         public FormWaybill(string processCode)
@@ -223,6 +234,8 @@ namespace Foxoft
                             deliveryInvoHeader.IsMainTF = true;
 
                             efMethods.InsertEntity<TrInvoiceHeader>(deliveryInvoHeader);
+
+                            trInvoiceHeadersBindingSource.DataSource = efMethods.SelectEntityById<TrInvoiceHeader>(unDeliveredViewModel.TrInvoiceHeader.InvoiceHeaderId);
                         }
 
                         if (!efMethods.WaybillExistByInvoiceLine(invoiceLineID))
