@@ -50,7 +50,7 @@ namespace Foxoft
             if (efMethods.EntityExists<DcCurrAcc>(txtEdit_CurrAccCode.Text))
                 efMethods.UpdateEntity(DcCurrAcc);
             else
-                efMethods.InsertEntity<DcCurrAcc>(DcCurrAcc);
+                efMethods.InsertEntity(DcCurrAcc);
 
             DialogResult = DialogResult.OK;
         }

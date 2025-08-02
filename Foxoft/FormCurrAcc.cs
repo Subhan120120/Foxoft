@@ -140,7 +140,7 @@ namespace Foxoft
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
                 if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if doesnt exist
-                    efMethods.InsertEntity<DcCurrAcc>(dcCurrAcc);
+                    efMethods.InsertEntity(dcCurrAcc);
                 else
                     dbContext.SaveChanges();
 

@@ -190,7 +190,7 @@ namespace Foxoft
             {
                 if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcWarehouse.WarehouseDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    efMethods.DeleteEntity<DcWarehouse>(dcWarehouse);
+                    efMethods.DeleteEntity(dcWarehouse);
 
                     LoadWarehouses();
                 }

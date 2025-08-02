@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraBars.Ribbon;
+﻿using DevExpress.Utils.Diagnostics;
+using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Columns;
@@ -26,6 +27,7 @@ namespace Foxoft
 
 
         EfMethods efMethods = new();
+        subContext dbContext = new();
         BindingList<UnDeliveredViewModel> liveList = new();
 
 
@@ -74,6 +76,18 @@ namespace Foxoft
         private void ClearControls()
         {
             deliveryInvoiceHeaderId = Guid.NewGuid();
+            Guid InvoiceHeaderId = Guid.NewGuid();
+
+            dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
+                                      .Include(x => x.DcCurrAcc)
+                                      .Include(x => x.TrInstallment)
+                                      .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
+                                      .Load();
+
+            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
+
+            deliveryInvoHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
+
             //unDeliveredViewModel = null;
             //gC_InvoiceLine.DataSource = null;
             gC_DeliveryInvoiceLine.DataSource = null;
@@ -211,80 +225,79 @@ namespace Foxoft
             Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
             decimal maxDelivery = (decimal)(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
 
-            if (maxDelivery > 0)
+            if (!(maxDelivery > 0))
             {
-                using (FormQty formQty = new(maxDelivery))
+                XtraMessageBox.Show("Təhvil edilə biləcək miqdar yoxdur");
+                return;
+            }
+
+            using (FormQty formQty = new(maxDelivery))
+            {
+                if (formQty.ShowDialog(this) == DialogResult.OK)
                 {
-                    if (formQty.ShowDialog(this) == DialogResult.OK)
+                    if (!efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId)) //if invoiceHeader doesnt exist
                     {
-                        if (!efMethods.EntityExists<TrInvoiceHeader>(deliveryInvoiceHeaderId)) //if invoiceHeader doesnt exist
-                        {
-                            string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
+                        string NewDocNum = efMethods.GetNextDocNum(true, processCode, "DocumentNumber", "TrInvoiceHeaders", 6);
 
-                            deliveryInvoHeader = new();
-                            deliveryInvoHeader.InvoiceHeaderId = deliveryInvoiceHeaderId;
-                            //deliveryInvoHeader.RelatedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
-                            deliveryInvoHeader.DocumentNumber = NewDocNum;
-                            deliveryInvoHeader.ProcessCode = processCode;
-                            deliveryInvoHeader.CurrAccCode = unDeliveredViewModel.TrInvoiceHeader.CurrAccCode;
-                            deliveryInvoHeader.OfficeCode = Authorization.OfficeCode;
-                            deliveryInvoHeader.StoreCode = Authorization.StoreCode;
-                            deliveryInvoHeader.CreatedUserName = Authorization.CurrAccCode;
-                            deliveryInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
-                            deliveryInvoHeader.IsMainTF = true;
+                        deliveryInvoHeader = new();
+                        deliveryInvoHeader.InvoiceHeaderId = deliveryInvoiceHeaderId;
+                        //deliveryInvoHeader.RelatedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
+                        deliveryInvoHeader.DocumentNumber = NewDocNum;
+                        deliveryInvoHeader.ProcessCode = processCode;
+                        deliveryInvoHeader.CurrAccCode = unDeliveredViewModel.TrInvoiceHeader.CurrAccCode;
+                        deliveryInvoHeader.OfficeCode = Authorization.OfficeCode;
+                        deliveryInvoHeader.StoreCode = Authorization.StoreCode;
+                        deliveryInvoHeader.CreatedUserName = Authorization.CurrAccCode;
+                        deliveryInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+                        deliveryInvoHeader.IsMainTF = true;
 
-                            efMethods.InsertEntity<TrInvoiceHeader>(deliveryInvoHeader);
+                        efMethods.InsertEntity(deliveryInvoHeader);
 
-                            trInvoiceHeadersBindingSource.DataSource = efMethods.SelectEntityById<TrInvoiceHeader>(unDeliveredViewModel.TrInvoiceHeader.InvoiceHeaderId);
-                        }
-
-                        if (!efMethods.WaybillExistByInvoiceLine(invoiceLineID))
-                        {
-                            TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
-                            TrInvoiceLine deliveryInvoiceLine = new();
-
-                            subContext dbContext = new();
-
-                            deliveryInvoiceLine.InvoiceLineId = Guid.NewGuid();
-                            deliveryInvoiceLine.InvoiceHeaderId = deliveryInvoiceHeaderId;
-                            deliveryInvoiceLine.RelatedLineId = invoiceLineID;
-                            deliveryInvoiceLine.ProductCode = invoiceLine.ProductCode;
-                            deliveryInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
-
-                            if ((bool)CustomExtensions.DirectionIsIn(processCode))
-                                deliveryInvoiceLine.QtyIn = formQty.qty;
-                            else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
-                                deliveryInvoiceLine.QtyOut = formQty.qty;
-
-                            efMethods.InsertEntity(deliveryInvoiceLine);
-
-                            List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
-                            gC_DeliveryInvoiceLine.DataSource = deliveryLines;
-                        }
-                        else
-                            efMethods.UpdateInvoiceLineQtyOut(deliveryInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
-
-
-                        var gridRow = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;
-
-                        if (gridRow != null)
-                        {
-                            gridRow.ReturnQty += formQty.qty;
-                            gridRow.RemainingQty -= formQty.qty;
-
-                            gV_InvoiceLine.RefreshRow(gV_InvoiceLine.FocusedRowHandle);
-                        }
-
-
-                        LoadDataStreamedAsync(unDeliveredViewModel.TrInvoiceHeader.InvoiceHeaderId);
-
-
-                        //gC_InvoiceLine.DataSource = null;
+                        trInvoiceHeadersBindingSource.DataSource = efMethods.SelectEntityById<TrInvoiceHeader>(unDeliveredViewModel.TrInvoiceHeader.InvoiceHeaderId);
                     }
+
+                    if (!efMethods.WaybillExistByInvoiceLine(invoiceLineID))
+                    {
+                        TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
+                        TrInvoiceLine deliveryInvoiceLine = new();
+
+
+                        deliveryInvoiceLine.InvoiceLineId = Guid.NewGuid();
+                        deliveryInvoiceLine.InvoiceHeaderId = deliveryInvoiceHeaderId;
+                        deliveryInvoiceLine.RelatedLineId = invoiceLineID;
+                        deliveryInvoiceLine.ProductCode = invoiceLine.ProductCode;
+                        deliveryInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
+
+                        if ((bool)CustomExtensions.DirectionIsIn(processCode))
+                            deliveryInvoiceLine.QtyIn = formQty.qty;
+                        else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
+                            deliveryInvoiceLine.QtyOut = formQty.qty;
+
+                        efMethods.InsertEntity(deliveryInvoiceLine);
+
+                        List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
+                        gC_DeliveryInvoiceLine.DataSource = deliveryLines;
+                    }
+                    else
+                        efMethods.UpdateInvoiceLineQtyOut(deliveryInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
+
+
+                    var gridRow = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;
+
+                    if (gridRow != null)
+                    {
+                        gridRow.ReturnQty += formQty.qty;
+                        gridRow.RemainingQty -= formQty.qty;
+
+                        gV_InvoiceLine.RefreshRow(gV_InvoiceLine.FocusedRowHandle);
+                    }
+
+
+                    LoadDataStreamedAsync(unDeliveredViewModel.TrInvoiceHeader.InvoiceHeaderId);
+
+                    //gC_InvoiceLine.DataSource = null;
                 }
             }
-            else
-                XtraMessageBox.Show("Təhvil edilə biləcək miqdar yoxdur");
 
         }
     }

@@ -53,7 +53,7 @@ namespace Foxoft
 
                         if (!string.Equals(process.ProcessName, "Foxoft.exe", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            efMethods.DeleteEntity<TrSession>(session);
+                            efMethods.DeleteEntity(session);
                         }
                         else if (string.Equals(session.CurrAccCode, user, StringComparison.InvariantCultureIgnoreCase))
                         {
@@ -63,7 +63,7 @@ namespace Foxoft
                     }
                     catch (ArgumentException)
                     {
-                        efMethods.DeleteEntity<TrSession>(session);
+                        efMethods.DeleteEntity(session);
                     }
                 }
 

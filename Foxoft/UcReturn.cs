@@ -121,7 +121,7 @@ namespace Foxoft
                             returnInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
                             returnInvoHeader.IsMainTF = true;
 
-                            efMethods.InsertEntity<TrInvoiceHeader>(returnInvoHeader);
+                            efMethods.InsertEntity(returnInvoHeader);
                         }
 
                         if (!efMethods.ReturnExistByInvoiceLine(returnInvoiceHeaderId, invoiceLineID))
@@ -157,7 +157,7 @@ namespace Foxoft
                             returnInvoiceLine.NetAmountLoc = formQty.qty * invoiceLine.NetAmountLoc / invoiceLine.Qty * (-1);
                             returnInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
 
-                            efMethods.InsertEntity<TrInvoiceLine>(returnInvoiceLine);
+                            efMethods.InsertEntity(returnInvoiceLine);
 
                             List<TrInvoiceLine> asdas = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
                             gC_ReturnInvoiceLine.DataSource = asdas;

@@ -169,6 +169,7 @@ namespace Foxoft
             dataLayoutControl1.Size = new Size(1001, 92);
             dataLayoutControl1.TabIndex = 5;
             dataLayoutControl1.Text = "dataLayoutControl1";
+            dataLayoutControl1.MaximumSize = new Size(0, 75);
             // 
             // DocumentNumberTextEdit
             // 

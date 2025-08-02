@@ -277,7 +277,7 @@ namespace Foxoft
                 {
                     if (XtraMessageBox.Show("Silmek Isteyirsiz? \n " + dcCurrAcc.CurrAccDesc, "Diqqet", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
-                        efMethods.DeleteEntity<DcCurrAcc>(dcCurrAcc);
+                        efMethods.DeleteEntity(dcCurrAcc);
 
                         LoadCurrAccs();
                     }

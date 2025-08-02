@@ -239,7 +239,7 @@ namespace Foxoft
                     }
 
                     if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
-                        efMethods.InsertEntity<DcReport>(dcReport);
+                        efMethods.InsertEntity(dcReport);
                     else
                         dbContext.SaveChanges();
 

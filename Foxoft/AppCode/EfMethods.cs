@@ -58,22 +58,6 @@ namespace Foxoft
                 return null;
         }
 
-
-        public TrInvoiceLine InsertTrInvoiceLine(TrInvoiceLine entity)
-        {
-            using subContext db = new();
-
-            db.Attach(entity.DcProduct);
-
-            db.TrInvoiceLines.Add(entity);
-            int rowAffected = db.SaveChanges();
-
-            if (rowAffected > 0)
-                return entity;
-            else
-                return null;
-        }
-
         public int UpdateEntity<T>(T entity) where T : class
         {
             using subContext db = new();

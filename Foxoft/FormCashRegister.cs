@@ -104,7 +104,7 @@ namespace Foxoft
                 dcCurrAcc = dcCurrAccsBindingSource.Current as DcCurrAcc;
 
                 if (!efMethods.CurrAccExist(dcCurrAcc.CurrAccCode)) //if invoiceHeader doesnt exist
-                    efMethods.InsertEntity<DcCurrAcc>(dcCurrAcc);
+                    efMethods.InsertEntity(dcCurrAcc);
                 else
                     dbContext.SaveChanges();
                 DialogResult = DialogResult.OK;

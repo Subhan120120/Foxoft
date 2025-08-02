@@ -101,7 +101,7 @@ namespace Foxoft
                 List<DcCompany> comps = efMethods.SelectCompanies();
 
                 if (!comps.Any(x => x.CompanyCode == txtDatabase.Text))
-                    efMethods.InsertEntity<DcCompany>(new DcCompany() { CompanyCode = txtDatabase.Text, CompanyDesc = txtDatabase.Text });
+                    efMethods.InsertEntity(new DcCompany() { CompanyCode = txtDatabase.Text, CompanyDesc = txtDatabase.Text });
 
                 XtraMessageBox.Show("Databaza müvəffəqiyətlə yaradıldı.");
             }

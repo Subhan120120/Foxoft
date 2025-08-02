@@ -160,7 +160,7 @@ namespace Foxoft
                 if (DcHierarchy == null)
                 {
                     DcHierarchy = new() { HierarchyCode = hierarchyCode, HierarchyDesc = "Yeni", HierarchyLevel = treeList1.FocusedNode.Level, HierarchyParentCode = treeList1.FocusedNode.ParentNode?.GetValue(treeListCol_HierarchyCode)?.ToString() };
-                    efMethods.InsertEntity<DcHierarchy>(DcHierarchy);
+                    efMethods.InsertEntity(DcHierarchy);
                 }
 
                 if (!string.IsNullOrEmpty(hierarchyDesc))

@@ -1076,7 +1076,7 @@ namespace Foxoft
                 trPaymentHeader.DocumentNumber = NewDocNum;
                 trPaymentHeader.Description = trInvoiceHeader.Description;
 
-                efMethods.InsertEntity<TrPaymentHeader>(trPaymentHeader);
+                efMethods.InsertEntity(trPaymentHeader);
             }
 
             efMethods.DeletePaymentLinesByPaymentHeader(trPaymentHeader.PaymentHeaderId);
@@ -1093,7 +1093,7 @@ namespace Foxoft
                     trPaymentLine.ExchangeRate = il.ExchangeRate;
                     trPaymentLine.LineDescription = il.LineDescription;
                     trPaymentLine.PaymentLoc = isNegativ ? il.NetAmountLoc * (-1) : il.NetAmountLoc;
-                    efMethods.InsertEntity<TrPaymentLine>(trPaymentLine);
+                    efMethods.InsertEntity(trPaymentLine);
                 }
             }
 
@@ -2454,7 +2454,7 @@ namespace Foxoft
 
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
         {
-            if (trInvoiceHeader is not null && trInvoiceHeader.ProcessCode == "IS")
+            if ( trInvoiceHeader.ProcessCode == "IS" && trInvoiceHeader?.TrInstallment is not null)
                 trInvoiceHeader.TrInstallment.InterestRate = (float)LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
         }
     }

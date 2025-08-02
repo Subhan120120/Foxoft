@@ -364,7 +364,7 @@ namespace Foxoft
                     LUE_ReportCustomization.Refresh();
                 }
 
-                efMethods.DeleteEntity<TrReportCustomization>(selectedEntity);
+                efMethods.DeleteEntity(selectedEntity);
             }
             else
             {
@@ -379,7 +379,7 @@ namespace Foxoft
             selectedEntity.ReportFilter = filterControl_Outer?.FilterCriteria?.ToString();
             selectedEntity.ReportDesignFileName = BtnEdit_DesignFileFullPath.EditValue?.ToString();
 
-            efMethods.UpdateEntity<TrReportCustomization>(selectedEntity);
+            efMethods.UpdateEntity(selectedEntity);
         }
 
         private void LUE_ReportCustomization_EditValueChanged(object sender, EventArgs e)

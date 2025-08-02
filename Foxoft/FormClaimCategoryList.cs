@@ -166,7 +166,7 @@ namespace Foxoft
                     {
                         if (!efMethods.TrRoleClaimExist(RoleCode, dcClaim.ClaimCode))
                         {
-                            efMethods.InsertEntity<TrRoleClaim>(new TrRoleClaim()
+                            efMethods.InsertEntity(new TrRoleClaim()
                             {
                                 RoleCode = RoleCode,
                                 ClaimCode = dcClaim.ClaimCode
@@ -178,7 +178,7 @@ namespace Foxoft
                         TrRoleClaim trRoleClaim = efMethods.SelectRoleClaim(RoleCode, dcClaim.ClaimCode);
 
                         if (trRoleClaim != null)
-                            efMethods.DeleteEntity<TrRoleClaim>(trRoleClaim);
+                            efMethods.DeleteEntity(trRoleClaim);
                     }
                 }
 

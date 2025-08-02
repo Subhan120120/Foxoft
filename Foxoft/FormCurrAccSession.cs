@@ -79,7 +79,7 @@ namespace Foxoft
                     }
                     catch (ArgumentException)
                     {
-                        efMethods.DeleteEntity<TrSession>(trSession);
+                        efMethods.DeleteEntity(trSession);
                     }
                 }
             }
