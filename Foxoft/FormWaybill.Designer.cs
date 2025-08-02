@@ -100,8 +100,8 @@ namespace Foxoft
             lCG_InvoiceLine = new DevExpress.XtraLayout.LayoutControlGroup();
             lCI_InvoiceLine = new DevExpress.XtraLayout.LayoutControlItem();
             lCG_ReturnInvoiceLine = new DevExpress.XtraLayout.LayoutControlGroup();
-            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
@@ -134,8 +134,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCG_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCI_InvoiceLine).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).BeginInit();
             SuspendLayout();
             // 
@@ -164,12 +164,13 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(StoreCodeTextEdit);
             dataLayoutControl1.DataSource = trInvoiceHeadersBindingSource;
             dataLayoutControl1.Location = new Point(24, 364);
+            dataLayoutControl1.MaximumSize = new Size(0, 83);
             dataLayoutControl1.Name = "dataLayoutControl1";
+            dataLayoutControl1.OptionsView.IsReadOnly = DevExpress.Utils.DefaultBoolean.True;
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(1001, 92);
+            dataLayoutControl1.Size = new Size(1001, 75);
             dataLayoutControl1.TabIndex = 5;
             dataLayoutControl1.Text = "dataLayoutControl1";
-            dataLayoutControl1.MaximumSize = new Size(0, 75);
             // 
             // DocumentNumberTextEdit
             // 
@@ -177,7 +178,8 @@ namespace Foxoft
             DocumentNumberTextEdit.Location = new Point(102, 12);
             DocumentNumberTextEdit.Name = "DocumentNumberTextEdit";
             DocumentNumberTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            DocumentNumberTextEdit.Size = new Size(396, 20);
+            DocumentNumberTextEdit.Properties.ReadOnly = true;
+            DocumentNumberTextEdit.Size = new Size(387, 20);
             DocumentNumberTextEdit.StyleController = dataLayoutControl1;
             DocumentNumberTextEdit.TabIndex = 4;
             // 
@@ -193,7 +195,8 @@ namespace Foxoft
             DocumentDateDateEdit.Name = "DocumentDateDateEdit";
             DocumentDateDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             DocumentDateDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            DocumentDateDateEdit.Size = new Size(396, 20);
+            DocumentDateDateEdit.Properties.ReadOnly = true;
+            DocumentDateDateEdit.Size = new Size(387, 20);
             DocumentDateDateEdit.StyleController = dataLayoutControl1;
             DocumentDateDateEdit.TabIndex = 5;
             // 
@@ -202,26 +205,29 @@ namespace Foxoft
             DescriptionTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "Description", true));
             DescriptionTextEdit.Location = new Point(102, 60);
             DescriptionTextEdit.Name = "DescriptionTextEdit";
-            DescriptionTextEdit.Size = new Size(887, 20);
+            DescriptionTextEdit.Properties.ReadOnly = true;
+            DescriptionTextEdit.Size = new Size(870, 20);
             DescriptionTextEdit.StyleController = dataLayoutControl1;
             DescriptionTextEdit.TabIndex = 6;
             // 
             // CurrAccCodeTextEdit
             // 
             CurrAccCodeTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "CurrAccCode", true));
-            CurrAccCodeTextEdit.Location = new Point(592, 12);
+            CurrAccCodeTextEdit.Location = new Point(583, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
-            CurrAccCodeTextEdit.Size = new Size(397, 20);
+            CurrAccCodeTextEdit.Properties.ReadOnly = true;
+            CurrAccCodeTextEdit.Size = new Size(389, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 7;
             // 
             // StoreCodeTextEdit
             // 
             StoreCodeTextEdit.DataBindings.Add(new Binding("EditValue", trInvoiceHeadersBindingSource, "StoreCode", true));
-            StoreCodeTextEdit.Location = new Point(592, 36);
+            StoreCodeTextEdit.Location = new Point(583, 36);
             StoreCodeTextEdit.Name = "StoreCodeTextEdit";
             StoreCodeTextEdit.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.False;
-            StoreCodeTextEdit.Size = new Size(397, 20);
+            StoreCodeTextEdit.Properties.ReadOnly = true;
+            StoreCodeTextEdit.Size = new Size(389, 20);
             StoreCodeTextEdit.StyleController = dataLayoutControl1;
             StoreCodeTextEdit.TabIndex = 8;
             // 
@@ -231,7 +237,7 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new Size(1001, 92);
+            Root.Size = new Size(984, 92);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
@@ -241,14 +247,14 @@ namespace Foxoft
             layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForDocumentNumber, ItemForDocumentDate, ItemForDescription, ItemForCurrAccCode, ItemForStoreCode });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(981, 72);
+            layoutControlGroup1.Size = new Size(964, 72);
             // 
             // ItemForDocumentNumber
             // 
             ItemForDocumentNumber.Control = DocumentNumberTextEdit;
             ItemForDocumentNumber.Location = new Point(0, 0);
             ItemForDocumentNumber.Name = "ItemForDocumentNumber";
-            ItemForDocumentNumber.Size = new Size(490, 24);
+            ItemForDocumentNumber.Size = new Size(481, 24);
             ItemForDocumentNumber.TextSize = new Size(78, 13);
             // 
             // ItemForDocumentDate
@@ -256,7 +262,7 @@ namespace Foxoft
             ItemForDocumentDate.Control = DocumentDateDateEdit;
             ItemForDocumentDate.Location = new Point(0, 24);
             ItemForDocumentDate.Name = "ItemForDocumentDate";
-            ItemForDocumentDate.Size = new Size(490, 24);
+            ItemForDocumentDate.Size = new Size(481, 24);
             ItemForDocumentDate.TextSize = new Size(78, 13);
             // 
             // ItemForDescription
@@ -264,23 +270,23 @@ namespace Foxoft
             ItemForDescription.Control = DescriptionTextEdit;
             ItemForDescription.Location = new Point(0, 48);
             ItemForDescription.Name = "ItemForDescription";
-            ItemForDescription.Size = new Size(981, 24);
+            ItemForDescription.Size = new Size(964, 24);
             ItemForDescription.TextSize = new Size(78, 13);
             // 
             // ItemForCurrAccCode
             // 
             ItemForCurrAccCode.Control = CurrAccCodeTextEdit;
-            ItemForCurrAccCode.Location = new Point(490, 0);
+            ItemForCurrAccCode.Location = new Point(481, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new Size(491, 24);
+            ItemForCurrAccCode.Size = new Size(483, 24);
             ItemForCurrAccCode.TextSize = new Size(78, 13);
             // 
             // ItemForStoreCode
             // 
             ItemForStoreCode.Control = StoreCodeTextEdit;
-            ItemForStoreCode.Location = new Point(490, 24);
+            ItemForStoreCode.Location = new Point(481, 24);
             ItemForStoreCode.Name = "ItemForStoreCode";
-            ItemForStoreCode.Size = new Size(491, 24);
+            ItemForStoreCode.Size = new Size(483, 24);
             ItemForStoreCode.TextSize = new Size(78, 13);
             // 
             // gC_DeliveryInvoiceLine
@@ -676,14 +682,6 @@ namespace Foxoft
             lCG_ReturnInvoiceLine.Size = new Size(1029, 284);
             lCG_ReturnInvoiceLine.Text = "Geri Qaytarma";
             // 
-            // layoutControlItem1
-            // 
-            layoutControlItem1.Control = gC_DeliveryInvoiceLine;
-            layoutControlItem1.Location = new Point(0, 96);
-            layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(1005, 143);
-            layoutControlItem1.TextVisible = false;
-            // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = dataLayoutControl1;
@@ -691,6 +689,14 @@ namespace Foxoft
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(1005, 96);
             layoutControlItem2.TextVisible = false;
+            // 
+            // layoutControlItem1
+            // 
+            layoutControlItem1.Control = gC_DeliveryInvoiceLine;
+            layoutControlItem1.Location = new Point(0, 96);
+            layoutControlItem1.Name = "layoutControlItem1";
+            layoutControlItem1.Size = new Size(1005, 143);
+            layoutControlItem1.TextVisible = false;
             // 
             // splitterItem1
             // 
@@ -738,8 +744,8 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)lCG_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCI_InvoiceLine).EndInit();
             ((System.ComponentModel.ISupportInitialize)lCG_ReturnInvoiceLine).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlItem2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)splitterItem1).EndInit();
             ResumeLayout(false);
         }

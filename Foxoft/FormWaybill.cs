@@ -27,7 +27,6 @@ namespace Foxoft
 
 
         EfMethods efMethods = new();
-        subContext dbContext = new();
         BindingList<UnDeliveredViewModel> liveList = new();
 
 
@@ -76,21 +75,11 @@ namespace Foxoft
         private void ClearControls()
         {
             deliveryInvoiceHeaderId = Guid.NewGuid();
-            Guid InvoiceHeaderId = Guid.NewGuid();
-
-            dbContext.TrInvoiceHeaders.Include(x => x.DcProcess)
-                                      .Include(x => x.DcCurrAcc)
-                                      .Include(x => x.TrInstallment)
-                                      .Where(x => x.InvoiceHeaderId == InvoiceHeaderId)
-                                      .Load();
-
-            trInvoiceHeadersBindingSource.DataSource = dbContext.TrInvoiceHeaders.Local.ToBindingList();
-
-            deliveryInvoHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
             //unDeliveredViewModel = null;
             //gC_InvoiceLine.DataSource = null;
             gC_DeliveryInvoiceLine.DataSource = null;
+            trInvoiceHeadersBindingSource.DataSource = new TrInvoiceHeader() { };
         }
 
 
@@ -171,9 +160,11 @@ namespace Foxoft
                     efMethods.DeleteInvoice(deliveryInvoiceHeaderId);
 
                     ClearControls();
+
+
+                    LoadDataStreamedAsync();
                 }
 
-            LoadDataStreamedAsync();
         }
 
 
