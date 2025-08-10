@@ -239,6 +239,7 @@ namespace Foxoft
                     criteriaOperators[index] = new BinaryOperator(rf.VariableProperty, variableValue, operatorType);
 
                     string filterSql = CriteriaToWhereClauseHelper.GetMsSqlWhere(criteriaOperators[index]);
+                    filterSql = filterSql.Replace("\"", "").Replace("[", "").Replace("]", "");
                     sqlQuery = sqlQuery.Replace(rf.Representative, " and " + filterSql); //filter sorgunun icinde temsilci ile deyisdirilir
 
                     index++;
@@ -455,10 +456,9 @@ namespace Foxoft
 
                         foreach (var item in dcReport.DcReportVariables.Where(x => x.ReportId == Convert.ToInt32(BBI.Name)))
                         {
-                            if (item.VariableProperty == columnName && !string.IsNullOrEmpty(columnValue))
+                            if (!string.IsNullOrEmpty(columnValue) && (item.VariableProperty == columnName || item.VariableProperty.Contains($".{columnName}")))
                             {
                                 item.VariableValue = columnValue;
-                                //efMethods.UpdateDcReportVariable_Value(item.ReportId, item.VariableProperty, item.VariableValue);
                             }
                         }
                     }

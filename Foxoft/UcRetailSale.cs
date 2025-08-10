@@ -491,18 +491,22 @@ namespace Foxoft
         private void gC_Sale_DoubleClick(object sender, EventArgs e)
         {
             if (gV_InvoiceLine.FocusedColumn == col_Qty)
-                using (FormQty formQty = new())
+                using (FormInput formQty = new())
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
-                        //object invoiceLineId = gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.InvoiceLineId));
+                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.QtyOut), formQty.input);
+                        gV_InvoiceLine.RefreshData(); // footer yenilensin deye
+                        SaveInvoice();
+                    }
+                }
 
-                        //efMethods.UpdateInvoiceLineQtyOut(invoiceLineId, formQty.qty);
-
-                        //gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
-                        //gV_InvoiceLine.MoveLast();
-
-                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.QtyOut), formQty.qty);
+            if (gV_InvoiceLine.FocusedColumn == col_Price)
+                using (FormInput formQty = new())
+                {
+                    if (formQty.ShowDialog(this) == DialogResult.OK)
+                    {
+                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.Price), formQty.input);
                         gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         SaveInvoice();
                     }

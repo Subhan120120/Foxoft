@@ -100,7 +100,7 @@ namespace Foxoft
 
             if (maxReturn > 0)
             {
-                using (FormQty formQty = new(maxReturn))
+                using (FormInput formQty = new(maxReturn))
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
                     {
@@ -139,22 +139,22 @@ namespace Foxoft
                             returnInvoiceLine.ProductCost = invoiceLine.ProductCost;
 
                             if ((bool)CustomExtensions.DirectionIsIn(processCode))
-                                returnInvoiceLine.QtyIn = formQty.qty * (-1);
+                                returnInvoiceLine.QtyIn = formQty.input * (-1);
                             else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
-                                returnInvoiceLine.QtyOut = formQty.qty * (-1);
+                                returnInvoiceLine.QtyOut = formQty.input * (-1);
 
                             returnInvoiceLine.UnitOfMeasureId = invoiceLine.UnitOfMeasureId;
                             returnInvoiceLine.Price = invoiceLine.Price;
                             returnInvoiceLine.PriceLoc = invoiceLine.PriceLoc;
                             returnInvoiceLine.CurrencyCode = invoiceLine.CurrencyCode;
-                            returnInvoiceLine.Amount = Convert.ToDecimal(formQty.qty * invoiceLine.Price * (-1));
-                            returnInvoiceLine.AmountLoc = Convert.ToDecimal(formQty.qty * invoiceLine.Price * (-1));
+                            returnInvoiceLine.Amount = Convert.ToDecimal(formQty.input * invoiceLine.Price * (-1));
+                            returnInvoiceLine.AmountLoc = Convert.ToDecimal(formQty.input * invoiceLine.Price * (-1));
                             returnInvoiceLine.PosDiscount = invoiceLine.PosDiscount;
                             returnInvoiceLine.ExchangeRate = invoiceLine.ExchangeRate;
                             returnInvoiceLine.VatRate = invoiceLine.VatRate;
                             returnInvoiceLine.SerialNumberCode = invoiceLine.SerialNumberCode;
-                            returnInvoiceLine.NetAmount = formQty.qty * invoiceLine.NetAmount / invoiceLine.Qty * (-1);
-                            returnInvoiceLine.NetAmountLoc = formQty.qty * invoiceLine.NetAmountLoc / invoiceLine.Qty * (-1);
+                            returnInvoiceLine.NetAmount = formQty.input * invoiceLine.NetAmount / invoiceLine.Qty * (-1);
+                            returnInvoiceLine.NetAmountLoc = formQty.input * invoiceLine.NetAmountLoc / invoiceLine.Qty * (-1);
                             returnInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
 
                             efMethods.InsertEntity(returnInvoiceLine);
@@ -163,7 +163,7 @@ namespace Foxoft
                             gC_ReturnInvoiceLine.DataSource = asdas;
                         }
                         else
-                            efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
+                            efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.input * (-1));
 
                         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
                     }

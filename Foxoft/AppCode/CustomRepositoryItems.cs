@@ -26,21 +26,26 @@ namespace Foxoft
                 e.CustomRepositoryItem = MyRepositoryItem((e.CurrentNode.Property).Name);
             }
         }
-
         private static RepositoryItem MyRepositoryItem(string PropName)
         {
-            return PropName switch
-            {
-                "ProductCode" => MyProductCode(),
-                "CurrAccCode" => MyCurrAccCode(),
-                "StoreCode" => MyStoreCode(),
-                "CashRegisterCode" => MyCashRegisterCode(),
-                "WarehouseCode" => MyWarehouseCode(),
-                "HierarchyCode" => MyHierarchyCode(),
-                "SalesPersonCode" => MySalesPersonCode(),
-                _ => null,
-            };
+            if (PropName == "ProductCode" || PropName.Contains(".ProductCode"))
+                return MyProductCode();
+            if (PropName == "CurrAccCode" || PropName.Contains(".CurrAccCode"))
+                return MyCurrAccCode();
+            if (PropName == "StoreCode" || PropName.Contains(".StoreCode"))
+                return MyStoreCode();
+            if (PropName == "CashRegisterCode" || PropName.Contains(".CashRegisterCode"))
+                return MyCashRegisterCode();
+            if (PropName == "WarehouseCode" || PropName.Contains(".WarehouseCode"))
+                return MyWarehouseCode();
+            if (PropName == "HierarchyCode" || PropName.Contains(".HierarchyCode"))
+                return MyHierarchyCode();
+            if (PropName == "SalesPersonCode" || PropName.Contains(".SalesPersonCode"))
+                return MySalesPersonCode();
+
+            return null;
         }
+
 
         private static RepositoryItem MyProductCode()
         {

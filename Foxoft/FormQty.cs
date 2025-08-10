@@ -7,12 +7,12 @@ using System.Windows.Forms;
 
 namespace Foxoft
 {
-    public partial class FormQty : XtraForm
+    public partial class FormInput : XtraForm
     {
-        public decimal maxQty { get; set; }
-        public decimal qty { get; set; }
+        public decimal maxInput { get; set; }
+        public decimal input { get; set; }
 
-        public FormQty()
+        public FormInput()
         {
             InitializeComponent();
             AcceptButton = btn_Ok;
@@ -20,24 +20,24 @@ namespace Foxoft
 
             CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
-            txtEdit_Qty.Properties.Mask.Culture = customCulture;
+            txtEdit_Input.Properties.Mask.Culture = customCulture;
         }
 
-        public FormQty(decimal maxQty)
+        public FormInput(decimal maxInput)
             : this()
         {
-            this.maxQty = maxQty;
+            this.maxInput = maxInput;
         }
 
-        private void FormQty_Load(object sender, EventArgs e)
+        private void FormInput_Load(object sender, EventArgs e)
         {
-            txtEdit_Qty.EditValue = maxQty;
+            txtEdit_Input.EditValue = maxInput;
         }
 
-        private void textEditQty_EditValueChanged(object sender, EventArgs e)
+        private void textEditInput_EditValueChanged(object sender, EventArgs e)
         {
-            qty = Convert.ToDecimal(txtEdit_Qty.EditValue);
-            txtEdit_Qty.DoValidate();
+            input = Convert.ToDecimal(txtEdit_Input.EditValue.ToString(), CultureInfo.InvariantCulture);
+            txtEdit_Input.DoValidate();
         }
 
         private void simpleButtonNum_Click(object sender, EventArgs e)
@@ -73,23 +73,23 @@ namespace Foxoft
             DialogResult = DialogResult.Cancel;
         }
 
-        private void textEditQty_Validating(object sender, CancelEventArgs e)
+        private void textEditInput_Validating(object sender, CancelEventArgs e)
         {
             TextEdit textEdit = sender as TextEdit;
             decimal val = Convert.ToDecimal(textEdit.EditValue);
             if (val <= 0)
                 e.Cancel = true;
-            else if (val > maxQty && maxQty != 0)
+            else if (val > maxInput && maxInput != 0)
                 e.Cancel = true;
             else
                 label_Message.Text = "";
         }
 
-        private void textEditQty_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
+        private void textEditInput_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
             e.ExceptionMode = ExceptionMode.DisplayError;
             e.WindowCaption = "Diqqət";
-            e.ErrorText = "Dəyər 0 ilə "+ maxQty.ToString() + " arasında olmalıdır";
+            e.ErrorText = "Dəyər 0 ilə " + maxInput.ToString() + " arasında olmalıdır";
             label_Message.Text = e.ErrorText;
         }
     }

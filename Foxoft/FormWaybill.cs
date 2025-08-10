@@ -222,7 +222,7 @@ namespace Foxoft
                 return;
             }
 
-            using (FormQty formQty = new(maxDelivery))
+            using (FormInput formQty = new(maxDelivery))
             {
                 if (formQty.ShowDialog(this) == DialogResult.OK)
                 {
@@ -260,9 +260,9 @@ namespace Foxoft
                         deliveryInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
 
                         if ((bool)CustomExtensions.DirectionIsIn(processCode))
-                            deliveryInvoiceLine.QtyIn = formQty.qty;
+                            deliveryInvoiceLine.QtyIn = formQty.input;
                         else if (!(bool)CustomExtensions.DirectionIsIn(processCode))
-                            deliveryInvoiceLine.QtyOut = formQty.qty;
+                            deliveryInvoiceLine.QtyOut = formQty.input;
 
                         efMethods.InsertEntity(deliveryInvoiceLine);
 
@@ -270,15 +270,15 @@ namespace Foxoft
                         gC_DeliveryInvoiceLine.DataSource = deliveryLines;
                     }
                     else
-                        efMethods.UpdateInvoiceLineQtyOut(deliveryInvoiceHeaderId, invoiceLineID, formQty.qty * (-1));
+                        efMethods.UpdateInvoiceLineQtyOut(deliveryInvoiceHeaderId, invoiceLineID, formQty.input * (-1));
 
 
                     var gridRow = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;
 
                     if (gridRow != null)
                     {
-                        gridRow.ReturnQty += formQty.qty;
-                        gridRow.RemainingQty -= formQty.qty;
+                        gridRow.ReturnQty += formQty.input;
+                        gridRow.RemainingQty -= formQty.input;
 
                         gV_InvoiceLine.RefreshRow(gV_InvoiceLine.FocusedRowHandle);
                     }
