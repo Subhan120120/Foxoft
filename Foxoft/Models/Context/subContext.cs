@@ -870,10 +870,10 @@ namespace Foxoft.Models
             );
 
             modelBuilder.Entity<DcUnitOfMeasure>().HasData(
-                new DcUnitOfMeasure { UnitOfMeasureId = 1, UnitOfMeasureDesc = "ədəd", Level = 0 },
-                new DcUnitOfMeasure { UnitOfMeasureId = 2, UnitOfMeasureDesc = "kq", Level = 0 },
-                new DcUnitOfMeasure { UnitOfMeasureId = 3, UnitOfMeasureDesc = "metr", Level = 0 },
-                new DcUnitOfMeasure { UnitOfMeasureId = 4, UnitOfMeasureDesc = "litr", Level = 0 }
+                new DcUnitOfMeasure { UnitOfMeasureId = 1, UnitOfMeasureDesc = "ədəd", ConversionRate = 1, Level = 0 },
+                new DcUnitOfMeasure { UnitOfMeasureId = 2, UnitOfMeasureDesc = "kq", ConversionRate = 1, Level = 0 },
+                new DcUnitOfMeasure { UnitOfMeasureId = 3, UnitOfMeasureDesc = "metr", ConversionRate = 1, Level = 0 },
+                new DcUnitOfMeasure { UnitOfMeasureId = 4, UnitOfMeasureDesc = "litr", ConversionRate = 1, Level = 0 }
             );
 
             modelBuilder.Entity<DcBarcodeType>().HasData(

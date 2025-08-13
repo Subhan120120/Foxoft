@@ -1,9 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
-using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
