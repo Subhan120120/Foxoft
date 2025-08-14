@@ -52,6 +52,9 @@ namespace Foxoft
 
             RegisterEvents();
 
+            this.Width = (int)(Screen.PrimaryScreen.Bounds.Width * 0.9);  // 80% of screen width
+            this.Height = (int)(Screen.PrimaryScreen.Bounds.Height * 0.9); // 80% of screen height
+
             WindowsFormsSettings.FilterCriteriaDisplayStyle = FilterCriteriaDisplayStyle.Text;
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
@@ -108,6 +111,7 @@ namespace Foxoft
         {
             FocusValue(focusedProductCode);
 
+            //this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void RegisterEvents()

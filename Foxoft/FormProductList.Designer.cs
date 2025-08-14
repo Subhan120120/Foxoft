@@ -326,7 +326,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1105, 663);
+            ClientSize = new Size(1105, 500);
             Controls.Add(btnEdit_BarcodeSearch);
             Controls.Add(gC_ProductList);
             Controls.Add(ribbonStatusBar1);

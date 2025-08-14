@@ -898,6 +898,10 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
 
             using FormProductList form = new(productTypeArr, false, productCode);
+            //Rectangle screenArea = Screen.FromControl(this).WorkingArea;
+            //form.Width = (int)(screenArea.Width * 0.9);
+            //form.Height = (int)(screenArea.Height * 0.9);
+            //form.StartPosition = FormStartPosition.CenterScreen;
 
             try
             {
@@ -908,7 +912,7 @@ namespace Foxoft
                     gV_InvoiceLine.SetFocusedRowCellValue(colUnitOfMeasureId, form.dcProduct.DefaultUnitOfMeasureId);
 
                     gV_InvoiceLine.CloseEditor();
-                    gV_InvoiceLine.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+                    gV_InvoiceLine.UpdateCurrentRow();
 
                     gV_InvoiceLine.BestFitColumns();
                     gV_InvoiceLine.FocusedColumn = colQty;
@@ -918,6 +922,7 @@ namespace Foxoft
             {
                 MessageBox.Show(ex.ToString());
             }
+
         }
 
         private void gV_InvoiceLine_RowUpdated(object sender, RowObjectEventArgs e)
