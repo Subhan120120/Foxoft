@@ -164,6 +164,8 @@ namespace Foxoft
             txtEdit_Input.Properties.Appearance.Options.UseTextOptions = true;
             txtEdit_Input.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
             txtEdit_Input.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            txtEdit_Input.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
+            txtEdit_Input.Properties.MaskSettings.Set("mask", "n3");
             txtEdit_Input.Properties.UseMaskAsDisplayFormat = true;
             txtEdit_Input.Size = new Size(279, 32);
             txtEdit_Input.StyleController = lC_Root;

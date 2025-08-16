@@ -15,10 +15,6 @@ namespace Foxoft
             InitializeComponent();
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
-
-            CultureInfo customCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ".";
-            txtEdit_Input.Properties.Mask.Culture = customCulture;
         }
 
         public FormInput(decimal maxInput)
@@ -34,7 +30,8 @@ namespace Foxoft
 
         private void textEditInput_EditValueChanged(object sender, EventArgs e)
         {
-            input = Convert.ToDecimal(txtEdit_Input.EditValue.ToString(), CultureInfo.InvariantCulture);
+            input = Convert.ToDecimal(txtEdit_Input.EditValue, CultureInfo.InvariantCulture);
+
             txtEdit_Input.DoValidate();
         }
 
