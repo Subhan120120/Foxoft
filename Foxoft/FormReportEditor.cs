@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm.Native;
+using DevExpress.Xpo.Helpers;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid;
@@ -7,10 +8,13 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraLayout;
 using DevExpress.XtraTab;
+using DevExpress.XtraTab.ViewInfo;
 using Foxoft.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Data;
+using System.Xml;
 
 namespace Foxoft
 {
@@ -20,6 +24,9 @@ namespace Foxoft
         subContext dbContext = new();
         ReportClass reportClass = new();
         EfMethods efMethods = new();
+
+
+        BindingSource relationColumnBindingSource = new();
 
         public FormReportEditor(int reportId)
         {
@@ -73,7 +80,6 @@ namespace Foxoft
                 LayoutControlGroup LCG = new();
                 LayoutControl LC = new();
                 BindingSource subQueryBindingSource = new();
-                BindingSource relationColumnBindingSource = new();
                 LayoutControlItem LCI_ME = new();
                 LayoutControlItem LCI_GC = new();
                 SplitterItem splitterItem = new();
@@ -112,12 +118,12 @@ namespace Foxoft
 
                 GV.GridControl = GC;
                 GV.OptionsView.ShowGroupPanel = false;
-                GV.Columns.AddRange(new GridColumn[] { colId, colParent, colSub, colSubQueryId });
+                GV.Columns.AddRange(new[] { colId, colParent, colSub, colSubQueryId });
                 GV.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
                 GV.OptionsBehavior.EditingMode = GridEditingMode.Inplace;
                 GV.OptionsNavigation.AutoFocusNewRow = true;
                 GV.OptionsView.NewItemRowPosition = NewItemRowPosition.Bottom;
-                GV.ActiveFilterString = $"[{nameof(TrReportSubQueryRelationColumn.SubQueryId)}] = {subQuery.SubQueryId}"; GV.ActiveFilterString = $"[{nameof(TrReportSubQueryRelationColumn.SubQueryId)}] = {subQuery.SubQueryId}";
+                GV.ActiveFilterString = $"[{nameof(TrReportSubQueryRelationColumn.SubQueryId)}] = {subQuery.SubQueryId}";
                 GV.OptionsView.ShowFilterPanelMode = ShowFilterPanelMode.Never;
                 GV.InitNewRow += (s, e) =>
                 {
@@ -126,10 +132,8 @@ namespace Foxoft
                 GV.KeyDown += (s, e) =>
                 {
                     if (e.KeyCode == Keys.Delete && GV != null && !GV.IsNewItemRow(GV.FocusedRowHandle))
-                    {
                         if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             GV.DeleteSelectedRows();
-                    }
                 };
 
                 LC.Controls.Add(memoEdit);
@@ -201,7 +205,6 @@ namespace Foxoft
             xtraTabControl1.TabPages.Insert(xtraTabControl1.TabPages.Count - 1, newPage);
         }
 
-
         private void ClearControlsAddNew()
         {
             dcReport = dcReportsBindingSource.AddNew() as DcReport;
@@ -225,11 +228,17 @@ namespace Foxoft
                     DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
 
                     DcReport? report = dcReportsBindingSource.Current as DcReport;
-                    ICollection<TrReportSubQuery> subQueries = report.TrReportSubQueries;
+                    var clonedEntity = CustomExtensions.Clone(report);
+                    ICollection<TrReportSubQuery> subQueries = clonedEntity.TrReportSubQueries;
+
+                    TrReportSubQueryRelationColumn[] entities = relationColumnBindingSource.List.OfType<TrReportSubQueryRelationColumn>().ToArray();
 
                     foreach (TrReportSubQuery? subQuery in subQueries)
                     {
                         SqlParameter[] sqlParameters1;
+
+                        subQuery.TrReportSubQueryRelationColumns.Clear();
+                        subQuery.TrReportSubQueryRelationColumns = entities.Where(x => x.SubQueryId == subQuery.SubQueryId).ToList();
 
                         subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1, 1);
 

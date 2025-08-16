@@ -8,6 +8,8 @@ using DevExpress.XtraPrinting;
 using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Foxoft
@@ -239,6 +241,22 @@ namespace Foxoft
                 throw;
             }
 
+        }
+
+        public static T Clone<T>(T source)
+        {
+            if (source == null)
+                return default!;
+
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                PropertyNameCaseInsensitive = true
+            };
+
+            // Serialize and deserialize -> creates a new instance
+            var serialized = JsonSerializer.Serialize(source, options);
+            return JsonSerializer.Deserialize<T>(serialized, options)!;
         }
     }
 }
