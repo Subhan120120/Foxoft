@@ -74,14 +74,16 @@ namespace Foxoft
 
             foreach (TrReportSubQuery? subQuery in subQueries)
             {
+                TextEdit txtEdit = new();
                 MemoEdit memoEdit = new();
                 GridControl GC = new();
                 GridView GV = new();
                 LayoutControlGroup LCG = new();
                 LayoutControl LC = new();
                 BindingSource subQueryBindingSource = new();
-                LayoutControlItem LCI_ME = new();
+                LayoutControlItem LCI_TXTEDIT = new();
                 LayoutControlItem LCI_GC = new();
+                LayoutControlItem LCI_ME = new();
                 SplitterItem splitterItem = new();
                 XtraTabPage xtraTabPage = new();
                 GridColumn? colId = new();
@@ -108,6 +110,12 @@ namespace Foxoft
                 memoEdit.Properties.ScrollBars = ScrollBars.Both;
                 memoEdit.DataBindings.Add("EditValue", subQueryBindingSource, nameof(subQuery.SubQueryText), true, DataSourceUpdateMode.OnPropertyChanged);
                 memoEdit.StyleController = layoutControl1;
+
+                txtEdit.DataBindings.Add("EditValue", subQueryBindingSource, nameof(subQuery.SubQueryName), true, DataSourceUpdateMode.OnPropertyChanged);
+                txtEdit.EditValueChanged += (s, e) =>
+                {
+                    xtraTabPage.Text = txtEdit.EditValue?.ToString();
+                };
 
                 GC.MainView = GV;
                 GC.ViewCollection.Add(GV);
@@ -146,6 +154,9 @@ namespace Foxoft
                 LCI_GC.SizeConstraintsType = SizeConstraintsType.Custom;
                 LCI_GC.MaxSize = new Size(1000, 100);
 
+                LCI_TXTEDIT.Control = txtEdit;
+                LCI_TXTEDIT.Text = "Alt Sorğu Adı";
+
                 LCI_ME.Control = memoEdit;
                 LCI_ME.TextVisible = false;
 
@@ -153,6 +164,7 @@ namespace Foxoft
                 LCG.GroupBordersVisible = false;
                 LCG.TextVisible = false;
 
+                LCG.AddItem(LCI_TXTEDIT);
                 LCG.AddItem(LCI_GC);
                 LCG.AddItem(splitterItem);
                 LCG.AddItem(LCI_ME);
@@ -215,7 +227,6 @@ namespace Foxoft
         private void btn_Ok_Click(object sender, EventArgs e)
         {
             EfMethods efMethods = new();
-            AdoMethods adoMethods = new();
 
             dcReport = dcReportsBindingSource.Current as DcReport;
 
@@ -223,29 +234,7 @@ namespace Foxoft
             {
                 try
                 {
-                    SqlParameter[] sqlParameters;
-                    string query = reportClass.ApplyFilter(dcReport, dcReport.ReportQuery, null, out sqlParameters, 1);
-                    DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
-
-                    DcReport? report = dcReportsBindingSource.Current as DcReport;
-                    var clonedEntity = CustomExtensions.Clone(report);
-                    ICollection<TrReportSubQuery> subQueries = clonedEntity.TrReportSubQueries;
-
-                    TrReportSubQueryRelationColumn[] entities = relationColumnBindingSource.List.OfType<TrReportSubQueryRelationColumn>().ToArray();
-
-                    foreach (TrReportSubQuery? subQuery in subQueries)
-                    {
-                        SqlParameter[] sqlParameters1;
-
-                        subQuery.TrReportSubQueryRelationColumns.Clear();
-                        subQuery.TrReportSubQueryRelationColumns = entities.Where(x => x.SubQueryId == subQuery.SubQueryId).ToList();
-
-                        subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1, 1);
-
-                        subQuery.SubQueryText = this.reportClass.AddRelation(query, subQuery);
-
-                        DataTable dt2 = adoMethods.SqlGetDt(subQuery.SubQueryText, sqlParameters1); // check query is correct 
-                    }
+                    CheckQuery(dcReport);
 
                     if (!efMethods.EntityExists<DcReport>(dcReport.ReportId)) //if doesnt exist
                         efMethods.InsertEntity(dcReport);
@@ -259,6 +248,35 @@ namespace Foxoft
                     MessageBox.Show(ex.Message, "Foxoft Error Code: 1215451 ");
                 }
 
+            }
+        }
+
+        private void CheckQuery(DcReport? dcReport)
+        {
+            AdoMethods adoMethods = new();
+
+            DcReport? clonedEntity = CustomExtensions.Clone(dcReport);
+
+            SqlParameter[] sqlParameters;
+            string query = reportClass.ApplyFilter(clonedEntity, clonedEntity.ReportQuery, null, out sqlParameters, 1);
+            DataTable dt = adoMethods.SqlGetDt(query, sqlParameters); // check query is correct 
+
+            ICollection<TrReportSubQuery> subQueries = clonedEntity.TrReportSubQueries;
+
+            TrReportSubQueryRelationColumn[] entities = relationColumnBindingSource.List.OfType<TrReportSubQueryRelationColumn>().ToArray();
+
+            foreach (TrReportSubQuery? subQuery in subQueries)
+            {
+                SqlParameter[] sqlParameters1;
+
+                subQuery.TrReportSubQueryRelationColumns.Clear();
+                subQuery.TrReportSubQueryRelationColumns = entities.Where(x => x.SubQueryId == subQuery.SubQueryId).ToList();
+
+                subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1, 1);
+
+                subQuery.SubQueryText = this.reportClass.AddRelation(query, subQuery);
+
+                DataTable dt2 = adoMethods.SqlGetDt(subQuery.SubQueryText, sqlParameters1); // check query is correct 
             }
         }
 
