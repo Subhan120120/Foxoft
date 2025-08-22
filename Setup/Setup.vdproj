@@ -15,896 +15,152 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_05E09DC406FEB308B3D4AD486DC9AE2B"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_084871008E944E82B8B1A420B91B49D5"
+        "MsmKey" = "8:_0411C88D74F6427F931FF23FA1C0D2CA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0A74FCE54D5849F198DE6A4F950FECD4"
+        "MsmKey" = "8:_131A765A485C4F409DC46698D4D3069D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0EDF1BB84EED484FA3F35A83C597D49C"
+        "MsmKey" = "8:_134867AA01FA4877956C8DE775A7DF1E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1104B451E3074F5EBF61A9354201D209"
+        "MsmKey" = "8:_155E6F45FFEB4AA9A0BACF33A6435703"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1240B9941F244A619ED73BBB91449341"
+        "MsmKey" = "8:_26678B3B0AC543D0B0D6246F20DF49F9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_15325D733CBD61CB83BF4D9F112B79E5"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_15E5D54B0DCF45E394F1FF6E921C4E45"
+        "MsmKey" = "8:_2CEA75D119204585B818D6ABE37A6851"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_16750B70CAD24524BD9F70F8F10BEE10"
+        "MsmKey" = "8:_4285E2097B4E49BC84B021102D62A4D9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_261D497EF1114948BA9F64C475CF9713"
+        "MsmKey" = "8:_48CF4CADAE394812A6B93B6EB1CD1C98"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_2680BCE354D143DAA4E6B078072650F7"
+        "MsmKey" = "8:_48D27295374F4B16ACAEF8432BA99E44"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_33A94E833AFD4D76B46C2BD255B0BDAF"
+        "MsmKey" = "8:_6CCC57A9B90549B8A120B2DE8E5BA9B6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_33CA6BF10516C670D71982035D22C1EA"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_37F2C49258866967F98ACD81277831D3"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3A631B392B6B433A86C5F4394AC61943"
+        "MsmKey" = "8:_6E5A6DC6D8164046AEEDDCA4E322FE02"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3DEA1B6F5CDC50696CCD69E934AD9E62"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3E0E264E7AA5EA5E258D70F7DFBDEE04"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3EDF01B303AC45B49D6B5CEB8A101AFA"
+        "MsmKey" = "8:_70F95BDBDF2F425F8136C1876061E099"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3EEC2B072347BCE9A39D557B36582D8E"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_43BFCB3DF6A74C669C00255E47DCBC1F"
+        "MsmKey" = "8:_7209B30C2C74467485B45C066D02274F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_44682AB7ED1041F9A9B1B256578D987C"
+        "MsmKey" = "8:_8B8E72A744DA4A0DA88E5CAF0E475E01"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_45F17E2AC7EB4530A8E39C9DCB703275"
+        "MsmKey" = "8:_8C85CAFAB93F4E74B1892E412672F3EF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_475F0AF48C584690B5A10602CA3E485A"
+        "MsmKey" = "8:_933F25D54B934C82A6E1A9C5F789F9BA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4B503E32BFC3466C9AD69B7C6EFAB297"
+        "MsmKey" = "8:_9D79653A54FB407E8F856CA3397939D1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4BD8DDC350E8405A811507A222477BD1"
+        "MsmKey" = "8:_9E2E59E529454750A91EC670FC354C30"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_53D961E270F3467C810734A896398427"
+        "MsmKey" = "8:_A86C95C772D948C7B9A567CE4A56FEB4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_55FEF9C8471842E6AD564366274BAE5E"
+        "MsmKey" = "8:_AEDEDCA7CC424D79B90A0DCBA72FE734"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_57F8AEDC8266450FB757BDCF94D98458"
+        "MsmKey" = "8:_B66FB8C2A9A74DD29BF1AE33CB850E19"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5A394C87D12A4FF5BEA9495A9AFC7118"
+        "MsmKey" = "8:_BBAEB02CBBBD4CDB869312D228C91641"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5CF065B9D6C4606BBF020FE628975DA8"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5F122AFB93A74EFDAD2978F2E6436B75"
+        "MsmKey" = "8:_C922AB86DA8D4DC9B3A3C94B2450F322"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_657D17A001624964BB58286A8DD6F0A5"
+        "MsmKey" = "8:_D5CE1BB7309248879D9DF77811D5EAAA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_66EF437157E04A3691243E628CE3A6FD"
+        "MsmKey" = "8:_F5247B8D0DD44C2CAFB0422BEE4E8FA4"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6A22E1124FA54ABB98B7A4156A485F6E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6FBECE45C261410C92BA2BD1A23D8752"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_71F89DCB6C8FE441DF33AE989E25210D"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_723F1DA26FBA4FBDA5DD9D86DE572900"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_733B43C130FE45BE92C2FA60FFCD77E8"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_73684C35B5974EA8BF001E3268C626EB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_742F5A1FA25C488A8D29A14B679FD275"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_78BD6F93639C48D3939054783EAC4B24"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_81147ABB080745C394205140CD713230"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_87A85BACCDB7402EB9825E0C17ACE7B3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8B0171C1872940BA9A6132720345D5B4"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8D7328E5A7FA4FB4B38CC12422ED794E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8DBDDFB7E22D406BBF0FFAE9890A1FDA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_96B468E8D8EB43A4B0AD43DB1FE6F44D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_981EFBB8623EB8ECE1C53F94FE40A0A3"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9C5056C99B4E4A5BA6CEB43FA2790913"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9EEC7161B5A2417490D7084B923A4681"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9F9A3D704DC041E2AD3D9140D92E1ABE"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A130BEEBA230480291E57C53AA531507"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A27BAA97BD2745609EFF860A4E29141D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A6BCF02580F5AA8A94E5CCF291E39452"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A73048BB2A844F7CA4CCA32770391D3D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A827DDC871294762A5EB246DA18A03ED"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A88518BAB0FF4462B06393420B3E79E6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_ADEED2F4370B4736BB079EF51C2CF1DF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AE2798AA057E41A9AB008BF3E54A86AC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AFB4B88B17CB4F4EABAAEA626F48BA52"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B00E163BF802441F9FF742109612B740"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "OwnerKey" = "8:_9F9A3D704DC041E2AD3D9140D92E1ABE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C83CF3971FCAC8B6799B0465272F2036"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C987D9A84AF9443F8C379902EB798FF3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CEB5F1AACB974214BCD65729FB896BEC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D02CE620734D4463847B389667E0863B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D40C23CC41FDD9ED0C6651D274A90A51"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D418A3A77D8E48BB9DF4B23C75F675E4"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D6D3CC5DEECB565A8F70DF5C373627CC"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D90673DFAAFD4EF086090273F4CAFA7A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DE0D62EF517B498AAFA6C198032886FA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E1FA7A461BDDA3AFC8E83C282F1163EA"
-        "OwnerKey" = "8:_71F89DCB6C8FE441DF33AE989E25210D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E1FA7A461BDDA3AFC8E83C282F1163EA"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E5C13E6485FE468F95DD4ACBA9806B11"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E77D172B82E04C11A542E7ABA6AC8EF3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EBA4BB2351614312A78CF81D1EB6F46A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F6250ADCF1FD4CFBA37F809E2F9AC6C7"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB4AB305B926DBA25A794338EB276D7F"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FB6DF2CF49BC430A8EEEF65F809546F9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8DBDDFB7E22D406BBF0FFAE9890A1FDA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FB6DF2CF49BC430A8EEEF65F809546F9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FB4AB305B926DBA25A794338EB276D7F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F6250ADCF1FD4CFBA37F809E2F9AC6C7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EBA4BB2351614312A78CF81D1EB6F46A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E77D172B82E04C11A542E7ABA6AC8EF3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E1FA7A461BDDA3AFC8E83C282F1163EA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DE0D62EF517B498AAFA6C198032886FA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D90673DFAAFD4EF086090273F4CAFA7A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D6D3CC5DEECB565A8F70DF5C373627CC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D418A3A77D8E48BB9DF4B23C75F675E4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D40C23CC41FDD9ED0C6651D274A90A51"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D02CE620734D4463847B389667E0863B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CEB5F1AACB974214BCD65729FB896BEC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C83CF3971FCAC8B6799B0465272F2036"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C6B7D3902B5965FDC15939B33E838601"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B00E163BF802441F9FF742109612B740"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AFB4B88B17CB4F4EABAAEA626F48BA52"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AE2798AA057E41A9AB008BF3E54A86AC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ADEED2F4370B4736BB079EF51C2CF1DF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A88518BAB0FF4462B06393420B3E79E6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A827DDC871294762A5EB246DA18A03ED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A73048BB2A844F7CA4CCA32770391D3D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A6BCF02580F5AA8A94E5CCF291E39452"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A27BAA97BD2745609EFF860A4E29141D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A130BEEBA230480291E57C53AA531507"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9EEC7161B5A2417490D7084B923A4681"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9C5056C99B4E4A5BA6CEB43FA2790913"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_981EFBB8623EB8ECE1C53F94FE40A0A3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_96B468E8D8EB43A4B0AD43DB1FE6F44D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8D7328E5A7FA4FB4B38CC12422ED794E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8B0171C1872940BA9A6132720345D5B4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_87A85BACCDB7402EB9825E0C17ACE7B3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_78BD6F93639C48D3939054783EAC4B24"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_742F5A1FA25C488A8D29A14B679FD275"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_733B43C130FE45BE92C2FA60FFCD77E8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_723F1DA26FBA4FBDA5DD9D86DE572900"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_71F89DCB6C8FE441DF33AE989E25210D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6FBECE45C261410C92BA2BD1A23D8752"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6A22E1124FA54ABB98B7A4156A485F6E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_66EF437157E04A3691243E628CE3A6FD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_657D17A001624964BB58286A8DD6F0A5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5CF065B9D6C4606BBF020FE628975DA8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_57F8AEDC8266450FB757BDCF94D98458"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_55FEF9C8471842E6AD564366274BAE5E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_53D961E270F3467C810734A896398427"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4BD8DDC350E8405A811507A222477BD1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4B503E32BFC3466C9AD69B7C6EFAB297"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_475F0AF48C584690B5A10602CA3E485A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_45F17E2AC7EB4530A8E39C9DCB703275"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_44682AB7ED1041F9A9B1B256578D987C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_43BFCB3DF6A74C669C00255E47DCBC1F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3EEC2B072347BCE9A39D557B36582D8E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3EDF01B303AC45B49D6B5CEB8A101AFA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3E0E264E7AA5EA5E258D70F7DFBDEE04"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3DEA1B6F5CDC50696CCD69E934AD9E62"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3A631B392B6B433A86C5F4394AC61943"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_37F2C49258866967F98ACD81277831D3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_33CA6BF10516C670D71982035D22C1EA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_33A94E833AFD4D76B46C2BD255B0BDAF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2680BCE354D143DAA4E6B078072650F7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_261D497EF1114948BA9F64C475CF9713"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_16750B70CAD24524BD9F70F8F10BEE10"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_15E5D54B0DCF45E394F1FF6E921C4E45"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_15325D733CBD61CB83BF4D9F112B79E5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1240B9941F244A619ED73BBB91449341"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1104B451E3074F5EBF61A9354201D209"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0EDF1BB84EED484FA3F35A83C597D49C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0A74FCE54D5849F198DE6A4F950FECD4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_05E09DC406FEB308B3D4AD486DC9AE2B"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -1012,71 +268,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_05E09DC406FEB308B3D4AD486DC9AE2B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime.Serialization.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_05E09DC406FEB308B3D4AD486DC9AE2B"
-                    {
-                    "Name" = "8:System.Runtime.Serialization.Primitives.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Runtime.Serialization.Primitives.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_084871008E944E82B8B1A420B91B49D5"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\json resources\\dx-rich.tr.json"
-            "TargetName" = "8:dx-rich.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_99EDF5C4742C46B6A0D4B350C7C6E694"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0A74FCE54D5849F198DE6A4F950FECD4"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0411C88D74F6427F931FF23FA1C0D2CA"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Drawing.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraReports.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_0A74FCE54D5849F198DE6A4F950FECD4"
+                    "_0411C88D74F6427F931FF23FA1C0D2CA"
                     {
-                    "Name" = "8:DevExpress.Drawing.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.XtraReports.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Drawing.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraReports.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1094,20 +299,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0EDF1BB84EED484FA3F35A83C597D49C"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_131A765A485C4F409DC46698D4D3069D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraCharts.v23.1.Wizard.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.DataAccess.v24.2.UI.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_0EDF1BB84EED484FA3F35A83C597D49C"
+                    "_131A765A485C4F409DC46698D4D3069D"
                     {
-                    "Name" = "8:DevExpress.XtraCharts.v23.1.Wizard.resources.dll"
+                    "Name" = "8:DevExpress.DataAccess.v24.2.UI.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraCharts.v23.1.Wizard.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.DataAccess.v24.2.UI.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1125,20 +330,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1104B451E3074F5EBF61A9354201D209"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_134867AA01FA4877956C8DE775A7DF1E"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Mvvm.v23.1.DataModel.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraTreeList.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1104B451E3074F5EBF61A9354201D209"
+                    "_134867AA01FA4877956C8DE775A7DF1E"
                     {
-                    "Name" = "8:DevExpress.Mvvm.v23.1.DataModel.resources.dll"
+                    "Name" = "8:DevExpress.XtraTreeList.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Mvvm.v23.1.DataModel.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraTreeList.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1156,20 +361,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1240B9941F244A619ED73BBB91449341"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_155E6F45FFEB4AA9A0BACF33A6435703"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.ReportServer.v23.1.Localization.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Office.v24.2.Core.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1240B9941F244A619ED73BBB91449341"
+                    "_155E6F45FFEB4AA9A0BACF33A6435703"
                     {
-                    "Name" = "8:DevExpress.ReportServer.v23.1.Localization.resources.dll"
+                    "Name" = "8:DevExpress.Office.v24.2.Core.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.ReportServer.v23.1.Localization.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Office.v24.2.Core.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1187,51 +392,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_15325D733CBD61CB83BF4D9F112B79E5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Diagnostics.Tracing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_15325D733CBD61CB83BF4D9F112B79E5"
-                    {
-                    "Name" = "8:System.Diagnostics.Tracing.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Diagnostics.Tracing.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_15E5D54B0DCF45E394F1FF6E921C4E45"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_26678B3B0AC543D0B0D6246F20DF49F9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraScheduler.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.DataAccess.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_15E5D54B0DCF45E394F1FF6E921C4E45"
+                    "_26678B3B0AC543D0B0D6246F20DF49F9"
                     {
-                    "Name" = "8:DevExpress.XtraScheduler.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.DataAccess.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraScheduler.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.DataAccess.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1249,20 +423,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_16750B70CAD24524BD9F70F8F10BEE10"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2CEA75D119204585B818D6ABE37A6851"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Diagram.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Utils.v24.2.UI.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_16750B70CAD24524BD9F70F8F10BEE10"
+                    "_2CEA75D119204585B818D6ABE37A6851"
                     {
-                    "Name" = "8:DevExpress.Diagram.v23.1.Core.resources.dll"
+                    "Name" = "8:DevExpress.Utils.v24.2.UI.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Diagram.v23.1.Core.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Utils.v24.2.UI.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1280,20 +454,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_261D497EF1114948BA9F64C475CF9713"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4285E2097B4E49BC84B021102D62A4D9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraGauges.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraSpreadsheet.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_261D497EF1114948BA9F64C475CF9713"
+                    "_4285E2097B4E49BC84B021102D62A4D9"
                     {
-                    "Name" = "8:DevExpress.XtraGauges.v23.1.Core.resources.dll"
+                    "Name" = "8:DevExpress.XtraSpreadsheet.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraGauges.v23.1.Core.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraSpreadsheet.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1311,20 +485,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2680BCE354D143DAA4E6B078072650F7"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_48CF4CADAE394812A6B93B6EB1CD1C98"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Sparkline.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraRichEdit.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2680BCE354D143DAA4E6B078072650F7"
+                    "_48CF4CADAE394812A6B93B6EB1CD1C98"
                     {
-                    "Name" = "8:DevExpress.Sparkline.v23.1.Core.resources.dll"
+                    "Name" = "8:DevExpress.XtraRichEdit.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Sparkline.v23.1.Core.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraRichEdit.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1342,20 +516,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_33A94E833AFD4D76B46C2BD255B0BDAF"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_48D27295374F4B16ACAEF8432BA99E44"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Printing.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraGrid.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_33A94E833AFD4D76B46C2BD255B0BDAF"
+                    "_48D27295374F4B16ACAEF8432BA99E44"
                     {
-                    "Name" = "8:DevExpress.Printing.v23.1.Core.resources.dll"
+                    "Name" = "8:DevExpress.XtraGrid.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Printing.v23.1.Core.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraGrid.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1373,82 +547,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_33CA6BF10516C670D71982035D22C1EA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_33CA6BF10516C670D71982035D22C1EA"
-                    {
-                    "Name" = "8:System.Security.Cryptography.Algorithms.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Security.Cryptography.Algorithms.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_37F2C49258866967F98ACD81277831D3"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime.Serialization.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_37F2C49258866967F98ACD81277831D3"
-                    {
-                    "Name" = "8:System.Runtime.Serialization.Xml.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Runtime.Serialization.Xml.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3A631B392B6B433A86C5F4394AC61943"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6E5A6DC6D8164046AEEDDCA4E322FE02"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraScheduler.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Data.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3A631B392B6B433A86C5F4394AC61943"
+                    "_6E5A6DC6D8164046AEEDDCA4E322FE02"
                     {
-                    "Name" = "8:DevExpress.XtraScheduler.v23.1.Core.resources.dll"
+                    "Name" = "8:DevExpress.Data.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraScheduler.v23.1.Core.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Data.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1466,23 +578,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3DEA1B6F5CDC50696CCD69E934AD9E62"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70F95BDBDF2F425F8136C1876061E099"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Security.SecureString, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3DEA1B6F5CDC50696CCD69E934AD9E62"
-                    {
-                    "Name" = "8:System.Security.SecureString.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Security.SecureString.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\Foxoft.deps.json"
+            "TargetName" = "8:Foxoft.deps.json"
             "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
+            "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1494,54 +595,23 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3E0E264E7AA5EA5E258D70F7DFBDEE04"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3E0E264E7AA5EA5E258D70F7DFBDEE04"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.Http.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3EDF01B303AC45B49D6B5CEB8A101AFA"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7209B30C2C74467485B45C066D02274F"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraRichEdit.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraEditors.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3EDF01B303AC45B49D6B5CEB8A101AFA"
+                    "_7209B30C2C74467485B45C066D02274F"
                     {
-                    "Name" = "8:DevExpress.XtraRichEdit.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.XtraEditors.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraRichEdit.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraEditors.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1559,51 +629,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3EEC2B072347BCE9A39D557B36582D8E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Threading.Overlapped, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3EEC2B072347BCE9A39D557B36582D8E"
-                    {
-                    "Name" = "8:System.Threading.Overlapped.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Threading.Overlapped.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_43BFCB3DF6A74C669C00255E47DCBC1F"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8B8E72A744DA4A0DA88E5CAF0E475E01"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Dashboard.v23.1.Win.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Dialogs.v24.2.Core.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_43BFCB3DF6A74C669C00255E47DCBC1F"
+                    "_8B8E72A744DA4A0DA88E5CAF0E475E01"
                     {
-                    "Name" = "8:DevExpress.Dashboard.v23.1.Win.resources.dll"
+                    "Name" = "8:DevExpress.Dialogs.v24.2.Core.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Dashboard.v23.1.Win.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Dialogs.v24.2.Core.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1621,20 +660,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_44682AB7ED1041F9A9B1B256578D987C"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8C85CAFAB93F4E74B1892E412672F3EF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Office.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraVerticalGrid.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_44682AB7ED1041F9A9B1B256578D987C"
+                    "_8C85CAFAB93F4E74B1892E412672F3EF"
                     {
-                    "Name" = "8:DevExpress.Office.v23.1.Core.resources.dll"
+                    "Name" = "8:DevExpress.XtraVerticalGrid.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Office.v23.1.Core.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraVerticalGrid.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1652,20 +691,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_45F17E2AC7EB4530A8E39C9DCB703275"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_933F25D54B934C82A6E1A9C5F789F9BA"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraReports.v23.1.Extensions.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraReports.v24.2.Extensions.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_45F17E2AC7EB4530A8E39C9DCB703275"
+                    "_933F25D54B934C82A6E1A9C5F789F9BA"
                     {
-                    "Name" = "8:DevExpress.XtraReports.v23.1.Extensions.resources.dll"
+                    "Name" = "8:DevExpress.XtraReports.v24.2.Extensions.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraReports.v23.1.Extensions.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraReports.v24.2.Extensions.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1683,20 +722,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_475F0AF48C584690B5A10602CA3E485A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9D79653A54FB407E8F856CA3397939D1"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.DataAccess.v23.1.UI.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Utils.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_475F0AF48C584690B5A10602CA3E485A"
+                    "_9D79653A54FB407E8F856CA3397939D1"
                     {
-                    "Name" = "8:DevExpress.DataAccess.v23.1.UI.resources.dll"
+                    "Name" = "8:DevExpress.Utils.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.DataAccess.v23.1.UI.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Utils.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1714,213 +753,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4B503E32BFC3466C9AD69B7C6EFAB297"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.RichEdit.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_4B503E32BFC3466C9AD69B7C6EFAB297"
-                    {
-                    "Name" = "8:DevExpress.RichEdit.v23.1.Core.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.RichEdit.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4BD8DDC350E8405A811507A222477BD1"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.DataAccess.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_4BD8DDC350E8405A811507A222477BD1"
-                    {
-                    "Name" = "8:DevExpress.DataAccess.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.DataAccess.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_53D961E270F3467C810734A896398427"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Data.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_53D961E270F3467C810734A896398427"
-                    {
-                    "Name" = "8:DevExpress.Data.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Data.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_55FEF9C8471842E6AD564366274BAE5E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraWizard.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_55FEF9C8471842E6AD564366274BAE5E"
-                    {
-                    "Name" = "8:DevExpress.XtraWizard.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraWizard.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_57F8AEDC8266450FB757BDCF94D98458"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Map.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_57F8AEDC8266450FB757BDCF94D98458"
-                    {
-                    "Name" = "8:DevExpress.Map.v23.1.Core.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Map.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5A394C87D12A4FF5BEA9495A9AFC7118"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\json resources\\dx-analytics-core.tr.json"
-            "TargetName" = "8:dx-analytics-core.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_99EDF5C4742C46B6A0D4B350C7C6E694"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5CF065B9D6C4606BBF020FE628975DA8"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.ValueTuple, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_5CF065B9D6C4606BBF020FE628975DA8"
-                    {
-                    "Name" = "8:System.ValueTuple.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.ValueTuple.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5F122AFB93A74EFDAD2978F2E6436B75"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9E2E59E529454750A91EC670FC354C30"
             {
             "SourcePath" = "8:..\\Foxoft\\FoxoftIcon64.ico"
             "TargetName" = "8:FoxoftIcon64.ico"
@@ -1940,20 +773,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_657D17A001624964BB58286A8DD6F0A5"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A86C95C772D948C7B9A567CE4A56FEB4"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraCharts.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Spreadsheet.v24.2.Core.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_657D17A001624964BB58286A8DD6F0A5"
+                    "_A86C95C772D948C7B9A567CE4A56FEB4"
                     {
-                    "Name" = "8:DevExpress.XtraCharts.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.Spreadsheet.v24.2.Core.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraCharts.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Spreadsheet.v24.2.Core.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -1971,20 +804,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_66EF437157E04A3691243E628CE3A6FD"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AEDEDCA7CC424D79B90A0DCBA72FE734"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraScheduler.v23.1.Extensions.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Xpo.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_66EF437157E04A3691243E628CE3A6FD"
+                    "_AEDEDCA7CC424D79B90A0DCBA72FE734"
                     {
-                    "Name" = "8:DevExpress.XtraScheduler.v23.1.Extensions.resources.dll"
+                    "Name" = "8:DevExpress.Xpo.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraScheduler.v23.1.Extensions.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Xpo.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -2002,20 +835,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6A22E1124FA54ABB98B7A4156A485F6E"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B66FB8C2A9A74DD29BF1AE33CB850E19"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraPivotGrid.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.Mvvm.v24.2.DataModel.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_6A22E1124FA54ABB98B7A4156A485F6E"
+                    "_B66FB8C2A9A74DD29BF1AE33CB850E19"
                     {
-                    "Name" = "8:DevExpress.XtraPivotGrid.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.Mvvm.v24.2.DataModel.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraPivotGrid.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Mvvm.v24.2.DataModel.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -2033,20 +866,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6FBECE45C261410C92BA2BD1A23D8752"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BBAEB02CBBBD4CDB869312D228C91641"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraGrid.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraPrinting.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_6FBECE45C261410C92BA2BD1A23D8752"
+                    "_BBAEB02CBBBD4CDB869312D228C91641"
                     {
-                    "Name" = "8:DevExpress.XtraGrid.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.XtraPrinting.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraGrid.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraPrinting.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -2064,51 +897,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_71F89DCB6C8FE441DF33AE989E25210D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.IO.Compression.FileSystem, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_71F89DCB6C8FE441DF33AE989E25210D"
-                    {
-                    "Name" = "8:System.IO.Compression.FileSystem.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.IO.Compression.FileSystem.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_723F1DA26FBA4FBDA5DD9D86DE572900"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C922AB86DA8D4DC9B3A3C94B2450F322"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraVerticalGrid.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraWizard.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_723F1DA26FBA4FBDA5DD9D86DE572900"
+                    "_C922AB86DA8D4DC9B3A3C94B2450F322"
                     {
-                    "Name" = "8:DevExpress.XtraVerticalGrid.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.XtraWizard.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraVerticalGrid.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraWizard.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -2126,20 +928,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_733B43C130FE45BE92C2FA60FFCD77E8"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D5CE1BB7309248879D9DF77811D5EAAA"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraLayout.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraBars.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_733B43C130FE45BE92C2FA60FFCD77E8"
+                    "_D5CE1BB7309248879D9DF77811D5EAAA"
                     {
-                    "Name" = "8:DevExpress.XtraLayout.v23.1.resources.dll"
+                    "Name" = "8:DevExpress.XtraBars.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraLayout.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraBars.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -2157,1165 +959,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_73684C35B5974EA8BF001E3268C626EB"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\json resources\\dx-dashboard.tr.json"
-            "TargetName" = "8:dx-dashboard.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_99EDF5C4742C46B6A0D4B350C7C6E694"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_742F5A1FA25C488A8D29A14B679FD275"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F5247B8D0DD44C2CAFB0422BEE4E8FA4"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Spreadsheet.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DevExpress.XtraLayout.v24.2.resources, Version=24.2.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_742F5A1FA25C488A8D29A14B679FD275"
+                    "_F5247B8D0DD44C2CAFB0422BEE4E8FA4"
                     {
-                    "Name" = "8:DevExpress.Spreadsheet.v23.1.Core.resources.dll"
+                    "Name" = "8:DevExpress.XtraLayout.v24.2.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Spreadsheet.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_78BD6F93639C48D3939054783EAC4B24"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Snap.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_78BD6F93639C48D3939054783EAC4B24"
-                    {
-                    "Name" = "8:DevExpress.Snap.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Snap.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_87A85BACCDB7402EB9825E0C17ACE7B3"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Dashboard.v23.1.Web.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_87A85BACCDB7402EB9825E0C17ACE7B3"
-                    {
-                    "Name" = "8:DevExpress.Dashboard.v23.1.Web.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Dashboard.v23.1.Web.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8B0171C1872940BA9A6132720345D5B4"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Pdf.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8B0171C1872940BA9A6132720345D5B4"
-                    {
-                    "Name" = "8:DevExpress.Pdf.v23.1.Core.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Pdf.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8D7328E5A7FA4FB4B38CC12422ED794E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraPdfViewer.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8D7328E5A7FA4FB4B38CC12422ED794E"
-                    {
-                    "Name" = "8:DevExpress.XtraPdfViewer.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraPdfViewer.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8DBDDFB7E22D406BBF0FFAE9890A1FDA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Snap.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8DBDDFB7E22D406BBF0FFAE9890A1FDA"
-                    {
-                    "Name" = "8:DevExpress.Snap.v23.1.Core.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Snap.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_96B468E8D8EB43A4B0AD43DB1FE6F44D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.EntityFrameworkCore.Security.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_96B468E8D8EB43A4B0AD43DB1FE6F44D"
-                    {
-                    "Name" = "8:DevExpress.EntityFrameworkCore.Security.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.EntityFrameworkCore.Security.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_981EFBB8623EB8ECE1C53F94FE40A0A3"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Sockets, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_981EFBB8623EB8ECE1C53F94FE40A0A3"
-                    {
-                    "Name" = "8:System.Net.Sockets.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.Sockets.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9C5056C99B4E4A5BA6CEB43FA2790913"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraSpreadsheet.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9C5056C99B4E4A5BA6CEB43FA2790913"
-                    {
-                    "Name" = "8:DevExpress.XtraSpreadsheet.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraSpreadsheet.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9EEC7161B5A2417490D7084B923A4681"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraScheduler.v23.1.Reporting.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9EEC7161B5A2417490D7084B923A4681"
-                    {
-                    "Name" = "8:DevExpress.XtraScheduler.v23.1.Reporting.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraScheduler.v23.1.Reporting.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9F9A3D704DC041E2AD3D9140D92E1ABE"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Private.ServiceModel.resources, Version=4.10.2.0, Culture=tr, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9F9A3D704DC041E2AD3D9140D92E1ABE"
-                    {
-                    "Name" = "8:System.Private.ServiceModel.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\System.Private.ServiceModel.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A130BEEBA230480291E57C53AA531507"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraGantt.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A130BEEBA230480291E57C53AA531507"
-                    {
-                    "Name" = "8:DevExpress.XtraGantt.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraGantt.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A27BAA97BD2745609EFF860A4E29141D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraSpellChecker.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A27BAA97BD2745609EFF860A4E29141D"
-                    {
-                    "Name" = "8:DevExpress.XtraSpellChecker.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraSpellChecker.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A6BCF02580F5AA8A94E5CCF291E39452"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Diagnostics.StackTrace, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A6BCF02580F5AA8A94E5CCF291E39452"
-                    {
-                    "Name" = "8:System.Diagnostics.StackTrace.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Diagnostics.StackTrace.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A73048BB2A844F7CA4CCA32770391D3D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraNavBar.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A73048BB2A844F7CA4CCA32770391D3D"
-                    {
-                    "Name" = "8:DevExpress.XtraNavBar.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraNavBar.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A827DDC871294762A5EB246DA18A03ED"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraEditors.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A827DDC871294762A5EB246DA18A03ED"
-                    {
-                    "Name" = "8:DevExpress.XtraEditors.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraEditors.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A88518BAB0FF4462B06393420B3E79E6"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Dashboard.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A88518BAB0FF4462B06393420B3E79E6"
-                    {
-                    "Name" = "8:DevExpress.Dashboard.v23.1.Core.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Dashboard.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ADEED2F4370B4736BB079EF51C2CF1DF"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraBars.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_ADEED2F4370B4736BB079EF51C2CF1DF"
-                    {
-                    "Name" = "8:DevExpress.XtraBars.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraBars.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AE2798AA057E41A9AB008BF3E54A86AC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraGauges.v23.1.Presets.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_AE2798AA057E41A9AB008BF3E54A86AC"
-                    {
-                    "Name" = "8:DevExpress.XtraGauges.v23.1.Presets.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraGauges.v23.1.Presets.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AFB4B88B17CB4F4EABAAEA626F48BA52"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraTreeList.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_AFB4B88B17CB4F4EABAAEA626F48BA52"
-                    {
-                    "Name" = "8:DevExpress.XtraTreeList.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraTreeList.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B00E163BF802441F9FF742109612B740"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.PivotGrid.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B00E163BF802441F9FF742109612B740"
-                    {
-                    "Name" = "8:DevExpress.PivotGrid.v23.1.Core.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.PivotGrid.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C6B7D3902B5965FDC15939B33E838601"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C6B7D3902B5965FDC15939B33E838601"
-                    {
-                    "Name" = "8:netstandard.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:netstandard.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C83CF3971FCAC8B6799B0465272F2036"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C83CF3971FCAC8B6799B0465272F2036"
-                    {
-                    "Name" = "8:System.Runtime.InteropServices.RuntimeInformation.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Runtime.InteropServices.RuntimeInformation.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C987D9A84AF9443F8C379902EB798FF3"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\json resources\\dx-spreadsheet.tr.json"
-            "TargetName" = "8:dx-spreadsheet.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_99EDF5C4742C46B6A0D4B350C7C6E694"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CEB5F1AACB974214BCD65729FB896BEC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Persistent.Base.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_CEB5F1AACB974214BCD65729FB896BEC"
-                    {
-                    "Name" = "8:DevExpress.Persistent.Base.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Persistent.Base.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D02CE620734D4463847B389667E0863B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Charts.Designer.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D02CE620734D4463847B389667E0863B"
-                    {
-                    "Name" = "8:DevExpress.Charts.Designer.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Charts.Designer.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D40C23CC41FDD9ED0C6651D274A90A51"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Globalization.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D40C23CC41FDD9ED0C6651D274A90A51"
-                    {
-                    "Name" = "8:System.Globalization.Extensions.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Globalization.Extensions.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D418A3A77D8E48BB9DF4B23C75F675E4"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Utils.v23.1.UI.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D418A3A77D8E48BB9DF4B23C75F675E4"
-                    {
-                    "Name" = "8:DevExpress.Utils.v23.1.UI.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Utils.v23.1.UI.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D6D3CC5DEECB565A8F70DF5C373627CC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Data.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D6D3CC5DEECB565A8F70DF5C373627CC"
-                    {
-                    "Name" = "8:System.Data.Common.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Data.Common.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D90673DFAAFD4EF086090273F4CAFA7A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraReports.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D90673DFAAFD4EF086090273F4CAFA7A"
-                    {
-                    "Name" = "8:DevExpress.XtraReports.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraReports.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DE0D62EF517B498AAFA6C198032886FA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraReports.v23.1.Web.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_DE0D62EF517B498AAFA6C198032886FA"
-                    {
-                    "Name" = "8:DevExpress.XtraReports.v23.1.Web.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraReports.v23.1.Web.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E1FA7A461BDDA3AFC8E83C282F1163EA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E1FA7A461BDDA3AFC8E83C282F1163EA"
-                    {
-                    "Name" = "8:System.IO.Compression.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.IO.Compression.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E5C13E6485FE468F95DD4ACBA9806B11"
-            {
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\json resources\\dx-reporting.tr.json"
-            "TargetName" = "8:dx-reporting.tr.json"
-            "Tag" = "8:"
-            "Folder" = "8:_99EDF5C4742C46B6A0D4B350C7C6E694"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E77D172B82E04C11A542E7ABA6AC8EF3"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Dialogs.v23.1.Core.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E77D172B82E04C11A542E7ABA6AC8EF3"
-                    {
-                    "Name" = "8:DevExpress.Dialogs.v23.1.Core.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Dialogs.v23.1.Core.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EBA4BB2351614312A78CF81D1EB6F46A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Snap.v23.1.Extensions.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_EBA4BB2351614312A78CF81D1EB6F46A"
-                    {
-                    "Name" = "8:DevExpress.Snap.v23.1.Extensions.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Snap.v23.1.Extensions.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F6250ADCF1FD4CFBA37F809E2F9AC6C7"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.Utils.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F6250ADCF1FD4CFBA37F809E2F9AC6C7"
-                    {
-                    "Name" = "8:DevExpress.Utils.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.Utils.v23.1.resources.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FB4AB305B926DBA25A794338EB276D7F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.Xml.XPath.XDocument, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FB4AB305B926DBA25A794338EB276D7F"
-                    {
-                    "Name" = "8:System.Xml.XPath.XDocument.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Xml.XPath.XDocument.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FB6DF2CF49BC430A8EEEF65F809546F9"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DevExpress.XtraPrinting.v23.1.resources, Version=23.1.0.0, Culture=tr, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FB6DF2CF49BC430A8EEEF65F809546F9"
-                    {
-                    "Name" = "8:DevExpress.XtraPrinting.v23.1.resources.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraPrinting.v23.1.resources.dll"
+            "SourcePath" = "8:..\\Foxoft\\bin\\Debug\\net8.0-windows\\tr\\DevExpress.XtraLayout.v24.2.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3379D1BE04F746E195277C123892B58A"
@@ -3369,17 +1026,6 @@
                     "Property" = "8:_CA4B7799259343BC96F0139A22756A2C"
                         "Folders"
                         {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_99EDF5C4742C46B6A0D4B350C7C6E694"
-                            {
-                            "Name" = "8:json resources"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_54B44AF94CEE42509291B25AF323C19E"
-                                "Folders"
-                                {
-                                }
-                            }
                         }
                     }
                 }
@@ -3412,7 +1058,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Foxoft"
         "ProductCode" = "8:{45CA112D-09DD-478B-AD26-1FA73E8263C8}"
-        "PackageCode" = "8:{ACB00AE3-43F3-452C-8F4D-874C49FB1D07}"
+        "PackageCode" = "8:{74E8DE33-7898-44B1-A763-E9CD18250189}"
         "UpgradeCode" = "8:{F9623061-39E4-403B-99A1-E6554D6C90B4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -3532,7 +1178,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FBD80EEF1C004D24B087D87C0BF01162"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BC8C7331C1394DBF848E87028027366B"
             {
             "Name" = "8:Foxoft"
             "Arguments" = "8:"
@@ -3540,10 +1186,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_81147ABB080745C394205140CD713230"
+            "Target" = "8:_6CCC57A9B90549B8A120B2DE8E5BA9B6"
             "Folder" = "8:_F578FFE419424F16B6122CD11371FAB6"
             "WorkingFolder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
-            "Icon" = "8:_5F122AFB93A74EFDAD2978F2E6436B75"
+            "Icon" = "8:_9E2E59E529454750A91EC670FC354C30"
             "Feature" = "8:"
             }
         }
@@ -3805,7 +1451,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_81147ABB080745C394205140CD713230"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6CCC57A9B90549B8A120B2DE8E5BA9B6"
             {
             "SourcePath" = "8:..\\Foxoft\\obj\\Debug\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"

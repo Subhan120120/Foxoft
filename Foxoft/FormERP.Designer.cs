@@ -30,7 +30,6 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -106,9 +105,9 @@ namespace Foxoft
             accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_Stores = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_Parameters = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_Stores = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemImageComboBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemComboBox1).BeginInit();
@@ -664,6 +663,14 @@ namespace Foxoft
             aCE_CurrAccRole.Text = "İstifadəçilər";
             aCE_CurrAccRole.Click += aCE_CurrAccRole_Click;
             // 
+            // ACE_Stores
+            // 
+            ACE_Stores.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Stores.ImageOptions.SvgImage");
+            ACE_Stores.Name = "ACE_Stores";
+            ACE_Stores.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_Stores.Text = "Mağazalar";
+            ACE_Stores.Click += ACE_Stores_Click;
+            // 
             // accordionControlSeparator2
             // 
             accordionControlSeparator2.Name = "accordionControlSeparator2";
@@ -675,14 +682,6 @@ namespace Foxoft
             ACE_Parameters.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_Parameters.Text = "Parametrlər";
             ACE_Parameters.Click += ACE_Parameters_Click;
-            // 
-            // ACE_Stores
-            // 
-            ACE_Stores.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("accordionControlElement3.ImageOptions.SvgImage");
-            ACE_Stores.Name = "ACE_Stores";
-            ACE_Stores.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_Stores.Text = "Mağazalar";
-            ACE_Stores.Click += ACE_Stores_Click;
             // 
             // FormERP
             // 

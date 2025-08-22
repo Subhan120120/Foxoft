@@ -89,7 +89,6 @@ namespace Foxoft
                 checkEdit_IsReturn.Properties.Appearance.ForeColor = (bool)isReturn ? Color.Red : Color.Empty;
             }
 
-            this.Text = dcProcess.ProcessDesc;
             BEI_PrinterName.EditValue = settingStore.PrinterName;
             lUE_StoreCode.Properties.DataSource = efMethods.SelectStoresIncludeDisabled();
             LUE_InstallmentPlan.Properties.DataSource = efMethods.SelectEntities<DcInstallmentPlan>();
@@ -230,6 +229,8 @@ namespace Foxoft
 
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
+            this.Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
+              
             CalcPaidAmount();
             //CalcInstallmentAmount();
 
@@ -376,6 +377,8 @@ namespace Foxoft
             trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
 
             dcProcess = efMethods.SelectEntityById<DcProcess>(trInvoiceHeader.ProcessCode);
+
+            Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
 
             dbContext.TrInvoiceLines.Include(o => o.DcProduct).ThenInclude(f => f.TrProductFeatures)
                                     .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcProcess)
@@ -2459,7 +2462,7 @@ namespace Foxoft
 
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
         {
-            if ( trInvoiceHeader.ProcessCode == "IS" && trInvoiceHeader?.TrInstallment is not null)
+            if (trInvoiceHeader.ProcessCode == "IS" && trInvoiceHeader?.TrInstallment is not null)
                 trInvoiceHeader.TrInstallment.InterestRate = (float)LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
         }
     }

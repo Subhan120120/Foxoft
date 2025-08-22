@@ -269,7 +269,7 @@ namespace Foxoft
             {
                 SqlParameter[] sqlParameters1;
 
-                subQuery.TrReportSubQueryRelationColumns.Clear();
+                //subQuery.TrReportSubQueryRelationColumns.Clear();
                 subQuery.TrReportSubQueryRelationColumns = entities.Where(x => x.SubQueryId == subQuery.SubQueryId).ToList();
 
                 subQuery.SubQueryText = reportClass.ApplyFilter(dcReport, subQuery.SubQueryText, null, out sqlParameters1, 1);

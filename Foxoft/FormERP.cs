@@ -496,5 +496,10 @@ namespace Foxoft
         {
             ShowExistForm<FormStoreList>();
         }
+
+        private void bBI_MdiChildrenList_Popup(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
