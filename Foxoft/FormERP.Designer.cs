@@ -105,7 +105,7 @@ namespace Foxoft
             accordionControlElement2 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Setting = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_CurrAccRole = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            ACE_Stores = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            ACE_StoreList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator2 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_Parameters = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)parentRibbonControl).BeginInit();
@@ -649,7 +649,7 @@ namespace Foxoft
             // 
             // aCE_Setting
             // 
-            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_Stores, accordionControlSeparator2, ACE_Parameters });
+            aCE_Setting.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { aCE_CurrAccRole, ACE_StoreList, accordionControlSeparator2, ACE_Parameters });
             aCE_Setting.Expanded = true;
             aCE_Setting.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Setting.ImageOptions.SvgImage");
             aCE_Setting.Name = "aCE_Setting";
@@ -665,11 +665,11 @@ namespace Foxoft
             // 
             // ACE_Stores
             // 
-            ACE_Stores.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Stores.ImageOptions.SvgImage");
-            ACE_Stores.Name = "ACE_Stores";
-            ACE_Stores.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            ACE_Stores.Text = "Mağazalar";
-            ACE_Stores.Click += ACE_Stores_Click;
+            ACE_StoreList.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Stores.ImageOptions.SvgImage");
+            ACE_StoreList.Name = "ACE_Stores";
+            ACE_StoreList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            ACE_StoreList.Text = "Mağazalar";
+            ACE_StoreList.Click += ACE_StoreList_Click;
             // 
             // accordionControlSeparator2
             // 
@@ -794,6 +794,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_CurrAccFeatureType;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_ProductFeatureType;
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Parameters;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_Stores;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement ACE_StoreList;
     }
 }

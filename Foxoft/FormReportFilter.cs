@@ -89,7 +89,12 @@ namespace Foxoft
             {
                 BinaryOperatorType operatorType = ConvertOperatorType(rf.VariableOperator);
 
-                object value = Convert.ChangeType(rf.VariableValue, Type.GetType(rf.VariableValueType));
+                Type targetType = Type.GetType(rf.VariableValueType);
+                string rawValue = rf.VariableValue;
+
+                object value = targetType == typeof(Guid)
+                    ? Guid.Parse(rawValue)
+                    : Convert.ChangeType(rawValue, targetType);
 
                 CriteriaOperator op = new BinaryOperator(rf.VariableProperty, value, operatorType);
 

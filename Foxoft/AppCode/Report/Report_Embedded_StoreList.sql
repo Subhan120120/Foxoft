@@ -1,0 +1,21 @@
+﻿
+
+	select StoreCode = DcCurrAccs.CurrAccCode
+	, [Mağaza Adı] = CurrAccDesc
+	, Balance =ISNULL(SUM(CAST(PaymentLoc as money)),0)
+	, PhoneNum
+	, IsVIP
+	, CurrAccTypeCode
+	from 
+	DcCurrAccs 
+	left join  TrPaymentLines on TrPaymentLines.CashRegisterCode = DcCurrAccs.CurrAccCode and PaymentTypeCode = 1
+	where CurrAccTypeCode = 4 and IsDisabled = 0
+		--and DcCurrAccs.IsVIP = 1 
+		--and balance.CurrAccCode = '1403'
+	group by DcCurrAccs.CurrAccCode
+	, CurrAccDesc
+	, PhoneNum
+	, IsVIP
+	, CurrAccTypeCode
+	, CashRegisterCode 
+	order by CurrAccDesc

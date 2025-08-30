@@ -141,7 +141,7 @@ namespace Foxoft
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
             this.bBI_Session.Name = "Session";
             this.ACE_Installments.Name = "Installments";
-            this.ACE_Stores.Name = "StoreList";
+            this.ACE_StoreList.Name = "StoreList";
         }
 
         private void InitializeReports()
@@ -492,7 +492,7 @@ namespace Foxoft
             ShowExistForm<FormAppSetting>();
         }
 
-        private void ACE_Stores_Click(object sender, EventArgs e)
+        private void ACE_StoreList_Click(object sender, EventArgs e)
         {
             ShowExistForm<FormStoreList>();
         }

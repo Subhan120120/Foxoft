@@ -119,25 +119,6 @@ namespace Foxoft
             DateEdit_InstallmentDate.EditValueChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
             LUE_InstallmentPlan.EditValueChanged += trInvoiceHeadersBindingSource_CurrentItemChanged;
             txtEdit_Installment_Commission.Leave += trInvoiceHeadersBindingSource_CurrentItemChanged;
-
-            //foreach (BaseLayoutItem item in dataLayoutControl1.Items)
-            //{
-            //    if (item is LayoutControlItem)
-            //    {
-            //        LayoutControlItem controlItem = item as LayoutControlItem;
-            //        if (controlItem != null)
-            //        {
-            //            if (controlItem.Control is LookUpEdit lookUpEdit)
-            //            {
-            //                lookUpEdit.EditValueChanged += LookUpEdit_EditValueChanged;
-            //            }
-            //            else if (controlItem.Control is BaseEdit baseEdit)
-            //            {
-            //                baseEdit.Leave += Control_Leave;
-            //            }
-            //        }
-            //    }
-            //}
         }
 
         public FormInvoice(string processCode, bool? isReturn, byte[] productTypeArr, Guid? relatedInvoiceId, Guid invoiceHeaderId)
@@ -155,38 +136,6 @@ namespace Foxoft
         private void FormInvoice_Shown(object sender, EventArgs e)
         {
             gC_InvoiceLine.Focus();
-        }
-
-        private void LookUpEdit_EditValueChanged(object? sender, EventArgs e)
-        {
-            //if (sender is LookUpEdit lookUpEdit)
-            //{
-            //    trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
-            //    if (trInvoiceHeader is not null)
-            //    {
-            //        if (lookUpEdit == lUE_StoreCode)
-            //            trInvoiceHeader.StoreCode = lookUpEdit.EditValue?.ToString();
-            //        if (lookUpEdit == lUE_ToWarehouseCode)
-            //            trInvoiceHeader.ToWarehouseCode = lookUpEdit.EditValue?.ToString();
-
-            //        if (dbContext != null
-            //            && dataLayoutControl1.IsValid(out _)
-            //            && Settings.Default.AppSetting.AutoSave
-            //            && gV_InvoiceLine.DataRowCount > 0)
-            //            SaveInvoice();
-            //    }
-            //}
-        }
-
-        private void Control_Leave(object sender, EventArgs e)
-        {
-            //trInvoiceHeader = trInvoiceHeadersBindingSource.Current as TrInvoiceHeader;
-
-            //if (trInvoiceHeader != null && dbContext != null && dataLayoutControl1.IsValid(out _))
-            //    if (Settings.Default.AppSetting.AutoSave)
-            //        if (gV_InvoiceLine.DataRowCount > 0)
-            //            SaveInvoice();
         }
 
         protected override void WndProc(ref Message m)
@@ -429,18 +378,6 @@ namespace Foxoft
             lbl_InvoicePaidTotalSum.Text = Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
         }
 
-        private void CalcInstallmentAmount()
-        {
-            //decimal installmentSum = efMethods.SelectInstallmentsSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
-            //lbl_InstallmentSum.Text = Math.Round(installmentSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
-
-            //decimal InstallmentCommissionsSum = efMethods.SelectInstallmentCommissionsSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
-            //lbl_InstallmentCommissionSum.Text = Math.Round(InstallmentCommissionsSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
-
-            //decimal InstallmentsTotalSum = efMethods.SelectInstallmentsTotalSumByInvoice(trInvoiceHeader.InvoiceHeaderId);
-            //lbl_InstallmentTotalSum.Text = Math.Round(InstallmentsTotalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
-        }
-
         private void ShowPrintCount()
         {
             int printCount = efMethods.SelectEntityById<TrInvoiceHeader>(trInvoiceHeader?.InvoiceHeaderId).PrintCount;
@@ -576,16 +513,6 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CellValueChanged(object sender, CellValueChangedEventArgs e)
         {
-            //if (e.Column == col_ProductCode)
-            //{
-            //    var row = gV_InvoiceLine.GetRow(e.RowHandle) as TrInvoiceLine;
-
-            //    if (row != null)
-            //    {
-            //        row.DcProduct = efMethods.SelectEntityById<DcProduct>(row.ProductCode);
-            //        gV_InvoiceLine.RefreshRow(e.RowHandle); // Refresh to show ProductDesc
-            //    }
-            //}
         }
 
         private void gV_InvoiceLine_ValidateRow(object sender, ValidateRowEventArgs e)
@@ -833,17 +760,6 @@ namespace Foxoft
 
         private void gV_InvoiceLine_DoubleClick(object sender, EventArgs e)
         {
-            #region DXMouseEventArgs ea
-            //DXMouseEventArgs ea = e as DXMouseEventArgs;
-            //GridView view = sender as GridView;
-            //GridHitInfo info = view.CalcHitInfo(ea.Location);
-            //info.Column
-            //if (info.InRow || info.InRowCell)
-            //{
-            //    string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-            //    MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
-            //} 
-            #endregion
         }
 
         void editor_DoubleClick(object sender, EventArgs e)
@@ -1204,8 +1120,6 @@ namespace Foxoft
                 if (formPayment.ShowDialog(this) == DialogResult.OK)
                 {
                     CalcPaidAmount();
-                    //CalcInstallmentAmount();
-                    //efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
                 }
             }
         }
