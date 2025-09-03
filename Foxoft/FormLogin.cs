@@ -9,6 +9,7 @@ using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using System.IO;
 using System.Net.NetworkInformation;
 
 namespace Foxoft
@@ -239,10 +240,33 @@ namespace Foxoft
             //lC_Root.RegisterUserCustomizationForm(typeof(Form1));
         }
 
-        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+        private async  void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormTest formClaimCategoryList = new FormTest();
-            formClaimCategoryList.Show();
+            // Fill your variables (you can also take them from configuration)
+            var TOKEN = "EAAWMnYx6BxYBPa19qH7uteeer8zFHrwagkVtCLtd7NhFpjCSHdYL52O8zlB0m23N68VXm7qpa4xMYefYY8uLTe6bXXmCIRVXEQoTHJQmKouCcq1hjrrB8Ogf0NtAoHKUZCh50Rln8aRw0xffrZAnHkT1aYhQcsF26fVVt2gVL68k5o0mQEDMy3c7ivsP5oCUOePkziqloxpxnHCo7QKCMfpWt7ZC5BoZC53jXl4cNfTiFSu3nQveA6rmrOZCL6wZDZD";
+            var PHONEID = "792567567267494";
+            var TO = "994519678909";
+
+            // Local file path to upload & send
+            var filePath = @"C:\Users\Subhan\Downloads\as.jpg";
+
+            using var wa = new WhatsAppClient(TOKEN, PHONEID);
+
+            // Example 1: you already have a MemoryStream (e.g., from DB or upload)
+            using var ms = new MemoryStream(File.ReadAllBytes(filePath)); // or any existing MemoryStream
+            var messageId = await wa.UploadAndSendImageAsync(TO, ms, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
+            Console.WriteLine($"Sent: {messageId}");
+
+            //// Example 2: PNG bytes → MemoryStream
+            //byte[] pngBytes = await File.ReadAllBytesAsync(@"C:\images\chart.png");
+            //using var msPng = new MemoryStream(pngBytes);
+            //var mediaId = await wa.UploadImageAsync(msPng, "image/png", "chart.png");
+            //await wa.SendImageByIdAsync(TO, mediaId, "PNG via MEDIA_ID");
+
+            //// Option C: send by public URL (no upload)
+            //var msg3 = await wa.SendImageByUrlAsync(TO, "https://example.com/your-image.jpg", "From URL");
+            //Console.WriteLine(msg3);
+
         }
     }
 }

@@ -1373,13 +1373,21 @@ namespace Foxoft
             return ms;
         }
 
-        private void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
+        private async void bBI_Whatsapp_ItemClick(object sender, ItemClickEventArgs e)
         {
             MemoryStream memoryStream = GetInvoiceReportImg();
             Clipboard.SetImage(Image.FromStream(memoryStream));
             string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
             SendWhatsApp(phoneNum, "");
+
+            //var TOKEN = "EAAWMnYx6BxYBPeWngemw2HEm4OwcVVRIQ1lfCgzhuxh8pouWH9pkztl3rbP4HlFa5rt1fky50yTxKM3wHfqZCC6UCKLZABNpZAkY9SKTSCFuWLZBmLBPZAcfn2JdfzhV0ZCZB3Cy5Wj3saTiItSgkLn1sytUWjvZARgGKZCSWiXDClpZC9CZBQkY6aN2kh4NfNlZCtT6x5fCsLQODnfWIDBNbza5NodxBWUYPTGOvmvPl1bLHSTtK3tsHHFQbpPEwa2UiQZDZD";
+            //var PHONEID = "792567567267494";
+
+            //using var wa = new WhatsAppClient(TOKEN, PHONEID);
+
+            //var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
+            //Console.WriteLine($"Sent: {messageId}");
         }
 
         private void SendWhatsApp(string number, string message)

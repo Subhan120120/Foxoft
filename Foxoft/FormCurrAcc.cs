@@ -111,6 +111,7 @@ namespace Foxoft
             string NewDocNum = efMethods.GetNextDocNum(true, "C", "CurrAccCode", "DcCurrAccs", 4);
             dcCurrAcc.CurrAccCode = NewDocNum;
             dcCurrAcc.DataLanguageCode = "AZ";
+            dcCurrAcc.PhoneNum = "+994";
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
             CurrAccDescTextEdit.Select();
@@ -167,6 +168,12 @@ namespace Foxoft
 
         private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)
         {
+            var te = (DevExpress.XtraEditors.TextEdit)sender;
+            var before = te.Text;
+            var after = PhoneNumberFormat.FormatIntlPhone(before);
+            te.Text = after;
+
+
             string inputPhone = Regex.Replace(PhoneNumTextEdit.Text, @"\D", ""); // \D = non-digit characters
 
             if (!string.IsNullOrEmpty(inputPhone))
@@ -176,6 +183,15 @@ namespace Foxoft
                 else
                     dxErrorProvider1.ClearErrors();
             }
+
+        }
+
+        private void PhoneNumTextEdit_EditValueChanged(object sender, EventArgs e)
+        {
+
+
+
+
         }
     }
 }

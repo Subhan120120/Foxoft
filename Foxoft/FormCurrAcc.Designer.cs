@@ -321,15 +321,17 @@ namespace Foxoft
             // PhoneNumTextEdit
             // 
             PhoneNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "PhoneNum", true));
+            PhoneNumTextEdit.EditValue = "+994";
             PhoneNumTextEdit.Location = new Point(134, 189);
             PhoneNumTextEdit.Name = "PhoneNumTextEdit";
-            PhoneNumTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
             PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.RegExpMaskManager));
-            PhoneNumTextEdit.Properties.MaskSettings.Set("MaskManagerSignature", "isOptimistic=False");
-            PhoneNumTextEdit.Properties.MaskSettings.Set("mask", "(\\d{2}[ ][0-9]{3}[ ][0-9]{2}[ ][0-9]{2})| ?");
+            PhoneNumTextEdit.Properties.MaskSettings.Set("allowBlankInput", true);
+            PhoneNumTextEdit.Properties.MaskSettings.Set("mask", "\\+?[1-9]\\d{0,2}([ ]?\\d{2,4}){2,6}");
+            PhoneNumTextEdit.Properties.MaskSettings.Set("showPlaceholders", false);
             PhoneNumTextEdit.Size = new Size(165, 20);
             PhoneNumTextEdit.StyleController = dataLayoutControl1;
             PhoneNumTextEdit.TabIndex = 13;
+            PhoneNumTextEdit.EditValueChanged += PhoneNumTextEdit_EditValueChanged;
             PhoneNumTextEdit.Validating += PhoneNumTextEdit_Validating;
             // 
             // BirthDateDateEdit
@@ -458,7 +460,6 @@ namespace Foxoft
             ItemForIsVip.Name = "ItemForIsVip";
             ItemForIsVip.Size = new Size(281, 24);
             ItemForIsVip.Text = "VIP";
-            ItemForIsVip.TextSize = new Size(0, 0);
             ItemForIsVip.TextVisible = false;
             // 
             // ItemForBonusCardNum
@@ -492,7 +493,6 @@ namespace Foxoft
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new Size(279, 24);
             ItemForIsDisabled.Text = "Qeyri-Aktiv";
-            ItemForIsDisabled.TextSize = new Size(0, 0);
             ItemForIsDisabled.TextVisible = false;
             // 
             // layoutControlGroup2
@@ -614,7 +614,6 @@ namespace Foxoft
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(81, 43);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
@@ -627,17 +626,14 @@ namespace Foxoft
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(80, 43);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.AllowHotTrack = false;
             emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
             emptySpaceItem1.Location = new Point(0, 306);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new Size(423, 43);
-            emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // ItemForCurrAccDesc
             // 
