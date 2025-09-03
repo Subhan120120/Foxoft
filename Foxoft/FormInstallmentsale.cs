@@ -13,6 +13,7 @@ using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports;
 using Foxoft.AppCode;
+using Foxoft.Migrations;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
@@ -30,9 +31,12 @@ namespace Foxoft
         EfMethods efMethods = new();
         TrInstallmentViewModel trInstallmentViewModel;
         DcReport dcReport;
+        ReportClass reportClass;
+        readonly SettingStore settingStore;
 
         public FormInstallmentSale()
         {
+
             InitializeComponent();
 
             ReloadData();
@@ -46,6 +50,11 @@ namespace Foxoft
             col_Buttons.VisibleIndex = gridView1.Columns.Count - 1;
             gridView1.BestFitColumns();
             ApplyConditionalFormatting();
+
+            settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            reportClass = new(settingStore.DesignFileFolder);
+            string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
+            reportClass.AddReports(BSI_Reports, "InstallmentSale", nameof(TrInstallment.InvoiceHeaderId), gridView1, activeFilterStr);
 
             GridLocalizer.Active = new MyGridLocalizer();
         }
@@ -427,6 +436,21 @@ namespace Foxoft
         private void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             ReloadData();
+        }
+
+        private void BBI_QueryEdit_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DcReport dcReport = null;
+
+            dcReport = efMethods.SelectReportByName("Report_Embedded_InstallmentSale");
+
+            if (dcReport is not null)
+            {
+                int id = dcReport.ReportId;
+                FormReportEditor formQueryEditor = new(id);
+                if (formQueryEditor.ShowDialog(this) == DialogResult.OK)
+                    ReloadData();
+            }
         }
     }
 }

@@ -43,9 +43,7 @@ namespace Foxoft
             barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             btn_POS = new DevExpress.XtraEditors.SimpleButton();
             txtEdit_UserName = new DevExpress.XtraEditors.TextEdit();
@@ -137,7 +135,7 @@ namespace Foxoft
             toolbarFormManager1.DockControls.Add(barDockControlLeft);
             toolbarFormManager1.DockControls.Add(barDockControlRight);
             toolbarFormManager1.Form = this;
-            toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barButtonItem1, barButtonItem2, BBI_GetKey, barButtonItem3, barButtonItem4 });
+            toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barButtonItem1, BBI_GetKey, barButtonItem4 });
             toolbarFormManager1.MaxItemId = 5;
             // 
             // barDockControlTop
@@ -179,14 +177,6 @@ namespace Foxoft
             barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
             barButtonItem1.Name = "barButtonItem1";
             // 
-            // barButtonItem2
-            // 
-            barButtonItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            barButtonItem2.Caption = "cap";
-            barButtonItem2.Id = 1;
-            barButtonItem2.Name = "barButtonItem2";
-            barButtonItem2.ItemClick += barButtonItem2_ItemClick;
-            // 
             // BBI_GetKey
             // 
             BBI_GetKey.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
@@ -194,13 +184,6 @@ namespace Foxoft
             BBI_GetKey.Id = 2;
             BBI_GetKey.Name = "BBI_GetKey";
             BBI_GetKey.ItemClick += BBI_GetKey_ItemClick;
-            // 
-            // barButtonItem3
-            // 
-            barButtonItem3.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            barButtonItem3.Caption = "barButtonItem3";
-            barButtonItem3.Id = 3;
-            barButtonItem3.Name = "barButtonItem3";
             // 
             // barButtonItem4
             // 
@@ -292,7 +275,6 @@ namespace Foxoft
             lCI_ERP.Name = "lCI_ERP";
             lCI_ERP.Size = new Size(207, 148);
             lCI_ERP.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            lCI_ERP.TextSize = new Size(0, 0);
             lCI_ERP.TextVisible = false;
             // 
             // lCI_POS
@@ -303,7 +285,6 @@ namespace Foxoft
             lCI_POS.Name = "lCI_POS";
             lCI_POS.Size = new Size(207, 148);
             lCI_POS.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            lCI_POS.TextSize = new Size(0, 0);
             lCI_POS.TextVisible = false;
             // 
             // lCI_UserName
@@ -330,7 +311,6 @@ namespace Foxoft
             lCI_RemindMe.Location = new Point(0, 98);
             lCI_RemindMe.Name = "lCI_RemindMe";
             lCI_RemindMe.Size = new Size(414, 24);
-            lCI_RemindMe.TextSize = new Size(0, 0);
             lCI_RemindMe.TextVisible = false;
             // 
             // layoutControlItem3
@@ -357,7 +337,6 @@ namespace Foxoft
             layoutControlItem2.Location = new Point(336, 0);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(78, 26);
-            layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // toolbarFormControl1
@@ -369,9 +348,7 @@ namespace Foxoft
             toolbarFormControl1.TabIndex = 3;
             toolbarFormControl1.TabStop = false;
             toolbarFormControl1.TitleItemLinks.Add(barButtonItem1);
-            toolbarFormControl1.TitleItemLinks.Add(barButtonItem2);
             toolbarFormControl1.TitleItemLinks.Add(BBI_GetKey);
-            toolbarFormControl1.TitleItemLinks.Add(barButtonItem3);
             toolbarFormControl1.TitleItemLinks.Add(barButtonItem4);
             toolbarFormControl1.ToolbarForm = this;
             // 
@@ -438,7 +415,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.SimpleButton btn_ConStringSave;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.BarButtonItem BBI_GetKey;
         private DevExpress.XtraEditors.LookUpEdit LUE_Terminal;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
@@ -446,7 +422,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
     }
 }

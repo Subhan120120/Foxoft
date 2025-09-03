@@ -514,7 +514,8 @@ namespace Foxoft.Models
                 new DcForm { FormCode = "CurrAccs", FormDesc = "Cari Hesablar" },
                 new DcForm { FormCode = "Products", FormDesc = "Məhsullar" },
                 new DcForm { FormCode = "CashRegisters", FormDesc = "Kassalar" },
-                new DcForm { FormCode = "PaymentDetails", FormDesc = "Payment Details" },
+                new DcForm { FormCode = "PaymentDetails", FormDesc = "Ödəniş" },
+                new DcForm { FormCode = "InstallmentSale", FormDesc = "Kredit Satış" },
                 new DcForm { FormCode = "ERP", FormDesc = "ERP" }
                 );
 
