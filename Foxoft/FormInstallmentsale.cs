@@ -452,5 +452,23 @@ namespace Foxoft
                     ReloadData();
             }
         }
+
+        private void BBI_Filter_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            BarCheckItem clicked = e.Item as BarCheckItem;
+            if (clicked == null) return;
+
+            if (clicked.Checked)
+            {
+                foreach (BarItem item in clicked.Manager.Items)
+                {
+                    if (item is BarCheckItem check && check != clicked && (check.Tag?.ToString() == clicked.Tag?.ToString()))
+                    {
+                        check.Checked = false;
+                    }
+                }
+            }
+
+        }
     }
 }

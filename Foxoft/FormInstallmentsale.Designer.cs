@@ -34,12 +34,12 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInstallmentSale));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             gridControl1 = new DevExpress.XtraGrid.GridControl();
             bindingSourceTrInstallmentSale = new BindingSource(components);
             gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -47,22 +47,21 @@ namespace Foxoft
             col_Buttons = new DevExpress.XtraGrid.Columns.GridColumn();
             colInvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             colMonthlyPayment = new DevExpress.XtraGrid.Columns.GridColumn();
-            ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            ribbonControl1 = new RibbonControl();
             BBI_Refresh = new BarButtonItem();
             BBI_GridOptions = new BarButtonItem();
             BSI_Reports = new BarSubItem();
             BBI_QueryEdit = new BarButtonItem();
-            barButtonGroup1 = new BarButtonGroup();
-            barCheckItem1 = new BarCheckItem();
-            barCheckItem2 = new BarCheckItem();
-            barCheckItem3 = new BarCheckItem();
-            ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            BCI_FilterDay = new BarCheckItem();
+            BBI_FilterWeek = new BarCheckItem();
+            BBI_FilterMonth = new BarCheckItem();
+            ribbonPage1 = new RibbonPage();
+            ribbonPageGroup1 = new RibbonPageGroup();
+            ribbonPageGroup2 = new RibbonPageGroup();
+            ribbonPageGroup3 = new RibbonPageGroup();
+            ribbonPageGroup5 = new RibbonPageGroup();
+            ribbonPage2 = new RibbonPage();
+            ribbonPageGroup4 = new RibbonPageGroup();
             ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceTrInstallmentSale).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
@@ -94,8 +93,8 @@ namespace Foxoft
             // repoBtnEdit_Payment
             // 
             repoBtnEdit_Payment.AutoHeight = false;
-            editorButtonImageOptions3.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions3.SvgImage");
-            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
+            repoBtnEdit_Payment.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
             repoBtnEdit_Payment.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             repoBtnEdit_Payment.Name = "repoBtnEdit_Payment";
             repoBtnEdit_Payment.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -119,11 +118,11 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, barButtonGroup1, barCheckItem1, barCheckItem2, barCheckItem3 });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_Refresh, BBI_GridOptions, BSI_Reports, BBI_QueryEdit, BCI_FilterDay, BBI_FilterWeek, BBI_FilterMonth });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 9;
+            ribbonControl1.MaxItemId = 16;
             ribbonControl1.Name = "ribbonControl1";
-            ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
+            ribbonControl1.Pages.AddRange(new RibbonPage[] { ribbonPage1, ribbonPage2 });
             ribbonControl1.Size = new Size(954, 158);
             // 
             // BBI_Refresh
@@ -157,54 +156,36 @@ namespace Foxoft
             BBI_QueryEdit.Name = "BBI_QueryEdit";
             BBI_QueryEdit.ItemClick += BBI_QueryEdit_ItemClick;
             // 
-            // barButtonGroup1
+            // BCI_FilterDay
             // 
-            barButtonGroup1.Caption = "barButtonGroup1";
-            barButtonGroup1.Id = 5;
-            barButtonGroup1.ItemLinks.Add(barCheckItem1);
-            barButtonGroup1.ItemLinks.Add(barCheckItem2);
-            barButtonGroup1.ItemLinks.Add(barCheckItem3);
-            barButtonGroup1.Name = "barButtonGroup1";
+            BCI_FilterDay.Caption = "Son Gün";
+            BCI_FilterDay.Id = 13;
+            BCI_FilterDay.ImageOptions.Image = (Image)resources.GetObject("BCI_FilterDay.ImageOptions.Image");
+            BCI_FilterDay.ImageOptions.LargeImage = (Image)resources.GetObject("BCI_FilterDay.ImageOptions.LargeImage");
+            BCI_FilterDay.Name = "BCI_FilterDay";
+            BCI_FilterDay.CheckedChanged += BBI_Filter_CheckedChanged;
             // 
-            // barCheckItem1
+            // BBI_FilterWeek
             // 
-            barCheckItem1.Caption = "barCheckItem1";
-            barCheckItem1.GroupIndex = 10;
-            barCheckItem1.Id = 6;
-            barCheckItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barCheckItem1.ImageOptions.SvgImage");
-            barCheckItem1.Name = "barCheckItem1";
-            barCheckItem1.RibbonStyle = RibbonItemStyles.Large;     // <-- Large tile
-            barCheckItem1.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.True;
-            barCheckItem1.ImageOptions.SvgImageSize = new Size(32, 32);
-            barCheckItem1.LargeWidth = 60;
+            BBI_FilterWeek.Caption = "Son Həftə";
+            BBI_FilterWeek.Id = 14;
+            BBI_FilterWeek.ImageOptions.Image = (Image)resources.GetObject("BBI_FilterWeek.ImageOptions.Image");
+            BBI_FilterWeek.ImageOptions.LargeImage = (Image)resources.GetObject("BBI_FilterWeek.ImageOptions.LargeImage");
+            BBI_FilterWeek.Name = "BBI_FilterWeek";
+            BBI_FilterWeek.CheckedChanged += BBI_Filter_CheckedChanged;
             // 
-            // barCheckItem2
+            // BBI_FilterMonth
             // 
-            barCheckItem2.Caption = "barCheckItem2";
-            barCheckItem2.GroupIndex = 10;
-            barCheckItem2.Id = 7;
-            barCheckItem2.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barCheckItem2.ImageOptions.SvgImage");
-            barCheckItem2.Name = "barCheckItem2";
-            barCheckItem2.RibbonStyle = RibbonItemStyles.Large;     // <-- Large tile
-            barCheckItem2.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.True;
-            barCheckItem2.ImageOptions.SvgImageSize = new Size(32, 32);
-            barCheckItem2.LargeWidth = 60;
-            // 
-            // barCheckItem3
-            // 
-            barCheckItem3.Caption = "barCheckItem3";
-            barCheckItem3.GroupIndex = 10;
-            barCheckItem3.Id = 8;
-            barCheckItem3.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barCheckItem3.ImageOptions.SvgImage");
-            barCheckItem3.Name = "barCheckItem3";
-            barCheckItem3.RibbonStyle = RibbonItemStyles.Large;     // <-- Large tile
-            barCheckItem3.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.True;
-            barCheckItem3.ImageOptions.SvgImageSize = new Size(32, 32);
-            barCheckItem3.LargeWidth = 60;
+            BBI_FilterMonth.Caption = "Son Ay";
+            BBI_FilterMonth.Id = 15;
+            BBI_FilterMonth.ImageOptions.Image = (Image)resources.GetObject("BBI_FilterMonth.ImageOptions.Image");
+            BBI_FilterMonth.ImageOptions.LargeImage = (Image)resources.GetObject("BBI_FilterMonth.ImageOptions.LargeImage");
+            BBI_FilterMonth.Name = "BBI_FilterMonth";
+            BBI_FilterMonth.CheckedChanged += BBI_Filter_CheckedChanged;
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3, ribbonPageGroup5 });
+            ribbonPage1.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup1, ribbonPageGroup2, ribbonPageGroup3, ribbonPageGroup5 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "Kredit";
             // 
@@ -228,13 +209,15 @@ namespace Foxoft
             // 
             // ribbonPageGroup5
             // 
-            ribbonPageGroup5.ItemLinks.Add(barButtonGroup1);
+            ribbonPageGroup5.ItemLinks.Add(BCI_FilterDay);
+            ribbonPageGroup5.ItemLinks.Add(BBI_FilterWeek);
+            ribbonPageGroup5.ItemLinks.Add(BBI_FilterMonth);
             ribbonPageGroup5.Name = "ribbonPageGroup5";
             ribbonPageGroup5.Text = "Filter";
             // 
             // ribbonPage2
             // 
-            ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup4 });
+            ribbonPage2.Groups.AddRange(new RibbonPageGroup[] { ribbonPageGroup4 });
             ribbonPage2.Name = "ribbonPage2";
             ribbonPage2.Text = "Ayarlar";
             // 
@@ -284,10 +267,9 @@ namespace Foxoft
         private BarButtonItem BBI_QueryEdit;
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
-        private BarButtonGroup barButtonGroup1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
-        private BarCheckItem barCheckItem1;
-        private BarCheckItem barCheckItem2;
-        private BarCheckItem barCheckItem3;
+        private BarCheckItem BCI_FilterDay;
+        private BarCheckItem BBI_FilterWeek;
+        private BarCheckItem BBI_FilterMonth;
     }
 }

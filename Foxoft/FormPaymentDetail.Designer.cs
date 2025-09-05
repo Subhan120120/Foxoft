@@ -354,6 +354,7 @@ namespace Foxoft
             gV_PaymentLine.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             gV_PaymentLine.OptionsNavigation.AutoFocusNewRow = true;
             gV_PaymentLine.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            gV_PaymentLine.OptionsView.ShowFooter = true;
             gV_PaymentLine.OptionsView.ShowGroupPanel = false;
             gV_PaymentLine.InitNewRow += gV_PaymentLine_InitNewRow;
             gV_PaymentLine.ShownEditor += gV_PaymentLine_ShownEditor;
@@ -670,7 +671,6 @@ namespace Foxoft
             layoutControlItem1.Location = new Point(0, 72);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(879, 280);
-            layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
             // ItemForDescription
@@ -708,7 +708,6 @@ namespace Foxoft
             layoutControlItem3.Name = "layoutControlItem3";
             layoutControlItem3.Size = new Size(276, 24);
             layoutControlItem3.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem3.TextSize = new Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
@@ -719,7 +718,6 @@ namespace Foxoft
             layoutControlItem4.Name = "layoutControlItem4";
             layoutControlItem4.Size = new Size(414, 24);
             layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem4.TextSize = new Size(0, 0);
             layoutControlItem4.TextVisible = false;
             // 
             // layoutControlItem5
@@ -730,7 +728,6 @@ namespace Foxoft
             layoutControlItem5.Name = "layoutControlItem5";
             layoutControlItem5.Size = new Size(355, 24);
             layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem5.TextSize = new Size(0, 0);
             layoutControlItem5.TextVisible = false;
             // 
             // layoutControlItem2
@@ -748,7 +745,6 @@ namespace Foxoft
             layoutControlItem6.Location = new Point(355, 352);
             layoutControlItem6.Name = "layoutControlItem6";
             layoutControlItem6.Size = new Size(110, 24);
-            layoutControlItem6.TextSize = new Size(0, 0);
             layoutControlItem6.TextVisible = false;
             // 
             // svgImageCollection1
