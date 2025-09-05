@@ -17,6 +17,10 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public string CategoryDesc { get; set; }
 
+        [Display(Name = "Kateqoriya Açıqlaması")]
+        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        public string ClaimDesc { get; set; }
+
         [Display(Name = "Kateqoriya Səviyyəsi")]
         public int CategoryLevel { get; set; }
 
@@ -29,6 +33,8 @@ namespace Foxoft.Models
         [Display(Name = "Kategoriadır")]
         public bool IsCategory { get; set; }
 
+        [Display(Name = "Role Kodu")]
+        public string ClaimCode { get; set; }
 
     }
 }

@@ -606,24 +606,25 @@ namespace Foxoft
         {
             using subContext db = new();
 
-            var data = db.DcClaimCategories.Include(x => x.DcClaims)
-                .Select(x => new DcClaimCategoryViewModel()
+            var data = db.DcClaimCategories
+                .Include(x => x.DcClaims)
+                .Select(x => new DcClaimCategoryViewModel
                 {
                     CategoryId = x.CategoryId,
                     CategoryParentId = x.CategoryParentId,
                     CategoryDesc = x.CategoryDesc,
-                    IsSelected = x.DcClaims.Where(x => x.TrRoleClaims.Any(x => x.RoleCode == roleCode)).Count() == x.DcClaims.Count() ? true : false,
+                    IsSelected = x.DcClaims.All(c => c.TrRoleClaims.Any(r => r.RoleCode == roleCode)), // if categia's all claims exist at TrRoleClaims return true
                     IsCategory = true
-                }).ToList();
-
-
+                })
+                .ToList();
 
             var data2 = db.DcClaims.Include(x => x.DcClaimCategory)
                 .Select(x => new DcClaimCategoryViewModel()
                 {
+                    CategoryDesc = x.ClaimCode,
                     CategoryId = x.Id + 1000, // Safe to use First() because we filtered out empty collections
                     CategoryParentId = x.CategoryId,
-                    CategoryDesc = x.ClaimDesc,
+                    ClaimDesc = x.ClaimDesc,
                     IsSelected = x.TrRoleClaims.Any(x => x.RoleCode == roleCode),
                     IsCategory = false
                 }).ToList();

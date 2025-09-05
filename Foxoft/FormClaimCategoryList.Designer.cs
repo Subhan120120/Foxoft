@@ -34,6 +34,7 @@
             treeListCol_CategoryId = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             treeListCol_CategoryDesc = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             treeListCol_CategoryParentId = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            treeListCol_ClaimDesc = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             btn_Clear = new Button();
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
@@ -44,7 +45,7 @@
             // 
             // treeList1
             // 
-            treeList1.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] { treeListCol_CategoryId, treeListCol_CategoryDesc, treeListCol_CategoryParentId });
+            treeList1.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] { treeListCol_CategoryId, treeListCol_CategoryDesc, treeListCol_CategoryParentId, treeListCol_ClaimDesc });
             treeList1.CustomizationFormBounds = new Rectangle(163, 241, 264, 200);
             treeList1.Dock = DockStyle.Fill;
             treeList1.KeyFieldName = "CategoryId";
@@ -78,8 +79,16 @@
             // 
             // treeListCol_CategoryParentId
             // 
-            treeListCol_CategoryParentId.FieldName = "treeListCol_CategoryId";
+            treeListCol_CategoryParentId.FieldName = "CategoryParentId";
             treeListCol_CategoryParentId.Name = "treeListCol_CategoryParentId";
+            // 
+            // treeListCol_ClaimDesc
+            // 
+            treeListCol_ClaimDesc.Caption = "coltreeListColumn4";
+            treeListCol_ClaimDesc.FieldName = "ClaimDesc";
+            treeListCol_ClaimDesc.Name = "treeListCol_ClaimDesc";
+            treeListCol_ClaimDesc.Visible = true;
+            treeListCol_ClaimDesc.VisibleIndex = 1;
             // 
             // svgImageCollection1
             // 
@@ -149,5 +158,6 @@
         private DevExpress.XtraEditors.SimpleButton btn_Save;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.SimpleButton btn_Claims;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn treeListCol_ClaimDesc;
     }
 }

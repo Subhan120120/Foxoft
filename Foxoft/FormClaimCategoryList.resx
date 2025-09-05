@@ -123,21 +123,21 @@
   <assembly alias="DevExpress.Data.v24.2" name="DevExpress.Data.v24.2, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
   <data name="svgImageCollection1.Key" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIzLjEsIFZlcnNpb249MjMuMS41
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjIsIFZlcnNpb249MjQuMi43
         LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAL0CAAAC77u/
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAKkCAAAC77u/
         PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgdmlld0JveD0iLTIgLTIg
         MzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6
         Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KICA8ZyBpZD0iTGF5ZXJfMSIgdHJhbnNmb3JtPSJ0cmFu
         c2xhdGUoLTQuNjY2NiwgLTQuNjY2NikiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMy
-        IDMyIj4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjE2NjY2NTQzNDgzNzM0LCAwLCAwLCAxLjE2
-        NjY2NTQzNDgzNzM0LCAwLCAwKSI+DQogICAgICA8cGF0aCBkPSJNMjAsIDRDMTUuNiwgNCAxMiwgNy42
-        IDEyLCAxMkMxMiwgMTMuMiAxMi4zLCAxNC4zIDEyLjcsIDE1LjNMNCwgMjRMNCwgMjhMOCwgMjhMMTAs
-        IDI2TDEwLCAyNEwxMiwgMjRMMTIsIDIyTDE0LCAyMkwxNi43LCAxOS4zQzE3LjcsIDE5LjggMTguOCwg
-        MjAgMjAsIDIwQzI0LjQsIDIwIDI4LCAxNi40IDI4LCAxMkMyOCwgNy42IDI0LjQsIDQgMjAsIDR6TTIy
-        LCAxMkMyMC45LCAxMiAyMCwgMTEuMSAyMCwgMTBDMjAsIDguOSAyMC45LCA4IDIyLCA4QzIzLjEsIDgg
-        MjQsIDguOSAyNCwgMTBDMjQsIDExLjEgMjMuMSwgMTIgMjIsIDEyeiIgZmlsbD0iIzExNzdENyIgY2xh
-        c3M9IkJsdWUiIC8+DQogICAgPC9nPg0KICA8L2c+DQo8L3N2Zz4L
+        IDMyIj4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjE2NjcsIDAsIDAsIDEuMTY2NywgMCwgMCki
+        Pg0KICAgICAgPHBhdGggZD0iTTIwLCA0QzE1LjYsIDQgMTIsIDcuNiAxMiwgMTJDMTIsIDEzLjIgMTIu
+        MywgMTQuMyAxMi43LCAxNS4zTDQsIDI0TDQsIDI4TDgsIDI4TDEwLCAyNkwxMCwgMjRMMTIsIDI0TDEy
+        LCAyMkwxNCwgMjJMMTYuNywgMTkuM0MxNy43LCAxOS44IDE4LjgsIDIwIDIwLCAyMEMyNC40LCAyMCAy
+        OCwgMTYuNCAyOCwgMTJDMjgsIDcuNiAyNC40LCA0IDIwLCA0ek0yMiwgMTJDMjAuOSwgMTIgMjAsIDEx
+        LjEgMjAsIDEwQzIwLCA4LjkgMjAuOSwgOCAyMiwgOEMyMy4xLCA4IDI0LCA4LjkgMjQsIDEwQzI0LCAx
+        MS4xIDIzLjEsIDEyIDIyLCAxMnoiIGZpbGw9IiMxMTc3RDciIGNsYXNzPSJCbHVlIiAvPg0KICAgIDwv
+        Zz4NCiAgPC9nPg0KPC9zdmc+Cw==
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
