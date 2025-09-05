@@ -459,6 +459,14 @@ namespace Foxoft
                     if (MessageBox.Show("Sətir Silinsin?", "Təsdiqlə", MessageBoxButtons.YesNo) != DialogResult.Yes)
                         return;
 
+                    string claim = "DeleteInvoiceLine" + dcProcess.ProcessCode;
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
+                    if (!currAccHasClaims)
+                    {
+                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        return;
+                    }
+
                     gV.DeleteSelectedRows();
                 }
 
