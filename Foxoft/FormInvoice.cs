@@ -456,7 +456,7 @@ namespace Foxoft
             {
                 if (e.KeyCode == Keys.Delete && gV.ActiveEditor == null)
                 {
-                    string claim = "DeleteInvoiceLine" + dcProcess.ProcessCode;
+                    string claim = "DeleteLine" + dcProcess.ProcessCode;
                     bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, claim);
                     if (!currAccHasClaims)
                     {
