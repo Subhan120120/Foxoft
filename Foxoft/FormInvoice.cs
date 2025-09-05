@@ -1406,7 +1406,7 @@ namespace Foxoft
                 return;
             }
 
-            number = "+994" + number.Trim();
+            number = number.Trim();
 
             string link = $"https://web.whatsapp.com/send?phone={number}&text={Uri.EscapeDataString(message)}";
 
