@@ -24,11 +24,19 @@ namespace Foxoft
             treeList1.OptionsSelection.MultiSelect = true;
             treeList1.OptionsSelection.EnableAppearanceFocusedRow = false;
 
+            RepositoryItemCheckEdit repoCheck = new RepositoryItemCheckEdit
+            {
+                AllowGrayed = false,             // enables indeterminate
+                ValueChecked = true,            // maps to true
+                ValueUnchecked = false,         // maps to false
+                ValueGrayed = null              // maps to null
+            };
+
             // Add an unbound checkbox column
             TreeListColumn checkBoxColumn = new TreeListColumn();
             checkBoxColumn.Caption = "Select";
             checkBoxColumn.FieldName = "IsSelected"; // Must match model property
-            checkBoxColumn.ColumnEdit = new RepositoryItemCheckEdit();
+            checkBoxColumn.ColumnEdit = repoCheck;
             checkBoxColumn.VisibleIndex = 1;
             checkBoxColumn.UnboundType = DevExpress.XtraTreeList.Data.UnboundColumnType.Boolean;
             treeList1.BestFitColumns();

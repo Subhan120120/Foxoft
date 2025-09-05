@@ -28,7 +28,7 @@ namespace Foxoft.Models
         public int? CategoryParentId { get; set; }
 
         [Display(Name = "Secilendir")]
-        public bool IsSelected { get; set; }
+        public bool? IsSelected { get; set; }
 
         [Display(Name = "Kategoriadır")]
         public bool IsCategory { get; set; }

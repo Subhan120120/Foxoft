@@ -604,33 +604,53 @@ namespace Foxoft
 
         public List<DcClaimCategoryViewModel> SelectDcClaimCategories(string roleCode)
         {
-            using subContext db = new();
+            using var db = new subContext();
 
-            var data = db.DcClaimCategories
-                .Include(x => x.DcClaims)
-                .Select(x => new DcClaimCategoryViewModel
-                {
-                    CategoryId = x.CategoryId,
-                    CategoryParentId = x.CategoryParentId,
-                    CategoryDesc = x.CategoryDesc,
-                    IsSelected = x.DcClaims.All(c => c.TrRoleClaims.Any(r => r.RoleCode == roleCode)), // if categia's all claims exist at TrRoleClaims return true
-                    IsCategory = true
-                })
-                .ToList();
+            var categories =
+                db.DcClaimCategories
+                  .AsNoTracking()
+                  .Select(cat => new DcClaimCategoryViewModel
+                  {
+                      CategoryId = cat.CategoryId,
+                      CategoryParentId = cat.CategoryParentId,
+                      CategoryDesc = cat.CategoryDesc,
+                      ClaimDesc = null,
 
-            var data2 = db.DcClaims.Include(x => x.DcClaimCategory)
-                .Select(x => new DcClaimCategoryViewModel()
-                {
-                    CategoryDesc = x.ClaimCode,
-                    CategoryId = x.Id + 1000, // Safe to use First() because we filtered out empty collections
-                    CategoryParentId = x.CategoryId,
-                    ClaimDesc = x.ClaimDesc,
-                    IsSelected = x.TrRoleClaims.Any(x => x.RoleCode == roleCode),
-                    IsCategory = false
-                }).ToList();
+                      IsSelected = !cat.DcClaims.Any()
+                          ? false
+                          : cat.DcClaims.All(cl => cl.TrRoleClaims.Any(rc => rc.RoleCode == roleCode))
+                              ? (bool?)true
+                              : cat.DcClaims.All(cl => cl.TrRoleClaims.All(rc => rc.RoleCode != roleCode))
+                                  ? (bool?)false
+                                  : null,
 
-            data.AddRange(data2);
+                      IsCategory = true
+                  });
+
+
+
+
+
+            var claims =
+                db.DcClaims
+                  .AsNoTracking()
+                  .Select(cl => new DcClaimCategoryViewModel
+                  {
+                      CategoryId = cl.Id + 1000,
+                      CategoryParentId = cl.CategoryId,
+                      CategoryDesc = cl.ClaimCode,
+                      ClaimDesc = cl.ClaimDesc,
+                      IsSelected = cl.TrRoleClaims.Any(rc => rc.RoleCode == roleCode),
+                      IsCategory = false
+                  });
+
+            var data = categories
+                .Concat(claims)           // Union-all
+                .ToList();                
+
             return data;
+
+
         }
 
         public TrInvoiceHeader SelectInvoiceHeaderByDocNum(string documentNumber)
