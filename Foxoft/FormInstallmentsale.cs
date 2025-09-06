@@ -1,4 +1,5 @@
 ﻿using DevExpress.Data;
+using DevExpress.Data.Filtering;
 using DevExpress.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
@@ -12,6 +13,7 @@ using DevExpress.XtraGrid.Localization;
 using DevExpress.XtraGrid.Menu;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports;
+using DevExpress.XtraRichEdit.Fields;
 using Foxoft.AppCode;
 using Foxoft.Migrations;
 using Foxoft.Models;
@@ -455,20 +457,43 @@ namespace Foxoft
 
         private void BBI_Filter_CheckedChanged(object sender, ItemClickEventArgs e)
         {
-            BarCheckItem clicked = e.Item as BarCheckItem;
-            if (clicked == null) return;
+            var item = e.Item as BarCheckItem;
+            if (item == null) return;
 
-            if (clicked.Checked)
+            if (!item.Checked)
             {
-                foreach (BarItem item in clicked.Manager.Items)
-                {
-                    if (item is BarCheckItem check && check != clicked && (check.Tag?.ToString() == clicked.Tag?.ToString()))
-                    {
-                        check.Checked = false;
-                    }
-                }
+                gridView1.ActiveFilterCriteria = null;
+                return;
             }
 
+            DateTime cutoff;
+
+            if (item == BCI_FilterDay)
+            {
+                cutoff = DateTime.Today;
+            }
+            else if (item == BBI_FilterWeek)
+            {
+                cutoff = DateTime.Today.AddDays(-7);
+            }
+            else if (item == BBI_FilterMonth)
+            {
+                cutoff = DateTime.Today.AddMonths(-1); 
+            }
+            else
+            {
+                return;
+            }
+
+            var criteria = new BinaryOperator(
+                new OperandProperty("InstallmentDate"),
+                new OperandValue(cutoff),
+                BinaryOperatorType.GreaterOrEqual
+            );
+
+            gridView1.ActiveFilterCriteria = criteria;
+
         }
+
     }
 }

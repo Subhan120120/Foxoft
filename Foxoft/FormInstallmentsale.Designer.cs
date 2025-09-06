@@ -164,6 +164,8 @@ namespace Foxoft
             BCI_FilterDay.ImageOptions.LargeImage = (Image)resources.GetObject("BCI_FilterDay.ImageOptions.LargeImage");
             BCI_FilterDay.Name = "BCI_FilterDay";
             BCI_FilterDay.CheckedChanged += BBI_Filter_CheckedChanged;
+            BCI_FilterDay.AllowAllUp = true;
+            BCI_FilterDay.GroupIndex = 1;
             // 
             // BBI_FilterWeek
             // 
@@ -173,6 +175,9 @@ namespace Foxoft
             BBI_FilterWeek.ImageOptions.LargeImage = (Image)resources.GetObject("BBI_FilterWeek.ImageOptions.LargeImage");
             BBI_FilterWeek.Name = "BBI_FilterWeek";
             BBI_FilterWeek.CheckedChanged += BBI_Filter_CheckedChanged;
+            BBI_FilterWeek.AllowAllUp = true;
+            BBI_FilterWeek.GroupIndex = 1;
+
             // 
             // BBI_FilterMonth
             // 
@@ -182,6 +187,9 @@ namespace Foxoft
             BBI_FilterMonth.ImageOptions.LargeImage = (Image)resources.GetObject("BBI_FilterMonth.ImageOptions.LargeImage");
             BBI_FilterMonth.Name = "BBI_FilterMonth";
             BBI_FilterMonth.CheckedChanged += BBI_Filter_CheckedChanged;
+            BBI_FilterMonth.AllowAllUp = true;
+            BBI_FilterMonth.GroupIndex = 1;
+
             // 
             // ribbonPage1
             // 
