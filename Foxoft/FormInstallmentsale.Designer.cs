@@ -158,38 +158,36 @@ namespace Foxoft
             // 
             // BCI_FilterDay
             // 
+            BCI_FilterDay.AllowAllUp = true;
             BCI_FilterDay.Caption = "Son Gün";
+            BCI_FilterDay.GroupIndex = 1;
             BCI_FilterDay.Id = 13;
             BCI_FilterDay.ImageOptions.Image = (Image)resources.GetObject("BCI_FilterDay.ImageOptions.Image");
             BCI_FilterDay.ImageOptions.LargeImage = (Image)resources.GetObject("BCI_FilterDay.ImageOptions.LargeImage");
             BCI_FilterDay.Name = "BCI_FilterDay";
             BCI_FilterDay.CheckedChanged += BBI_Filter_CheckedChanged;
-            BCI_FilterDay.AllowAllUp = true;
-            BCI_FilterDay.GroupIndex = 1;
             // 
             // BBI_FilterWeek
             // 
+            BBI_FilterWeek.AllowAllUp = true;
             BBI_FilterWeek.Caption = "Son Həftə";
+            BBI_FilterWeek.GroupIndex = 1;
             BBI_FilterWeek.Id = 14;
             BBI_FilterWeek.ImageOptions.Image = (Image)resources.GetObject("BBI_FilterWeek.ImageOptions.Image");
             BBI_FilterWeek.ImageOptions.LargeImage = (Image)resources.GetObject("BBI_FilterWeek.ImageOptions.LargeImage");
             BBI_FilterWeek.Name = "BBI_FilterWeek";
             BBI_FilterWeek.CheckedChanged += BBI_Filter_CheckedChanged;
-            BBI_FilterWeek.AllowAllUp = true;
-            BBI_FilterWeek.GroupIndex = 1;
-
             // 
             // BBI_FilterMonth
             // 
+            BBI_FilterMonth.AllowAllUp = true;
             BBI_FilterMonth.Caption = "Son Ay";
+            BBI_FilterMonth.GroupIndex = 1;
             BBI_FilterMonth.Id = 15;
             BBI_FilterMonth.ImageOptions.Image = (Image)resources.GetObject("BBI_FilterMonth.ImageOptions.Image");
             BBI_FilterMonth.ImageOptions.LargeImage = (Image)resources.GetObject("BBI_FilterMonth.ImageOptions.LargeImage");
             BBI_FilterMonth.Name = "BBI_FilterMonth";
             BBI_FilterMonth.CheckedChanged += BBI_Filter_CheckedChanged;
-            BBI_FilterMonth.AllowAllUp = true;
-            BBI_FilterMonth.GroupIndex = 1;
-
             // 
             // ribbonPage1
             // 
