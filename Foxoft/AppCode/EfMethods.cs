@@ -199,6 +199,7 @@ namespace Foxoft
                 .Include(x => x.DcProduct)
                 .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
                 .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
+                            && x.TrInvoiceHeader.IsReturn == false
                             && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
                 .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
                 .AsAsyncEnumerable()
@@ -646,7 +647,7 @@ namespace Foxoft
 
             var data = categories
                 .Concat(claims)           // Union-all
-                .ToList();                
+                .ToList();
 
             return data;
 
