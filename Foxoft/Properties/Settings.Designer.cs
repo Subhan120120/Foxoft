@@ -10,100 +10,125 @@
 
 using Foxoft.Models;
 
-namespace Foxoft.Properties {
-    
-    
+namespace Foxoft.Properties
+{
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.10.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
+
+        public static Settings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LoginName {
-            get {
+        public string LoginName
+        {
+            get
+            {
                 return ((string)(this["LoginName"]));
             }
-            set {
+            set
+            {
                 this["LoginName"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LoginPassword {
-            get {
+        public string LoginPassword
+        {
+            get
+            {
                 return ((string)(this["LoginPassword"]));
             }
-            set {
+            set
+            {
                 this["LoginPassword"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool LoginChecked {
-            get {
+        public bool LoginChecked
+        {
+            get
+            {
                 return ((bool)(this["LoginChecked"]));
             }
-            set {
+            set
+            {
                 this["LoginChecked"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GridViewLayout {
-            get {
+        public string GridViewLayout
+        {
+            get
+            {
                 return ((string)(this["GridViewLayout"]));
             }
-            set {
+            set
+            {
                 this["GridViewLayout"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::Foxoft.Models.AppSetting AppSetting {
-            get {
+        public global::Foxoft.Models.AppSetting AppSetting
+        {
+            get
+            {
                 return ((global::Foxoft.Models.AppSetting)(this["AppSetting"]));
             }
-            set {
+            set
+            {
                 this["AppSetting"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string OfficeCode {
-            get {
+        public string OfficeCode
+        {
+            get
+            {
                 return ((string)(this["OfficeCode"]));
             }
-            set {
+            set
+            {
                 this["OfficeCode"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string StoreCode {
-            get {
+        public string StoreCode
+        {
+            get
+            {
                 return ((string)(this["StoreCode"]));
             }
-            set {
+            set
+            {
                 this["StoreCode"] = value;
             }
         }
@@ -126,45 +151,55 @@ namespace Foxoft.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string OpenDocNum {
-            get {
+        public string OpenDocNum
+        {
+            get
+            {
                 return ((string)(this["OpenDocNum"]));
             }
-            set {
+            set
+            {
                 this["OpenDocNum"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TerminalId {
-            get {
+        public int TerminalId
+        {
+            get
+            {
                 return ((int)(this["TerminalId"]));
             }
-            set {
+            set
+            {
                 this["TerminalId"] = value;
             }
         }
-        
+
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Main;Persist Security Info=True;TrustServerC" +
             "ertificate=True;User ID=sa;Password=sql123_")]
-        public string MainConnString {
-            get {
+        public string MainConnString
+        {
+            get
+            {
                 return ((string)(this["MainConnString"]));
             }
         }
-        
+
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Tokla;Persist Security Info=True;TrustServe" +
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SUBSQL;Initial Catalog=Tokla2;Persist Security Info=True;TrustServe" +
             "rCertificate=True;User ID=sa;Password=sql123_")]
-        public string SubConnString {
-            get {
+        public string SubConnString
+        {
+            get
+            {
                 return ((string)(this["SubConnString"]));
             }
             set
@@ -172,27 +207,33 @@ namespace Foxoft.Properties {
                 this["SubConnString"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string CompanyCode {
-            get {
+        public string CompanyCode
+        {
+            get
+            {
                 return ((string)(this["CompanyCode"]));
             }
-            set {
+            set
+            {
                 this["CompanyCode"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public string CompanyId {
-            get {
+        public string CompanyId
+        {
+            get
+            {
                 return ((string)(this["CompanyId"]));
             }
-            set {
+            set
+            {
                 this["CompanyId"] = value;
             }
         }
@@ -200,12 +241,30 @@ namespace Foxoft.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public List<TrReportCustomization> TrReportCustomizations {
-            get {
+        public List<TrReportCustomization> TrReportCustomizations
+        {
+            get
+            {
                 return ((List<TrReportCustomization>)(this["TrReportCustomizations"]));
             }
-            set {
+            set
+            {
                 this["TrReportCustomizations"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public global::System.Collections.Specialized.StringCollection FavoritesMenus
+        {
+            get
+            {
+                return ((global::System.Collections.Specialized.StringCollection)(this["FavoritesMenus"]));
+            }
+            set
+            {
+                this["FavoritesMenus"] = value;
             }
         }
     }

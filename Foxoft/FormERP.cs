@@ -1,12 +1,18 @@
 ﻿using DevExpress.LookAndFeel;
+using DevExpress.Mvvm.Native;
+using DevExpress.Utils.Extensions;
+using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraNavBar;
+using DevExpress.XtraReports.Serialization;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System.Collections;
+using System.Collections.Specialized;
 using System.Data;
 using System.IO;
 
@@ -20,6 +26,9 @@ namespace Foxoft
         EfMethods efMethods = new();
         ReportClass reportClass = new();
         AdoMethods adoMethods = new();
+
+        private AccordionControlElement _ctxElement;
+        private ContextMenuStrip _cms;
 
         public FormERP()
         {
@@ -64,6 +73,26 @@ namespace Foxoft
             bSI_TerminalName.Caption = "| " + efMethods.SelectEntityById<DcTerminal>(Settings.Default.TerminalId).TerminalDesc;
 
             InitializeReports();
+            InitializeFavorites();
+        }
+
+        private void aC_Root_MouseDown(object sender, MouseEventArgs e)
+        {
+            var hit = aC_Root.CalcHitInfo(e.Location).ItemInfo;
+            if (hit?.Element == null) return;                 // clicked empty space
+            if (hit.Element.Style != ElementStyle.Item) return; // ignore group headers, etc.
+
+            _ctxElement = hit.Element; // remember the element for later
+
+            if (e.Button == MouseButtons.Left)
+            {
+                // LEFT CLICK -> open your form
+                BBI_FavoriteAdd_ItemClick(hit.Element);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                popupMenuAccordian.ShowPopup(Cursor.Position);
+            }
         }
 
         private void UIMode(bool toucUIMode)
@@ -98,17 +127,75 @@ namespace Foxoft
                 childElement.Visible = false;
         }
 
+        private void BBI_FavoriteAdd_ItemClick(AccordionControlElement el)
+        {
+            if (el?.Name is not string key) return;
+
+            switch (key)
+            {
+                case "Products": ShowExistForm<FormProductList>(new byte[] { 1 }, false); break;
+                case "CurrAccs": ShowExistForm<FormCurrAccList>(new byte[] { 1, 2, 3 }); break;
+
+                case "RetailPurchaseInvoice": ShowNewForm<FormInvoice>("RP", false, new byte[] { 1, 3 }, null); break;
+                case "RetailSaleInvoice": ShowNewForm<FormInvoice>("RS", false, new byte[] { 1, 3 }, null); break;
+                case "WholesaleInvoice": ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null); break;
+                case "InstallmentSaleInvoice": ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null); break;
+                case "Expense": ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null); break;
+                case "CountIn": ShowNewForm<FormInvoice>("CI", false, new byte[] { 1 }, null); break;
+                case "CountOut": ShowNewForm<FormInvoice>("CO", false, new byte[] { 1 }, null); break;
+                case "InventoryTransfer": ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null); break;
+
+                case "PurchaseReturnCustom": ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null); break;
+                case "RetailsaleReturnCustom": ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null); break;
+                case "WholesaleReturnCustom": ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null); break;
+                case "InstallmentSaleReturnCustom": ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null); break;
+
+                case "RetailPurchaseReturn": ShowExistForm<FormReturn>("RP"); break;
+                case "RetailSaleReturn": ShowExistForm<FormReturn>("RS"); break;
+                case "WholesaleReturn": ShowExistForm<FormReturn>("WS"); break;
+                case "InstallmentSaleReturn": ShowExistForm<FormReturn>("IS"); break;
+
+                case "Waybill": ShowNewForm<FormWaybill>("WO"); break;
+                case "WaybillIn": ShowNewForm<FormInvoice>("WI", false, new byte[] { 1 }, null); break;
+                case "WaybillOut": ShowNewForm<FormInvoice>("WO", false, new byte[] { 1 }, null); break;
+
+                case "PaymentDetail": ShowNewForm<FormPaymentDetail>(); break;
+                case "CashTransfer": ShowNewForm<FormMoneyTransfer>(); break;
+                case "CashRegs": ShowExistForm<FormCashRegisterList>(); break;
+                case "InstallmentSales": ShowExistForm<FormInstallmentSale>(); break;
+                case "PriceList": ShowNewForm<FormPriceListDetail>(); break;
+                case "ProductDiscountList": ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId)); break;
+                case "RetailSaleOrder": ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null); break;
+                case "Session": ShowExistForm<FormCurrAccSession>(); break;
+                case "ProductFeatureType": ShowExistForm<FormHierarchyFeatureType>(); break;
+                case "CurrAccFeatureType": ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)); break;
+                case "CurrAccClaim": ShowExistForm<FormCurrAccProfile>(); break;
+                case "Parameters": ShowExistForm<FormAppSetting>(); break;
+                case "StoreList": ShowExistForm<FormStoreList>(); break;
+
+                default: break;
+            }
+
+        }
+
+        private void BBI_FavoriteRemove_ItemClick(AccordionControlElement el)
+        {
+            MessageBox.Show($"Element: {el.Text}\nTag: {el.Tag}", "Properties");
+        }
+
         private void InitComponentName()
         {
             this.aCE_Invoices.Name = "Invoices";
             this.aCE_Products.Name = "Products";
             this.aCE_CurrAccs.Name = "CurrAccs";
             this.ACE_CashRegs.Name = "CashRegs";
+
             this.aCE_RetailPurchaseInvoice.Name = "RetailPurchaseInvoice";
             this.aCE_RetailSaleInvoice.Name = "RetailSaleInvoice";
             this.aCE_WholesaleInvoice.Name = "WholesaleInvoice";
             this.aCE_InstallmentSaleInvoice.Name = "InstallmentSaleInvoice";
             this.aCE_InventoryTransfer.Name = "InventoryTransfer";
+
             this.ACE_RetailPurchaseOrder.Name = "RetailPurchaseOrder";
             this.ACE_RetailSaleOrder.Name = "RetailSaleOrder";
 
@@ -122,15 +209,17 @@ namespace Foxoft
             this.ACE_WholesaleReturnCustom.Name = "WholesaleReturnCustom";
             this.ACE_InstallmentSaleReturnCustom.Name = "InstallmentSaleReturnCustom";
 
+            this.ACE_Waybill.Name = "Waybill";
+            this.ACE_WaybillIn.Name = "WaybillIn";
+            this.ACE_WaybillOut.Name = "WaybillOut";
+
+            this.aCE_CountIn.Name = "CountIn";
+            this.aCE_CountOut.Name = "CountOut";
+
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
             this.aCE_PaymentDetail.Name = "PaymentDetail";
             this.aCE_Acounting.Name = "Acounting";
-            this.aCE_CountIn.Name = "CountIn";
-            this.aCE_CountOut.Name = "CountOut";
-            this.ACE_Waybill.Name = "Waybill";
-            this.ACE_WaybillIn.Name = "WaybillIn";
-            this.ACE_WaybillOut.Name = "WaybillOut";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
             this.ACE_Parameters.Name = "Parameters";
@@ -140,7 +229,7 @@ namespace Foxoft
             this.ACE_CurrAccFeatureType.Name = "CurrAccFeatureType";
             this.aCE_CurrAccRole.Name = "CurrAccClaim";
             this.bBI_Session.Name = "Session";
-            this.ACE_Installments.Name = "Installments";
+            this.ACE_InstallmentSales.Name = "InstallmentSales";
             this.ACE_StoreList.Name = "StoreList";
         }
 
@@ -168,6 +257,25 @@ namespace Foxoft
                 };
 
                 aCE_Reports.Elements.Add(aCE);
+            }
+        }
+
+        private void InitializeFavorites()
+        {
+            StringCollection aceList = Settings.Default.FavoritesMenus;
+
+            if (aceList is null)
+                return;
+
+            foreach (string aCE in aceList)
+            {
+                var element = aC_Root.Elements
+                                    .SelectMany(x => x.Elements) // bütün child elementləri düzləşdir
+                                    .FirstOrDefault(x => x.Name == aCE);
+
+                if (element != null)
+                    ACG_Favorites.Elements.Add(element);
+
             }
         }
 
@@ -221,14 +329,6 @@ namespace Foxoft
             ArrayList list = new(MdiChildren);
             foreach (Form f in list)
                 f.Close();
-
-            //foreach (var child in this.MdiChildren)
-            //{
-            //    var customChild = child as RibbonForm;
-            //    if (customChild == null) continue; //if there are any casting problems
-
-            //    customChild.Close();
-            //}
         }
 
         private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
@@ -251,6 +351,38 @@ namespace Foxoft
         {
             //if (parentRibbonControl.MergedPages.Count > 0)
             //    parentRibbonControl.SelectedPage = parentRibbonControl.MergedPages[0]; // islemir
+        }
+
+        private void BBI_FavoriteAdd_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            AccordionControlElement newElement = new()
+            {
+                Name = _ctxElement.Name,
+                Text = _ctxElement.Text,
+                Style = ElementStyle.Item,
+                Tag = _ctxElement,
+            };
+
+            newElement.ImageOptions.SvgImage = _ctxElement.ImageOptions.SvgImage;
+
+            ACG_Favorites.Visible = true;
+            ACG_Favorites.Elements.Add(newElement);
+
+            Settings.Default.FavoritesMenus.Add(newElement.Name);
+            Settings.Default.Save();
+        }
+
+        private void BBI_FavoriteRemove_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            AccordionControlElement removeElement = ACG_Favorites.Elements.FirstOrDefault(x => x.Name == _ctxElement.Name);
+
+            ACG_Favorites.Elements.Remove(removeElement);
+
+            Settings.Default.FavoritesMenus.Remove(removeElement.Name);
+            Settings.Default.Save();
+
+            if (ACG_Favorites.Elements.Count == 0)
+                ACG_Favorites.Visible = false;
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form
@@ -312,194 +444,6 @@ namespace Foxoft
             }
         }
 
-        private void aCE_Products_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormProductList>(new byte[] { 1 }, false);
-        }
 
-        private void aCE_CurrAccs_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormCurrAccList>(new byte[] { 1, 2, 3 });
-        }
-
-        private void aCE_RetailPurchaseInvoice_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("RP", false, new byte[] { 1, 3 }, null);
-        }
-
-        private void aCE_RetailSaleInvoice_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("RS", false, new byte[] { 1, 3 }, null);
-        }
-
-        private void ACE_WholesaleInvoice_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("WS", false, new byte[] { 1, 3 }, null);
-        }
-
-        private void ACE_InstallmentSaleInvoice_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("IS", false, new byte[] { 1, 3 }, null);
-        }
-
-        private void aCE_Expense_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("EX", false, new byte[] { 2, 3 }, null);
-        }
-
-        private void aCE_CountIn_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("CI", false, new byte[] { 1 }, null);
-        }
-
-        private void aCE_CountOut_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("CO", false, new byte[] { 1 }, null);
-        }
-
-        private void aCE_InventoryTransfer_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("IT", false, new byte[] { 1 }, null);
-        }
-
-        private void ACE_PurchaseReturnCustom_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("RP", true, new byte[] { 1, 3 }, null);
-        }
-
-        private void ACE_RetailsaleReturnCustom_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("RS", true, new byte[] { 1, 3 }, null);
-        }
-
-        private void ACE_WholesaleReturnCustom_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("WS", true, new byte[] { 1, 3 }, null);
-        }
-
-        private void ACE_InstallmentSaleReturnCustom_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("IS", true, new byte[] { 1, 3 }, null);
-        }
-
-        private void aCE_PaymentDetail_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormPaymentDetail>();
-        }
-
-        private void ACE_CashTransfer_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormMoneyTransfer>();
-        }
-
-        private void ACE_PurchaseReturn_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormReturn>("RP");
-        }
-
-        private void ACE_RetailSaleReturn_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormReturn>("RS");
-        }
-
-        private void aCE_WholesaleReturn_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormReturn>("WS");
-        }
-
-        private void ACE_InstallmentSaleReturn_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormReturn>("IS");
-        }
-
-        private void ACE_CashRegs_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormCashRegisterList>();
-        }
-
-        private void ACE_Installments_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormInstallmentSale>();
-        }
-
-        private void ACE_PricList_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormPriceListDetail>();
-        }
-
-        private void ACE_Discounts_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormCommonList<DcDiscount>>("", nameof(DcDiscount.DiscountId));
-        }
-
-        private void BBI_ChangeUser_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
-        private void ACE_RetailPurchaseOrder_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ACE_RetailSaleOrder_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("RSO", false, new byte[] { 1, 3 }, null);
-        }
-
-        private void BBI_Test_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
-        }
-
-        private void BBI_Session_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ShowExistForm<FormCurrAccSession>();
-        }
-
-        private void ACE_ProductFeatureTypes_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormHierarchyFeatureType>();
-        }
-
-        private void ACE_CurrAccFeatureTypes_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormCommonList<DcCurrAccFeatureType>>("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId));
-        }
-
-        private void aCE_CurrAccRole_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormCurrAccProfile>();
-        }
-
-        private void ACE_Delivery_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormWaybill>("WO");
-        }
-
-        private void ACE_WaybillIn_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("WI", false, new byte[] { 1 }, null);
-        }
-
-        private void ACE_WaybillOut_Click(object sender, EventArgs e)
-        {
-            ShowNewForm<FormInvoice>("WO", false, new byte[] { 1 }, null);
-        }
-
-        private void ACE_Parameters_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormAppSetting>();
-        }
-
-        private void ACE_StoreList_Click(object sender, EventArgs e)
-        {
-            ShowExistForm<FormStoreList>();
-        }
-
-        private void bBI_MdiChildrenList_Popup(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
