@@ -86,7 +86,7 @@ namespace Foxoft
             col_VatRate = new DevExpress.XtraGrid.Columns.GridColumn();
             col_AddWaybill = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtn_AddWaybill = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_DocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             col_CurrAccCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -412,7 +412,7 @@ namespace Foxoft
             gV_InvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate });
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
             gV_InvoiceLine.OptionsFind.AlwaysVisible = true;
@@ -563,9 +563,9 @@ namespace Foxoft
             // 
             // InvoiceHeaderId
             // 
-            InvoiceHeaderId.Caption = "InvoiceHeaderId";
-            InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
-            InvoiceHeaderId.Name = "InvoiceHeaderId";
+            col_InvoiceHeaderId.Caption = "InvoiceHeaderId";
+            col_InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
+            col_InvoiceHeaderId.Name = "InvoiceHeaderId";
             // 
             // col_DocumentNumber
             // 
@@ -796,7 +796,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
         private DevExpress.XtraLayout.SplitterItem splitterItem1;
         private BindingSource UndeliveredBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn InvoiceHeaderId;
+        private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn col_DocumentNumber;
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_CurrAccDesc;

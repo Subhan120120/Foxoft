@@ -214,6 +214,7 @@ namespace Foxoft
         private void repoBtn_AddWaybill_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
             Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
+            Guid invoiceHeaderId = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceHeaderId);
             decimal maxDelivery = (decimal)(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
 
             if (!(maxDelivery > 0))
@@ -232,7 +233,7 @@ namespace Foxoft
 
                         deliveryInvoHeader = new();
                         deliveryInvoHeader.InvoiceHeaderId = deliveryInvoiceHeaderId;
-                        //deliveryInvoHeader.RelatedInvoiceId = trInvoiceHeader.InvoiceHeaderId;
+                        deliveryInvoHeader.RelatedInvoiceId = invoiceHeaderId;
                         deliveryInvoHeader.DocumentNumber = NewDocNum;
                         deliveryInvoHeader.ProcessCode = processCode;
                         deliveryInvoHeader.CurrAccCode = unDeliveredViewModel.TrInvoiceHeader.CurrAccCode;
@@ -251,7 +252,6 @@ namespace Foxoft
                     {
                         TrInvoiceLine invoiceLine = efMethods.SelectInvoiceLine(invoiceLineID);
                         TrInvoiceLine deliveryInvoiceLine = new();
-
 
                         deliveryInvoiceLine.InvoiceLineId = Guid.NewGuid();
                         deliveryInvoiceLine.InvoiceHeaderId = deliveryInvoiceHeaderId;
