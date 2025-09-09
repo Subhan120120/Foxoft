@@ -81,6 +81,8 @@ namespace Foxoft
             barButtonItem4 = new BarButtonItem();
             barButtonItem5 = new BarButtonItem();
             BBI_InstallmentGuarantorAdd = new BarButtonItem();
+            BBI_InvoiceDiscount = new BarButtonItem();
+            BBI_Salesman = new BarButtonItem();
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             Faktura = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Payment = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -88,6 +90,7 @@ namespace Foxoft
             ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             RPG_Control = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             RibbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -438,9 +441,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, bBI_Save, bBI_SaveAndNew, bBI_Payment, bBI_New, bBI_reportPreview, bBI_DeleteInvoice, bBI_PaymentDelete, bBI_SaveAndQuit, bBI_CopyInvoice, bBI_Whatsapp, BBI_EditInvoice, BBI_exportXLSX, BBI_ImportExcel, BBI_ReportPrintFast, BBI_PrintSettingSave, BEI_PrinterName, barButtonItem3, btn_info, BBI_picture, barButtonItem2, BBI_InvoiceExpenses, BCI_ShowPicture, BCI_ShowPrint, BCI_ShowCopy, barButtonItem6, BSI_Reports, barButtonItem4, barButtonItem5, BBI_InstallmentGuarantorAdd, BBI_InvoiceDiscount, BBI_Salesman });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 63;
+            ribbonControl1.MaxItemId = 65;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.OptionsTouch.ShowTouchUISelectorInQAT = true;
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1, ribbonPage2 });
@@ -696,9 +699,25 @@ namespace Foxoft
             BBI_InstallmentGuarantorAdd.Name = "BBI_InstallmentGuarantorAdd";
             BBI_InstallmentGuarantorAdd.ItemClick += BBI_InstallmentGuarantorAdd_ItemClick;
             // 
+            // BBI_InvoiceDiscount
+            // 
+            BBI_InvoiceDiscount.Caption = "Qaimə Endirimi";
+            BBI_InvoiceDiscount.Id = 63;
+            BBI_InvoiceDiscount.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_InvoiceDiscount.ImageOptions.SvgImage");
+            BBI_InvoiceDiscount.Name = "BBI_InvoiceDiscount";
+            BBI_InvoiceDiscount.ItemClick += BBI_InvoiceDiscount_ItemClick;
+            // 
+            // BBI_Salesman
+            // 
+            BBI_Salesman.Caption = "Satıcı";
+            BBI_Salesman.Id = 64;
+            BBI_Salesman.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("BBI_Salesman.ImageOptions.SvgImage");
+            BBI_Salesman.Name = "BBI_Salesman";
+            BBI_Salesman.ItemClick += BBI_Salesman_ItemClick;
+            // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, RPG_Control, ribbonPageGroup8 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { Faktura, RPG_Payment, RPG_Installment, ribbonPageGroup2, RPG_Control, ribbonPageGroup8, ribbonPageGroup3 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "Faktura";
             // 
@@ -736,9 +755,7 @@ namespace Foxoft
             // 
             // RPG_Control
             // 
-            RPG_Control.ItemLinks.Add(BBI_picture);
             RPG_Control.ItemLinks.Add(BBI_EditInvoice, true);
-            RPG_Control.ItemLinks.Add(BBI_InvoiceExpenses);
             RPG_Control.Name = "RPG_Control";
             RPG_Control.Text = "Nəzarət";
             // 
@@ -748,6 +765,15 @@ namespace Foxoft
             ribbonPageGroup8.ItemLinks.Add(btn_info);
             ribbonPageGroup8.Name = "ribbonPageGroup8";
             ribbonPageGroup8.Text = "Məlumat";
+            // 
+            // ribbonPageGroup3
+            // 
+            ribbonPageGroup3.ItemLinks.Add(BBI_picture);
+            ribbonPageGroup3.ItemLinks.Add(BBI_InvoiceDiscount);
+            ribbonPageGroup3.ItemLinks.Add(BBI_InvoiceExpenses);
+            ribbonPageGroup3.ItemLinks.Add(BBI_Salesman);
+            ribbonPageGroup3.Name = "ribbonPageGroup3";
+            ribbonPageGroup3.Text = "Faktura";
             // 
             // ribbonPage2
             // 
@@ -1574,14 +1600,13 @@ namespace Foxoft
             LCI_SalesPersonDesc.Name = "LCI_SalesPersonDesc";
             LCI_SalesPersonDesc.Size = new Size(124, 24);
             LCI_SalesPersonDesc.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            LCI_SalesPersonDesc.TextSize = new Size(0, 0);
             LCI_SalesPersonDesc.TextVisible = false;
             // 
             // ItemForTrInstallment
             // 
             ItemForTrInstallment.Control = TrInstallmentTextEdit;
             ItemForTrInstallment.Location = new Point(0, 0);
-            ItemForTrInstallment.Name = "ItemForTrInstallment";
+            ItemForTrInstallment.Name = "item0";
             ItemForTrInstallment.Size = new Size(549, 24);
             ItemForTrInstallment.TextSize = new Size(98, 13);
             // 
@@ -1609,7 +1634,6 @@ namespace Foxoft
             LCI_GvProductList.Location = new Point(0, 216);
             LCI_GvProductList.Name = "LCI_GvProductList";
             LCI_GvProductList.Size = new Size(1126, 154);
-            LCI_GvProductList.TextSize = new Size(0, 0);
             LCI_GvProductList.TextVisible = false;
             // 
             // ItemForDocumentNumber
@@ -1632,33 +1656,27 @@ namespace Foxoft
             // 
             // splitterItem1
             // 
-            splitterItem1.AllowHotTrack = true;
             splitterItem1.Location = new Point(449, 370);
             splitterItem1.Name = "splitterItem1";
             splitterItem1.Size = new Size(10, 84);
             // 
             // splitterItem2
             // 
-            splitterItem2.AllowHotTrack = true;
             splitterItem2.Location = new Point(755, 370);
             splitterItem2.Name = "splitterItem2";
             splitterItem2.Size = new Size(10, 84);
             // 
             // emptySpaceItem3
             // 
-            emptySpaceItem3.AllowHotTrack = false;
             emptySpaceItem3.Location = new Point(632, 370);
             emptySpaceItem3.Name = "emptySpaceItem3";
             emptySpaceItem3.Size = new Size(123, 84);
-            emptySpaceItem3.TextSize = new Size(0, 0);
             // 
             // emptySpaceItem4
             // 
-            emptySpaceItem4.AllowHotTrack = false;
             emptySpaceItem4.Location = new Point(904, 370);
             emptySpaceItem4.Name = "emptySpaceItem4";
             emptySpaceItem4.Size = new Size(222, 84);
-            emptySpaceItem4.TextSize = new Size(0, 0);
             // 
             // LCG_InfoInstallment
             // 
@@ -1680,7 +1698,6 @@ namespace Foxoft
             LCI_InstallmentSum.Location = new Point(93, 0);
             LCI_InstallmentSum.Name = "LCI_InstallmentSum";
             LCI_InstallmentSum.Size = new Size(56, 20);
-            LCI_InstallmentSum.TextSize = new Size(0, 0);
             LCI_InstallmentSum.TextVisible = false;
             // 
             // LCI_InstallmentCommissionSum
@@ -1690,7 +1707,6 @@ namespace Foxoft
             LCI_InstallmentCommissionSum.Location = new Point(93, 20);
             LCI_InstallmentCommissionSum.Name = "LCI_InstallmentCommissionSum";
             LCI_InstallmentCommissionSum.Size = new Size(56, 20);
-            LCI_InstallmentCommissionSum.TextSize = new Size(0, 0);
             LCI_InstallmentCommissionSum.TextVisible = false;
             // 
             // LCI_InstallmentTotalSum
@@ -1700,7 +1716,6 @@ namespace Foxoft
             LCI_InstallmentTotalSum.Location = new Point(93, 40);
             LCI_InstallmentTotalSum.Name = "LCI_InstallmentTotalSum";
             LCI_InstallmentTotalSum.Size = new Size(56, 20);
-            LCI_InstallmentTotalSum.TextSize = new Size(0, 0);
             LCI_InstallmentTotalSum.TextVisible = false;
             // 
             // LCI_InstallmentCommissionSumTxt
@@ -1710,7 +1725,6 @@ namespace Foxoft
             LCI_InstallmentCommissionSumTxt.Location = new Point(0, 20);
             LCI_InstallmentCommissionSumTxt.Name = "LCI_InstallmentCommissionSumTxt";
             LCI_InstallmentCommissionSumTxt.Size = new Size(93, 20);
-            LCI_InstallmentCommissionSumTxt.TextSize = new Size(0, 0);
             LCI_InstallmentCommissionSumTxt.TextVisible = false;
             // 
             // LCI_InstallmentSumTxt
@@ -1720,7 +1734,6 @@ namespace Foxoft
             LCI_InstallmentSumTxt.Location = new Point(0, 0);
             LCI_InstallmentSumTxt.Name = "LCI_InstallmentSumTxt";
             LCI_InstallmentSumTxt.Size = new Size(93, 20);
-            LCI_InstallmentSumTxt.TextSize = new Size(0, 0);
             LCI_InstallmentSumTxt.TextVisible = false;
             // 
             // LCI_InstallmentTotalSumTxt
@@ -1730,7 +1743,6 @@ namespace Foxoft
             LCI_InstallmentTotalSumTxt.Location = new Point(0, 40);
             LCI_InstallmentTotalSumTxt.Name = "LCI_InstallmentTotalSumTxt";
             LCI_InstallmentTotalSumTxt.Size = new Size(93, 20);
-            LCI_InstallmentTotalSumTxt.TextSize = new Size(0, 0);
             LCI_InstallmentTotalSumTxt.TextVisible = false;
             // 
             // LCG_InfoPayment
@@ -1753,7 +1765,6 @@ namespace Foxoft
             LCI_InvoicePaidSum.Name = "LCI_InvoicePaidSum";
             LCI_InvoicePaidSum.Size = new Size(56, 20);
             LCI_InvoicePaidSum.Text = "0.00";
-            LCI_InvoicePaidSum.TextSize = new Size(0, 0);
             LCI_InvoicePaidSum.TextVisible = false;
             // 
             // LCI_InvoicePaidCashSum
@@ -1763,7 +1774,6 @@ namespace Foxoft
             LCI_InvoicePaidCashSum.Location = new Point(59, 0);
             LCI_InvoicePaidCashSum.Name = "LCI_InvoicePaidCashSum";
             LCI_InvoicePaidCashSum.Size = new Size(56, 20);
-            LCI_InvoicePaidCashSum.TextSize = new Size(0, 0);
             LCI_InvoicePaidCashSum.TextVisible = false;
             // 
             // LCI_InvoicePaidSumTxt
@@ -1773,7 +1783,6 @@ namespace Foxoft
             LCI_InvoicePaidSumTxt.Location = new Point(0, 40);
             LCI_InvoicePaidSumTxt.Name = "LCI_InvoicePaidSumTxt";
             LCI_InvoicePaidSumTxt.Size = new Size(59, 20);
-            LCI_InvoicePaidSumTxt.TextSize = new Size(0, 0);
             LCI_InvoicePaidSumTxt.TextVisible = false;
             // 
             // LCI_InvoicePaidCashlessSumTxt
@@ -1783,7 +1792,6 @@ namespace Foxoft
             LCI_InvoicePaidCashlessSumTxt.Location = new Point(0, 20);
             LCI_InvoicePaidCashlessSumTxt.Name = "LCI_InvoicePaidCashlessSumTxt";
             LCI_InvoicePaidCashlessSumTxt.Size = new Size(59, 20);
-            LCI_InvoicePaidCashlessSumTxt.TextSize = new Size(0, 0);
             LCI_InvoicePaidCashlessSumTxt.TextVisible = false;
             // 
             // LCI_InvoicePaidCashSumTxt
@@ -1793,7 +1801,6 @@ namespace Foxoft
             LCI_InvoicePaidCashSumTxt.Location = new Point(0, 0);
             LCI_InvoicePaidCashSumTxt.Name = "LCI_InvoicePaidCashSumTxt";
             LCI_InvoicePaidCashSumTxt.Size = new Size(59, 20);
-            LCI_InvoicePaidCashSumTxt.TextSize = new Size(0, 0);
             LCI_InvoicePaidCashSumTxt.TextVisible = false;
             // 
             // LCI_InvoicePaidCashlessSum
@@ -1803,7 +1810,6 @@ namespace Foxoft
             LCI_InvoicePaidCashlessSum.Location = new Point(59, 20);
             LCI_InvoicePaidCashlessSum.Name = "LCI_InvoicePaidCashlessSum";
             LCI_InvoicePaidCashlessSum.Size = new Size(56, 20);
-            LCI_InvoicePaidCashlessSum.TextSize = new Size(0, 0);
             LCI_InvoicePaidCashlessSum.TextVisible = false;
             // 
             // LCI_CurrAccDesc
@@ -1815,7 +1821,6 @@ namespace Foxoft
             LCI_CurrAccDesc.Size = new Size(361, 24);
             LCI_CurrAccDesc.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             LCI_CurrAccDesc.Text = "CurrAccDesc";
-            LCI_CurrAccDesc.TextSize = new Size(0, 0);
             LCI_CurrAccDesc.TextVisible = false;
             // 
             // ItemForStoreCode
@@ -1852,7 +1857,6 @@ namespace Foxoft
             ItemForDocumentTime.Name = "ItemForDocumentTime";
             ItemForDocumentTime.Size = new Size(194, 24);
             ItemForDocumentTime.Text = "Sənəd Vaxtı";
-            ItemForDocumentTime.TextSize = new Size(0, 0);
             ItemForDocumentTime.TextVisible = false;
             // 
             // ItemForToWarehouseCode
@@ -1888,7 +1892,6 @@ namespace Foxoft
             ItemForIsReturn.Location = new Point(0, 370);
             ItemForIsReturn.Name = "ItemForIsReturn";
             ItemForIsReturn.Size = new Size(112, 84);
-            ItemForIsReturn.TextSize = new Size(0, 0);
             ItemForIsReturn.TextVisible = false;
             // 
             // lCI_printCount
@@ -1908,16 +1911,13 @@ namespace Foxoft
             lCI_IsSent.Location = new Point(112, 370);
             lCI_IsSent.Name = "lCI_IsSent";
             lCI_IsSent.Size = new Size(112, 84);
-            lCI_IsSent.TextSize = new Size(0, 0);
             lCI_IsSent.TextVisible = false;
             // 
             // emptySpaceItem2
             // 
-            emptySpaceItem2.AllowHotTrack = false;
             emptySpaceItem2.Location = new Point(336, 370);
             emptySpaceItem2.Name = "emptySpaceItem2";
             emptySpaceItem2.Size = new Size(113, 84);
-            emptySpaceItem2.TextSize = new Size(0, 0);
             // 
             // LCG_Installment
             // 
@@ -2294,5 +2294,8 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForTrInstallment;
         private DevExpress.XtraEditors.TextEdit txtEdit_Installment_InterestRate;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private BarButtonItem BBI_InvoiceDiscount;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private BarButtonItem BBI_Salesman;
     }
 }

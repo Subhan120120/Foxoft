@@ -7,6 +7,7 @@ using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraNavBar;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.Serialization;
 using Foxoft.AppCode;
 using Foxoft.Models;
@@ -27,7 +28,7 @@ namespace Foxoft
         ReportClass reportClass = new();
         AdoMethods adoMethods = new();
 
-        private AccordionControlElement _ctxElement;
+        private AccordionControlElement aCE_Active;
         private ContextMenuStrip _cms;
 
         public FormERP()
@@ -82,17 +83,21 @@ namespace Foxoft
             if (hit?.Element == null) return;                 // clicked empty space
             if (hit.Element.Style != ElementStyle.Item) return; // ignore group headers, etc.
 
-            _ctxElement = hit.Element; // remember the element for later
+            aCE_Active = hit.Element; // remember the element for later
 
             if (e.Button == MouseButtons.Left)
             {
-                // LEFT CLICK -> open your form
-                BBI_FavoriteAdd_ItemClick(hit.Element);
+                BBI_ItemClick(hit.Element);
             }
             else if (e.Button == MouseButtons.Right)
             {
                 popupMenuAccordian.ShowPopup(Cursor.Position);
             }
+        }
+
+        private void BBI_Report_ItemClick(AccordionControlElement el)
+        {
+
         }
 
         private void UIMode(bool toucUIMode)
@@ -127,11 +132,11 @@ namespace Foxoft
                 childElement.Visible = false;
         }
 
-        private void BBI_FavoriteAdd_ItemClick(AccordionControlElement el)
+        private void BBI_ItemClick(AccordionControlElement el)
         {
-            if (el?.Name is not string key) return;
+            if (el?.Name is not string name) return;
 
-            switch (key)
+            switch (name)
             {
                 case "Products": ShowExistForm<FormProductList>(new byte[] { 1 }, false); break;
                 case "CurrAccs": ShowExistForm<FormCurrAccList>(new byte[] { 1, 2, 3 }); break;
@@ -176,11 +181,27 @@ namespace Foxoft
                 default: break;
             }
 
-        }
+            if (el.Name.StartsWith("report_"))
+            {
+                string idPart = el.Name.Substring("report_".Length);
 
-        private void BBI_FavoriteRemove_ItemClick(AccordionControlElement el)
-        {
-            MessageBox.Show($"Element: {el.Text}\nTag: {el.Tag}", "Properties");
+                if (int.TryParse(idPart, out int reportId))
+                {
+                    DcReport dcReport = efMethods.SelectEntityById<DcReport>(reportId);
+
+                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString());
+
+                    if (!currAccHasClaims)
+                    {
+                        MessageBox.Show("Yetkiniz yoxdur! ");
+                        return;
+                    }
+
+                    if (dcReport is not null)
+                        ShowNewForm<FormReportFilter>(dcReport);
+                }
+            }
+
         }
 
         private void InitComponentName()
@@ -242,19 +263,10 @@ namespace Foxoft
                 AccordionControlElement aCE = new();
 
                 aCE.ImageOptions.SvgImage = svgImageCollection1["report"];
-                aCE.Name = dcReport.ReportId.ToString();
+                aCE.Name = "report_" + dcReport.ReportId.ToString();
                 aCE.Style = ElementStyle.Item;
                 aCE.Text = dcReport.ReportName;
-                aCE.Click += (sender, e) =>
-                {
-                    bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, dcReport.ReportId.ToString());
-                    if (!currAccHasClaims)
-                    {
-                        MessageBox.Show("Yetkiniz yoxdur! ");
-                        return;
-                    }
-                    ShowNewForm<FormReportFilter>(dcReport);
-                };
+                aCE.Tag = dcReport;
 
                 aCE_Reports.Elements.Add(aCE);
             }
@@ -269,14 +281,26 @@ namespace Foxoft
 
             foreach (string aCE in aceList)
             {
-                var element = aC_Root.Elements
-                                    .SelectMany(x => x.Elements) // bütün child elementləri düzləşdir
+                AccordionControlElement element = aC_Root.Elements
+                                    .SelectMany(x => x.Elements)
                                     .FirstOrDefault(x => x.Name == aCE);
 
                 if (element != null)
-                    ACG_Favorites.Elements.Add(element);
+                {
+                    AccordionControlElement shortcut = new()
+                    {
+                        Name = element.Name,
+                        Text = element.Text,
+                        Style = ElementStyle.Item,
+                        Tag = element  // orijinal elementin linki
+                    };
+                    shortcut.ImageOptions.SvgImage = element.ImageOptions.SvgImage;
 
+                    ACG_Favorites.Visible = true;
+                    ACG_Favorites.Elements.Add(shortcut);
+                }
             }
+
         }
 
         private void UserLookAndFeel_StyleChanged(object sender, EventArgs e)
@@ -357,13 +381,13 @@ namespace Foxoft
         {
             AccordionControlElement newElement = new()
             {
-                Name = _ctxElement.Name,
-                Text = _ctxElement.Text,
+                Name = aCE_Active.Name,
+                Text = aCE_Active.Text,
                 Style = ElementStyle.Item,
-                Tag = _ctxElement,
+                Tag = aCE_Active,
             };
 
-            newElement.ImageOptions.SvgImage = _ctxElement.ImageOptions.SvgImage;
+            newElement.ImageOptions.SvgImage = aCE_Active.ImageOptions.SvgImage;
 
             ACG_Favorites.Visible = true;
             ACG_Favorites.Elements.Add(newElement);
@@ -374,7 +398,7 @@ namespace Foxoft
 
         private void BBI_FavoriteRemove_ItemClick(object sender, ItemClickEventArgs e)
         {
-            AccordionControlElement removeElement = ACG_Favorites.Elements.FirstOrDefault(x => x.Name == _ctxElement.Name);
+            AccordionControlElement removeElement = ACG_Favorites.Elements.FirstOrDefault(x => x.Name == aCE_Active.Name);
 
             ACG_Favorites.Elements.Remove(removeElement);
 
@@ -383,6 +407,13 @@ namespace Foxoft
 
             if (ACG_Favorites.Elements.Count == 0)
                 ACG_Favorites.Visible = false;
+        }
+
+        private void popupMenuAccordian_Popup(object sender, EventArgs e)
+        {
+            bool isFavorite = Settings.Default.FavoritesMenus.Contains(aCE_Active.Name);
+            BBI_FavoriteRemove.Enabled = isFavorite;
+            BBI_FavoriteAdd.Enabled = !isFavorite;
         }
 
         private void ShowNewForm<T>(params object[] args) where T : Form

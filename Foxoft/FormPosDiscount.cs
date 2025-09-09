@@ -9,14 +9,20 @@ namespace Foxoft
     public partial class FormPosDiscount : XtraForm
     {
         decimal Amount = 0; // Amount come from parent form
-        public decimal PosDiscount = 0; // PosDiscount come from parent form
+        public decimal DiscountAmount = 0; // PosDiscount come from parent form
+        public decimal DiscountPercent = 0; // PosDiscount come from parent form
 
-        public FormPosDiscount(decimal PosDiscount, decimal Amount)
+        public FormPosDiscount()
+        {
+            InitializeComponent();
+        }
+
+        public FormPosDiscount(decimal discountPercent, decimal Amount)
+            : this()
         {
             this.Amount = Amount;
-            this.PosDiscount = PosDiscount;
-
-            InitializeComponent();
+            this.DiscountPercent = discountPercent;
+            this.DiscountAmount = discountPercent * Amount / 100;
         }
 
         private void FormPosDiscount_Load(object sender, EventArgs e)
@@ -24,29 +30,32 @@ namespace Foxoft
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
 
-            textEditDiscountRate.EditValue = Math.Round(PosDiscount / Amount * 100, 2);
-            textEditNetAmount.EditValue = Amount - PosDiscount;
+            textEditDiscountRate.EditValue = Math.Round(DiscountAmount / Amount * 100, 4);
+            textEditNetAmount.EditValue = Amount - DiscountAmount;
         }
 
         private void textEditDiscountRate_EditValueChanged(object sender, EventArgs e)
         {
-            PosDiscount = Convert.ToDecimal(textEditDiscountRate.EditValue) * Amount / 100;
+            DiscountAmount = Convert.ToDecimal(textEditDiscountRate.EditValue) * Amount / 100;
 
             textEditNetAmount.EditValueChanged -= new EventHandler(textEditNetAmount_EditValueChanged);
-            textEditNetAmount.EditValue = Amount - PosDiscount;
+            textEditNetAmount.EditValue = Amount - DiscountAmount;
             textEditNetAmount.EditValueChanged += new EventHandler(textEditNetAmount_EditValueChanged);
+
+            DiscountPercent = Convert.ToDecimal(textEditDiscountRate.EditValue);
 
             textEditDiscountRate.DoValidate();
         }
 
         private void textEditNetAmount_EditValueChanged(object sender, EventArgs e)
         {
-            PosDiscount = Amount - Convert.ToDecimal(textEditNetAmount.EditValue);
+            DiscountAmount = Amount - Convert.ToDecimal(textEditNetAmount.EditValue);
 
             textEditDiscountRate.EditValueChanged -= new EventHandler(textEditDiscountRate_EditValueChanged);
-            textEditDiscountRate.EditValue = Math.Round(PosDiscount / Amount * 100, 2);
+            textEditDiscountRate.EditValue = Math.Round(DiscountAmount / Amount * 100, 4);
             textEditDiscountRate.EditValueChanged += new EventHandler(textEditDiscountRate_EditValueChanged);
 
+            DiscountPercent = Convert.ToDecimal(textEditDiscountRate.EditValue);
             textEditNetAmount.DoValidate();
         }
 

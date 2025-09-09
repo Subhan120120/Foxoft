@@ -314,6 +314,7 @@ namespace Foxoft
             popupMenuAccordian.ItemLinks.Add(BBI_FavoriteRemove);
             popupMenuAccordian.Name = "popupMenuAccordian";
             popupMenuAccordian.Ribbon = parentRibbonControl;
+            popupMenuAccordian.Popup += popupMenuAccordian_Popup;
             // 
             // aC_Root
             // 
@@ -336,6 +337,7 @@ namespace Foxoft
             ACG_Favorites.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACG_Favorites.ImageOptions.SvgImage");
             ACG_Favorites.Name = "ACG_Favorites";
             ACG_Favorites.Text = "Sevimli";
+            ACG_Favorites.Visible = false;
             // 
             // aCE_Invoices
             // 

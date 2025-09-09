@@ -179,7 +179,7 @@ namespace Foxoft
             trInvoiceHeader = trInvoiceHeadersBindingSource.AddNew() as TrInvoiceHeader;
 
             this.Text = $"{dcProcess.ProcessDesc} - ({btnEdit_DocNum.EditValue})";
-              
+
             CalcPaidAmount();
             //CalcInstallmentAmount();
 
@@ -664,7 +664,7 @@ namespace Foxoft
             decimal newValue = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
             decimal oldValue = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc));
 
-            decimal oldSummaryValue = CalcSummmaryValue();
+            decimal oldSummaryValue = CalcNetAmountSummmaryValue();
             decimal newSummaryValue = oldSummaryValue - oldValue + newValue;
 
             decimal balanceAfter = CurrAccBalanceBefore - newSummaryValue;
@@ -672,7 +672,7 @@ namespace Foxoft
             return balanceAfter;
         }
 
-        private decimal CalcSummmaryValue()
+        private decimal CalcNetAmountSummmaryValue()
         {
             decimal sum = 0;
 
@@ -685,6 +685,23 @@ namespace Foxoft
             }
 
             return sum;
+            //return (decimal)colNetAmountLoc.SummaryItem.SummaryValue
+        }
+
+        private decimal CalcAmountSummmaryValue()
+        {
+            decimal sum = 0;
+
+            for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+            {
+                object value = gV_InvoiceLine.GetRowCellValue(i, colAmountLoc);
+
+                if (value != null && value != DBNull.Value)
+                    sum += Convert.ToDecimal(value);
+            }
+
+            return sum;
+            //return (decimal)colAmountLoc.SummaryItem.SummaryValue
         }
 
         private decimal CalcProductBalance(TrInvoiceLine trInvoiceLine, string wareHouse)
@@ -1082,7 +1099,8 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+
+                decimal summaryInvoice = CalcNetAmountSummmaryValue();
 
                 if (summaryInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
                 {
@@ -1159,7 +1177,7 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+                decimal summaryInvoice = CalcNetAmountSummmaryValue();
 
                 if (summaryInvoice != 0)
                     SaveInvoice();
@@ -1175,7 +1193,7 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                decimal summaryInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+                decimal summaryInvoice = CalcNetAmountSummmaryValue();
 
                 if (summaryInvoice != 0)
                     MakePayment(summaryInvoice);
@@ -1291,7 +1309,7 @@ namespace Foxoft
         {
             if (dataLayoutControl1.IsValid(out List<string> errorList))
             {
-                decimal summInvoice = (decimal)colNetAmountLoc.SummaryItem.SummaryValue;
+                decimal summInvoice = CalcNetAmountSummmaryValue();
 
                 if (summInvoice != 0 || trInvoiceHeader.ProcessCode == "IT")
                 {
@@ -1687,6 +1705,8 @@ namespace Foxoft
 
             if (!colNetAmountLoc.Summary.Any(x => x.SummaryType == SummaryItemType.Sum))
                 colNetAmountLoc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, "NetAmountLoc", "{0:n2}") });
+            if (!colAmountLoc.Summary.Any(x => x.SummaryType == SummaryItemType.Sum))
+                colAmountLoc.Summary.AddRange(new GridSummaryItem[] { new GridColumnSummaryItem(SummaryItemType.Sum, "AmountLoc", "{0:n2}") });
         }
 
         private void SaveLayout()
@@ -2394,6 +2414,42 @@ namespace Foxoft
         {
             if (trInvoiceHeader.ProcessCode == "IS" && trInvoiceHeader?.TrInstallment is not null)
                 trInvoiceHeader.TrInstallment.InterestRate = (float)LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
+        }
+
+        private void BBI_InvoiceDiscount_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, nameof(TrInvoiceLine.PosDiscount));
+            if (!currAccHasClaims)
+            {
+                XtraMessageBox.Show("Yetkiniz Yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (gV_InvoiceLine.DataRowCount > 0)
+            {
+                decimal amountSummary = CalcAmountSummmaryValue();
+                using (FormPosDiscount formPosDiscount = new(amountSummary, 0))
+                {
+                    if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
+                    {
+                        for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                            gV_InvoiceLine.SetRowCellValue(i, col_PosDiscount, formPosDiscount.DiscountPercent);
+                    }
+                }
+            }
+            else
+                XtraMessageBox.Show("Sətir yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        private void BBI_Salesman_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DcCurrAcc salesMan = efMethods.SelectSalesPerson(btnEdit_SalesPerson.EditValue?.ToString());
+            if (salesMan is not null)
+            {
+                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                    gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
+            }
         }
     }
 }

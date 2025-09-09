@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraRichEdit.Model;
 using DevExpress.XtraSplashScreen;
@@ -10,6 +11,7 @@ using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.IO;
 
 namespace Foxoft
@@ -351,8 +353,8 @@ namespace Foxoft
                         TrInvoiceLine trInvoiceLine = new()
                         {
                             InvoiceLineId = (Guid)invoiceLineId,
-                            NetAmount = Amount - formPosDiscount.PosDiscount,
-                            PosDiscount = formPosDiscount.PosDiscount
+                            NetAmount = Amount - formPosDiscount.DiscountAmount,
+                            PosDiscount = formPosDiscount.DiscountPercent
                         };
                         int result = efMethods.UpdateInvoiceLine_PosDiscount(trInvoiceLine);
 
@@ -515,6 +517,8 @@ namespace Foxoft
 
         private async void btn_Print_Click(object sender, EventArgs e)
         {
+            string printerName = String.IsNullOrEmpty(settingStore.PrinterName) ? new PrinterSettings().PrinterName : settingStore.PrinterName;
+
             await PrintFast(settingStore.PrinterName);
         }
 
