@@ -113,7 +113,7 @@ namespace Foxoft
             colCurrencyCode = new GridColumn();
             colQtyOut = new GridColumn();
             btn_ProductSearch = new SimpleButton();
-            btn_Discount = new SimpleButton();
+            btn_LineDiscount = new SimpleButton();
             btn_CancelInvoice = new SimpleButton();
             btn_DeleteLine = new SimpleButton();
             btn_SalesPerson = new SimpleButton();
@@ -125,6 +125,7 @@ namespace Foxoft
             btn_ReportZ = new SimpleButton();
             btn_NewInvoice = new SimpleButton();
             btn_IncomplatedInvoices = new SimpleButton();
+            btn_InvoiceDiscount = new SimpleButton();
             lCG_Root = new LayoutControlGroup();
             lCG_Barcode = new LayoutControlGroup();
             lCI_ComboBox = new LayoutControlItem();
@@ -134,15 +135,16 @@ namespace Foxoft
             lCI_GridView = new LayoutControlItem();
             lCG_Function = new LayoutControlGroup();
             lCI_ProductSearch = new LayoutControlItem();
-            lCI_Discount = new LayoutControlItem();
             lCI_CancelInvoice = new LayoutControlItem();
-            lCI_DeleteLine = new LayoutControlItem();
-            lCI_SalesPerson = new LayoutControlItem();
             lCI_Print = new LayoutControlItem();
             lCI_PrintDesign = new LayoutControlItem();
             lCI_ReportZ = new LayoutControlItem();
+            lCI_DeleteLine = new LayoutControlItem();
             LCI_NewInvoice = new LayoutControlItem();
+            lCI_SalesPerson = new LayoutControlItem();
             layoutControlItem8 = new LayoutControlItem();
+            lCI_Discount = new LayoutControlItem();
+            layoutControlItem9 = new LayoutControlItem();
             lCG_Payment = new LayoutControlGroup();
             lCI_Cash = new LayoutControlItem();
             lCI_Cashless = new LayoutControlItem();
@@ -197,15 +199,16 @@ namespace Foxoft
             ((ISupportInitialize)lCI_GridView).BeginInit();
             ((ISupportInitialize)lCG_Function).BeginInit();
             ((ISupportInitialize)lCI_ProductSearch).BeginInit();
-            ((ISupportInitialize)lCI_Discount).BeginInit();
             ((ISupportInitialize)lCI_CancelInvoice).BeginInit();
-            ((ISupportInitialize)lCI_DeleteLine).BeginInit();
-            ((ISupportInitialize)lCI_SalesPerson).BeginInit();
             ((ISupportInitialize)lCI_Print).BeginInit();
             ((ISupportInitialize)lCI_PrintDesign).BeginInit();
             ((ISupportInitialize)lCI_ReportZ).BeginInit();
+            ((ISupportInitialize)lCI_DeleteLine).BeginInit();
             ((ISupportInitialize)LCI_NewInvoice).BeginInit();
+            ((ISupportInitialize)lCI_SalesPerson).BeginInit();
             ((ISupportInitialize)layoutControlItem8).BeginInit();
+            ((ISupportInitialize)lCI_Discount).BeginInit();
+            ((ISupportInitialize)layoutControlItem9).BeginInit();
             ((ISupportInitialize)lCG_Payment).BeginInit();
             ((ISupportInitialize)lCI_Cash).BeginInit();
             ((ISupportInitialize)lCI_Cashless).BeginInit();
@@ -241,7 +244,7 @@ namespace Foxoft
             lC_InvoiceLine.Controls.Add(imageComboEdit_Barcode);
             lC_InvoiceLine.Controls.Add(gC_InvoiceLine);
             lC_InvoiceLine.Controls.Add(btn_ProductSearch);
-            lC_InvoiceLine.Controls.Add(btn_Discount);
+            lC_InvoiceLine.Controls.Add(btn_LineDiscount);
             lC_InvoiceLine.Controls.Add(btn_CancelInvoice);
             lC_InvoiceLine.Controls.Add(btn_DeleteLine);
             lC_InvoiceLine.Controls.Add(btn_SalesPerson);
@@ -253,6 +256,7 @@ namespace Foxoft
             lC_InvoiceLine.Controls.Add(btn_ReportZ);
             lC_InvoiceLine.Controls.Add(btn_NewInvoice);
             lC_InvoiceLine.Controls.Add(btn_IncomplatedInvoices);
+            lC_InvoiceLine.Controls.Add(btn_InvoiceDiscount);
             lC_InvoiceLine.Dock = DockStyle.Fill;
             lC_InvoiceLine.Location = new Point(0, 0);
             lC_InvoiceLine.Name = "lC_InvoiceLine";
@@ -266,7 +270,7 @@ namespace Foxoft
             // 
             lbl_InvoicePaidTotalSum.Appearance.Font = new Font("Tahoma", 12F);
             lbl_InvoicePaidTotalSum.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidTotalSum.Location = new Point(621, 595);
+            lbl_InvoicePaidTotalSum.Location = new Point(487, 595);
             lbl_InvoicePaidTotalSum.Name = "lbl_InvoicePaidTotalSum";
             lbl_InvoicePaidTotalSum.Size = new Size(68, 19);
             lbl_InvoicePaidTotalSum.StyleController = lC_InvoiceLine;
@@ -277,7 +281,7 @@ namespace Foxoft
             // 
             lbl_InvoicePaidTotalSumTxt.Appearance.Font = new Font("Tahoma", 12F);
             lbl_InvoicePaidTotalSumTxt.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidTotalSumTxt.Location = new Point(552, 595);
+            lbl_InvoicePaidTotalSumTxt.Location = new Point(418, 595);
             lbl_InvoicePaidTotalSumTxt.Name = "lbl_InvoicePaidTotalSumTxt";
             lbl_InvoicePaidTotalSumTxt.Size = new Size(65, 19);
             lbl_InvoicePaidTotalSumTxt.StyleController = lC_InvoiceLine;
@@ -288,7 +292,7 @@ namespace Foxoft
             // 
             lbl_InvoicePaidCashlessSum.Appearance.Font = new Font("Tahoma", 12F);
             lbl_InvoicePaidCashlessSum.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidCashlessSum.Location = new Point(621, 572);
+            lbl_InvoicePaidCashlessSum.Location = new Point(487, 572);
             lbl_InvoicePaidCashlessSum.Name = "lbl_InvoicePaidCashlessSum";
             lbl_InvoicePaidCashlessSum.Size = new Size(68, 19);
             lbl_InvoicePaidCashlessSum.StyleController = lC_InvoiceLine;
@@ -299,7 +303,7 @@ namespace Foxoft
             // 
             lbl_InvoicePaidCashlessSumTxt.Appearance.Font = new Font("Tahoma", 12F);
             lbl_InvoicePaidCashlessSumTxt.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidCashlessSumTxt.Location = new Point(556, 572);
+            lbl_InvoicePaidCashlessSumTxt.Location = new Point(422, 572);
             lbl_InvoicePaidCashlessSumTxt.Name = "lbl_InvoicePaidCashlessSumTxt";
             lbl_InvoicePaidCashlessSumTxt.Size = new Size(61, 19);
             lbl_InvoicePaidCashlessSumTxt.StyleController = lC_InvoiceLine;
@@ -310,7 +314,7 @@ namespace Foxoft
             // 
             labelControl2.Appearance.Font = new Font("Tahoma", 12F);
             labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(621, 549);
+            labelControl2.Location = new Point(487, 549);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(68, 19);
             labelControl2.StyleController = lC_InvoiceLine;
@@ -321,7 +325,7 @@ namespace Foxoft
             // 
             lbl_InvoicePaidCashSumTxt.Appearance.Font = new Font("Tahoma", 12F);
             lbl_InvoicePaidCashSumTxt.Appearance.Options.UseFont = true;
-            lbl_InvoicePaidCashSumTxt.Location = new Point(574, 549);
+            lbl_InvoicePaidCashSumTxt.Location = new Point(440, 549);
             lbl_InvoicePaidCashSumTxt.Name = "lbl_InvoicePaidCashSumTxt";
             lbl_InvoicePaidCashSumTxt.Size = new Size(43, 19);
             lbl_InvoicePaidCashSumTxt.StyleController = lC_InvoiceLine;
@@ -330,11 +334,11 @@ namespace Foxoft
             // 
             // txt_PrintCount
             // 
-            txt_PrintCount.Location = new Point(480, 414);
+            txt_PrintCount.Location = new Point(401, 414);
             txt_PrintCount.Name = "txt_PrintCount";
-            txt_PrintCount.Size = new Size(221, 20);
+            txt_PrintCount.Size = new Size(166, 20);
             txt_PrintCount.StyleController = lC_InvoiceLine;
-            txt_PrintCount.TabIndex = 7;
+            txt_PrintCount.TabIndex = 8;
             // 
             // dataLayoutControl1
             // 
@@ -347,10 +351,10 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(btn_CustomerAdd);
             dataLayoutControl1.Controls.Add(btn_CustomerEdit);
             dataLayoutControl1.DataSource = dcCurrAccBindingSource;
-            dataLayoutControl1.Location = new Point(729, 45);
+            dataLayoutControl1.Location = new Point(595, 45);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.Root = Root;
-            dataLayoutControl1.Size = new Size(322, 146);
+            dataLayoutControl1.Size = new Size(456, 146);
             dataLayoutControl1.TabIndex = 5;
             dataLayoutControl1.Text = "dataLayoutControl1";
             // 
@@ -360,7 +364,7 @@ namespace Foxoft
             CurrAccCodeTextEdit.Location = new Point(103, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
             CurrAccCodeTextEdit.Properties.AllowNullInput = DefaultBoolean.False;
-            CurrAccCodeTextEdit.Size = new Size(163, 20);
+            CurrAccCodeTextEdit.Size = new Size(277, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 4;
             // 
@@ -374,7 +378,7 @@ namespace Foxoft
             CurrAccDescTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccBindingSource, "CurrAccDesc", true));
             CurrAccDescTextEdit.Location = new Point(103, 36);
             CurrAccDescTextEdit.Name = "CurrAccDescTextEdit";
-            CurrAccDescTextEdit.Size = new Size(163, 20);
+            CurrAccDescTextEdit.Size = new Size(277, 20);
             CurrAccDescTextEdit.StyleController = dataLayoutControl1;
             CurrAccDescTextEdit.TabIndex = 5;
             // 
@@ -383,7 +387,7 @@ namespace Foxoft
             BonusCardNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccBindingSource, "BonusCardNum", true));
             BonusCardNumTextEdit.Location = new Point(103, 60);
             BonusCardNumTextEdit.Name = "BonusCardNumTextEdit";
-            BonusCardNumTextEdit.Size = new Size(163, 20);
+            BonusCardNumTextEdit.Size = new Size(277, 20);
             BonusCardNumTextEdit.StyleController = dataLayoutControl1;
             BonusCardNumTextEdit.TabIndex = 6;
             // 
@@ -392,7 +396,7 @@ namespace Foxoft
             AddressTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccBindingSource, "Address", true));
             AddressTextEdit.Location = new Point(103, 84);
             AddressTextEdit.Name = "AddressTextEdit";
-            AddressTextEdit.Size = new Size(163, 20);
+            AddressTextEdit.Size = new Size(277, 20);
             AddressTextEdit.StyleController = dataLayoutControl1;
             AddressTextEdit.TabIndex = 7;
             // 
@@ -404,7 +408,7 @@ namespace Foxoft
             PhoneNumTextEdit.Properties.Mask.EditMask = "(999) 000-0000";
             PhoneNumTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
             PhoneNumTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            PhoneNumTextEdit.Size = new Size(163, 20);
+            PhoneNumTextEdit.Size = new Size(277, 20);
             PhoneNumTextEdit.StyleController = dataLayoutControl1;
             PhoneNumTextEdit.TabIndex = 8;
             // 
@@ -434,10 +438,10 @@ namespace Foxoft
             btn_CustomerSearch.ButtonStyle = BorderStyles.UltraFlat;
             btn_CustomerSearch.ImageOptions.Image = (Image)resources.GetObject("btn_CustomerSearch.ImageOptions.Image");
             btn_CustomerSearch.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_CustomerSearch.Location = new Point(270, 12);
+            btn_CustomerSearch.Location = new Point(384, 12);
             btn_CustomerSearch.Name = "btn_CustomerSearch";
             btn_CustomerSearch.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CustomerSearch.Size = new Size(40, 38);
+            btn_CustomerSearch.Size = new Size(60, 38);
             btn_CustomerSearch.StyleController = dataLayoutControl1;
             btn_CustomerSearch.TabIndex = 32;
             btn_CustomerSearch.Text = "simpleButton3";
@@ -469,10 +473,10 @@ namespace Foxoft
             btn_CustomerAdd.ButtonStyle = BorderStyles.UltraFlat;
             btn_CustomerAdd.ImageOptions.Image = (Image)resources.GetObject("btn_CustomerAdd.ImageOptions.Image");
             btn_CustomerAdd.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_CustomerAdd.Location = new Point(270, 54);
+            btn_CustomerAdd.Location = new Point(384, 54);
             btn_CustomerAdd.Name = "btn_CustomerAdd";
             btn_CustomerAdd.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CustomerAdd.Size = new Size(40, 38);
+            btn_CustomerAdd.Size = new Size(60, 38);
             btn_CustomerAdd.StyleController = dataLayoutControl1;
             btn_CustomerAdd.TabIndex = 31;
             btn_CustomerAdd.Text = "simpleButton1";
@@ -504,10 +508,10 @@ namespace Foxoft
             btn_CustomerEdit.ButtonStyle = BorderStyles.UltraFlat;
             btn_CustomerEdit.ImageOptions.Image = (Image)resources.GetObject("btn_CustomerEdit.ImageOptions.Image");
             btn_CustomerEdit.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_CustomerEdit.Location = new Point(270, 96);
+            btn_CustomerEdit.Location = new Point(384, 96);
             btn_CustomerEdit.Name = "btn_CustomerEdit";
             btn_CustomerEdit.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CustomerEdit.Size = new Size(40, 38);
+            btn_CustomerEdit.Size = new Size(60, 38);
             btn_CustomerEdit.StyleController = dataLayoutControl1;
             btn_CustomerEdit.TabIndex = 33;
             btn_CustomerEdit.Text = "simpleButton4";
@@ -519,7 +523,7 @@ namespace Foxoft
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new BaseLayoutItem[] { layoutControlGroup1 });
             Root.Name = "Root";
-            Root.Size = new Size(322, 146);
+            Root.Size = new Size(456, 146);
             Root.TextVisible = false;
             // 
             // layoutControlGroup1
@@ -528,14 +532,14 @@ namespace Foxoft
             layoutControlGroup1.Items.AddRange(new BaseLayoutItem[] { ItemForCurrAccCode, ItemForCurrAccDesc, ItemForBonusCardNum, ItemForAddress, ItemForPhoneNum, layoutControlItem3, layoutControlItem4, layoutControlItem5 });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
-            layoutControlGroup1.Size = new Size(302, 126);
+            layoutControlGroup1.Size = new Size(436, 126);
             // 
             // ItemForCurrAccCode
             // 
             ItemForCurrAccCode.Control = CurrAccCodeTextEdit;
             ItemForCurrAccCode.Location = new Point(0, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new Size(258, 24);
+            ItemForCurrAccCode.Size = new Size(372, 24);
             ItemForCurrAccCode.TextSize = new Size(79, 13);
             // 
             // ItemForCurrAccDesc
@@ -543,7 +547,7 @@ namespace Foxoft
             ItemForCurrAccDesc.Control = CurrAccDescTextEdit;
             ItemForCurrAccDesc.Location = new Point(0, 24);
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
-            ItemForCurrAccDesc.Size = new Size(258, 24);
+            ItemForCurrAccDesc.Size = new Size(372, 24);
             ItemForCurrAccDesc.TextSize = new Size(79, 13);
             // 
             // ItemForBonusCardNum
@@ -551,7 +555,7 @@ namespace Foxoft
             ItemForBonusCardNum.Control = BonusCardNumTextEdit;
             ItemForBonusCardNum.Location = new Point(0, 48);
             ItemForBonusCardNum.Name = "ItemForBonusCardNum";
-            ItemForBonusCardNum.Size = new Size(258, 24);
+            ItemForBonusCardNum.Size = new Size(372, 24);
             ItemForBonusCardNum.TextSize = new Size(79, 13);
             // 
             // ItemForAddress
@@ -559,7 +563,7 @@ namespace Foxoft
             ItemForAddress.Control = AddressTextEdit;
             ItemForAddress.Location = new Point(0, 72);
             ItemForAddress.Name = "ItemForAddress";
-            ItemForAddress.Size = new Size(258, 24);
+            ItemForAddress.Size = new Size(372, 24);
             ItemForAddress.TextSize = new Size(79, 13);
             // 
             // ItemForPhoneNum
@@ -567,57 +571,54 @@ namespace Foxoft
             ItemForPhoneNum.Control = PhoneNumTextEdit;
             ItemForPhoneNum.Location = new Point(0, 96);
             ItemForPhoneNum.Name = "ItemForPhoneNum";
-            ItemForPhoneNum.Size = new Size(258, 30);
+            ItemForPhoneNum.Size = new Size(372, 30);
             ItemForPhoneNum.TextSize = new Size(79, 13);
             // 
             // layoutControlItem3
             // 
             layoutControlItem3.Control = btn_CustomerSearch;
-            layoutControlItem3.Location = new Point(258, 0);
+            layoutControlItem3.Location = new Point(372, 0);
             layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(44, 42);
-            layoutControlItem3.TextSize = new Size(0, 0);
+            layoutControlItem3.Size = new Size(64, 42);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             layoutControlItem4.Control = btn_CustomerAdd;
-            layoutControlItem4.Location = new Point(258, 42);
+            layoutControlItem4.Location = new Point(372, 42);
             layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new Size(44, 42);
-            layoutControlItem4.TextSize = new Size(0, 0);
+            layoutControlItem4.Size = new Size(64, 42);
             layoutControlItem4.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             layoutControlItem5.Control = btn_CustomerEdit;
-            layoutControlItem5.Location = new Point(258, 84);
+            layoutControlItem5.Location = new Point(372, 84);
             layoutControlItem5.Name = "layoutControlItem5";
-            layoutControlItem5.Size = new Size(44, 42);
-            layoutControlItem5.TextSize = new Size(0, 0);
+            layoutControlItem5.Size = new Size(64, 42);
             layoutControlItem5.TextVisible = false;
             // 
             // ucNumberPad1
             // 
-            ucNumberPad1.Location = new Point(426, 87);
+            ucNumberPad1.Location = new Point(347, 87);
             ucNumberPad1.Name = "ucNumberPad1";
-            ucNumberPad1.Size = new Size(275, 278);
+            ucNumberPad1.Size = new Size(220, 278);
             ucNumberPad1.TabIndex = 4;
             // 
             // txtEdit_Barcode
             // 
-            txtEdit_Barcode.Location = new Point(482, 47);
+            txtEdit_Barcode.Location = new Point(392, 47);
             txtEdit_Barcode.Name = "txtEdit_Barcode";
             txtEdit_Barcode.Properties.Appearance.Font = new Font("Tahoma", 17F);
             txtEdit_Barcode.Properties.Appearance.Options.UseFont = true;
-            txtEdit_Barcode.Size = new Size(219, 34);
+            txtEdit_Barcode.Size = new Size(175, 34);
             txtEdit_Barcode.StyleController = lC_InvoiceLine;
             txtEdit_Barcode.TabIndex = 3;
             txtEdit_Barcode.KeyDown += TxtEdit_Barcode_KeyDown;
             // 
             // imageComboEdit_Barcode
             // 
-            imageComboEdit_Barcode.Location = new Point(426, 46);
+            imageComboEdit_Barcode.Location = new Point(347, 46);
             imageComboEdit_Barcode.Name = "imageComboEdit_Barcode";
             imageComboEdit_Barcode.Properties.AllowFocused = false;
             imageComboEdit_Barcode.Properties.Appearance.Font = new Font("Tahoma", 15F);
@@ -627,7 +628,7 @@ namespace Foxoft
             imageComboEdit_Barcode.Properties.ContextImageOptions.Image = (Image)resources.GetObject("imageComboEdit_Barcode.Properties.ContextImageOptions.Image");
             imageComboEdit_Barcode.Properties.ContextImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("imageComboEdit_Barcode.Properties.ContextImageOptions.SvgImage");
             imageComboEdit_Barcode.Properties.DisplayFormat.FormatType = FormatType.Custom;
-            imageComboEdit_Barcode.Size = new Size(52, 36);
+            imageComboEdit_Barcode.Size = new Size(41, 36);
             imageComboEdit_Barcode.StyleController = lC_InvoiceLine;
             imageComboEdit_Barcode.TabIndex = 2;
             // 
@@ -637,7 +638,7 @@ namespace Foxoft
             gC_InvoiceLine.Location = new Point(24, 45);
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
-            gC_InvoiceLine.Size = new Size(374, 581);
+            gC_InvoiceLine.Size = new Size(295, 581);
             gC_InvoiceLine.TabIndex = 0;
             gC_InvoiceLine.ViewCollection.AddRange(new BaseView[] { gV_InvoiceLine });
             gC_InvoiceLine.DoubleClick += gC_Sale_DoubleClick;
@@ -791,30 +792,30 @@ namespace Foxoft
             btn_ProductSearch.Appearance.Options.UseBackColor = true;
             btn_ProductSearch.ImageOptions.Location = ImageLocation.TopCenter;
             btn_ProductSearch.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_ProductSearch.ImageOptions.SvgImage");
-            btn_ProductSearch.Location = new Point(729, 240);
+            btn_ProductSearch.Location = new Point(595, 240);
             btn_ProductSearch.Name = "btn_ProductSearch";
             btn_ProductSearch.ShowFocusRectangle = DefaultBoolean.False;
-            btn_ProductSearch.Size = new Size(77, 63);
+            btn_ProductSearch.Size = new Size(111, 63);
             btn_ProductSearch.StyleController = lC_InvoiceLine;
             btn_ProductSearch.TabIndex = 1;
             btn_ProductSearch.Text = "Məhsul";
             btn_ProductSearch.Click += btn_ProductSearch_Click;
             // 
-            // btn_Discount
+            // btn_LineDiscount
             // 
-            btn_Discount.AllowFocus = false;
-            btn_Discount.Appearance.BackColor = Color.Transparent;
-            btn_Discount.Appearance.Options.UseBackColor = true;
-            btn_Discount.ImageOptions.Image = (Image)resources.GetObject("btn_Discount.ImageOptions.Image");
-            btn_Discount.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_Discount.Location = new Point(810, 240);
-            btn_Discount.Name = "btn_Discount";
-            btn_Discount.ShowFocusRectangle = DefaultBoolean.False;
-            btn_Discount.Size = new Size(77, 63);
-            btn_Discount.StyleController = lC_InvoiceLine;
-            btn_Discount.TabIndex = 1;
-            btn_Discount.Text = "Endirim";
-            btn_Discount.Click += btn_Discount_Click;
+            btn_LineDiscount.AllowFocus = false;
+            btn_LineDiscount.Appearance.BackColor = Color.Transparent;
+            btn_LineDiscount.Appearance.Options.UseBackColor = true;
+            btn_LineDiscount.ImageOptions.Image = (Image)resources.GetObject("btn_LineDiscount.ImageOptions.Image");
+            btn_LineDiscount.ImageOptions.Location = ImageLocation.TopCenter;
+            btn_LineDiscount.Location = new Point(710, 374);
+            btn_LineDiscount.Name = "btn_LineDiscount";
+            btn_LineDiscount.ShowFocusRectangle = DefaultBoolean.False;
+            btn_LineDiscount.Size = new Size(111, 63);
+            btn_LineDiscount.StyleController = lC_InvoiceLine;
+            btn_LineDiscount.TabIndex = 1;
+            btn_LineDiscount.Text = "Sətir Endirimi";
+            btn_LineDiscount.Click += btn_Discount_Click;
             // 
             // btn_CancelInvoice
             // 
@@ -823,10 +824,10 @@ namespace Foxoft
             btn_CancelInvoice.Appearance.Options.UseBackColor = true;
             btn_CancelInvoice.ImageOptions.Image = (Image)resources.GetObject("btn_CancelInvoice.ImageOptions.Image");
             btn_CancelInvoice.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_CancelInvoice.Location = new Point(972, 240);
+            btn_CancelInvoice.Location = new Point(940, 240);
             btn_CancelInvoice.Name = "btn_CancelInvoice";
             btn_CancelInvoice.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CancelInvoice.Size = new Size(79, 63);
+            btn_CancelInvoice.Size = new Size(111, 63);
             btn_CancelInvoice.StyleController = lC_InvoiceLine;
             btn_CancelInvoice.TabIndex = 1;
             btn_CancelInvoice.Text = "Çeki Ləğv Et";
@@ -839,10 +840,10 @@ namespace Foxoft
             btn_DeleteLine.Appearance.Options.UseBackColor = true;
             btn_DeleteLine.ImageOptions.Image = (Image)resources.GetObject("btn_DeleteLine.ImageOptions.Image");
             btn_DeleteLine.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_DeleteLine.Location = new Point(891, 240);
+            btn_DeleteLine.Location = new Point(825, 240);
             btn_DeleteLine.Name = "btn_DeleteLine";
             btn_DeleteLine.ShowFocusRectangle = DefaultBoolean.False;
-            btn_DeleteLine.Size = new Size(77, 63);
+            btn_DeleteLine.Size = new Size(111, 63);
             btn_DeleteLine.StyleController = lC_InvoiceLine;
             btn_DeleteLine.TabIndex = 1;
             btn_DeleteLine.Text = "Sətri Sil";
@@ -855,9 +856,9 @@ namespace Foxoft
             btn_SalesPerson.Appearance.Options.UseBackColor = true;
             btn_SalesPerson.ImageOptions.Image = (Image)resources.GetObject("btn_SalesPerson.ImageOptions.Image");
             btn_SalesPerson.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_SalesPerson.Location = new Point(729, 307);
+            btn_SalesPerson.Location = new Point(710, 240);
             btn_SalesPerson.Name = "btn_SalesPerson";
-            btn_SalesPerson.Size = new Size(77, 63);
+            btn_SalesPerson.Size = new Size(111, 63);
             btn_SalesPerson.StyleController = lC_InvoiceLine;
             btn_SalesPerson.TabIndex = 1;
             btn_SalesPerson.Text = "Satıcı";
@@ -870,10 +871,10 @@ namespace Foxoft
             btn_Cash.Appearance.Options.UseBackColor = true;
             btn_Cash.ImageOptions.Image = (Image)resources.GetObject("btn_Cash.ImageOptions.Image");
             btn_Cash.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_Cash.Location = new Point(729, 554);
+            btn_Cash.Location = new Point(595, 554);
             btn_Cash.Name = "btn_Cash";
             btn_Cash.ShowFocusRectangle = DefaultBoolean.False;
-            btn_Cash.Size = new Size(77, 72);
+            btn_Cash.Size = new Size(111, 72);
             btn_Cash.StyleController = lC_InvoiceLine;
             btn_Cash.TabIndex = 1;
             btn_Cash.Text = "Cash";
@@ -884,10 +885,10 @@ namespace Foxoft
             btn_Cashless.AllowFocus = false;
             btn_Cashless.ImageOptions.Image = (Image)resources.GetObject("btn_Cashless.ImageOptions.Image");
             btn_Cashless.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_Cashless.Location = new Point(810, 554);
+            btn_Cashless.Location = new Point(710, 554);
             btn_Cashless.Name = "btn_Cashless";
             btn_Cashless.ShowFocusRectangle = DefaultBoolean.False;
-            btn_Cashless.Size = new Size(77, 72);
+            btn_Cashless.Size = new Size(111, 72);
             btn_Cashless.StyleController = lC_InvoiceLine;
             btn_Cashless.TabIndex = 1;
             btn_Cashless.Text = "Nağdsız";
@@ -898,10 +899,10 @@ namespace Foxoft
             btn_CustomerBonus.AllowFocus = false;
             btn_CustomerBonus.ImageOptions.Image = (Image)resources.GetObject("btn_CustomerBonus.ImageOptions.Image");
             btn_CustomerBonus.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_CustomerBonus.Location = new Point(891, 554);
+            btn_CustomerBonus.Location = new Point(825, 554);
             btn_CustomerBonus.Name = "btn_CustomerBonus";
             btn_CustomerBonus.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CustomerBonus.Size = new Size(77, 72);
+            btn_CustomerBonus.Size = new Size(111, 72);
             btn_CustomerBonus.StyleController = lC_InvoiceLine;
             btn_CustomerBonus.TabIndex = 1;
             btn_CustomerBonus.Text = "Bonus";
@@ -912,9 +913,9 @@ namespace Foxoft
             btn_Print.AllowFocus = false;
             btn_Print.ImageOptions.Image = (Image)resources.GetObject("btn_Print.ImageOptions.Image");
             btn_Print.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_Print.Location = new Point(810, 307);
+            btn_Print.Location = new Point(710, 307);
             btn_Print.Name = "btn_Print";
-            btn_Print.Size = new Size(77, 63);
+            btn_Print.Size = new Size(111, 63);
             btn_Print.StyleController = lC_InvoiceLine;
             btn_Print.TabIndex = 1;
             btn_Print.Text = "Çap";
@@ -925,9 +926,9 @@ namespace Foxoft
             btn_PrintPreview.AllowFocus = false;
             btn_PrintPreview.ImageOptions.Image = (Image)resources.GetObject("btn_PrintPreview.ImageOptions.Image");
             btn_PrintPreview.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_PrintPreview.Location = new Point(891, 307);
+            btn_PrintPreview.Location = new Point(825, 307);
             btn_PrintPreview.Name = "btn_PrintPreview";
-            btn_PrintPreview.Size = new Size(77, 63);
+            btn_PrintPreview.Size = new Size(111, 63);
             btn_PrintPreview.StyleController = lC_InvoiceLine;
             btn_PrintPreview.TabIndex = 1;
             btn_PrintPreview.Text = "Çap Görünüş";
@@ -938,9 +939,9 @@ namespace Foxoft
             btn_ReportZ.AllowFocus = false;
             btn_ReportZ.ImageOptions.Image = (Image)resources.GetObject("btn_ReportZ.ImageOptions.Image");
             btn_ReportZ.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_ReportZ.Location = new Point(972, 307);
+            btn_ReportZ.Location = new Point(940, 307);
             btn_ReportZ.Name = "btn_ReportZ";
-            btn_ReportZ.Size = new Size(79, 63);
+            btn_ReportZ.Size = new Size(111, 63);
             btn_ReportZ.StyleController = lC_InvoiceLine;
             btn_ReportZ.TabIndex = 1;
             btn_ReportZ.Text = "Gün Sonu";
@@ -951,9 +952,9 @@ namespace Foxoft
             btn_NewInvoice.AllowFocus = false;
             btn_NewInvoice.ImageOptions.Image = (Image)resources.GetObject("btn_NewInvoice.ImageOptions.Image");
             btn_NewInvoice.ImageOptions.Location = ImageLocation.TopCenter;
-            btn_NewInvoice.Location = new Point(729, 374);
+            btn_NewInvoice.Location = new Point(595, 374);
             btn_NewInvoice.Name = "btn_NewInvoice";
-            btn_NewInvoice.Size = new Size(77, 63);
+            btn_NewInvoice.Size = new Size(111, 63);
             btn_NewInvoice.StyleController = lC_InvoiceLine;
             btn_NewInvoice.TabIndex = 1;
             btn_NewInvoice.Text = "Yeni";
@@ -961,15 +962,31 @@ namespace Foxoft
             // 
             // btn_IncomplatedInvoices
             // 
+            btn_IncomplatedInvoices.AllowFocus = false;
             btn_IncomplatedInvoices.ImageOptions.Image = (Image)resources.GetObject("btn_IncomplatedInvoices.ImageOptions.Image");
             btn_IncomplatedInvoices.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_IncomplatedInvoices.Location = new Point(810, 374);
+            btn_IncomplatedInvoices.Location = new Point(595, 307);
             btn_IncomplatedInvoices.Name = "btn_IncomplatedInvoices";
-            btn_IncomplatedInvoices.Size = new Size(77, 63);
+            btn_IncomplatedInvoices.Size = new Size(111, 63);
             btn_IncomplatedInvoices.StyleController = lC_InvoiceLine;
             btn_IncomplatedInvoices.TabIndex = 6;
             btn_IncomplatedInvoices.Text = "simpleButton3";
             btn_IncomplatedInvoices.Click += btn_IncomplatedInvoices_Click;
+            // 
+            // btn_InvoiceDiscount
+            // 
+            btn_InvoiceDiscount.AllowFocus = false;
+            btn_InvoiceDiscount.Appearance.BackColor = Color.Transparent;
+            btn_InvoiceDiscount.Appearance.Options.UseBackColor = true;
+            btn_InvoiceDiscount.ImageOptions.Image = (Image)resources.GetObject("btn_InvoiceDiscount.ImageOptions.Image");
+            btn_InvoiceDiscount.ImageOptions.Location = ImageLocation.TopCenter;
+            btn_InvoiceDiscount.Location = new Point(825, 374);
+            btn_InvoiceDiscount.Name = "btn_InvoiceDiscount";
+            btn_InvoiceDiscount.Size = new Size(111, 63);
+            btn_InvoiceDiscount.StyleController = lC_InvoiceLine;
+            btn_InvoiceDiscount.TabIndex = 7;
+            btn_InvoiceDiscount.Text = "Qaimə Endirimi";
+            btn_InvoiceDiscount.Click += btn_InvoiceDiscount_Click;
             // 
             // lCG_Root
             // 
@@ -984,9 +1001,9 @@ namespace Foxoft
             // 
             lCG_Barcode.CustomizationFormText = "Barcode";
             lCG_Barcode.Items.AddRange(new BaseLayoutItem[] { lCI_ComboBox, LCI_Barcode, layoutControlItem1 });
-            lCG_Barcode.Location = new Point(402, 0);
+            lCG_Barcode.Location = new Point(323, 0);
             lCG_Barcode.Name = "lCG_Barcode";
-            lCG_Barcode.Size = new Size(303, 369);
+            lCG_Barcode.Size = new Size(248, 369);
             lCG_Barcode.Text = "Barcode";
             // 
             // lCI_ComboBox
@@ -999,9 +1016,8 @@ namespace Foxoft
             lCI_ComboBox.Location = new Point(0, 0);
             lCI_ComboBox.MinSize = new Size(40, 24);
             lCI_ComboBox.Name = "lCI_ComboBox";
-            lCI_ComboBox.Size = new Size(56, 42);
+            lCI_ComboBox.Size = new Size(45, 42);
             lCI_ComboBox.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_ComboBox.TextSize = new Size(0, 0);
             lCI_ComboBox.TextVisible = false;
             // 
             // LCI_Barcode
@@ -1011,14 +1027,13 @@ namespace Foxoft
             LCI_Barcode.Control = txtEdit_Barcode;
             LCI_Barcode.ControlAlignment = ContentAlignment.TopLeft;
             LCI_Barcode.CustomizationFormText = "layoutControlItemTextBox";
-            LCI_Barcode.Location = new Point(56, 0);
+            LCI_Barcode.Location = new Point(45, 0);
             LCI_Barcode.MinSize = new Size(40, 24);
             LCI_Barcode.Name = "LCI_Barcode";
             LCI_Barcode.OptionsTableLayoutItem.ColumnIndex = 1;
             LCI_Barcode.OptionsTableLayoutItem.ColumnSpan = 3;
-            LCI_Barcode.Size = new Size(223, 42);
+            LCI_Barcode.Size = new Size(179, 42);
             LCI_Barcode.SizeConstraintsType = SizeConstraintsType.Custom;
-            LCI_Barcode.TextSize = new Size(0, 0);
             LCI_Barcode.TextVisible = false;
             // 
             // layoutControlItem1
@@ -1026,8 +1041,7 @@ namespace Foxoft
             layoutControlItem1.Control = ucNumberPad1;
             layoutControlItem1.Location = new Point(0, 42);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(279, 282);
-            layoutControlItem1.TextSize = new Size(0, 0);
+            layoutControlItem1.Size = new Size(224, 282);
             layoutControlItem1.TextVisible = false;
             // 
             // lCG_Invoice
@@ -1036,7 +1050,7 @@ namespace Foxoft
             lCG_Invoice.Items.AddRange(new BaseLayoutItem[] { lCI_GridView });
             lCG_Invoice.Location = new Point(0, 0);
             lCG_Invoice.Name = "lCG_Invoice";
-            lCG_Invoice.Size = new Size(402, 630);
+            lCG_Invoice.Size = new Size(323, 630);
             lCG_Invoice.Text = "Satış";
             // 
             // lCI_GridView
@@ -1046,16 +1060,15 @@ namespace Foxoft
             lCI_GridView.CustomizationFormText = "layoutControlItemGridView";
             lCI_GridView.Location = new Point(0, 0);
             lCI_GridView.Name = "lCI_GridView";
-            lCI_GridView.Size = new Size(378, 585);
-            lCI_GridView.TextSize = new Size(0, 0);
+            lCI_GridView.Size = new Size(299, 585);
             lCI_GridView.TextVisible = false;
             // 
             // lCG_Function
             // 
             lCG_Function.CustomizationFormText = "Əməliyat";
-            lCG_Function.Items.AddRange(new BaseLayoutItem[] { lCI_ProductSearch, lCI_Discount, lCI_CancelInvoice, lCI_DeleteLine, lCI_SalesPerson, lCI_Print, lCI_PrintDesign, lCI_ReportZ, LCI_NewInvoice, layoutControlItem8 });
+            lCG_Function.Items.AddRange(new BaseLayoutItem[] { lCI_ProductSearch, lCI_CancelInvoice, lCI_Print, lCI_PrintDesign, lCI_ReportZ, lCI_DeleteLine, LCI_NewInvoice, lCI_SalesPerson, layoutControlItem8, lCI_Discount, layoutControlItem9 });
             lCG_Function.LayoutMode = LayoutMode.Table;
-            lCG_Function.Location = new Point(705, 195);
+            lCG_Function.Location = new Point(571, 195);
             lCG_Function.Name = "lCG_Function";
             columnDefinition1.SizeType = SizeType.Percent;
             columnDefinition1.Width = 25D;
@@ -1075,7 +1088,7 @@ namespace Foxoft
             rowDefinition4.Height = 25D;
             rowDefinition4.SizeType = SizeType.Percent;
             lCG_Function.OptionsTableLayoutGroup.RowDefinitions.AddRange(new RowDefinition[] { rowDefinition1, rowDefinition2, rowDefinition3, rowDefinition4 });
-            lCG_Function.Size = new Size(350, 314);
+            lCG_Function.Size = new Size(484, 314);
             lCG_Function.Text = "Əməliyat";
             // 
             // lCI_ProductSearch
@@ -1084,130 +1097,141 @@ namespace Foxoft
             lCI_ProductSearch.ControlAlignment = ContentAlignment.TopLeft;
             lCI_ProductSearch.CustomizationFormText = "layoutControlItemProductSearch";
             lCI_ProductSearch.Location = new Point(0, 0);
+            lCI_ProductSearch.MinSize = new Size(50, 25);
             lCI_ProductSearch.Name = "lCI_ProductSearch";
-            lCI_ProductSearch.Size = new Size(81, 67);
+            lCI_ProductSearch.Size = new Size(115, 67);
             lCI_ProductSearch.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_ProductSearch.TextSize = new Size(0, 0);
             lCI_ProductSearch.TextVisible = false;
-            // 
-            // lCI_Discount
-            // 
-            lCI_Discount.Control = btn_Discount;
-            lCI_Discount.ControlAlignment = ContentAlignment.TopLeft;
-            lCI_Discount.CustomizationFormText = "layoutControlItemDiscount";
-            lCI_Discount.Location = new Point(81, 0);
-            lCI_Discount.Name = "lCI_Discount";
-            lCI_Discount.OptionsTableLayoutItem.ColumnIndex = 1;
-            lCI_Discount.Size = new Size(81, 67);
-            lCI_Discount.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_Discount.TextSize = new Size(0, 0);
-            lCI_Discount.TextVisible = false;
             // 
             // lCI_CancelInvoice
             // 
             lCI_CancelInvoice.Control = btn_CancelInvoice;
             lCI_CancelInvoice.ControlAlignment = ContentAlignment.TopLeft;
             lCI_CancelInvoice.CustomizationFormText = "layoutControlItemCancelInvoice";
-            lCI_CancelInvoice.Location = new Point(243, 0);
+            lCI_CancelInvoice.Location = new Point(345, 0);
+            lCI_CancelInvoice.MinSize = new Size(50, 25);
             lCI_CancelInvoice.Name = "lCI_CancelInvoice";
             lCI_CancelInvoice.OptionsTableLayoutItem.ColumnIndex = 3;
-            lCI_CancelInvoice.Size = new Size(83, 67);
+            lCI_CancelInvoice.Size = new Size(115, 67);
             lCI_CancelInvoice.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_CancelInvoice.TextSize = new Size(0, 0);
             lCI_CancelInvoice.TextVisible = false;
+            // 
+            // lCI_Print
+            // 
+            lCI_Print.Control = btn_Print;
+            lCI_Print.Location = new Point(115, 67);
+            lCI_Print.MinSize = new Size(50, 25);
+            lCI_Print.Name = "lCI_Print";
+            lCI_Print.OptionsTableLayoutItem.ColumnIndex = 1;
+            lCI_Print.OptionsTableLayoutItem.RowIndex = 1;
+            lCI_Print.Size = new Size(115, 67);
+            lCI_Print.SizeConstraintsType = SizeConstraintsType.Custom;
+            lCI_Print.TextVisible = false;
+            // 
+            // lCI_PrintDesign
+            // 
+            lCI_PrintDesign.Control = btn_PrintPreview;
+            lCI_PrintDesign.Location = new Point(230, 67);
+            lCI_PrintDesign.MinSize = new Size(50, 25);
+            lCI_PrintDesign.Name = "lCI_PrintDesign";
+            lCI_PrintDesign.OptionsTableLayoutItem.ColumnIndex = 2;
+            lCI_PrintDesign.OptionsTableLayoutItem.RowIndex = 1;
+            lCI_PrintDesign.Size = new Size(115, 67);
+            lCI_PrintDesign.SizeConstraintsType = SizeConstraintsType.Custom;
+            lCI_PrintDesign.TextVisible = false;
+            // 
+            // lCI_ReportZ
+            // 
+            lCI_ReportZ.Control = btn_ReportZ;
+            lCI_ReportZ.Location = new Point(345, 67);
+            lCI_ReportZ.MinSize = new Size(50, 25);
+            lCI_ReportZ.Name = "lCI_ReportZ";
+            lCI_ReportZ.OptionsTableLayoutItem.ColumnIndex = 3;
+            lCI_ReportZ.OptionsTableLayoutItem.RowIndex = 1;
+            lCI_ReportZ.Size = new Size(115, 67);
+            lCI_ReportZ.SizeConstraintsType = SizeConstraintsType.Custom;
+            lCI_ReportZ.TextVisible = false;
             // 
             // lCI_DeleteLine
             // 
             lCI_DeleteLine.Control = btn_DeleteLine;
             lCI_DeleteLine.ControlAlignment = ContentAlignment.TopLeft;
             lCI_DeleteLine.CustomizationFormText = "layoutControlItemDeleteLine";
-            lCI_DeleteLine.Location = new Point(162, 0);
+            lCI_DeleteLine.Location = new Point(230, 0);
+            lCI_DeleteLine.MinSize = new Size(50, 25);
             lCI_DeleteLine.Name = "lCI_DeleteLine";
             lCI_DeleteLine.OptionsTableLayoutItem.ColumnIndex = 2;
-            lCI_DeleteLine.Size = new Size(81, 67);
+            lCI_DeleteLine.Size = new Size(115, 67);
             lCI_DeleteLine.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_DeleteLine.TextSize = new Size(0, 0);
             lCI_DeleteLine.TextVisible = false;
+            // 
+            // LCI_NewInvoice
+            // 
+            LCI_NewInvoice.Control = btn_NewInvoice;
+            LCI_NewInvoice.Location = new Point(0, 134);
+            LCI_NewInvoice.MinSize = new Size(50, 25);
+            LCI_NewInvoice.Name = "layoutControlItem7";
+            LCI_NewInvoice.OptionsTableLayoutItem.RowIndex = 2;
+            LCI_NewInvoice.Size = new Size(115, 67);
+            LCI_NewInvoice.SizeConstraintsType = SizeConstraintsType.Custom;
+            LCI_NewInvoice.TextVisible = false;
             // 
             // lCI_SalesPerson
             // 
             lCI_SalesPerson.Control = btn_SalesPerson;
             lCI_SalesPerson.ControlAlignment = ContentAlignment.TopLeft;
             lCI_SalesPerson.CustomizationFormText = "layoutControlItemSalesPerson";
-            lCI_SalesPerson.Location = new Point(0, 67);
+            lCI_SalesPerson.Location = new Point(115, 0);
+            lCI_SalesPerson.MinSize = new Size(50, 25);
             lCI_SalesPerson.Name = "lCI_SalesPerson";
-            lCI_SalesPerson.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_SalesPerson.Size = new Size(81, 67);
+            lCI_SalesPerson.OptionsTableLayoutItem.ColumnIndex = 1;
+            lCI_SalesPerson.Size = new Size(115, 67);
             lCI_SalesPerson.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_SalesPerson.TextSize = new Size(0, 0);
             lCI_SalesPerson.TextVisible = false;
-            // 
-            // lCI_Print
-            // 
-            lCI_Print.Control = btn_Print;
-            lCI_Print.Location = new Point(81, 67);
-            lCI_Print.Name = "lCI_Print";
-            lCI_Print.OptionsTableLayoutItem.ColumnIndex = 1;
-            lCI_Print.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_Print.Size = new Size(81, 67);
-            lCI_Print.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_Print.TextSize = new Size(0, 0);
-            lCI_Print.TextVisible = false;
-            // 
-            // lCI_PrintDesign
-            // 
-            lCI_PrintDesign.Control = btn_PrintPreview;
-            lCI_PrintDesign.Location = new Point(162, 67);
-            lCI_PrintDesign.Name = "lCI_PrintDesign";
-            lCI_PrintDesign.OptionsTableLayoutItem.ColumnIndex = 2;
-            lCI_PrintDesign.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_PrintDesign.Size = new Size(81, 67);
-            lCI_PrintDesign.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_PrintDesign.TextSize = new Size(0, 0);
-            lCI_PrintDesign.TextVisible = false;
-            // 
-            // lCI_ReportZ
-            // 
-            lCI_ReportZ.Control = btn_ReportZ;
-            lCI_ReportZ.Location = new Point(243, 67);
-            lCI_ReportZ.Name = "lCI_ReportZ";
-            lCI_ReportZ.OptionsTableLayoutItem.ColumnIndex = 3;
-            lCI_ReportZ.OptionsTableLayoutItem.RowIndex = 1;
-            lCI_ReportZ.Size = new Size(83, 67);
-            lCI_ReportZ.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_ReportZ.TextSize = new Size(0, 0);
-            lCI_ReportZ.TextVisible = false;
-            // 
-            // LCI_NewInvoice
-            // 
-            LCI_NewInvoice.Control = btn_NewInvoice;
-            LCI_NewInvoice.Location = new Point(0, 134);
-            LCI_NewInvoice.Name = "layoutControlItem7";
-            LCI_NewInvoice.OptionsTableLayoutItem.RowIndex = 2;
-            LCI_NewInvoice.Size = new Size(81, 67);
-            LCI_NewInvoice.SizeConstraintsType = SizeConstraintsType.Custom;
-            LCI_NewInvoice.TextSize = new Size(0, 0);
-            LCI_NewInvoice.TextVisible = false;
             // 
             // layoutControlItem8
             // 
             layoutControlItem8.Control = btn_IncomplatedInvoices;
-            layoutControlItem8.Location = new Point(81, 134);
+            layoutControlItem8.Location = new Point(0, 67);
             layoutControlItem8.MinSize = new Size(60, 40);
             layoutControlItem8.Name = "layoutControlItem8";
-            layoutControlItem8.OptionsTableLayoutItem.ColumnIndex = 1;
-            layoutControlItem8.OptionsTableLayoutItem.RowIndex = 2;
-            layoutControlItem8.Size = new Size(81, 67);
+            layoutControlItem8.OptionsTableLayoutItem.RowIndex = 1;
+            layoutControlItem8.Size = new Size(115, 67);
             layoutControlItem8.SizeConstraintsType = SizeConstraintsType.Custom;
-            layoutControlItem8.TextSize = new Size(0, 0);
             layoutControlItem8.TextVisible = false;
+            // 
+            // lCI_Discount
+            // 
+            lCI_Discount.Control = btn_LineDiscount;
+            lCI_Discount.ControlAlignment = ContentAlignment.TopLeft;
+            lCI_Discount.CustomizationFormText = "layoutControlItemDiscount";
+            lCI_Discount.Location = new Point(115, 134);
+            lCI_Discount.MinSize = new Size(50, 25);
+            lCI_Discount.Name = "lCI_Discount";
+            lCI_Discount.OptionsTableLayoutItem.ColumnIndex = 1;
+            lCI_Discount.OptionsTableLayoutItem.RowIndex = 2;
+            lCI_Discount.Size = new Size(115, 67);
+            lCI_Discount.SizeConstraintsType = SizeConstraintsType.Custom;
+            lCI_Discount.TextVisible = false;
+            // 
+            // layoutControlItem9
+            // 
+            layoutControlItem9.Control = btn_InvoiceDiscount;
+            layoutControlItem9.Location = new Point(230, 134);
+            layoutControlItem9.MinSize = new Size(80, 57);
+            layoutControlItem9.Name = "layoutControlItem9";
+            layoutControlItem9.OptionsTableLayoutItem.ColumnIndex = 2;
+            layoutControlItem9.OptionsTableLayoutItem.RowIndex = 2;
+            layoutControlItem9.Size = new Size(115, 67);
+            layoutControlItem9.SizeConstraintsType = SizeConstraintsType.Custom;
+            layoutControlItem9.TextVisible = false;
             // 
             // lCG_Payment
             // 
             lCG_Payment.CustomizationFormText = "Ödəmə";
             lCG_Payment.Items.AddRange(new BaseLayoutItem[] { lCI_Cash, lCI_Cashless, lCI_CustomerBonus });
             lCG_Payment.LayoutMode = LayoutMode.Table;
-            lCG_Payment.Location = new Point(705, 509);
+            lCG_Payment.Location = new Point(571, 509);
             lCG_Payment.Name = "lCG_Payment";
             columnDefinition5.SizeType = SizeType.Percent;
             columnDefinition5.Width = 25D;
@@ -1221,7 +1245,7 @@ namespace Foxoft
             rowDefinition5.Height = 100D;
             rowDefinition5.SizeType = SizeType.Percent;
             lCG_Payment.OptionsTableLayoutGroup.RowDefinitions.AddRange(new RowDefinition[] { rowDefinition5 });
-            lCG_Payment.Size = new Size(350, 121);
+            lCG_Payment.Size = new Size(484, 121);
             lCG_Payment.Text = "Ödəmə";
             // 
             // lCI_Cash
@@ -1232,9 +1256,8 @@ namespace Foxoft
             lCI_Cash.Location = new Point(0, 0);
             lCI_Cash.MinSize = new Size(40, 26);
             lCI_Cash.Name = "lCI_Cash";
-            lCI_Cash.Size = new Size(81, 76);
+            lCI_Cash.Size = new Size(115, 76);
             lCI_Cash.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_Cash.TextSize = new Size(0, 0);
             lCI_Cash.TextVisible = false;
             // 
             // lCI_Cashless
@@ -1242,13 +1265,12 @@ namespace Foxoft
             lCI_Cashless.Control = btn_Cashless;
             lCI_Cashless.ControlAlignment = ContentAlignment.TopLeft;
             lCI_Cashless.CustomizationFormText = "layoutControlItemCashless";
-            lCI_Cashless.Location = new Point(81, 0);
+            lCI_Cashless.Location = new Point(115, 0);
             lCI_Cashless.MinSize = new Size(40, 26);
             lCI_Cashless.Name = "lCI_Cashless";
             lCI_Cashless.OptionsTableLayoutItem.ColumnIndex = 1;
-            lCI_Cashless.Size = new Size(81, 76);
+            lCI_Cashless.Size = new Size(115, 76);
             lCI_Cashless.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_Cashless.TextSize = new Size(0, 0);
             lCI_Cashless.TextVisible = false;
             // 
             // lCI_CustomerBonus
@@ -1256,22 +1278,21 @@ namespace Foxoft
             lCI_CustomerBonus.Control = btn_CustomerBonus;
             lCI_CustomerBonus.ControlAlignment = ContentAlignment.TopLeft;
             lCI_CustomerBonus.CustomizationFormText = "layoutControlItemCustomerBonus";
-            lCI_CustomerBonus.Location = new Point(162, 0);
+            lCI_CustomerBonus.Location = new Point(230, 0);
             lCI_CustomerBonus.MinSize = new Size(40, 26);
             lCI_CustomerBonus.Name = "lCI_CustomerBonus";
             lCI_CustomerBonus.OptionsTableLayoutItem.ColumnIndex = 2;
-            lCI_CustomerBonus.Size = new Size(81, 76);
+            lCI_CustomerBonus.Size = new Size(115, 76);
             lCI_CustomerBonus.SizeConstraintsType = SizeConstraintsType.Custom;
-            lCI_CustomerBonus.TextSize = new Size(0, 0);
             lCI_CustomerBonus.TextVisible = false;
             // 
             // LCG_Total
             // 
             LCG_Total.CustomizationFormText = "layoutControlGroup1";
             LCG_Total.Items.AddRange(new BaseLayoutItem[] { layoutControlItem6, layoutControlGroup3, emptySpaceItem2 });
-            LCG_Total.Location = new Point(402, 369);
+            LCG_Total.Location = new Point(323, 369);
             LCG_Total.Name = "LCG_Total";
-            LCG_Total.Size = new Size(303, 261);
+            LCG_Total.Size = new Size(248, 261);
             LCG_Total.Text = "Toplam";
             // 
             // layoutControlItem6
@@ -1279,7 +1300,7 @@ namespace Foxoft
             layoutControlItem6.Control = txt_PrintCount;
             layoutControlItem6.Location = new Point(0, 0);
             layoutControlItem6.Name = "layoutControlItem6";
-            layoutControlItem6.Size = new Size(279, 24);
+            layoutControlItem6.Size = new Size(224, 24);
             layoutControlItem6.Text = "Çap Sayı";
             layoutControlItem6.TextSize = new Size(42, 13);
             // 
@@ -1289,91 +1310,81 @@ namespace Foxoft
             layoutControlGroup3.Items.AddRange(new BaseLayoutItem[] { layoutControlItem7, lbl_InvoicePaidCashSum, layoutControlItem10, layoutControlItem12, layoutControlItem13, layoutControlItem11, emptySpaceItem1 });
             layoutControlGroup3.Location = new Point(0, 123);
             layoutControlGroup3.Name = "layoutControlGroup3";
-            layoutControlGroup3.Size = new Size(279, 93);
+            layoutControlGroup3.Size = new Size(224, 93);
             layoutControlGroup3.TextVisible = false;
             // 
             // layoutControlItem7
             // 
             layoutControlItem7.ContentHorzAlignment = HorzAlignment.Far;
             layoutControlItem7.Control = lbl_InvoicePaidCashSumTxt;
-            layoutControlItem7.Location = new Point(114, 0);
+            layoutControlItem7.Location = new Point(59, 0);
             layoutControlItem7.Name = "item0";
             layoutControlItem7.Size = new Size(69, 23);
-            layoutControlItem7.TextSize = new Size(0, 0);
             layoutControlItem7.TextVisible = false;
             // 
             // lbl_InvoicePaidCashSum
             // 
             lbl_InvoicePaidCashSum.ContentHorzAlignment = HorzAlignment.Far;
             lbl_InvoicePaidCashSum.Control = labelControl2;
-            lbl_InvoicePaidCashSum.Location = new Point(183, 0);
+            lbl_InvoicePaidCashSum.Location = new Point(128, 0);
             lbl_InvoicePaidCashSum.Name = "lbl_InvoicePaidCashSum";
             lbl_InvoicePaidCashSum.Size = new Size(72, 23);
-            lbl_InvoicePaidCashSum.TextSize = new Size(0, 0);
             lbl_InvoicePaidCashSum.TextVisible = false;
             // 
             // layoutControlItem10
             // 
             layoutControlItem10.ContentHorzAlignment = HorzAlignment.Far;
             layoutControlItem10.Control = lbl_InvoicePaidCashlessSumTxt;
-            layoutControlItem10.Location = new Point(114, 23);
+            layoutControlItem10.Location = new Point(59, 23);
             layoutControlItem10.Name = "layoutControlItem10";
             layoutControlItem10.Size = new Size(69, 23);
-            layoutControlItem10.TextSize = new Size(0, 0);
             layoutControlItem10.TextVisible = false;
             // 
             // layoutControlItem12
             // 
             layoutControlItem12.ContentHorzAlignment = HorzAlignment.Far;
             layoutControlItem12.Control = lbl_InvoicePaidTotalSumTxt;
-            layoutControlItem12.Location = new Point(114, 46);
+            layoutControlItem12.Location = new Point(59, 46);
             layoutControlItem12.Name = "layoutControlItem12";
             layoutControlItem12.Size = new Size(69, 23);
-            layoutControlItem12.TextSize = new Size(0, 0);
             layoutControlItem12.TextVisible = false;
             // 
             // layoutControlItem13
             // 
             layoutControlItem13.ContentHorzAlignment = HorzAlignment.Far;
             layoutControlItem13.Control = lbl_InvoicePaidTotalSum;
-            layoutControlItem13.Location = new Point(183, 46);
+            layoutControlItem13.Location = new Point(128, 46);
             layoutControlItem13.Name = "layoutControlItem13";
             layoutControlItem13.Size = new Size(72, 23);
-            layoutControlItem13.TextSize = new Size(0, 0);
             layoutControlItem13.TextVisible = false;
             // 
             // layoutControlItem11
             // 
             layoutControlItem11.ContentHorzAlignment = HorzAlignment.Far;
             layoutControlItem11.Control = lbl_InvoicePaidCashlessSum;
-            layoutControlItem11.Location = new Point(183, 23);
+            layoutControlItem11.Location = new Point(128, 23);
             layoutControlItem11.Name = "layoutControlItem11";
             layoutControlItem11.Size = new Size(72, 23);
-            layoutControlItem11.TextSize = new Size(0, 0);
             layoutControlItem11.TextVisible = false;
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.AllowHotTrack = false;
             emptySpaceItem1.Location = new Point(0, 0);
             emptySpaceItem1.Name = "emptySpaceItem1";
-            emptySpaceItem1.Size = new Size(114, 69);
-            emptySpaceItem1.TextSize = new Size(0, 0);
+            emptySpaceItem1.Size = new Size(59, 69);
             // 
             // emptySpaceItem2
             // 
-            emptySpaceItem2.AllowHotTrack = false;
             emptySpaceItem2.Location = new Point(0, 24);
             emptySpaceItem2.Name = "emptySpaceItem2";
-            emptySpaceItem2.Size = new Size(279, 99);
-            emptySpaceItem2.TextSize = new Size(0, 0);
+            emptySpaceItem2.Size = new Size(224, 99);
             // 
             // layoutControlGroup2
             // 
             layoutControlGroup2.Items.AddRange(new BaseLayoutItem[] { layoutControlItem2 });
-            layoutControlGroup2.Location = new Point(705, 0);
+            layoutControlGroup2.Location = new Point(571, 0);
             layoutControlGroup2.Name = "layoutControlGroup2";
-            layoutControlGroup2.Size = new Size(350, 195);
+            layoutControlGroup2.Size = new Size(484, 195);
             layoutControlGroup2.Text = "Müştəri";
             // 
             // layoutControlItem2
@@ -1383,9 +1394,8 @@ namespace Foxoft
             layoutControlItem2.MaxSize = new Size(0, 150);
             layoutControlItem2.MinSize = new Size(213, 150);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new Size(326, 150);
+            layoutControlItem2.Size = new Size(460, 150);
             layoutControlItem2.SizeConstraintsType = SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // trInvoiceHeadersBindingSource
@@ -1436,15 +1446,16 @@ namespace Foxoft
             ((ISupportInitialize)lCI_GridView).EndInit();
             ((ISupportInitialize)lCG_Function).EndInit();
             ((ISupportInitialize)lCI_ProductSearch).EndInit();
-            ((ISupportInitialize)lCI_Discount).EndInit();
             ((ISupportInitialize)lCI_CancelInvoice).EndInit();
-            ((ISupportInitialize)lCI_DeleteLine).EndInit();
-            ((ISupportInitialize)lCI_SalesPerson).EndInit();
             ((ISupportInitialize)lCI_Print).EndInit();
             ((ISupportInitialize)lCI_PrintDesign).EndInit();
             ((ISupportInitialize)lCI_ReportZ).EndInit();
+            ((ISupportInitialize)lCI_DeleteLine).EndInit();
             ((ISupportInitialize)LCI_NewInvoice).EndInit();
+            ((ISupportInitialize)lCI_SalesPerson).EndInit();
             ((ISupportInitialize)layoutControlItem8).EndInit();
+            ((ISupportInitialize)lCI_Discount).EndInit();
+            ((ISupportInitialize)layoutControlItem9).EndInit();
             ((ISupportInitialize)lCG_Payment).EndInit();
             ((ISupportInitialize)lCI_Cash).EndInit();
             ((ISupportInitialize)lCI_Cashless).EndInit();
@@ -1496,7 +1507,7 @@ namespace Foxoft
         private GridColumn col_Amount;
         private GridColumn col_VatRate;
         private SimpleButton btn_ProductSearch;
-        private SimpleButton btn_Discount;
+        private SimpleButton btn_LineDiscount;
         private SimpleButton btn_CancelInvoice;
         private SimpleButton btn_DeleteLine;
         private SimpleButton btn_SalesPerson;
@@ -1598,5 +1609,7 @@ namespace Foxoft
         private LayoutControlItem layoutControlItem13;
         private LayoutControlGroup layoutControlGroup3;
         private EmptySpaceItem emptySpaceItem2;
+        private SimpleButton btn_InvoiceDiscount;
+        private LayoutControlItem layoutControlItem9;
     }
 }

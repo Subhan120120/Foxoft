@@ -1,4 +1,5 @@
 ﻿using DevExpress.DataAccess.Sql;
+using DevExpress.XtraBars.Docking2010.Views.Widget;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
+using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
 
 namespace Foxoft
 {
@@ -785,6 +787,46 @@ namespace Foxoft
 
             decimal totalSum = efMethods.SelectPaymentLinesSumByInvoice(trInvoiceHeader.InvoiceHeaderId, trInvoiceHeader.CurrAccCode);
             lbl_InvoicePaidTotalSum.Text = Math.Round(totalSum, 2).ToString() + " " + Settings.Default.AppSetting.LocalCurrencyCode;
+        }
+
+        private void btn_InvoiceDiscount_Click(object sender, EventArgs e)
+        {
+            bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, nameof(TrInvoiceLine.PosDiscount));
+            if (!currAccHasClaims)
+            {
+                XtraMessageBox.Show("Yetkiniz Yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            decimal Amount = efMethods.SelectInvoiceSum(trInvoiceHeader.InvoiceHeaderId);
+
+            if (gV_InvoiceLine.DataRowCount <= 0)
+            {
+                XtraMessageBox.Show("Məhsul yoxdur", "Diqqət", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (FormPosDiscount formPosDiscount = new(0, Amount))
+            {
+                if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
+                {
+                    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                    {
+                        object invoiceLineId = gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.InvoiceLineId));
+
+                        TrInvoiceLine trInvoiceLine = new()
+                        {
+                            InvoiceLineId = (Guid)invoiceLineId,
+                            //NetAmount = Amount - formPosDiscount.DiscountAmount,
+                            PosDiscount = formPosDiscount.DiscountPercent
+                        };
+                        efMethods.UpdateInvoiceLine_PosDiscount(trInvoiceLine);
+                    }
+                }
+            }
+
+            gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+            gV_InvoiceLine.MoveLast();
         }
     }
 }
