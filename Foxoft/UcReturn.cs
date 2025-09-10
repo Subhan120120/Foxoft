@@ -158,12 +158,22 @@ namespace Foxoft
                             returnInvoiceLine.CreatedUserName = Authorization.CurrAccCode;
 
                             efMethods.InsertEntity(returnInvoiceLine);
-
-                            List<TrInvoiceLine> asdas = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
-                            gC_ReturnInvoiceLine.DataSource = asdas;
                         }
                         else
-                            efMethods.UpdateInvoiceLineQtyOut(returnInvoiceHeaderId, invoiceLineID, formQty.input * (-1));
+                        {
+                            TrInvoiceLine trInvoiceLine = efMethods.SelectTrInvoiceLineByRelatedLineId(returnInvoiceHeaderId, invoiceLineID);
+
+                            trInvoiceLine.Amount = (-1) * formQty.input * trInvoiceLine.Price;
+                            trInvoiceLine.AmountLoc = (-1) * formQty.input * trInvoiceLine.PriceLoc;
+                            trInvoiceLine.NetAmount = (-1) * formQty.input * trInvoiceLine.Price * (100 - trInvoiceLine.PosDiscount);
+                            trInvoiceLine.NetAmountLoc = (-1) * formQty.input * trInvoiceLine.PriceLoc * (100 - trInvoiceLine.PosDiscount);
+                            trInvoiceLine.QtyOut = formQty.input + trInvoiceLine.QtyOut;
+
+                            efMethods.UpdateEntity(trInvoiceLine);
+                        }
+
+                        List<TrInvoiceLine> asdas = efMethods.SelectInvoiceLines(returnInvoiceHeaderId);
+                        gC_ReturnInvoiceLine.DataSource = asdas;
 
                         gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
                     }

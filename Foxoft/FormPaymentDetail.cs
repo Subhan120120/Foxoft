@@ -438,8 +438,6 @@ namespace Foxoft
                 return;
             }
 
-            number = "+994" + number;
-
             string link = $"https://web.whatsapp.com/send?phone={number}&text={message}";
 
             Process myProcess = new();

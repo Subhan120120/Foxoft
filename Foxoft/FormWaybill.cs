@@ -270,7 +270,17 @@ namespace Foxoft
                         gC_DeliveryInvoiceLine.DataSource = deliveryLines;
                     }
                     else
-                        efMethods.UpdateInvoiceLineQtyOut(deliveryInvoiceHeaderId, invoiceLineID, formQty.input * (-1));
+                    {
+                        TrInvoiceLine trInvoiceLine = efMethods.SelectTrInvoiceLineByRelatedLineId(deliveryInvoiceHeaderId, invoiceLineID);
+
+                        trInvoiceLine.Amount = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.Price;
+                        trInvoiceLine.AmountLoc = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.PriceLoc;
+                        trInvoiceLine.NetAmount = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.Price * (100 - trInvoiceLine.PosDiscount);
+                        trInvoiceLine.NetAmountLoc = (formQty.input + trInvoiceLine.QtyOut) * trInvoiceLine.PriceLoc * (100 - trInvoiceLine.PosDiscount);
+                        trInvoiceLine.QtyOut = formQty.input + trInvoiceLine.QtyOut;
+
+                        efMethods.UpdateEntity(trInvoiceLine);
+                    }
 
 
                     var gridRow = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;

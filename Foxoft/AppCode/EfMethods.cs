@@ -926,39 +926,12 @@ namespace Foxoft
                 return 0;
         }
 
-        public int UpdateInvoiceLineQtyOut(object invoiceLineId, decimal qtyOut)
-        {
-            Guid variable = Guid.Parse(invoiceLineId.ToString());
-
-            using subContext db = new();
-
-            TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.FirstOrDefault(x => x.InvoiceLineId == variable);
-
-            if (trInvoiceLine.QtyOut != 0)
-                trInvoiceLine.PosDiscount = qtyOut * (trInvoiceLine.PosDiscount / trInvoiceLine.QtyOut); // qty is new quantity trInvoiceLine.Qty is old quantity
-            trInvoiceLine.Amount = qtyOut * Convert.ToDecimal(trInvoiceLine.Price);
-            trInvoiceLine.NetAmount = trInvoiceLine.Amount - trInvoiceLine.PosDiscount;
-            trInvoiceLine.QtyOut = qtyOut;
-
-            db.TrInvoiceLines.Update(trInvoiceLine);
-            return db.SaveChanges();
-        }
-
-        public int UpdateInvoiceLineQtyOut(Guid invoiceHeaderId, Guid relatedLineId, decimal qtyOut)
+        public TrInvoiceLine SelectTrInvoiceLineByRelatedLineId(Guid invoiceHeaderId, Guid relatedLineId)
         {
             using subContext db = new();
-
             TrInvoiceLine trInvoiceLine = db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                                .FirstOrDefault(x => x.RelatedLineId == relatedLineId);
-
-            trInvoiceLine.Amount = qtyOut * trInvoiceLine.Price;
-            trInvoiceLine.AmountLoc = qtyOut * trInvoiceLine.PriceLoc;
-            trInvoiceLine.NetAmount = qtyOut * (trInvoiceLine.Price * (100 - trInvoiceLine.PosDiscount));
-            trInvoiceLine.NetAmountLoc = qtyOut * (trInvoiceLine.PriceLoc * (100 - trInvoiceLine.PosDiscount));
-            trInvoiceLine.QtyOut = qtyOut;
-
-            db.TrInvoiceLines.Update(trInvoiceLine);
-            return db.SaveChanges();
+            return trInvoiceLine;
         }
 
         public int UpdateInvoiceLine_PosDiscount(TrInvoiceLine trInvoiceLine)
