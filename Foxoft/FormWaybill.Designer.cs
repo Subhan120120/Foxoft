@@ -817,5 +817,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem ItemForDescription;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForStoreCode;
+        private DevExpress.XtraGrid.Columns.GridColumn InvoiceHeaderId;
     }
 }
