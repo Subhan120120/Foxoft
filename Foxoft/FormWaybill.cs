@@ -70,10 +70,6 @@ namespace Foxoft
             this.processCode = processCode;
         }
 
-        //private void FormDelivery_Load(object sender, EventArgs e)
-        //{
-        //    //ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing); // set Parent Form Closing event
-        //}
         private void FormDelivery_Load(object sender, EventArgs e)
         {
             //gC_InvoiceLine.DataSource = liveList;
@@ -81,6 +77,10 @@ namespace Foxoft
             LoadDataStreamedAsync();
         }
 
+        private void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            LoadDataStreamedAsync();
+        }
 
         private void ClearControls()
         {
@@ -383,6 +383,5 @@ namespace Foxoft
 
             e.Cancel = false;
         }
-
     }
 }

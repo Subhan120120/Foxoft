@@ -110,6 +110,8 @@ namespace Foxoft
             ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            BBI_Refresh = new BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)lC_Root).BeginInit();
             lC_Root.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
@@ -719,9 +721,9 @@ namespace Foxoft
             // ribbonControl1
             // 
             ribbonControl1.ExpandCollapseItem.Id = 0;
-            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ReportPrintFast });
+            ribbonControl1.Items.AddRange(new BarItem[] { ribbonControl1.ExpandCollapseItem, BBI_ReportPrintFast, BBI_Refresh });
             ribbonControl1.Location = new Point(0, 0);
-            ribbonControl1.MaxItemId = 2;
+            ribbonControl1.MaxItemId = 3;
             ribbonControl1.Name = "ribbonControl1";
             ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] { ribbonPage1 });
             ribbonControl1.Size = new Size(1049, 158);
@@ -744,7 +746,7 @@ namespace Foxoft
             // 
             // ribbonPage1
             // 
-            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup1 });
+            ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] { ribbonPageGroup2, ribbonPageGroup1 });
             ribbonPage1.Name = "ribbonPage1";
             ribbonPage1.Text = "ribbonPage1";
             // 
@@ -752,11 +754,25 @@ namespace Foxoft
             // 
             ribbonPageGroup1.ItemLinks.Add(BBI_ReportPrintFast);
             ribbonPageGroup1.Name = "ribbonPageGroup1";
-            ribbonPageGroup1.Text = "ribbonPageGroup1";
+            ribbonPageGroup1.Text = "Print";
             // 
             // svgImageCollection1
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
+            // 
+            // ribbonPageGroup2
+            // 
+            ribbonPageGroup2.ItemLinks.Add(BBI_Refresh);
+            ribbonPageGroup2.Name = "ribbonPageGroup2";
+            ribbonPageGroup2.Text = "Əməliyatlar";
+            // 
+            // barButtonItem1
+            // 
+            BBI_Refresh.Caption = "Yenilə";
+            BBI_Refresh.Id = 2;
+            BBI_Refresh.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
+            BBI_Refresh.Name = "barButtonItem1";
+            BBI_Refresh.ItemClick += BBI_Refresh_ItemClick;
             // 
             // FormWaybill
             // 
@@ -884,5 +900,7 @@ namespace Foxoft
         private PopupMenu popupMenuPrinters;
         private DevExpress.XtraGrid.Columns.GridColumn InvoiceHeaderId;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
+        private BarButtonItem BBI_Refresh;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
     }
 }
