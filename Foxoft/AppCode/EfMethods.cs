@@ -4,6 +4,7 @@ using DevExpress.Data.Linq.Helpers;
 using DevExpress.Data.ODataLinq.Helpers;
 using DevExpress.Mvvm.Native;
 using DevExpress.Spreadsheet;
+using DevExpress.XtraSpreadsheet.Model;
 using Foxoft.Models;
 using Foxoft.Models.Entity;
 using Microsoft.Data.SqlClient;
@@ -207,25 +208,27 @@ namespace Foxoft
 
             await foreach (var x in baseQuery)
             {
-                var asd = x.TrInvoiceHeader.DocumentNumber;
-
                 cancellationToken.ThrowIfCancellationRequested();
 
+                var delivered = await db.TrInvoiceLines
+                    .Where(y => y.RelatedLineId == x.InvoiceLineId && new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                    .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
+
                 var returned = await db.TrInvoiceLines
-                    .Where(y => y.RelatedLineId == x.InvoiceLineId &&
-                                new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                    .Include(y => y.TrInvoiceHeader)
+                    .Where(y => y.RelatedLineId == x.InvoiceLineId && new[] { "RS", "WS" }.Contains(y.TrInvoiceHeader.ProcessCode) && y.TrInvoiceHeader.IsReturn == true)
                     .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
 
                 var original = x.QtyIn - x.QtyOut;
 
-                if (Math.Abs(original) - Math.Abs(returned) > 0)
+                if (Math.Abs(original) - Math.Abs(delivered) - Math.Abs(returned) > 0)
                 {
                     yield return new UnDeliveredViewModel
                     {
                         TrInvoiceLine = x,
                         TrInvoiceHeader = x.TrInvoiceHeader,
-                        ReturnQty = Math.Abs(returned),
-                        RemainingQty = Math.Abs(original) - Math.Abs(returned)
+                        ReturnQty = Math.Abs(delivered),
+                        RemainingQty = Math.Abs(original) - Math.Abs(delivered)
                     };
                 }
             }
@@ -713,15 +716,6 @@ namespace Foxoft
                                     .Any(x => x.RelatedLineId == relatedLineId);
         }
 
-        public bool WaybillExistByInvoiceLine(Guid relatedLineId)
-        {
-            using subContext db = new();
-
-            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                    .Where(x => new string[] { "WI", "WO" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                                    .Any(x => x.RelatedLineId == relatedLineId);
-        }
-
         public List<TrInvoiceLine> SelectInvoiceLineForReport(Guid invoiceHeaderId)
         {
             using subContext db = new();
@@ -925,6 +919,24 @@ namespace Foxoft
             else
                 return 0;
         }
+
+        public bool WaybillExistByInvoiceLine(Guid relatedLineId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => new string[] { "WI", "WO" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                    .Any(x => x.RelatedLineId == relatedLineId);
+        }
+
+        public bool InvoicelineExistByRelatedLineId(Guid invoiceHeaderId, Guid relatedLineId)
+        {
+            using subContext db = new();
+            return db.TrInvoiceLines.Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                    .Where(x => new string[] { "WI", "WO" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                    .Any(x => x.RelatedLineId == relatedLineId);
+        }
+
 
         public TrInvoiceLine SelectTrInvoiceLineByRelatedLineId(Guid invoiceHeaderId, Guid relatedLineId)
         {
