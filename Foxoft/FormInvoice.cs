@@ -2428,12 +2428,13 @@ namespace Foxoft
             if (gV_InvoiceLine.DataRowCount > 0)
             {
                 decimal amountSummary = CalcAmountSummmaryValue();
-                using (FormPosDiscount formPosDiscount = new(amountSummary, 0))
+                using (FormPosDiscount formPosDiscount = new(0, amountSummary))
                 {
                     if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
                     {
                         for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                             gV_InvoiceLine.SetRowCellValue(i, col_PosDiscount, formPosDiscount.DiscountPercent);
+                        gV_InvoiceLine.RefreshData();//update footer summary
                     }
                 }
             }

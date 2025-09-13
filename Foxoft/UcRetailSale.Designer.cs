@@ -815,7 +815,7 @@ namespace Foxoft
             btn_LineDiscount.StyleController = lC_InvoiceLine;
             btn_LineDiscount.TabIndex = 1;
             btn_LineDiscount.Text = "Sətir Endirimi";
-            btn_LineDiscount.Click += btn_Discount_Click;
+            btn_LineDiscount.Click += btn_LineDiscount_Click;
             // 
             // btn_CancelInvoice
             // 

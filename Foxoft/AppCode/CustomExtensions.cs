@@ -42,18 +42,18 @@ namespace Foxoft
                 return false;
         }
 
-        public static string GetPreviewText(decimal PosDiscount, decimal Amount, decimal NetAmount, float VatRate, string Barcode, string SalesPersonCode)
+        public static string GetPreviewText(decimal PosDiscountRate, decimal Amount, decimal NetAmount, float VatRate, string Barcode, string SalesPersonCode)
         {
-            decimal PosDiscountRate = 0;
+            decimal PosDiscount = 0;
             if (Amount != 0 && NetAmount != 0)
-                PosDiscountRate = Math.Round(PosDiscount / Amount * 100, 2);
+                PosDiscount = Math.Round(PosDiscountRate * Amount / 100, 2);
 
             string previewText = "ƏDV: " + VatRate + "%\n";
 
             if (!string.IsNullOrEmpty(Barcode))
                 previewText += "Barkod: " + Barcode + "\n";
 
-            if (PosDiscountRate > 0)
+            if (PosDiscount > 0)
                 previewText += "Pos Endirimi: [" + PosDiscountRate + "%] = " + PosDiscount + "\n";
 
             if (!string.IsNullOrEmpty(SalesPersonCode))

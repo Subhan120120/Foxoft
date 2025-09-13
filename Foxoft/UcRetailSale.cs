@@ -1,20 +1,15 @@
 ﻿using DevExpress.DataAccess.Sql;
-using DevExpress.XtraBars.Docking2010.Views.Widget;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.UI;
-using DevExpress.XtraRichEdit.Model;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
-using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -236,6 +231,7 @@ namespace Foxoft
                                 return;
                             }
                     }
+
                     AddNewRow(formProductList.dcProduct, 1);
 
                     SaveInvoice();
@@ -265,25 +261,6 @@ namespace Foxoft
             else return 0;
         }
 
-        //private void InsertInvoiceHeader()
-        //{
-        //    trInvoiceHeader = new();
-        //    trInvoiceHeader.InvoiceHeaderId = invoiceHeaderId;
-        //    string NewDocNum = efMethods.GetNextDocNum(true, "RS", "DocumentNumber", "TrInvoiceHeaders", 6);
-        //    trInvoiceHeader.DocumentNumber = NewDocNum;
-        //    trInvoiceHeader.DocumentDate = DateTime.Now;
-        //    trInvoiceHeader.DocumentTime = TimeSpan.Parse(DateTime.Now.ToString("HH:mm:ss"));
-        //    trInvoiceHeader.ProcessCode = "RS";
-        //    trInvoiceHeader.OfficeCode = Authorization.OfficeCode;
-        //    trInvoiceHeader.StoreCode = Authorization.StoreCode;
-        //    trInvoiceHeader.CreatedUserName = Authorization.CurrAccCode;
-        //    trInvoiceHeader.IsMainTF = true;
-        //    trInvoiceHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
-        //    //trInvoiceHeader.CurrAccCode = dcCurrAcc.CurrAccCode;
-
-        //    efMethods.InsertEntity<TrInvoiceHeader>(trInvoiceHeader);
-        //}
-
         private void btn_CancelInvoice_Click(object sender, EventArgs e)
         {
             if (rowIndx >= 0)
@@ -311,15 +288,6 @@ namespace Foxoft
                 DialogResult dialogResult = XtraMessageBox.Show("Silmək istədiyinizə əminmisiniz?", "Diqqət", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    //Guid invoiceLineId = Guid.Parse(gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.InvoiceLineId)).ToString());
-                    //int result = efMethods.DeleteEntityById<TrInvoiceLine>(invoiceLineId);
-
-                    //if (result >= 0)
-                    //{
-                    //    gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
-                    //    gV_InvoiceLine.MoveLast();
-                    //}
-
                     gV_InvoiceLine.DeleteRow(gV_InvoiceLine.FocusedRowHandle);
 
                     SaveInvoice();
@@ -332,7 +300,7 @@ namespace Foxoft
         }
 
 
-        private void btn_Discount_Click(object sender, EventArgs e)
+        private void btn_LineDiscount_Click(object sender, EventArgs e)
         {
             bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, nameof(TrInvoiceLine.PosDiscount));
             if (!currAccHasClaims)
@@ -350,21 +318,9 @@ namespace Foxoft
                 {
                     if (formPosDiscount.ShowDialog(this) == DialogResult.OK)
                     {
-                        object invoiceLineId = gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.InvoiceLineId));
-
-                        TrInvoiceLine trInvoiceLine = new()
-                        {
-                            InvoiceLineId = (Guid)invoiceLineId,
-                            NetAmount = Amount - formPosDiscount.DiscountAmount,
-                            PosDiscount = formPosDiscount.DiscountPercent
-                        };
-                        int result = efMethods.UpdateInvoiceLine_PosDiscount(trInvoiceLine);
-
-                        if (result >= 0)
-                        {
-                            gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
-                            gV_InvoiceLine.MoveLast();
-                        }
+                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.PosDiscount), formPosDiscount.DiscountPercent);
+                        gV_InvoiceLine.RefreshData(); // footer yenilensin deye
+                        gV_InvoiceLine.MoveLast();
                     }
                 }
             }
@@ -634,8 +590,6 @@ namespace Foxoft
             }
         }
 
-
-
         private void btn_ReportZ_Click(object sender, EventArgs e)
         {
             ShowZetPreview();
@@ -645,14 +599,17 @@ namespace Foxoft
         {
             if (rowIndx >= 0)
             {
-                using (FormCurrAccList form = new(new byte[] { 3 }))
+                string salesPerson = gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.SalesPersonCode))?.ToString();
+
+                using (FormCurrAccList form = new(new byte[] { 3 }, salesPerson, new byte[] { 1 }))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
-                        Guid invoiceLineId = (Guid)gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.InvoiceLineId));
-                        efMethods.UpdateInvoiceSalesPerson(invoiceLineId, form.dcCurrAcc.CurrAccCode);
-                        gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(invoiceHeaderId);
+                        gV_InvoiceLine.SetRowCellValue(rowIndx, nameof(TrInvoiceLine.SalesPersonCode), form.dcCurrAcc.CurrAccCode);
+                        gV_InvoiceLine.RefreshData(); // footer yenilensin deye
                         gV_InvoiceLine.MoveLast();
+
+                        SaveInvoice();
                     }
                 }
             }
@@ -660,7 +617,7 @@ namespace Foxoft
                 XtraMessageBox.Show("Məhsul Seçin");
         }
 
-        private void gV_InvoiceLine_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        private void gV_InvoiceLine_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             rowIndx = gV_InvoiceLine.FocusedRowHandle;
         }
@@ -705,7 +662,7 @@ namespace Foxoft
 
             if (dcProductByBarcode != null && dcProductByScale != null)
             {
-                using var formProductList = new FormProductList(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductByScale.ProductCode });
+                using FormProductList formProductList = new (new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductByScale.ProductCode });
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
                     selectedProduct = formProductList.dcProduct;
@@ -812,20 +769,12 @@ namespace Foxoft
                 {
                     for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
                     {
-                        object invoiceLineId = gV_InvoiceLine.GetRowCellValue(i, nameof(TrInvoiceLine.InvoiceLineId));
-
-                        TrInvoiceLine trInvoiceLine = new()
-                        {
-                            InvoiceLineId = (Guid)invoiceLineId,
-                            //NetAmount = Amount - formPosDiscount.DiscountAmount,
-                            PosDiscount = formPosDiscount.DiscountPercent
-                        };
-                        efMethods.UpdateInvoiceLine_PosDiscount(trInvoiceLine);
+                        gV_InvoiceLine.SetRowCellValue(i, nameof(TrInvoiceLine.PosDiscount), formPosDiscount.DiscountPercent);
                     }
                 }
             }
 
-            //gC_InvoiceLine.DataSource = efMethods.SelectInvoiceLines(trInvoiceHeader.InvoiceHeaderId);
+            gV_InvoiceLine.RefreshData();
             gV_InvoiceLine.MoveLast();
         }
     }
