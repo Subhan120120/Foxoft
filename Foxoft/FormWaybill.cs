@@ -9,11 +9,14 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Printing;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -32,7 +35,6 @@ namespace Foxoft
         readonly SettingStore settingStore;
         ReportClass reportClass;
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
-
 
         EfMethods efMethods = new();
         BindingList<UnDeliveredViewModel> liveList = new();
@@ -75,6 +77,8 @@ namespace Foxoft
             //gC_InvoiceLine.DataSource = liveList;
 
             LoadDataStreamedAsync();
+
+            LoadLayout();
         }
 
         private void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
@@ -382,6 +386,35 @@ namespace Foxoft
             }
 
             e.Cancel = false;
+        }
+
+        private void LoadLayout()
+        {
+            string fileName = "UnDeliveredLayout.xml";
+            string layoutHeaderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+
+            if (File.Exists(layoutHeaderPath))
+                dataLayoutControl1.RestoreLayoutFromXml(layoutHeaderPath);
+
+            string layoutLineFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+
+            if (File.Exists(layoutLineFilePath))
+                gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
+        }
+
+        private void SaveLayout()
+        {
+            string fileName = "UnDeliveredLayout.xml";
+            string layoutFileDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
+
+            if (!Directory.Exists(layoutFileDir))
+                Directory.CreateDirectory(layoutFileDir);
+            gV_InvoiceLine.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+        }
+
+        private void BBI_GridLayoutSave_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SaveLayout();
         }
     }
 }

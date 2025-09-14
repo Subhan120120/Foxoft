@@ -32,7 +32,7 @@ namespace Foxoft
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportGrid));
             gC_Report = new MyGridControl();
-            gV_Report = new MyGridView(this);
+            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
             bBI_LayoutSave = new DevExpress.XtraBars.BarButtonItem();
             bBI_LayoutLoad = new DevExpress.XtraBars.BarButtonItem();
@@ -61,7 +61,7 @@ namespace Foxoft
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
             ((System.ComponentModel.ISupportInitialize)gC_Report).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gV_Report).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
@@ -71,17 +71,17 @@ namespace Foxoft
             // 
             gC_Report.Dock = DockStyle.Fill;
             gC_Report.Location = new Point(0, 158);
-            gC_Report.MainView = gV_Report;
+            gC_Report.MainView = gridView1;
             gC_Report.Name = "gC_Report";
             gC_Report.Size = new Size(820, 420);
             gC_Report.TabIndex = 0;
-            gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_Report });
+            gC_Report.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             gC_Report.ProcessGridKey += gC_Report_ProcessGridKey;
             // 
             // gridView1
             // 
-            gV_Report.GridControl = gC_Report;
-            gV_Report.Name = "gridView1";
+            gridView1.GridControl = gC_Report;
+            gridView1.Name = "gridView1";
             // 
             // ribbonControl1
             // 
@@ -98,8 +98,7 @@ namespace Foxoft
             // 
             bBI_LayoutSave.Caption = "Dizaynı Saxla";
             bBI_LayoutSave.Id = 1;
-            bBI_LayoutSave.ImageOptions.Image = (Image)resources.GetObject("bBI_LayoutSave.ImageOptions.Image");
-            bBI_LayoutSave.ImageOptions.LargeImage = (Image)resources.GetObject("bBI_LayoutSave.ImageOptions.LargeImage");
+            bBI_LayoutSave.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_LayoutSave.ImageOptions.SvgImage");
             bBI_LayoutSave.Name = "bBI_LayoutSave";
             bBI_LayoutSave.ItemClick += bBI_LayoutSave_ItemClick;
             // 
@@ -107,8 +106,7 @@ namespace Foxoft
             // 
             bBI_LayoutLoad.Caption = "Dizaynı Al";
             bBI_LayoutLoad.Id = 2;
-            bBI_LayoutLoad.ImageOptions.Image = (Image)resources.GetObject("bBI_LayoutLoad.ImageOptions.Image");
-            bBI_LayoutLoad.ImageOptions.LargeImage = (Image)resources.GetObject("bBI_LayoutLoad.ImageOptions.LargeImage");
+            bBI_LayoutLoad.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bBI_LayoutLoad.ImageOptions.SvgImage");
             bBI_LayoutLoad.Name = "bBI_LayoutLoad";
             bBI_LayoutLoad.ItemClick += bBI_LayoutLoad_ItemClick;
             // 
@@ -148,6 +146,7 @@ namespace Foxoft
             // 
             barButtonItem2.Caption = "Test";
             barButtonItem2.Id = 10;
+            barButtonItem2.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem2.ImageOptions.SvgImage");
             barButtonItem2.Name = "barButtonItem2";
             barButtonItem2.ItemClick += barButtonItem2_ItemClick;
             // 
@@ -244,8 +243,8 @@ namespace Foxoft
             // 
             // ribbonPageGroup1
             // 
-            ribbonPageGroup1.ItemLinks.Add(bBI_LayoutSave);
             ribbonPageGroup1.ItemLinks.Add(bBI_LayoutLoad);
+            ribbonPageGroup1.ItemLinks.Add(bBI_LayoutSave);
             ribbonPageGroup1.ItemLinks.Add(bBI_GridOptions);
             ribbonPageGroup1.ItemLinks.Add(bBI_DesignClear);
             ribbonPageGroup1.ItemLinks.Add(barSubItem1);
@@ -301,7 +300,7 @@ namespace Foxoft
             FormClosing += FormReportGrid_FormClosing;
             KeyDown += FormReportGrid_KeyDown;
             ((System.ComponentModel.ISupportInitialize)gC_Report).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gV_Report).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu1).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
@@ -341,5 +340,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem BBI_AddColumnTimeSpan;
         private DevExpress.XtraBars.BarButtonItem BBI_AddColumnDecimal;
         private DevExpress.XtraBars.BarButtonItem BBI_AddColumnObject;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
     }
 }
