@@ -72,7 +72,7 @@ namespace Foxoft
             UndeliveredBindingSource = new BindingSource(components);
             gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
-            InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Qty = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -429,10 +429,10 @@ namespace Foxoft
             gV_InvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, InvoiceHeaderId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode });
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
-            gV_InvoiceLine.OptionsBehavior.Editable = false;
+            gV_InvoiceLine.OptionsBehavior.ReadOnly = true;
             gV_InvoiceLine.OptionsFind.AlwaysVisible = true;
             gV_InvoiceLine.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             gV_InvoiceLine.OptionsFind.FindNullPrompt = "";
@@ -455,9 +455,9 @@ namespace Foxoft
             // 
             // InvoiceHeaderId
             // 
-            InvoiceHeaderId.Caption = "InvoiceHeaderId";
-            InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
-            InvoiceHeaderId.Name = "InvoiceHeaderId";
+            col_InvoiceHeaderId.Caption = "InvoiceHeaderId";
+            col_InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
+            col_InvoiceHeaderId.Name = "InvoiceHeaderId";
             // 
             // col_ProductCode
             // 
@@ -939,7 +939,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem BBI_ReportPrintFast;
         private PopupMenu popupMenuPrinters;
-        private DevExpress.XtraGrid.Columns.GridColumn InvoiceHeaderId;
         private DevExpress.Utils.SvgImageCollection svgImageCollection1;
         private BarButtonItem BBI_Refresh;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
