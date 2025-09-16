@@ -44,13 +44,13 @@ namespace Foxoft
         {
             InitializeComponent();
 
-            gC_InvoiceLine.DataSource = liveList;
+            gC_Invoice.DataSource = liveList;
 
             ClearControls();
 
             //LoadInvoiceLinesAsync();
 
-            gV_InvoiceLine.BestFitColumns();
+            gV_InvoiceHeader.BestFitColumns();
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
             reportClass = new(settingStore.DesignFileFolder);
 
@@ -148,7 +148,7 @@ namespace Foxoft
                 }
             }, token);
 
-            unDeliveredViewModel = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;
+            unDeliveredViewModel = gV_InvoiceHeader.GetFocusedRow() as UnDeliveredViewModel;
         }
 
 
@@ -223,16 +223,16 @@ namespace Foxoft
             //e.PreviewText = CustomExtensions.GetPreviewText(0, 0, 0, 0, String.Empty, SalesPersonCode);
         }
 
-        private void gV_InvoiceLine_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        private void gV_InvoiceHeader_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-            unDeliveredViewModel = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;
+            unDeliveredViewModel = gV_InvoiceHeader.GetFocusedRow() as UnDeliveredViewModel;
         }
 
         private void repoBtn_AddWaybill_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            Guid invoiceLineID = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceLineId);
-            Guid invoiceHeaderId = (Guid)gV_InvoiceLine.GetFocusedRowCellValue(col_InvoiceHeaderId);
-            decimal maxDelivery = (decimal)(gV_InvoiceLine.GetFocusedRowCellValue(col_RemainingQty));
+            Guid invoiceLineID = (Guid)gV_InvoiceHeader.GetFocusedRowCellValue(col_InvoiceLineId);
+            Guid invoiceHeaderId = (Guid)gV_InvoiceHeader.GetFocusedRowCellValue(col_InvoiceHeaderId);
+            decimal maxDelivery = (decimal)(gV_InvoiceHeader.GetFocusedRowCellValue(col_RemainingQty));
 
             if (!(maxDelivery > 0))
             {
@@ -299,14 +299,14 @@ namespace Foxoft
                     List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
                     gC_DeliveryInvoiceLine.DataSource = deliveryLines;
 
-                    var gridRow = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;
+                    var gridRow = gV_InvoiceHeader.GetFocusedRow() as UnDeliveredViewModel;
 
                     if (gridRow != null)
                     {
                         gridRow.ReturnQty += formQty.input;
                         gridRow.RemainingQty -= formQty.input;
 
-                        gV_InvoiceLine.RefreshRow(gV_InvoiceLine.FocusedRowHandle);
+                        gV_InvoiceHeader.RefreshRow(gV_InvoiceHeader.FocusedRowHandle);
                     }
 
 
@@ -401,7 +401,7 @@ namespace Foxoft
             string layoutLineFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
 
             if (File.Exists(layoutLineFilePath))
-                gV_InvoiceLine.RestoreLayoutFromXml(layoutLineFilePath);
+                gV_InvoiceHeader.RestoreLayoutFromXml(layoutLineFilePath);
         }
 
         private void SaveLayout()
@@ -411,7 +411,7 @@ namespace Foxoft
 
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
-            gV_InvoiceLine.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+            gV_InvoiceHeader.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
         }
 
         private void BBI_GridLayoutSave_ItemClick(object sender, ItemClickEventArgs e)
