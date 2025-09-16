@@ -72,7 +72,7 @@ namespace Foxoft
             UndeliveredBindingSource = new BindingSource(components);
             gV_InvoiceLine = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
+            InvoiceHeaderId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Qty = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -168,7 +168,7 @@ namespace Foxoft
             lC_Root.Name = "lC_Root";
             lC_Root.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new Rectangle(710, 0, 650, 400);
             lC_Root.Root = lCG_Root;
-            lC_Root.Size = new Size(1049, 491);
+            lC_Root.Size = new Size(1049, 621);
             lC_Root.TabIndex = 0;
             lC_Root.Text = "layoutControl1";
             // 
@@ -180,7 +180,7 @@ namespace Foxoft
             dataLayoutControl1.Controls.Add(CurrAccCodeTextEdit);
             dataLayoutControl1.Controls.Add(StoreCodeTextEdit);
             dataLayoutControl1.DataSource = trInvoiceHeadersBindingSource;
-            dataLayoutControl1.Location = new Point(24, 286);
+            dataLayoutControl1.Location = new Point(24, 324);
             dataLayoutControl1.MaximumSize = new Size(0, 83);
             dataLayoutControl1.Name = "dataLayoutControl1";
             dataLayoutControl1.OptionsView.IsReadOnly = DevExpress.Utils.DefaultBoolean.True;
@@ -308,10 +308,10 @@ namespace Foxoft
             // 
             // gC_DeliveryInvoiceLine
             // 
-            gC_DeliveryInvoiceLine.Location = new Point(24, 382);
+            gC_DeliveryInvoiceLine.Location = new Point(24, 420);
             gC_DeliveryInvoiceLine.MainView = gV_ReturnInvoiceLine;
             gC_DeliveryInvoiceLine.Name = "gC_DeliveryInvoiceLine";
-            gC_DeliveryInvoiceLine.Size = new Size(1001, 49);
+            gC_DeliveryInvoiceLine.Size = new Size(1001, 127);
             gC_DeliveryInvoiceLine.TabIndex = 2;
             gC_DeliveryInvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_ReturnInvoiceLine });
             // 
@@ -418,7 +418,7 @@ namespace Foxoft
             gC_InvoiceLine.MainView = gV_InvoiceLine;
             gC_InvoiceLine.Name = "gC_InvoiceLine";
             gC_InvoiceLine.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoBtn_AddWaybill });
-            gC_InvoiceLine.Size = new Size(1001, 182);
+            gC_InvoiceLine.Size = new Size(1001, 220);
             gC_InvoiceLine.TabIndex = 0;
             gC_InvoiceLine.Tag = "Empty";
             gC_InvoiceLine.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_InvoiceLine });
@@ -429,7 +429,7 @@ namespace Foxoft
             gV_InvoiceLine.Appearance.FooterPanel.Options.UseFont = true;
             gV_InvoiceLine.Appearance.Row.Font = new Font("Tahoma", 12F);
             gV_InvoiceLine.Appearance.Row.Options.UseFont = true;
-            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_InvoiceHeaderId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode });
+            gV_InvoiceLine.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, InvoiceHeaderId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode });
             gV_InvoiceLine.GridControl = gC_InvoiceLine;
             gV_InvoiceLine.Name = "gV_InvoiceLine";
             gV_InvoiceLine.OptionsBehavior.ReadOnly = true;
@@ -455,9 +455,9 @@ namespace Foxoft
             // 
             // InvoiceHeaderId
             // 
-            col_InvoiceHeaderId.Caption = "InvoiceHeaderId";
-            col_InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
-            col_InvoiceHeaderId.Name = "InvoiceHeaderId";
+            InvoiceHeaderId.Caption = "InvoiceHeaderId";
+            InvoiceHeaderId.FieldName = "TrInvoiceHeader.InvoiceHeaderId";
+            InvoiceHeaderId.Name = "InvoiceHeaderId";
             // 
             // col_ProductCode
             // 
@@ -628,9 +628,9 @@ namespace Foxoft
             // 
             btn_Ok.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Ok.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Ok.ImageOptions.SvgImage");
-            btn_Ok.Location = new Point(734, 447);
+            btn_Ok.Location = new Point(734, 563);
             btn_Ok.Name = "btn_Ok";
-            btn_Ok.Size = new Size(132, 32);
+            btn_Ok.Size = new Size(132, 46);
             btn_Ok.StyleController = lC_Root;
             btn_Ok.TabIndex = 3;
             btn_Ok.Text = "simpleButton1";
@@ -640,9 +640,9 @@ namespace Foxoft
             // 
             btn_Cancel.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
             btn_Cancel.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_Cancel.ImageOptions.SvgImage");
-            btn_Cancel.Location = new Point(870, 447);
+            btn_Cancel.Location = new Point(870, 563);
             btn_Cancel.Name = "btn_Cancel";
-            btn_Cancel.Size = new Size(167, 32);
+            btn_Cancel.Size = new Size(167, 46);
             btn_Cancel.StyleController = lC_Root;
             btn_Cancel.TabIndex = 4;
             btn_Cancel.Text = "simpleButton2";
@@ -654,34 +654,34 @@ namespace Foxoft
             lCG_Root.GroupBordersVisible = false;
             lCG_Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_Cancel, lCI_Cash, emptySpace_1, lCG_InvoiceLine, lCG_ReturnInvoiceLine, splitterItem1 });
             lCG_Root.Name = "Root";
-            lCG_Root.Size = new Size(1049, 491);
+            lCG_Root.Size = new Size(1049, 621);
             lCG_Root.TextVisible = false;
             // 
             // lCI_Cancel
             // 
             lCI_Cancel.Control = btn_Cancel;
-            lCI_Cancel.Location = new Point(858, 435);
+            lCI_Cancel.Location = new Point(858, 551);
             lCI_Cancel.MinSize = new Size(78, 26);
             lCI_Cancel.Name = "lCI_Cancel";
-            lCI_Cancel.Size = new Size(171, 36);
+            lCI_Cancel.Size = new Size(171, 50);
             lCI_Cancel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cancel.TextVisible = false;
             // 
             // lCI_Cash
             // 
             lCI_Cash.Control = btn_Ok;
-            lCI_Cash.Location = new Point(722, 435);
+            lCI_Cash.Location = new Point(722, 551);
             lCI_Cash.MinSize = new Size(78, 26);
             lCI_Cash.Name = "lCI_Cash";
-            lCI_Cash.Size = new Size(136, 36);
+            lCI_Cash.Size = new Size(136, 50);
             lCI_Cash.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             lCI_Cash.TextVisible = false;
             // 
             // emptySpace_1
             // 
-            emptySpace_1.Location = new Point(0, 435);
+            emptySpace_1.Location = new Point(0, 551);
             emptySpace_1.Name = "emptySpace_1";
-            emptySpace_1.Size = new Size(722, 36);
+            emptySpace_1.Size = new Size(722, 50);
             // 
             // lCG_InvoiceLine
             // 
@@ -689,7 +689,7 @@ namespace Foxoft
             lCG_InvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { lCI_InvoiceLine });
             lCG_InvoiceLine.Location = new Point(0, 0);
             lCG_InvoiceLine.Name = "lCG_InvoiceLine";
-            lCG_InvoiceLine.Size = new Size(1029, 231);
+            lCG_InvoiceLine.Size = new Size(1029, 269);
             lCG_InvoiceLine.Text = "Məhsul";
             // 
             // lCI_InvoiceLine
@@ -697,16 +697,16 @@ namespace Foxoft
             lCI_InvoiceLine.Control = gC_InvoiceLine;
             lCI_InvoiceLine.Location = new Point(0, 0);
             lCI_InvoiceLine.Name = "lCI_InvoiceLine";
-            lCI_InvoiceLine.Size = new Size(1005, 186);
+            lCI_InvoiceLine.Size = new Size(1005, 224);
             lCI_InvoiceLine.TextVisible = false;
             // 
             // lCG_ReturnInvoiceLine
             // 
             lCG_ReturnInvoiceLine.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             lCG_ReturnInvoiceLine.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1 });
-            lCG_ReturnInvoiceLine.Location = new Point(0, 241);
+            lCG_ReturnInvoiceLine.Location = new Point(0, 279);
             lCG_ReturnInvoiceLine.Name = "lCG_ReturnInvoiceLine";
-            lCG_ReturnInvoiceLine.Size = new Size(1029, 194);
+            lCG_ReturnInvoiceLine.Size = new Size(1029, 272);
             lCG_ReturnInvoiceLine.Text = "Geri Qaytarma";
             // 
             // layoutControlItem2
@@ -722,12 +722,12 @@ namespace Foxoft
             layoutControlItem1.Control = gC_DeliveryInvoiceLine;
             layoutControlItem1.Location = new Point(0, 96);
             layoutControlItem1.Name = "layoutControlItem1";
-            layoutControlItem1.Size = new Size(1005, 53);
+            layoutControlItem1.Size = new Size(1005, 131);
             layoutControlItem1.TextVisible = false;
             // 
             // splitterItem1
             // 
-            splitterItem1.Location = new Point(0, 231);
+            splitterItem1.Location = new Point(0, 269);
             splitterItem1.Name = "splitterItem1";
             splitterItem1.Size = new Size(1029, 10);
             // 
@@ -819,7 +819,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1049, 649);
+            ClientSize = new Size(1049, 779);
             Controls.Add(lC_Root);
             Controls.Add(ribbonControl1);
             Name = "FormWaybill";
@@ -947,5 +947,6 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private BarButtonItem BBI_GridLayoutSave;
         private DevExpress.XtraGrid.Columns.GridColumn col_WarehouseCode;
+        private DevExpress.XtraGrid.Columns.GridColumn InvoiceHeaderId;
     }
 }

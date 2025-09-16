@@ -147,6 +147,8 @@ namespace Foxoft
                     Console.WriteLine($"Load error: {ex.Message}");
                 }
             }, token);
+
+            unDeliveredViewModel = gV_InvoiceLine.GetFocusedRow() as UnDeliveredViewModel;
         }
 
 
