@@ -119,6 +119,14 @@ namespace Foxoft
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            col_Description = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_ProcessCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_DocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_OfficeCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_StoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_CustomsDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_SerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_UnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)gvDetail).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtn_AddWaybill).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_Invoice).BeginInit();
@@ -161,7 +169,7 @@ namespace Foxoft
             // 
             // gvDetail
             // 
-            gvDetail.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill });
+            gvDetail.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_SerialNumberCode, col_AddWaybill, col_UnitOfMeasureId });
             gvDetail.GridControl = gC_Invoice;
             gvDetail.Name = "gvDetail";
             gvDetail.OptionsFind.AllowFindInExpandedDetails = DevExpress.Utils.DefaultBoolean.True;
@@ -343,7 +351,7 @@ namespace Foxoft
             gvMaster.Appearance.FooterPanel.Options.UseFont = true;
             gvMaster.Appearance.Row.Font = new Font("Tahoma", 12F);
             gvMaster.Appearance.Row.Options.UseFont = true;
-            gvMaster.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode });
+            gvMaster.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode, col_Description, col_ProcessCode, col_DocumentTime, col_OfficeCode, col_StoreCode, col_CustomsDocumentNumber });
             gvMaster.GridControl = gC_Invoice;
             gvMaster.Name = "gvMaster";
             gvMaster.OptionsBehavior.Editable = false;
@@ -850,6 +858,70 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
             // 
+            // col_Description
+            // 
+            col_Description.Caption = "Açıqlama";
+            col_Description.FieldName = "TrInvoiceHeader.Description";
+            col_Description.Name = "col_Description";
+            col_Description.Visible = true;
+            col_Description.VisibleIndex = 5;
+            // 
+            // col_ProcessCode
+            // 
+            col_ProcessCode.Caption = "Proses Kodu";
+            col_ProcessCode.FieldName = "TrInvoiceHeader.ProcessCode";
+            col_ProcessCode.Name = "col_ProcessCode";
+            col_ProcessCode.Visible = true;
+            col_ProcessCode.VisibleIndex = 6;
+            // 
+            // col_DocumentTime
+            // 
+            col_DocumentTime.Caption = "Faktura Vaxtı";
+            col_DocumentTime.FieldName = "TrInvoiceHeader.DocumentTime";
+            col_DocumentTime.Name = "col_DocumentTime";
+            col_DocumentTime.Visible = true;
+            col_DocumentTime.VisibleIndex = 7;
+            // 
+            // col_OfficeCode
+            // 
+            col_OfficeCode.Caption = "Ofis Kodu";
+            col_OfficeCode.FieldName = "TrInvoiceHeader.OfficeCode";
+            col_OfficeCode.Name = "col_OfficeCode";
+            col_OfficeCode.Visible = true;
+            col_OfficeCode.VisibleIndex = 8;
+            // 
+            // col_StoreCode
+            // 
+            col_StoreCode.Caption = "Mağaza Kodu";
+            col_StoreCode.FieldName = "TrInvoiceHeader.StoreCode";
+            col_StoreCode.Name = "col_StoreCode";
+            col_StoreCode.Visible = true;
+            col_StoreCode.VisibleIndex = 9;
+            // 
+            // col_CustomsDocumentNumber
+            // 
+            col_CustomsDocumentNumber.Caption = "Xüsusi Sənəd Nömrəsi";
+            col_CustomsDocumentNumber.FieldName = "TrInvoiceHeader.CustomsDocumentNumber";
+            col_CustomsDocumentNumber.Name = "col_CustomsDocumentNumber";
+            col_CustomsDocumentNumber.Visible = true;
+            col_CustomsDocumentNumber.VisibleIndex = 10;
+            // 
+            // col_SerialNumberCode
+            // 
+            col_SerialNumberCode.Caption = "Seria nömrəsi";
+            col_SerialNumberCode.FieldName = "TrInvoiceLine.SerialNumberCode";
+            col_SerialNumberCode.Name = "col_SerialNumberCode";
+            col_SerialNumberCode.Visible = true;
+            col_SerialNumberCode.VisibleIndex = 15;
+            // 
+            // col_UnitOfMeasureId
+            // 
+            col_UnitOfMeasureId.Caption = "Ölçü Vahidi";
+            col_UnitOfMeasureId.FieldName = "TrInvoiceLine.UnitOfMeasureId";
+            col_UnitOfMeasureId.Name = "col_UnitOfMeasureId";
+            col_UnitOfMeasureId.Visible = true;
+            col_UnitOfMeasureId.VisibleIndex = 16;
+            // 
             // FormWaybill
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -985,5 +1057,13 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceHeaderId;
         private DevExpress.XtraGrid.Columns.GridColumn col_InvoiceLineId;
         private DevExpress.XtraGrid.Columns.GridColumn col_AddWaybill;
+        private DevExpress.XtraGrid.Columns.GridColumn col_Description;
+        private DevExpress.XtraGrid.Columns.GridColumn col_ProcessCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_DocumentTime;
+        private DevExpress.XtraGrid.Columns.GridColumn col_OfficeCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_StoreCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_CustomsDocumentNumber;
+        private DevExpress.XtraGrid.Columns.GridColumn col_SerialNumberCode;
+        private DevExpress.XtraGrid.Columns.GridColumn col_UnitOfMeasureId;
     }
 }
