@@ -227,7 +227,7 @@ namespace Foxoft
                     .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
 
                 var original = x.QtyIn - x.QtyOut;
-                var remaining = Math.Abs(original) - Math.Abs(delivered) - Math.Abs(delivered);
+                var remaining = Math.Abs(original) - Math.Abs(returned) - Math.Abs(delivered);
                 if (remaining <= 0) continue;
 
                 yield return new UnDeliveredViewModel
