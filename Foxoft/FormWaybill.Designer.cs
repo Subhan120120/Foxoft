@@ -33,13 +33,13 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaybill));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             gvDetail = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -55,6 +55,8 @@ namespace Foxoft
             col_LineDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_SalesPersonCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_VatRate = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_SerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_UnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_AddWaybill = new DevExpress.XtraGrid.Columns.GridColumn();
             repoBtn_AddWaybill = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             gC_Invoice = new DevExpress.XtraGrid.GridControl();
@@ -66,6 +68,12 @@ namespace Foxoft
             col_CurrAccDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_DocumentDate = new DevExpress.XtraGrid.Columns.GridColumn();
             col_WarehouseCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_Description = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_ProcessCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_DocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_OfficeCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_StoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_CustomsDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
             lC_Root = new DevExpress.XtraLayout.LayoutControl();
             dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
             DocumentNumberTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -119,14 +127,6 @@ namespace Foxoft
             ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
-            col_Description = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_ProcessCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_DocumentTime = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_OfficeCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_StoreCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_CustomsDocumentNumber = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_SerialNumberCode = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_UnitOfMeasureId = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)gvDetail).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtn_AddWaybill).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_Invoice).BeginInit();
@@ -311,9 +311,25 @@ namespace Foxoft
             col_VatRate.Visible = true;
             col_VatRate.VisibleIndex = 13;
             // 
+            // col_SerialNumberCode
+            // 
+            col_SerialNumberCode.Caption = "Seria nömrəsi";
+            col_SerialNumberCode.FieldName = "TrInvoiceLine.SerialNumberCode";
+            col_SerialNumberCode.Name = "col_SerialNumberCode";
+            col_SerialNumberCode.Visible = true;
+            col_SerialNumberCode.VisibleIndex = 15;
+            // 
+            // col_UnitOfMeasureId
+            // 
+            col_UnitOfMeasureId.Caption = "Ölçü Vahidi";
+            col_UnitOfMeasureId.FieldName = "TrInvoiceLine.UnitOfMeasureId";
+            col_UnitOfMeasureId.Name = "col_UnitOfMeasureId";
+            col_UnitOfMeasureId.Visible = true;
+            col_UnitOfMeasureId.VisibleIndex = 16;
+            // 
             // col_AddWaybill
             // 
-            col_AddWaybill.Caption = "gridColumn1";
+            col_AddWaybill.Caption = "Əlavə Et";
             col_AddWaybill.ColumnEdit = repoBtn_AddWaybill;
             col_AddWaybill.FieldName = "AddWaybill";
             col_AddWaybill.Name = "col_AddWaybill";
@@ -323,9 +339,9 @@ namespace Foxoft
             // repoBtn_AddWaybill
             // 
             repoBtn_AddWaybill.AutoHeight = false;
-            editorButtonImageOptions2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions2.SvgImage");
-            editorButtonImageOptions2.SvgImageSize = new Size(16, 16);
-            repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
+            editorButtonImageOptions1.SvgImageSize = new Size(16, 16);
+            repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
             repoBtn_AddWaybill.Name = "repoBtn_AddWaybill";
             repoBtn_AddWaybill.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             repoBtn_AddWaybill.ButtonPressed += repoBtn_AddWaybill_ButtonPressed;
@@ -333,9 +349,9 @@ namespace Foxoft
             // gC_Invoice
             // 
             gC_Invoice.DataSource = UndeliveredBindingSource;
-            gridLevelNode2.LevelTemplate = gvDetail;
-            gridLevelNode2.RelationName = "Lines";
-            gC_Invoice.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode2 });
+            gridLevelNode1.LevelTemplate = gvDetail;
+            gridLevelNode1.RelationName = "Lines";
+            gC_Invoice.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode1 });
             gC_Invoice.Location = new Point(24, 45);
             gC_Invoice.MainView = gvMaster;
             gC_Invoice.Name = "gC_Invoice";
@@ -415,6 +431,54 @@ namespace Foxoft
             col_WarehouseCode.Name = "col_WarehouseCode";
             col_WarehouseCode.Visible = true;
             col_WarehouseCode.VisibleIndex = 3;
+            // 
+            // col_Description
+            // 
+            col_Description.Caption = "Açıqlama";
+            col_Description.FieldName = "TrInvoiceHeader.Description";
+            col_Description.Name = "col_Description";
+            col_Description.Visible = true;
+            col_Description.VisibleIndex = 5;
+            // 
+            // col_ProcessCode
+            // 
+            col_ProcessCode.Caption = "Proses Kodu";
+            col_ProcessCode.FieldName = "TrInvoiceHeader.ProcessCode";
+            col_ProcessCode.Name = "col_ProcessCode";
+            col_ProcessCode.Visible = true;
+            col_ProcessCode.VisibleIndex = 6;
+            // 
+            // col_DocumentTime
+            // 
+            col_DocumentTime.Caption = "Faktura Vaxtı";
+            col_DocumentTime.FieldName = "TrInvoiceHeader.DocumentTime";
+            col_DocumentTime.Name = "col_DocumentTime";
+            col_DocumentTime.Visible = true;
+            col_DocumentTime.VisibleIndex = 7;
+            // 
+            // col_OfficeCode
+            // 
+            col_OfficeCode.Caption = "Ofis Kodu";
+            col_OfficeCode.FieldName = "TrInvoiceHeader.OfficeCode";
+            col_OfficeCode.Name = "col_OfficeCode";
+            col_OfficeCode.Visible = true;
+            col_OfficeCode.VisibleIndex = 8;
+            // 
+            // col_StoreCode
+            // 
+            col_StoreCode.Caption = "Mağaza Kodu";
+            col_StoreCode.FieldName = "TrInvoiceHeader.StoreCode";
+            col_StoreCode.Name = "col_StoreCode";
+            col_StoreCode.Visible = true;
+            col_StoreCode.VisibleIndex = 9;
+            // 
+            // col_CustomsDocumentNumber
+            // 
+            col_CustomsDocumentNumber.Caption = "Xüsusi Sənəd Nömrəsi";
+            col_CustomsDocumentNumber.FieldName = "TrInvoiceHeader.CustomsDocumentNumber";
+            col_CustomsDocumentNumber.Name = "col_CustomsDocumentNumber";
+            col_CustomsDocumentNumber.Visible = true;
+            col_CustomsDocumentNumber.VisibleIndex = 10;
             // 
             // lC_Root
             // 
@@ -857,70 +921,6 @@ namespace Foxoft
             // svgImageCollection1
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
-            // 
-            // col_Description
-            // 
-            col_Description.Caption = "Açıqlama";
-            col_Description.FieldName = "TrInvoiceHeader.Description";
-            col_Description.Name = "col_Description";
-            col_Description.Visible = true;
-            col_Description.VisibleIndex = 5;
-            // 
-            // col_ProcessCode
-            // 
-            col_ProcessCode.Caption = "Proses Kodu";
-            col_ProcessCode.FieldName = "TrInvoiceHeader.ProcessCode";
-            col_ProcessCode.Name = "col_ProcessCode";
-            col_ProcessCode.Visible = true;
-            col_ProcessCode.VisibleIndex = 6;
-            // 
-            // col_DocumentTime
-            // 
-            col_DocumentTime.Caption = "Faktura Vaxtı";
-            col_DocumentTime.FieldName = "TrInvoiceHeader.DocumentTime";
-            col_DocumentTime.Name = "col_DocumentTime";
-            col_DocumentTime.Visible = true;
-            col_DocumentTime.VisibleIndex = 7;
-            // 
-            // col_OfficeCode
-            // 
-            col_OfficeCode.Caption = "Ofis Kodu";
-            col_OfficeCode.FieldName = "TrInvoiceHeader.OfficeCode";
-            col_OfficeCode.Name = "col_OfficeCode";
-            col_OfficeCode.Visible = true;
-            col_OfficeCode.VisibleIndex = 8;
-            // 
-            // col_StoreCode
-            // 
-            col_StoreCode.Caption = "Mağaza Kodu";
-            col_StoreCode.FieldName = "TrInvoiceHeader.StoreCode";
-            col_StoreCode.Name = "col_StoreCode";
-            col_StoreCode.Visible = true;
-            col_StoreCode.VisibleIndex = 9;
-            // 
-            // col_CustomsDocumentNumber
-            // 
-            col_CustomsDocumentNumber.Caption = "Xüsusi Sənəd Nömrəsi";
-            col_CustomsDocumentNumber.FieldName = "TrInvoiceHeader.CustomsDocumentNumber";
-            col_CustomsDocumentNumber.Name = "col_CustomsDocumentNumber";
-            col_CustomsDocumentNumber.Visible = true;
-            col_CustomsDocumentNumber.VisibleIndex = 10;
-            // 
-            // col_SerialNumberCode
-            // 
-            col_SerialNumberCode.Caption = "Seria nömrəsi";
-            col_SerialNumberCode.FieldName = "TrInvoiceLine.SerialNumberCode";
-            col_SerialNumberCode.Name = "col_SerialNumberCode";
-            col_SerialNumberCode.Visible = true;
-            col_SerialNumberCode.VisibleIndex = 15;
-            // 
-            // col_UnitOfMeasureId
-            // 
-            col_UnitOfMeasureId.Caption = "Ölçü Vahidi";
-            col_UnitOfMeasureId.FieldName = "TrInvoiceLine.UnitOfMeasureId";
-            col_UnitOfMeasureId.Name = "col_UnitOfMeasureId";
-            col_UnitOfMeasureId.Visible = true;
-            col_UnitOfMeasureId.VisibleIndex = 16;
             // 
             // FormWaybill
             // 
