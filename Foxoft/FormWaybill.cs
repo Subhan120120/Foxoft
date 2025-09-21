@@ -203,7 +203,8 @@ namespace Foxoft
                 .Include(x => x.DcProduct)
                 .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
                 .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
-                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value)
+                            && !x.TrInvoiceHeader.IsReturn)
                 .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
                 .AsAsyncEnumerable()
                 .WithCancellation(cancellationToken);
@@ -213,18 +214,27 @@ namespace Foxoft
                 cancellationToken.ThrowIfCancellationRequested();
 
                 var returned = await db.TrInvoiceLines
-                    .Where(y => y.RelatedLineId == x.InvoiceLineId && new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                    .Include(y => y.TrInvoiceHeader)
+                    .Where(y => y.RelatedLineId == x.InvoiceLineId
+                        && new[] { "RS", "WS" }.Contains(y.TrInvoiceHeader.ProcessCode)
+                        && y.TrInvoiceHeader.IsReturn)
+                    .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
+
+                var delivered = await db.TrInvoiceLines
+                    .Include(y => y.TrInvoiceHeader)
+                    .Where(y => y.RelatedLineId == x.InvoiceLineId 
+                        && new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
                     .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
 
                 var original = x.QtyIn - x.QtyOut;
-                var remaining = Math.Abs(original) - Math.Abs(returned);
+                var remaining = Math.Abs(original) - Math.Abs(delivered) - Math.Abs(delivered);
                 if (remaining <= 0) continue;
 
                 yield return new UnDeliveredViewModel
                 {
                     TrInvoiceLine = x,
                     TrInvoiceHeader = x.TrInvoiceHeader,
-                    ReturnQty = Math.Abs(returned),
+                    ReturnQty = Math.Abs(delivered),
                     RemainingQty = remaining
                 };
             }

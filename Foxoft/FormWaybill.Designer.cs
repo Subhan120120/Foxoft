@@ -164,6 +164,9 @@ namespace Foxoft
             gvDetail.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_AddWaybill });
             gvDetail.GridControl = gC_Invoice;
             gvDetail.Name = "gvDetail";
+            gvDetail.OptionsFind.AllowFindInExpandedDetails = DevExpress.Utils.DefaultBoolean.True;
+            gvDetail.OptionsFind.AlwaysVisible = true;
+            gvDetail.OptionsFind.FindMode = DevExpress.XtraEditors.FindMode.Always;
             gvDetail.OptionsView.ColumnAutoWidth = false;
             gvDetail.OptionsView.ShowGroupPanel = false;
             // 
