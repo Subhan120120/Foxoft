@@ -2412,6 +2412,7 @@ namespace Foxoft
 
         private void LUE_InstallmentPlan_EditValueChanged(object sender, EventArgs e)
         {
+            if (trInvoiceHeader is null) return;
             if (trInvoiceHeader.ProcessCode == "IS" && trInvoiceHeader?.TrInstallment is not null)
                 trInvoiceHeader.TrInstallment.InterestRate = (float)LUE_InstallmentPlan.GetColumnValue(nameof(DcInstallmentPlan.InterestRate));
         }

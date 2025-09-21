@@ -1,11 +1,11 @@
-﻿WITH InstallmentPaymentSum AS (
+﻿;WITH InstallmentPaymentSum AS (
     SELECT
         ph.InvoiceHeaderId,
         ph.CurrAccCode,
         SUM(pl.PaymentLoc) AS InstallmentPaymentSum
     FROM TrPaymentLines pl
-    INNER JOIN TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId
-    INNER JOIN TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
+    JOIN TrPaymentHeaders ph ON pl.PaymentHeaderId = ph.PaymentHeaderId
+    JOIN TrInstallments i ON ph.InvoiceHeaderId = i.InvoiceHeaderId
     WHERE ph.PaymentKindId = 3
     GROUP BY ph.InvoiceHeaderId, ph.CurrAccCode
 ),
@@ -14,10 +14,11 @@ DownPaymentSum AS (
         i.InvoiceHeaderId,
         SUM(pl.PaymentLoc) AS DownPaymentSum
     FROM TrInstallments i
-    INNER JOIN TrInvoiceHeaders ih ON ih.InvoiceHeaderId = i.InvoiceHeaderId  
-    INNER JOIN TrPaymentHeaders ph ON ih.InvoiceHeaderId = ph.InvoiceHeaderId AND ih.CurrAccCode = ph.CurrAccCode
-    INNER JOIN TrPaymentLines pl ON ph.PaymentHeaderId = pl.PaymentHeaderId
-    WHERE ph.PaymentKindId <> 3
+    JOIN TrInvoiceHeaders ih ON ih.InvoiceHeaderId = i.InvoiceHeaderId
+    JOIN TrPaymentHeaders ph ON ih.InvoiceHeaderId = ph.InvoiceHeaderId
+                             AND ih.CurrAccCode     = ph.CurrAccCode
+    JOIN TrPaymentLines pl   ON ph.PaymentHeaderId  = pl.PaymentHeaderId
+    WHERE ph.PaymentKindId != 3
     GROUP BY i.InvoiceHeaderId
 ),
 InstallmentData AS (
@@ -25,93 +26,109 @@ InstallmentData AS (
         i.InstallmentId,
         i.InvoiceHeaderId,
         i.InstallmentDate,
-        SUM(il.NetAmountLoc) + COALESCE(SUM(ril.NetAmountLoc), 0) AS Amount,
-        SUM(il.NetAmountLoc) + COALESCE(SUM(ril.NetAmountLoc), 0) AS AmountLoc, 
-        (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0) AS AmountWithComLoc,
-        (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0) - COALESCE(dps.DownPaymentSum, 0) AS InstallmentAmount,
+        SUM(il.NetAmountLoc) + COALESCE(SUM(ril.NetAmountLoc), 0)                                AS AmountLoc,
+        (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0)               AS AmountWithComLoc,
+        (SUM(il.NetAmountLoc) + i.Commission) + COALESCE(SUM(ril.NetAmountLoc), 0)
+          - COALESCE(dps.DownPaymentSum, 0)                                                      AS InstallmentAmount,
         ih.DocumentNumber,
         ca.CurrAccDesc,
         ca.PhoneNum,
         ip.DurationInMonths,
-        COALESCE(psum.InstallmentPaymentSum, 0) AS InstallmentPaidSum,
-        COALESCE(dps.DownPaymentSum, 0) AS DownPayment
+        COALESCE(psum.InstallmentPaymentSum, 0)                                                  AS InstallmentPaid,
+        COALESCE(dps.DownPaymentSum, 0)                                                          AS DownPayment
     FROM TrInstallments i
-    INNER JOIN TrInvoiceHeaders ih ON i.InvoiceHeaderId = ih.InvoiceHeaderId
+    JOIN TrInvoiceHeaders ih    ON i.InvoiceHeaderId = ih.InvoiceHeaderId
     LEFT JOIN TrInvoiceLines il ON il.InvoiceHeaderId = ih.InvoiceHeaderId
-    INNER JOIN DcCurrAccs ca ON ih.CurrAccCode = ca.CurrAccCode
-    INNER JOIN DcInstallmentPlan ip ON i.InstallmentPlanCode = ip.InstallmentPlanCode
-    LEFT JOIN InstallmentPaymentSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId AND ih.CurrAccCode = psum.CurrAccCode
+    JOIN DcCurrAccs ca          ON ih.CurrAccCode = ca.CurrAccCode
+    JOIN DcInstallmentPlan ip   ON i.InstallmentPlanCode = ip.InstallmentPlanCode
+    LEFT JOIN InstallmentPaymentSum psum ON i.InvoiceHeaderId = psum.InvoiceHeaderId
+                                         AND ih.CurrAccCode     = psum.CurrAccCode
     LEFT JOIN DownPaymentSum dps ON i.InvoiceHeaderId = dps.InvoiceHeaderId
-    LEFT JOIN TrInvoiceHeaders rih ON rih.RelatedInvoiceId = i.InvoiceHeaderId AND rih.IsReturn = 1 
-    LEFT JOIN TrInvoiceLines ril ON ril.InvoiceHeaderId = rih.InvoiceHeaderId AND ril.RelatedLineId = il.InvoiceLineId
-    GROUP BY 
-        i.InstallmentId,
-        i.InvoiceHeaderId,
-        i.InstallmentDate,
-        ih.DocumentNumber,
-        ca.CurrAccDesc,
-        ca.PhoneNum,
-        ip.DurationInMonths,
-        i.Commission,
-        psum.InstallmentPaymentSum,
-        dps.DownPaymentSum
-),
-CalculatedData AS (
-    SELECT
-        InstallmentId,
-        InvoiceHeaderId,
-        CurrAccDesc,
-        PhoneNum,
-        DocumentNumber,
-        InstallmentDate,
-        Amount,
-        AmountWithComLoc,
-        InstallmentAmount,
-        DownPayment,
-        InstallmentPaidSum,
-        DurationInMonths,
-        InstallmentAmount - InstallmentPaidSum AS RemainingBalance,
-        ((InstallmentAmount) / NULLIF(DurationInMonths, 0)) AS MonthlyPayment,
-        FLOOR(InstallmentPaidSum / (InstallmentAmount / NULLIF(DurationInMonths, 0))) AS MonthsPaid,
-        -- Keçən ayları hesabla, 0-dan aşağı olmasın və maksimum DurationInMonths olsun
-        CASE 
-            WHEN GETDATE() < InstallmentDate THEN 0
-            ELSE
-                CASE 
-                    WHEN DATEDIFF(MONTH, InstallmentDate, GETDATE()) > DurationInMonths 
-                        THEN DurationInMonths
-                    ELSE DATEDIFF(MONTH, InstallmentDate, GETDATE())
-                END
-        END AS MonthsElapsedCapped,
-        CASE 
-            WHEN DurationInMonths = 0 THEN InstallmentDate
-            ELSE DATEADD(MONTH, FLOOR(InstallmentPaidSum / (NULLIF(InstallmentAmount / NULLIF(DurationInMonths, 0), 0))) + 1, InstallmentDate)
-        END AS OverdueDate,
-        ENDDATE = DATEADD(MONTH, DurationInMonths, InstallmentDate)
-    FROM InstallmentData
+    LEFT JOIN TrInvoiceHeaders rih ON rih.RelatedInvoiceId = i.InvoiceHeaderId AND rih.IsReturn = 1
+    LEFT JOIN TrInvoiceLines ril   ON ril.InvoiceHeaderId  = rih.InvoiceHeaderId
+                                   AND ril.RelatedLineId   = il.InvoiceLineId
+    GROUP BY
+        i.InstallmentId, i.InvoiceHeaderId, i.InstallmentDate,
+        ih.DocumentNumber, ca.CurrAccDesc, ca.PhoneNum,
+        ip.DurationInMonths, i.Commission, psum.InstallmentPaymentSum, dps.DownPaymentSum
 )
 SELECT
-    InstallmentId,
-    InvoiceHeaderId,
-    CurrAccDesc,
-    PhoneNum,
-    DocumentNumber,
-    InstallmentDate,
-    Amount,
-    MonthsPaid,
-    MonthlyPayment,
-    [Tutar Faizi ilə] = AmountWithComLoc,
-    [Kredit Məbləği] = InstallmentAmount,
-    [Ay] = DurationInMonths,
-    [İlkin Ödəniş] = DownPayment,
-    [Toplam Ödəniş] = InstallmentPaidSum,
-    [Qalıq] = RemainingBalance,
-    [Aylıq Ödəniş] = MonthlyPayment,
-    [Ödənilməli məbləğ] = InstallmentPaidSum - (MonthsElapsedCapped * MonthlyPayment),
-    [Gecikmə tarixi] = OverdueDate,
-    [Gecikmiş Günlər] = CASE 
-        WHEN DATEDIFF(DAY, ENDDATE, OverdueDate) > 0 THEN 0
-        WHEN GETDATE() > OverdueDate THEN DATEDIFF(DAY, OverdueDate, GETDATE())
-        ELSE 0
-    END
-FROM CalculatedData;
+    id.InstallmentId,
+    id.InvoiceHeaderId,
+    id.DocumentNumber,
+    id.CurrAccDesc,
+    id.PhoneNum,
+	id.InstallmentDate,
+    [Kredit Məbləği]     = id.InstallmentAmount,
+    [Müddət Ay]          = id.DurationInMonths,
+    [Ödənilmiş Məbləğ]   = id.InstallmentPaid,
+
+    [Qalıq] = CASE
+        WHEN COALESCE(id.InstallmentAmount,0) - COALESCE(id.InstallmentPaid,0) < 0 THEN 0
+        ELSE COALESCE(id.InstallmentAmount,0) - COALESCE(id.InstallmentPaid,0)
+    END,
+
+    [Aylıq Ödəniş]   = mp.MonthlyPayment,
+
+    [Keçən Aylar]    = pm.PassedMonth,
+
+    [Ödənilmiş Ay]   = p2.PaidMonth,
+
+    [Gecikən Məbləğ] = CASE
+        WHEN pm.PassedMonth * mp.MonthlyPayment - COALESCE(id.InstallmentPaid,0) < 0 THEN 0
+        ELSE pm.PassedMonth * mp.MonthlyPayment - COALESCE(id.InstallmentPaid,0)
+    END,
+
+    [Gecikmə Tarixi] = dd.DueDate,
+
+    [Gecikmiş Günlər] = od.OverDueDays
+
+FROM InstallmentData id
+OUTER APPLY (
+    SELECT MonthlyPayment =
+        CASE
+            WHEN NULLIF(id.DurationInMonths, 0) IS NULL OR COALESCE(id.InstallmentAmount,0) = 0 THEN 0.0
+            ELSE COALESCE(id.InstallmentAmount,0) * 1.0 / NULLIF(id.DurationInMonths, 0)
+        END
+) mp
+OUTER APPLY (
+    SELECT RawPassed =
+        DATEDIFF(MONTH, id.InstallmentDate, CAST(GETDATE() AS date))
+) rp
+OUTER APPLY (
+    SELECT PassedMonth =
+        CASE
+            WHEN rp.RawPassed < 0 THEN 0
+            WHEN rp.RawPassed > COALESCE(id.DurationInMonths, 0) THEN COALESCE(id.DurationInMonths, 0)
+            ELSE rp.RawPassed
+        END
+) pm
+OUTER APPLY (
+
+    SELECT PaidMonth =
+        CASE
+            WHEN mp.MonthlyPayment <= 0 THEN 0
+            ELSE
+                CASE
+                    WHEN FLOOR(COALESCE(id.InstallmentPaid,0) * 1.0 / mp.MonthlyPayment) > COALESCE(id.DurationInMonths,0)
+                        THEN COALESCE(id.DurationInMonths,0)
+                    ELSE FLOOR(COALESCE(id.InstallmentPaid,0) * 1.0 / mp.MonthlyPayment)
+                END
+        END
+) p2
+OUTER APPLY (
+
+    SELECT DueDate =
+        CASE
+            WHEN COALESCE(id.InstallmentAmount,0) - COALESCE(id.InstallmentPaid,0) <= 0 THEN NULL
+            ELSE DATEADD(MONTH, p2.PaidMonth + 1, id.InstallmentDate)
+        END
+) dd
+OUTER APPLY (
+    SELECT OverDueDays =
+        CASE
+            WHEN COALESCE(id.InstallmentAmount,0) - COALESCE(id.InstallmentPaid,0) <= 0 OR dd.DueDate IS NULL THEN 0
+            WHEN CAST(GETDATE() AS date) <= CAST(dd.DueDate AS date) THEN 0
+            ELSE DATEDIFF(DAY, CAST(dd.DueDate AS date), CAST(GETDATE() AS date))
+        END
+) od;

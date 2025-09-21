@@ -44,7 +44,7 @@ namespace Foxoft
             barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
-            barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
+            bbi_test = new DevExpress.XtraBars.BarButtonItem();
             btn_POS = new DevExpress.XtraEditors.SimpleButton();
             txtEdit_UserName = new DevExpress.XtraEditors.TextEdit();
             txtEdit_Password = new DevExpress.XtraEditors.TextEdit();
@@ -135,7 +135,7 @@ namespace Foxoft
             toolbarFormManager1.DockControls.Add(barDockControlLeft);
             toolbarFormManager1.DockControls.Add(barDockControlRight);
             toolbarFormManager1.Form = this;
-            toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barButtonItem1, BBI_GetKey, barButtonItem4 });
+            toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barButtonItem1, BBI_GetKey, bbi_test });
             toolbarFormManager1.MaxItemId = 5;
             // 
             // barDockControlTop
@@ -187,10 +187,10 @@ namespace Foxoft
             // 
             // barButtonItem4
             // 
-            barButtonItem4.Caption = "run";
-            barButtonItem4.Id = 4;
-            barButtonItem4.Name = "barButtonItem4";
-            barButtonItem4.ItemClick += barButtonItem4_ItemClick;
+            bbi_test.Caption = "run";
+            bbi_test.Id = 4;
+            bbi_test.Name = "barButtonItem4";
+            bbi_test.ItemClick += bbi_test_ItemClick;
             // 
             // btn_POS
             // 
@@ -349,7 +349,7 @@ namespace Foxoft
             toolbarFormControl1.TabStop = false;
             toolbarFormControl1.TitleItemLinks.Add(barButtonItem1);
             toolbarFormControl1.TitleItemLinks.Add(BBI_GetKey);
-            toolbarFormControl1.TitleItemLinks.Add(barButtonItem4);
+            toolbarFormControl1.TitleItemLinks.Add(bbi_test);
             toolbarFormControl1.ToolbarForm = this;
             // 
             // FormLogin
@@ -422,6 +422,6 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem4;
+        private DevExpress.XtraBars.BarButtonItem bbi_test;
     }
 }

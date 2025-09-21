@@ -5,8 +5,10 @@ using DevExpress.XtraBars.Alerter;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraMap.Drawing.DirectD3D9;
 using DevExpress.XtraReports.UI;
 using Foxoft.Models;
 using Foxoft.Properties;
@@ -29,29 +31,42 @@ namespace Foxoft
         public TrInvoiceHeader deliveryInvoHeader;
         public Guid invoiceLineID;
         public string processCode;
-        private CancellationTokenSource? _cts;
-        private Task? _loadingTask;
-        private readonly object _lock = new();
         readonly SettingStore settingStore;
         ReportClass reportClass;
         string reportFileNameInvoiceWare = @"InvoiceRS_A4_depo.repx";
 
+        private readonly BindingList<DeliveryHeaderVM> _master = new BindingList<DeliveryHeaderVM>();
+        private readonly Dictionary<Guid, DeliveryHeaderVM> _index = new Dictionary<Guid, DeliveryHeaderVM>();
+        private CancellationTokenSource _cts;
+
         EfMethods efMethods = new();
-        BindingList<UnDeliveredViewModel> liveList = new();
+
+        public sealed class DeliveryHeaderVM
+        {
+            public TrInvoiceHeader TrInvoiceHeader { get; set; }
+            public BindingList<UnDeliveredViewModel> Lines { get; } = new BindingList<UnDeliveredViewModel>();
+
+            public decimal TotalNetAmount => TrInvoiceHeader?.TotalNetAmount ?? 0m;
+
+            // Hesablanmış: detail cəmi
+            public decimal RemainingTotal => Lines.Sum(x => x.RemainingQty * (x.TrInvoiceLine?.PriceLoc ?? 0m));
+        }
 
 
         public FormWaybill()
         {
             InitializeComponent();
+            //gC_Invoice.DataSource = liveList;
 
-            gC_Invoice.DataSource = liveList;
+            gC_Invoice.DataSource = _master;
 
             ClearControls();
 
             //LoadInvoiceLinesAsync();
 
-            gV_InvoiceHeader.BestFitColumns();
+            //gvMaster.BestFitColumns();
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
+            settingStore = efMethods.SelectSettingStore("mgz01");
             reportClass = new(settingStore.DesignFileFolder);
 
             //Foxoft.Models.subContext dbContext = new Foxoft.Models.subContext();
@@ -72,10 +87,11 @@ namespace Foxoft
             this.processCode = processCode;
         }
 
-        private void FormDelivery_Load(object sender, EventArgs e)
+        private void FormWaybill_Load(object sender, EventArgs e)
         {
             //gC_InvoiceLine.DataSource = liveList;
 
+            gvMaster.OptionsView.ShowDetailButtons = false;
             LoadDataStreamedAsync();
 
             LoadLayout();
@@ -91,64 +107,127 @@ namespace Foxoft
             deliveryInvoiceHeaderId = Guid.NewGuid();
             deliveryInvoHeader = new TrInvoiceHeader();
 
-            //unDeliveredViewModel = null;
-            //gC_InvoiceLine.DataSource = null;
             gC_DeliveryInvoiceLine.DataSource = null;
             trInvoiceHeadersBindingSource.DataSource = new TrInvoiceHeader() { };
         }
+        
+        // class fields
+        //private CancellationTokenSource _cts;
+        private int _loadSeq;
 
-
-        private async void LoadDataStreamedAsync(Guid? invoiceHeaderId = null)
+        private async Task LoadDataStreamedAsync(Guid? filterInvoiceHeaderId = null)
         {
-            lock (_lock)
-            {
-                _cts?.Cancel();
-            }
-
-            if (_loadingTask != null)
-            {
-                try
-                {
-                    await _loadingTask;
-                }
-                catch (OperationCanceledException)
-                {
-                    // Load cancelled
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Unexpected error: {ex.Message}");
-                }
-            }
+            // cancel & dispose any previous run
+            _cts?.Cancel();
+            _cts?.Dispose();
 
             _cts = new CancellationTokenSource();
-            var token = _cts.Token;
+            var cts = _cts;                    // capture for this run
+            var mySeq = Interlocked.Increment(ref _loadSeq);
 
-            _loadingTask = Task.Run(async () =>
+            ResetAll();
+
+            try
             {
-                // Clear BindingList on UI thread
-                this.Invoke(() => liveList.Clear());
-
-                try
+                await foreach (var row in StreamInvoiceLinesForDeliveryAsync(filterInvoiceHeaderId, cts.Token))
                 {
-                    await foreach (UnDeliveredViewModel? item in efMethods.StreamInvoiceLinesForDeliveryAsync(invoiceHeaderId, token))
-                    {
-                        if (token.IsCancellationRequested) break;
+                    // guard against races/newer loads
+                    if (cts.IsCancellationRequested || mySeq != _loadSeq)
+                        break;
 
-                        this.Invoke(() => liveList.Add(item));
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    // Safely ignore
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Load error: {ex.Message}");
-                }
-            }, token);
+                    AddRowToUI(row);
 
-            unDeliveredViewModel = gV_InvoiceHeader.GetFocusedRow() as UnDeliveredViewModel;
+                    // second guard for ultra-tight races
+                    if (cts.IsCancellationRequested || mySeq != _loadSeq)
+                        break;
+                }
+            }
+            // only show the message if THIS run is still the active one
+            catch (OperationCanceledException) when (ReferenceEquals(cts, _cts))
+            {
+                XtraMessageBox.Show("Yükləmə ləğv edildi.", "Məlumat",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, "Xəta",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // only touch UI if this run is still current
+                if (ReferenceEquals(cts, _cts) && gvMaster.RowCount > 0)
+                {
+                    gvMaster.FocusedRowHandle = 0;
+                    gvMaster.SetMasterRowExpanded(0, true);
+                }
+            }
+        }
+
+
+        private void ResetAll()
+        {
+            _index.Clear();
+            _master.Clear();
+        }
+
+
+        private void AddRowToUI(UnDeliveredViewModel vmLine)
+        {
+            if (vmLine?.TrInvoiceHeader == null) return;
+            var hid = vmLine.TrInvoiceHeader.InvoiceHeaderId;
+
+            if (!_index.TryGetValue(hid, out var headerVm))
+            {
+                headerVm = new DeliveryHeaderVM
+                {
+                    TrInvoiceHeader = vmLine.TrInvoiceHeader
+                };
+                _index.Add(hid, headerVm);
+                _master.Add(headerVm);
+            }
+
+            headerVm.Lines.Add(vmLine);
+            // Detail cəm dəyişirsə, master sətrini yeniləmək üçün:
+            var rowHandle = gvMaster.LocateByValue(nameof(TrInvoiceHeader.DocumentNumber), headerVm.TrInvoiceHeader.DocumentNumber);
+            if (rowHandle >= 0) gvMaster.RefreshRow(rowHandle);
+        }
+
+        public async IAsyncEnumerable<UnDeliveredViewModel> StreamInvoiceLinesForDeliveryAsync(
+            Guid? invoiceHeader = null,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            await using var db = new subContext();
+
+            var baseQuery = db.TrInvoiceLines
+                .Include(x => x.DcProduct)
+                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+                .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
+                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+                .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+                .AsAsyncEnumerable()
+                .WithCancellation(cancellationToken);
+
+            await foreach (var x in baseQuery)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var returned = await db.TrInvoiceLines
+                    .Where(y => y.RelatedLineId == x.InvoiceLineId && new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                    .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
+
+                var original = x.QtyIn - x.QtyOut;
+                var remaining = Math.Abs(original) - Math.Abs(returned);
+                if (remaining <= 0) continue;
+
+                yield return new UnDeliveredViewModel
+                {
+                    TrInvoiceLine = x,
+                    TrInvoiceHeader = x.TrInvoiceHeader,
+                    ReturnQty = Math.Abs(returned),
+                    RemainingQty = remaining
+                };
+            }
         }
 
 
@@ -225,14 +304,27 @@ namespace Foxoft
 
         private void gV_InvoiceHeader_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-            unDeliveredViewModel = gV_InvoiceHeader.GetFocusedRow() as UnDeliveredViewModel;
+            unDeliveredViewModel = gvMaster.GetFocusedRow() as UnDeliveredViewModel;
         }
 
         private void repoBtn_AddWaybill_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            Guid invoiceLineID = (Guid)gV_InvoiceHeader.GetFocusedRowCellValue(col_InvoiceLineId);
-            Guid invoiceHeaderId = (Guid)gV_InvoiceHeader.GetFocusedRowCellValue(col_InvoiceHeaderId);
-            decimal maxDelivery = (decimal)(gV_InvoiceHeader.GetFocusedRowCellValue(col_RemainingQty));
+            var editor = sender as ButtonEdit;
+            if (editor == null) return;
+
+            var grid = editor.Parent as GridControl;            // parent is the GridControl’s editor container
+            var view = grid?.FocusedView as GridView;          // this will be the active detail GridView
+
+            if (view == null) return;
+
+            var val = view.GetFocusedRowCellValue(col_InvoiceLineId);
+
+            if (val == null || val == DBNull.Value) return;     // handle empty cells safely
+
+            Guid invoiceLineID = (Guid)val;
+
+            Guid invoiceHeaderId = (Guid)gvMaster.GetFocusedRowCellValue(col_InvoiceHeaderId);
+            decimal maxDelivery = (decimal)(view.GetFocusedRowCellValue(col_RemainingQty));
 
             if (!(maxDelivery > 0))
             {
@@ -253,7 +345,8 @@ namespace Foxoft
                         deliveryInvoHeader.RelatedInvoiceId = invoiceHeaderId;
                         deliveryInvoHeader.DocumentNumber = NewDocNum;
                         deliveryInvoHeader.ProcessCode = processCode;
-                        deliveryInvoHeader.CurrAccCode = unDeliveredViewModel.TrInvoiceHeader.CurrAccCode;
+                        if (_index.ContainsKey(invoiceHeaderId))
+                            deliveryInvoHeader.CurrAccCode = _index[invoiceHeaderId].TrInvoiceHeader.CurrAccCode;
                         deliveryInvoHeader.OfficeCode = Authorization.OfficeCode;
                         deliveryInvoHeader.StoreCode = Authorization.StoreCode;
                         deliveryInvoHeader.CreatedUserName = Authorization.CurrAccCode;
@@ -262,7 +355,7 @@ namespace Foxoft
 
                         efMethods.InsertEntity(deliveryInvoHeader);
 
-                        trInvoiceHeadersBindingSource.DataSource = efMethods.SelectEntityById<TrInvoiceHeader>(unDeliveredViewModel.TrInvoiceHeader.InvoiceHeaderId);
+                        trInvoiceHeadersBindingSource.DataSource = efMethods.SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
                     }
 
                     if (!efMethods.InvoicelineExistByRelatedLineId(deliveryInvoiceHeaderId, invoiceLineID))
@@ -299,18 +392,17 @@ namespace Foxoft
                     List<TrInvoiceLine> deliveryLines = efMethods.SelectInvoiceLines(deliveryInvoiceHeaderId);
                     gC_DeliveryInvoiceLine.DataSource = deliveryLines;
 
-                    var gridRow = gV_InvoiceHeader.GetFocusedRow() as UnDeliveredViewModel;
+                    var gridRow = gvMaster.GetFocusedRow() as UnDeliveredViewModel;
 
                     if (gridRow != null)
                     {
                         gridRow.ReturnQty += formQty.input;
                         gridRow.RemainingQty -= formQty.input;
 
-                        gV_InvoiceHeader.RefreshRow(gV_InvoiceHeader.FocusedRowHandle);
+                        gvMaster.RefreshRow(gvMaster.FocusedRowHandle);
                     }
 
-
-                    LoadDataStreamedAsync(unDeliveredViewModel.TrInvoiceHeader.InvoiceHeaderId);
+                    LoadDataStreamedAsync(invoiceHeaderId);
 
                     //gC_InvoiceLine.DataSource = null;
                 }
@@ -392,31 +484,65 @@ namespace Foxoft
 
         private void LoadLayout()
         {
-            string fileName = "UnDeliveredLayout.xml";
-            string layoutHeaderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+            string fileNameR = "UnDeliveredLayoutMaster.xml";
+            string layoutHeaderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileNameR);
 
             if (File.Exists(layoutHeaderPath))
                 dataLayoutControl1.RestoreLayoutFromXml(layoutHeaderPath);
 
-            string layoutLineFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+            string layoutFileDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
+            string fileNameM = "UnDeliveredLayoutMaster.xml";
+            string fileM = Path.Combine(layoutFileDir, fileNameM);
 
-            if (File.Exists(layoutLineFilePath))
-                gV_InvoiceHeader.RestoreLayoutFromXml(layoutLineFilePath);
+            if (File.Exists(fileM))
+                gvMaster.RestoreLayoutFromXml(fileM);
+
+            string fileNameD = "UnDeliveredLayoutDetail.xml";
+            string fileD = Path.Combine(layoutFileDir, fileNameD);
+
+            if (File.Exists(fileD))
+                gvDetail.RestoreLayoutFromXml(fileD);
         }
 
         private void SaveLayout()
         {
-            string fileName = "UnDeliveredLayout.xml";
             string layoutFileDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files");
 
             if (!Directory.Exists(layoutFileDir))
                 Directory.CreateDirectory(layoutFileDir);
-            gV_InvoiceHeader.SaveLayoutToXml(Path.Combine(layoutFileDir, fileName));
+            {
+                string fileNameM = "UnDeliveredLayoutMaster.xml";
+                gvMaster.SaveLayoutToXml(Path.Combine(layoutFileDir, fileNameM));
+                string fileNameD = "UnDeliveredLayoutDetail.xml";
+                gvDetail.SaveLayoutToXml(Path.Combine(layoutFileDir, fileNameD));
+            }
         }
 
         private void BBI_GridLayoutSave_ItemClick(object sender, ItemClickEventArgs e)
         {
             SaveLayout();
         }
+
+        private void GvMaster_MasterRowEmpty(object sender, DevExpress.XtraGrid.Views.Grid.MasterRowEmptyEventArgs e)
+        {
+            if (e.RowHandle < 0) { e.IsEmpty = true; return; }
+            var vm = gvMaster.GetRow(e.RowHandle) as DeliveryHeaderVM;
+            e.IsEmpty = vm == null || vm.Lines.Count == 0; // e.IsEmpty = true olarsa həmin sətrin detail row açılmayacaq
+        }
+
+        private void GvMaster_RowClick(object sender, RowClickEventArgs e)
+        {
+            var view = sender as GridView;
+            if (view == null) return;
+
+            if (view.GetMasterRowExpanded(e.RowHandle))
+                view.CollapseMasterRow(e.RowHandle);
+            else
+                view.ExpandMasterRow(e.RowHandle);
+        }
+
+
+
+
     }
 }

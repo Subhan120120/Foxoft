@@ -125,36 +125,109 @@ namespace Foxoft
             }
         }
 
-        //public List<UnDeliveredViewModel> SelectInvoiceLinesForDelivery(Guid? invoiceHeader = null)
-        //{
-        //    using subContext db = new();
+        public List<UnDeliveredViewModel> SelectDetailForDelivery(Guid? invoiceHeader = null)
+        {
+            using subContext db = new();
 
-        //    return db.TrInvoiceLines
-        //        .Include(x => x.DcProduct)
-        //        .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
-        //        .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
-        //                    && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
-        //        .Select(x => new
-        //        {
-        //            TrInvoiceLine = x,
-        //            TrInvoiceHeader = x.TrInvoiceHeader,
-        //            Returned = db.TrInvoiceLines
-        //                        .Where(y => y.RelatedLineId == x.InvoiceLineId &&
-        //                                    new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-        //                        .Sum(y => y.QtyIn - y.QtyOut),
-        //            Original = x.QtyIn - x.QtyOut
-        //        })
-        //        .Where(t => Math.Abs(t.Original) - Math.Abs(t.Returned) > 0)
-        //        .Select(t => new UnDeliveredViewModel
-        //        {
-        //            TrInvoiceLine = t.TrInvoiceLine,
-        //            TrInvoiceHeader = t.TrInvoiceHeader,
-        //            ReturnQty = Math.Abs(t.Returned),
-        //            RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
-        //        })
-        //        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
-        //        .ToList();
-        //}
+            return db.TrInvoiceLines
+                .Include(x => x.DcProduct)
+                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+                .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
+                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+                .Select(x => new
+                {
+                    TrInvoiceLine = x,
+                    Returned = db.TrInvoiceLines
+                                .Where(y => y.RelatedLineId == x.InvoiceLineId &&
+                                            new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                                .Sum(y => y.QtyIn - y.QtyOut),
+                    Original = x.QtyIn - x.QtyOut
+                })
+                .Where(t => Math.Abs(t.Original) - Math.Abs(t.Returned) > 0)
+                .Select(t => new UnDeliveredViewModel
+                {
+                    TrInvoiceLine = t.TrInvoiceLine,
+                    ReturnQty = Math.Abs(t.Returned),
+                    RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
+                })
+                .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+                .ToList();
+        }
+
+        public List<TrInvoiceHeader> SelectMasterForDelivery(Guid? invoiceHeader = null)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceHeaders
+                .Include(x => x.DcCurrAcc)
+                .Where(x => new[] { "RS", "WS" }.Contains(x.ProcessCode)
+                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+                .OrderByDescending(x => x.DocumentDate)
+                .ToList();
+        }
+
+        // Service layer (can live in your repo/service class)
+        public async IAsyncEnumerable<TrInvoiceHeader> StreamMasterForDeliveryAsync(
+                                Guid? invoiceHeader = null,
+                        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            await using var db = new subContext();
+
+            var qry = db.TrInvoiceHeaders
+                .AsNoTracking()
+                .Include(x => x.DcCurrAcc)
+                .Where(x => new[] { "RS", "WS" }.Contains(x.ProcessCode)
+                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
+                .OrderByDescending(x => x.DocumentDate)
+                .AsAsyncEnumerable()
+                .WithCancellation(cancellationToken);
+
+            await foreach (var h in qry)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                yield return h;
+            }
+        }
+
+        public async IAsyncEnumerable<UnDeliveredViewModel> StreamDetailForDeliveryAsync(
+            Guid masterHeaderId,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            await using var db = new subContext();
+
+            // Your undelivered logic — kept in one SQL, streamed:
+            var qry = db.TrInvoiceLines
+                .AsNoTracking()
+                .Include(x => x.DcProduct)
+                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
+                .Where(x => x.InvoiceHeaderId == masterHeaderId
+                            && new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                .Select(x => new
+                {
+                    TrInvoiceLine = x,
+                    Returned = db.TrInvoiceLines
+                                 .Where(y => y.RelatedLineId == x.InvoiceLineId &&
+                                             new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
+                                 .Sum(y => y.QtyIn - y.QtyOut),
+                    Original = x.QtyIn - x.QtyOut
+                })
+                .Where(t => Math.Abs(t.Original) - Math.Abs(t.Returned) > 0)
+                .Select(t => new UnDeliveredViewModel
+                {
+                    TrInvoiceLine = t.TrInvoiceLine,
+                    ReturnQty = Math.Abs(t.Returned),
+                    RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
+                })
+                .AsAsyncEnumerable()
+                .WithCancellation(cancellationToken);
+
+            await foreach (var d in qry)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                yield return d;
+            }
+        }
+
 
         //public async Task<List<UnDeliveredViewModel>> SelectInvoiceLinesForDeliveryAsync(Guid? invoiceHeader = null)
         //{

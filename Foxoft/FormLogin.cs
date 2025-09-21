@@ -240,7 +240,14 @@ namespace Foxoft
             //lC_Root.RegisterUserCustomizationForm(typeof(Form1));
         }
 
-        private async  void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+        private void bbi_test_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FormWaybill deliveryBrowser = new();
+            deliveryBrowser.ShowDialog();
+
+        }
+
+        private static async Task TestWhatsapp()
         {
             // Fill your variables (you can also take them from configuration)
             var TOKEN = "EAAWMnYx6BxYBPa19qH7uteeer8zFHrwagkVtCLtd7NhFpjCSHdYL52O8zlB0m23N68VXm7qpa4xMYefYY8uLTe6bXXmCIRVXEQoTHJQmKouCcq1hjrrB8Ogf0NtAoHKUZCh50Rln8aRw0xffrZAnHkT1aYhQcsF26fVVt2gVL68k5o0mQEDMy3c7ivsP5oCUOePkziqloxpxnHCo7QKCMfpWt7ZC5BoZC53jXl4cNfTiFSu3nQveA6rmrOZCL6wZDZD";
@@ -266,7 +273,6 @@ namespace Foxoft
             //// Option C: send by public URL (no upload)
             //var msg3 = await wa.SendImageByUrlAsync(TO, "https://example.com/your-image.jpg", "From URL");
             //Console.WriteLine(msg3);
-
         }
     }
 }
