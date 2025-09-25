@@ -145,13 +145,9 @@ namespace Foxoft
             // only show the message if THIS run is still the active one
             catch (OperationCanceledException) when (ReferenceEquals(cts, _cts))
             {
-                //XtraMessageBox.Show("Yükləmə ləğv edildi.", "Məlumat",
-                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(ex.Message, "Xəta",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

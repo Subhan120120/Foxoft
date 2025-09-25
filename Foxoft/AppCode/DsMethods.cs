@@ -11,15 +11,6 @@ namespace Foxoft
         public CustomSqlQuery SelectInvoice(Guid invoiceHeader)
         {
             string qry = "";
-            //Assembly assembly = Assembly.GetExecutingAssembly();
-            //
-            //using (Stream stream = assembly.GetManifestResourceStream("Foxoft.AppCode.SqlQuery.Qry_Invoice.sql"))
-            //{
-            //    using (StreamReader reader = new(stream))
-            //    {
-            //        qry = reader.ReadToEnd();
-            //    }
-            //}
 
             EfMethods efMethods = new();
             DcReport report = efMethods.SelectReportByName("Report_Embedded_InvoiceReport");
@@ -29,7 +20,7 @@ namespace Foxoft
             queryParameter1.Type = typeof(Guid);
             queryParameter1.ValueInfo = invoiceHeader.ToString();
 
-            CustomSqlQuery sqlQuerySale = new("Invoice", report.ReportQuery);
+            CustomSqlQuery sqlQuerySale = new("Main", report.ReportQuery);
             sqlQuerySale.Parameters.Add(queryParameter1);
 
             return sqlQuerySale;

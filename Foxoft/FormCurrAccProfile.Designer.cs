@@ -62,13 +62,25 @@ namespace Foxoft
             emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             splitterControl1 = new DevExpress.XtraEditors.SplitterControl();
             layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
+            btn_ClaimReportSave = new DevExpress.XtraEditors.SimpleButton();
+            treeList1 = new DevExpress.XtraTreeList.TreeList();
+            coltreeListColumn0 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            repoCheckEdit = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            btnEdit_ClaimReport = new DevExpress.XtraEditors.ButtonEdit();
+            btn_ClaimCategoryList = new DevExpress.XtraEditors.SimpleButton();
             btnEdit_RoleCode = new DevExpress.XtraEditors.ButtonEdit();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             Rol = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            LCI_ClaimReport = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             bindingSource2 = new BindingSource(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
-            btn_ClaimCategoryList = new DevExpress.XtraEditors.SimpleButton();
-            layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            coltreeListColumn1 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            coltreeListColumn2 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            coltreeListColumn3 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
+            coltreeListColumn4 = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             ((System.ComponentModel.ISupportInitialize)ribbon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_CurrAccCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
@@ -87,12 +99,18 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl2).BeginInit();
             layoutControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)treeList1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoCheckEdit).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_ClaimReport.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_RoleCode.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Rol).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_ClaimReport).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).BeginInit();
             SuspendLayout();
             // 
             // ribbon
@@ -298,7 +316,6 @@ namespace Foxoft
             layoutControlItem2.Location = new Point(0, 96);
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(609, 250);
-            layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // LCI_NewPassword
@@ -325,16 +342,13 @@ namespace Foxoft
             layoutControlItem3.Location = new Point(445, 72);
             layoutControlItem3.Name = "layoutControlItem3";
             layoutControlItem3.Size = new Size(164, 24);
-            layoutControlItem3.TextSize = new Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // emptySpaceItem1
             // 
-            emptySpaceItem1.AllowHotTrack = false;
             emptySpaceItem1.Location = new Point(0, 72);
             emptySpaceItem1.Name = "emptySpaceItem1";
             emptySpaceItem1.Size = new Size(445, 24);
-            emptySpaceItem1.TextSize = new Size(0, 0);
             // 
             // splitterControl1
             // 
@@ -346,6 +360,9 @@ namespace Foxoft
             // 
             // layoutControl2
             // 
+            layoutControl2.Controls.Add(btn_ClaimReportSave);
+            layoutControl2.Controls.Add(treeList1);
+            layoutControl2.Controls.Add(btnEdit_ClaimReport);
             layoutControl2.Controls.Add(btn_ClaimCategoryList);
             layoutControl2.Controls.Add(btnEdit_RoleCode);
             layoutControl2.Dock = DockStyle.Fill;
@@ -357,42 +374,55 @@ namespace Foxoft
             layoutControl2.TabIndex = 7;
             layoutControl2.Text = "layoutControl2";
             // 
-            // btnEdit_RoleCode
+            // btn_ClaimReportSave
             // 
-            btnEdit_RoleCode.Location = new Point(39, 12);
-            btnEdit_RoleCode.MenuManager = ribbon;
-            btnEdit_RoleCode.Name = "btnEdit_RoleCode";
-            btnEdit_RoleCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
-            btnEdit_RoleCode.Size = new Size(630, 20);
-            btnEdit_RoleCode.StyleController = layoutControl2;
-            btnEdit_RoleCode.TabIndex = 4;
-            btnEdit_RoleCode.ButtonPressed += btnEdit_RoleCode_ButtonPressed;
-            btnEdit_RoleCode.EditValueChanged += btnEdit_RoleCode_EditValueChanged;
+            btn_ClaimReportSave.Location = new Point(12, 332);
+            btn_ClaimReportSave.Name = "btn_ClaimReportSave";
+            btn_ClaimReportSave.Size = new Size(657, 22);
+            btn_ClaimReportSave.StyleController = layoutControl2;
+            btn_ClaimReportSave.TabIndex = 13;
+            btn_ClaimReportSave.Text = "Yadda saxla";
+            btn_ClaimReportSave.Click += btn_ClaimReportSave_Click;
             // 
-            // layoutControlGroup1
+            // treeList1
             // 
-            layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { Rol, layoutControlItem6 });
-            layoutControlGroup1.Name = "Root";
-            layoutControlGroup1.Size = new Size(681, 366);
-            layoutControlGroup1.TextVisible = false;
+            treeList1.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] { coltreeListColumn1, coltreeListColumn2, coltreeListColumn3, coltreeListColumn4, coltreeListColumn0 });
+            treeList1.Location = new Point(12, 86);
+            treeList1.MenuManager = ribbon;
+            treeList1.Name = "treeList1";
+            treeList1.OptionsSelection.EnableAppearanceFocusedRow = false;
+            treeList1.OptionsSelection.MultiSelect = true;
+            treeList1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoCheckEdit });
+            treeList1.Size = new Size(657, 242);
+            treeList1.TabIndex = 12;
+            treeList1.CellValueChanged += treeList1_CellValueChanged;
             // 
-            // Rol
+            // coltreeListColumn0
             // 
-            Rol.Control = btnEdit_RoleCode;
-            Rol.Location = new Point(0, 0);
-            Rol.Name = "Rol";
-            Rol.Size = new Size(661, 24);
-            Rol.TextSize = new Size(15, 13);
+            coltreeListColumn0.Caption = "Select";
+            coltreeListColumn0.ColumnEdit = repoCheckEdit;
+            coltreeListColumn0.FieldName = "IsSelected";
+            coltreeListColumn0.Name = "coltreeListColumn0";
+            coltreeListColumn0.UnboundDataType = typeof(bool);
+            coltreeListColumn0.Visible = true;
+            coltreeListColumn0.VisibleIndex = 0;
             // 
-            // bindingSource2
+            // repoCheckEdit
             // 
-            bindingSource2.DataSource = typeof(TrRoleClaim);
+            repoCheckEdit.AutoHeight = false;
+            repoCheckEdit.Name = "repoCheckEdit";
             // 
-            // dxErrorProvider1
+            // btnEdit_ClaimReport
             // 
-            dxErrorProvider1.ContainerControl = this;
+            btnEdit_ClaimReport.Location = new Point(97, 62);
+            btnEdit_ClaimReport.MenuManager = ribbon;
+            btnEdit_ClaimReport.Name = "btnEdit_ClaimReport";
+            btnEdit_ClaimReport.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_ClaimReport.Size = new Size(572, 20);
+            btnEdit_ClaimReport.StyleController = layoutControl2;
+            btnEdit_ClaimReport.TabIndex = 11;
+            btnEdit_ClaimReport.ButtonPressed += btnEdit_ClaimReport_ButtonPressed;
+            btnEdit_ClaimReport.EditValueChanged += btnEdit_ClaimReport_EditValueChanged;
             // 
             // btn_ClaimCategoryList
             // 
@@ -404,14 +434,107 @@ namespace Foxoft
             btn_ClaimCategoryList.Text = "Yetkiler";
             btn_ClaimCategoryList.Click += Btn_ClaimCategoryList_Click;
             // 
+            // btnEdit_RoleCode
+            // 
+            btnEdit_RoleCode.Location = new Point(97, 12);
+            btnEdit_RoleCode.MenuManager = ribbon;
+            btnEdit_RoleCode.Name = "btnEdit_RoleCode";
+            btnEdit_RoleCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton() });
+            btnEdit_RoleCode.Size = new Size(572, 20);
+            btnEdit_RoleCode.StyleController = layoutControl2;
+            btnEdit_RoleCode.TabIndex = 4;
+            btnEdit_RoleCode.ButtonPressed += btnEdit_RoleCode_ButtonPressed;
+            btnEdit_RoleCode.EditValueChanged += btnEdit_RoleCode_EditValueChanged;
+            // 
+            // layoutControlGroup1
+            // 
+            layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            layoutControlGroup1.GroupBordersVisible = false;
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { Rol, layoutControlItem6, LCI_ClaimReport, layoutControlItem5, layoutControlItem4 });
+            layoutControlGroup1.Name = "Root";
+            layoutControlGroup1.Size = new Size(681, 366);
+            layoutControlGroup1.TextVisible = false;
+            // 
+            // Rol
+            // 
+            Rol.Control = btnEdit_RoleCode;
+            Rol.Location = new Point(0, 0);
+            Rol.Name = "Rol";
+            Rol.Size = new Size(661, 24);
+            Rol.TextSize = new Size(73, 13);
+            // 
             // layoutControlItem6
             // 
             layoutControlItem6.Control = btn_ClaimCategoryList;
             layoutControlItem6.Location = new Point(0, 24);
             layoutControlItem6.Name = "layoutControlItem6";
-            layoutControlItem6.Size = new Size(661, 322);
-            layoutControlItem6.TextSize = new Size(0, 0);
+            layoutControlItem6.Size = new Size(661, 26);
             layoutControlItem6.TextVisible = false;
+            // 
+            // LCI_ClaimReport
+            // 
+            LCI_ClaimReport.Control = btnEdit_ClaimReport;
+            LCI_ClaimReport.Location = new Point(0, 50);
+            LCI_ClaimReport.Name = "LCI_ClaimReport";
+            LCI_ClaimReport.Size = new Size(661, 24);
+            LCI_ClaimReport.Text = "Hesabat Yetkisi";
+            LCI_ClaimReport.TextSize = new Size(73, 13);
+            // 
+            // layoutControlItem5
+            // 
+            layoutControlItem5.Control = treeList1;
+            layoutControlItem5.Location = new Point(0, 74);
+            layoutControlItem5.Name = "layoutControlItem5";
+            layoutControlItem5.Size = new Size(661, 246);
+            layoutControlItem5.TextVisible = false;
+            // 
+            // layoutControlItem4
+            // 
+            layoutControlItem4.Control = btn_ClaimReportSave;
+            layoutControlItem4.Location = new Point(0, 320);
+            layoutControlItem4.Name = "layoutControlItem4";
+            layoutControlItem4.Size = new Size(661, 26);
+            layoutControlItem4.TextVisible = false;
+            // 
+            // bindingSource2
+            // 
+            bindingSource2.DataSource = typeof(TrRoleClaim);
+            // 
+            // dxErrorProvider1
+            // 
+            dxErrorProvider1.ContainerControl = this;
+            // 
+            // coltreeListColumn1
+            // 
+            coltreeListColumn1.Caption = "coltreeListColumn1";
+            coltreeListColumn1.FieldName = "ReportId";
+            coltreeListColumn1.Name = "coltreeListColumn1";
+            coltreeListColumn1.Visible = true;
+            coltreeListColumn1.VisibleIndex = 1;
+            // 
+            // coltreeListColumn2
+            // 
+            coltreeListColumn2.Caption = "coltreeListColumn2";
+            coltreeListColumn2.FieldName = "ReportName";
+            coltreeListColumn2.Name = "coltreeListColumn2";
+            coltreeListColumn2.Visible = true;
+            coltreeListColumn2.VisibleIndex = 2;
+            // 
+            // coltreeListColumn3
+            // 
+            coltreeListColumn3.Caption = "coltreeListColumn3";
+            coltreeListColumn3.FieldName = "ClaimCode";
+            coltreeListColumn3.Name = "coltreeListColumn3";
+            coltreeListColumn3.Visible = true;
+            coltreeListColumn3.VisibleIndex = 3;
+            // 
+            // coltreeListColumn4
+            // 
+            coltreeListColumn4.Caption = "coltreeListColumn4";
+            coltreeListColumn4.FieldName = "ClaimDesc";
+            coltreeListColumn4.Name = "coltreeListColumn4";
+            coltreeListColumn4.Visible = true;
+            coltreeListColumn4.VisibleIndex = 4;
             // 
             // FormCurrAccProfile
             // 
@@ -445,12 +568,18 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)emptySpaceItem1).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControl2).EndInit();
             layoutControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)treeList1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoCheckEdit).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnEdit_ClaimReport.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnEdit_RoleCode.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Rol).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)LCI_ClaimReport).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)layoutControlItem4).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource2).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)layoutControlItem6).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -500,10 +629,20 @@ namespace Foxoft
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btn_ClaimReportSave;
         private FormClaimCategoryList UcClaimCategory;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
         private DevExpress.XtraEditors.SimpleButton btn_ClaimCategoryList;
+        private DevExpress.XtraEditors.ButtonEdit btnEdit_ClaimReport;
+        private DevExpress.XtraLayout.LayoutControlItem LCI_ClaimReport;
+        private DevExpress.XtraTreeList.TreeList treeList1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn coltreeListColumn0;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repoCheckEdit;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn coltreeListColumn1;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn coltreeListColumn2;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn coltreeListColumn3;
+        private DevExpress.XtraTreeList.Columns.TreeListColumn coltreeListColumn4;
     }
 }

@@ -2069,7 +2069,7 @@ namespace Foxoft
         {
             DsMethods dsMethods = new();
             SqlQuery sqlQuerySale = dsMethods.SelectInvoice(trInvoiceHeader.InvoiceHeaderId);
-            return reportClass.GetReport("invoice", fileName, new SqlQuery[] { sqlQuerySale });
+            return reportClass.GetReport("Main", fileName, new SqlQuery[] { sqlQuerySale });
         }
 
         private void repoCBE_PrinterName_EditValueChanged(object sender, EventArgs e)
@@ -2135,7 +2135,14 @@ namespace Foxoft
 
         private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            MessageBox.Show(gV_InvoiceLine.ActiveEditor?.Text.ToString());
+            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
+            report.PrinterName = "Server";
+
+            if (report is not null)
+            {
+                ReportDesignTool printTool = new(report);
+                printTool.ShowRibbonDesigner();
+            }
         }
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)

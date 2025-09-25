@@ -628,17 +628,6 @@ namespace Foxoft
             return result;
         }
 
-        public List<TrCurrAccRole> SelectCurrAccRole(string currAccCode)
-        {
-            using subContext db = new();
-
-            List<TrCurrAccRole> currAccRoles = db.TrCurrAccRoles.Include(x => x.DcRole)
-                                                                  .Include(x => x.DcCurrAcc)
-                                                                  .Where(x => x.CurrAccCode == currAccCode)
-                                                                  .ToList();
-            return currAccRoles;
-        }
-
         public List<TrRoleClaim> SelectRoleClaim(string roleCode)
         {
             using subContext db = new();
@@ -655,6 +644,17 @@ namespace Foxoft
 
             TrRoleClaim roleClaims = db.TrRoleClaims.Include(x => x.DcRole)
                                                                   .Where(x => x.RoleCode == roleCode)
+                                                                  .Where(x => x.ClaimCode == claimCode)
+                                                                  .FirstOrDefault();
+            return roleClaims;
+        }
+
+        public TrClaimReport SelectClaimReport(int reportId, string claimCode)
+        {
+            using subContext db = new();
+
+            TrClaimReport roleClaims = db.TrClaimReports
+                                                                  .Where(x => x.ReportId == reportId)
                                                                   .Where(x => x.ClaimCode == claimCode)
                                                                   .FirstOrDefault();
             return roleClaims;
@@ -696,16 +696,13 @@ namespace Foxoft
                       IsSelected = !cat.DcClaims.Any()
                           ? false
                           : cat.DcClaims.All(cl => cl.TrRoleClaims.Any(rc => rc.RoleCode == roleCode))
-                              ? (bool?)true
+                              ? true
                               : cat.DcClaims.All(cl => cl.TrRoleClaims.All(rc => rc.RoleCode != roleCode))
-                                  ? (bool?)false
+                                  ? false
                                   : null,
 
                       IsCategory = true
                   });
-
-
-
 
 
             var claims =
@@ -728,6 +725,35 @@ namespace Foxoft
             return data;
 
 
+        }
+
+        public List<TrCurrAccRole> SelectCurrAccRole(string currAccCode)
+        {
+            using subContext db = new();
+
+            List<TrCurrAccRole> currAccRoles = db.TrCurrAccRoles.Include(x => x.DcRole)
+                                                                  .Include(x => x.DcCurrAcc)
+                                                                  .Where(x => x.CurrAccCode == currAccCode)
+                                                                  .ToList();
+            return currAccRoles;
+        }
+
+        public List<DcClaimReportViewModel> SelectClaimReport(string claimCode)
+        {
+
+            using var db = new subContext();
+
+            return
+            db.TrClaimReports
+                .Include(x => x.DcReport)
+              .AsNoTracking()
+              .Select(x => new DcClaimReportViewModel
+              {
+                  ReportId = x.ReportId,
+                  ReportName = x.DcReport.ReportName,
+                  IsSelected = x.ClaimCode == claimCode,
+                  ClaimCode = claimCode
+              }).ToList();
         }
 
         public TrInvoiceHeader SelectInvoiceHeaderByDocNum(string documentNumber)
@@ -1568,6 +1594,13 @@ namespace Foxoft
         {
             using subContext db = new();
             return db.TrRoleClaims.Where(x => x.RoleCode == roleCode)
+                       .Any(x => x.ClaimCode == claimCode);
+        }
+
+        public bool TrClaimReportExist(int reportId, string claimCode)
+        {
+            using subContext db = new();
+            return db.TrClaimReports.Where(x => x.ReportId == reportId)
                        .Any(x => x.ClaimCode == claimCode);
         }
 

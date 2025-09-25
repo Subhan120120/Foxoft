@@ -43,9 +43,7 @@ namespace Foxoft
 
             treeList1.Columns.Add(checkBoxColumn);
 
-            // Handle checkbox state changes
             treeList1.CellValueChanged += TreeList1_CellValueChanged;
-            treeList1.CellValueChanging += TreeList1_CellValueChanging;
         }
 
         public FormClaimCategoryList(string roleCode)
@@ -66,20 +64,6 @@ namespace Foxoft
         {
             List<DcClaimCategoryViewModel> DcClaimCategories = efMethods.SelectDcClaimCategories(RoleCode);
             treeList1.DataSource = DcClaimCategories;
-
-            // Expand nodes to show hierarchy
-            //treeList1.ExpandAll();
-        }
-
-        private void FormTreeView_Activated(object sender, EventArgs e)
-        {
-            // AutoFocus FindPanel
-            //if (treeList1 is not null)
-            //{
-            //    treeList1.FindPanelVisible = false;
-            //    if (!treeList1.FindPanelVisible)
-            //        treeList1.BeginInvoke(new Action(treeList1.ShowFindPanel));
-            //}
         }
 
         private void treeList1_InitNewRow(object sender, TreeListInitNewRowEventArgs e)
@@ -98,13 +82,10 @@ namespace Foxoft
 
         private void treeList1_DoubleClick(object sender, EventArgs e)
         {
-            //DialogResult = DialogResult.OK;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            //DcClaimCategory = null;
-            //DialogResult = DialogResult.OK;
         }
 
         private void TreeList1_CellValueChanged(object sender, CellValueChangedEventArgs e)
@@ -118,11 +99,6 @@ namespace Foxoft
 
                 SetParentNodesChecked(node);
             }
-        }
-
-        private void TreeList1_CellValueChanging(object sender, CellValueChangedEventArgs e)
-        {
-
         }
 
         private void SetChildNodesChecked(TreeListNode parentNode, bool isChecked)
@@ -154,9 +130,7 @@ namespace Foxoft
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            // Call the method with the root nodes
             SaveNodesToDb(treeList1.Nodes);
-            //DialogResult = DialogResult.OK;
         }
 
         private void SaveNodesToDb(IEnumerable<TreeListNode> nodes)

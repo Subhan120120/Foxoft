@@ -3,6 +3,7 @@ using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraTreeList.Nodes;
 using Foxoft.Models;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,17 @@ namespace Foxoft
             col_RoleDesc.Caption = ReflectionExt.GetDisplayName<DcRole>(x => x.RoleDesc);
 
             LoadCurrAccRole(null);
+            LoadClaimReport();
+        }
+
+        private void LoadClaimReport()
+        {
+            string claimCode = btnEdit_ClaimReport.Text;
+
+            List<DcClaimReportViewModel> data = efMethods.SelectClaimReport(claimCode);
+            treeList1.DataSource = data;
+
+            treeList1.BestFitColumns();
         }
 
         private void LoadCurrAccRole(string currAccCode)
@@ -148,6 +160,88 @@ namespace Foxoft
             {
                 FormClaimCategoryList formClaimCategoryList = new(btnEdit_RoleCode.EditValue?.ToString());
                 formClaimCategoryList.Show();
+            }
+        }
+
+        private void btnEdit_ClaimReport_ButtonPressed(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            ButtonEdit buttonEdit = (ButtonEdit)sender;
+
+            using (FormCommonList<DcClaim> form = new("", nameof(DcClaim.ClaimCode), buttonEdit.EditValue?.ToString(), nameof(DcClaim.ClaimTypeId), 2))
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    buttonEdit.EditValue = form.Value_Id;
+        }
+
+        private void treeList1_CellValueChanged(object sender, DevExpress.XtraTreeList.CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName == "IsSelected")
+            {
+                bool isChecked = Convert.ToBoolean(e.Value);
+                TreeListNode node = e.Node;
+
+                SetChildNodesChecked(node, isChecked);
+
+                SetParentNodesChecked(node);
+            }
+        }
+
+        private void SetChildNodesChecked(TreeListNode parentNode, bool isChecked)
+        {
+            foreach (TreeListNode child in parentNode.Nodes)
+            {
+                child.SetValue("IsSelected", isChecked);
+                SetChildNodesChecked(child, isChecked);
+            }
+        }
+
+        private void SetParentNodesChecked(TreeListNode childNode)
+        {
+            TreeListNode parent = childNode.ParentNode;
+            while (parent != null)
+            {
+                bool allChecked = parent.Nodes.Cast<TreeListNode>().All(n => Convert.ToBoolean(n.GetValue("IsSelected")));
+                parent.SetValue("IsSelected", allChecked);
+                parent = parent.ParentNode;
+            }
+        }
+        private void btnEdit_ClaimReport_EditValueChanged(object sender, EventArgs e)
+        {
+            LoadClaimReport();
+        }
+
+        private void btn_ClaimReportSave_Click(object sender, EventArgs e)
+        {
+            SaveNodesToDb(treeList1.Nodes);
+        }
+
+        private void SaveNodesToDb(IEnumerable<TreeListNode> nodes)
+        {
+            string claimCode = btnEdit_ClaimReport.Text;
+
+            foreach (TreeListNode child in nodes)
+            {
+
+                DcReport report = efMethods.SelectEntityById<DcReport>(Convert.ToInt32(child.GetValue("ReportId")));
+                bool chckd = (bool)child.GetValue("IsSelected");
+
+                if (chckd)
+                {
+                    if (!efMethods.TrClaimReportExist(report.ReportId, claimCode))
+                    {
+                        efMethods.InsertEntity(new TrClaimReport()
+                        {
+                            ClaimCode = claimCode,
+                            ReportId = report.ReportId
+                        });
+                    }
+                }
+                else
+                {
+                    TrClaimReport claimReport = efMethods.SelectClaimReport(report.ReportId, claimCode);
+
+                    if (claimReport != null)
+                        efMethods.DeleteEntity(claimReport);
+                }
             }
         }
 
