@@ -25,7 +25,8 @@ Select pro.ProductCode
 		, ProductTypeCode
 		--, ProductId	
 		, ProductCost = dbo.GetProductCost(pro.ProductCode, null)
-		, CalcClosingStockFifo.FIFO_CORG
+		--, CalcClosingStockFifo.FIFO_CORG
+		, IsDisabled
 		
 from DcProducts pro
 

@@ -111,6 +111,7 @@ namespace Foxoft.Models
         [ForeignKey("DcUnitOfMeasure")]
         public int? UnitOfMeasureId { get; set; }
 
+        [Column(TypeName = "money")]
         [Display(Name = "Qiymət")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal Price { get; set; }
@@ -124,6 +125,7 @@ namespace Foxoft.Models
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public float ExchangeRate { get; set; } = 1;
 
+        [Column(TypeName = "money")]
         [Display(Name = "Qiymət (YPV)")]
         [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
         public decimal PriceLoc { get { return Math.Round(Price / (decimal)ExchangeRate, 4); } set { } }
@@ -138,7 +140,6 @@ namespace Foxoft.Models
 
         [DefaultValue("0")]
         [Display(Name = "Endirim")]
-        [Column(TypeName = "money")]
         public decimal PosDiscount { get; set; }
 
         [Column(TypeName = "money")]

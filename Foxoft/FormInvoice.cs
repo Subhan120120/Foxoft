@@ -2133,16 +2133,21 @@ namespace Foxoft
             formPictures.ShowDialog();
         }
 
-        private void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
+        private async void barButtonItem2_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            XtraReport report = GetInvoiceReport(reportFileNameInvoiceWare);
-            report.PrinterName = "Server";
+            MemoryStream memoryStream = GetInvoiceReportImg();
+            Clipboard.SetImage(Image.FromStream(memoryStream));
+            string phoneNum = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode).PhoneNum;
 
-            if (report is not null)
-            {
-                ReportDesignTool printTool = new(report);
-                printTool.ShowRibbonDesigner();
-            }
+            //SendWhatsApp(phoneNum, "");
+
+            var TOKEN = "EAAWMnYx6BxYBPvCUQYulGoALBtuiLPjpaZBfEEdKRnnDelxUTrjLDLa3SoESY6IREkTwkK3SZBZA5weFRUyZCOgZBD6oKo2nyOx5jAi7JPWPeCxrBN1uSfdbwALmljhdfEVdlL0OrNjqY2LCNAtHiCdMgaGfi0J1YzvpG9AGGLbTK0eEGB5hHkEMPBPKCKeW6pgZDZD";
+            var PHONEID = "767335943132720";
+
+            using var wa = new WhatsAppClient(TOKEN, PHONEID);
+            
+            var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
+            Console.WriteLine($"Sent: {messageId}");
         }
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
