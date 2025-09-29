@@ -144,7 +144,7 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(ex.ToString());
+                XtraMessageBox.Show("Inter Error Code: 2565635 \n" + ex.ToString());
             }
         }
 

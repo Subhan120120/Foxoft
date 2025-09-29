@@ -62,8 +62,12 @@ namespace Foxoft
             InitializeGVReportEvents();
 
             SettingStore settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            if (!CustomExtensions.DirectoryExist(settingStore.ImageFolder))
-                Directory.CreateDirectory(settingStore.ImageFolder);
+            try
+            {
+                if (!CustomExtensions.DirectoryExist(settingStore.ImageFolder))
+                    Directory.CreateDirectory(settingStore.ImageFolder);
+            }
+            catch (UnauthorizedAccessException) { }
 
             ProductsFolder = Path.Combine(settingStore.ImageFolder, "Products");
 

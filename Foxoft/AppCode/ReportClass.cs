@@ -298,7 +298,7 @@ namespace Foxoft
 
         public new List<string> VariableValueTypes = new List<string>
         {
-            "System.Int",
+            "System.Int32",
             "System.Decimal",
             "System.Bool",
             "System.String",
@@ -325,7 +325,7 @@ namespace Foxoft
                 "System.Sbyte" => DbType.SByte,
                 "System.Short" => DbType.Int16,
                 "System.Ushort" => DbType.UInt16,
-                "System.Int" => DbType.Int32,
+                "System.Int32" => DbType.Int32,
                 "System.Uint" => DbType.UInt32,
                 "System.Long" => DbType.Int64,
                 "System.Ulong" => DbType.UInt64,
