@@ -744,14 +744,14 @@ namespace Foxoft
             using var db = new subContext();
 
             return
-            db.TrClaimReports
-                .Include(x => x.DcReport)
+            db.DcReports
+              .Include(x => x.TrClaimReports)
               .AsNoTracking()
               .Select(x => new DcClaimReportViewModel
               {
                   ReportId = x.ReportId,
-                  ReportName = x.DcReport.ReportName,
-                  IsSelected = x.ClaimCode == claimCode,
+                  ReportName = x.ReportName,
+                  IsSelected = x.TrClaimReports.Any(x => x.ClaimCode == claimCode),
                   ClaimCode = claimCode
               }).ToList();
         }
