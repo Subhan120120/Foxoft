@@ -252,7 +252,7 @@ namespace Foxoft
                 {
                     TrInvoiceLine = x,
                     TrInvoiceHeader = x.TrInvoiceHeader,
-                    ReturnQty = Math.Abs(returned),
+                    DeliveryQty = Math.Abs(returned),
                     RemainingQty = remaining
                 };
             }

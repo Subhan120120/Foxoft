@@ -11,7 +11,7 @@ namespace Foxoft.Models
     {
         public TrInvoiceLine TrInvoiceLine { get; set; }
         public TrInvoiceHeader TrInvoiceHeader { get; set; }
-        public decimal ReturnQty { get; set; }
+        public decimal DeliveryQty { get; set; }
         public decimal RemainingQty { get; set; }
     }
 }

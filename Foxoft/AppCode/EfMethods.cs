@@ -147,7 +147,7 @@ namespace Foxoft
                 .Select(t => new UnDeliveredViewModel
                 {
                     TrInvoiceLine = t.TrInvoiceLine,
-                    ReturnQty = Math.Abs(t.Returned),
+                    DeliveryQty = Math.Abs(t.Returned),
                     RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
                 })
                 .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
@@ -215,7 +215,7 @@ namespace Foxoft
                 .Select(t => new UnDeliveredViewModel
                 {
                     TrInvoiceLine = t.TrInvoiceLine,
-                    ReturnQty = Math.Abs(t.Returned),
+                    DeliveryQty = Math.Abs(t.Returned),
                     RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
                 })
                 .AsAsyncEnumerable()
@@ -300,7 +300,7 @@ namespace Foxoft
                     {
                         TrInvoiceLine = x,
                         TrInvoiceHeader = x.TrInvoiceHeader,
-                        ReturnQty = Math.Abs(delivered),
+                        DeliveryQty = Math.Abs(delivered),
                         RemainingQty = Math.Abs(original) - Math.Abs(delivered)
                     };
                 }

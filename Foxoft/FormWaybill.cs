@@ -230,7 +230,7 @@ namespace Foxoft
                 {
                     TrInvoiceLine = x,
                     TrInvoiceHeader = x.TrInvoiceHeader,
-                    ReturnQty = Math.Abs(delivered),
+                    DeliveryQty = Math.Abs(delivered),
                     RemainingQty = remaining
                 };
             }
@@ -361,7 +361,7 @@ namespace Foxoft
 
                         efMethods.InsertEntity(deliveryInvoHeader);
 
-                        trInvoiceHeadersBindingSource.DataSource = efMethods.SelectEntityById<TrInvoiceHeader>(invoiceHeaderId);
+                        trInvoiceHeadersBindingSource.DataSource = efMethods.SelectInvoiceHeader(invoiceHeaderId);
                     }
 
                     if (!efMethods.InvoicelineExistByRelatedLineId(deliveryInvoiceHeaderId, invoiceLineID))
@@ -402,7 +402,7 @@ namespace Foxoft
 
                     if (gridRow != null)
                     {
-                        gridRow.ReturnQty += formQty.input;
+                        gridRow.DeliveryQty += formQty.input;
                         gridRow.RemainingQty -= formQty.input;
 
                         gvMaster.RefreshRow(gvMaster.FocusedRowHandle);
