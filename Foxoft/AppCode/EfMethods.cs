@@ -125,35 +125,6 @@ namespace Foxoft
             }
         }
 
-        public List<UnDeliveredViewModel> SelectDetailForDelivery(Guid? invoiceHeader = null)
-        {
-            using subContext db = new();
-
-            return db.TrInvoiceLines
-                .Include(x => x.DcProduct)
-                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
-                .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
-                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
-                .Select(x => new
-                {
-                    TrInvoiceLine = x,
-                    Returned = db.TrInvoiceLines
-                                .Where(y => y.RelatedLineId == x.InvoiceLineId &&
-                                            new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-                                .Sum(y => y.QtyIn - y.QtyOut),
-                    Original = x.QtyIn - x.QtyOut
-                })
-                .Where(t => Math.Abs(t.Original) - Math.Abs(t.Returned) > 0)
-                .Select(t => new UnDeliveredViewModel
-                {
-                    TrInvoiceLine = t.TrInvoiceLine,
-                    DeliveryQty = Math.Abs(t.Returned),
-                    RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
-                })
-                .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
-                .ToList();
-        }
-
         public List<TrInvoiceHeader> SelectMasterForDelivery(Guid? invoiceHeader = null)
         {
             using subContext db = new();
@@ -189,46 +160,6 @@ namespace Foxoft
             }
         }
 
-        public async IAsyncEnumerable<UnDeliveredViewModel> StreamDetailForDeliveryAsync(
-            Guid masterHeaderId,
-            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await using var db = new subContext();
-
-            // Your undelivered logic — kept in one SQL, streamed:
-            var qry = db.TrInvoiceLines
-                .AsNoTracking()
-                .Include(x => x.DcProduct)
-                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
-                .Where(x => x.InvoiceHeaderId == masterHeaderId
-                            && new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                .Select(x => new
-                {
-                    TrInvoiceLine = x,
-                    Returned = db.TrInvoiceLines
-                                 .Where(y => y.RelatedLineId == x.InvoiceLineId &&
-                                             new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-                                 .Sum(y => y.QtyIn - y.QtyOut),
-                    Original = x.QtyIn - x.QtyOut
-                })
-                .Where(t => Math.Abs(t.Original) - Math.Abs(t.Returned) > 0)
-                .Select(t => new UnDeliveredViewModel
-                {
-                    TrInvoiceLine = t.TrInvoiceLine,
-                    DeliveryQty = Math.Abs(t.Returned),
-                    RemainingQty = Math.Abs(t.Original) - Math.Abs(t.Returned)
-                })
-                .AsAsyncEnumerable()
-                .WithCancellation(cancellationToken);
-
-            await foreach (var d in qry)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                yield return d;
-            }
-        }
-
-
         //public async Task<List<UnDeliveredViewModel>> SelectInvoiceLinesForDeliveryAsync(Guid? invoiceHeader = null)
         //{
         //    await using var db = new subContext();
@@ -262,52 +193,6 @@ namespace Foxoft
         //        .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
         //        .ToList();
         //}
-
-        public async IAsyncEnumerable<UnDeliveredViewModel> StreamInvoiceLinesForDeliveryAsync(
-    Guid? invoiceHeader = null,
-    [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await using var db = new subContext();
-
-            var baseQuery = db.TrInvoiceLines
-                .Include(x => x.DcProduct)
-                .Include(x => x.TrInvoiceHeader).ThenInclude(x => x.DcCurrAcc)
-                .Where(x => new[] { "RS", "WS" }.Contains(x.TrInvoiceHeader.ProcessCode)
-                            && x.TrInvoiceHeader.IsReturn == false
-                            && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value))
-                .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
-                .AsAsyncEnumerable()
-                .WithCancellation(cancellationToken); // required
-
-            await foreach (var x in baseQuery)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                var delivered = await db.TrInvoiceLines
-                    .Where(y => y.RelatedLineId == x.InvoiceLineId && new[] { "WI", "WO" }.Contains(y.TrInvoiceHeader.ProcessCode))
-                    .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
-
-                var returned = await db.TrInvoiceLines
-                    .Include(y => y.TrInvoiceHeader)
-                    .Where(y => y.RelatedLineId == x.InvoiceLineId && new[] { "RS", "WS" }.Contains(y.TrInvoiceHeader.ProcessCode) && y.TrInvoiceHeader.IsReturn == true)
-                    .SumAsync(y => y.QtyIn - y.QtyOut, cancellationToken);
-
-                var original = x.QtyIn - x.QtyOut;
-
-                if (Math.Abs(original) - Math.Abs(delivered) - Math.Abs(returned) > 0)
-                {
-                    yield return new UnDeliveredViewModel
-                    {
-                        TrInvoiceLine = x,
-                        TrInvoiceHeader = x.TrInvoiceHeader,
-                        DeliveryQty = Math.Abs(delivered),
-                        RemainingQty = Math.Abs(original) - Math.Abs(delivered)
-                    };
-                }
-            }
-        }
-
-
 
         public List<TrPriceListLine> SelectPriceListLines(Guid priceListHeaderId)
         {

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Foxoft.Models
 {
-    public partial class UnDeliveredViewModel
-    {
-        public TrInvoiceLine TrInvoiceLine { get; set; }
-        public TrInvoiceHeader TrInvoiceHeader { get; set; }
-        public decimal DeliveryQty { get; set; }
-        public decimal RemainingQty { get; set; }
-    }
+    //public partial class UnDeliveredViewModel
+    //{
+    //    public TrInvoiceLine TrInvoiceLine { get; set; }
+    //    public TrInvoiceHeader TrInvoiceHeader { get; set; }
+    //    public decimal DeliveryQty { get; set; }
+    //    public decimal RemainingQty { get; set; }
+    //}
 }

@@ -35,6 +35,13 @@ namespace Foxoft
             public decimal RemainingTotal => Lines.Sum(x => x.RemainingQty * (x.TrInvoiceLine?.PriceLoc ?? 0m));
         }
 
+        public partial class UnDeliveredViewModel
+        {
+            public TrInvoiceLine TrInvoiceLine { get; set; }
+            public TrInvoiceHeader TrInvoiceHeader { get; set; }
+            public decimal DeliveryQty { get; set; }
+            public decimal RemainingQty { get; set; }
+        }
 
         public FormDelivery()
         {
