@@ -46,10 +46,10 @@ namespace Foxoft
             public TrInvoiceHeader TrInvoiceHeader { get; set; }
             public BindingList<UnDeliveredViewModel> Lines { get; } = new BindingList<UnDeliveredViewModel>();
 
-            public decimal TotalNetAmount => TrInvoiceHeader?.TotalNetAmount ?? 0m;
+            //public decimal TotalNetAmount => TrInvoiceHeader?.TotalNetAmount ?? 0m;
 
             // Hesablanmış: detail cəmi
-            public decimal RemainingTotal => Lines.Sum(x => x.RemainingQty * (x.TrInvoiceLine?.PriceLoc ?? 0m));
+            //public decimal RemainingTotal => Lines.Sum(x => x.RemainingQty * (x.TrInvoiceLine?.PriceLoc ?? 0m));
         }
 
         public partial class UnDeliveredViewModel
@@ -104,9 +104,15 @@ namespace Foxoft
             LoadLayout();
         }
 
-        private void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
+        private async void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
-            LoadDataStreamedAsync();
+            //LoadDataStreamedAsync();
+            var sw = Stopwatch.StartNew();
+            await LoadDataStreamedAsync();
+            sw.Stop();
+
+            var secs = sw.Elapsed.TotalSeconds;
+            MessageBox.Show($"Refresh full load in {secs:F2} s");
         }
 
         private void ClearControls()
