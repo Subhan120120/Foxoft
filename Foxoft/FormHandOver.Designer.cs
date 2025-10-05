@@ -4,7 +4,7 @@ using Foxoft.Models;
 
 namespace Foxoft
 {
-    partial class FormDelivery
+    partial class FormHandOver
     {
         /// <summary> 
         /// Required designer variable.
@@ -33,20 +33,20 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaybill));
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormHandOver));
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             gvDetail = new DevExpress.XtraGrid.Views.Grid.GridView();
             col_InvoiceLineId = new DevExpress.XtraGrid.Columns.GridColumn();
             col_HierarchyCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductCode = new DevExpress.XtraGrid.Columns.GridColumn();
             col_ProductDesc = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Qty = new DevExpress.XtraGrid.Columns.GridColumn();
-            col_ReturnQty = new DevExpress.XtraGrid.Columns.GridColumn();
+            col_DeliveredQty = new DevExpress.XtraGrid.Columns.GridColumn();
             col_RemainingQty = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Price = new DevExpress.XtraGrid.Columns.GridColumn();
             col_Amount = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -129,6 +129,7 @@ namespace Foxoft
             splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             lCI_InvoiceLine = new DevExpress.XtraLayout.LayoutControlItem();
             svgImageCollection1 = new DevExpress.Utils.SvgImageCollection(components);
+            col_CreatedUserName = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)gvDetail).BeginInit();
             ((System.ComponentModel.ISupportInitialize)repoBtn_AddWaybill).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gC_Invoice).BeginInit();
@@ -172,7 +173,7 @@ namespace Foxoft
             // 
             // gvDetail
             // 
-            gvDetail.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_HierarchyCode, col_ProductCode, col_ProductDesc, col_Qty, col_ReturnQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_SerialNumberCode, col_UnitOfMeasureId, col_AddWaybill });
+            gvDetail.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceLineId, col_HierarchyCode, col_ProductCode, col_ProductDesc, col_Qty, col_DeliveredQty, col_RemainingQty, col_Price, col_Amount, col_PosDiscount, col_DiscountCampaign, col_NetAmount, col_LineDesc, col_SalesPersonCode, col_VatRate, col_SerialNumberCode, col_UnitOfMeasureId, col_AddWaybill });
             gvDetail.GridControl = gC_Invoice;
             gvDetail.Name = "gvDetail";
             gvDetail.OptionsFind.AllowFindInExpandedDetails = DevExpress.Utils.DefaultBoolean.True;
@@ -192,7 +193,7 @@ namespace Foxoft
             // col_HierarchyCode
             // 
             col_HierarchyCode.Caption = "İyerarxiya Kodu";
-            col_HierarchyCode.FieldName = "TrInvoiceLine.HierarchyCode";
+            col_HierarchyCode.FieldName = "TrInvoiceLine.DcProduct.HierarchyCode";
             col_HierarchyCode.Name = "col_HierarchyCode";
             col_HierarchyCode.Visible = true;
             col_HierarchyCode.VisibleIndex = 0;
@@ -226,17 +227,17 @@ namespace Foxoft
             col_Qty.VisibleIndex = 3;
             col_Qty.Width = 42;
             // 
-            // col_ReturnQty
+            // col_DeliveredQty
             // 
-            col_ReturnQty.Caption = "Təhvil Olan Miqdar";
-            col_ReturnQty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            col_ReturnQty.FieldName = "ReturnQty";
-            col_ReturnQty.Name = "col_ReturnQty";
-            col_ReturnQty.OptionsColumn.AllowEdit = false;
-            col_ReturnQty.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-            col_ReturnQty.Visible = true;
-            col_ReturnQty.VisibleIndex = 4;
-            col_ReturnQty.Width = 49;
+            col_DeliveredQty.Caption = "Təhvil Olan Miqdar";
+            col_DeliveredQty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            col_DeliveredQty.FieldName = "DeliveredQty";
+            col_DeliveredQty.Name = "col_DeliveredQty";
+            col_DeliveredQty.OptionsColumn.AllowEdit = false;
+            col_DeliveredQty.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            col_DeliveredQty.Visible = true;
+            col_DeliveredQty.VisibleIndex = 4;
+            col_DeliveredQty.Width = 49;
             // 
             // col_RemainingQty
             // 
@@ -350,9 +351,9 @@ namespace Foxoft
             // repoBtn_AddWaybill
             // 
             repoBtn_AddWaybill.AutoHeight = false;
-            editorButtonImageOptions2.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions2.SvgImage");
-            editorButtonImageOptions2.SvgImageSize = new Size(16, 16);
-            repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
+            editorButtonImageOptions1.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("editorButtonImageOptions1.SvgImage");
+            editorButtonImageOptions1.SvgImageSize = new Size(16, 16);
+            repoBtn_AddWaybill.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default) });
             repoBtn_AddWaybill.Name = "repoBtn_AddWaybill";
             repoBtn_AddWaybill.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             repoBtn_AddWaybill.ButtonPressed += repoBtn_AddWaybill_ButtonPressed;
@@ -360,9 +361,9 @@ namespace Foxoft
             // gC_Invoice
             // 
             gC_Invoice.DataSource = UndeliveredBindingSource;
-            gridLevelNode2.LevelTemplate = gvDetail;
-            gridLevelNode2.RelationName = "Lines";
-            gC_Invoice.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode2 });
+            gridLevelNode1.LevelTemplate = gvDetail;
+            gridLevelNode1.RelationName = "Lines";
+            gC_Invoice.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode1 });
             gC_Invoice.Location = new Point(12, 12);
             gC_Invoice.MainView = gvMaster;
             gC_Invoice.Name = "gC_Invoice";
@@ -378,7 +379,7 @@ namespace Foxoft
             gvMaster.Appearance.FooterPanel.Options.UseFont = true;
             gvMaster.Appearance.Row.Font = new Font("Tahoma", 12F);
             gvMaster.Appearance.Row.Options.UseFont = true;
-            gvMaster.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode, col_Description, col_ProcessCode, col_DocumentTime, col_OfficeCode, col_StoreCode, col_CustomsDocumentNumber });
+            gvMaster.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { col_InvoiceHeaderId, col_DocumentNumber, col_CurrAccCode, col_CurrAccDesc, col_DocumentDate, col_WarehouseCode, col_Description, col_ProcessCode, col_DocumentTime, col_OfficeCode, col_StoreCode, col_CustomsDocumentNumber, col_CreatedUserName });
             gvMaster.GridControl = gC_Invoice;
             gvMaster.Name = "gvMaster";
             gvMaster.OptionsBehavior.Editable = false;
@@ -951,14 +952,22 @@ namespace Foxoft
             // 
             svgImageCollection1.Add("quickprint", "image://svgimages/diagramicons/quickprint.svg");
             // 
-            // FormWaybill
+            // col_CreatedUserName
+            // 
+            col_CreatedUserName.Caption = "gridColumn1";
+            col_CreatedUserName.FieldName = "TrInvoiceHeader.CreatedUserName";
+            col_CreatedUserName.Name = "col_CreatedUserName";
+            col_CreatedUserName.Visible = true;
+            col_CreatedUserName.VisibleIndex = 11;
+            // 
+            // FormHandOver
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1049, 779);
             Controls.Add(lC_Root);
             Controls.Add(ribbonControl1);
-            Name = "FormWaybill";
+            Name = "FormHandOver";
             Ribbon = ribbonControl1;
             FormClosing += FormWaybill_FormClosing;
             Load += FormWaybill_Load;
@@ -1023,7 +1032,7 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_SalesPersonCode;
         private DevExpress.XtraGrid.Columns.GridColumn col_VatRate;
         private DevExpress.XtraGrid.Columns.GridColumn col_ProductDesc;
-        private DevExpress.XtraGrid.Columns.GridColumn col_ReturnQty;
+        private DevExpress.XtraGrid.Columns.GridColumn col_DeliveredQty;
         private DevExpress.XtraGrid.Columns.GridColumn col_RemainingQty;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repoBtn_AddWaybill;
         private DevExpress.XtraEditors.SimpleButton btn_Ok;
@@ -1097,5 +1106,6 @@ namespace Foxoft
         private DevExpress.XtraGrid.Columns.GridColumn col_HierarchyCode;
         private DevExpress.XtraEditors.TextEdit CurrAccDescTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForCurrAccDesc;
+        private DevExpress.XtraGrid.Columns.GridColumn col_CreatedUserName;
     }
 }

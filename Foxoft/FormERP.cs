@@ -160,7 +160,7 @@ namespace Foxoft
                 case "WholesaleReturn": ShowExistForm<FormReturn>("WS"); break;
                 case "InstallmentSaleReturn": ShowExistForm<FormReturn>("IS"); break;
 
-                case "Waybill": ShowNewForm<FormWaybill>("WO"); break;
+                case "Waybill": ShowNewForm<FormHandOver>("WO"); break;
                 case "WaybillIn": ShowNewForm<FormInvoice>("WI", false, new byte[] { 1 }, null); break;
                 case "WaybillOut": ShowNewForm<FormInvoice>("WO", false, new byte[] { 1 }, null); break;
 

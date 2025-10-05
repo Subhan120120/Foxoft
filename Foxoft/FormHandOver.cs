@@ -24,7 +24,7 @@ using System.Xml;
 
 namespace Foxoft
 {
-    public partial class FormDelivery : RibbonForm
+    public partial class FormHandOver : RibbonForm
     {
         public Guid deliveryInvoiceHeaderId;
         public TrInvoiceHeader deliveryInvoHeader;
@@ -45,13 +45,7 @@ namespace Foxoft
         {
             public TrInvoiceHeader TrInvoiceHeader { get; set; }
 
-            // Master grid üçün pass-through propertilər (mövcud kolon bağlarını pozmamaq üçün)
-            public Guid InvoiceHeaderId => TrInvoiceHeader?.InvoiceHeaderId ?? Guid.Empty;
-            public string DocumentNumber => TrInvoiceHeader?.DocumentNumber;
-            public DateTime DocumentDate => TrInvoiceHeader?.DocumentDate ?? DateTime.MinValue;
-            public string CurrAccCode => TrInvoiceHeader?.CurrAccCode;
-
-            public decimal TotalNetAmount => TrInvoiceHeader?.TotalNetAmount ?? 0m;
+            //public decimal TotalNetAmount => TrInvoiceHeader?.TotalNetAmount ?? 0m;
 
             public BindingList<Line> Lines { get; } = new BindingList<Line>();
 
@@ -64,13 +58,13 @@ namespace Foxoft
                 public TrInvoiceLine TrInvoiceLine { get; set; }
                 public TrInvoiceHeader TrInvoiceHeader => TrInvoiceLine?.TrInvoiceHeader;
 
-                public decimal DeliveryQty { get; set; }
+                public decimal DeliveredQty { get; set; }
                 public decimal RemainingQty { get; set; }
             }
         }
 
 
-        public FormDelivery()
+        public FormHandOver()
         {
             InitializeComponent();
             //gC_Invoice.DataSource = liveList;
@@ -83,7 +77,6 @@ namespace Foxoft
 
             //gvMaster.BestFitColumns();
             settingStore = efMethods.SelectSettingStore(Authorization.StoreCode);
-            settingStore = efMethods.SelectSettingStore("mgz01");
             reportClass = new(settingStore.DesignFileFolder);
 
             //Foxoft.Models.subContext dbContext = new Foxoft.Models.subContext();
@@ -98,7 +91,7 @@ namespace Foxoft
             //dataLayoutControl1.Size = dataLayoutControl1.PreferredSize;
         }
 
-        public FormDelivery(string processCode)
+        public FormHandOver(string processCode)
            : this()
         {
             this.processCode = processCode;
@@ -209,7 +202,7 @@ namespace Foxoft
             headerVm.Lines.Add(line);
 
             // Master row-u təravətləndir
-            var rowHandle = gvMaster.LocateByValue(nameof(DeliveryVM.DocumentNumber), headerVm.DocumentNumber);
+            var rowHandle = gvMaster.LocateByValue(nameof(TrInvoiceHeader.DocumentNumber), headerVm.TrInvoiceHeader.DocumentNumber);
             if (rowHandle >= 0) gvMaster.RefreshRow(rowHandle);
         }
 
@@ -254,7 +247,7 @@ namespace Foxoft
                 yield return new DeliveryVM.Line
                 {
                     TrInvoiceLine = x,
-                    DeliveryQty = Math.Abs(delivered),
+                    DeliveredQty = Math.Abs(delivered),
                     RemainingQty = remaining
                 };
             }
@@ -378,10 +371,10 @@ namespace Foxoft
                         deliveryInvoHeader.ProcessCode = processCode;
                         if (_index.ContainsKey(invoiceHeaderId))
                             deliveryInvoHeader.CurrAccCode = _index[invoiceHeaderId].TrInvoiceHeader.CurrAccCode;
-                        deliveryInvoHeader.OfficeCode = "ofis01";
-                        deliveryInvoHeader.StoreCode = "mgz01";
+                        deliveryInvoHeader.OfficeCode = Authorization.OfficeCode;
+                        deliveryInvoHeader.StoreCode = Authorization.StoreCode;
                         deliveryInvoHeader.CreatedUserName = Authorization.CurrAccCode;
-                        deliveryInvoHeader.WarehouseCode = efMethods.SelectWarehouseByStore(Authorization.StoreCode);
+                        deliveryInvoHeader.WarehouseCode = _index[invoiceHeaderId].TrInvoiceHeader.WarehouseCode;
                         deliveryInvoHeader.IsMainTF = true;
 
                         efMethods.InsertEntity(deliveryInvoHeader);
@@ -427,7 +420,7 @@ namespace Foxoft
                     // Seçilmiş detail sətrin lokaldakı hesablanmış dəyərlərini yenilə
                     if (focusedDetailRow != null)
                     {
-                        focusedDetailRow.DeliveryQty += formQty.input;
+                        focusedDetailRow.DeliveredQty += formQty.input;
                         focusedDetailRow.RemainingQty -= formQty.input;
                         view.RefreshRow(view.FocusedRowHandle);
                     }

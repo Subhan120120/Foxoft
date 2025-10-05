@@ -242,7 +242,7 @@ namespace Foxoft
 
         private void bbi_test_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormDelivery deliveryBrowser = new("WO");
+            FormHandOver deliveryBrowser = new("WO");
             deliveryBrowser.ShowDialog();
 
         }
