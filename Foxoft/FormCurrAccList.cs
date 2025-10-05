@@ -59,11 +59,16 @@ namespace Foxoft
             : this(currAccTypeArr)
         {
             this.currAccCode = currAccCode;
-            this.personalTypes = personalTypes;
         }
 
         public FormCurrAccList(byte[] currAccTypeArr, string currAccCode, byte[] personalTypes)
             : this(currAccTypeArr, currAccCode)
+        {
+            this.personalTypes = personalTypes;
+        }
+
+        public FormCurrAccList(byte[] currAccTypeArr, byte[] personalTypes)
+            : this(currAccTypeArr)
         {
             this.personalTypes = personalTypes;
         }

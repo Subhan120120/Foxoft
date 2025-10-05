@@ -7,6 +7,7 @@ using DevExpress.DataAccess.Sql;
 using DevExpress.Utils.Extensions;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Customization;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -2145,7 +2146,7 @@ namespace Foxoft
             var PHONEID = "767335943132720";
 
             using var wa = new WhatsAppClient(TOKEN, PHONEID);
-            
+
             var messageId = await wa.UploadAndSendImageAsync(phoneNum, memoryStream, caption: "From MemoryStream", fileName: "pic.jpg", contentType: "image/jpeg");
             Console.WriteLine($"Sent: {messageId}");
         }
@@ -2458,11 +2459,16 @@ namespace Foxoft
 
         private void BBI_Salesman_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DcCurrAcc salesMan = efMethods.SelectSalesPerson(btnEdit_SalesPerson.EditValue?.ToString());
-            if (salesMan is not null)
+            using FormCurrAccList form = new(new byte[] { 3 }, new byte[] { 1 });
+
+
+            if (form.ShowDialog(this) == DialogResult.OK)
             {
-                for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
-                    gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, btnEdit_SalesPerson.EditValue);
+                if (form.dcCurrAcc?.CurrAccCode is not null)
+                {
+                    for (int i = 0; i < gV_InvoiceLine.DataRowCount; i++)
+                        gV_InvoiceLine.SetRowCellValue(i, col_SalesPersonCode, form.dcCurrAcc.CurrAccCode);
+                }
             }
         }
     }
