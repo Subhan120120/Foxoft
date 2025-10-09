@@ -591,50 +591,49 @@ namespace Foxoft
             {
                 string eValue = (e.Value ??= String.Empty).ToString();
 
-                if (!string.IsNullOrEmpty(eValue))
+                if (string.IsNullOrEmpty(eValue))
                 {
-                    DcProduct product = null;
+                    e.Value = null;
+                    return;
+                }
 
-                    if (column == colBarcode)
-                        product = efMethods.SelectProductByBarcode(eValue);
-                    if (column == colSerialNumberCode)
-                    {
-                        gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, eValue);
-                        product = efMethods.SelectProductBySerialNumber(eValue);
-                    }
-                    if (column == col_ProductCode)
-                    {
-                        product = efMethods.SelectProduct(eValue);
-                        view.SetFocusedRowCellValue(colSerialNumberCode, null);
-                    }
+                DcProduct product = null;
 
-                    if (product is not null)
-                    {
-                        FillRow(view.FocusedRowHandle, product);
-                        view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-                        if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                            view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
+                if (column == colBarcode)
+                    product = efMethods.SelectProductByBarcode(eValue);
+                if (column == colSerialNumberCode)
+                {
+                    gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, eValue);
+                    product = efMethods.SelectProductBySerialNumber(eValue);
+                }
+                if (column == col_ProductCode)
+                {
+                    product = efMethods.SelectProduct(eValue);
+                    view.SetFocusedRowCellValue(colSerialNumberCode, null);
+                }
 
-                        decimal returnSum = efMethods.SelectReturnByInvoiceLine(trInvoiceLine.InvoiceLineId).Sum(x => x.QtyIn - x.QtyOut);
+                if (product is not null)
+                {
+                    FillRow(view.FocusedRowHandle, product);
+                    view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
+                    if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
+                        view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
 
-                        if (returnSum > 0)
-                        {
-                            e.Valid = false; 
-                            e.ErrorText = $"Bu sətirdə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
-                        }
-                    }
-                    else
+                    decimal returnSum = efMethods.SelectReturnByInvoiceLine(trInvoiceLine.InvoiceLineId).Sum(x => x.QtyIn - x.QtyOut);
+
+                    if (returnSum > 0)
                     {
-                        e.ErrorText = "Belə bir məhsul yoxdur";
                         e.Valid = false;
+                        e.ErrorText = $"Bu sətirdə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
                     }
-
-
                 }
                 else
                 {
-                    e.Value = null;
+                    e.ErrorText = "Belə bir məhsul yoxdur";
+                    e.Valid = false;
                 }
+
+
             }
 
             if (column == col_SalesPersonCode)
@@ -674,6 +673,12 @@ namespace Foxoft
                     e.Value = null;
                 }
             }
+        }
+
+        private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
+        {
+            e.ExceptionMode = ExceptionMode.DisplayError;
+            e.WindowCaption = "Diqqət";
         }
 
         private decimal CalcCurrAccCreditBalance(int eValue, GridView view, string currAccCode)
@@ -732,12 +737,6 @@ namespace Foxoft
                     return efMethods.SelectProductBalance(trInvoiceLine.ProductCode, wareHouse) + trInvoiceLine.Qty;
             }
             else return 0;
-        }
-
-        private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
-        {
-            e.ExceptionMode = ExceptionMode.DisplayError;
-            e.WindowCaption = "Diqqət";
         }
 
         private void repoBtnEdit_ProductCode_ButtonPressed(object sender, ButtonPressedEventArgs e)
