@@ -220,6 +220,7 @@ namespace Foxoft
                             && (!invoiceHeader.HasValue || x.InvoiceHeaderId == invoiceHeader.Value)
                             && !x.TrInvoiceHeader.IsReturn)
                 .OrderByDescending(x => x.TrInvoiceHeader.DocumentDate)
+                .ThenByDescending(x => x.TrInvoiceHeader.DocumentTime)
                 .AsAsyncEnumerable()
                 .WithCancellation(cancellationToken);
 
