@@ -690,6 +690,16 @@ namespace Foxoft
                                     .Any(x => x.RelatedLineId == relatedLineId);
         }
 
+        public List<TrInvoiceLine> SelectReturnByInvoiceLine(Guid relatedLineId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.TrInvoiceHeader.IsReturn)
+                                    .Where(x => x.RelatedLineId == relatedLineId)
+                                    .ToList();
+        }
+
         public bool ReturnExistByInvoiceLine(Guid invoiceHeaderId, Guid relatedLineId)
         {
             using subContext db = new();
@@ -1225,13 +1235,13 @@ namespace Foxoft
             decimal invoiceSum = db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                        .Where(x => x.TrInvoiceHeader.CurrAccCode == currAccCode)
                                        .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
+                                       .AsEnumerable()
                                        .Where(x => x.TrInvoiceHeader.DocumentDate.Add(x.TrInvoiceHeader.DocumentTime) < documentDate)
                                        .Sum(x => (x.QtyIn - x.QtyOut) * (x.PriceLoc - (x.PriceLoc * x.PosDiscount / 100)));
 
             decimal paymentSum = db.TrPaymentLines.Include(x => x.TrPaymentHeader)
                                        .Where(x => x.TrPaymentHeader.CurrAccCode == currAccCode)
-                                       .AsEnumerable() // Pull the data into memory for 'TrInvoiceHeader.DocumentDate.Add'
+                                       .AsEnumerable()
                                        .Where(x => x.TrPaymentHeader.OperationDate.Add(x.TrPaymentHeader.OperationTime) < documentDate)
                                        .Sum(x => x.PaymentLoc);
 

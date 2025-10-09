@@ -536,6 +536,7 @@ namespace Foxoft
         {
             GridView view = sender as GridView;
             GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
+            TrInvoiceLine trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
 
             if (column == colQty)
             {
@@ -543,7 +544,6 @@ namespace Foxoft
                     && (!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)
                     || trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)))
                 {
-                    TrInvoiceLine trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
 
                     if (efMethods.SelectEntityById<DcProduct>(trInvoiceLine?.ProductCode)?.ProductTypeCode != 3) // product is not service product
                     {
@@ -562,6 +562,13 @@ namespace Foxoft
                                 e.Valid = false;
                             }
                     }
+                }
+
+                decimal returnSum = efMethods.SelectReturnByInvoiceLine(trInvoiceLine.InvoiceLineId).Sum(x => x.QtyIn - x.QtyOut);
+                if (Convert.ToDecimal(e.Value) < returnSum)
+                {
+                    e.ErrorText = $"Bu sətirdə {returnSum} ədəd geri qaytarma əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
+                    e.Valid = false;
                 }
 
                 if (!String.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
@@ -607,12 +614,22 @@ namespace Foxoft
                         view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
                         if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                             view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
+
+                        decimal returnSum = efMethods.SelectReturnByInvoiceLine(trInvoiceLine.InvoiceLineId).Sum(x => x.QtyIn - x.QtyOut);
+
+                        if (returnSum > 0)
+                        {
+                            e.Valid = false; 
+                            e.ErrorText = $"Bu sətirdə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                        }
                     }
                     else
                     {
                         e.ErrorText = "Belə bir məhsul yoxdur";
                         e.Valid = false;
                     }
+
+
                 }
                 else
                 {
@@ -665,8 +682,8 @@ namespace Foxoft
             decimal newValue = eValue * Convert.ToDecimal(objPriceLoc ??= 0);
             decimal oldValue = Convert.ToDecimal(gV_InvoiceLine.GetFocusedRowCellValue(colNetAmountLoc));
 
-            decimal oldSummaryValue = CalcNetAmountSummmaryValue();
-            decimal newSummaryValue = oldSummaryValue - oldValue + newValue;
+            //decimal oldSummaryValue = CalcNetAmountSummmaryValue();
+            decimal newSummaryValue = newValue - oldValue; // + oldSummaryValue;
 
             decimal balanceAfter = CurrAccBalanceBefore - newSummaryValue;
 
@@ -2004,7 +2021,7 @@ namespace Foxoft
             trInvoiceHeader.CurrAccCode = curr?.CurrAccCode;
             lbl_CurrAccDesc.Text = curr?.CurrAccDesc + " " + curr?.FirstName + " " + curr?.LastName;
 
-            CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.OperationDate.Add(trInvoiceHeader.OperationTime)), 2);
+            CurrAccBalanceBefore = Math.Round(efMethods.SelectCurrAccBalance(trInvoiceHeader.CurrAccCode, trInvoiceHeader.DocumentDate.Add(trInvoiceHeader.OperationTime)), 2);
 
             if (Settings.Default.AppSetting.AutoSave)
                 efMethods.UpdatePaymentsCurrAccCode(trInvoiceHeader.InvoiceHeaderId, curr?.CurrAccCode);
