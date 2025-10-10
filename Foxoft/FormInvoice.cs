@@ -591,18 +591,16 @@ namespace Foxoft
                     {
                         e.Valid = false;
                         e.ErrorText = "Müştəri Kredit Limitini Aşır!";
-                        //view.SetColumnError(colQty, e.ErrorText);
                     }
                 }
             }
 
-            // --- ProductCode / Barcode / Serial validation ---
             else if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
             {
                 string input = (e.Value ??= string.Empty).ToString();
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    e.Value = null; // allow blank to clear
+                    e.Value = null; 
                     return;
                 }
 
@@ -618,18 +616,15 @@ namespace Foxoft
                 {
                     e.Valid = false;
                     e.ErrorText = "Belə bir məhsul yoxdur";
-                    //view.SetColumnError(column, e.ErrorText);
                     return;
                 }
 
-                // block changing product when returns exist (validate only; DO NOT mutate row yet)
                 decimal returnSum = efMethods.SelectReturnByInvoiceLine(tr.InvoiceLineId)
                                              .Sum(x => x.QtyIn - x.QtyOut);
                 if (returnSum > 0)
                 {
                     e.Valid = false;
                     e.ErrorText = "Bu sətirdə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
-                    //view.SetColumnError(column, e.ErrorText);
                 }
             }
 
@@ -643,13 +638,11 @@ namespace Foxoft
                     {
                         e.Valid = false;
                         e.ErrorText = "Belə bir satıcı yoxdur";
-                        //view.SetColumnError(col_SalesPersonCode, e.ErrorText);
                     }
                 }
                 else e.Value = null;
             }
 
-            // --- Worker validation ---
             else if (column == colWorkerCode)
             {
                 string input = (e.Value ??= string.Empty).ToString();
@@ -660,7 +653,6 @@ namespace Foxoft
                     {
                         e.Valid = false;
                         e.ErrorText = "Belə bir usta yoxdur";
-                        //view.SetColumnError(colWorkerCode, e.ErrorText);
                     }
                 }
                 else e.Value = null;
