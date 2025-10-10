@@ -534,146 +534,139 @@ namespace Foxoft
 
         private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
         {
-            GridView view = sender as GridView;
-            GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
-            TrInvoiceLine trInvoiceLine = view.GetFocusedRow() as TrInvoiceLine;
+            var view = (GridView)sender;
+            var column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
+            var tr = view.GetFocusedRow() as TrInvoiceLine;
+
+            e.Valid = true;
+            view.ClearColumnErrors();
 
             if (column == colQty)
             {
-                if (new string[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
-                    && (!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)
-                    || trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)))
+                if (new[] { "RP", "WP", "RS", "WS", "IS", "IT" }.Contains(trInvoiceHeader.ProcessCode)
+                    && ((!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
+                        || (trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
                 {
-
-                    if (efMethods.SelectEntityById<DcProduct>(trInvoiceLine?.ProductCode)?.ProductTypeCode != 3) // product is not service product
+                    var prodType = efMethods.SelectEntityById<DcProduct>(tr?.ProductCode)?.ProductTypeCode;
+                    if (prodType != 3) // not a service
                     {
-                        string wareHouse = lUE_WarehouseCode.EditValue.ToString();
+                        string wareHouse = lUE_WarehouseCode.EditValue?.ToString();
                         if (trInvoiceHeader.IsReturn && trInvoiceHeader.ProcessCode == "IT")
-                            wareHouse = lUE_ToWarehouseCode.EditValue.ToString();
+                            wareHouse = lUE_ToWarehouseCode.EditValue?.ToString();
 
-                        bool permitNegativeStock = (bool)lUE_WarehouseCode.GetColumnValue("PermitNegativeStock");
+                        bool permitNegativeStock = Convert.ToBoolean(lUE_WarehouseCode.GetColumnValue("PermitNegativeStock"));
+                        decimal balance = CalcProductBalance(tr, wareHouse);
 
-                        decimal balance = CalcProductBalance(trInvoiceLine, wareHouse);
-
-                        if (permitNegativeStock)
-                            if (Convert.ToDecimal(e.Value) > balance)
-                            {
-                                e.ErrorText = "Stokda miqdar yoxdur";
-                                e.Valid = false;
-                            }
+                        if (permitNegativeStock && Convert.ToDecimal(e.Value) > balance)
+                        {
+                            e.Valid = false;
+                            e.ErrorText = "Stokda miqdar yoxdur";
+                            //view.SetColumnError(colQty, e.ErrorText);
+                        }
                     }
                 }
 
-                decimal returnSum = efMethods.SelectReturnByInvoiceLine(trInvoiceLine.InvoiceLineId).Sum(x => x.QtyIn - x.QtyOut);
-                if (Convert.ToDecimal(e.Value) < returnSum)
+                if (e.Valid)
                 {
-                    e.ErrorText = $"Bu sətirdə {returnSum} ədəd geri qaytarma əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
-                    e.Valid = false;
+                    decimal returnSum = efMethods.SelectReturnByInvoiceLine(tr.InvoiceLineId)
+                                                 .Sum(x => x.QtyIn - x.QtyOut);
+                    if (Convert.ToDecimal(e.Value) < returnSum)
+                    {
+                        e.Valid = false;
+                        e.ErrorText = $"Bu sətirdə {returnSum} ədəd geri qaytarma əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
+                        //view.SetColumnError(colQty, e.ErrorText);
+                    }
                 }
 
-                if (!String.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
-                    && new string[] { "RP", "WP", "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode)
-                    && (!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)
-                    || trInvoiceHeader.IsReturn && (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode)))
+                if (e.Valid
+                    && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
+                    && new[] { "RP", "WP", "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode)
+                    && ((!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
+                        || (trInvoiceHeader.IsReturn && (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
                 {
-                    DcCurrAcc dcCurrAcc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
+                    DcCurrAcc dc = efMethods.SelectCurrAcc(trInvoiceHeader.CurrAccCode);
                     decimal currAccBalance = CalcCurrAccCreditBalance(Convert.ToInt32(e.Value), view, trInvoiceHeader.CurrAccCode);
 
-                    if (Math.Abs(currAccBalance) > dcCurrAcc.CreditLimit && dcCurrAcc.CreditLimit != 0 && Convert.ToInt32(e.Value) != 0)
+                    if (Math.Abs(currAccBalance) > dc.CreditLimit && dc.CreditLimit != 0 && Convert.ToInt32(e.Value) != 0)
                     {
-                        e.ErrorText = "Müştəri Kredit Limitini Aşır!";
                         e.Valid = false;
+                        e.ErrorText = "Müştəri Kredit Limitini Aşır!";
+                        //view.SetColumnError(colQty, e.ErrorText);
                     }
                 }
             }
 
-            if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
+            // --- ProductCode / Barcode / Serial validation ---
+            else if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
             {
-                string eValue = (e.Value ??= String.Empty).ToString();
-
-                if (string.IsNullOrEmpty(eValue))
+                string input = (e.Value ??= string.Empty).ToString();
+                if (string.IsNullOrWhiteSpace(input))
                 {
-                    e.Value = null;
+                    e.Value = null; // allow blank to clear
                     return;
                 }
 
                 DcProduct product = null;
-
                 if (column == colBarcode)
-                    product = efMethods.SelectProductByBarcode(eValue);
-                if (column == colSerialNumberCode)
-                {
-                    gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, eValue);
-                    product = efMethods.SelectProductBySerialNumber(eValue);
-                }
-                if (column == col_ProductCode)
-                {
-                    product = efMethods.SelectProduct(eValue);
-                    view.SetFocusedRowCellValue(colSerialNumberCode, null);
-                }
+                    product = efMethods.SelectProductByBarcode(input);
+                else if (column == colSerialNumberCode)
+                    product = efMethods.SelectProductBySerialNumber(input);
+                else // col_ProductCode
+                    product = efMethods.SelectProduct(input);
 
-                if (product is not null)
+                if (product == null)
                 {
-                    FillRow(view.FocusedRowHandle, product);
-                    view.UpdateCurrentRow(); // For Model/Entity/trInvoiceLine Included TrInvoiceHeader
-                    if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
-                        view.SetRowCellValue(view.FocusedRowHandle, colQty, 1);
-
-                    decimal returnSum = efMethods.SelectReturnByInvoiceLine(trInvoiceLine.InvoiceLineId).Sum(x => x.QtyIn - x.QtyOut);
-
-                    if (returnSum > 0)
-                    {
-                        e.Valid = false;
-                        e.ErrorText = $"Bu sətirdə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
-                    }
-                }
-                else
-                {
-                    e.ErrorText = "Belə bir məhsul yoxdur";
                     e.Valid = false;
+                    e.ErrorText = "Belə bir məhsul yoxdur";
+                    //view.SetColumnError(column, e.ErrorText);
+                    return;
                 }
 
-
+                // block changing product when returns exist (validate only; DO NOT mutate row yet)
+                decimal returnSum = efMethods.SelectReturnByInvoiceLine(tr.InvoiceLineId)
+                                             .Sum(x => x.QtyIn - x.QtyOut);
+                if (returnSum > 0)
+                {
+                    e.Valid = false;
+                    e.ErrorText = "Bu sətirdə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    //view.SetColumnError(column, e.ErrorText);
+                }
             }
 
-            if (column == col_SalesPersonCode)
+            else if (column == col_SalesPersonCode)
             {
-                string eValue = (e.Value ??= String.Empty).ToString();
-
-                if (!String.IsNullOrEmpty(eValue))
+                string input = (e.Value ??= string.Empty).ToString();
+                if (!string.IsNullOrEmpty(input))
                 {
-                    DcCurrAcc dcCurrAcc = efMethods.SelectSalesPerson(eValue);
-                    if (dcCurrAcc is null || dcCurrAcc?.CurrAccTypeCode != 3)
+                    var acc = efMethods.SelectSalesPerson(input);
+                    if (acc == null || acc.CurrAccTypeCode != 3)
                     {
+                        e.Valid = false;
                         e.ErrorText = "Belə bir satıcı yoxdur";
-                        e.Valid = false;
+                        //view.SetColumnError(col_SalesPersonCode, e.ErrorText);
                     }
                 }
-                else
-                {
-                    e.Value = null;
-                }
+                else e.Value = null;
             }
 
-            if (column == colWorkerCode)
+            // --- Worker validation ---
+            else if (column == colWorkerCode)
             {
-                string eValue = (e.Value ??= String.Empty).ToString();
-
-                if (!String.IsNullOrEmpty(eValue))
+                string input = (e.Value ??= string.Empty).ToString();
+                if (!string.IsNullOrEmpty(input))
                 {
-                    DcCurrAcc dcCurrAcc = efMethods.SelectWorker(eValue);
-                    if (dcCurrAcc is null || dcCurrAcc?.CurrAccTypeCode != 3)
+                    var acc = efMethods.SelectWorker(input);
+                    if (acc == null || acc.CurrAccTypeCode != 3)
                     {
-                        e.ErrorText = "Belə bir usta yoxdur";
                         e.Valid = false;
+                        e.ErrorText = "Belə bir usta yoxdur";
+                        //view.SetColumnError(colWorkerCode, e.ErrorText);
                     }
                 }
-                else
-                {
-                    e.Value = null;
-                }
+                else e.Value = null;
             }
         }
+
 
         private void gV_InvoiceLine_InvalidValueException(object sender, InvalidValueExceptionEventArgs e)
         {
