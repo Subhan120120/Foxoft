@@ -11,6 +11,7 @@ using DevExpress.XtraBars.Customization;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraEditors.Filtering;
 using DevExpress.XtraEditors.Mask;
 using DevExpress.XtraGrid;
@@ -561,25 +562,50 @@ namespace Foxoft
                         {
                             e.Valid = false;
                             e.ErrorText = "Stokda miqdar yoxdur";
-                            //view.SetColumnError(colQty, e.ErrorText);
+                            return;
                         }
                     }
                 }
 
-                if (e.Valid)
+
+                decimal returnSum = Math.Abs(efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
+                                             .Sum(x => x.QtyIn - x.QtyOut));
+                if (Convert.ToDecimal(e.Value) < returnSum)
                 {
-                    decimal returnSum = efMethods.SelectReturnByInvoiceLine(tr.InvoiceLineId)
-                                                 .Sum(x => x.QtyIn - x.QtyOut);
-                    if (Convert.ToDecimal(e.Value) < returnSum)
-                    {
-                        e.Valid = false;
-                        e.ErrorText = $"Bu sətirdə {returnSum} ədəd geri qaytarma əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
-                        //view.SetColumnError(colQty, e.ErrorText);
-                    }
+                    e.Valid = false;
+                    e.ErrorText = $"Bu sətirdə {returnSum} ədəd geri qaytarma əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
+                    return;
                 }
 
-                if (e.Valid
-                    && !string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
+                decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
+                                             .Sum(x => x.QtyIn - x.QtyOut));
+                if (Convert.ToDecimal(e.Value) < invoiceSum)
+                {
+                    e.Valid = false;
+                    e.ErrorText = $"Satışı {invoiceSum} ədəd olan məhsulun geri qaytarmasıdır. Miqdar bu rəqəmdən çox ola bilməz.";
+                    return;
+                }
+
+                decimal waybillSum = Math.Abs(efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
+                                             .Sum(x => x.QtyIn - x.QtyOut));
+                if (Convert.ToDecimal(e.Value) < waybillSum)
+                {
+                    e.Valid = false;
+                    e.ErrorText = $"Bu sətirdə {waybillSum} ədəd təhvil-təslim əməliyyatı mövcuddur. Miqdar bu rəqəmdən az ola bilməz.";
+                    return;
+                }
+
+                decimal invoiceSum2 = Math.Abs(efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
+                                             .Sum(x => x.QtyIn - x.QtyOut));
+
+                if (Convert.ToDecimal(e.Value) > invoiceSum2)
+                {
+                    e.Valid = false;
+                    e.ErrorText = $"Satışı {invoiceSum2} ədəd olan məhsulun təhvil-təslimidir. Miqdar bu rəqəmdən çox ola bilməz.";
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(trInvoiceHeader.CurrAccCode)
                     && new[] { "RP", "WP", "RS", "WS", "IS" }.Contains(trInvoiceHeader.ProcessCode)
                     && ((!trInvoiceHeader.IsReturn && !(bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))
                         || (trInvoiceHeader.IsReturn && (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode))))
@@ -591,6 +617,7 @@ namespace Foxoft
                     {
                         e.Valid = false;
                         e.ErrorText = "Müştəri Kredit Limitini Aşır!";
+                        return;
                     }
                 }
             }
@@ -600,7 +627,7 @@ namespace Foxoft
                 string input = (e.Value ??= string.Empty).ToString();
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    e.Value = null; 
+                    e.Value = null;
                     return;
                 }
 
@@ -615,16 +642,46 @@ namespace Foxoft
                 if (product == null)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Belə bir məhsul yoxdur";
+                    e.ErrorText = "Məhsul tapılmadı və ya deaktiv edilib.";
                     return;
                 }
 
-                decimal returnSum = efMethods.SelectReturnByInvoiceLine(tr.InvoiceLineId)
-                                             .Sum(x => x.QtyIn - x.QtyOut);
-                if (returnSum > 0)
+                bool returnExist = efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
+                                             .Any();
+                if (returnExist)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Bu sətirdə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    e.ErrorText = "Bu sətir üzrə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    return;
+                }
+
+                bool invoiceExist = efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
+                                             .Any();
+
+                if (invoiceExist)
+                {
+                    e.Valid = false;
+                    e.ErrorText = "Bu geri qaytarma üzrə əlaqəli sətir mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    return;
+                }
+
+                bool waybillExist = efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
+                                             .Any();
+                if (waybillExist)
+                {
+                    e.Valid = false;
+                    e.ErrorText = "Bu sətir üzrə təhvil-təslim əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    return;
+                }
+
+                bool invoiceExist2 = efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
+                                             .Any();
+
+                if (invoiceExist2)
+                {
+                    e.Valid = false;
+                    e.ErrorText = "Bu təhvil-təslim üzrə əlaqəli sətir mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    return;
                 }
             }
 
@@ -638,6 +695,7 @@ namespace Foxoft
                     {
                         e.Valid = false;
                         e.ErrorText = "Belə bir satıcı yoxdur";
+                        return;
                     }
                 }
                 else e.Value = null;
@@ -844,25 +902,25 @@ namespace Foxoft
             ButtonEdit editor = (ButtonEdit)sender;
 
             using FormProductList form = new(productTypeArr, false, productCode);
-            //Rectangle screenArea = Screen.FromControl(this).WorkingArea;
-            //form.Width = (int)(screenArea.Width * 0.9);
-            //form.Height = (int)(screenArea.Height * 0.9);
-            //form.StartPosition = FormStartPosition.CenterScreen;
 
             try
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
                     editor.EditValue = form.dcProduct.ProductCode;
+
+                    if (!gV_InvoiceLine.PostEditor()) // 🔹 Post editor to trigger ValidatingEditor for the ProductCode cell
+                        return; // validation failed in ValidatingEditor
+
                     gV_InvoiceLine.SetFocusedRowCellValue(colProductCost, form.dcProduct.ProductCost);
                     gV_InvoiceLine.SetFocusedRowCellValue(colUnitOfMeasureId, form.dcProduct.DefaultUnitOfMeasureId);
 
-                    gV_InvoiceLine.CloseEditor();
                     gV_InvoiceLine.UpdateCurrentRow();
 
-                    gV_InvoiceLine.BestFitColumns();
                     gV_InvoiceLine.FocusedColumn = colQty;
+                    gV_InvoiceLine.ShowEditor();
                 }
+
             }
             catch (Exception ex)
             {
@@ -1497,22 +1555,47 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_Validating(object sender, CancelEventArgs e)
         {
-            object eValue = trInvoiceHeader?.CurrAccCode;
+            ButtonEdit editor = sender as ButtonEdit;
+            string eValue = editor.Text?.Trim();
 
-            if (eValue is not null)
+            if (eValue is null)
+                return;
+
+            DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(eValue.ToString());
+
+            if (curr is null)
             {
-                DcCurrAcc curr = efMethods.SelectEntityById<DcCurrAcc>(eValue.ToString());
-
-                if (curr is null)
-                {
-                    e.Cancel = true;
-                }
+                e.Cancel = true;
+                return;
             }
+
+            string curr1 = efMethods.SelectInvoiceLineByReturnHeader(trInvoiceHeader.RelatedInvoiceId, trInvoiceHeader.ProcessCode)
+                                         .FirstOrDefault().CurrAccCode;
+
+            if (curr.CurrAccCode != curr1)
+            {
+                dxErrorProvider1.SetError(editor, "Bu geri qaytarma üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
+                e.Cancel = true;
+                return;
+            }
+
+            string curr2 = efMethods.SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
+                                         .FirstOrDefault().CurrAccCode;
+
+            if (curr.CurrAccCode != curr2)
+            {
+                dxErrorProvider1.SetError(editor, "Bu təhvil-təslim üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
+                e.Cancel = true;
+                return;
+            }
+
+
+            dxErrorProvider1.ClearErrors();
         }
 
         private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
-            e.ErrorText = "Belə bir cari yoxdur";
+            //e.ErrorText = "Belə bir cari yoxdur";
             e.ExceptionMode = ExceptionMode.DisplayError;
         }
 

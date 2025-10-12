@@ -690,13 +690,61 @@ namespace Foxoft
                                     .Any(x => x.RelatedLineId == relatedLineId);
         }
 
-        public List<TrInvoiceLine> SelectReturnByInvoiceLine(Guid relatedLineId)
+        public List<TrInvoiceLine> SelectReturnLinesByInvoiceLine(Guid relatedLineId)
         {
             using subContext db = new();
 
             return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
                                     .Where(x => x.TrInvoiceHeader.IsReturn)
                                     .Where(x => x.RelatedLineId == relatedLineId)
+                                    .ToList();
+        }
+
+        public List<TrInvoiceLine> SelectWaybillByInvoiceLine(Guid relatedLineId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.TrInvoiceHeader.ProcessCode == "WO")
+                                    .Where(x => x.RelatedLineId == relatedLineId)
+                                    .ToList();
+        }
+
+        public List<TrInvoiceLine> SelectInvoiceLineByReturnLine(Guid? invoiceLineId, string processCode)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.TrInvoiceHeader.ProcessCode == processCode)
+                                    .Where(x => x.InvoiceLineId == invoiceLineId)
+                                    .ToList();
+        }
+
+        public List<TrInvoiceHeader> SelectInvoiceLineByReturnHeader(Guid? invoiceHeaderId, string processCode)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceHeaders
+                                    .Where(x => x.ProcessCode == processCode)
+                                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
+                                    .ToList();
+        }
+
+        public List<TrInvoiceLine> SelectInvoiceLinesByLineId(Guid? invoiceLineId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
+                                    .Where(x => x.InvoiceLineId == invoiceLineId)
+                                    .ToList();
+        }
+
+        public List<TrInvoiceHeader> SelectInvoiceLinesByHeaderId(Guid? invoiceHeaderId)
+        {
+            using subContext db = new();
+
+            return db.TrInvoiceHeaders
+                                    .Where(x => x.InvoiceHeaderId == invoiceHeaderId)
                                     .ToList();
         }
 
