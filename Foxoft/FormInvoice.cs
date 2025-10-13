@@ -539,8 +539,8 @@ namespace Foxoft
             var column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
             var tr = view.GetFocusedRow() as TrInvoiceLine;
 
-            e.Valid = true;
-            view.ClearColumnErrors();
+            //e.Valid = true;
+            //view.ClearColumnErrors();
 
             if (column == colQty)
             {
