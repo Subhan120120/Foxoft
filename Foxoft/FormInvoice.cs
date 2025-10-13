@@ -2030,16 +2030,6 @@ namespace Foxoft
                 gV_InvoiceLine.SetRowCellValue(rowHandle, col_Price, priceProduct);
         }
 
-        private static string GetProductDescWide(DcProduct product)
-        {
-            int[] featureTypeIds = new[] { 4, 5 };
-            string arr = "";
-            foreach (var item in product?.TrProductFeatures.Where(f => featureTypeIds.Contains(f.FeatureTypeId)))
-                arr += " " + item.FeatureCode;
-            string productDescWide = product.HierarchyCode + " " + product.ProductDesc + arr;
-            return productDescWide;
-        }
-
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
         {
             IList list = ((IListSource)excelDataSource).GetList();
@@ -2240,30 +2230,47 @@ namespace Foxoft
 
         private void gV_InvoiceLine_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
+            if (!e.IsGetData)
+                return;
+
             int rowInd = gV_InvoiceLine.GetRowHandle(e.ListSourceRowIndex);
-            object obj = gV_InvoiceLine.GetRowCellValue(rowInd, col_ProductCode);
+            object productCode = gV_InvoiceLine.GetRowCellValue(rowInd, col_ProductCode);
 
-            if (obj is not null && new GridColumn[] { col_ProductDesc, colBalance }.Contains(e.Column) && e.IsGetData)
+            if (string.IsNullOrEmpty(productCode?.ToString()))
+                return;
+
+            DcProduct dcProduct = subContext.DcProducts // more fast query
+                        .AsNoTracking()
+                        .Include(x => x.DcHierarchy)
+                        .Include(x => x.TrProductFeatures)
+                        .FirstOrDefault(x => x.ProductCode == productCode);
+
+            if (dcProduct is null)
+                return;
+
+            if (e.Column == col_ProductDesc)
             {
-                string productCode = obj.ToString();
-                DcProduct dcProduct = subContext.DcProducts // more fast query
-                                        .Include(x => x.DcHierarchy)
-                                        .Include(x => x.TrProductFeatures)
-                                        .FirstOrDefault(x => x.ProductCode == productCode);
-
-                if (dcProduct is not null)
-                {
-                    dcProduct.Balance = subContext.TrInvoiceLines.Include(x => x.TrInvoiceHeader)
-                                                                 .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
-                                                                 .Where(x => x.ProductCode == productCode)
-                                                                 .Sum(x => x.QtyIn - x.QtyOut);
-
-                    if (e.Column == col_ProductDesc)
-                        e.Value = GetProductDescWide(dcProduct);
-                    else if (e.Column == colBalance)
-                        e.Value = dcProduct.Balance;
-                }
+                e.Value = GetProductDescWide(dcProduct);
             }
+            else if (e.Column == colBalance)
+            {
+                dcProduct.Balance = subContext.TrInvoiceLines.AsNoTracking()
+                                                             .Include(x => x.TrInvoiceHeader)
+                                                             .Where(x => new string[] { "RP", "WP", "RS", "WS", "IS", "CI", "CO", "IT" }.Contains(x.TrInvoiceHeader.ProcessCode))
+                                                             .Where(x => x.ProductCode == productCode)
+                                                             .Sum(x => x.QtyIn - x.QtyOut);
+                e.Value = dcProduct.Balance;
+            }
+        }
+
+        private static string GetProductDescWide(DcProduct product)
+        {
+            int[] featureTypeIds = new[] { 4, 5 };
+            string arr = "";
+            foreach (var item in product?.TrProductFeatures.Where(f => featureTypeIds.Contains(f.FeatureTypeId)))
+                arr += " " + item.FeatureCode;
+            string productDescWide = product.HierarchyCode + " " + product.ProductDesc + arr;
+            return productDescWide;
         }
 
         private void BBI_InvoiceExpenses_ItemClick(object sender, ItemClickEventArgs e)
