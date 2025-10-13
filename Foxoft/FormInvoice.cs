@@ -539,8 +539,8 @@ namespace Foxoft
             var column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
             var tr = view.GetFocusedRow() as TrInvoiceLine;
 
-            e.Valid = true;
-            view.ClearColumnErrors();
+            //e.Valid = true;
+            //view.ClearColumnErrors();
 
             if (column == colQty)
             {
@@ -1565,30 +1565,33 @@ namespace Foxoft
 
             if (curr is null)
             {
+                dxErrorProvider1.SetError(editor, "Belə bir cari yoxdur", ErrorType.Critical);
                 e.Cancel = true;
                 return;
             }
 
-            string curr1 = efMethods.SelectInvoiceLineByReturnHeader(trInvoiceHeader.RelatedInvoiceId, trInvoiceHeader.ProcessCode)
+            if (trInvoiceHeader.RelatedInvoiceId is not null)
+            {
+                string curr1 = efMethods.SelectInvoiceLineByReturnHeader(trInvoiceHeader.RelatedInvoiceId, trInvoiceHeader.ProcessCode)
                                          .FirstOrDefault().CurrAccCode;
 
-            if (curr.CurrAccCode != curr1)
-            {
-                dxErrorProvider1.SetError(editor, "Bu geri qaytarma üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
-                e.Cancel = true;
-                return;
+                if (curr.CurrAccCode != curr1)
+                {
+                    dxErrorProvider1.SetError(editor, "Bu geri qaytarma üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
+                    e.Cancel = true;
+                    return;
+                }
+
+                string curr2 = efMethods.SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
+                                             .FirstOrDefault().CurrAccCode;
+
+                if (curr.CurrAccCode != curr2)
+                {
+                    dxErrorProvider1.SetError(editor, "Bu təhvil-təslim üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
+                    e.Cancel = true;
+                    return;
+                }
             }
-
-            string curr2 = efMethods.SelectInvoiceLinesByHeaderId(trInvoiceHeader.RelatedInvoiceId)
-                                         .FirstOrDefault().CurrAccCode;
-
-            if (curr.CurrAccCode != curr2)
-            {
-                dxErrorProvider1.SetError(editor, "Bu təhvil-təslim üzrə əlaqəli qaimə mövcuddur. Cari Hesab Kodu dəyişilə bilməz.", ErrorType.Critical);
-                e.Cancel = true;
-                return;
-            }
-
 
             dxErrorProvider1.ClearErrors();
         }
