@@ -539,8 +539,8 @@ namespace Foxoft
             var column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
             var tr = view.GetFocusedRow() as TrInvoiceLine;
 
-            //e.Valid = true;
-            //view.ClearColumnErrors();
+            e.Valid = true;
+            view.ClearColumnErrors();
 
             if (column == colQty)
             {
@@ -579,7 +579,7 @@ namespace Foxoft
 
                 decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
                                              .Sum(x => x.QtyIn - x.QtyOut));
-                if (Convert.ToDecimal(e.Value) < invoiceSum)
+                if (tr.TrInvoiceHeader.IsReturn && Convert.ToDecimal(e.Value) > invoiceSum)
                 {
                     e.Valid = false;
                     e.ErrorText = $"Satışı {invoiceSum} ədəd olan məhsulun geri qaytarmasıdır. Miqdar bu rəqəmdən çox ola bilməz.";
@@ -598,7 +598,7 @@ namespace Foxoft
                 decimal invoiceSum2 = Math.Abs(efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
                                              .Sum(x => x.QtyIn - x.QtyOut));
 
-                if (Convert.ToDecimal(e.Value) > invoiceSum2)
+                if (tr.TrInvoiceHeader.ProcessCode == "WO" && Convert.ToDecimal(e.Value) > invoiceSum2)
                 {
                     e.Valid = false;
                     e.ErrorText = $"Satışı {invoiceSum2} ədəd olan məhsulun təhvil-təslimidir. Miqdar bu rəqəmdən çox ola bilməz.";
