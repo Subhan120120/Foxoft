@@ -1783,6 +1783,13 @@ namespace Foxoft
                 }
             }
 
+            if (col_Price != null)
+            {
+                bool currAccHasClaims = efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangePrice" + dcProcess.ProcessCode);
+                if (!currAccHasClaims)
+                    col_Price.OptionsColumn.ReadOnly = true;
+            }
+
             colBalance.OptionsColumn.ReadOnly = true;
             colProductCost.OptionsColumn.ReadOnly = true;
             col_NetAmount.OptionsColumn.ReadOnly = true;

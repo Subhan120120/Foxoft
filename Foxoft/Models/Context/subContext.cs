@@ -553,6 +553,16 @@ namespace Foxoft.Models
                 new DcPersonalType { PersonalTypeCode = 1, PersonalTypeDesc = "Satıcı" }
                 );
 
+            modelBuilder.Entity<SettingStore>().HasData(
+               new SettingStore { Id = 1, StoreCode = "mgz01", DefaultUnitOfMeasureId = 1, DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
+                );
+
+            modelBuilder.Entity<DcCurrency>().HasData(
+                new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "₼ AZN", ExchangeRate = 1 },
+                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$ DOLLAR", ExchangeRate = 1.7f },
+                new DcCurrency { CurrencyCode = "EUR", CurrencyDesc = "€ EURO", ExchangeRate = 1.67f }
+                );
+
             modelBuilder.Entity<DcClaimCategory>().HasData(
                 new DcClaimCategory { CategoryId = 1,/*dəyişmə olmaz*/ CategoryDesc = "Hesabatlar", CategoryLevel = 0, CategoryParentId = null },
                 new DcClaimCategory { CategoryId = 2,/*dəyişmə olmaz*/ CategoryDesc = "Fakturalar", CategoryLevel = 0, CategoryParentId = null },
@@ -661,23 +671,21 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "EditLockedInvoice", ClaimDesc = "Kilidli Fakturanı Dəyiş", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "EditLockedPayment", ClaimDesc = "Kilidli Ödənişi Dəyiş", ClaimTypeId = 1, CategoryId = 2 },
                 new DcClaim { ClaimCode = "Parameters", ClaimDesc = "Parametrlər", ClaimTypeId = 1, CategoryId = 15 },
-                new DcClaim { ClaimCode = "StoreList", ClaimDesc = "Mağaza Siyahısı", ClaimTypeId = 1, CategoryId = 22 }
+                new DcClaim { ClaimCode = "StoreList", ClaimDesc = "Mağaza Siyahısı", ClaimTypeId = 1, CategoryId = 22 },
+                new DcClaim { ClaimCode = "ChangePriceRP", ClaimDesc = "Pərakəndə Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 3 },
+                new DcClaim { ClaimCode = "ChangePriceWP", ClaimDesc = "Topdan Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 4 },
+                new DcClaim { ClaimCode = "ChangePriceRS", ClaimDesc = "Pərakəndə Satış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 5 },
+                new DcClaim { ClaimCode = "ChangePriceWS", ClaimDesc = "Topdan Satış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 6 },
+                new DcClaim { ClaimCode = "ChangePriceIP", ClaimDesc = "Kredit Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 7 },
+                new DcClaim { ClaimCode = "ChangePriceIS", ClaimDesc = "Kredit Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 8 },
+                new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
+                new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 11 }
                 );
 
             modelBuilder.Entity<DcClaimType>().HasData(
                 new DcClaimType { ClaimTypeId = 1, ClaimTypeDesc = "Embedded" },
                 new DcClaimType { ClaimTypeId = 2, ClaimTypeDesc = "Report" },
                 new DcClaimType { ClaimTypeId = 3, ClaimTypeDesc = "Column" }
-                );
-
-            modelBuilder.Entity<SettingStore>().HasData(
-               new SettingStore { Id = 1, StoreCode = "mgz01", DefaultUnitOfMeasureId = 1, DesignFileFolder = @"C:\Foxoft\Foxoft Design Files", ImageFolder = @"C:\Foxoft\Foxoft Images" }
-                );
-
-            modelBuilder.Entity<DcCurrency>().HasData(
-                new DcCurrency { CurrencyCode = "AZN", CurrencyDesc = "₼ AZN", ExchangeRate = 1 },
-                new DcCurrency { CurrencyCode = "USD", CurrencyDesc = "$ DOLLAR", ExchangeRate = 1.7f },
-                new DcCurrency { CurrencyCode = "EUR", CurrencyDesc = "€ EURO", ExchangeRate = 1.67f }
                 );
 
             modelBuilder.Entity<DcRole>().HasData(
@@ -737,7 +745,15 @@ namespace Foxoft.Models
                 new TrRoleClaim { RoleClaimId = 47, RoleCode = "Admin", ClaimCode = "EditLockedInvoice" },
                 new TrRoleClaim { RoleClaimId = 48, RoleCode = "Admin", ClaimCode = "EditLockedPayment" },
                 new TrRoleClaim { RoleClaimId = 49, RoleCode = "Admin", ClaimCode = "CurrAccCreditLimit" },
-                new TrRoleClaim { RoleClaimId = 50, RoleCode = "Admin", ClaimCode = "Parameters" }
+                new TrRoleClaim { RoleClaimId = 50, RoleCode = "Admin", ClaimCode = "Parameters" },
+                new TrRoleClaim { RoleClaimId = 51, RoleCode = "Admin", ClaimCode = "ChangePriceRP" },
+                new TrRoleClaim { RoleClaimId = 52, RoleCode = "Admin", ClaimCode = "ChangePriceWP" },
+                new TrRoleClaim { RoleClaimId = 53, RoleCode = "Admin", ClaimCode = "ChangePriceRS" },
+                new TrRoleClaim { RoleClaimId = 54, RoleCode = "Admin", ClaimCode = "ChangePriceWS" },
+                new TrRoleClaim { RoleClaimId = 55, RoleCode = "Admin", ClaimCode = "ChangePriceIP" },
+                new TrRoleClaim { RoleClaimId = 56, RoleCode = "Admin", ClaimCode = "ChangePriceIS" },
+                new TrRoleClaim { RoleClaimId = 57, RoleCode = "Admin", ClaimCode = "ChangePriceCI" },
+                new TrRoleClaim { RoleClaimId = 58, RoleCode = "Admin", ClaimCode = "ChangePriceCO" }
                );
 
             modelBuilder.Entity<TrClaimReport>().HasData(

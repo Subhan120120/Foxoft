@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraSplashScreen;
 using Foxoft.Models;
@@ -462,6 +463,10 @@ namespace Foxoft
                 }
 
             if (gV_InvoiceLine.FocusedColumn == col_Price)
+            {
+                if (!efMethods.CurrAccHasClaims(Authorization.CurrAccCode, "ChangePriceRS"))
+                    return;
+
                 using (FormInput formQty = new())
                 {
                     if (formQty.ShowDialog(this) == DialogResult.OK)
@@ -471,6 +476,7 @@ namespace Foxoft
                         SaveInvoice();
                     }
                 }
+            }
         }
 
         private async void btn_Print_Click(object sender, EventArgs e)
@@ -662,7 +668,7 @@ namespace Foxoft
 
             if (dcProductByBarcode != null && dcProductByScale != null)
             {
-                using FormProductList formProductList = new (new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductByScale.ProductCode });
+                using FormProductList formProductList = new(new byte[] { 1 }, false, new[] { dcProductByBarcode.ProductCode, dcProductByScale.ProductCode });
                 if (formProductList.ShowDialog(this) == DialogResult.OK)
                 {
                     selectedProduct = formProductList.dcProduct;
