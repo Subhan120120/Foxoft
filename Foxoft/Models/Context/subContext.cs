@@ -678,6 +678,7 @@ namespace Foxoft.Models
                 new DcClaim { ClaimCode = "ChangePriceWS", ClaimDesc = "Topdan Satış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 6 },
                 new DcClaim { ClaimCode = "ChangePriceIP", ClaimDesc = "Kredit Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 7 },
                 new DcClaim { ClaimCode = "ChangePriceIS", ClaimDesc = "Kredit Alış Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 8 },
+                new DcClaim { ClaimCode = "ChangePriceEX", ClaimDesc = "Xərc Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 9 },
                 new DcClaim { ClaimCode = "ChangePriceCI", ClaimDesc = "Sayım Artırma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 10 },
                 new DcClaim { ClaimCode = "ChangePriceCO", ClaimDesc = "Sayım Azaltma Qiymət Dəyişmə", ClaimTypeId = 1, CategoryId = 11 }
                 );

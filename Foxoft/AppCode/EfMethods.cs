@@ -348,7 +348,9 @@ namespace Foxoft
         public DcProduct SelectProduct(string productCode)
         {
             using subContext db = new();
-            var product = QueryableSelectProducts(db).FirstOrDefault(x => x.ProductCode == productCode);
+            var product = QueryableSelectProducts(db)
+                            .Where(x => x.ProductTypeCode == 1)
+                            .FirstOrDefault(x => x.ProductCode == productCode);
             return product;
         }
 
