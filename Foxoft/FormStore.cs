@@ -23,7 +23,7 @@ namespace Foxoft
 
             CurrAccTypeCodeLookUpEdit.Properties.DataSource = efMethods.SelectEntities<DcCurrAccType>();
             OfficeCodeLookUpEdit.Properties.DataSource = efMethods.SelectOffices();
-            StoreCodeLookUpEdit.Properties.DataSource = efMethods.SelectStores();
+            DefaultUnitOfMeasureIdLookUpEdit.Properties.DataSource = efMethods.SelectUnitOfMeasures();
 
             AcceptButton = btn_Ok;
             CancelButton = btn_Cancel;
@@ -60,7 +60,8 @@ namespace Foxoft
                 //                    .ContinueWith(loadTask => dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList(), TaskScheduler.FromCurrentSynchronizationContext());
 
                 dbContext.DcCurrAccs.Where(x => x.CurrAccCode == dcCurrAcc.CurrAccCode)
-                    .Load();
+                                    .Include(x => x.SettingStore)
+                                    .Load();
                 dcCurrAccsBindingSource.DataSource = dbContext.DcCurrAccs.Local.ToBindingList();
             }
         }

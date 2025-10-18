@@ -1331,6 +1331,14 @@ namespace Foxoft
                                .ToList();
         }
 
+        public List<DcUnitOfMeasure> SelectUnitOfMeasures()
+        {
+            using subContext db = new();
+
+            return db.DcUnitOfMeasures.Where(x => x.IsDisabled == false)
+                               .ToList();
+        }
+
         public DcCurrency SelectCurrencyByName(string currencyDesc)
         {
             using subContext db = new();

@@ -158,7 +158,7 @@ namespace Foxoft.Models
         [ForeignKey("CashRegPaymentTypeCode")]
         public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual TrSession TrSession { get; set; }
-        public virtual ICollection<SettingStore> SettingStores { get; set; }
+        public virtual SettingStore SettingStore { get; set; }
         public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }

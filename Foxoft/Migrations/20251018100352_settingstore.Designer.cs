@@ -4,6 +4,7 @@ using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foxoft.Migrations
 {
     [DbContext(typeof(subContext))]
-    partial class subContextModelSnapshot : ModelSnapshot
+    [Migration("20251018100352_settingstore")]
+    partial class settingstore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3422,9 +3425,6 @@ namespace Foxoft.Migrations
                     b.Property<bool>("IsBasic")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDisabled")
-                        .HasColumnType("bit");
-
                     b.Property<byte>("Level")
                         .HasColumnType("tinyint");
 
@@ -3448,7 +3448,6 @@ namespace Foxoft.Migrations
                             UnitOfMeasureId = 1,
                             ConversionRate = 1m,
                             IsBasic = false,
-                            IsDisabled = false,
                             Level = (byte)0,
                             UnitOfMeasureDesc = "ədəd"
                         },
@@ -3457,7 +3456,6 @@ namespace Foxoft.Migrations
                             UnitOfMeasureId = 2,
                             ConversionRate = 1m,
                             IsBasic = false,
-                            IsDisabled = false,
                             Level = (byte)0,
                             UnitOfMeasureDesc = "kq"
                         },
@@ -3466,7 +3464,6 @@ namespace Foxoft.Migrations
                             UnitOfMeasureId = 3,
                             ConversionRate = 1m,
                             IsBasic = false,
-                            IsDisabled = false,
                             Level = (byte)0,
                             UnitOfMeasureDesc = "metr"
                         },
@@ -3475,7 +3472,6 @@ namespace Foxoft.Migrations
                             UnitOfMeasureId = 4,
                             ConversionRate = 1m,
                             IsBasic = false,
-                            IsDisabled = false,
                             Level = (byte)0,
                             UnitOfMeasureDesc = "litr"
                         });

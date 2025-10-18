@@ -30,7 +30,6 @@ namespace Foxoft
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormERP));
             parentRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             skinRibbonGalleryBarItem = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
@@ -299,7 +298,7 @@ namespace Foxoft
             ribbonStatusBar.ItemLinks.Add(BSI_StoreDesc);
             ribbonStatusBar.ItemLinks.Add(bSI_UserName);
             ribbonStatusBar.ItemLinks.Add(bSI_TerminalName);
-            ribbonStatusBar.Location = new Point(0, 612);
+            ribbonStatusBar.Location = new Point(0, 591);
             ribbonStatusBar.Name = "ribbonStatusBar";
             ribbonStatusBar.Ribbon = parentRibbonControl;
             ribbonStatusBar.Size = new Size(1023, 24);
@@ -328,7 +327,7 @@ namespace Foxoft
             aC_Root.RootDisplayMode = DevExpress.XtraBars.Navigation.AccordionControlRootDisplayMode.Footer;
             aC_Root.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch;
             aC_Root.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always;
-            aC_Root.Size = new Size(314, 454);
+            aC_Root.Size = new Size(314, 433);
             aC_Root.TabIndex = 2;
             aC_Root.MouseDown += aC_Root_MouseDown;
             // 
@@ -675,7 +674,7 @@ namespace Foxoft
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1023, 636);
+            ClientSize = new Size(1023, 615);
             Controls.Add(aC_Root);
             Controls.Add(ribbonStatusBar);
             Controls.Add(parentRibbonControl);

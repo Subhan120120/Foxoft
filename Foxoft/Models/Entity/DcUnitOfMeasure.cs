@@ -41,6 +41,9 @@ namespace Foxoft.Models
         [Display(Name = "Ana Ölçü Vahididir")]
         public bool IsBasic { get; set; }
 
+        [Display(Name = "Qeyri-Aktiv")]
+        public bool IsDisabled { get; set; }
+
 
         //public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }
         public virtual AppSetting AppSetting { get; set; }
