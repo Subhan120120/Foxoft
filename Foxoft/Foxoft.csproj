@@ -79,7 +79,130 @@
 		<None Remove="Resources\search_client_32px.png" />
 		<None Remove="Resources\startup.png" />
 		<None Remove="Resources\startup550x363.png.png" />
+		<None Remove="tr\DevExpress.Data.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.DataAccess.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.DataAccess.v24.2.UI.resources.dll" />
+		<None Remove="tr\DevExpress.Dialogs.v24.2.Core.resources.dll" />
+		<None Remove="tr\DevExpress.Mvvm.v24.2.DataModel.resources.dll" />
+		<None Remove="tr\DevExpress.Office.v24.2.Core.resources.dll" />
+		<None Remove="tr\DevExpress.Spreadsheet.v24.2.Core.resources.dll" />
+		<None Remove="tr\DevExpress.Utils.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.Utils.v24.2.UI.resources.dll" />
+		<None Remove="tr\DevExpress.Xpo.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraBars.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraEditors.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraGrid.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraLayout.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraPrinting.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraReports.v24.2.Extensions.resources.dll" />
+		<None Remove="tr\DevExpress.XtraReports.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraRichEdit.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraSpreadsheet.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraTreeList.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraVerticalGrid.v24.2.resources.dll" />
+		<None Remove="tr\DevExpress.XtraWizard.v24.2.resources.dll" />
+		<None Remove="tr\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+		<None Remove="tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+		<None Remove="tr\Microsoft.CodeAnalysis.resources.dll" />
+		<None Remove="tr\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+		<None Remove="tr\System.ServiceModel.Http.resources.dll" />
+		<None Remove="tr\System.ServiceModel.NetFramingBase.resources.dll" />
+		<None Remove="tr\System.ServiceModel.NetTcp.resources.dll" />
+		<None Remove="tr\System.ServiceModel.Primitives.resources.dll" />
 		<None Remove="Resources\Untitled-32x32x.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="tr\DevExpress.Data.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.DataAccess.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.DataAccess.v24.2.UI.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.Dialogs.v24.2.Core.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.Mvvm.v24.2.DataModel.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.Office.v24.2.Core.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.Spreadsheet.v24.2.Core.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.Utils.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.Utils.v24.2.UI.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.Xpo.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraBars.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraEditors.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraGrid.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraLayout.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraPrinting.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraReports.v24.2.Extensions.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraReports.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraRichEdit.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraSpreadsheet.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraTreeList.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraVerticalGrid.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\DevExpress.XtraWizard.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\Microsoft.CodeAnalysis.CSharp.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\Microsoft.CodeAnalysis.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\Microsoft.CodeAnalysis.Workspaces.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\System.ServiceModel.Http.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\System.ServiceModel.NetFramingBase.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\System.ServiceModel.NetTcp.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="tr\System.ServiceModel.Primitives.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -175,186 +298,6 @@
 		<None Update="Properties\Settings.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
-		</None>
-		<None Update="tr\DevExpress.Data.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.DataAccess.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.DataAccess.v24.2.UI.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Dialogs.v24.2.Core.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Mvvm.v24.2.DataModel.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Office.v24.2.Core.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Spreadsheet.v24.2.Core.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Utils.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Utils.v24.2.UI.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Xpo.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraBars.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraEditors.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraGrid.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraLayout.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraPrinting.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraReports.v24.2.Extensions.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraReports.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraRichEdit.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraSpreadsheet.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraTreeList.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraVerticalGrid.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraWizard.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.CSharp.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.Workspaces.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.Http.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.NetFramingBase.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.NetTcp.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.Primitives.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Data.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.DataAccess.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.DataAccess.v24.2.UI.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Dialogs.v24.2.Core.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Mvvm.v24.2.DataModel.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Office.v24.2.Core.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Spreadsheet.v24.2.Core.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Utils.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Utils.v24.2.UI.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.Xpo.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraBars.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraEditors.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraGrid.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraLayout.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraPrinting.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraReports.v24.2.Extensions.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraReports.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraRichEdit.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraSpreadsheet.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraTreeList.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraVerticalGrid.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\DevExpress.XtraWizard.v24.2.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.CSharp.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\Microsoft.CodeAnalysis.Workspaces.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.Http.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.NetFramingBase.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.NetTcp.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="tr\System.ServiceModel.Primitives.resources.dll">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
