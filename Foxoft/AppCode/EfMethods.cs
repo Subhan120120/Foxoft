@@ -357,7 +357,9 @@ namespace Foxoft
         public DcProduct SelectExpense(string productCode)
         {
             using subContext db = new();
-            var product = QueryableSelectProducts(db).FirstOrDefault(x => x.ProductCode == productCode && x.ProductTypeCode == 2);
+            var product = QueryableSelectProducts(db)
+                            .Where(x => x.ProductTypeCode == 2)
+                            .FirstOrDefault(x => x.ProductCode == productCode);
             return product;
         }
 

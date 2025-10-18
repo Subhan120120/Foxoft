@@ -526,7 +526,12 @@ namespace Foxoft
         {
             if (e.Column == col_ProductCode)
             {
-                DcProduct product = efMethods.SelectProduct(e.Value?.ToString());
+                DcProduct product = null;
+
+                if (dcProcess.ProcessCode == "EX")
+                    product = efMethods.SelectExpense(e.Value?.ToString());
+                else
+                    product = efMethods.SelectProduct(e.Value?.ToString());
 
                 if (product is null)
                     return;
@@ -551,9 +556,6 @@ namespace Foxoft
             var column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
             var tr = view.GetFocusedRow() as TrInvoiceLine;
 
-            //e.Valid = true;
-            //view.ClearColumnErrors();
-
             if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
             {
                 string input = (e.Value ??= string.Empty).ToString();
@@ -564,17 +566,20 @@ namespace Foxoft
                 }
 
                 DcProduct product = null;
-                if (column == colBarcode)
+
+                if (column == col_ProductCode && dcProcess.ProcessCode == "EX")
+                    product = efMethods.SelectExpense(input);
+                else if (column == col_ProductCode)
+                    product = efMethods.SelectProduct(input);
+                else if (column == colBarcode)
                     product = efMethods.SelectProductByBarcode(input);
                 else if (column == colSerialNumberCode)
                     product = efMethods.SelectProductBySerialNumber(input);
-                else // col_ProductCode
-                    product = efMethods.SelectProduct(input);
 
                 if (product == null)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Məhsul tapılmadı və ya deaktiv edilib.";
+                    e.ErrorText = dcProcess.ProcessCode == "EX" ? "Xərc tapılmadı və ya deaktiv edilib." : "Məhsul tapılmadı və ya deaktiv edilib.";
                     return;
                 }
 
@@ -646,7 +651,6 @@ namespace Foxoft
                     }
                 }
 
-
                 decimal returnSum = Math.Abs(efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
                                              .Sum(x => x.QtyIn - x.QtyOut));
                 if (Convert.ToDecimal(e.Value) < returnSum)
@@ -700,7 +704,6 @@ namespace Foxoft
                     }
                 }
             }
-
 
             else if (column == col_SalesPersonCode)
             {
@@ -999,7 +1002,6 @@ namespace Foxoft
         private void InitilizeTransfer()
         {
             IEnumerable<EntityEntry> entityEntries = dbContext.ChangeTracker.Entries();
-
 
             EntityEntry? entryHeader = entityEntries.FirstOrDefault(x => x.Entity is TrInvoiceHeader);
 
@@ -1610,7 +1612,6 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_InvalidValue(object sender, InvalidValueExceptionEventArgs e)
         {
-            //e.ErrorText = "Belə bir cari yoxdur";
             e.ExceptionMode = ExceptionMode.DisplayError;
         }
 
