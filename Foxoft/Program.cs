@@ -20,12 +20,6 @@ namespace Foxoft
 
             SplashScreenManager.ShowForm(typeof(SplashScreenStartup));
 
-            CultureInfo culture = CultureInfo.CreateSpecificCulture("tr-TR");
-            Thread.CurrentThread.CurrentUICulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;//
-            CultureInfo.DefaultThreadCurrentCulture = culture;//
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
-
             //if (Debugger.IsAttached)
             //{
             //    Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");

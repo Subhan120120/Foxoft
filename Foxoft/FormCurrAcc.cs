@@ -10,6 +10,7 @@ using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -110,7 +111,7 @@ namespace Foxoft
             dcCurrAcc.OfficeCode = Authorization.OfficeCode;
             string NewDocNum = efMethods.GetNextDocNum(true, "C", "CurrAccCode", "DcCurrAccs", 4);
             dcCurrAcc.CurrAccCode = NewDocNum;
-            dcCurrAcc.DataLanguageCode = "AZ";
+            dcCurrAcc.LanguageCode = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
             dcCurrAcc.PhoneNum = "+994";
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;

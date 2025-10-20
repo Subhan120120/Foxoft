@@ -84,8 +84,8 @@ namespace Foxoft.Models
         public string? TaxNum { get; set; }
 
         [Display(Name = "İstifadəçi Dili")]
-        [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-        public string? DataLanguageCode { get; set; }
+        [ForeignKey("DcUILanguage")]
+        public string? LanguageCode { get; set; }
 
         [DefaultValue("0")]
         [Column(TypeName = "money")]
@@ -154,6 +154,7 @@ namespace Foxoft.Models
 
 
         public virtual DcCurrAccType DcCurrAccType { get; set; }
+        public virtual DcUILanguage DcUILanguage { get; set; }
         public virtual DcPersonalType DcPersonalType { get; set; }
         [ForeignKey("CashRegPaymentTypeCode")]
         public virtual DcPaymentType DcPaymentType { get; set; }

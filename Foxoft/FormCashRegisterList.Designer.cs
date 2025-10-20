@@ -176,8 +176,8 @@ namespace Foxoft
             // 
             // colDataLanguageCode
             // 
-            colDataLanguageCode.FieldName = "DataLanguageCode";
-            colDataLanguageCode.Name = "colDataLanguageCode";
+            colDataLanguageCode.FieldName = "LanguageCode";
+            colDataLanguageCode.Name = "colLanguageCode";
             // 
             // colCreditLimit
             // 

@@ -1,11 +1,12 @@
 ﻿using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
-using Microsoft.EntityFrameworkCore;
 using Foxoft.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -76,7 +77,6 @@ namespace Foxoft
             dcCurrAcc.OfficeCode = Authorization.OfficeCode;
             string NewDocNum = efMethods.GetNextDocNum(true, "C", nameof(DcCurrAcc.CurrAccCode), "DcCurrAccs", 4);
             dcCurrAcc.CurrAccCode = NewDocNum;
-            dcCurrAcc.DataLanguageCode = "AZ";
 
             dcCurrAccsBindingSource.DataSource = dcCurrAcc;
         }

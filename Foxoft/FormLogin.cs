@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils.Svg;
+﻿using DevExpress.Office.NumberConverters;
+using DevExpress.Utils.Svg;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.ToolbarForm;
 using DevExpress.XtraEditors;
@@ -9,6 +10,7 @@ using Foxoft.Properties;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Net.NetworkInformation;
 
@@ -24,6 +26,7 @@ namespace Foxoft
             InitializeComponent();
 
             LUE_Company.Properties.DataSource = efMethods.SelectCompanies();
+            LUE_Language.Properties.DataSource = efMethods.SelectEntities<DcUILanguage>();
             LUE_Company.EditValue = Settings.Default.CompanyCode;
 
             AcceptButton = btn_ERP;
@@ -91,6 +94,12 @@ namespace Foxoft
                 if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
                 {
                     SessionSave(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked, Convert.ToInt32(LUE_Terminal.EditValue), LUE_Company.EditValue?.ToString());
+
+                    CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
+                    Thread.CurrentThread.CurrentUICulture = culture;
+                    Thread.CurrentThread.CurrentCulture = culture;//
+                    CultureInfo.DefaultThreadCurrentCulture = culture;//
+                    CultureInfo.DefaultThreadCurrentUICulture = culture;
 
                     if (Convert.ToInt32(LUE_Terminal.EditValue) != 0)
                     {
@@ -170,10 +179,6 @@ namespace Foxoft
         string nameConStr = "Foxoft.Properties.Settings.SubConnString";
 
 
-        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
-        {
-        }
-
         private void BBI_GetKey_ItemClick(object sender, ItemClickEventArgs e)
         {
             string localAddress = CustomExtensions.GetPhiscalAdress();
@@ -223,10 +228,6 @@ namespace Foxoft
         {
             Settings.Default.SubConnString = constr;
             Settings.Default.Save();
-
-            //config.ConnectionStrings.ConnectionStrings[nameConStr].ConnectionString = Settings.Default.SubConnString;
-            //config.ConnectionStrings.ConnectionStrings[nameConStr].ProviderName = "System.Data.SqlClient";
-            //config.Save(ConfigurationSaveMode.Modified); // Save permenantly
         }
 
         private void btn_ConStr(object sender, EventArgs e)

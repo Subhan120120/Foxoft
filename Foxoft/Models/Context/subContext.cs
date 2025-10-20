@@ -18,6 +18,7 @@ namespace Foxoft.Models
         public subContext(DbContextOptions<subContext> options)
             : base(options) { }
 
+        public DbSet<DcUILanguage> DcUILanguages { get; set; }
         public DbSet<DcClaim> DcClaims { get; set; }
         public DbSet<DcClaimType> DcClaimTypes { get; set; }
         public DbSet<TrClaimReport> TrClaimReports { get; set; }
@@ -515,6 +516,13 @@ namespace Foxoft.Models
         {
             modelBuilder.Entity<DcHierarchy>().HasData(
                 new DcHierarchy { HierarchyCode = "Root", HierarchyDesc = "Root", HierarchyLevel = 0, Order = 0 }
+                );
+
+            modelBuilder.Entity<DcUILanguage>().HasData(
+                new DcUILanguage { LanguageCode = "en", LanguageDesc = "English" },
+                new DcUILanguage { LanguageCode = "az", LanguageDesc = "Azərbaycanca" },
+                new DcUILanguage { LanguageCode = "tr", LanguageDesc = "Türkçe" },
+                new DcUILanguage { LanguageCode = "ru", LanguageDesc = "Русский" }
                 );
 
             modelBuilder.Entity<DcForm>().HasData(

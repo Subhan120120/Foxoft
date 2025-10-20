@@ -374,7 +374,7 @@ namespace Foxoft
             // 
             // DataLanguageCodeTextEdit
             // 
-            DataLanguageCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "DataLanguageCode", true));
+            DataLanguageCodeTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccsBindingSource, "LanguageCode", true));
             DataLanguageCodeTextEdit.Location = new Point(413, 36);
             DataLanguageCodeTextEdit.Name = "DataLanguageCodeTextEdit";
             DataLanguageCodeTextEdit.Size = new Size(179, 20);
