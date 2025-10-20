@@ -44,6 +44,7 @@ namespace Foxoft
             LUE_Terminal.EditValue = Settings.Default.TerminalId;
             txtEdit_UserName.Text = Settings.Default.LoginName;
             txtEdit_Password.Text = Settings.Default.LoginPassword;
+            LUE_Language.EditValue= Settings.Default.LanguageCode;
             checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
 
             TouchUIMode(Settings.Default.TerminalId);
@@ -93,7 +94,7 @@ namespace Foxoft
             {
                 if (Authorization.Login(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked))
                 {
-                    SessionSave(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked, Convert.ToInt32(LUE_Terminal.EditValue), LUE_Company.EditValue?.ToString());
+                    SessionSave(txtEdit_UserName.Text, txtEdit_Password.Text, checkEdit_RemindMe.Checked, Convert.ToInt32(LUE_Terminal.EditValue), LUE_Company.EditValue?.ToString(), LUE_Language.EditValue?.ToString());
 
                     CultureInfo culture = CultureInfo.CreateSpecificCulture(LUE_Language.EditValue?.ToString());
                     Thread.CurrentThread.CurrentUICulture = culture;
@@ -154,7 +155,7 @@ namespace Foxoft
             }
         }
 
-        private static void SessionSave(string user, string password, bool Checked, int terminalId, string companyCode)
+        private static void SessionSave(string user, string password, bool Checked, int terminalId, string companyCode, string langCode)
         {
             Settings.Default.TerminalId = terminalId;
             Settings.Default.CompanyCode = companyCode;
@@ -163,6 +164,7 @@ namespace Foxoft
             {
                 Settings.Default.LoginName = user;
                 Settings.Default.LoginPassword = password;
+                Settings.Default.LanguageCode = langCode;
                 Settings.Default.LoginChecked = Checked;
                 Settings.Default.Save();
             }
@@ -170,6 +172,7 @@ namespace Foxoft
             {
                 Settings.Default.LoginName = string.Empty;
                 Settings.Default.LoginPassword = string.Empty;
+                Settings.Default.LanguageCode = "en";
                 Settings.Default.LoginChecked = false;
                 Settings.Default.Save();
             }
