@@ -556,14 +556,28 @@ namespace Foxoft
             GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
             var tr = view.GetFocusedRow() as TrInvoiceLine;
 
-            if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
+            string input = (e.Value ??= string.Empty).ToString();
+
+            if (string.IsNullOrWhiteSpace(input))
             {
-                string input = (e.Value ??= string.Empty).ToString();
-                if (string.IsNullOrWhiteSpace(input))
+                if (Type.GetTypeCode(column.ColumnType) is TypeCode.Int32 or TypeCode.Int64
+                    or TypeCode.Decimal or TypeCode.Double
+                    or TypeCode.Single or TypeCode.Int16
+                    or TypeCode.Byte)
+                {
+                    e.Value = Activator.CreateInstance(column.ColumnType); // default(0)
+                }
+                else
                 {
                     e.Value = null;
-                    return;
                 }
+
+                return;
+            }
+
+
+            if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
+            {
 
                 DcProduct product = null;
 
@@ -572,56 +586,68 @@ namespace Foxoft
                 else if (column == colBarcode)
                     product = efMethods.SelectProductByBarcode(input);
                 else if (column == colSerialNumberCode)
+                {
+                    bool sN_Exist = efMethods.EntityExists<DcSerialNumber>(input);
+                    if (!sN_Exist)
+                    {
+                        e.Valid = false;
+                        e.ErrorText = $"Seria Nömrəsi tapılmadı.";
+                        return;
+                    }
+
                     product = efMethods.SelectProductBySerialNumber(input);
+                }
 
                 if (product == null)
                 {
                     e.Valid = false;
-                    e.ErrorText = dcProcess.ProcessCode == "EX" ? "Xərc tapılmadı və ya deaktiv edilib." : "Məhsul tapılmadı və ya deaktiv edilib.";
+                    e.ErrorText = $"{(dcProcess.ProcessCode == "EX" ? "Xərc" : "Məhsul")} tapılmadı və ya deaktiv edilib.";
+
                     return;
                 }
 
-                bool returnExist = efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
-                                             .Any();
-                if (returnExist)
+                string returnProductCode = efMethods.SelectReturnLinesByInvoiceLine(tr.InvoiceLineId)
+                                             .FirstOrDefault()?.ProductCode;
+
+                if (!string.IsNullOrEmpty(returnProductCode) && product.ProductCode != returnProductCode)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Bu sətir üzrə geri qaytarma əməliyyatı mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
+                    e.ErrorText = $"Bu sətir üzrə geri qaytarma əməliyyatı mövcuddur. Məhsul Kodu dəyişilə bilməz.";
                     return;
                 }
 
-                bool waybillExist = efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
-                                             .Any();
-                if (waybillExist)
+                string waybillProductCode = efMethods.SelectWaybillByInvoiceLine(tr.InvoiceLineId)
+                                             .FirstOrDefault()?.ProductCode;
+
+                if (!string.IsNullOrEmpty(waybillProductCode) && product.ProductCode != waybillProductCode)
                 {
                     e.Valid = false;
-                    e.ErrorText = $"Bu sətir üzrə təhvil-təslim əməliyyatı mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
+                    e.ErrorText = $"Bu sətir üzrə təhvil-təslim əməliyyatı mövcuddur. Məhsul Kodu dəyişilə bilməz.";
                     return;
                 }
 
                 if (tr.RelatedLineId is not null)
                 {
-                    bool invoiceExist = efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
-                                             .Any();
+                    string invoiceProductCode = efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
+                                             .FirstOrDefault()?.ProductCode;
 
-                    if (invoiceExist)
+                    if (!string.IsNullOrEmpty(invoiceProductCode) && product.ProductCode != invoiceProductCode)
                     {
                         e.Valid = false;
-                        e.ErrorText = $"Bu geri qaytarma üzrə əlaqəli sətir mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
+                        e.ErrorText = $"Bu geri qaytarma üzrə əlaqəli sətir mövcuddur. Məhsul Kodu dəyişilə bilməz.";
                         return;
                     }
 
-                    bool invoiceExist2 = efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
-                                                 .Any();
+                    string invoiceProductCode2 = efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
+                                                 .FirstOrDefault()?.ProductCode;
 
-                    if (invoiceExist2)
+                    if (!string.IsNullOrEmpty(invoiceProductCode2) && product.ProductCode != invoiceProductCode2)
                     {
                         e.Valid = false;
-                        e.ErrorText = $"Bu təhvil-təslim üzrə əlaqəli sətir mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
+                        e.ErrorText = $"Bu təhvil-təslim üzrə əlaqəli sətir mövcuddur. Məhsul Kodu dəyişilə bilməz.";
                         return;
                     }
                 }
-
             }
 
             else if (column == colQty)
@@ -705,33 +731,23 @@ namespace Foxoft
 
             else if (column == col_SalesPersonCode)
             {
-                string input = (e.Value ??= string.Empty).ToString();
-                if (!string.IsNullOrEmpty(input))
+                var acc = efMethods.SelectSalesPerson(input);
+                if (acc == null || acc.CurrAccTypeCode != 3)
                 {
-                    var acc = efMethods.SelectSalesPerson(input);
-                    if (acc == null || acc.CurrAccTypeCode != 3)
-                    {
-                        e.Valid = false;
-                        e.ErrorText = "Belə bir satıcı yoxdur";
-                        return;
-                    }
+                    e.Valid = false;
+                    e.ErrorText = "Belə bir satıcı yoxdur";
+                    return;
                 }
-                else e.Value = null;
             }
 
             else if (column == colWorkerCode)
             {
-                string input = (e.Value ??= string.Empty).ToString();
-                if (!string.IsNullOrEmpty(input))
+                var acc = efMethods.SelectWorker(input);
+                if (acc == null || acc.CurrAccTypeCode != 3)
                 {
-                    var acc = efMethods.SelectWorker(input);
-                    if (acc == null || acc.CurrAccTypeCode != 3)
-                    {
-                        e.Valid = false;
-                        e.ErrorText = "Belə bir usta yoxdur";
-                    }
+                    e.Valid = false;
+                    e.ErrorText = "Belə bir usta yoxdur";
                 }
-                else e.Value = null;
             }
         }
 
