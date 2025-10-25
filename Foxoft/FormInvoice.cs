@@ -927,7 +927,7 @@ namespace Foxoft
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    editor.EditValue = form.dcProduct.ProductCode;
+                    editor.EditValue = form.dcProduct?.ProductCode;
 
                     if (!gV_InvoiceLine.PostEditor()) // 🔹 Post editor to trigger ValidatingEditor for the ProductCode cell
                         return; // validation failed in ValidatingEditor
