@@ -301,7 +301,7 @@ namespace Foxoft
             {
                 object productCode = gV_ProductList.GetFocusedRowCellValue("ProductCode");
                 if (productCode is not null)
-                    dcProduct = efMethods.SelectProduct(productCode.ToString());
+                    dcProduct = efMethods.SelectProduct(productCode.ToString(), productTypeArr);
             }
             else
                 dcProduct = null;
@@ -319,7 +319,7 @@ namespace Foxoft
             {
                 object productCode = view.GetFocusedRowCellValue(nameof(dcProduct.ProductCode));
                 if (productCode is not null)
-                    dcProduct = efMethods.SelectProduct(productCode.ToString());
+                    dcProduct = efMethods.SelectProduct(productCode.ToString(), productTypeArr);
             }
             else
                 dcProduct = null;
@@ -433,7 +433,7 @@ namespace Foxoft
             {
                 object productCode = view.GetFocusedRowCellValue(nameof(dcProduct.ProductCode));
                 if (productCode is not null)
-                    dcProduct = efMethods.SelectProduct(productCode.ToString());
+                    dcProduct = efMethods.SelectProduct(productCode.ToString(), productTypeArr);
             }
             else
                 dcProduct = null;

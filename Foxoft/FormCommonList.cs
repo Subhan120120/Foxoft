@@ -403,7 +403,7 @@ namespace Foxoft
 
                 if (value is not null)
                 {
-                    DcProduct dcProduct = efMethods.SelectProduct(value.ToString());
+                    DcProduct dcProduct = efMethods.SelectProduct(value.ToString(), new byte[] { 1 });
                     e.Value = dcProduct?.ProductDesc;
                 }
             }

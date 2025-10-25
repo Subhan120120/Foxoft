@@ -345,11 +345,11 @@ namespace Foxoft
                                        .FirstOrDefault();
         }
 
-        public DcProduct SelectProduct(string productCode)
+        public DcProduct SelectProduct(string productCode, byte[] productTypeCode)
         {
             using subContext db = new();
             var product = QueryableSelectProducts(db)
-                            .Where(x => x.ProductTypeCode == 1)
+                            .Where(x => productTypeCode.Contains(x.ProductTypeCode))
                             .FirstOrDefault(x => x.ProductCode == productCode);
             return product;
         }

@@ -18,7 +18,7 @@ namespace Foxoft
         public FormProductFeature(string productCode)
            : this()
         {
-            dcProduct = efMethods.SelectProduct(productCode);
+            dcProduct = efMethods.SelectProduct(productCode, new byte[] { 1 });
         }
 
         private void FormProductFeature_Load(object sender, EventArgs e)

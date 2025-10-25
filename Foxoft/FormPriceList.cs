@@ -284,7 +284,7 @@ namespace Foxoft
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string productCode = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
 
-                DcProduct dcProduct = efMethods.SelectProduct(productCode);
+                DcProduct dcProduct = efMethods.SelectProduct(productCode, new byte[] { 1 });
 
                 e.Value = dcProduct?.ProductDesc;
             }
@@ -295,7 +295,7 @@ namespace Foxoft
                 int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
                 string productCode = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
 
-                DcProduct dcProduct = efMethods.SelectProduct(productCode);
+                DcProduct dcProduct = efMethods.SelectProduct(productCode, new byte[] { 1 });
 
                 e.Value = dcProduct?.ProductCost;
             }
@@ -386,7 +386,7 @@ namespace Foxoft
 
                 if (!string.IsNullOrEmpty(productCode))
                 {
-                    DcProduct product = efMethods.SelectProduct(productCode);
+                    DcProduct product = efMethods.SelectProduct(productCode, new byte[] { 1 });
                     if (product is not null)
                     {
                         object objInvoiceHeadId = gV_PriceListLine.GetRowCellValue(GridControl.NewItemRowHandle, colPriceListHeaderId);

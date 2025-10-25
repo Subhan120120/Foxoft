@@ -531,7 +531,7 @@ namespace Foxoft
                 if (dcProcess.ProcessCode == "EX")
                     product = efMethods.SelectExpense(e.Value?.ToString());
                 else
-                    product = efMethods.SelectProduct(e.Value?.ToString());
+                    product = efMethods.SelectProduct(e.Value?.ToString(), productTypeArr);
 
                 if (product is null)
                     return;
@@ -567,10 +567,8 @@ namespace Foxoft
 
                 DcProduct product = null;
 
-                if (column == col_ProductCode && dcProcess.ProcessCode == "EX")
-                    product = efMethods.SelectExpense(input);
-                else if (column == col_ProductCode)
-                    product = efMethods.SelectProduct(input);
+                if (column == col_ProductCode)
+                    product = efMethods.SelectProduct(input, productTypeArr);
                 else if (column == colBarcode)
                     product = efMethods.SelectProductByBarcode(input);
                 else if (column == colSerialNumberCode)
@@ -1958,7 +1956,7 @@ namespace Foxoft
                 if (string.IsNullOrEmpty(productCode))
                     continue;
 
-                DcProduct product = efMethods.SelectProduct(productCode);
+                DcProduct product = efMethods.SelectProduct(productCode, productTypeArr);
 
                 if (product is null)
                 {
@@ -2437,7 +2435,7 @@ namespace Foxoft
             {
                 string productCode = gV_InvoiceLine.GetFocusedRowCellValue(col_ProductCode)?.ToString();
 
-                DcProduct product = efMethods.SelectProduct(productCode);
+                DcProduct product = efMethods.SelectProduct(productCode, productTypeArr);
                 if (product is not null)
                 {
                     List<DcUnitOfMeasure> unitOfMeasure = efMethods.SelectUnitOfMeasuresAllRelated(product.DefaultUnitOfMeasureId);

@@ -19,7 +19,7 @@ namespace Foxoft
         public FormProductStaticPrice(string productCode)
            : this()
         {
-            dcProduct = efMethods.SelectProduct(productCode);
+            dcProduct = efMethods.SelectProduct(productCode, new byte[] { 1 });
         }
 
         private void FormProductStaticPrice_Load(object sender, EventArgs e)
