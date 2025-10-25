@@ -553,7 +553,7 @@ namespace Foxoft
         private void gV_InvoiceLine_ValidatingEditor(object sender, BaseContainerValidateEditorEventArgs e)
         {
             var view = (GridView)sender;
-            var column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
+            GridColumn column = (e as EditFormValidateEditorEventArgs)?.Column ?? view.FocusedColumn;
             var tr = view.GetFocusedRow() as TrInvoiceLine;
 
             if (column == colBarcode || column == col_ProductCode || column == colSerialNumberCode)
@@ -586,7 +586,7 @@ namespace Foxoft
                 if (returnExist)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Bu sətir üzrə geri qaytarma əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    e.ErrorText = $"Bu sətir üzrə geri qaytarma əməliyyatı mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
                     return;
                 }
 
@@ -595,7 +595,7 @@ namespace Foxoft
                 if (waybillExist)
                 {
                     e.Valid = false;
-                    e.ErrorText = "Bu sətir üzrə təhvil-təslim əməliyyatı mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                    e.ErrorText = $"Bu sətir üzrə təhvil-təslim əməliyyatı mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
                     return;
                 }
 
@@ -607,7 +607,7 @@ namespace Foxoft
                     if (invoiceExist)
                     {
                         e.Valid = false;
-                        e.ErrorText = "Bu geri qaytarma üzrə əlaqəli sətir mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                        e.ErrorText = $"Bu geri qaytarma üzrə əlaqəli sətir mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
                         return;
                     }
 
@@ -617,7 +617,7 @@ namespace Foxoft
                     if (invoiceExist2)
                     {
                         e.Valid = false;
-                        e.ErrorText = "Bu təhvil-təslim üzrə əlaqəli sətir mövcuddur. Məhsul kodu dəyişilə bilməz.";
+                        e.ErrorText = $"Bu təhvil-təslim üzrə əlaqəli sətir mövcuddur. {column.CustomizationSearchCaption} dəyişilə bilməz.";
                         return;
                     }
                 }
