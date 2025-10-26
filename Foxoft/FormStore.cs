@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.DXErrorProvider;
 using Foxoft.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Foxoft
@@ -115,6 +117,26 @@ namespace Foxoft
                 string combinedString = errorList.Aggregate((x, y) => x + "" + y);
                 XtraMessageBox.Show(combinedString);
             }
+        }
+
+        private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)
+        {
+            var te = (DevExpress.XtraEditors.TextEdit)sender;
+            var before = te.Text;
+            var after = PhoneNumberFormat.FormatIntlPhone(before);
+            te.Text = after;
+
+
+            string inputPhone = Regex.Replace(PhoneNumTextEdit.Text, @"\D", ""); // \D = non-digit characters
+
+            if (!string.IsNullOrEmpty(inputPhone))
+            {
+                if (efMethods.CurrAccExistByPhoneNum(inputPhone))
+                    dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə bazada mövcuddur.", ErrorType.Warning);
+                else
+                    dxErrorProvider1.ClearErrors();
+            }
+
         }
     }
 }

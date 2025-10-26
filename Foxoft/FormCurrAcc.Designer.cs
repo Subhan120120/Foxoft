@@ -903,8 +903,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.BarButtonItem BBI_ContactDetail;
         private DevExpress.XtraBars.BarButtonItem BBI_Contact;
-        private DevExpress.XtraEditors.TextEdit TxtEdit_PhoneNumber;
-        private DevExpress.XtraLayout.LayoutControlItem LCI_PhoneNumber;
         private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
     }
 }
