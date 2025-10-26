@@ -42,7 +42,6 @@ namespace Foxoft
             barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             BBI_GetKey = new DevExpress.XtraBars.BarButtonItem();
             bbi_test = new DevExpress.XtraBars.BarButtonItem();
             repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -142,7 +141,7 @@ namespace Foxoft
             toolbarFormManager1.DockControls.Add(barDockControlLeft);
             toolbarFormManager1.DockControls.Add(barDockControlRight);
             toolbarFormManager1.Form = this;
-            toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barButtonItem1, BBI_GetKey, bbi_test });
+            toolbarFormManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { BBI_GetKey, bbi_test });
             toolbarFormManager1.MaxItemId = 6;
             toolbarFormManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemTextEdit1 });
             // 
@@ -178,13 +177,6 @@ namespace Foxoft
             barDockControlRight.Manager = toolbarFormManager1;
             barDockControlRight.Size = new Size(0, 284);
             // 
-            // barButtonItem1
-            // 
-            barButtonItem1.Caption = "Default";
-            barButtonItem1.Id = 0;
-            barButtonItem1.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("barButtonItem1.ImageOptions.SvgImage");
-            barButtonItem1.Name = "barButtonItem1";
-            // 
             // BBI_GetKey
             // 
             BBI_GetKey.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
@@ -197,6 +189,7 @@ namespace Foxoft
             // 
             bbi_test.Caption = "run";
             bbi_test.Id = 4;
+            bbi_test.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("bbi_test.ImageOptions.SvgImage");
             bbi_test.Name = "bbi_test";
             bbi_test.ItemClick += bbi_test_ItemClick;
             // 
@@ -383,7 +376,6 @@ namespace Foxoft
             toolbarFormControl1.Size = new Size(375, 31);
             toolbarFormControl1.TabIndex = 3;
             toolbarFormControl1.TabStop = false;
-            toolbarFormControl1.TitleItemLinks.Add(barButtonItem1);
             toolbarFormControl1.TitleItemLinks.Add(BBI_GetKey);
             toolbarFormControl1.TitleItemLinks.Add(bbi_test);
             toolbarFormControl1.ToolbarForm = this;
@@ -449,7 +441,6 @@ namespace Foxoft
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraLayout.LayoutControlItem LCI_lang;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.SimpleButton btn_ConStringSave;

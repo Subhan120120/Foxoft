@@ -44,7 +44,7 @@ namespace Foxoft
             LUE_Terminal.EditValue = Settings.Default.TerminalId;
             txtEdit_UserName.Text = Settings.Default.LoginName;
             txtEdit_Password.Text = Settings.Default.LoginPassword;
-            LUE_Language.EditValue= Settings.Default.LanguageCode;
+            LUE_Language.EditValue = Settings.Default.LanguageCode;
             checkEdit_RemindMe.Checked = Settings.Default.LoginChecked;
 
             TouchUIMode(Settings.Default.TerminalId);

@@ -1,20 +1,14 @@
 ﻿using DevExpress.LookAndFeel;
 using DevExpress.Mvvm.Native;
-using DevExpress.Utils.Extensions;
-using DevExpress.Utils.Menu;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
-using DevExpress.XtraNavBar;
-using DevExpress.XtraReports;
-using DevExpress.XtraReports.Serialization;
 using Foxoft.AppCode;
 using Foxoft.Models;
 using Foxoft.Properties;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Data;
 using System.IO;
 
 namespace Foxoft
@@ -357,7 +351,7 @@ namespace Foxoft
 
         private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Programdan Çıx", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            if (MessageBox.Show(Resources.Form_QuitProgram, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 e.Cancel = true;
         }
 
