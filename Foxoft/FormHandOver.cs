@@ -109,13 +109,7 @@ namespace Foxoft
 
         private async void BBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //LoadDataStreamedAsync();
-            var sw = Stopwatch.StartNew();
             await LoadDataStreamedAsync();
-            sw.Stop();
-
-            var secs = sw.Elapsed.TotalSeconds;
-            MessageBox.Show($"Refresh full load in {secs:F2} s");
         }
 
         private void ClearControls()
