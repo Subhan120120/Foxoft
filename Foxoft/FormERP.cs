@@ -214,12 +214,12 @@ namespace Foxoft
             this.ACE_RetailPurchaseOrder.Name = "RetailPurchaseOrder";
             this.ACE_RetailSaleOrder.Name = "RetailSaleOrder";
 
-            this.ACE_PurchaseReturn.Name = "RetailPurchaseReturn";
+            this.ACE_RetailPurchaseReturn.Name = "RetailPurchaseReturn";
             this.ACE_RetailSaleReturn.Name = "RetailSaleReturn";
             this.aCE_WholesaleReturn.Name = "WholesaleReturn";
             this.ACE_InstallmentSaleReturn.Name = "InstallmentSaleReturn";
 
-            this.ACE_PurchaseReturnCustom.Name = "PurchaseReturnCustom";
+            this.ACE_RetailPurchaseReturnCustom.Name = "PurchaseReturnCustom";
             this.ACE_RetailsaleReturnCustom.Name = "RetailsaleReturnCustom";
             this.ACE_WholesaleReturnCustom.Name = "WholesaleReturnCustom";
             this.ACE_InstallmentSaleReturnCustom.Name = "InstallmentSaleReturnCustom";
@@ -234,10 +234,10 @@ namespace Foxoft
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";
             this.aCE_PaymentDetail.Name = "PaymentDetail";
-            this.aCE_Acounting.Name = "Acounting";
+            this.ACE_InventoryCount.Name = "Acounting";
             this.aCE_Reports.Name = "Reports";
             this.aCE_Setting.Name = "Setting";
-            this.ACE_Parameters.Name = "Parameters";
+            this.ACE_AppSettings.Name = "Parameters";
             this.ACE_PriceList.Name = "PriceList";
             this.ACE_ProductDiscounts.Name = "ProductDiscountList";
             this.ACE_ProductFeatureType.Name = "ProductFeatureType";
@@ -351,7 +351,7 @@ namespace Foxoft
 
         private void FormERP_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show(Resources.Form_QuitProgram, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+            if (MessageBox.Show(Resources.Common_QuitProgram, Resources.Common_Attention, MessageBoxButtons.OKCancel) == DialogResult.Cancel)
                 e.Cancel = true;
         }
 
@@ -439,7 +439,7 @@ namespace Foxoft
                 });
 
                 if (constructor == null)
-                    throw new ArgumentException($"No matching constructor found for {typeof(T).Name}");
+                    throw new ArgumentException(string.Format(Resources.ERP_NoMatchingCtor, typeof(T).Name));
 
                 form = (T)constructor.Invoke(args);
                 form.MdiParent = this;
@@ -450,7 +450,13 @@ namespace Foxoft
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{(form != null ? form.Text : typeof(T).Name)} açıla bilmir: \n" + ex);
+                string formName = form != null ? form.Text : typeof(T).Name;
+                MessageBox.Show(
+                    string.Format(Resources.ERP_OpenFormError, formName, ex.Message),
+                    string.Format(Resources.Common_ErrorTitle, 7321246),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
             }
         }
 

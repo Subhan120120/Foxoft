@@ -61,21 +61,65 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap add_client_32px {
-            get {
-                object obj = ResourceManager.GetObject("add_client_32px", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Attention.
         /// </summary>
         public static string Common_Attention {
             get {
                 return ResourceManager.GetString("Common_Attention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error {0}.
+        /// </summary>
+        public static string Common_ErrorTitle {
+            get {
+                return ResourceManager.GetString("Common_ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Mode.
+        /// </summary>
+        public static string Common_InputMode {
+            get {
+                return ResourceManager.GetString("Common_InputMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mouse Mode.
+        /// </summary>
+        public static string Common_MouseMode {
+            get {
+                return ResourceManager.GetString("Common_MouseMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit Program.
+        /// </summary>
+        public static string Common_QuitProgram {
+            get {
+                return ResourceManager.GetString("Common_QuitProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sensor Mode.
+        /// </summary>
+        public static string Common_SensorMode {
+            get {
+                return ResourceManager.GetString("Common_SensorMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string Common_Theme {
+            get {
+                return ResourceManager.GetString("Common_Theme", resourceCulture);
             }
         }
         
@@ -90,31 +134,470 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quit.
+        ///   Looks up a localized string similar to App Settings.
         /// </summary>
-        public static string Form_QuitProgram {
+        public static string ERP_ACE_AppSettings {
             get {
-                return ResourceManager.GetString("Form_QuitProgram", resourceCulture);
+                return ResourceManager.GetString("ERP_ACE_AppSettings", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized string similar to Cash Transfer.
         /// </summary>
-        public static System.Drawing.Icon fox_007 {
+        public static string ERP_ACE_CashTransfers {
             get {
-                object obj = ResourceManager.GetObject("fox_007", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                return ResourceManager.GetString("ERP_ACE_CashTransfers", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Count In.
         /// </summary>
-        public static System.Drawing.Bitmap NoPhoto {
+        public static string ERP_ACE_CountInInvoice {
             get {
-                object obj = ResourceManager.GetObject("NoPhoto", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("ERP_ACE_CountInInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count Out.
+        /// </summary>
+        public static string ERP_ACE_CountOutInvoice {
+            get {
+                return ResourceManager.GetString("ERP_ACE_CountOutInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CurrAcc Feature Type.
+        /// </summary>
+        public static string ERP_ACE_CurrAccFeatureType {
+            get {
+                return ResourceManager.GetString("ERP_ACE_CurrAccFeatureType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string ERP_ACE_CurrAccs {
+            get {
+                return ResourceManager.GetString("ERP_ACE_CurrAccs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expenses.
+        /// </summary>
+        public static string ERP_ACE_Expenses {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Expenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favorites.
+        /// </summary>
+        public static string ERP_ACE_Favorites {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Favorites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installmentsale Invoice.
+        /// </summary>
+        public static string ERP_ACE_InstallmentsaleInvoice {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InstallmentsaleInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installmentsale Return.
+        /// </summary>
+        public static string ERP_ACE_InstallmentsaleReturn {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InstallmentsaleReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installmentsale Return Custom.
+        /// </summary>
+        public static string ERP_ACE_InstallmentSaleReturnCustom {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InstallmentSaleReturnCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Sales.
+        /// </summary>
+        public static string ERP_ACE_InstallmentSales {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InstallmentSales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Count.
+        /// </summary>
+        public static string ERP_ACE_InventoryCount {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InventoryCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Transfer.
+        /// </summary>
+        public static string ERP_ACE_InventoryTransfers {
+            get {
+                return ResourceManager.GetString("ERP_ACE_InventoryTransfers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoices.
+        /// </summary>
+        public static string ERP_ACE_Invoices {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Invoices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operations.
+        /// </summary>
+        public static string ERP_ACE_Operations {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Operations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters.
+        /// </summary>
+        public static string ERP_ACE_Parameters {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Parameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Detail.
+        /// </summary>
+        public static string ERP_ACE_PaymentDetail {
+            get {
+                return ResourceManager.GetString("ERP_ACE_PaymentDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price List.
+        /// </summary>
+        public static string ERP_ACE_PriceList {
+            get {
+                return ResourceManager.GetString("ERP_ACE_PriceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Discounts.
+        /// </summary>
+        public static string ERP_ACE_ProductDiscounts {
+            get {
+                return ResourceManager.GetString("ERP_ACE_ProductDiscounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Feature Type.
+        /// </summary>
+        public static string ERP_ACE_ProductFeatureType {
+            get {
+                return ResourceManager.GetString("ERP_ACE_ProductFeatureType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string ERP_ACE_Products {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reports.
+        /// </summary>
+        public static string ERP_ACE_Reports {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Reports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retail Purchase Invoice.
+        /// </summary>
+        public static string ERP_ACE_RetailPurchaseInvoice {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailPurchaseInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retail Purchase Order.
+        /// </summary>
+        public static string ERP_ACE_RetailPurchaseOrder {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailPurchaseOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retail Purchase Return.
+        /// </summary>
+        public static string ERP_ACE_RetailPurchaseReturn {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailPurchaseReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase Return Custom.
+        /// </summary>
+        public static string ERP_ACE_RetailPurchaseReturnCustom {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailPurchaseReturnCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retailsale Invoice.
+        /// </summary>
+        public static string ERP_ACE_RetailSaleInvoice {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailSaleInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retailsale Order.
+        /// </summary>
+        public static string ERP_ACE_RetailSaleOrder {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailSaleOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retailsale Return.
+        /// </summary>
+        public static string ERP_ACE_RetailSaleReturn {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailSaleReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retailsale Return Custom.
+        /// </summary>
+        public static string ERP_ACE_RetailSaleReturnCustom {
+            get {
+                return ResourceManager.GetString("ERP_ACE_RetailSaleReturnCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store List.
+        /// </summary>
+        public static string ERP_ACE_StoreList {
+            get {
+                return ResourceManager.GetString("ERP_ACE_StoreList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string ERP_ACE_Users {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waybill.
+        /// </summary>
+        public static string ERP_ACE_Waybill {
+            get {
+                return ResourceManager.GetString("ERP_ACE_Waybill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waybill In.
+        /// </summary>
+        public static string ERP_ACE_WaybillIn {
+            get {
+                return ResourceManager.GetString("ERP_ACE_WaybillIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waybill Out.
+        /// </summary>
+        public static string ERP_ACE_WaybillOut {
+            get {
+                return ResourceManager.GetString("ERP_ACE_WaybillOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wholesale Invoice.
+        /// </summary>
+        public static string ERP_ACE_WholeSaleInvoice {
+            get {
+                return ResourceManager.GetString("ERP_ACE_WholeSaleInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wholesale Return.
+        /// </summary>
+        public static string ERP_ACE_WholeSaleReturn {
+            get {
+                return ResourceManager.GetString("ERP_ACE_WholeSaleReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wholesale Return Custom.
+        /// </summary>
+        public static string ERP_ACE_WholeSaleReturnCustom {
+            get {
+                return ResourceManager.GetString("ERP_ACE_WholeSaleReturnCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to Favorites.
+        /// </summary>
+        public static string ERP_AddToFavorites {
+            get {
+                return ResourceManager.GetString("ERP_AddToFavorites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active Users.
+        /// </summary>
+        public static string ERP_BBI_ActiveUsers {
+            get {
+                return ResourceManager.GetString("ERP_BBI_ActiveUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active Windows.
+        /// </summary>
+        public static string ERP_BBI_ActiveWindows {
+            get {
+                return ResourceManager.GetString("ERP_BBI_ActiveWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change User.
+        /// </summary>
+        public static string ERP_BBI_ChangeUser {
+            get {
+                return ResourceManager.GetString("ERP_BBI_ChangeUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Windows.
+        /// </summary>
+        public static string ERP_BBI_CloseWindows {
+            get {
+                return ResourceManager.GetString("ERP_BBI_CloseWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string ERP_BSI_Reports {
+            get {
+                return ResourceManager.GetString("ERP_BSI_Reports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Register.
+        /// </summary>
+        public static string ERP_CashRegs {
+            get {
+                return ResourceManager.GetString("ERP_CashRegs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No matching constructor found for {0}.
+        /// </summary>
+        public static string ERP_NoMatchingCtor {
+            get {
+                return ResourceManager.GetString("ERP_NoMatchingCtor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be opened: {1}.
+        /// </summary>
+        public static string ERP_OpenFormError {
+            get {
+                return ResourceManager.GetString("ERP_OpenFormError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove from Favorites.
+        /// </summary>
+        public static string ERP_RemoveFromFavorites {
+            get {
+                return ResourceManager.GetString("ERP_RemoveFromFavorites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control.
+        /// </summary>
+        public static string ERP_RibbonPage_Control {
+            get {
+                return ResourceManager.GetString("ERP_RibbonPage_Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string ERP_RibbonPage_Home {
+            get {
+                return ResourceManager.GetString("ERP_RibbonPage_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS.
+        /// </summary>
+        public static string Login_POS {
+            get {
+                return ResourceManager.GetString("Login_POS", resourceCulture);
             }
         }
         
@@ -165,15 +648,6 @@ namespace Foxoft.Properties {
             get {
                 object obj = ResourceManager.GetObject("Untitled-32x32x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Azerbaycan.
-        /// </summary>
-        public static string welcome {
-            get {
-                return ResourceManager.GetString("welcome", resourceCulture);
             }
         }
     }

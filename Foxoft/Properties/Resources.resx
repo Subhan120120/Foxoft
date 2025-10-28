@@ -130,28 +130,187 @@
   <data name="CreditCard-32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CreditCard-32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add_client_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_client_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Untitled-32x32x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Untitled-32x32x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="startup550x363.png" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\startup550x363.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="welcome" xml:space="preserve">
-    <value>Azerbaycan</value>
-  </data>
-  <data name="fox_007" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fox_007.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NoPhoto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NoPhoto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Form_QuitProgram" xml:space="preserve">
-    <value>Quit</value>
+  <data name="Common_QuitProgram" xml:space="preserve">
+    <value>Quit Program</value>
   </data>
   <data name="Common_Attention" xml:space="preserve">
     <value>Attention</value>
+  </data>
+  <data name="ERP_OpenFormError" xml:space="preserve">
+    <value>{0} cannot be opened: {1}</value>
+  </data>
+  <data name="Common_ErrorTitle" xml:space="preserve">
+    <value>Error {0}</value>
+  </data>
+  <data name="ERP_NoMatchingCtor" xml:space="preserve">
+    <value>No matching constructor found for {0}</value>
+  </data>
+  <data name="ERP_BBI_ActiveWindows" xml:space="preserve">
+    <value>Active Windows</value>
+  </data>
+  <data name="ERP_BBI_CloseWindows" xml:space="preserve">
+    <value>Close Windows</value>
+  </data>
+  <data name="ERP_BBI_ChangeUser" xml:space="preserve">
+    <value>Change User</value>
+  </data>
+  <data name="Common_MouseMode" xml:space="preserve">
+    <value>Mouse Mode</value>
+  </data>
+  <data name="Common_SensorMode" xml:space="preserve">
+    <value>Sensor Mode</value>
+  </data>
+  <data name="ERP_BBI_ActiveUsers" xml:space="preserve">
+    <value>Active Users</value>
+  </data>
+  <data name="ERP_ACE_Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="ERP_AddToFavorites" xml:space="preserve">
+    <value>Add to Favorites</value>
+  </data>
+  <data name="ERP_RemoveFromFavorites" xml:space="preserve">
+    <value>Remove from Favorites</value>
+  </data>
+  <data name="ERP_RibbonPage_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="ERP_RibbonPage_Control" xml:space="preserve">
+    <value>Control</value>
+  </data>
+  <data name="ERP_ACE_Favorites" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="ERP_ACE_Operations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="ERP_ACE_Products" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ERP_ACE_CurrAccs" xml:space="preserve">
+    <value>Current Account</value>
+  </data>
+  <data name="ERP_CashRegs" xml:space="preserve">
+    <value>Cash Register</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseInvoice" xml:space="preserve">
+    <value>Retail Purchase Invoice</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleInvoice" xml:space="preserve">
+    <value>Retailsale Invoice</value>
+  </data>
+  <data name="ERP_ACE_WholeSaleInvoice" xml:space="preserve">
+    <value>Wholesale Invoice</value>
+  </data>
+  <data name="ERP_ACE_InstallmentsaleInvoice" xml:space="preserve">
+    <value>Installmentsale Invoice</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseReturn" xml:space="preserve">
+    <value>Retail Purchase Return</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleReturn" xml:space="preserve">
+    <value>Retailsale Return</value>
+  </data>
+  <data name="ERP_ACE_WholeSaleReturn" xml:space="preserve">
+    <value>Wholesale Return</value>
+  </data>
+  <data name="ERP_ACE_InstallmentsaleReturn" xml:space="preserve">
+    <value>Installmentsale Return</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseReturnCustom" xml:space="preserve">
+    <value>Purchase Return Custom</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleReturnCustom" xml:space="preserve">
+    <value>Retailsale Return Custom</value>
+  </data>
+  <data name="ERP_ACE_WholeSaleReturnCustom" xml:space="preserve">
+    <value>Wholesale Return Custom</value>
+  </data>
+  <data name="ERP_ACE_InstallmentSaleReturnCustom" xml:space="preserve">
+    <value>Installmentsale Return Custom</value>
+  </data>
+  <data name="ERP_ACE_InventoryTransfers" xml:space="preserve">
+    <value>Inventory Transfer</value>
+  </data>
+  <data name="ERP_ACE_CashTransfers" xml:space="preserve">
+    <value>Cash Transfer</value>
+  </data>
+  <data name="ERP_ACE_Expenses" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="ERP_ACE_PaymentDetail" xml:space="preserve">
+    <value>Payment Detail</value>
+  </data>
+  <data name="ERP_ACE_InstallmentSales" xml:space="preserve">
+    <value>Installment Sales</value>
+  </data>
+  <data name="ERP_ACE_InventoryCount" xml:space="preserve">
+    <value>Inventory Count</value>
+  </data>
+  <data name="ERP_ACE_CountInInvoice" xml:space="preserve">
+    <value>Count In</value>
+  </data>
+  <data name="ERP_ACE_CountOutInvoice" xml:space="preserve">
+    <value>Count Out</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseOrder" xml:space="preserve">
+    <value>Retail Purchase Order</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleOrder" xml:space="preserve">
+    <value>Retailsale Order</value>
+  </data>
+  <data name="ERP_ACE_Waybill" xml:space="preserve">
+    <value>Waybill</value>
+  </data>
+  <data name="ERP_ACE_WaybillIn" xml:space="preserve">
+    <value>Waybill In</value>
+  </data>
+  <data name="ERP_ACE_WaybillOut" xml:space="preserve">
+    <value>Waybill Out</value>
+  </data>
+  <data name="ERP_ACE_Invoices" xml:space="preserve">
+    <value>Invoices</value>
+  </data>
+  <data name="ERP_ACE_PriceList" xml:space="preserve">
+    <value>Price List</value>
+  </data>
+  <data name="ERP_ACE_ProductDiscounts" xml:space="preserve">
+    <value>Product Discounts</value>
+  </data>
+  <data name="ERP_ACE_ProductFeatureType" xml:space="preserve">
+    <value>Product Feature Type</value>
+  </data>
+  <data name="ERP_ACE_CurrAccFeatureType" xml:space="preserve">
+    <value>CurrAcc Feature Type</value>
+  </data>
+  <data name="ERP_BSI_Reports" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="ERP_ACE_Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="ERP_ACE_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="ERP_ACE_StoreList" xml:space="preserve">
+    <value>Store List</value>
+  </data>
+  <data name="ERP_ACE_AppSettings" xml:space="preserve">
+    <value>App Settings</value>
+  </data>
+  <data name="Login_POS" xml:space="preserve">
+    <value>POS</value>
+  </data>
+  <data name="Common_Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Common_InputMode" xml:space="preserve">
+    <value>Input Mode</value>
   </data>
 </root>

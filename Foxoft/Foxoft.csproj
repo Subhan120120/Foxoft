@@ -325,7 +325,6 @@
 		<EmbeddedResource Include="Resources\credit_card.png" />
 		<EmbeddedResource Include="Resources\credit_cards32x32.png" />
 		<EmbeddedResource Include="Resources\fox_007.ico" />
-		<EmbeddedResource Include="Resources\NoPhoto.ico" />
 		<EmbeddedResource Include="Resources\NoPhoto.png" />
 		<EmbeddedResource Include="Resources\registration_24px.png" />
 		<EmbeddedResource Include="Resources\registration_32px.png" />

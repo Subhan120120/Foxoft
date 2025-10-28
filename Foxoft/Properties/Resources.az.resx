@@ -117,10 +117,181 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Form_QuitProgram" xml:space="preserve">
+  <data name="Common_QuitProgram" xml:space="preserve">
     <value>Proqramdan Çıx</value>
   </data>
   <data name="Common_Attention" xml:space="preserve">
     <value>Diqqət</value>
+  </data>
+  <data name="ERP_OpenFormError" xml:space="preserve">
+    <value>{0} açıla bilmir: {1}</value>
+  </data>
+  <data name="Common_ErrorTitle" xml:space="preserve">
+    <value>Xəta {0}</value>
+  </data>
+  <data name="ERP_NoMatchingCtor" xml:space="preserve">
+    <value>{0} üçün uyğun konstruktor tapılmadı</value>
+  </data>
+  <data name="ERP_BBI_ActiveWindows" xml:space="preserve">
+    <value>Aktiv Pəncərələr</value>
+  </data>
+  <data name="ERP_BBI_CloseWindows" xml:space="preserve">
+    <value>Pəncərələri Bağla</value>
+  </data>
+  <data name="ERP_BBI_ChangeUser" xml:space="preserve">
+    <value>İstifadəçini Dəyiş</value>
+  </data>
+  <data name="Common_MouseMode" xml:space="preserve">
+    <value>Sıçan Modu</value>
+  </data>
+  <data name="Common_SensorMode" xml:space="preserve">
+    <value>Sensor Modu</value>
+  </data>
+  <data name="ERP_BBI_ActiveUsers" xml:space="preserve">
+    <value>Aktiv İstifadəçilər</value>
+  </data>
+  <data name="ERP_ACE_Reports" xml:space="preserve">
+    <value>Hesabatlar</value>
+  </data>
+  <data name="ERP_AddToFavorites" xml:space="preserve">
+    <value>Sevimli Et</value>
+  </data>
+  <data name="ERP_RemoveFromFavorites" xml:space="preserve">
+    <value>Sevimlidən Çıxar</value>
+  </data>
+  <data name="ERP_RibbonPage_Home" xml:space="preserve">
+    <value>Ev</value>
+  </data>
+  <data name="ERP_RibbonPage_Control" xml:space="preserve">
+    <value>Nəzarət</value>
+  </data>
+  <data name="ERP_ACE_Favorites" xml:space="preserve">
+    <value>Sevimli</value>
+  </data>
+  <data name="ERP_ACE_Operations" xml:space="preserve">
+    <value>Əməliyatlar</value>
+  </data>
+  <data name="ERP_ACE_Products" xml:space="preserve">
+    <value>Məhsul</value>
+  </data>
+  <data name="ERP_ACE_CurrAccs" xml:space="preserve">
+    <value>Cari Hesab</value>
+  </data>
+  <data name="ERP_CashRegs" xml:space="preserve">
+    <value>Kassa</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseInvoice" xml:space="preserve">
+    <value>Alış Fakturası</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleInvoice" xml:space="preserve">
+    <value>Pərakəndə Satış Fakturası</value>
+  </data>
+  <data name="ERP_ACE_WholeSaleInvoice" xml:space="preserve">
+    <value>Topdan Satış Fakturası</value>
+  </data>
+  <data name="ERP_ACE_InstallmentsaleInvoice" xml:space="preserve">
+    <value>Kredit Satış Fakturası</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseReturn" xml:space="preserve">
+    <value>Alışın Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleReturn" xml:space="preserve">
+    <value>Pərak. Satış. Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_WholeSaleReturn" xml:space="preserve">
+    <value>Topdan Satış. Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_InstallmentsaleReturn" xml:space="preserve">
+    <value>Kredit Satış. Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseReturnCustom" xml:space="preserve">
+    <value>Alış. Xüsusi Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleReturnCustom" xml:space="preserve">
+    <value>Pərak. Satış. Xüsusi Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_WholeSaleReturnCustom" xml:space="preserve">
+    <value>Top. Sat. Xüsusi Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_InstallmentSaleReturnCustom" xml:space="preserve">
+    <value>Kresit Satış. Xüsusi Qaytarılması</value>
+  </data>
+  <data name="ERP_ACE_InventoryTransfers" xml:space="preserve">
+    <value>Anbarlar Arası Transfer</value>
+  </data>
+  <data name="ERP_ACE_CashTransfers" xml:space="preserve">
+    <value>Kassalar Arası Transfer</value>
+  </data>
+  <data name="ERP_ACE_Expenses" xml:space="preserve">
+    <value>Xərclər</value>
+  </data>
+  <data name="ERP_ACE_PaymentDetail" xml:space="preserve">
+    <value>Ödəniş Qəbzi</value>
+  </data>
+  <data name="ERP_ACE_InstallmentSales" xml:space="preserve">
+    <value>Kredit Satışlar</value>
+  </data>
+  <data name="ERP_ACE_InventoryCount" xml:space="preserve">
+    <value>Sayım</value>
+  </data>
+  <data name="ERP_ACE_CountInInvoice" xml:space="preserve">
+    <value>Sayım Artırma</value>
+  </data>
+  <data name="ERP_ACE_CountOutInvoice" xml:space="preserve">
+    <value>Sayım Azaltma</value>
+  </data>
+  <data name="ERP_ACE_RetailPurchaseOrder" xml:space="preserve">
+    <value>Alış Sifarişi</value>
+  </data>
+  <data name="ERP_ACE_RetailSaleOrder" xml:space="preserve">
+    <value>Pərak. Satış Sifarişi</value>
+  </data>
+  <data name="ERP_ACE_Waybill" xml:space="preserve">
+    <value>Təhvil Təslim</value>
+  </data>
+  <data name="ERP_ACE_WaybillIn" xml:space="preserve">
+    <value>Təhvil Alma</value>
+  </data>
+  <data name="ERP_ACE_WaybillOut" xml:space="preserve">
+    <value>Təhvil Vermə</value>
+  </data>
+  <data name="ERP_ACE_Invoices" xml:space="preserve">
+    <value>Fakturalar</value>
+  </data>
+  <data name="ERP_ACE_PriceList" xml:space="preserve">
+    <value>Qiymət Siyahısı</value>
+  </data>
+  <data name="ERP_ACE_ProductDiscounts" xml:space="preserve">
+    <value>Endirimlər</value>
+  </data>
+  <data name="ERP_ACE_ProductFeatureType" xml:space="preserve">
+    <value>Məhsul Özəllik Tipləri</value>
+  </data>
+  <data name="ERP_ACE_CurrAccFeatureType" xml:space="preserve">
+    <value>Cari Hesab Özəllik Tipləri</value>
+  </data>
+  <data name="ERP_BSI_Reports" xml:space="preserve">
+    <value>Hesabat</value>
+  </data>
+  <data name="ERP_ACE_Parameters" xml:space="preserve">
+    <value>Parametr</value>
+  </data>
+  <data name="ERP_ACE_Users" xml:space="preserve">
+    <value>İstifadəçilər</value>
+  </data>
+  <data name="ERP_ACE_StoreList" xml:space="preserve">
+    <value>Mağazalar</value>
+  </data>
+  <data name="ERP_ACE_AppSettings" xml:space="preserve">
+    <value>Tətbiq Parametrləri</value>
+  </data>
+  <data name="Login_POS" xml:space="preserve">
+    <value>Satış Nöqtəsi</value>
+  </data>
+  <data name="Common_Theme" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="Common_InputMode" xml:space="preserve">
+    <value>Giriş Modu</value>
   </data>
 </root>
