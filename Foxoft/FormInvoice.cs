@@ -1,5 +1,6 @@
 ﻿
 #region Using
+using DevExpress.CodeParser;
 using DevExpress.Data;
 using DevExpress.DataAccess.Excel;
 using DevExpress.DataAccess.Native.Excel;
@@ -684,9 +685,9 @@ namespace Foxoft
                     return;
                 }
 
-                decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader.ProcessCode)
+                decimal invoiceSum = Math.Abs(efMethods.SelectInvoiceLineByReturnLine(tr.RelatedLineId, tr.TrInvoiceHeader?.ProcessCode)
                                              .Sum(x => x.QtyIn - x.QtyOut));
-                if (tr.TrInvoiceHeader.IsReturn && Convert.ToDecimal(e.Value) > invoiceSum)
+                if (trInvoiceHeader.IsReturn && Convert.ToDecimal(e.Value) > invoiceSum)
                 {
                     e.Valid = false;
                     e.ErrorText = $"Satışı {invoiceSum} ədəd olan məhsulun geri qaytarmasıdır. Miqdar bu rəqəmdən çox ola bilməz.";
@@ -705,7 +706,7 @@ namespace Foxoft
                 decimal invoiceSum2 = Math.Abs(efMethods.SelectInvoiceLinesByLineId(tr.RelatedLineId)
                                              .Sum(x => x.QtyIn - x.QtyOut));
 
-                if (tr.TrInvoiceHeader.ProcessCode == "WO" && Convert.ToDecimal(e.Value) > invoiceSum2)
+                if (trInvoiceHeader.ProcessCode == "WO" && Convert.ToDecimal(e.Value) > invoiceSum2)
                 {
                     e.Valid = false;
                     e.ErrorText = $"Satışı {invoiceSum2} ədəd olan məhsulun təhvil-təslimidir. Miqdar bu rəqəmdən çox ola bilməz.";
@@ -1917,6 +1918,15 @@ namespace Foxoft
 
         private void BBI_ImportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
+            string captionProductCode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCode);
+            string captionQty = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Qty);
+            string captionLineDesc = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.LineDescription);
+            string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
+            string captionCurrency = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
+            string captionExRate = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ExchangeRate);
+            string captionPosDiscount = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.PosDiscount);
+            string captionSerialNumber = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.SerialNumberCode);
+
             OpenFileDialog dialog = new();
             dialog.Filter = "Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*.*)|*.*";
             dialog.Title = "Excel faylı seçin.";
@@ -1943,11 +1953,9 @@ namespace Foxoft
             excelDataSource.Fill();
 
             gV_InvoiceLine.GridControl.BeginUpdate();
-            gV_InvoiceLine.BeginDataUpdate();
             gV_InvoiceLine.BeginUpdate();
 
-            DataTable dt = new();
-            dt = ToDataTableFromExcelDataSource(excelDataSource);
+            DataTable dt = ToDataTableFromExcelDataSource(excelDataSource);
 
             string errorCodes = "";
             double rowCount = 0;
@@ -1957,15 +1965,6 @@ namespace Foxoft
                 SplashScreenManager.Default.SendCommand(WaitForm.WaitFormCommand.SetProgress, i);
                 SplashScreenManager.Default.SetWaitFormDescription(i + "%");
                 rowCount++;
-
-                string captionProductCode = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ProductCode);
-                string captionQty = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Qty);
-                string captionLineDesc = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.LineDescription);
-                string captionPrice = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.Price);
-                string captionCurrency = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.CurrencyCode);
-                string captionExRate = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.ExchangeRate);
-                string captionPosDiscount = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.PosDiscount);
-                string captionSerialNumber = ReflectionExt.GetDisplayName<TrInvoiceLine>(x => x.SerialNumberCode);
 
                 string productCode = row[captionProductCode].ToString();
 
@@ -1980,29 +1979,33 @@ namespace Foxoft
                     continue;
                 }
 
-                object objInvoiceHeadId = gV_InvoiceLine.GetRowCellValue(GridControl.NewItemRowHandle, col_InvoiceHeaderId);
-                if (objInvoiceHeadId is null) // Check InitNewRow
+                if (gV_InvoiceLine.GetRowCellValue(GridControl.NewItemRowHandle, col_InvoiceHeaderId) is null)
                     gV_InvoiceLine.AddNewRow();
-
-                FillRow(GridControl.NewItemRowHandle, product);
 
                 foreach (DataColumn column in dt.Columns)
                 {
                     try
                     {
-                        if (column.ColumnName == captionQty)
+                        if (column.ColumnName == captionProductCode)
                         {
-                            GridColumn qty = (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode) ? colQtyIn : colQtyOut;
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, qty, row[captionQty].ToString());
+                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_ProductCode, product.ProductCode);
+                        }
+                        else if (column.ColumnName == captionQty)
+                        {
+                            //GridColumn qty = (bool)CustomExtensions.DirectionIsIn(trInvoiceHeader.ProcessCode) ? colQtyIn : colQtyOut;
+                            gV_InvoiceLine.SetFocusedRowCellValue(colQty, row[captionQty].ToString());
                         }
                         else if (column.ColumnName == captionLineDesc)
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_LineDesc, row[captionLineDesc].ToString());
+                            gV_InvoiceLine.SetFocusedRowCellValue(col_LineDesc, row[captionLineDesc].ToString());
+
+                        else if (column.ColumnName == captionSerialNumber)
+                            gV_InvoiceLine.SetFocusedRowCellValue(colSerialNumberCode, row[captionSerialNumber].ToString());
 
                         else if (dcProcess.ProcessCode == "IT")
                             break;
 
                         else if (column.ColumnName == captionPrice)
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_Price, row[captionPrice].ToString());
+                            gV_InvoiceLine.SetFocusedRowCellValue(col_Price, row[captionPrice].ToString());
 
                         else if (column.ColumnName == captionCurrency)
                         {
@@ -2015,20 +2018,17 @@ namespace Foxoft
 
                             if (currency is not null)
                             {
-                                gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colCurrencyCode, currency.CurrencyCode);
-                                gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colExchangeRate, currency.ExchangeRate);
+                                gV_InvoiceLine.SetFocusedRowCellValue(colCurrencyCode, currency.CurrencyCode);
+                                gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, currency.ExchangeRate);
                             }
                             else
                                 errorCodes += captionCurrency + ": " + row[captionCurrency].ToString() + "\n";
                         }
                         else if (column.ColumnName == captionExRate)
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colExchangeRate, row[captionExRate].ToString());
+                            gV_InvoiceLine.SetFocusedRowCellValue(colExchangeRate, row[captionExRate].ToString());
 
                         else if (column.ColumnName == captionPosDiscount)
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, col_PosDiscount, row[captionPosDiscount].ToString());
-
-                        else if (column.ColumnName == captionSerialNumber)
-                            gV_InvoiceLine.SetRowCellValue(GridControl.NewItemRowHandle, colSerialNumberCode, row[captionSerialNumber].ToString());
+                            gV_InvoiceLine.SetFocusedRowCellValue(col_PosDiscount, row[captionPosDiscount].ToString());
 
                     }
                     catch (ArgumentException ae)
@@ -2041,13 +2041,11 @@ namespace Foxoft
             }
 
             gV_InvoiceLine.EndUpdate();
-            gV_InvoiceLine.EndDataUpdate();
             gV_InvoiceLine.GridControl.EndUpdate();
 
             SplashScreenManager.CloseForm(false);
             if (!string.IsNullOrEmpty(errorCodes))
                 MessageBox.Show("Aşağıdakı kodlar üzrə Dəyər tapılmadı \n" + errorCodes, "Xəta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
         }
 
         private void FillRow(int rowHandle, DcProduct product)
@@ -2074,7 +2072,6 @@ namespace Foxoft
 
             if (new string[] { "EX", "EI" }.Contains(dcProcess.ProcessCode))
                 gV_InvoiceLine.SetRowCellValue(rowHandle, colQty, 1);
-
         }
 
         public DataTable ToDataTableFromExcelDataSource(ExcelDataSource excelDataSource)
