@@ -1,4 +1,6 @@
 ﻿
+using System.Data;
+
 namespace Foxoft
 {
     partial class FormReportGrid
@@ -14,11 +16,52 @@ namespace Foxoft
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                // 1) Unhook events that could keep the form rooted
+                gV_Report.RowStyle -= gV_Report_RowStyle;
+                gV_Report.PopupMenuShowing -= gV_Report_PopupMenuShowing;
+                gV_Report.CalcRowHeight -= gV_Report_CalcRowHeight;
+                gV_Report.ShowingEditor -= gV_Report_ShowingEditor;
+                gV_Report.CustomUnboundColumnData -= gV_Report_CustomUnboundColumnData;
+
+                gC_Report.ProcessGridKey -= gC_Report_ProcessGridKey;
+
+                this.KeyDown -= FormReportGrid_KeyDown;
+                this.FormClosing -= FormReportGrid_FormClosing;
+
+                // 2) Release grid data (dispose DataTable if we own it)
+                if (gC_Report.DataSource is DataTable dt)
+                {
+                    gC_Report.DataSource = null;
+                    dt.Dispose();
+                }
+                else
+                {
+                    gC_Report.DataSource = null;
+                }
+
+                // 3) Dispose GDI+ images in cache
+                foreach (var img in imageCache.Values)
+                    img?.Dispose();
+                imageCache.Clear();
+
+                riPictureEdit?.Dispose();
+                colImage?.Dispose();
+
+                (adoMethods as IDisposable)?.Dispose();
+                (efMethods as IDisposable)?.Dispose();
+
+                components?.Dispose();
+
+                gC_Report?.Dispose();
             }
+
             base.Dispose(disposing);
+
+            // Optional: for very large reports/images you can force a collection
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         #region Windows Form Designer generated code

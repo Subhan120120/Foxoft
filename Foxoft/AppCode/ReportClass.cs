@@ -522,7 +522,6 @@ namespace Foxoft
                             key |= Keys.Alt;
                             break;
                         default:
-                            // Convert the main key (like G) using the converter
                             key |= (Keys)converter.ConvertFromString(trimmedKeyPart);
                             break;
                     }

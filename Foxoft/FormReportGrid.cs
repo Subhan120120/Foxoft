@@ -112,31 +112,35 @@ namespace Foxoft
                 string fileName = gV.GetRowCellValue(rowInd, nameof(DcProduct.ProductCode)) as string ?? string.Empty;
                 fileName += @"\" + fileName + ".jpg";
                 string path = ProductsFolder + @"\" + fileName;
-                if (!imageCache.ContainsKey(path))
+                if (!imageCache.TryGetValue(path, out var img))
                 {
-                    Image img = GetImage(path);
-                    imageCache.Add(path, img);
+                    img = GetImage(path);
+                    imageCache[path] = img;
                 }
-                e.Value = imageCache[path];
+                e.Value = img;
             }
         }
 
         Image GetImage(string path)
         {
-            Image img = null;
-
             try
             {
-                if (File.Exists(path))
-                    using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                        img = Image.FromStream(stream);
-            }
-            catch (Exception)
-            {
-            }
+                if (!File.Exists(path))
+                    return null;
 
-            return img;
+                using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var tmp = Image.FromStream(stream))
+                {
+                    // Clone so we don’t hold the file handle
+                    return (Image)tmp.Clone();
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
+
 
         public class MyGridLocalizer : GridLocalizer
         {
@@ -234,14 +238,15 @@ namespace Foxoft
         {
             if (dcReport.ReportId > 0)
             {
-                Stream str = new MemoryStream();
-                gV_Report.SaveLayoutToStream(str);
-                str.Seek(0, SeekOrigin.Begin);
-                StreamReader reader = new(str);
+                using var ms = new MemoryStream();
+                gV_Report.SaveLayoutToStream(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                using var reader = new StreamReader(ms, Encoding.UTF8, detectEncodingFromByteOrderMarks: true, leaveOpen: false);
                 string layoutTxt = reader.ReadToEnd();
                 efMethods.UpdateReportLayout(dcReport.ReportId, layoutTxt);
             }
         }
+
 
         private void bBI_LayoutLoad_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -254,12 +259,12 @@ namespace Foxoft
             if (!string.IsNullOrEmpty(dcReport.ReportLayout) && dcReport.ReportId > 0)
             {
                 byte[] byteArray = Encoding.Unicode.GetBytes(dcReport.ReportLayout);
-                MemoryStream stream = new(byteArray);
+                using MemoryStream stream = new(byteArray);
                 gV_Report.RestoreLayoutFromStream(stream);
             }
-
             TrimNumbersFormat();
         }
+
 
         private void bBI_gridOptions_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -424,7 +429,7 @@ namespace Foxoft
 
         private void BBI_ExportExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraSaveFileDialog sFD = new()
+            using var sFD = new XtraSaveFileDialog
             {
                 Filter = "Excel Faylı|*.xlsx",
                 Title = "Excel Faylı Yadda Saxla",
@@ -439,12 +444,16 @@ namespace Foxoft
 
                 if (XtraMessageBox.Show(this, "Açmaq istəyirsiz?", "Diqqət", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    Process p = new();
-                    p.StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true };
+                    using var p = new Process
+                    {
+                        StartInfo = new ProcessStartInfo(sFD.FileName) { UseShellExecute = true }
+                    };
                     p.Start();
                 }
             }
         }
+
+
 
         private void bBI_Refresh_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -577,18 +586,25 @@ namespace Foxoft
                 LoadData();
             }
         }
-
         private void OpenFormProduct(string productCode)
         {
-            FormProduct formProduct = new(0, productCode);
-            if (formProduct.ShowDialog(this) == DialogResult.OK)
+            using (var formProduct = new FormProduct(0, productCode))
             {
-                string path = ProductsFolder + @"\" + productCode + @"\" + productCode + ".jpg";
-                imageCache.Remove(path);
+                if (formProduct.ShowDialog(this) == DialogResult.OK)
+                {
+                    string path = Path.Combine(ProductsFolder, productCode, productCode + ".jpg");
 
-                LoadData();
+                    if (imageCache.TryGetValue(path, out var oldImg))
+                    {
+                        oldImg?.Dispose();      // dispose FIRST
+                        imageCache.Remove(path); // then remove
+                    }
+
+                    LoadData();
+                }
             }
         }
+
 
         DXSubMenuItem CreateSubMenuReports(GridColumn gridColumn, int rowHandle)
         {
