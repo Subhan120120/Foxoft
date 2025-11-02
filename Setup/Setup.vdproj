@@ -244,7 +244,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Foxoft"
         "ProductCode" = "8:{45CA112D-09DD-478B-AD26-1FA73E8263C8}"
-        "PackageCode" = "8:{74E8DE33-7898-44B1-A763-E9CD18250189}"
+        "PackageCode" = "8:{C87E66C3-6976-4691-8339-58A94594190D}"
         "UpgradeCode" = "8:{F9623061-39E4-403B-99A1-E6554D6C90B4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -637,6 +637,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_639EFB4995374A71922312B72DF73479"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B1810D22714546829FF16CFA6AAEFDE9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{F5E905B5-E76C-4751-B1E3-D415C01E9C61}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6CCC57A9B90549B8A120B2DE8E5BA9B6"
             {
             "SourcePath" = "8:..\\Foxoft\\obj\\Debug\\net8.0-windows\\apphost.exe"
