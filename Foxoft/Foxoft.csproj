@@ -65,6 +65,8 @@
 		<None Remove="az\DevExpress.Spreadsheet.v24.2.Core.resources.dll" />
 		<None Remove="az\DevExpress.Utils.v24.2.resources.dll" />
 		<None Remove="az\DevExpress.Utils.v24.2.UI.resources.dll" />
+		<None Remove="az\DevExpress.Web.ASPxScheduler.v24.2.resources.dll" />
+		<None Remove="az\DevExpress.Web.v24.2.resources.dll" />
 		<None Remove="az\DevExpress.XtraBars.v24.2.resources.dll" />
 		<None Remove="az\DevExpress.XtraEditors.v24.2.resources.dll" />
 		<None Remove="az\DevExpress.XtraGrid.v24.2.resources.dll" />
@@ -150,6 +152,12 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="az\DevExpress.Utils.v24.2.UI.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="az\DevExpress.Web.ASPxScheduler.v24.2.resources.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="az\DevExpress.Web.v24.2.resources.dll">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="az\DevExpress.XtraBars.v24.2.resources.dll">
