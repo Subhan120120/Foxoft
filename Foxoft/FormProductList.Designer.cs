@@ -1,5 +1,6 @@
 ﻿
 using DevExpress.Utils;
+using System.Data;
 
 namespace Foxoft
 {
@@ -16,6 +17,35 @@ namespace Foxoft
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            Load -= FormProductList_Load;
+            Activated -= FormProductList_Activated;
+            BBI_Save.ItemClick -= BBI_Save_ItemClick;
+            BBI_Show.ItemClick -= BBI_Show_ItemClick;
+            BBI_ProductNew.ItemClick -= BBI_ProductNew_ItemClick;
+            bBI_ExportExcel.ItemClick -= bBI_ExportExcel_ItemClick;
+            bBI_ProductDelete.ItemClick -= bBI_ProductDelete_ItemClick;
+            bBI_ProductRefresh.ItemClick -= bBI_ProductRefresh_ItemClick;
+            BBI_query.ItemClick -= BBI_Query_ItemClick;
+            btn_ProductEdit.ItemClick -= btn_productEdit_ItemClick;
+            gC_ProductList.ProcessGridKey -= gC_ProductList_ProcessGridKey;
+            gV_ProductList.CustomUnboundColumnData -= gV_ProductList_CustomUnboundColumnData;
+            gV_ProductList.RowCellStyle -= gV_ProductList_RowCellStyle;
+            gV_ProductList.RowStyle -= gV_ProductList_RowStyle;
+            gV_ProductList.PopupMenuShowing -= gV_ProductList_PopupMenuShowing;
+            gV_ProductList.CalcRowHeight -= gV_ProductList_CalcRowHeight;
+            gV_ProductList.FocusedRowChanged -= gV_ProductList_FocusedRowChanged;
+            gV_ProductList.ColumnFilterChanged -= gV_ProductList_ColumnFilterChanged;
+            gV_ProductList.DoubleClick -= gV_ProductList_DoubleClick;
+
+            if (dcProductsBindingSource.DataSource is DataTable dt)
+            {
+                dcProductsBindingSource.DataSource = null;
+                dt.Dispose();
+            }
+            gC_ProductList.DataSource = null;
+
+            ClearImageCache();
+
             if (disposing && (components != null))
             {
                 components.Dispose();

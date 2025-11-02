@@ -128,7 +128,6 @@ namespace Foxoft
             btn_ProductEdit.ItemClick += btn_productEdit_ItemClick;
             gC_ProductList.ProcessGridKey += gC_ProductList_ProcessGridKey;
             gC_ProductList.Resize += (s, e) => btnEdit_BarcodeSearch_Layout();
-            gV_ProductList.CustomUnboundColumnData += gV_ProductList_CustomUnboundColumnData;
             gV_ProductList.RowCellStyle += gV_ProductList_RowCellStyle;
             gV_ProductList.RowStyle += gV_ProductList_RowStyle;
             gV_ProductList.PopupMenuShowing += gV_ProductList_PopupMenuShowing;
@@ -193,7 +192,7 @@ namespace Foxoft
             else
             {
                 byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-                MemoryStream stream = new(byteArray);
+                using MemoryStream stream = new(byteArray);
                 gV_ProductList.RestoreLayoutFromStream(stream, option);
             }
 
@@ -216,42 +215,49 @@ namespace Foxoft
         public Dictionary<string, Image> imageCache = new(StringComparer.OrdinalIgnoreCase);
         private void gV_ProductList_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e)
         {
-            if (e.Column.FieldName == "Image" && e.IsGetData)
+            if (e.Column.FieldName != "Image" || !e.IsGetData) return;
+
+            var view = (GridView)sender;
+            int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
+            string code = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
+
+            if (!CustomExtensions.DirectoryExist(productsFolder) || string.IsNullOrEmpty(code))
+                return;
+
+            string path = Path.Combine(productsFolder, code, code + ".jpg");
+
+            if (!imageCache.TryGetValue(path, out var img))
             {
-                GridView view = sender as GridView;
-                int rowInd = view.GetRowHandle(e.ListSourceRowIndex);
-                string fileName = view.GetRowCellValue(rowInd, colProductCode) as string ?? string.Empty;
-                fileName += @"\" + fileName + ".jpg";
-                if (CustomExtensions.DirectoryExist(productsFolder))
-                {
-                    string path = productsFolder + @"\" + fileName;
-                    if (!imageCache.ContainsKey(path))
-                    {
-                        Image img = GetImage(path);
-                        imageCache.Add(path, img);
-                    }
-                    e.Value = imageCache[path];
-                }
+                img = GetImage(path);
+                imageCache[path] = img;
             }
+
+            e.Value = img;
         }
 
         Image GetImage(string path)
         {
-            Image img = null;
+            if (!File.Exists(path)) return null;
 
-            if (File.Exists(path))
-                using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            try
+            {
+                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var tmp = Image.FromStream(fs))
                 {
-                    try
-                    {
-                        img = Image.FromStream(stream);
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    return (Image)tmp.Clone(); // prevents locking the jpg on disk
                 }
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
-            return img;
+        void ClearImageCache()
+        {
+            foreach (var kv in imageCache)
+                kv.Value?.Dispose();
+            imageCache.Clear();
         }
 
         private void LoadProducts(byte[] productTypeArr)
@@ -332,7 +338,7 @@ namespace Foxoft
 
         private void BBI_ProductNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormProduct formProduct = new(productTypeArr.FirstOrDefault(), true);
+            using FormProduct formProduct = new(productTypeArr.FirstOrDefault(), true);
             if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
                 LoadProducts(productTypeArr);
@@ -342,30 +348,32 @@ namespace Foxoft
 
         private void btn_productEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (dcProduct is not null)
+            if (dcProduct is null) { MessageBox.Show("Məhsul Seçilməyib"); return; }
+
+            using FormProduct formProduct = new(dcProduct.ProductTypeCode, dcProduct.ProductCode);
+            if (formProduct.ShowDialog(this) == DialogResult.OK)
             {
-                FormProduct formProduct = new(dcProduct.ProductTypeCode, dcProduct.ProductCode);
+                int fr = gV_ProductList.FocusedRowHandle;
 
-                if (formProduct.ShowDialog(this) == DialogResult.OK)
+                if (CustomExtensions.DirectoryExist(productsFolder))
                 {
-                    int fr = gV_ProductList.FocusedRowHandle;
+                    string path = Path.Combine(productsFolder, dcProduct.ProductCode, dcProduct.ProductCode + ".jpg");
 
-                    if (CustomExtensions.DirectoryExist(productsFolder))
+                    if (imageCache.TryGetValue(path, out var oldImg))
                     {
-                        string path = productsFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
+                        oldImg?.Dispose();              // dispose first
                         imageCache.Remove(path);
-
-                        Image img = GetImage(path);
-                        imageCache.Add(path, img);
                     }
 
-                    LoadProducts(productTypeArr);
-
-                    gV_ProductList.FocusedRowHandle = fr;
+                    var newImg = GetImage(path);
+                    imageCache[path] = newImg;
                 }
+
+                LoadProducts(productTypeArr);
+
+                gV_ProductList.FocusedRowHandle = fr;
             }
-            else
-                MessageBox.Show("Məhsul Seçilməyib");
+
         }
 
         private void gC_ProductList_ProcessGridKey(object sender, KeyEventArgs e)
@@ -508,8 +516,12 @@ namespace Foxoft
 
                     if (CustomExtensions.DirectoryExist(productsFolder))
                     {
-                        string path = productsFolder + @"\" + dcProduct.ProductCode + @"\" + dcProduct.ProductCode + ".jpg";
-                        imageCache.Remove(path);
+                        string path = Path.Combine(productsFolder, dcProduct.ProductCode, dcProduct.ProductCode + ".jpg");
+                        if (imageCache.TryGetValue(path, out var oldImg))
+                        {
+                            oldImg?.Dispose();
+                            imageCache.Remove(path);
+                        }
                     }
 
                     LoadProducts(productTypeArr);
