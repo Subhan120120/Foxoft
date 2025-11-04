@@ -241,6 +241,7 @@ namespace Foxoft
             { nameof(DcFeatureType.FeatureTypeId), typeof(DcFeatureType) },
             { nameof(DcClaim.ClaimCode), typeof(DcClaim) },
             { nameof(DcClaimCategory.CategoryId), typeof(DcClaimCategory) },
+            { nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId), typeof(DcCurrAccFeatureType) },
         };
 
         private void dataLayoutControl1_FieldRetrieving(object sender, FieldRetrievingEventArgs e)
@@ -269,6 +270,7 @@ namespace Foxoft
             else if (e.FieldName == nameof(DcFeatureType.FeatureTypeId)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcClaim.ClaimCode)) e.EditorType = typeof(ButtonEdit);
             else if (e.FieldName == nameof(DcClaimCategory.CategoryId)) e.EditorType = typeof(ButtonEdit);
+            else if (e.FieldName == nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId)) e.EditorType = typeof(ButtonEdit);
 
             e.DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
             e.Handled = true;
@@ -336,6 +338,12 @@ namespace Foxoft
                 RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
                 if (btnEdit != null)
                     btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_ClaimCategoryId_ButtonPressed);
+            }
+            if (e.FieldName == nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId))// add FieldRetrieving too
+            {
+                RepositoryItemButtonEdit btnEdit = e.RepositoryItem as RepositoryItemButtonEdit;
+                if (btnEdit != null)
+                    btnEdit.ButtonPressed += new ButtonPressedEventHandler(repoBtnEdit_CurrAccFeatureTypeId_ButtonPressed);
             }
         }
 
@@ -497,6 +505,23 @@ namespace Foxoft
             string value = ((ButtonEdit)sender).EditValue?.ToString();
 
             using FormCommonList<DcClaimCategory> form = new("", nameof(DcClaimCategory.CategoryId), value);
+
+            try
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                    ((ButtonEdit)sender).EditValue = form.Value_Id;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void repoBtnEdit_CurrAccFeatureTypeId_ButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            string value = ((ButtonEdit)sender).EditValue?.ToString();
+
+            using FormCommonList<DcCurrAccFeatureType> form = new("", nameof(DcCurrAccFeatureType.CurrAccFeatureTypeId), value);
 
             try
             {

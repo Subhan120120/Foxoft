@@ -1565,10 +1565,20 @@ namespace Foxoft
             return db.TrProductBarcodes.Any(x => x.ProductCode == productCode);
         }
 
-        public bool CurrAccExistByPhoneNum(string phoneNum)
+        public bool CurrAccExistByPhoneNumExceptCurrAcc(string phoneNum, string currAccCode)
         {
             using subContext db = new();
-            return db.DcCurrAccs.Any(x => x.PhoneNum.Trim() == phoneNum);
+            return db.DcCurrAccs
+                .Where(x => x.CurrAccCode != currAccCode)
+                .Any(x => x.PhoneNum.Trim() == phoneNum);
+        }
+
+        public bool ProductExistByNameExceptProduct(string productName, string productCode)
+        {
+            using subContext db = new();
+            return db.DcProducts
+                .Where(x => x.ProductCode != productCode)
+                .Any(x => x.ProductDesc == productName);
         }
 
         public bool CurrAccContactDetailsExistByCurrAcc(string currAccCode)

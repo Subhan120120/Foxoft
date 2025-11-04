@@ -10,6 +10,7 @@ using Foxoft.Properties;
 using System.Collections;
 using System.Collections.Specialized;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Foxoft
 {
@@ -443,6 +444,7 @@ namespace Foxoft
 
                 form = (T)constructor.Invoke(args);
                 form.MdiParent = this;
+                form.FormClosed += (s, args) => form.Dispose();
                 form.Show();
                 form.WindowState = FormWindowState.Maximized;
                 if (parentRibbonControl.MergedPages.Count > 0)

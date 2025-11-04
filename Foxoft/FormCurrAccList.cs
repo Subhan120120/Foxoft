@@ -188,14 +188,18 @@ namespace Foxoft
         {
             OptionsLayoutGrid option = new() { StoreAllOptions = true, StoreAppearance = true };
             string fileName = "FormCurrAccList.xml";
-            string layoutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
+            string layoutFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Foxoft", Settings.Default.CompanyCode, "Layout Xml Files", fileName);
 
             if (File.Exists(layoutFilePath))
+            {
                 gV_CurrAccList.RestoreLayoutFromXml(layoutFilePath, option);
+            }
             else
             {
                 byte[] byteArray = Encoding.ASCII.GetBytes(Settings.Default.AppSetting.GridViewLayout);
-                MemoryStream stream = new(byteArray);
+                using MemoryStream stream = new(byteArray);
                 gV_CurrAccList.RestoreLayoutFromStream(stream, option);
             }
 
@@ -205,7 +209,7 @@ namespace Foxoft
                 repoPhoneNum.MaskSettings.Set("MaskManagerType", typeof(RegularMaskManager));
                 repoPhoneNum.MaskSettings.Set("mask", "(\\d?\\d?) \\d\\d\\d-\\d\\d-\\d\\d");
                 repoPhoneNum.UseMaskAsDisplayFormat = true;
-                gC_CurrAccList.RepositoryItems.AddRange(new RepositoryItem[] { repoPhoneNum });
+                gC_CurrAccList.RepositoryItems.Add(repoPhoneNum);
                 colPhoneNum.ColumnEdit = repoPhoneNum;
             }
 
@@ -216,10 +220,11 @@ namespace Foxoft
                 repoMoney.MaskSettings.Set("MaskManagerType", typeof(NumericMaskManager));
                 repoMoney.MaskSettings.Set("mask", "f2");
                 repoMoney.UseMaskAsDisplayFormat = true;
-                gC_CurrAccList.RepositoryItems.AddRange(new RepositoryItem[] { repoMoney });
+                gC_CurrAccList.RepositoryItems.Add(repoMoney);
                 colBalance.ColumnEdit = repoMoney;
             }
         }
+
 
         private void gV_CurrAccList_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
@@ -265,23 +270,19 @@ namespace Foxoft
         private void bBI_CurrAccNew_ItemClick(object sender, ItemClickEventArgs e)
         {
             dcCurrAcc = new DcCurrAcc();
-            FormCurrAcc form = new(currAccTypeArr.FirstOrDefault());
+            using FormCurrAcc form = new(currAccTypeArr.FirstOrDefault());
             if (form.ShowDialog(this) == DialogResult.OK)
                 UpdateGridViewData();
-
         }
 
         private void bBI_CurrAccEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //ApplySelectedCurrAcc();
-
-            if (dcCurrAcc is not null)
-            {
-                FormCurrAcc form = new(dcCurrAcc.CurrAccCode);
-                if (form.ShowDialog(this) == DialogResult.OK)
-                    UpdateGridViewData();
-            }
+            if (dcCurrAcc is null) return;
+            using FormCurrAcc form = new(dcCurrAcc.CurrAccCode);
+            if (form.ShowDialog(this) == DialogResult.OK)
+                UpdateGridViewData();
         }
+
 
         private void UpdateGridViewData()
         {

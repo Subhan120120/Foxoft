@@ -6,15 +6,18 @@ using DevExpress.XtraBars.Ribbon.ViewInfo;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraLayout.Utils;
 using Foxoft.Models;
 using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Foxoft
 {
@@ -643,6 +646,16 @@ namespace Foxoft
         {
             FormProductScales formProductScales = new(dcProduct);
             formProductScales.ShowDialog();
+        }
+
+        private void ProductDescTextEdit_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ProductDescTextEdit.Text)) return;
+
+            if (efMethods.ProductExistByNameExceptProduct(ProductDescTextEdit.Text, dcProduct.ProductCode))
+                dxErrorProvider1.SetError(ProductDescTextEdit, "Bu adda məhsul mövcuddur.", ErrorType.Information);
+            else
+                dxErrorProvider1.ClearErrors();
         }
     }
 }

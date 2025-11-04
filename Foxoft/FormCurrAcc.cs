@@ -169,7 +169,7 @@ namespace Foxoft
 
         private void PhoneNumTextEdit_Validating(object sender, CancelEventArgs e)
         {
-            var te = (DevExpress.XtraEditors.TextEdit)sender;
+            var te = (TextEdit)sender;
             var before = te.Text;
             var after = PhoneNumberFormat.FormatIntlPhone(before);
             te.Text = after;
@@ -179,12 +179,11 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(inputPhone))
             {
-                if (efMethods.CurrAccExistByPhoneNum(inputPhone))
-                    dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə bazada mövcuddur.", ErrorType.Warning);
+                if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(inputPhone, dcCurrAcc.CurrAccCode))
+                    dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə başqa Cari Hesabda mövcuddur.", ErrorType.Information);
                 else
                     dxErrorProvider1.ClearErrors();
             }
-
         }
 
         private void PhoneNumTextEdit_EditValueChanged(object sender, EventArgs e)

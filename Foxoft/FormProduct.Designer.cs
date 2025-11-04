@@ -117,6 +117,7 @@ namespace Foxoft
             layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             popupMenu_Gallery = new DevExpress.XtraBars.PopupMenu(components);
             svgImageCollection1 = new SvgImageCollection(components);
+            dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)dataLayoutControl1).BeginInit();
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)galleryControl1).BeginInit();
@@ -181,6 +182,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu_Gallery).BeginInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             SuspendLayout();
             // 
             // dataLayoutControl1
@@ -332,6 +334,7 @@ namespace Foxoft
             ProductDescTextEdit.Size = new Size(359, 20);
             ProductDescTextEdit.StyleController = dataLayoutControl1;
             ProductDescTextEdit.TabIndex = 3;
+            ProductDescTextEdit.Validating += ProductDescTextEdit_Validating;
             // 
             // btn_Ok
             // 
@@ -694,7 +697,6 @@ namespace Foxoft
             ItemForUsePos.Name = "ItemForUsePos";
             ItemForUsePos.Size = new Size(121, 27);
             ItemForUsePos.Text = "Use Pos";
-            ItemForUsePos.TextSize = new Size(0, 0);
             ItemForUsePos.TextVisible = false;
             // 
             // ItemForPromotionCode
@@ -759,7 +761,6 @@ namespace Foxoft
             layoutControlItem4.Name = "layoutControlItem4";
             layoutControlItem4.Size = new Size(193, 131);
             layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem4.TextSize = new Size(0, 0);
             layoutControlItem4.TextVisible = false;
             // 
             // ItemForProductCode
@@ -895,7 +896,6 @@ namespace Foxoft
             layoutControlItem2.Name = "layoutControlItem2";
             layoutControlItem2.Size = new Size(78, 66);
             layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem2.TextSize = new Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem1
@@ -907,7 +907,6 @@ namespace Foxoft
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Size = new Size(78, 66);
             layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem1.TextSize = new Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
             // ItemForUseInternet
@@ -917,7 +916,6 @@ namespace Foxoft
             ItemForUseInternet.Name = "ItemForUseInternet";
             ItemForUseInternet.Size = new Size(132, 24);
             ItemForUseInternet.Text = "İnternetdə İstifadə Et";
-            ItemForUseInternet.TextSize = new Size(0, 0);
             ItemForUseInternet.TextVisible = false;
             // 
             // ItemForIsDisabled
@@ -927,7 +925,6 @@ namespace Foxoft
             ItemForIsDisabled.Name = "ItemForIsDisabled";
             ItemForIsDisabled.Size = new Size(149, 24);
             ItemForIsDisabled.Text = "Is Disabled";
-            ItemForIsDisabled.TextSize = new Size(0, 0);
             ItemForIsDisabled.TextVisible = false;
             // 
             // layoutControlItem3
@@ -936,7 +933,6 @@ namespace Foxoft
             layoutControlItem3.Location = new Point(281, 179);
             layoutControlItem3.Name = "layoutControlItem3";
             layoutControlItem3.Size = new Size(193, 132);
-            layoutControlItem3.TextSize = new Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem10
@@ -948,16 +944,13 @@ namespace Foxoft
             layoutControlItem10.Name = "layoutControlItem10";
             layoutControlItem10.Size = new Size(78, 66);
             layoutControlItem10.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            layoutControlItem10.TextSize = new Size(0, 0);
             layoutControlItem10.TextVisible = false;
             // 
             // emptySpaceItem2
             // 
-            emptySpaceItem2.AllowHotTrack = false;
             emptySpaceItem2.Location = new Point(0, 311);
             emptySpaceItem2.Name = "emptySpaceItem2";
             emptySpaceItem2.Size = new Size(240, 66);
-            emptySpaceItem2.TextSize = new Size(0, 0);
             // 
             // ItemForDefaultUnitOfMeasureId
             // 
@@ -986,7 +979,6 @@ namespace Foxoft
             layoutControlItem8.Location = new Point(102, 335);
             layoutControlItem8.Name = "layoutControlItem10";
             layoutControlItem8.Size = new Size(168, 67);
-            layoutControlItem8.TextSize = new Size(0, 0);
             layoutControlItem8.TextVisible = false;
             // 
             // popupMenu_Gallery
@@ -999,6 +991,10 @@ namespace Foxoft
             // svgImageCollection1
             // 
             svgImageCollection1.Add("save", "image://svgimages/diagramicons/save.svg");
+            // 
+            // dxErrorProvider1
+            // 
+            dxErrorProvider1.ContainerControl = this;
             // 
             // FormProduct
             // 
@@ -1078,6 +1074,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)layoutControlItem8).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenu_Gallery).EndInit();
             ((System.ComponentModel.ISupportInitialize)svgImageCollection1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1175,5 +1172,6 @@ namespace Foxoft
         private DevExpress.XtraEditors.LookUpEdit LUE_DefaultUnitOfMeasureId;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem BBI_Scales;
+        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
     }
 }

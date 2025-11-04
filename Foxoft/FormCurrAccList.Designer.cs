@@ -1,5 +1,6 @@
 ﻿
 using DevExpress.Utils;
+using System.Data;
 
 namespace Foxoft
 {
@@ -16,6 +17,19 @@ namespace Foxoft
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            gV_CurrAccList.FocusedRowChanged -= gV_CurrAccList_FocusedRowChanged;
+            gV_CurrAccList.ColumnFilterChanged -= gV_CurrAccList_ColumnFilterChanged;
+            gV_CurrAccList.PopupMenuShowing -= gV_CurrAccList_PopupMenuShowing;
+            gC_CurrAccList.ProcessGridKey -= gC_CurrAccList_ProcessGridKey;
+            Activated -= FormCurrAccList_Activated;
+
+            if (dcCurrAccsBindingSource.DataSource is DataTable dt)
+            {
+                dcCurrAccsBindingSource.DataSource = null;
+                dt.Dispose();
+            }
+            gC_CurrAccList.DataSource = null;
+
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -57,7 +71,7 @@ namespace Foxoft
             colBonusCardNum = new DevExpress.XtraGrid.Columns.GridColumn();
             colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
             colPhoneNum = new DevExpress.XtraGrid.Columns.GridColumn();
-            repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            repoPhoneNum = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             colBirthDate = new DevExpress.XtraGrid.Columns.GridColumn();
             colBalance = new DevExpress.XtraGrid.Columns.GridColumn();
             ribbonControl1 = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -83,7 +97,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)repoPhoneNum).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).BeginInit();
             SuspendLayout();
@@ -95,7 +109,7 @@ namespace Foxoft
             gC_CurrAccList.Location = new Point(0, 158);
             gC_CurrAccList.MainView = gV_CurrAccList;
             gC_CurrAccList.Name = "gC_CurrAccList";
-            gC_CurrAccList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repositoryItemTextEdit1 });
+            gC_CurrAccList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] { repoPhoneNum });
             gC_CurrAccList.Size = new Size(858, 413);
             gC_CurrAccList.TabIndex = 0;
             gC_CurrAccList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gV_CurrAccList });
@@ -225,7 +239,7 @@ namespace Foxoft
             // 
             // colPhoneNum
             // 
-            colPhoneNum.ColumnEdit = repositoryItemTextEdit1;
+            colPhoneNum.ColumnEdit = repoPhoneNum;
             colPhoneNum.FieldName = "PhoneNum";
             colPhoneNum.Name = "colPhoneNum";
             colPhoneNum.Visible = true;
@@ -233,12 +247,12 @@ namespace Foxoft
             // 
             // repositoryItemTextEdit1
             // 
-            repositoryItemTextEdit1.AutoHeight = false;
-            repositoryItemTextEdit1.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
-            repositoryItemTextEdit1.MaskSettings.Set("MaskManagerSignature", "allowNull=False");
-            repositoryItemTextEdit1.MaskSettings.Set("mask", "f");
-            repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
-            repositoryItemTextEdit1.UseMaskAsDisplayFormat = true;
+            repoPhoneNum.AutoHeight = false;
+            repoPhoneNum.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.NumericMaskManager));
+            repoPhoneNum.MaskSettings.Set("MaskManagerSignature", "allowNull=False");
+            repoPhoneNum.MaskSettings.Set("mask", "f");
+            repoPhoneNum.Name = "repositoryItemTextEdit1";
+            repoPhoneNum.UseMaskAsDisplayFormat = true;
             // 
             // colBirthDate
             // 
@@ -427,7 +441,7 @@ namespace Foxoft
             ((System.ComponentModel.ISupportInitialize)gC_CurrAccList).EndInit();
             ((System.ComponentModel.ISupportInitialize)dcCurrAccsBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)gV_CurrAccList).EndInit();
-            ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)repoPhoneNum).EndInit();
             ((System.ComponentModel.ISupportInitialize)ribbonControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)popupMenuReports).EndInit();
             ResumeLayout(false);
@@ -479,7 +493,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
         private DevExpress.XtraBars.BarButtonItem BBI_query;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repoPhoneNum;
         private DevExpress.XtraBars.PopupMenu popupMenuReports;
         private DevExpress.XtraBars.BarSubItem BSI_Reports;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;

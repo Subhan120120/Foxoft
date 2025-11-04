@@ -131,7 +131,7 @@ namespace Foxoft
 
             if (!string.IsNullOrEmpty(inputPhone))
             {
-                if (efMethods.CurrAccExistByPhoneNum(inputPhone))
+                if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(inputPhone, dcCurrAcc.CurrAccCode))
                     dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə bazada mövcuddur.", ErrorType.Warning);
                 else
                     dxErrorProvider1.ClearErrors();

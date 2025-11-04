@@ -44,6 +44,12 @@ namespace Foxoft
             btn_OptimizeDatabaseIndexes.Text = "Verilənlər bazası indekslərini optimallaşdırın (" + adoMethods.DatabaseAVGFragmentationPercent() + "%)";
         }
 
+        private void Btn_ClearMemory_Click(object sender, EventArgs e)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
         private void ShowDatabaseFragPercent()
         {
         }
