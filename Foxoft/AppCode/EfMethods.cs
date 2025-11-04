@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace Foxoft
 {
@@ -1567,10 +1568,23 @@ namespace Foxoft
 
         public bool CurrAccExistByPhoneNumExceptCurrAcc(string phoneNum, string currAccCode)
         {
+            //phoneNum = Regex.Replace(phoneNum, @"\D", "");
+
             using subContext db = new();
-            return db.DcCurrAccs
+
+            phoneNum = new string((phoneNum ?? "")
+                .Where(char.IsDigit).ToArray());
+
+            // compare against DB after stripping common symbols (translated to SQL REPLACE)
+            return  db.DcCurrAccs
                 .Where(x => x.CurrAccCode != currAccCode)
-                .Any(x => x.PhoneNum.Trim() == phoneNum);
+                .Any(x =>
+                    (x.PhoneNum ?? "")
+                        .Replace(" ", "")
+                        .Replace("-", "")
+                        .Replace("(", "")
+                        .Replace(")", "")
+                        .Replace("+", "") == phoneNum);
         }
 
         public bool ProductExistByNameExceptProduct(string productName, string productCode)

@@ -174,12 +174,9 @@ namespace Foxoft
             var after = PhoneNumberFormat.FormatIntlPhone(before);
             te.Text = after;
 
-
-            string inputPhone = Regex.Replace(PhoneNumTextEdit.Text, @"\D", ""); // \D = non-digit characters
-
-            if (!string.IsNullOrEmpty(inputPhone))
+            if (!string.IsNullOrEmpty(te.Text))
             {
-                if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(inputPhone, dcCurrAcc.CurrAccCode))
+                if (efMethods.CurrAccExistByPhoneNumExceptCurrAcc(te.Text, dcCurrAcc.CurrAccCode))
                     dxErrorProvider1.SetError(PhoneNumTextEdit, "Bu nömrə başqa Cari Hesabda mövcuddur.", ErrorType.Information);
                 else
                     dxErrorProvider1.ClearErrors();
