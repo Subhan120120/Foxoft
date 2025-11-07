@@ -45,7 +45,7 @@ namespace Foxoft
         {
             ButtonEdit buttonEdit = (ButtonEdit)sender;
 
-            using (FormCurrAccList form = new(new byte[] { 3 }, buttonEdit.EditValue?.ToString()))
+            using (FormCurrAccList form = new(new byte[] { 3 }, false, buttonEdit.EditValue?.ToString()))
                 if (form.ShowDialog(this) == DialogResult.OK)
                     buttonEdit.EditValue = form.dcCurrAcc.CurrAccCode;
         }

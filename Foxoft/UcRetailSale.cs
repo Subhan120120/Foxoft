@@ -436,7 +436,7 @@ namespace Foxoft
 
         private void btn_CustomerSearch_Click(object sender, EventArgs e)
         {
-            using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, trInvoiceHeader.CurrAccCode))
+            using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, trInvoiceHeader.CurrAccCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -607,7 +607,7 @@ namespace Foxoft
             {
                 string salesPerson = gV_InvoiceLine.GetRowCellValue(rowIndx, nameof(TrInvoiceLine.SalesPersonCode))?.ToString();
 
-                using (FormCurrAccList form = new(new byte[] { 3 }, salesPerson, new byte[] { 1 }))
+                using (FormCurrAccList form = new(new byte[] { 3 }, false, salesPerson, new byte[] { 1 }))
                 {
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {

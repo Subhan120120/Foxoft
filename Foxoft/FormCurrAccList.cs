@@ -34,6 +34,7 @@ namespace Foxoft
         public byte[] personalTypes;
         public byte cashRegPaymentTypeCode;
         public string currAccCode;
+        public bool? isDisabled { get; set; }
 
         public FormCurrAccList()
         {
@@ -42,10 +43,11 @@ namespace Foxoft
             colCurrAccCode = gV_CurrAccList.Columns["CurrAccCode"];
         }
 
-        public FormCurrAccList(byte[] currAccTypeArr)
+        public FormCurrAccList(byte[] currAccTypeArr, bool? isDisabled)
             : this()
         {
             this.currAccTypeArr = currAccTypeArr;
+            this.isDisabled = isDisabled;
 
             string activeFilterStr = "[StoreCode] = \'" + Authorization.StoreCode + "\'";
 
@@ -55,20 +57,20 @@ namespace Foxoft
 
         }
 
-        public FormCurrAccList(byte[] currAccTypeArr, string currAccCode)
-            : this(currAccTypeArr)
+        public FormCurrAccList(byte[] currAccTypeArr, bool? isDisabled, string currAccCode)
+            : this(currAccTypeArr, isDisabled)
         {
             this.currAccCode = currAccCode;
         }
 
-        public FormCurrAccList(byte[] currAccTypeArr, string currAccCode, byte[] personalTypes)
-            : this(currAccTypeArr, currAccCode)
+        public FormCurrAccList(byte[] currAccTypeArr, bool? isDisabled, string currAccCode, byte[] personalTypes)
+            : this(currAccTypeArr, isDisabled, currAccCode)
         {
             this.personalTypes = personalTypes;
         }
 
-        public FormCurrAccList(byte[] currAccTypeArr, byte[] personalTypes)
-            : this(currAccTypeArr)
+        public FormCurrAccList(byte[] currAccTypeArr, bool? isDisabled, byte[] personalTypes)
+            : this(currAccTypeArr, isDisabled)
         {
             this.personalTypes = personalTypes;
         }
@@ -121,6 +123,12 @@ namespace Foxoft
                     {
                         string subTypeArr = String.Join(",", personalTypes);
                         clause += "AND PersonalTypeCode in (" + subTypeArr + ") ";
+                    }
+
+                    if (isDisabled.HasValue)
+                    {
+                        string dbValue = (bool)isDisabled ? "1" : "0";
+                        clause = clause + $"AND IsDisabled = {dbValue}";
                     }
 
                     SqlParameter[] sqlParameters;

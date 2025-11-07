@@ -102,6 +102,8 @@ namespace Foxoft
             ACE_WaybillOut = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             aCE_Operation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_PriceList = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aCE_ProductsDisabled = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            aCE_CurrAccsDisabled = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             accordionControlSeparator8 = new DevExpress.XtraBars.Navigation.AccordionControlSeparator();
             ACE_ProductDiscounts = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ACE_ProductFeatureType = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -580,7 +582,7 @@ namespace Foxoft
             // 
             // aCE_Operation
             // 
-            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType });
+            aCE_Operation.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { ACE_PriceList, aCE_ProductsDisabled, aCE_CurrAccsDisabled, accordionControlSeparator8, ACE_ProductDiscounts, ACE_ProductFeatureType, ACE_CurrAccFeatureType });
             aCE_Operation.Expanded = true;
             aCE_Operation.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_Operation.ImageOptions.SvgImage");
             aCE_Operation.Name = "aCE_Operation";
@@ -592,6 +594,20 @@ namespace Foxoft
             ACE_PriceList.Name = "ACE_PriceList";
             ACE_PriceList.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_PriceList.Text = Resources.ERP_ACE_PriceList;
+            // 
+            // aCE_ProductsDisabled
+            // 
+            aCE_ProductsDisabled.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_ProductsDisabled.ImageOptions.SvgImage");
+            aCE_ProductsDisabled.Name = "aCE_ProductsDisabled";
+            aCE_ProductsDisabled.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_ProductsDisabled.Text = "Disabled Product";
+            // 
+            // aCE_CurrAccsDisabled
+            // 
+            aCE_CurrAccsDisabled.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("aCE_CurrAccsDisabled.ImageOptions.SvgImage");
+            aCE_CurrAccsDisabled.Name = "aCE_CurrAccsDisabled";
+            aCE_CurrAccsDisabled.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            aCE_CurrAccsDisabled.Text = "Disabled Current Account";
             // 
             // accordionControlSeparator8
             // 
@@ -651,10 +667,10 @@ namespace Foxoft
             // 
             accordionControlSeparator2.Name = "accordionControlSeparator2";
             // 
-            // ACE_Parameters
+            // ACE_AppSettings
             // 
-            ACE_AppSettings.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_Parameters.ImageOptions.SvgImage");
-            ACE_AppSettings.Name = "ACE_Parameters";
+            ACE_AppSettings.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("ACE_AppSettings.ImageOptions.SvgImage");
+            ACE_AppSettings.Name = "ACE_AppSettings";
             ACE_AppSettings.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             ACE_AppSettings.Text = Resources.ERP_ACE_AppSettings;
             // 
@@ -769,5 +785,7 @@ namespace Foxoft
         private DevExpress.XtraBars.Navigation.AccordionControlElement ACG_Favorites;
         private DevExpress.XtraBars.BarButtonItem BBI_FavoriteAdd;
         private DevExpress.XtraBars.BarButtonItem BBI_FavoriteRemove;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_ProductsDisabled;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement aCE_CurrAccsDisabled;
     }
 }

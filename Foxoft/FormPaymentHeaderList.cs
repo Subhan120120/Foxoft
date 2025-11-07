@@ -241,7 +241,7 @@ namespace Foxoft
 
         private void bBI_ReceivePayment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            using (FormCurrAccList formCurrAcc = new(new byte[] { 0 }))
+            using (FormCurrAccList formCurrAcc = new(new byte[] { 0 }, false))
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {
@@ -270,7 +270,7 @@ namespace Foxoft
 
         private void bBI_MakePayment_ItemClick(object sender, ItemClickEventArgs e)
         {
-            using (FormCurrAccList formCurrAcc = new(new byte[] { 0 }))
+            using (FormCurrAccList formCurrAcc = new(new byte[] { 0 }, false))
             {
                 if (formCurrAcc.ShowDialog(this) == DialogResult.OK)
                 {

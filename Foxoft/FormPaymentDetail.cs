@@ -218,7 +218,7 @@ namespace Foxoft
 
         private void SelectCurrAcc()
         {
-            using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, trPaymentHeader.CurrAccCode))
+            using (FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, trPaymentHeader.CurrAccCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -467,7 +467,7 @@ namespace Foxoft
         {
             ButtonEdit editor = (ButtonEdit)sender;
 
-            using (FormCurrAccList form = new(new byte[] { 5 }, trPaymentHeader.CurrAccCode))
+            using (FormCurrAccList form = new(new byte[] { 5 }, false, trPaymentHeader.CurrAccCode))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {

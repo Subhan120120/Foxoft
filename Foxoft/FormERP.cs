@@ -134,7 +134,9 @@ namespace Foxoft
             switch (name)
             {
                 case "Products": ShowExistForm<FormProductList>(new byte[] { 1 }, false); break;
-                case "CurrAccs": ShowExistForm<FormCurrAccList>(new byte[] { 1, 2, 3 }); break;
+                case "ProductsDisabled": ShowExistForm<FormProductList>(new byte[] { 1 }, true); break;
+                case "CurrAccs": ShowExistForm<FormCurrAccList>(new byte[] { 1, 2, 3 }, false); break;
+                case "CurrAccsDisabled": ShowExistForm<FormCurrAccList>(new byte[] { 1, 2, 3 }, true); break;
 
                 case "RetailPurchaseInvoice": ShowNewForm<FormInvoice>("RP", false, new byte[] { 1, 3 }, null); break;
                 case "RetailSaleInvoice": ShowNewForm<FormInvoice>("RS", false, new byte[] { 1, 3 }, null); break;
@@ -231,6 +233,9 @@ namespace Foxoft
 
             this.aCE_CountIn.Name = "CountIn";
             this.aCE_CountOut.Name = "CountOut";
+
+            this.aCE_ProductsDisabled.Name = "ProductsDisabled";
+            this.aCE_CurrAccsDisabled.Name = "CurrAccsDisabled";
 
             this.ACE_CashTransfer.Name = "CashTransfer";
             this.aCE_Expense.Name = "Expense";

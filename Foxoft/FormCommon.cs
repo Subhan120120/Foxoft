@@ -368,7 +368,7 @@ namespace Foxoft
         {
             string currAccCode = ((ButtonEdit)sender).EditValue?.ToString();
 
-            using FormCurrAccList form = new(new byte[] { 1, 2, 3 }, currAccCode);
+            using FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, currAccCode);
 
             try
             {

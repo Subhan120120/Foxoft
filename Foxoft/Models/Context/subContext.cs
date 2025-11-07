@@ -604,7 +604,9 @@ namespace Foxoft.Models
             modelBuilder.Entity<DcClaim>().HasData(
                 new DcClaim { ClaimCode = "ButunHesabatlar", ClaimDesc = "Butun Hesabatlar", ClaimTypeId = 2, CategoryId = 1 },
                 new DcClaim { ClaimCode = "Products", ClaimDesc = "Məhsullar", ClaimTypeId = 1, CategoryId = 18 },
+                new DcClaim { ClaimCode = "ProductsDisabled", ClaimDesc = "Qeyri-Aktiv Məhsullar", ClaimTypeId = 1, CategoryId = 18 },
                 new DcClaim { ClaimCode = "CurrAccs", ClaimDesc = "Cari Hesablar", ClaimTypeId = 1, CategoryId = 19 },
+                new DcClaim { ClaimCode = "CurrAccsDisabled", ClaimDesc = "Qeyri-Aktiv Cari Hesablar", ClaimTypeId = 1, CategoryId = 19 },
                 new DcClaim { ClaimCode = "CashRegs", ClaimDesc = "Kassalar", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "CashTransfer", ClaimDesc = "Pul Transferi", ClaimTypeId = 1, CategoryId = 21 },
                 new DcClaim { ClaimCode = "InventoryTransfer", ClaimDesc = "Mal Transferi", ClaimTypeId = 1, CategoryId = 14 },

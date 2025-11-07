@@ -130,7 +130,7 @@ namespace Foxoft
 
             string value = editor.EditValue?.ToString();
 
-            using (FormCurrAccList form = new(currAccTypeCode, value))
+            using (FormCurrAccList form = new(currAccTypeCode, false, value))
             {
                 if (form.ShowDialog(parentForm) == DialogResult.OK)
                     editor.EditValue = form.dcCurrAcc.CurrAccCode;

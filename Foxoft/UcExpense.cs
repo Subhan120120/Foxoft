@@ -152,7 +152,7 @@ namespace Foxoft
 
         private void btnEdit_CurrAccCode_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            using (FormCurrAccList form = new(new byte[] { 2 }))
+            using (FormCurrAccList form = new(new byte[] { 2 }, false))
             {
                 if (form.ShowDialog(this) == DialogResult.OK)
                     btnEdit_CurrAccCode.EditValue = form.dcCurrAcc.CurrAccCode;

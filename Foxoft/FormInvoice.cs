@@ -403,10 +403,10 @@ namespace Foxoft
         {
             if (btnEdit_CurrAccCode.Enabled)
             {
-                FormCurrAccList form = new(new byte[] { 1, 2, 3 }, trInvoiceHeader.CurrAccCode);
+                FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false, trInvoiceHeader.CurrAccCode);
 
                 if (trInvoiceHeader.ProcessCode == "IT")
-                    form = new FormCurrAccList(new byte[] { 4 }, trInvoiceHeader.CurrAccCode);
+                    form = new FormCurrAccList(new byte[] { 4 }, false, trInvoiceHeader.CurrAccCode);
 
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
@@ -906,7 +906,7 @@ namespace Foxoft
 
             string value = editor.EditValue?.ToString();
 
-            using FormCurrAccList form = new(new byte[] { 3 }, value, new byte[] { 1 });
+            using FormCurrAccList form = new(new byte[] { 3 }, false, value, new byte[] { 1 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -920,7 +920,7 @@ namespace Foxoft
 
             string value = editor.EditValue?.ToString();
 
-            using FormCurrAccList form = new(new byte[] { 3 }, value, new byte[] { 3 });
+            using FormCurrAccList form = new(new byte[] { 3 }, false, value, new byte[] { 3 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -2376,7 +2376,7 @@ namespace Foxoft
 
         private void btnEdit_SalesPerson_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            FormCurrAccList form = new(new byte[] { 3 }, trInvoiceHeader.CurrAccCode, new byte[] { 1 });
+            FormCurrAccList form = new(new byte[] { 3 }, false, trInvoiceHeader.CurrAccCode, new byte[] { 1 });
 
             if (form.ShowDialog(this) == DialogResult.OK)
                 btnEdit_SalesPerson.EditValue = form.dcCurrAcc.CurrAccCode;
@@ -2505,7 +2505,7 @@ namespace Foxoft
 
         private void BBI_InstallmentGuarantorAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FormCurrAccList form = new(new byte[] { 1, 2, 3 });
+            FormCurrAccList form = new(new byte[] { 1, 2, 3 }, false);
 
             if (form.ShowDialog(this) == DialogResult.OK)
             {
@@ -2597,7 +2597,7 @@ namespace Foxoft
 
         private void BBI_Salesman_ItemClick(object sender, ItemClickEventArgs e)
         {
-            using FormCurrAccList form = new(new byte[] { 3 }, new byte[] { 1 });
+            using FormCurrAccList form = new(new byte[] { 3 }, false, new byte[] { 1 });
 
 
             if (form.ShowDialog(this) == DialogResult.OK)

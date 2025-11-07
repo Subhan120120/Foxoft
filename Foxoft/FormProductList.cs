@@ -293,14 +293,6 @@ namespace Foxoft
                 }
             }
 
-            if (dataSource is null)
-            {
-                if (productTypeArr != null && productTypeArr.Length > 0)
-                    dataSource = efMethods.SelectProductsByTypeByFilter(productTypeArr, isDisabled, gV_ProductList.ActiveFilterCriteria);
-                else if (productTypeArr == null)
-                    dataSource = efMethods.SelectProducts(isDisabled);
-            }
-
             dcProductsBindingSource.DataSource = dataSource;
 
             if (gV_ProductList.FocusedRowHandle >= 0)
