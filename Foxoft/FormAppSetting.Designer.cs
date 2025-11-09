@@ -164,6 +164,7 @@ namespace Foxoft
             AutoPrintCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AutoPrint", true));
             AutoPrintCheckEdit.Location = new Point(12, 12);
             AutoPrintCheckEdit.Name = "GetPrintCheckEdit";
+            AutoPrintCheckEdit.Properties.Caption = Resources.Entity_AppSetting_AutoPrint;
             AutoPrintCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             AutoPrintCheckEdit.Size = new Size(482, 20);
             AutoPrintCheckEdit.StyleController = dataLayoutControl1;
@@ -228,6 +229,7 @@ namespace Foxoft
             UsePriceListCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UsePriceList", true));
             UsePriceListCheckEdit.Location = new Point(12, 156);
             UsePriceListCheckEdit.Name = "UsePriceListCheckEdit";
+            UsePriceListCheckEdit.Properties.Caption = Resources.Entity_AppSetting_UsePriceList;
             UsePriceListCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             UsePriceListCheckEdit.Size = new Size(482, 20);
             UsePriceListCheckEdit.StyleController = dataLayoutControl1;
