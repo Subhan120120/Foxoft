@@ -364,7 +364,7 @@ namespace Foxoft
             CurrAccCodeTextEdit.Location = new Point(103, 12);
             CurrAccCodeTextEdit.Name = "CurrAccCodeTextEdit";
             CurrAccCodeTextEdit.Properties.AllowNullInput = DefaultBoolean.False;
-            CurrAccCodeTextEdit.Size = new Size(277, 20);
+            CurrAccCodeTextEdit.Size = new Size(261, 20);
             CurrAccCodeTextEdit.StyleController = dataLayoutControl1;
             CurrAccCodeTextEdit.TabIndex = 4;
             // 
@@ -378,7 +378,7 @@ namespace Foxoft
             CurrAccDescTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccBindingSource, "CurrAccDesc", true));
             CurrAccDescTextEdit.Location = new Point(103, 36);
             CurrAccDescTextEdit.Name = "CurrAccDescTextEdit";
-            CurrAccDescTextEdit.Size = new Size(277, 20);
+            CurrAccDescTextEdit.Size = new Size(261, 20);
             CurrAccDescTextEdit.StyleController = dataLayoutControl1;
             CurrAccDescTextEdit.TabIndex = 5;
             // 
@@ -387,7 +387,7 @@ namespace Foxoft
             BonusCardNumTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccBindingSource, "BonusCardNum", true));
             BonusCardNumTextEdit.Location = new Point(103, 60);
             BonusCardNumTextEdit.Name = "BonusCardNumTextEdit";
-            BonusCardNumTextEdit.Size = new Size(277, 20);
+            BonusCardNumTextEdit.Size = new Size(261, 20);
             BonusCardNumTextEdit.StyleController = dataLayoutControl1;
             BonusCardNumTextEdit.TabIndex = 6;
             // 
@@ -396,7 +396,7 @@ namespace Foxoft
             AddressTextEdit.DataBindings.Add(new Binding("EditValue", dcCurrAccBindingSource, "Address", true));
             AddressTextEdit.Location = new Point(103, 84);
             AddressTextEdit.Name = "AddressTextEdit";
-            AddressTextEdit.Size = new Size(277, 20);
+            AddressTextEdit.Size = new Size(261, 20);
             AddressTextEdit.StyleController = dataLayoutControl1;
             AddressTextEdit.TabIndex = 7;
             // 
@@ -408,7 +408,7 @@ namespace Foxoft
             PhoneNumTextEdit.Properties.Mask.EditMask = "(999) 000-0000";
             PhoneNumTextEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
             PhoneNumTextEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            PhoneNumTextEdit.Size = new Size(277, 20);
+            PhoneNumTextEdit.Size = new Size(261, 20);
             PhoneNumTextEdit.StyleController = dataLayoutControl1;
             PhoneNumTextEdit.TabIndex = 8;
             // 
@@ -436,12 +436,12 @@ namespace Foxoft
             btn_CustomerSearch.AppearancePressed.Options.UseBackColor = true;
             btn_CustomerSearch.AppearancePressed.Options.UseBorderColor = true;
             btn_CustomerSearch.ButtonStyle = BorderStyles.UltraFlat;
-            btn_CustomerSearch.ImageOptions.Image = (Image)resources.GetObject("btn_CustomerSearch.ImageOptions.Image");
             btn_CustomerSearch.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_CustomerSearch.Location = new Point(384, 12);
+            btn_CustomerSearch.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_CustomerSearch.ImageOptions.SvgImage");
+            btn_CustomerSearch.Location = new Point(368, 12);
             btn_CustomerSearch.Name = "btn_CustomerSearch";
             btn_CustomerSearch.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CustomerSearch.Size = new Size(60, 38);
+            btn_CustomerSearch.Size = new Size(76, 38);
             btn_CustomerSearch.StyleController = dataLayoutControl1;
             btn_CustomerSearch.TabIndex = 32;
             btn_CustomerSearch.Text = "simpleButton3";
@@ -471,12 +471,12 @@ namespace Foxoft
             btn_CustomerAdd.AppearancePressed.Options.UseBackColor = true;
             btn_CustomerAdd.AppearancePressed.Options.UseBorderColor = true;
             btn_CustomerAdd.ButtonStyle = BorderStyles.UltraFlat;
-            btn_CustomerAdd.ImageOptions.Image = (Image)resources.GetObject("btn_CustomerAdd.ImageOptions.Image");
             btn_CustomerAdd.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_CustomerAdd.Location = new Point(384, 54);
+            btn_CustomerAdd.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_CustomerAdd.ImageOptions.SvgImage");
+            btn_CustomerAdd.Location = new Point(368, 54);
             btn_CustomerAdd.Name = "btn_CustomerAdd";
             btn_CustomerAdd.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CustomerAdd.Size = new Size(60, 38);
+            btn_CustomerAdd.Size = new Size(76, 38);
             btn_CustomerAdd.StyleController = dataLayoutControl1;
             btn_CustomerAdd.TabIndex = 31;
             btn_CustomerAdd.Text = "simpleButton1";
@@ -506,12 +506,12 @@ namespace Foxoft
             btn_CustomerEdit.AppearancePressed.Options.UseBackColor = true;
             btn_CustomerEdit.AppearancePressed.Options.UseBorderColor = true;
             btn_CustomerEdit.ButtonStyle = BorderStyles.UltraFlat;
-            btn_CustomerEdit.ImageOptions.Image = (Image)resources.GetObject("btn_CustomerEdit.ImageOptions.Image");
             btn_CustomerEdit.ImageOptions.Location = ImageLocation.MiddleCenter;
-            btn_CustomerEdit.Location = new Point(384, 96);
+            btn_CustomerEdit.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btn_CustomerEdit.ImageOptions.SvgImage");
+            btn_CustomerEdit.Location = new Point(368, 96);
             btn_CustomerEdit.Name = "btn_CustomerEdit";
             btn_CustomerEdit.ShowFocusRectangle = DefaultBoolean.False;
-            btn_CustomerEdit.Size = new Size(60, 38);
+            btn_CustomerEdit.Size = new Size(76, 38);
             btn_CustomerEdit.StyleController = dataLayoutControl1;
             btn_CustomerEdit.TabIndex = 33;
             btn_CustomerEdit.Text = "simpleButton4";
@@ -539,7 +539,7 @@ namespace Foxoft
             ItemForCurrAccCode.Control = CurrAccCodeTextEdit;
             ItemForCurrAccCode.Location = new Point(0, 0);
             ItemForCurrAccCode.Name = "ItemForCurrAccCode";
-            ItemForCurrAccCode.Size = new Size(372, 24);
+            ItemForCurrAccCode.Size = new Size(356, 24);
             ItemForCurrAccCode.TextSize = new Size(79, 13);
             // 
             // ItemForCurrAccDesc
@@ -547,7 +547,7 @@ namespace Foxoft
             ItemForCurrAccDesc.Control = CurrAccDescTextEdit;
             ItemForCurrAccDesc.Location = new Point(0, 24);
             ItemForCurrAccDesc.Name = "ItemForCurrAccDesc";
-            ItemForCurrAccDesc.Size = new Size(372, 24);
+            ItemForCurrAccDesc.Size = new Size(356, 24);
             ItemForCurrAccDesc.TextSize = new Size(79, 13);
             // 
             // ItemForBonusCardNum
@@ -555,7 +555,7 @@ namespace Foxoft
             ItemForBonusCardNum.Control = BonusCardNumTextEdit;
             ItemForBonusCardNum.Location = new Point(0, 48);
             ItemForBonusCardNum.Name = "ItemForBonusCardNum";
-            ItemForBonusCardNum.Size = new Size(372, 24);
+            ItemForBonusCardNum.Size = new Size(356, 24);
             ItemForBonusCardNum.TextSize = new Size(79, 13);
             // 
             // ItemForAddress
@@ -563,7 +563,7 @@ namespace Foxoft
             ItemForAddress.Control = AddressTextEdit;
             ItemForAddress.Location = new Point(0, 72);
             ItemForAddress.Name = "ItemForAddress";
-            ItemForAddress.Size = new Size(372, 24);
+            ItemForAddress.Size = new Size(356, 24);
             ItemForAddress.TextSize = new Size(79, 13);
             // 
             // ItemForPhoneNum
@@ -571,31 +571,31 @@ namespace Foxoft
             ItemForPhoneNum.Control = PhoneNumTextEdit;
             ItemForPhoneNum.Location = new Point(0, 96);
             ItemForPhoneNum.Name = "ItemForPhoneNum";
-            ItemForPhoneNum.Size = new Size(372, 30);
+            ItemForPhoneNum.Size = new Size(356, 30);
             ItemForPhoneNum.TextSize = new Size(79, 13);
             // 
             // layoutControlItem3
             // 
             layoutControlItem3.Control = btn_CustomerSearch;
-            layoutControlItem3.Location = new Point(372, 0);
+            layoutControlItem3.Location = new Point(356, 0);
             layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new Size(64, 42);
+            layoutControlItem3.Size = new Size(80, 42);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             layoutControlItem4.Control = btn_CustomerAdd;
-            layoutControlItem4.Location = new Point(372, 42);
+            layoutControlItem4.Location = new Point(356, 42);
             layoutControlItem4.Name = "layoutControlItem4";
-            layoutControlItem4.Size = new Size(64, 42);
+            layoutControlItem4.Size = new Size(80, 42);
             layoutControlItem4.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             layoutControlItem5.Control = btn_CustomerEdit;
-            layoutControlItem5.Location = new Point(372, 84);
+            layoutControlItem5.Location = new Point(356, 84);
             layoutControlItem5.Name = "layoutControlItem5";
-            layoutControlItem5.Size = new Size(64, 42);
+            layoutControlItem5.Size = new Size(80, 42);
             layoutControlItem5.TextVisible = false;
             // 
             // ucNumberPad1

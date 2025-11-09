@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Foxoft.Properties;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,58 +11,59 @@ namespace Foxoft.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Cədvəl Dizaynı")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_GridViewLayout), ResourceType = typeof(Resources))]
         public string? GridViewLayout { get; set; }
 
-        [Display(Name = "Çap Edilsin")]
-        public bool GetPrint { get; set; }
+        [Display(Name = nameof(Resources.Entity_AppSetting_AutoPrint), ResourceType = typeof(Resources))]
+        public bool AutoPrint { get; set; }
 
-        [Display(Name = "Printer Adı")]
+
+        [Display(Name = nameof(Resources.Entity_AppSetting_PrinterName), ResourceType = typeof(Resources))]
         public string? PrinterName { get; set; }
 
-        [Display(Name = "Çap sayı")]
-        public int PrinterCopyNum { get; set; }
+        [Display(Name = nameof(Resources.Entity_AppSetting_PrintCount), ResourceType = typeof(Resources))]
+        public int PrintCount { get; set; }
 
-        [Display(Name = "Print Dizayn Yolu")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_PrintDesignPath), ResourceType = typeof(Resources))]
         public string? PrintDesignPath { get; set; }
 
-        [Display(Name = "Yerli Valyuta Kodu")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_LocalCurrencyCode), ResourceType = typeof(Resources))]
         public string? LocalCurrencyCode { get; set; }
 
-        [Display(Name = "Whatsapp Chrome Profil Adı")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_WhatsappChromeProfileName), ResourceType = typeof(Resources))]
         public string? WhatsappChromeProfileName { get; set; }
 
         [Display(Name = "Twilio Token")]
         public string? TwilioToken { get; set; }
 
-        [Display(Name = "Lisenziya")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_License), ResourceType = typeof(Resources))]
         public string? License { get; set; }
 
-        [Display(Name = "Son Tarix")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_DueDate), ResourceType = typeof(Resources))]
         public string? DueDate { get; set; }  // lazimsiz prop, silinecek
 
         [DefaultValue("0")]
-        [Display(Name = "Qiymət Cədvəli İstifadə Et")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_UsePriceList), ResourceType = typeof(Resources))]
         public bool UsePriceList { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Avtomatik Yadda Saxla")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_AutoSave), ResourceType = typeof(Resources))]
         public bool AutoSave { get; set; }
 
-        [Display(Name = "Faktura Redaktə Üçün Möhlət Günləri")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_InvoiceEditGraceDays), ResourceType = typeof(Resources))]
         public int? InvoiceEditGraceDays { get; set; }
 
-        [Display(Name = "Ödəniş Redaktə Üçün Möhlət Günləri")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_PaymentEditGraceDays), ResourceType = typeof(Resources))]
         public int? PaymentEditGraceDays { get; set; }
 
-        [Display(Name = "Çap sayı")]
         [ForeignKey("DcUnitOfMeasure")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_DefaultUnitOfMeasureId), ResourceType = typeof(Resources))]
         public int DefaultUnitOfMeasureId { get; set; }
 
-        [Display(Name = "Tərəzi İstifadə Et")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_UseScales), ResourceType = typeof(Resources))]
         public bool UseScales { get; set; }
 
-        [Display(Name = "Barkod İstifadə Et")]
+        [Display(Name = nameof(Resources.Entity_AppSetting_UseBarcode), ResourceType = typeof(Resources))]
         public bool UseBarcode { get; set; }
 
 

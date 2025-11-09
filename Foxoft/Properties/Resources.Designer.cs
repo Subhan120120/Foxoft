@@ -106,6 +106,15 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Common_Save {
+            get {
+                return ResourceManager.GetString("Common_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sensor Mode.
         /// </summary>
         public static string Common_SensorMode {
@@ -124,12 +133,155 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Auto Print.
         /// </summary>
-        public static System.Drawing.Bitmap CreditCard_32x32 {
+        public static string Entity_AppSetting_AutoPrint {
             get {
-                object obj = ResourceManager.GetObject("CreditCard-32x32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("Entity_AppSetting_AutoPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Save.
+        /// </summary>
+        public static string Entity_AppSetting_AutoSave {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_AutoSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Unit of MeasureId.
+        /// </summary>
+        public static string Entity_AppSetting_DefaultUnitOfMeasureId {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_DefaultUnitOfMeasureId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due Date.
+        /// </summary>
+        public static string Entity_AppSetting_DueDate {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_DueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GridView Layout.
+        /// </summary>
+        public static string Entity_AppSetting_GridViewLayout {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_GridViewLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Edit Grace Days.
+        /// </summary>
+        public static string Entity_AppSetting_InvoiceEditGraceDays {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_InvoiceEditGraceDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string Entity_AppSetting_License {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local Currency Code.
+        /// </summary>
+        public static string Entity_AppSetting_LocalCurrencyCode {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_LocalCurrencyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optimize Database Indexes ({0}%).
+        /// </summary>
+        public static string Entity_AppSetting_OptimizeDatabaseIndexes {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_OptimizeDatabaseIndexes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Edit Grace Days.
+        /// </summary>
+        public static string Entity_AppSetting_PaymentEditGraceDays {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_PaymentEditGraceDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Count.
+        /// </summary>
+        public static string Entity_AppSetting_PrintCount {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_PrintCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Design Path.
+        /// </summary>
+        public static string Entity_AppSetting_PrintDesignPath {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_PrintDesignPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printer Name.
+        /// </summary>
+        public static string Entity_AppSetting_PrinterName {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_PrinterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Barcode.
+        /// </summary>
+        public static string Entity_AppSetting_UseBarcode {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_UseBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Price List.
+        /// </summary>
+        public static string Entity_AppSetting_UsePriceList {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_UsePriceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Scales.
+        /// </summary>
+        public static string Entity_AppSetting_UseScales {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_UseScales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whatsapp Chrome Profile Name.
+        /// </summary>
+        public static string Entity_AppSetting_WhatsappChromeProfileName {
+            get {
+                return ResourceManager.GetString("Entity_AppSetting_WhatsappChromeProfileName", resourceCulture);
             }
         }
         
@@ -604,49 +756,9 @@ namespace Foxoft.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap registration_32px {
-            get {
-                object obj = ResourceManager.GetObject("registration_32px", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap search_client_32px {
-            get {
-                object obj = ResourceManager.GetObject("search_client_32px", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap startup {
-            get {
-                object obj = ResourceManager.GetObject("startup", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap startup550x363_png {
             get {
                 object obj = ResourceManager.GetObject("startup550x363.png", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap Untitled_32x32x {
-            get {
-                object obj = ResourceManager.GetObject("Untitled-32x32x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

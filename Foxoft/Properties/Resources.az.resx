@@ -294,4 +294,58 @@
   <data name="Common_InputMode" xml:space="preserve">
     <value>Giriş Modu</value>
   </data>
+  <data name="Entity_AppSetting_OptimizeDatabaseIndexes" xml:space="preserve">
+    <value>Verilənlər Bazası İndekslərini Optimallaşdırın ({0}%)</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Yadda Saxla</value>
+  </data>
+  <data name="Entity_AppSetting_AutoPrint" xml:space="preserve">
+    <value>Avtomatik Çap</value>
+  </data>
+  <data name="Entity_AppSetting_PrinterName" xml:space="preserve">
+    <value>Printer Adı</value>
+  </data>
+  <data name="Entity_AppSetting_UsePriceList" xml:space="preserve">
+    <value>Qiymət Cədvəli İstifadə Et</value>
+  </data>
+  <data name="Entity_AppSetting_PrintCount" xml:space="preserve">
+    <value>Çap Sayı</value>
+  </data>
+  <data name="Entity_AppSetting_PrintDesignPath" xml:space="preserve">
+    <value>Print Dizayn Yolu</value>
+  </data>
+  <data name="Entity_AppSetting_LocalCurrencyCode" xml:space="preserve">
+    <value>Yerli Valyuta Kodu</value>
+  </data>
+  <data name="Entity_AppSetting_WhatsappChromeProfileName" xml:space="preserve">
+    <value>Whatsapp Chrome Profil Adı</value>
+  </data>
+  <data name="Entity_AppSetting_License" xml:space="preserve">
+    <value>Lisenziya</value>
+  </data>
+  <data name="Entity_AppSetting_DueDate" xml:space="preserve">
+    <value>Son Tarix</value>
+  </data>
+  <data name="Entity_AppSetting_AutoSave" xml:space="preserve">
+    <value>Avtomatik Yadda Saxla</value>
+  </data>
+  <data name="Entity_AppSetting_GridViewLayout" xml:space="preserve">
+    <value>Cədvəl Dizaynı</value>
+  </data>
+  <data name="Entity_AppSetting_InvoiceEditGraceDays" xml:space="preserve">
+    <value>Faktura Redaktə Üçün Möhlət Günləri</value>
+  </data>
+  <data name="Entity_AppSetting_PaymentEditGraceDays" xml:space="preserve">
+    <value>Ödəniş Redaktə Üçün Möhlət Günləri</value>
+  </data>
+  <data name="Entity_AppSetting_DefaultUnitOfMeasureId" xml:space="preserve">
+    <value>Ölçü Vahidi ID</value>
+  </data>
+  <data name="Entity_AppSetting_UseScales" xml:space="preserve">
+    <value>Tərəzi İstifadə Et</value>
+  </data>
+  <data name="Entity_AppSetting_UseBarcode" xml:space="preserve">
+    <value>Barkod İstifadə Et</value>
+  </data>
 </root>

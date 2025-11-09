@@ -118,21 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="startup" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\startup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="registration_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\registration_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="search_client_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\search_client_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CreditCard-32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CreditCard-32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Untitled-32x32x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Untitled-32x32x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="startup550x363.png" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\startup550x363.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -312,5 +297,59 @@
   </data>
   <data name="Common_InputMode" xml:space="preserve">
     <value>Input Mode</value>
+  </data>
+  <data name="Entity_AppSetting_OptimizeDatabaseIndexes" xml:space="preserve">
+    <value>Optimize Database Indexes ({0}%)</value>
+  </data>
+  <data name="Common_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Entity_AppSetting_AutoPrint" xml:space="preserve">
+    <value>Auto Print</value>
+  </data>
+  <data name="Entity_AppSetting_PrinterName" xml:space="preserve">
+    <value>Printer Name</value>
+  </data>
+  <data name="Entity_AppSetting_UsePriceList" xml:space="preserve">
+    <value>Use Price List</value>
+  </data>
+  <data name="Entity_AppSetting_PrintCount" xml:space="preserve">
+    <value>Print Count</value>
+  </data>
+  <data name="Entity_AppSetting_PrintDesignPath" xml:space="preserve">
+    <value>Print Design Path</value>
+  </data>
+  <data name="Entity_AppSetting_LocalCurrencyCode" xml:space="preserve">
+    <value>Local Currency Code</value>
+  </data>
+  <data name="Entity_AppSetting_WhatsappChromeProfileName" xml:space="preserve">
+    <value>Whatsapp Chrome Profile Name</value>
+  </data>
+  <data name="Entity_AppSetting_License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Entity_AppSetting_DueDate" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
+  <data name="Entity_AppSetting_AutoSave" xml:space="preserve">
+    <value>Auto Save</value>
+  </data>
+  <data name="Entity_AppSetting_GridViewLayout" xml:space="preserve">
+    <value>GridView Layout</value>
+  </data>
+  <data name="Entity_AppSetting_InvoiceEditGraceDays" xml:space="preserve">
+    <value>Invoice Edit Grace Days</value>
+  </data>
+  <data name="Entity_AppSetting_PaymentEditGraceDays" xml:space="preserve">
+    <value>Payment Edit Grace Days</value>
+  </data>
+  <data name="Entity_AppSetting_DefaultUnitOfMeasureId" xml:space="preserve">
+    <value>Default Unit of MeasureId</value>
+  </data>
+  <data name="Entity_AppSetting_UseScales" xml:space="preserve">
+    <value>Use Scales</value>
+  </data>
+  <data name="Entity_AppSetting_UseBarcode" xml:space="preserve">
+    <value>Use Barcode</value>
   </data>
 </root>

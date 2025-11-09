@@ -1,4 +1,6 @@
-﻿namespace Foxoft
+﻿using Foxoft.Properties;
+
+namespace Foxoft
 {
     partial class FormAppSetting
     {
@@ -35,9 +37,9 @@
             btn_Save = new DevExpress.XtraEditors.SimpleButton();
             GridViewLayoutTextEdit = new DevExpress.XtraEditors.TextEdit();
             appSettingBindingSource = new BindingSource(components);
-            GetPrintCheckEdit = new DevExpress.XtraEditors.CheckEdit();
+            AutoPrintCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             PrinterNameTextEdit = new DevExpress.XtraEditors.TextEdit();
-            PrinterCopyNumSpinEdit = new DevExpress.XtraEditors.SpinEdit();
+            PrintCountSpinEdit = new DevExpress.XtraEditors.SpinEdit();
             PrintDesignPathButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
             LocalCurrencyCodeButtonEdit = new DevExpress.XtraEditors.ButtonEdit();
             WhatsappChromeProfileNameTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -49,7 +51,7 @@
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             ItemForGetPrint = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPrinterName = new DevExpress.XtraLayout.LayoutControlItem();
-            ItemForPrinterCopyNum = new DevExpress.XtraLayout.LayoutControlItem();
+            ItemForPrintCount = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForPrintDesignPath = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForLocalCurrencyCode = new DevExpress.XtraLayout.LayoutControlItem();
             ItemForWhatsappChromeProfileName = new DevExpress.XtraLayout.LayoutControlItem();
@@ -67,9 +69,9 @@
             dataLayoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)appSettingBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)GetPrintCheckEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)AutoPrintCheckEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PrinterNameTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)PrinterCopyNumSpinEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PrintCountSpinEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PrintDesignPathButtonEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LocalCurrencyCodeButtonEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)WhatsappChromeProfileNameTextEdit.Properties).BeginInit();
@@ -81,7 +83,7 @@
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPrinterName).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPrinterCopyNum).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPrintCount).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPrintDesignPath).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForLocalCurrencyCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).BeginInit();
@@ -101,9 +103,9 @@
             dataLayoutControl1.Controls.Add(btn_OptimizeDatabaseIndexes);
             dataLayoutControl1.Controls.Add(btn_Save);
             dataLayoutControl1.Controls.Add(GridViewLayoutTextEdit);
-            dataLayoutControl1.Controls.Add(GetPrintCheckEdit);
+            dataLayoutControl1.Controls.Add(AutoPrintCheckEdit);
             dataLayoutControl1.Controls.Add(PrinterNameTextEdit);
-            dataLayoutControl1.Controls.Add(PrinterCopyNumSpinEdit);
+            dataLayoutControl1.Controls.Add(PrintCountSpinEdit);
             dataLayoutControl1.Controls.Add(PrintDesignPathButtonEdit);
             dataLayoutControl1.Controls.Add(LocalCurrencyCodeButtonEdit);
             dataLayoutControl1.Controls.Add(WhatsappChromeProfileNameTextEdit);
@@ -129,7 +131,7 @@
             btn_OptimizeDatabaseIndexes.Size = new Size(482, 22);
             btn_OptimizeDatabaseIndexes.StyleController = dataLayoutControl1;
             btn_OptimizeDatabaseIndexes.TabIndex = 0;
-            btn_OptimizeDatabaseIndexes.Text = "Verilənlər bazası indekslərini optimallaşdırın";
+            btn_OptimizeDatabaseIndexes.Text = "Optimize Database Indexes";
             btn_OptimizeDatabaseIndexes.Click += Btn_OptimizeDatabaseIndexes_Click;
             // 
             // btn_Save
@@ -141,7 +143,7 @@
             btn_Save.Size = new Size(239, 63);
             btn_Save.StyleController = dataLayoutControl1;
             btn_Save.TabIndex = 2;
-            btn_Save.Text = "Yadda Saxla";
+            btn_Save.Text = Resources.Common_Save;
             btn_Save.Click += Btn_Save_Click;
             // 
             // GridViewLayoutTextEdit
@@ -159,14 +161,13 @@
             // 
             // GetPrintCheckEdit
             // 
-            GetPrintCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "GetPrint", true));
-            GetPrintCheckEdit.Location = new Point(12, 12);
-            GetPrintCheckEdit.Name = "GetPrintCheckEdit";
-            GetPrintCheckEdit.Properties.Caption = "Çap Edilsin";
-            GetPrintCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
-            GetPrintCheckEdit.Size = new Size(482, 20);
-            GetPrintCheckEdit.StyleController = dataLayoutControl1;
-            GetPrintCheckEdit.TabIndex = 4;
+            AutoPrintCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "AutoPrint", true));
+            AutoPrintCheckEdit.Location = new Point(12, 12);
+            AutoPrintCheckEdit.Name = "GetPrintCheckEdit";
+            AutoPrintCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
+            AutoPrintCheckEdit.Size = new Size(482, 20);
+            AutoPrintCheckEdit.StyleController = dataLayoutControl1;
+            AutoPrintCheckEdit.TabIndex = 4;
             // 
             // PrinterNameTextEdit
             // 
@@ -179,19 +180,19 @@
             // 
             // PrinterCopyNumSpinEdit
             // 
-            PrinterCopyNumSpinEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "PrinterCopyNum", true));
-            PrinterCopyNumSpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
-            PrinterCopyNumSpinEdit.Location = new Point(202, 60);
-            PrinterCopyNumSpinEdit.Name = "PrinterCopyNumSpinEdit";
-            PrinterCopyNumSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
-            PrinterCopyNumSpinEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            PrinterCopyNumSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            PrinterCopyNumSpinEdit.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
-            PrinterCopyNumSpinEdit.Properties.Mask.EditMask = "N0";
-            PrinterCopyNumSpinEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
-            PrinterCopyNumSpinEdit.Size = new Size(292, 20);
-            PrinterCopyNumSpinEdit.StyleController = dataLayoutControl1;
-            PrinterCopyNumSpinEdit.TabIndex = 6;
+            PrintCountSpinEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "PrintCount", true));
+            PrintCountSpinEdit.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
+            PrintCountSpinEdit.Location = new Point(202, 60);
+            PrintCountSpinEdit.Name = "PrinterCopyNumSpinEdit";
+            PrintCountSpinEdit.Properties.Appearance.Options.UseTextOptions = true;
+            PrintCountSpinEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            PrintCountSpinEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            PrintCountSpinEdit.Properties.EditValueChangedFiringMode = DevExpress.XtraEditors.Controls.EditValueChangedFiringMode.Default;
+            PrintCountSpinEdit.Properties.Mask.EditMask = "N0";
+            PrintCountSpinEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            PrintCountSpinEdit.Size = new Size(292, 20);
+            PrintCountSpinEdit.StyleController = dataLayoutControl1;
+            PrintCountSpinEdit.TabIndex = 6;
             // 
             // PrintDesignPathButtonEdit
             // 
@@ -227,7 +228,6 @@
             UsePriceListCheckEdit.DataBindings.Add(new Binding("EditValue", appSettingBindingSource, "UsePriceList", true));
             UsePriceListCheckEdit.Location = new Point(12, 156);
             UsePriceListCheckEdit.Name = "UsePriceListCheckEdit";
-            UsePriceListCheckEdit.Properties.Caption = "Qiymət Cədvəli İstifadə Et";
             UsePriceListCheckEdit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             UsePriceListCheckEdit.Size = new Size(482, 20);
             UsePriceListCheckEdit.StyleController = dataLayoutControl1;
@@ -291,14 +291,14 @@
             // 
             layoutControlGroup1.AllowDrawBackground = false;
             layoutControlGroup1.GroupBordersVisible = false;
-            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrinterName, ItemForPrinterCopyNum, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForWhatsappChromeProfileName, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory });
+            layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { ItemForGetPrint, ItemForPrinterName, ItemForPrintCount, ItemForPrintDesignPath, ItemForLocalCurrencyCode, ItemForWhatsappChromeProfileName, ItemForUsePriceList, ItemForAutoSave, ItemForInvoiceEditGraceDays, ItemForPaymentEditGraceDays, emptySpaceItem1, layoutControlItem1, layoutControlItem2, ItemForGridViewLayout, LCI_ClearMemory });
             layoutControlGroup1.Location = new Point(0, 0);
             layoutControlGroup1.Name = "autoGeneratedGroup0";
             layoutControlGroup1.Size = new Size(486, 383);
             // 
             // ItemForGetPrint
             // 
-            ItemForGetPrint.Control = GetPrintCheckEdit;
+            ItemForGetPrint.Control = AutoPrintCheckEdit;
             ItemForGetPrint.Location = new Point(0, 0);
             ItemForGetPrint.Name = "ItemForGetPrint";
             ItemForGetPrint.Size = new Size(486, 24);
@@ -314,11 +314,11 @@
             // 
             // ItemForPrinterCopyNum
             // 
-            ItemForPrinterCopyNum.Control = PrinterCopyNumSpinEdit;
-            ItemForPrinterCopyNum.Location = new Point(0, 48);
-            ItemForPrinterCopyNum.Name = "ItemForPrinterCopyNum";
-            ItemForPrinterCopyNum.Size = new Size(486, 24);
-            ItemForPrinterCopyNum.TextSize = new Size(178, 13);
+            ItemForPrintCount.Control = PrintCountSpinEdit;
+            ItemForPrintCount.Location = new Point(0, 48);
+            ItemForPrintCount.Name = "ItemForPrinterCopyNum";
+            ItemForPrintCount.Size = new Size(486, 24);
+            ItemForPrintCount.TextSize = new Size(178, 13);
             // 
             // ItemForPrintDesignPath
             // 
@@ -424,7 +424,7 @@
             LCI_ClearMemory.Name = "LCI_ClearMemory";
             LCI_ClearMemory.Size = new Size(486, 26);
             LCI_ClearMemory.TextVisible = false;
-            LCI_ClearMemory.Click += Btn_ClearMemory_Click; 
+            LCI_ClearMemory.Click += Btn_ClearMemory_Click;
             // 
             // FormAppSetting
             // 
@@ -439,9 +439,9 @@
             dataLayoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)GridViewLayoutTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)appSettingBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)GetPrintCheckEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AutoPrintCheckEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PrinterNameTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)PrinterCopyNumSpinEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PrintCountSpinEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PrintDesignPathButtonEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LocalCurrencyCodeButtonEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)WhatsappChromeProfileNameTextEdit.Properties).EndInit();
@@ -453,7 +453,7 @@
             ((System.ComponentModel.ISupportInitialize)layoutControlGroup1).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForGetPrint).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPrinterName).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ItemForPrinterCopyNum).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ItemForPrintCount).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForPrintDesignPath).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForLocalCurrencyCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)ItemForWhatsappChromeProfileName).EndInit();
@@ -478,9 +478,8 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraEditors.TextEdit GridViewLayoutTextEdit;
         private BindingSource appSettingBindingSource;
-        private DevExpress.XtraEditors.CheckEdit GetPrintCheckEdit;
+        private DevExpress.XtraEditors.CheckEdit AutoPrintCheckEdit;
         private DevExpress.XtraEditors.TextEdit PrinterNameTextEdit;
-        private DevExpress.XtraEditors.TextEdit PrinterCopyNumTextEdit;
         private DevExpress.XtraEditors.TextEdit PrintDesignPathTextEdit;
         private DevExpress.XtraEditors.TextEdit LocalCurrencyCodeTextEdit;
         private DevExpress.XtraEditors.TextEdit TwilioTokenTextEdit;
@@ -500,13 +499,13 @@
         private DevExpress.XtraEditors.ButtonEdit PrintDesignPathButtonEdit;
         private DevExpress.XtraEditors.SpinEdit InvoiceEditGraceDaysSpinEdit;
         private DevExpress.XtraEditors.SpinEdit PaymentEditGraceDaysSpinEdit;
-        private DevExpress.XtraEditors.SpinEdit PrinterCopyNumSpinEdit;
+        private DevExpress.XtraEditors.SpinEdit PrintCountSpinEdit;
         private DevExpress.XtraEditors.ButtonEdit LocalCurrencyCodeButtonEdit;
         private DevExpress.XtraEditors.TextEdit WhatsappChromeProfileNameTextEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForGridViewLayout;
         private DevExpress.XtraLayout.LayoutControlItem ItemForGetPrint;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPrinterName;
-        private DevExpress.XtraLayout.LayoutControlItem ItemForPrinterCopyNum;
+        private DevExpress.XtraLayout.LayoutControlItem ItemForPrintCount;
         private DevExpress.XtraLayout.LayoutControlItem ItemForPrintDesignPath;
         private DevExpress.XtraLayout.LayoutControlItem ItemForLocalCurrencyCode;
         private DevExpress.XtraLayout.LayoutControlItem ItemForWhatsappChromeProfileName;

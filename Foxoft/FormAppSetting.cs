@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using Foxoft.Models;
+using Foxoft.Properties;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
@@ -19,8 +20,6 @@ namespace Foxoft
         private void FormAppSetting_Load(object sender, EventArgs e)
         {
             FillDataLayout();
-
-            btn_OptimizeDatabaseIndexes.Text = "Verilənlər bazası indekslərini optimallaşdırın (" + adoMethods.DatabaseAVGFragmentationPercent() + "%)";
         }
 
 
@@ -41,17 +40,13 @@ namespace Foxoft
         private void Btn_OptimizeDatabaseIndexes_Click(object sender, EventArgs e)
         {
             adoMethods.RebuldOrReorganizeDatabase();
-            btn_OptimizeDatabaseIndexes.Text = "Verilənlər bazası indekslərini optimallaşdırın (" + adoMethods.DatabaseAVGFragmentationPercent() + "%)";
+            btn_OptimizeDatabaseIndexes.Text = string.Format(Resources.Entity_AppSetting_OptimizeDatabaseIndexes, adoMethods.DatabaseAVGFragmentationPercent());
         }
 
         private void Btn_ClearMemory_Click(object sender, EventArgs e)
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
-        }
-
-        private void ShowDatabaseFragPercent()
-        {
         }
     }
 }

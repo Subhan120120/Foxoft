@@ -365,7 +365,7 @@ namespace Foxoft
                     {
                         efMethods.UpdateInvoiceIsCompleted(trInvoiceHeader.InvoiceHeaderId);
 
-                        if (Settings.Default.AppSetting.GetPrint == true)
+                        if (Settings.Default.AppSetting.AutoPrint == true)
                         {
                             string designPath = Settings.Default.AppSetting.PrintDesignPath;
                             if (!File.Exists(designPath))
