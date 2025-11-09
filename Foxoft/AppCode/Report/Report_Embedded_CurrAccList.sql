@@ -6,6 +6,7 @@ select DcCurrAccs.CurrAccCode
 , PhoneNum
 , IsVIP
 , CurrAccTypeCode
+, IsDisabled
 from 
 DcCurrAccs 
 left join 
@@ -25,7 +26,7 @@ left join
 	, Amount = PaymentLoc -- 200 usd
 	from TrPaymentLines pl
 	left join TrPaymentHeaders ph on pl.PaymentHeaderId = ph.PaymentHeaderId	
-	where 1=1 AND pl.PaymentTypeCode != 5
+	where 1=1 AND pl.PaymentTypeCode != 4
 	--and (CAST(ph.OperationDate AS DATETIME) + CAST(ph.OperationTime AS DATETIME)) <=
 	--(CAST(@EndDate AS DATETIME) + CAST(@EndTime AS DATETIME))
 ) as balance on balance.CurrAccCode = DcCurrAccs.CurrAccCode
@@ -37,4 +38,5 @@ group by DcCurrAccs.CurrAccCode
 , PhoneNum
 , IsVIP
 , CurrAccTypeCode
+, IsDisabled
 order by CurrAccDesc

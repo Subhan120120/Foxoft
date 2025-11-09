@@ -124,11 +124,9 @@ namespace Foxoft
                         string subTypeArr = String.Join(",", personalTypes);
                         clause += "AND PersonalTypeCode in (" + subTypeArr + ") ";
                     }
-
-                    if (isDisabled.HasValue)
+                    if (isDisabled is bool value)
                     {
-                        string dbValue = (bool)isDisabled ? "1" : "0";
-                        clause = clause + $"AND IsDisabled = {dbValue}";
+                        clause += $" AND IsDisabled = {(value ? 1 : 0)}";
                     }
 
                     SqlParameter[] sqlParameters;
