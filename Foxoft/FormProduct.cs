@@ -89,12 +89,6 @@ namespace Foxoft
             ProductCodeTextEdit.Properties.Appearance.BackColor = Color.LightGray;
         }
 
-        private void InitializeGallery()
-        {
-            galleryItemGroup1.Caption = "Product Images";
-            galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
-        }
-
         private void InitializeControlText()
         {
             layoutControlItem6.Name = ReflectionExt.GetDisplayName<SiteProduct>(x => x.Price);
@@ -411,24 +405,25 @@ namespace Foxoft
                 Image loadedImage = Image.FromFile(openFileDialog.FileName);
 
                 if (!Directory.Exists(productFolder))
+                    Directory.CreateDirectory(productFolder);
+
+                string fileName = "";
+                for (int i = 1; i <= 50; i++)
                 {
-                    string fileName = "";
-                    for (int i = 1; i <= 50; i++)
-                    {
-                        fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
-                        string filePath = Path.Combine(productFolder, fileName);
-                        if (!File.Exists(filePath))
-                            break;
-                    }
-
-                    string savePath = Path.Combine(productFolder, fileName);
-
-                    loadedImage.Save(savePath, ImageFormat.Jpeg);
-
-                    LoadGalleryImages();
+                    fileName = $"{dcProduct.ProductCode}-00{i}.jpg";
+                    string filePath = Path.Combine(productFolder, fileName);
+                    if (!File.Exists(filePath))
+                        break;
                 }
+
+                string savePath = Path.Combine(productFolder, fileName);
+
+                loadedImage.Save(savePath, ImageFormat.Jpeg);
+
+                LoadGalleryImages();
             }
         }
+
 
         private void BBI_GalleryCopy_ItemClick(object sender, ItemClickEventArgs e)
         {
