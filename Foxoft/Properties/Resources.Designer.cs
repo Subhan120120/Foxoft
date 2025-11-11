@@ -61,11 +61,74 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Common_Address {
+            get {
+                return ResourceManager.GetString("Common_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string Common_Apply {
+            get {
+                return ResourceManager.GetString("Common_Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attention.
         /// </summary>
         public static string Common_Attention {
             get {
                 return ResourceManager.GetString("Common_Attention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        public static string Common_Balance {
+            get {
+                return ResourceManager.GetString("Common_Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        public static string Common_Barcode {
+            get {
+                return ResourceManager.GetString("Common_Barcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Common_Copy {
+            get {
+                return ResourceManager.GetString("Common_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Common_Delete {
+            get {
+                return ResourceManager.GetString("Common_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount.
+        /// </summary>
+        public static string Common_Discount {
+            get {
+                return ResourceManager.GetString("Common_Discount", resourceCulture);
             }
         }
         
@@ -79,11 +142,47 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feature.
+        /// </summary>
+        public static string Common_Feature {
+            get {
+                return ResourceManager.GetString("Common_Feature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identity.
+        /// </summary>
+        public static string Common_Identity {
+            get {
+                return ResourceManager.GetString("Common_Identity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input Mode.
         /// </summary>
         public static string Common_InputMode {
             get {
                 return ResourceManager.GetString("Common_InputMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Disabled.
+        /// </summary>
+        public static string Common_IsDisabled {
+            get {
+                return ResourceManager.GetString("Common_IsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string Common_Load {
+            get {
+                return ResourceManager.GetString("Common_Load", resourceCulture);
             }
         }
         
@@ -97,11 +196,47 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string Common_Paste {
+            get {
+                return ResourceManager.GetString("Common_Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string Common_Phone {
+            get {
+                return ResourceManager.GetString("Common_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PriceList.
+        /// </summary>
+        public static string Common_PriceList {
+            get {
+                return ResourceManager.GetString("Common_PriceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit Program.
         /// </summary>
         public static string Common_QuitProgram {
             get {
                 return ResourceManager.GetString("Common_QuitProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guid Id.
+        /// </summary>
+        public static string Common_RowGuid {
+            get {
+                return ResourceManager.GetString("Common_RowGuid", resourceCulture);
             }
         }
         
@@ -115,11 +250,29 @@ namespace Foxoft.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scales.
+        /// </summary>
+        public static string Common_Scales {
+            get {
+                return ResourceManager.GetString("Common_Scales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sensor Mode.
         /// </summary>
         public static string Common_SensorMode {
             get {
                 return ResourceManager.GetString("Common_SensorMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site.
+        /// </summary>
+        public static string Common_Site {
+            get {
+                return ResourceManager.GetString("Common_Site", resourceCulture);
             }
         }
         
@@ -282,6 +435,4236 @@ namespace Foxoft.Properties {
         public static string Entity_AppSetting_WhatsappChromeProfileName {
             get {
                 return ResourceManager.GetString("Entity_AppSetting_WhatsappChromeProfileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Type.
+        /// </summary>
+        public static string Entity_BarcodeType {
+            get {
+                return ResourceManager.GetString("Entity_BarcodeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Type Code.
+        /// </summary>
+        public static string Entity_BarcodeType_Code {
+            get {
+                return ResourceManager.GetString("Entity_BarcodeType_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Barcode Type.
+        /// </summary>
+        public static string Entity_BarcodeType_Default {
+            get {
+                return ResourceManager.GetString("Entity_BarcodeType_Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Type Description.
+        /// </summary>
+        public static string Entity_BarcodeType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_BarcodeType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created Date.
+        /// </summary>
+        public static string Entity_Base_CreatedDate {
+            get {
+                return ResourceManager.GetString("Entity_Base_CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created User.
+        /// </summary>
+        public static string Entity_Base_CreatedUserName {
+            get {
+                return ResourceManager.GetString("Entity_Base_CreatedUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Updated Date.
+        /// </summary>
+        public static string Entity_Base_LastUpdatedDate {
+            get {
+                return ResourceManager.GetString("Entity_Base_LastUpdatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Updated User.
+        /// </summary>
+        public static string Entity_Base_LastUpdatedUserName {
+            get {
+                return ResourceManager.GetString("Entity_Base_LastUpdatedUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim.
+        /// </summary>
+        public static string Entity_Claim {
+            get {
+                return ResourceManager.GetString("Entity_Claim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Category.
+        /// </summary>
+        public static string Entity_Claim_CategoryId {
+            get {
+                return ResourceManager.GetString("Entity_Claim_CategoryId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Code.
+        /// </summary>
+        public static string Entity_Claim_Code {
+            get {
+                return ResourceManager.GetString("Entity_Claim_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Description.
+        /// </summary>
+        public static string Entity_Claim_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Claim_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_Claim_Id {
+            get {
+                return ResourceManager.GetString("Entity_Claim_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Type.
+        /// </summary>
+        public static string Entity_Claim_TypeId {
+            get {
+                return ResourceManager.GetString("Entity_Claim_TypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Hierarchy.
+        /// </summary>
+        public static string Entity_ClaimCategory {
+            get {
+                return ResourceManager.GetString("Entity_ClaimCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Description.
+        /// </summary>
+        public static string Entity_ClaimCategory_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ClaimCategory_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Id.
+        /// </summary>
+        public static string Entity_ClaimCategory_Id {
+            get {
+                return ResourceManager.GetString("Entity_ClaimCategory_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Level.
+        /// </summary>
+        public static string Entity_ClaimCategory_Level {
+            get {
+                return ResourceManager.GetString("Entity_ClaimCategory_Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Entity_ClaimCategory_Order {
+            get {
+                return ResourceManager.GetString("Entity_ClaimCategory_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Category Id.
+        /// </summary>
+        public static string Entity_ClaimCategory_ParentId {
+            get {
+                return ResourceManager.GetString("Entity_ClaimCategory_ParentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Permission.
+        /// </summary>
+        public static string Entity_ClaimReport {
+            get {
+                return ResourceManager.GetString("Entity_ClaimReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Code.
+        /// </summary>
+        public static string Entity_ClaimReport_ClaimCode {
+            get {
+                return ResourceManager.GetString("Entity_ClaimReport_ClaimCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Report Id.
+        /// </summary>
+        public static string Entity_ClaimReport_Id {
+            get {
+                return ResourceManager.GetString("Entity_ClaimReport_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Id.
+        /// </summary>
+        public static string Entity_ClaimReport_ReportId {
+            get {
+                return ResourceManager.GetString("Entity_ClaimReport_ReportId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Type.
+        /// </summary>
+        public static string Entity_ClaimType {
+            get {
+                return ResourceManager.GetString("Entity_ClaimType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Type Description.
+        /// </summary>
+        public static string Entity_ClaimType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ClaimType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Type Id.
+        /// </summary>
+        public static string Entity_ClaimType_Id {
+            get {
+                return ResourceManager.GetString("Entity_ClaimType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        public static string Entity_Company {
+            get {
+                return ResourceManager.GetString("Entity_Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company Code.
+        /// </summary>
+        public static string Entity_Company_Code {
+            get {
+                return ResourceManager.GetString("Entity_Company_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company Description.
+        /// </summary>
+        public static string Entity_Company_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Company_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Disabled.
+        /// </summary>
+        public static string Entity_Company_IsDisabled {
+            get {
+                return ResourceManager.GetString("Entity_Company_IsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guid Id.
+        /// </summary>
+        public static string Entity_Company_RowGuid {
+            get {
+                return ResourceManager.GetString("Entity_Company_RowGuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Detail Type.
+        /// </summary>
+        public static string Entity_ContactType {
+            get {
+                return ResourceManager.GetString("Entity_ContactType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Value.
+        /// </summary>
+        public static string Entity_ContactType_DefaultValue {
+            get {
+                return ResourceManager.GetString("Entity_ContactType_DefaultValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Detail Type Description.
+        /// </summary>
+        public static string Entity_ContactType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ContactType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Detail Type Id.
+        /// </summary>
+        public static string Entity_ContactType_Id {
+            get {
+                return ResourceManager.GetString("Entity_ContactType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Number Format.
+        /// </summary>
+        public static string Entity_ContactType_PhoneNumberFormat {
+            get {
+                return ResourceManager.GetString("Entity_ContactType_PhoneNumberFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Entity_CurrAcc {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birth Date.
+        /// </summary>
+        public static string Entity_CurrAcc_BirthDate {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_BirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bonus Card.
+        /// </summary>
+        public static string Entity_CurrAcc_BonusCardNum {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_BonusCardNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Register Payment Type.
+        /// </summary>
+        public static string Entity_CurrAcc_CashRegPaymentType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_CashRegPaymentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Code.
+        /// </summary>
+        public static string Entity_CurrAcc_Code {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string Entity_CurrAcc_ConfirmPassword {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit Limit.
+        /// </summary>
+        public static string Entity_CurrAcc_CreditLimit {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_CreditLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Discount Rate.
+        /// </summary>
+        public static string Entity_CurrAcc_CustomerPosDiscountRate {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_CustomerPosDiscountRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Type.
+        /// </summary>
+        public static string Entity_CurrAcc_CustomerType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_CustomerType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Name.
+        /// </summary>
+        public static string Entity_CurrAcc_Desc {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Father&apos;s Name.
+        /// </summary>
+        public static string Entity_CurrAcc_FatherName {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_FatherName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string Entity_CurrAcc_FirstName {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Number.
+        /// </summary>
+        public static string Entity_CurrAcc_IdentityNum {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_IdentityNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Customer.
+        /// </summary>
+        public static string Entity_CurrAcc_IsDefault {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_IsDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Language.
+        /// </summary>
+        public static string Entity_CurrAcc_Language {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string Entity_CurrAcc_LastName {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Password.
+        /// </summary>
+        public static string Entity_CurrAcc_NewPassword {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        public static string Entity_CurrAcc_Office {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_Office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal Type.
+        /// </summary>
+        public static string Entity_CurrAcc_PersonalType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_PersonalType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Code.
+        /// </summary>
+        public static string Entity_CurrAcc_StoreCode {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_StoreCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Number.
+        /// </summary>
+        public static string Entity_CurrAcc_TaxNum {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_TaxNum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Type.
+        /// </summary>
+        public static string Entity_CurrAcc_Type {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor Type.
+        /// </summary>
+        public static string Entity_CurrAcc_VendorType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_VendorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VIP.
+        /// </summary>
+        public static string Entity_CurrAcc_VIP {
+            get {
+                return ResourceManager.GetString("Entity_CurrAcc_VIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Contact Details.
+        /// </summary>
+        public static string Entity_CurrAccContactDetail {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccContactDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Detail Description.
+        /// </summary>
+        public static string Entity_CurrAccContactDetail_Desc {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccContactDetail_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Detail Id.
+        /// </summary>
+        public static string Entity_CurrAccContactDetail_Id {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccContactDetail_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Feature.
+        /// </summary>
+        public static string Entity_CurrAccFeature {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Code.
+        /// </summary>
+        public static string Entity_CurrAccFeature_Code {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeature_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Description.
+        /// </summary>
+        public static string Entity_CurrAccFeature_Desc {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeature_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_CurrAccFeature_TypeId {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeature_TypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Feature.
+        /// </summary>
+        public static string Entity_CurrAccFeatureLink {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeatureLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Feature Type.
+        /// </summary>
+        public static string Entity_CurrAccFeatureType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeatureType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filterable.
+        /// </summary>
+        public static string Entity_CurrAccFeatureType_Filterable {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeatureType_Filterable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_CurrAccFeatureType_Id {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeatureType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Name.
+        /// </summary>
+        public static string Entity_CurrAccFeatureType_Name {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeatureType_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Entity_CurrAccFeatureType_Order {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccFeatureType_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Role.
+        /// </summary>
+        public static string Entity_CurrAccRole {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Entity_CurrAccRole_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRole_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Role Id.
+        /// </summary>
+        public static string Entity_CurrAccRole_Id {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRole_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string Entity_CurrAccRole_RoleCode {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccRole_RoleCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Type.
+        /// </summary>
+        public static string Entity_CurrAccType {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Type Code.
+        /// </summary>
+        public static string Entity_CurrAccType_Code {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccType_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Type Description.
+        /// </summary>
+        public static string Entity_CurrAccType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_CurrAccType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Entity_Currency {
+            get {
+                return ResourceManager.GetString("Entity_Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Entity_Currency_Code {
+            get {
+                return ResourceManager.GetString("Entity_Currency_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency Description.
+        /// </summary>
+        public static string Entity_Currency_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Currency_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exchange Rate.
+        /// </summary>
+        public static string Entity_Currency_ExchangeRate {
+            get {
+                return ResourceManager.GetString("Entity_Currency_ExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount.
+        /// </summary>
+        public static string Entity_Discount {
+            get {
+                return ResourceManager.GetString("Entity_Discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Name.
+        /// </summary>
+        public static string Entity_Discount_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Discount_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Id.
+        /// </summary>
+        public static string Entity_Discount_Id {
+            get {
+                return ResourceManager.GetString("Entity_Discount_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percent.
+        /// </summary>
+        public static string Entity_Discount_Percent {
+            get {
+                return ResourceManager.GetString("Entity_Discount_Percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature.
+        /// </summary>
+        public static string Entity_Feature {
+            get {
+                return ResourceManager.GetString("Entity_Feature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Code.
+        /// </summary>
+        public static string Entity_Feature_Code {
+            get {
+                return ResourceManager.GetString("Entity_Feature_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Description.
+        /// </summary>
+        public static string Entity_Feature_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Feature_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_Feature_TypeId {
+            get {
+                return ResourceManager.GetString("Entity_Feature_TypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type.
+        /// </summary>
+        public static string Entity_FeatureType {
+            get {
+                return ResourceManager.GetString("Entity_FeatureType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filterable.
+        /// </summary>
+        public static string Entity_FeatureType_Filterable {
+            get {
+                return ResourceManager.GetString("Entity_FeatureType_Filterable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_FeatureType_Id {
+            get {
+                return ResourceManager.GetString("Entity_FeatureType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Name.
+        /// </summary>
+        public static string Entity_FeatureType_Name {
+            get {
+                return ResourceManager.GetString("Entity_FeatureType_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Entity_FeatureType_Order {
+            get {
+                return ResourceManager.GetString("Entity_FeatureType_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Form.
+        /// </summary>
+        public static string Entity_Form {
+            get {
+                return ResourceManager.GetString("Entity_Form", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Form Code.
+        /// </summary>
+        public static string Entity_Form_Code {
+            get {
+                return ResourceManager.GetString("Entity_Form_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Form Description.
+        /// </summary>
+        public static string Entity_Form_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Form_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Form Report.
+        /// </summary>
+        public static string Entity_FormReport {
+            get {
+                return ResourceManager.GetString("Entity_FormReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Form Code.
+        /// </summary>
+        public static string Entity_FormReport_FormCode {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_FormCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Id.
+        /// </summary>
+        public static string Entity_FormReport_ReportId {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_ReportId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shortcut.
+        /// </summary>
+        public static string Entity_FormReport_Shortcut {
+            get {
+                return ResourceManager.GetString("Entity_FormReport_Shortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy.
+        /// </summary>
+        public static string Entity_Hierarchy {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy Code.
+        /// </summary>
+        public static string Entity_Hierarchy_Code {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy Description.
+        /// </summary>
+        public static string Entity_Hierarchy_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_Hierarchy_Id {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy Level.
+        /// </summary>
+        public static string Entity_Hierarchy_Level {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy_Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Entity_Hierarchy_Order {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Hierarchy Code.
+        /// </summary>
+        public static string Entity_Hierarchy_ParentCode {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy_ParentCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slug.
+        /// </summary>
+        public static string Entity_Hierarchy_Slug {
+            get {
+                return ResourceManager.GetString("Entity_Hierarchy_Slug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy Feature Type.
+        /// </summary>
+        public static string Entity_HierarchyFeatureType {
+            get {
+                return ResourceManager.GetString("Entity_HierarchyFeatureType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment.
+        /// </summary>
+        public static string Entity_Installment {
+            get {
+                return ResourceManager.GetString("Entity_Installment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission.
+        /// </summary>
+        public static string Entity_Installment_Commission {
+            get {
+                return ResourceManager.GetString("Entity_Installment_Commission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Date.
+        /// </summary>
+        public static string Entity_Installment_Date {
+            get {
+                return ResourceManager.GetString("Entity_Installment_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due Amount.
+        /// </summary>
+        public static string Entity_Installment_DueAmount {
+            get {
+                return ResourceManager.GetString("Entity_Installment_DueAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Id.
+        /// </summary>
+        public static string Entity_Installment_Id {
+            get {
+                return ResourceManager.GetString("Entity_Installment_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interest Rate (%).
+        /// </summary>
+        public static string Entity_Installment_InterestRate {
+            get {
+                return ResourceManager.GetString("Entity_Installment_InterestRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Id.
+        /// </summary>
+        public static string Entity_Installment_InvoiceHeaderId {
+            get {
+                return ResourceManager.GetString("Entity_Installment_InvoiceHeaderId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monthly Payment.
+        /// </summary>
+        public static string Entity_Installment_MonthlyPayment {
+            get {
+                return ResourceManager.GetString("Entity_Installment_MonthlyPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overdue Date.
+        /// </summary>
+        public static string Entity_Installment_OverdueDate {
+            get {
+                return ResourceManager.GetString("Entity_Installment_OverdueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overdue Days.
+        /// </summary>
+        public static string Entity_Installment_OverdueDays {
+            get {
+                return ResourceManager.GetString("Entity_Installment_OverdueDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Plan Code.
+        /// </summary>
+        public static string Entity_Installment_PlanCode {
+            get {
+                return ResourceManager.GetString("Entity_Installment_PlanCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining Balance.
+        /// </summary>
+        public static string Entity_Installment_RemainingBalance {
+            get {
+                return ResourceManager.GetString("Entity_Installment_RemainingBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Paid.
+        /// </summary>
+        public static string Entity_Installment_TotalPaid {
+            get {
+                return ResourceManager.GetString("Entity_Installment_TotalPaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Guarantor.
+        /// </summary>
+        public static string Entity_InstallmentGuarantor {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentGuarantor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Entity_InstallmentGuarantor_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentGuarantor_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Guarantor Id.
+        /// </summary>
+        public static string Entity_InstallmentGuarantor_Id {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentGuarantor_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Id.
+        /// </summary>
+        public static string Entity_InstallmentGuarantor_InstallmentId {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentGuarantor_InstallmentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Plan.
+        /// </summary>
+        public static string Entity_InstallmentPlan {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Plan Code.
+        /// </summary>
+        public static string Entity_InstallmentPlan_Code {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentPlan_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Plan Description.
+        /// </summary>
+        public static string Entity_InstallmentPlan_Desc {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentPlan_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration (Months).
+        /// </summary>
+        public static string Entity_InstallmentPlan_DurationInMonths {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentPlan_DurationInMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interest Rate.
+        /// </summary>
+        public static string Entity_InstallmentPlan_InterestRate {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentPlan_InterestRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Default.
+        /// </summary>
+        public static string Entity_InstallmentPlan_IsDefault {
+            get {
+                return ResourceManager.GetString("Entity_InstallmentPlan_IsDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Header.
+        /// </summary>
+        public static string Entity_InvoiceHeader {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Name.
+        /// </summary>
+        public static string Entity_InvoiceHeader_CurrAccDesc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_CurrAccDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customs Doc. Number.
+        /// </summary>
+        public static string Entity_InvoiceHeader_CustomsDocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_CustomsDocumentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Entity_InvoiceHeader_Description {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Date.
+        /// </summary>
+        public static string Entity_InvoiceHeader_DocumentDate {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_DocumentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Number.
+        /// </summary>
+        public static string Entity_InvoiceHeader_DocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_DocumentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Time.
+        /// </summary>
+        public static string Entity_InvoiceHeader_DocumentTime {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_DocumentTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiscal Print State.
+        /// </summary>
+        public static string Entity_InvoiceHeader_FiscalPrintedState {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_FiscalPrintedState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsCompleted {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locked.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsLocked {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Transfer.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsMainTF {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsMainTF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsOpen {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Return.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsReturn {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales via Internet.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsSalesViaInternet {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsSalesViaInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsSent {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspended.
+        /// </summary>
+        public static string Entity_InvoiceHeader_IsSuspended {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_IsSuspended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        public static string Entity_InvoiceHeader_OfficeCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_OfficeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation Date.
+        /// </summary>
+        public static string Entity_InvoiceHeader_OperationDate {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_OperationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation Time.
+        /// </summary>
+        public static string Entity_InvoiceHeader_OperationTime {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_OperationTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS Terminal.
+        /// </summary>
+        public static string Entity_InvoiceHeader_PosTerminalId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_PosTerminalId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Count.
+        /// </summary>
+        public static string Entity_InvoiceHeader_PrintCount {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_PrintCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process.
+        /// </summary>
+        public static string Entity_InvoiceHeader_ProcessCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_ProcessCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Invoice Id.
+        /// </summary>
+        public static string Entity_InvoiceHeader_RelatedInvoiceId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_RelatedInvoiceId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Code.
+        /// </summary>
+        public static string Entity_InvoiceHeader_StoreCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_StoreCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Entity_InvoiceHeader_TotalNetAmount {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_TotalNetAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Warehouse.
+        /// </summary>
+        public static string Entity_InvoiceHeader_ToWarehouseCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_ToWarehouseCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Warehouse.
+        /// </summary>
+        public static string Entity_InvoiceHeader_WarehouseCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceHeader_WarehouseCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line.
+        /// </summary>
+        public static string Entity_InvoiceLine {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string Entity_InvoiceLine_Amount {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount (LCY).
+        /// </summary>
+        public static string Entity_InvoiceLine_AmountLoc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_AmountLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Margin.
+        /// </summary>
+        public static string Entity_InvoiceLine_Benefit {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_Benefit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Entity_InvoiceLine_CurrencyCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_CurrencyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campaign Discount.
+        /// </summary>
+        public static string Entity_InvoiceLine_DiscountCampaign {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_DiscountCampaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exchange Rate.
+        /// </summary>
+        public static string Entity_InvoiceLine_ExchangeRate {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_ExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Description.
+        /// </summary>
+        public static string Entity_InvoiceLine_LineDescription {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_LineDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Net Amount.
+        /// </summary>
+        public static string Entity_InvoiceLine_NetAmount {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_NetAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Net Amount (LCY).
+        /// </summary>
+        public static string Entity_InvoiceLine_NetAmountLoc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_NetAmountLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount.
+        /// </summary>
+        public static string Entity_InvoiceLine_PosDiscount {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_PosDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Entity_InvoiceLine_Price {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price (LCY).
+        /// </summary>
+        public static string Entity_InvoiceLine_PriceLoc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_PriceLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_InvoiceLine_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cost.
+        /// </summary>
+        public static string Entity_InvoiceLine_ProductCost {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_ProductCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Name.
+        /// </summary>
+        public static string Entity_InvoiceLine_ProductDesc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_ProductDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Entity_InvoiceLine_Qty {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_Qty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qty In.
+        /// </summary>
+        public static string Entity_InvoiceLine_QtyIn {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_QtyIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qty Out.
+        /// </summary>
+        public static string Entity_InvoiceLine_QtyOut {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_QtyOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining Qty.
+        /// </summary>
+        public static string Entity_InvoiceLine_RemainingQty {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_RemainingQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returned Qty.
+        /// </summary>
+        public static string Entity_InvoiceLine_ReturnQty {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_ReturnQty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salesperson.
+        /// </summary>
+        public static string Entity_InvoiceLine_SalesPersonCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_SalesPersonCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Number.
+        /// </summary>
+        public static string Entity_InvoiceLine_SerialNumberCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_SerialNumberCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Margin.
+        /// </summary>
+        public static string Entity_InvoiceLine_TotalBenefit {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_TotalBenefit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit of Measure.
+        /// </summary>
+        public static string Entity_InvoiceLine_UnitOfMeasureId {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_UnitOfMeasureId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VAT.
+        /// </summary>
+        public static string Entity_InvoiceLine_VatRate {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_VatRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technician.
+        /// </summary>
+        public static string Entity_InvoiceLine_WorkerCode {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLine_WorkerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Line Extra.
+        /// </summary>
+        public static string Entity_InvoiceLineExt {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineExt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_InvoiceLineExt_Id {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineExt_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Expenses.
+        /// </summary>
+        public static string Entity_InvoiceLineExt_LineExpences {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineExt_LineExpences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discounted Price.
+        /// </summary>
+        public static string Entity_InvoiceLineExt_PriceDiscounted {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineExt_PriceDiscounted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discounted Price (LCY).
+        /// </summary>
+        public static string Entity_InvoiceLineExt_PriceDiscountedLoc {
+            get {
+                return ResourceManager.GetString("Entity_InvoiceLineExt_PriceDiscountedLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        public static string Entity_Office {
+            get {
+                return ResourceManager.GetString("Entity_Office", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office Code.
+        /// </summary>
+        public static string Entity_Office_Code {
+            get {
+                return ResourceManager.GetString("Entity_Office_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office Description.
+        /// </summary>
+        public static string Entity_Office_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Office_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Header.
+        /// </summary>
+        public static string Entity_PaymentHeader {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        public static string Entity_PaymentHeader_CompanyCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_CompanyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Entity_PaymentHeader_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Name.
+        /// </summary>
+        public static string Entity_PaymentHeader_CurrAccDesc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_CurrAccDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Entity_PaymentHeader_Description {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Date.
+        /// </summary>
+        public static string Entity_PaymentHeader_DocumentDate {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_DocumentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Number.
+        /// </summary>
+        public static string Entity_PaymentHeader_DocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_DocumentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Time.
+        /// </summary>
+        public static string Entity_PaymentHeader_DocumentTime {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_DocumentTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Cash Register.
+        /// </summary>
+        public static string Entity_PaymentHeader_FromCashRegCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_FromCashRegCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Id.
+        /// </summary>
+        public static string Entity_PaymentHeader_InvoiceHeaderId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_InvoiceHeaderId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completed.
+        /// </summary>
+        public static string Entity_PaymentHeader_IsCompleted {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_IsCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locked.
+        /// </summary>
+        public static string Entity_PaymentHeader_IsLocked {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_IsLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Transfer.
+        /// </summary>
+        public static string Entity_PaymentHeader_IsMainTF {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_IsMainTF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent.
+        /// </summary>
+        public static string Entity_PaymentHeader_IsSent {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_IsSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        public static string Entity_PaymentHeader_OfficeCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_OfficeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation Date.
+        /// </summary>
+        public static string Entity_PaymentHeader_OperationDate {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_OperationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation Time.
+        /// </summary>
+        public static string Entity_PaymentHeader_OperationTime {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_OperationTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation Type.
+        /// </summary>
+        public static string Entity_PaymentHeader_OperationType {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_OperationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Kind.
+        /// </summary>
+        public static string Entity_PaymentHeader_PaymentKindId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_PaymentKindId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS Terminal.
+        /// </summary>
+        public static string Entity_PaymentHeader_PosterminalId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_PosterminalId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process.
+        /// </summary>
+        public static string Entity_PaymentHeader_ProcessCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_ProcessCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Code.
+        /// </summary>
+        public static string Entity_PaymentHeader_StoreCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_StoreCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Cash Register.
+        /// </summary>
+        public static string Entity_PaymentHeader_ToCashRegCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_ToCashRegCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Entity_PaymentHeader_TotalPayment {
+            get {
+                return ResourceManager.GetString("Entity_PaymentHeader_TotalPayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Kind.
+        /// </summary>
+        public static string Entity_PaymentKind {
+            get {
+                return ResourceManager.GetString("Entity_PaymentKind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Kind Description.
+        /// </summary>
+        public static string Entity_PaymentKind_Desc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentKind_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Kind Id.
+        /// </summary>
+        public static string Entity_PaymentKind_Id {
+            get {
+                return ResourceManager.GetString("Entity_PaymentKind_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Line.
+        /// </summary>
+        public static string Entity_PaymentLine {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Balance.
+        /// </summary>
+        public static string Entity_PaymentLine_BalanceAfter {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_BalanceAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Balance.
+        /// </summary>
+        public static string Entity_PaymentLine_BalanceBefor {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_BalanceBefor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Register.
+        /// </summary>
+        public static string Entity_PaymentLine_CashRegisterCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_CashRegisterCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Code.
+        /// </summary>
+        public static string Entity_PaymentLine_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Name.
+        /// </summary>
+        public static string Entity_PaymentLine_CurrAccDesc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_CurrAccDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Entity_PaymentLine_CurrencyCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_CurrencyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Date.
+        /// </summary>
+        public static string Entity_PaymentLine_DocumentDate {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_DocumentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Number.
+        /// </summary>
+        public static string Entity_PaymentLine_DocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_DocumentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exchange Rate.
+        /// </summary>
+        public static string Entity_PaymentLine_ExchangeRate {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_ExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Id.
+        /// </summary>
+        public static string Entity_PaymentLine_InvoiceHeaderId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_InvoiceHeaderId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice Number.
+        /// </summary>
+        public static string Entity_PaymentLine_InvoiceNumber {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_InvoiceNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Description.
+        /// </summary>
+        public static string Entity_PaymentLine_LineDescription {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_LineDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make Payment.
+        /// </summary>
+        public static string Entity_PaymentLine_MakePayment {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_MakePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Entity_PaymentLine_Payment {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment (LCY).
+        /// </summary>
+        public static string Entity_PaymentLine_PaymentLoc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_PaymentLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method.
+        /// </summary>
+        public static string Entity_PaymentLine_PaymentMethodId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_PaymentMethodId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Type.
+        /// </summary>
+        public static string Entity_PaymentLine_PaymentTypeCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_PaymentTypeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receive Payment.
+        /// </summary>
+        public static string Entity_PaymentLine_ReceivePayment {
+            get {
+                return ResourceManager.GetString("Entity_PaymentLine_ReceivePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method.
+        /// </summary>
+        public static string Entity_PaymentMethod {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Cash Register.
+        /// </summary>
+        public static string Entity_PaymentMethod_DefaultCashReg {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod_DefaultCashReg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method Description.
+        /// </summary>
+        public static string Entity_PaymentMethod_Desc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method Id.
+        /// </summary>
+        public static string Entity_PaymentMethod_Id {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Payment Method.
+        /// </summary>
+        public static string Entity_PaymentMethod_IsDefault {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod_IsDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Redirected.
+        /// </summary>
+        public static string Entity_PaymentMethod_IsRedirected {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod_IsRedirected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirected Current Account.
+        /// </summary>
+        public static string Entity_PaymentMethod_RedirectedCurrAcc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod_RedirectedCurrAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Type Code.
+        /// </summary>
+        public static string Entity_PaymentMethod_TypeCode {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethod_TypeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method Discount.
+        /// </summary>
+        public static string Entity_PaymentMethodDiscount {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethodDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Id.
+        /// </summary>
+        public static string Entity_PaymentMethodDiscount_DiscountId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethodDiscount_DiscountId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method.
+        /// </summary>
+        public static string Entity_PaymentMethodDiscount_PaymentMethodId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentMethodDiscount_PaymentMethodId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Plan.
+        /// </summary>
+        public static string Entity_PaymentPlan {
+            get {
+                return ResourceManager.GetString("Entity_PaymentPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Plan Code.
+        /// </summary>
+        public static string Entity_PaymentPlan_Code {
+            get {
+                return ResourceManager.GetString("Entity_PaymentPlan_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commission Rate.
+        /// </summary>
+        public static string Entity_PaymentPlan_CommissionRate {
+            get {
+                return ResourceManager.GetString("Entity_PaymentPlan_CommissionRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Plan Description.
+        /// </summary>
+        public static string Entity_PaymentPlan_Desc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentPlan_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration (Months).
+        /// </summary>
+        public static string Entity_PaymentPlan_DurationInMonths {
+            get {
+                return ResourceManager.GetString("Entity_PaymentPlan_DurationInMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Default.
+        /// </summary>
+        public static string Entity_PaymentPlan_IsDefault {
+            get {
+                return ResourceManager.GetString("Entity_PaymentPlan_IsDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Method Id.
+        /// </summary>
+        public static string Entity_PaymentPlan_MethodId {
+            get {
+                return ResourceManager.GetString("Entity_PaymentPlan_MethodId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Type.
+        /// </summary>
+        public static string Entity_PaymentType {
+            get {
+                return ResourceManager.GetString("Entity_PaymentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Type Code.
+        /// </summary>
+        public static string Entity_PaymentType_Code {
+            get {
+                return ResourceManager.GetString("Entity_PaymentType_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Type Description.
+        /// </summary>
+        public static string Entity_PaymentType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_PaymentType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Subtype.
+        /// </summary>
+        public static string Entity_PersonalType {
+            get {
+                return ResourceManager.GetString("Entity_PersonalType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal Type Code.
+        /// </summary>
+        public static string Entity_PersonalType_Code {
+            get {
+                return ResourceManager.GetString("Entity_PersonalType_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personal Type Description.
+        /// </summary>
+        public static string Entity_PersonalType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_PersonalType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price List Header.
+        /// </summary>
+        public static string Entity_PriceListHeader {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Entity_PriceListHeader_Description {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Date.
+        /// </summary>
+        public static string Entity_PriceListHeader_DocumentDate {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_DocumentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Number.
+        /// </summary>
+        public static string Entity_PriceListHeader_DocumentNumber {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_DocumentNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Time.
+        /// </summary>
+        public static string Entity_PriceListHeader_DocumentTime {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_DocumentTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due Date.
+        /// </summary>
+        public static string Entity_PriceListHeader_DueDate {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_DueDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due Time.
+        /// </summary>
+        public static string Entity_PriceListHeader_DueTime {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_DueTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmed.
+        /// </summary>
+        public static string Entity_PriceListHeader_IsConfirmed {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_IsConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelled.
+        /// </summary>
+        public static string Entity_PriceListHeader_IsDisabled {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_IsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Included.
+        /// </summary>
+        public static string Entity_PriceListHeader_IsTexIncluded {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_IsTexIncluded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office.
+        /// </summary>
+        public static string Entity_PriceListHeader_OfficeCode {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_OfficeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation Date.
+        /// </summary>
+        public static string Entity_PriceListHeader_OperationDate {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_OperationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation Time.
+        /// </summary>
+        public static string Entity_PriceListHeader_OperationTime {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_OperationTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Type Code.
+        /// </summary>
+        public static string Entity_PriceListHeader_PriceTypeCode {
+            get {
+                return ResourceManager.GetString("Entity_PriceListHeader_PriceTypeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price List Line.
+        /// </summary>
+        public static string Entity_PriceListLine {
+            get {
+                return ResourceManager.GetString("Entity_PriceListLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Entity_PriceListLine_CurrencyCode {
+            get {
+                return ResourceManager.GetString("Entity_PriceListLine_CurrencyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Description.
+        /// </summary>
+        public static string Entity_PriceListLine_LineDescription {
+            get {
+                return ResourceManager.GetString("Entity_PriceListLine_LineDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Entity_PriceListLine_Price {
+            get {
+                return ResourceManager.GetString("Entity_PriceListLine_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_PriceListLine_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_PriceListLine_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Type.
+        /// </summary>
+        public static string Entity_PriceType {
+            get {
+                return ResourceManager.GetString("Entity_PriceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Type Code.
+        /// </summary>
+        public static string Entity_PriceType_Code {
+            get {
+                return ResourceManager.GetString("Entity_PriceType_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Type Description.
+        /// </summary>
+        public static string Entity_PriceType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_PriceType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process.
+        /// </summary>
+        public static string Entity_Process {
+            get {
+                return ResourceManager.GetString("Entity_Process", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Code.
+        /// </summary>
+        public static string Entity_Process_Code {
+            get {
+                return ResourceManager.GetString("Entity_Process_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Currency.
+        /// </summary>
+        public static string Entity_Process_CustomCurrency {
+            get {
+                return ResourceManager.GetString("Entity_Process_CustomCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Name.
+        /// </summary>
+        public static string Entity_Process_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Process_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Direction.
+        /// </summary>
+        public static string Entity_Process_Dir {
+            get {
+                return ResourceManager.GetString("Entity_Process_Dir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Price Type.
+        /// </summary>
+        public static string Entity_ProcessPriceType {
+            get {
+                return ResourceManager.GetString("Entity_ProcessPriceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_ProcessPriceType_Id {
+            get {
+                return ResourceManager.GetString("Entity_ProcessPriceType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Type Code.
+        /// </summary>
+        public static string Entity_ProcessPriceType_PriceTypeCode {
+            get {
+                return ResourceManager.GetString("Entity_ProcessPriceType_PriceTypeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process Code.
+        /// </summary>
+        public static string Entity_ProcessPriceType_ProcessCode {
+            get {
+                return ResourceManager.GetString("Entity_ProcessPriceType_ProcessCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Entity_Product {
+            get {
+                return ResourceManager.GetString("Entity_Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        public static string Entity_Product_Balance {
+            get {
+                return ResourceManager.GetString("Entity_Product_Balance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance Warning Level.
+        /// </summary>
+        public static string Entity_Product_BalanceWarning {
+            get {
+                return ResourceManager.GetString("Entity_Product_BalanceWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance Warning Level.
+        /// </summary>
+        public static string Entity_Product_BalanceWarningLevel {
+            get {
+                return ResourceManager.GetString("Entity_Product_BalanceWarningLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_Product_Code {
+            get {
+                return ResourceManager.GetString("Entity_Product_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Umico Code.
+        /// </summary>
+        public static string Entity_Product_Code2 {
+            get {
+                return ResourceManager.GetString("Entity_Product_Code2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Unit of Measure.
+        /// </summary>
+        public static string Entity_Product_DefaultUnitOfMeasureId {
+            get {
+                return ResourceManager.GetString("Entity_Product_DefaultUnitOfMeasureId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Name.
+        /// </summary>
+        public static string Entity_Product_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Product_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Feature.
+        /// </summary>
+        public static string Entity_Product_Feature {
+            get {
+                return ResourceManager.GetString("Entity_Product_Feature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarchy Code.
+        /// </summary>
+        public static string Entity_Product_HierarchyCode {
+            get {
+                return ResourceManager.GetString("Entity_Product_HierarchyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_Product_Id {
+            get {
+                return ResourceManager.GetString("Entity_Product_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Entity_Product_Image {
+            get {
+                return ResourceManager.GetString("Entity_Product_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Entity_Product_ImagePath {
+            get {
+                return ResourceManager.GetString("Entity_Product_ImagePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Sale Price.
+        /// </summary>
+        public static string Entity_Product_LastSalePrice {
+            get {
+                return ResourceManager.GetString("Entity_Product_LastSalePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POS Discount.
+        /// </summary>
+        public static string Entity_Product_PosDiscount {
+            get {
+                return ResourceManager.GetString("Entity_Product_PosDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prices.
+        /// </summary>
+        public static string Entity_Product_Prices {
+            get {
+                return ResourceManager.GetString("Entity_Product_Prices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cost.
+        /// </summary>
+        public static string Entity_Product_ProductCost {
+            get {
+                return ResourceManager.GetString("Entity_Product_ProductCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promotion.
+        /// </summary>
+        public static string Entity_Product_PromotionCode {
+            get {
+                return ResourceManager.GetString("Entity_Product_PromotionCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promotion 2.
+        /// </summary>
+        public static string Entity_Product_PromotionCode2 {
+            get {
+                return ResourceManager.GetString("Entity_Product_PromotionCode2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase Price.
+        /// </summary>
+        public static string Entity_Product_PurchasePrice {
+            get {
+                return ResourceManager.GetString("Entity_Product_PurchasePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retail Price.
+        /// </summary>
+        public static string Entity_Product_RetailPrice {
+            get {
+                return ResourceManager.GetString("Entity_Product_RetailPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tax Rate.
+        /// </summary>
+        public static string Entity_Product_TaxRate {
+            get {
+                return ResourceManager.GetString("Entity_Product_TaxRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Type.
+        /// </summary>
+        public static string Entity_Product_Type {
+            get {
+                return ResourceManager.GetString("Entity_Product_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use on Internet.
+        /// </summary>
+        public static string Entity_Product_UseInternet {
+            get {
+                return ResourceManager.GetString("Entity_Product_UseInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use in POS.
+        /// </summary>
+        public static string Entity_Product_UsePos {
+            get {
+                return ResourceManager.GetString("Entity_Product_UsePos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wholesale Price.
+        /// </summary>
+        public static string Entity_Product_WholesalePrice {
+            get {
+                return ResourceManager.GetString("Entity_Product_WholesalePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Barcode.
+        /// </summary>
+        public static string Entity_ProductBarcode {
+            get {
+                return ResourceManager.GetString("Entity_ProductBarcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        public static string Entity_ProductBarcode_Barcode {
+            get {
+                return ResourceManager.GetString("Entity_ProductBarcode_Barcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Type.
+        /// </summary>
+        public static string Entity_ProductBarcode_BarcodeTypeCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductBarcode_BarcodeTypeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_ProductBarcode_Id {
+            get {
+                return ResourceManager.GetString("Entity_ProductBarcode_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_ProductBarcode_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductBarcode_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Entity_ProductBarcode_Qty {
+            get {
+                return ResourceManager.GetString("Entity_ProductBarcode_Qty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Discount.
+        /// </summary>
+        public static string Entity_ProductDiscount {
+            get {
+                return ResourceManager.GetString("Entity_ProductDiscount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount Id.
+        /// </summary>
+        public static string Entity_ProductDiscount_DiscountId {
+            get {
+                return ResourceManager.GetString("Entity_ProductDiscount_DiscountId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_ProductDiscount_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductDiscount_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Code.
+        /// </summary>
+        public static string Entity_ProductFeature_FeatureCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductFeature_FeatureCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Type Id.
+        /// </summary>
+        public static string Entity_ProductFeature_FeatureTypeId {
+            get {
+                return ResourceManager.GetString("Entity_ProductFeature_FeatureTypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_ProductFeature_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductFeature_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Feature.
+        /// </summary>
+        public static string Entity_ProductFeatureLink {
+            get {
+                return ResourceManager.GetString("Entity_ProductFeatureLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scales.
+        /// </summary>
+        public static string Entity_ProductScale {
+            get {
+                return ResourceManager.GetString("Entity_ProductScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Code.
+        /// </summary>
+        public static string Entity_ProductScale_Id {
+            get {
+                return ResourceManager.GetString("Entity_ProductScale_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale Product Number.
+        /// </summary>
+        public static string Entity_ProductScale_Number {
+            get {
+                return ResourceManager.GetString("Entity_ProductScale_Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_ProductScale_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductScale_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale Product Description.
+        /// </summary>
+        public static string Entity_ProductScale_ScaleProductDesc {
+            get {
+                return ResourceManager.GetString("Entity_ProductScale_ScaleProductDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale Product Code.
+        /// </summary>
+        public static string Entity_ProductScale_ScaleProductNumber {
+            get {
+                return ResourceManager.GetString("Entity_ProductScale_ScaleProductNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use in Scale.
+        /// </summary>
+        public static string Entity_ProductScale_UseInScale {
+            get {
+                return ResourceManager.GetString("Entity_ProductScale_UseInScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Entity_ProductStaticPrice {
+            get {
+                return ResourceManager.GetString("Entity_ProductStaticPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Entity_ProductStaticPrice_Price {
+            get {
+                return ResourceManager.GetString("Entity_ProductStaticPrice_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Type Code.
+        /// </summary>
+        public static string Entity_ProductStaticPrice_PriceTypeCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductStaticPrice_PriceTypeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Type.
+        /// </summary>
+        public static string Entity_ProductType {
+            get {
+                return ResourceManager.GetString("Entity_ProductType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Type Code.
+        /// </summary>
+        public static string Entity_ProductType_Code {
+            get {
+                return ResourceManager.GetString("Entity_ProductType_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Type Description.
+        /// </summary>
+        public static string Entity_ProductType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ProductType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Unit of Measure.
+        /// </summary>
+        public static string Entity_ProductUnitOfMeasure {
+            get {
+                return ResourceManager.GetString("Entity_ProductUnitOfMeasure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversion Rate.
+        /// </summary>
+        public static string Entity_ProductUnitOfMeasure_ConversionRate {
+            get {
+                return ResourceManager.GetString("Entity_ProductUnitOfMeasure_ConversionRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Of Measure Id.
+        /// </summary>
+        public static string Entity_ProductUnitOfMeasure_Id {
+            get {
+                return ResourceManager.GetString("Entity_ProductUnitOfMeasure_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_ProductUnitOfMeasure_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_ProductUnitOfMeasure_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit of Measure.
+        /// </summary>
+        public static string Entity_ProductUnitOfMeasure_UnitOfMeasureId {
+            get {
+                return ResourceManager.GetString("Entity_ProductUnitOfMeasure_UnitOfMeasureId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query Parameter.
+        /// </summary>
+        public static string Entity_QueryParam {
+            get {
+                return ResourceManager.GetString("Entity_QueryParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter Id.
+        /// </summary>
+        public static string Entity_QueryParam_Id {
+            get {
+                return ResourceManager.GetString("Entity_QueryParam_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter Name.
+        /// </summary>
+        public static string Entity_QueryParam_Name {
+            get {
+                return ResourceManager.GetString("Entity_QueryParam_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Id.
+        /// </summary>
+        public static string Entity_QueryParam_ReportId {
+            get {
+                return ResourceManager.GetString("Entity_QueryParam_ReportId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter Type.
+        /// </summary>
+        public static string Entity_QueryParam_Type {
+            get {
+                return ResourceManager.GetString("Entity_QueryParam_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter Value.
+        /// </summary>
+        public static string Entity_QueryParam_Value {
+            get {
+                return ResourceManager.GetString("Entity_QueryParam_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Entity_Report {
+            get {
+                return ResourceManager.GetString("Entity_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Category Id.
+        /// </summary>
+        public static string Entity_Report_CategoryId {
+            get {
+                return ResourceManager.GetString("Entity_Report_CategoryId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External Filter.
+        /// </summary>
+        public static string Entity_Report_Filter {
+            get {
+                return ResourceManager.GetString("Entity_Report_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Id.
+        /// </summary>
+        public static string Entity_Report_Id {
+            get {
+                return ResourceManager.GetString("Entity_Report_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Design.
+        /// </summary>
+        public static string Entity_Report_Layout {
+            get {
+                return ResourceManager.GetString("Entity_Report_Layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Name.
+        /// </summary>
+        public static string Entity_Report_Name {
+            get {
+                return ResourceManager.GetString("Entity_Report_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Query.
+        /// </summary>
+        public static string Entity_Report_Query {
+            get {
+                return ResourceManager.GetString("Entity_Report_Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Type.
+        /// </summary>
+        public static string Entity_Report_Type {
+            get {
+                return ResourceManager.GetString("Entity_Report_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Type.
+        /// </summary>
+        public static string Entity_Report_TypeId {
+            get {
+                return ResourceManager.GetString("Entity_Report_TypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Category.
+        /// </summary>
+        public static string Entity_ReportCategory {
+            get {
+                return ResourceManager.GetString("Entity_ReportCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Category Name.
+        /// </summary>
+        public static string Entity_ReportCategory_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ReportCategory_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Category.
+        /// </summary>
+        public static string Entity_ReportCategory_Id {
+            get {
+                return ResourceManager.GetString("Entity_ReportCategory_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Customization.
+        /// </summary>
+        public static string Entity_ReportCustomization {
+            get {
+                return ResourceManager.GetString("Entity_ReportCustomization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account.
+        /// </summary>
+        public static string Entity_ReportCustomization_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_ReportCustomization_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customization Name.
+        /// </summary>
+        public static string Entity_ReportCustomization_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ReportCustomization_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design File Name.
+        /// </summary>
+        public static string Entity_ReportCustomization_DesignFileName {
+            get {
+                return ResourceManager.GetString("Entity_ReportCustomization_DesignFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External Filter.
+        /// </summary>
+        public static string Entity_ReportCustomization_Filter {
+            get {
+                return ResourceManager.GetString("Entity_ReportCustomization_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customization Id.
+        /// </summary>
+        public static string Entity_ReportCustomization_Id {
+            get {
+                return ResourceManager.GetString("Entity_ReportCustomization_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Id.
+        /// </summary>
+        public static string Entity_ReportCustomization_ReportId {
+            get {
+                return ResourceManager.GetString("Entity_ReportCustomization_ReportId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Subquery.
+        /// </summary>
+        public static string Entity_ReportSubQuery {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subquery Id.
+        /// </summary>
+        public static string Entity_ReportSubQuery_Id {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQuery_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subquery Name.
+        /// </summary>
+        public static string Entity_ReportSubQuery_Name {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQuery_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Id.
+        /// </summary>
+        public static string Entity_ReportSubQuery_ReportId {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQuery_ReportId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subquery Text.
+        /// </summary>
+        public static string Entity_ReportSubQuery_Text {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQuery_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subquery Relation Column.
+        /// </summary>
+        public static string Entity_ReportSubQueryRelationColumn {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQueryRelationColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_ReportSubQueryRelationColumn_Id {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQueryRelationColumn_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Column.
+        /// </summary>
+        public static string Entity_ReportSubQueryRelationColumn_ParentColumnName {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQueryRelationColumn_ParentColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subquery Column.
+        /// </summary>
+        public static string Entity_ReportSubQueryRelationColumn_SubColumnName {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQueryRelationColumn_SubColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subquery Id.
+        /// </summary>
+        public static string Entity_ReportSubQueryRelationColumn_SubQueryId {
+            get {
+                return ResourceManager.GetString("Entity_ReportSubQueryRelationColumn_SubQueryId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Type.
+        /// </summary>
+        public static string Entity_ReportType {
+            get {
+                return ResourceManager.GetString("Entity_ReportType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Type Description.
+        /// </summary>
+        public static string Entity_ReportType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ReportType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Type Id.
+        /// </summary>
+        public static string Entity_ReportType_Id {
+            get {
+                return ResourceManager.GetString("Entity_ReportType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Variable.
+        /// </summary>
+        public static string Entity_ReportVariable {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable Id.
+        /// </summary>
+        public static string Entity_ReportVariable_Id {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operator.
+        /// </summary>
+        public static string Entity_ReportVariable_Operator {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_Operator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable Property.
+        /// </summary>
+        public static string Entity_ReportVariable_Property {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_Property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Id.
+        /// </summary>
+        public static string Entity_ReportVariable_ReportId {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_ReportId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Representative.
+        /// </summary>
+        public static string Entity_ReportVariable_Representative {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_Representative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable Type Id.
+        /// </summary>
+        public static string Entity_ReportVariable_TypeId {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_TypeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable Value.
+        /// </summary>
+        public static string Entity_ReportVariable_Value {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value Type.
+        /// </summary>
+        public static string Entity_ReportVariable_ValueType {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariable_ValueType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Variable Type.
+        /// </summary>
+        public static string Entity_ReportVariableType {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariableType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type Description.
+        /// </summary>
+        public static string Entity_ReportVariableType_Desc {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariableType_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type Id.
+        /// </summary>
+        public static string Entity_ReportVariableType_Id {
+            get {
+                return ResourceManager.GetString("Entity_ReportVariableType_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string Entity_Role {
+            get {
+                return ResourceManager.GetString("Entity_Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Code.
+        /// </summary>
+        public static string Entity_Role_Code {
+            get {
+                return ResourceManager.GetString("Entity_Role_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Description.
+        /// </summary>
+        public static string Entity_Role_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Role_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Claim.
+        /// </summary>
+        public static string Entity_RoleClaim {
+            get {
+                return ResourceManager.GetString("Entity_RoleClaim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Code.
+        /// </summary>
+        public static string Entity_RoleClaim_ClaimCode {
+            get {
+                return ResourceManager.GetString("Entity_RoleClaim_ClaimCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Claim Id.
+        /// </summary>
+        public static string Entity_RoleClaim_Id {
+            get {
+                return ResourceManager.GetString("Entity_RoleClaim_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Code.
+        /// </summary>
+        public static string Entity_RoleClaim_RoleCode {
+            get {
+                return ResourceManager.GetString("Entity_RoleClaim_RoleCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Number.
+        /// </summary>
+        public static string Entity_SerialNumber {
+            get {
+                return ResourceManager.GetString("Entity_SerialNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Number Code.
+        /// </summary>
+        public static string Entity_SerialNumber_Code {
+            get {
+                return ResourceManager.GetString("Entity_SerialNumber_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_SerialNumber_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_SerialNumber_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session.
+        /// </summary>
+        public static string Entity_Session {
+            get {
+                return ResourceManager.GetString("Entity_Session", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Account Code.
+        /// </summary>
+        public static string Entity_Session_CurrAccCode {
+            get {
+                return ResourceManager.GetString("Entity_Session_CurrAccCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_Session_Id {
+            get {
+                return ResourceManager.GetString("Entity_Session_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blocked.
+        /// </summary>
+        public static string Entity_Session_IsBlocked {
+            get {
+                return ResourceManager.GetString("Entity_Session_IsBlocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PID.
+        /// </summary>
+        public static string Entity_Session_PID {
+            get {
+                return ResourceManager.GetString("Entity_Session_PID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Product.
+        /// </summary>
+        public static string Entity_SiteProduct {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Id.
+        /// </summary>
+        public static string Entity_SiteProduct_CategoryId {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_CategoryId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Entity_SiteProduct_Desc {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Entity_SiteProduct_Price {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Code.
+        /// </summary>
+        public static string Entity_SiteProduct_ProductCode {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Id.
+        /// </summary>
+        public static string Entity_SiteProduct_ProductId {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_ProductId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rating.
+        /// </summary>
+        public static string Entity_SiteProduct_Rating {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slug.
+        /// </summary>
+        public static string Entity_SiteProduct_Slug {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_Slug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show on Site.
+        /// </summary>
+        public static string Entity_SiteProduct_UseInSite {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_UseInSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Count.
+        /// </summary>
+        public static string Entity_SiteProduct_ViewCount {
+            get {
+                return ResourceManager.GetString("Entity_SiteProduct_ViewCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Settings.
+        /// </summary>
+        public static string Entity_StoreSetting {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Unit of Measure.
+        /// </summary>
+        public static string Entity_StoreSetting_DefaultUnitOfMeasureId {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting_DefaultUnitOfMeasureId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design File Folder.
+        /// </summary>
+        public static string Entity_StoreSetting_DesignFolder {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting_DesignFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string Entity_StoreSetting_Id {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Folder.
+        /// </summary>
+        public static string Entity_StoreSetting_ImageFolder {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting_ImageFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printer Name.
+        /// </summary>
+        public static string Entity_StoreSetting_PrinterName {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting_PrinterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Salesman Row.
+        /// </summary>
+        public static string Entity_StoreSetting_SalesmanContinuity {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting_SalesmanContinuity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Code.
+        /// </summary>
+        public static string Entity_StoreSetting_StoreCode {
+            get {
+                return ResourceManager.GetString("Entity_StoreSetting_StoreCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminal.
+        /// </summary>
+        public static string Entity_Terminal {
+            get {
+                return ResourceManager.GetString("Entity_Terminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminal Description.
+        /// </summary>
+        public static string Entity_Terminal_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Terminal_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminal Id.
+        /// </summary>
+        public static string Entity_Terminal_Id {
+            get {
+                return ResourceManager.GetString("Entity_Terminal_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Touch Scale Factor.
+        /// </summary>
+        public static string Entity_Terminal_TouchScaleFactor {
+            get {
+                return ResourceManager.GetString("Entity_Terminal_TouchScaleFactor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TouchScreen Mode.
+        /// </summary>
+        public static string Entity_Terminal_TouchUIMode {
+            get {
+                return ResourceManager.GetString("Entity_Terminal_TouchUIMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interface Language.
+        /// </summary>
+        public static string Entity_UILanguage {
+            get {
+                return ResourceManager.GetString("Entity_UILanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language Code.
+        /// </summary>
+        public static string Entity_UILanguage_Code {
+            get {
+                return ResourceManager.GetString("Entity_UILanguage_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language Description.
+        /// </summary>
+        public static string Entity_UILanguage_Desc {
+            get {
+                return ResourceManager.GetString("Entity_UILanguage_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit of Measure.
+        /// </summary>
+        public static string Entity_UnitOfMeasure {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversion Rate.
+        /// </summary>
+        public static string Entity_UnitOfMeasure_ConversionRate {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_ConversionRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit of Measure Description.
+        /// </summary>
+        public static string Entity_UnitOfMeasure_Desc {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit of Measure Id.
+        /// </summary>
+        public static string Entity_UnitOfMeasure_Id {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Basic Unit.
+        /// </summary>
+        public static string Entity_UnitOfMeasure_IsBasic {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_IsBasic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit of Measure Level.
+        /// </summary>
+        public static string Entity_UnitOfMeasure_Level {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Unit of Measure Id.
+        /// </summary>
+        public static string Entity_UnitOfMeasure_ParentId {
+            get {
+                return ResourceManager.GetString("Entity_UnitOfMeasure_ParentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable.
+        /// </summary>
+        public static string Entity_Variable {
+            get {
+                return ResourceManager.GetString("Entity_Variable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable Code.
+        /// </summary>
+        public static string Entity_Variable_Code {
+            get {
+                return ResourceManager.GetString("Entity_Variable_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable Description.
+        /// </summary>
+        public static string Entity_Variable_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Variable_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Number.
+        /// </summary>
+        public static string Entity_Variable_LastNumber {
+            get {
+                return ResourceManager.GetString("Entity_Variable_LastNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string Entity_Warehouse {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse Code.
+        /// </summary>
+        public static string Entity_Warehouse_Code {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control Stock Level.
+        /// </summary>
+        public static string Entity_Warehouse_ControlStockLevel {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_ControlStockLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse Description.
+        /// </summary>
+        public static string Entity_Warehouse_Desc {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string Entity_Warehouse_IsDefault {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_IsDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Office Code.
+        /// </summary>
+        public static string Entity_Warehouse_OfficeCode {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_OfficeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permit Negative Stock.
+        /// </summary>
+        public static string Entity_Warehouse_PermitNegativeStock {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_PermitNegativeStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store Code.
+        /// </summary>
+        public static string Entity_Warehouse_StoreCode {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_StoreCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse Type.
+        /// </summary>
+        public static string Entity_Warehouse_Type {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warn on Negative Stock.
+        /// </summary>
+        public static string Entity_Warehouse_WarnNegativeStock {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_WarnNegativeStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warn Stock Level.
+        /// </summary>
+        public static string Entity_Warehouse_WarnStockLevelRate {
+            get {
+                return ResourceManager.GetString("Entity_Warehouse_WarnStockLevelRate", resourceCulture);
             }
         }
         
@@ -760,6 +5143,51 @@ namespace Foxoft.Properties {
             get {
                 object obj = ResourceManager.GetObject("startup550x363.png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords do not match.
+        /// </summary>
+        public static string Validation_Compare_Mismatch {
+            get {
+                return ResourceManager.GetString("Validation_Compare_Mismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must be between {1} and {2}.
+        /// </summary>
+        public static string Validation_Range {
+            get {
+                return ResourceManager.GetString("Validation_Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must be greater than {1}.
+        /// </summary>
+        public static string Validation_Range_Min {
+            get {
+                return ResourceManager.GetString("Validation_Range_Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be empty.
+        /// </summary>
+        public static string Validation_Required {
+            get {
+                return ResourceManager.GetString("Validation_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be longer than {1} characters.
+        /// </summary>
+        public static string Validation_StringLength_Max {
+            get {
+                return ResourceManager.GetString("Validation_StringLength_Max", resourceCulture);
             }
         }
     }

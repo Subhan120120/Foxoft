@@ -2,10 +2,11 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Məzənnə")]
+    [Display(Name = nameof(Resources.Entity_Currency), ResourceType = typeof(Resources))]
     public partial class DcCurrency
     {
         public DcCurrency()
@@ -16,18 +17,25 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Valyuta")]
-        [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Currency_Code), ResourceType = typeof(Resources))]
+        [StringLength(10,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string CurrencyCode { get; set; }
 
-        [Display(Name = "Valyuta Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_Currency_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
         public string CurrencyDesc { get; set; }
 
-        [Display(Name = "Valyuta Kursu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_Currency_ExchangeRate), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
         public float ExchangeRate { get; set; }
-
 
         public virtual AppSetting AppSetting { get; set; }
         public virtual ICollection<TrInvoiceLine> TrInvoiceLines { get; set; }

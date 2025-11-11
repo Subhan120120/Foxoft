@@ -1,37 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Hesabat Kateqoriyası")]
+    [Display(Name = nameof(Resources.Entity_ReportCustomization), ResourceType = typeof(Resources))]
     public partial class TrReportCustomization : BaseEntity
     {
-        public TrReportCustomization()
-        {
-        }
-
         [Key]
-        [Display(Name = "Hesabat Fərdiləşdirmə İd")]
+        [Display(Name = nameof(Resources.Entity_ReportCustomization_Id), ResourceType = typeof(Resources))]
         public int ReportCustomizationId { get; set; }
 
-        [Display(Name = "Hesabat Fərdiləşdirmə Adı")]
+        [Display(Name = nameof(Resources.Entity_ReportCustomization_Desc), ResourceType = typeof(Resources))]
         public string ReportCustomizationDesc { get; set; }
 
-        [ForeignKey("DcReport")]
-        [Display(Name = "Hesabat Id")]
+        [ForeignKey(nameof(DcReport))]
+        [Display(Name = nameof(Resources.Entity_ReportCustomization_ReportId), ResourceType = typeof(Resources))]
         public int ReportId { get; set; }
 
-        [Display(Name = "Hesabat Dizayn File Adı")]
+        [Display(Name = nameof(Resources.Entity_ReportCustomization_DesignFileName), ResourceType = typeof(Resources))]
         public string? ReportDesignFileName { get; set; }
 
-        [Display(Name = "Xarici Filter")]
+        [Display(Name = nameof(Resources.Entity_ReportCustomization_Filter), ResourceType = typeof(Resources))]
         public string? ReportFilter { get; set; }
 
-        [ForeignKey("DcCurrAcc")]
-        [Display(Name = "Cari Hesab")]
+        [ForeignKey(nameof(DcCurrAcc))]
+        [Display(Name = nameof(Resources.Entity_ReportCustomization_CurrAccCode), ResourceType = typeof(Resources))]
         public string CurrAccCode { get; set; }
 
         public virtual DcReport DcReport { get; set; }

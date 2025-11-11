@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "İyerarxiya")]
+    [Display(Name = nameof(Resources.Entity_Hierarchy), ResourceType = typeof(Resources))]
     public partial class DcHierarchy : BaseEntity
     {
         public DcHierarchy()
@@ -15,30 +15,31 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "İyerarxiya Kodu")]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_Code), ResourceType = typeof(Resources))]
         public string HierarchyCode { get; set; }
 
-        [Display(Name = "İyerarxiya Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string HierarchyDesc { get; set; }
 
-        [Display(Name = "İyerarxiya Səviyyəsi")]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_Level), ResourceType = typeof(Resources))]
         public int HierarchyLevel { get; set; }
 
-        [Display(Name = "Ana İyerarxiya Kodu")]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_ParentCode), ResourceType = typeof(Resources))]
         public string? HierarchyParentCode { get; set; }
 
-        [Display(Name = "Sıra")]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_Order), ResourceType = typeof(Resources))]
         public int Order { get; set; }
 
-        [Display(Name = "İlbiz")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_Slug), ResourceType = typeof(Resources))]
+        [StringLength(150, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? Slug { get; set; }
 
-        [Display(Name = "Id")]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_Id), ResourceType = typeof(Resources))]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
 
         public virtual ICollection<TrHierarchyFeatureType> TrHierarchyFeatureTypes { get; set; }
         public virtual ICollection<DcProduct> DcProducts { get; set; }

@@ -2,10 +2,11 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Ödəmə Metodu")]
+    [Display(Name = nameof(Resources.Entity_PaymentMethod), ResourceType = typeof(Resources))]
     public partial class DcPaymentMethod
     {
         public DcPaymentMethod()
@@ -16,45 +17,41 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Ödəmə Tipi Kodu")]
+        [Display(Name = nameof(Resources.Entity_PaymentMethod_Id), ResourceType = typeof(Resources))]
         public int PaymentMethodId { get; set; }
 
-        [ForeignKey("DcPaymentType")]
-        [Display(Name = "Ödəmə Tipi Kodu")]
+        [ForeignKey(nameof(DcPaymentType))]
+        [Display(Name = nameof(Resources.Entity_PaymentMethod_TypeCode), ResourceType = typeof(Resources))]
         public byte PaymentTypeCode { get; set; }
 
-        [Display(Name = "Ödəmə Tipi Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_PaymentMethod_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string PaymentMethodDesc { get; set; }
 
-        [ForeignKey("DcCashReg")]
-        [Display(Name = "Default Kassa")]
+        [ForeignKey(nameof(DcCashReg))]
+        [Display(Name = nameof(Resources.Entity_PaymentMethod_DefaultCashReg), ResourceType = typeof(Resources))]
         public string? DefaultCashRegCode { get; set; }
 
-
-        //[ForeignKey("DcCashReg")]
-        [Display(Name = "Yönləndiriləndir")]
+        [Display(Name = nameof(Resources.Entity_PaymentMethod_IsRedirected), ResourceType = typeof(Resources))]
         public bool IsRedirected { get; set; }
 
-        [ForeignKey("DcCurrAcc")]
-        [Display(Name = "Yönləndirilmiş Cari Hesab")]
+        [ForeignKey(nameof(DcCurrAcc))]
+        [Display(Name = nameof(Resources.Entity_PaymentMethod_RedirectedCurrAcc), ResourceType = typeof(Resources))]
         public string? RedirectedCurrAccCode { get; set; }
 
-        [Display(Name = "Default Ödəmə Metodu")]
+        [Display(Name = nameof(Resources.Entity_PaymentMethod_IsDefault), ResourceType = typeof(Resources))]
         public bool IsDefault { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Qeyri-Aktiv")]
+        [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 
-
-        [ForeignKey("DefaultCashRegCode")]
-        public virtual DcCurrAcc DcCashReg { get; set; }
-        [ForeignKey("RedirectedCurrAccCode")]
-        public virtual DcCurrAcc DcCurrAcc { get; set; }
-        [ForeignKey("PaymentTypeCode")]
-        public virtual DcPaymentType DcPaymentType { get; set; }
+        [ForeignKey(nameof(DefaultCashRegCode))] public virtual DcCurrAcc DcCashReg { get; set; }
+        [ForeignKey(nameof(RedirectedCurrAccCode))] public virtual DcCurrAcc DcCurrAcc { get; set; }
+        [ForeignKey(nameof(PaymentTypeCode))] public virtual DcPaymentType DcPaymentType { get; set; }
         public virtual ICollection<TrPaymentLine> TrPaymentLines { get; set; }
         public virtual ICollection<TrPaymentMethodDiscount> TrPaymentMethodDiscounts { get; set; }
         public virtual ICollection<DcPaymentPlan> DcPaymentPlans { get; set; }

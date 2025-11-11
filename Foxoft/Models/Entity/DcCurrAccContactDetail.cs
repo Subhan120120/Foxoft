@@ -2,37 +2,41 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Cari Hesab Əlaqə Məlumatları")]
+    [Display(Name = nameof(Resources.Entity_CurrAccContactDetail), ResourceType = typeof(Resources))]
     public partial class DcCurrAccContactDetail
     {
-        public DcCurrAccContactDetail()
-        {
-        }
+        public DcCurrAccContactDetail() { }
 
         [Key]
-        [Display(Name = "Əlaqə Məlumatları İd")]
+        [Display(Name = nameof(Resources.Entity_CurrAccContactDetail_Id), ResourceType = typeof(Resources))]
         public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "Əlaqə Məlumatları Açıqlaması")]
+        [Display(Name = nameof(Resources.Entity_CurrAccContactDetail_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
         public string ContactDesc { get; set; }
 
-        [Required]
-        [Display(Name = "Əlaqə Məlumatları Tipi")]
-        [ForeignKey("DcContactType")]
+        [Display(Name = nameof(Resources.Entity_ContactType), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [ForeignKey(nameof(DcContactType))]
         public byte ContactTypeId { get; set; }
 
-        [Required]
-        [Display(Name = "Cari Hesab Kodu")]
-        [ForeignKey("DcCurrAcc")]
+        [Display(Name = nameof(Resources.Entity_CurrAcc_Code), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [ForeignKey(nameof(DcCurrAcc))]
         public string CurrAccCode { get; set; }
-
 
         public virtual DcCurrAcc DcCurrAcc { get; set; }
         public virtual DcContactType DcContactType { get; set; }

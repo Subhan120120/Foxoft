@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Foxoft.Properties; // Resources üçün
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Əlaqə Məlumatları Tipi")]
+    [Display(Name = nameof(Resources.Entity_ContactType), ResourceType = typeof(Resources))]
     public partial class DcContactType
     {
         public DcContactType()
@@ -15,21 +13,32 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Əlaqə Məlumatları Tipi İd")]
+        [Display(Name = nameof(Resources.Entity_ContactType_Id), ResourceType = typeof(Resources))]
         public byte Id { get; set; }
 
-
-        [Display(Name = "Əlaqə Məlumatları Tipi Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ContactType_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [StringLength(100,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
         public string ContactTypeDesc { get; set; }
 
-        [Display(Name = "Telefon Nömrəsi formatı")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ContactType_PhoneNumberFormat), ResourceType = typeof(Resources))]
+        [StringLength(200,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
         public string? PhoneNumberFormat { get; set; }
 
-        [Display(Name = "Default Dəyər")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ContactType_DefaultValue), ResourceType = typeof(Resources))]
+        [StringLength(100,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
         public string? DefaultValue { get; set; }
 
         public virtual ICollection<DcCurrAccContactDetail> DcContactDetails { get; set; }

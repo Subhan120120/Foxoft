@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Cari Hesab Özəlliyi")]
+    [Display(Name = nameof(Resources.Entity_CurrAccFeature), ResourceType = typeof(Resources))]
     public partial class DcCurrAccFeature
     {
         public DcCurrAccFeature()
@@ -14,20 +15,17 @@ namespace Foxoft.Models
         }
 
         [Key, Column(Order = 0)]
-        [Display(Name = "Özəllik Kodu")]
+        [Display(Name = nameof(Resources.Entity_CurrAccFeature_Code), ResourceType = typeof(Resources))]
         public string CurrAccFeatureCode { get; set; }
 
         [Key, Column(Order = 1)]
-        [ForeignKey("DcFeatureTypeCurrAcc")]
-        [Display(Name = "Özəllik Tipi Kodu")]
+        [Display(Name = nameof(Resources.Entity_CurrAccFeature_TypeId), ResourceType = typeof(Resources))]
         public int CurrAccFeatureTypeId { get; set; }
 
-        [Display(Name = "Özəllik Açıqlaması")]
-        //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_CurrAccFeature_Desc), ResourceType = typeof(Resources))]
         public string? FeatureDesc { get; set; }
 
-
-        [ForeignKey("CurrAccFeatureTypeId")]
+        [ForeignKey(nameof(CurrAccFeatureTypeId))]
         public virtual DcCurrAccFeatureType DcCurrAccFeatureType { get; set; }
 
         public virtual ICollection<TrCurrAccFeature> TrCurrAccFeatures { get; set; }

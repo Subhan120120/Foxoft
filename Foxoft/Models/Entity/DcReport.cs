@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Hesabat")]
+    [Display(Name = nameof(Resources.Entity_Report), ResourceType = typeof(Resources))]
     public partial class DcReport : BaseEntity
     {
         public DcReport()
@@ -19,29 +18,28 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Hesabat Id")]
+        [Display(Name = nameof(Resources.Entity_Report_Id), ResourceType = typeof(Resources))]
         public int ReportId { get; set; }
 
-        [Display(Name = "Hesabat Adı")]
+        [Display(Name = nameof(Resources.Entity_Report_Name), ResourceType = typeof(Resources))]
         public string? ReportName { get; set; }
 
-        [Display(Name = "Hesabat Sorğusu")]
+        [Display(Name = nameof(Resources.Entity_Report_Query), ResourceType = typeof(Resources))]
         public string? ReportQuery { get; set; }
 
-        [Display(Name = "Hesabat Tipi")]
-        [ForeignKey("DcReportType")]
+        [Display(Name = nameof(Resources.Entity_Report_TypeId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcReportType))]
         public byte ReportTypeId { get; set; }
 
-        [Display(Name = "Hesabat Dizaynı")]
+        [Display(Name = nameof(Resources.Entity_Report_Layout), ResourceType = typeof(Resources))]
         public string? ReportLayout { get; set; }
 
-        [Display(Name = "Xarici Filter")]
+        [Display(Name = nameof(Resources.Entity_Report_Filter), ResourceType = typeof(Resources))]
         public string? ReportFilter { get; set; }
 
-        [Display(Name = "Hesabat Kateqoriya Id")]
-        [ForeignKey("DcReportCategory")]
+        [Display(Name = nameof(Resources.Entity_Report_CategoryId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcReportCategory))]
         public int? ReportCategoryId { get; set; }
-
 
         public virtual DcReportType DcReportType { get; set; }
         public virtual DcReportCategory DcReportCategory { get; set; }
@@ -50,6 +48,5 @@ namespace Foxoft.Models
         public virtual ICollection<TrFormReport> TrFormReports { get; set; }
         public virtual ICollection<TrReportSubQuery> TrReportSubQueries { get; set; }
         public virtual ICollection<TrReportCustomization> TrReportCustomizations { get; set; }
-
     }
 }

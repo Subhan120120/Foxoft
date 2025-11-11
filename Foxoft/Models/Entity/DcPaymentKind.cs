@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Ödəmə Növü")]
+    [Display(Name = nameof(Resources.Entity_PaymentKind), ResourceType = typeof(Resources))]
     public partial class DcPaymentKind
     {
         public DcPaymentKind()
         {
             TrPaymentHeaders = new HashSet<TrPaymentHeader>();
         }
+
         [Key]
-        [Display(Name = "Ödəmə Növü Kodu")]
+        [Display(Name = nameof(Resources.Entity_PaymentKind_Id), ResourceType = typeof(Resources))]
         public byte PaymentKindId { get; set; }
 
-        [Display(Name = "Ödəmə Növü Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_PaymentKind_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string PaymentKindDesc { get; set; }
 
         public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }

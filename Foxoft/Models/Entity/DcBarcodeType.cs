@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Barkod Tipi")]
+    [Display(Name = nameof(Resources.Entity_BarcodeType), ResourceType = typeof(Resources))]
     public partial class DcBarcodeType
     {
         public DcBarcodeType()
@@ -12,19 +13,22 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Barkod Tipi Kodu")]
+        [Display(Name = nameof(Resources.Entity_BarcodeType_Code), ResourceType = typeof(Resources))]
         public string BarcodeTypeCode { get; set; }
 
-        [Display(Name = "Barkod Tipi Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_BarcodeType_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [StringLength(50,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
         public string BarcodeTypeDesc { get; set; }
 
-        [Display(Name = "Default Barkod Tipi")]
-        public bool? DefaultBarcodeType{ get; set; }
-
-
-
+        [Display(Name = nameof(Resources.Entity_BarcodeType_Default), ResourceType = typeof(Resources))]
+        public bool? DefaultBarcodeType { get; set; }
 
         public virtual ICollection<TrProductBarcode> TrProductBarcodes { get; set; }
     }

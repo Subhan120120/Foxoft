@@ -1,34 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Foxoft.Properties; // Resources namespace
 
-namespace Foxoft.Models
+namespace Foxoft // remove Dc/Tr prefixes from entity names in keys (not applicable here)
 {
     public partial class BaseEntity
     {
-        [Display(Name = "Yaradan İstifadəçi")]
-        [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Base_CreatedUserName), ResourceType = typeof(Resources))]
+        [StringLength(20,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         [DefaultValue(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
         public string? CreatedUserName { get; set; }
 
         [DefaultValue("getdate()")]
         [Column(TypeName = "datetime")]
-        [Display(Name = "Yaradılma tarixi")]
+        [Display(Name = nameof(Resources.Entity_Base_CreatedDate), ResourceType = typeof(Resources))]
         public DateTime CreatedDate { get; set; }
 
-        [Display(Name = "Son Dəyişən İstifadəçi")]
-        [StringLength(20, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Base_LastUpdatedUserName), ResourceType = typeof(Resources))]
+        [StringLength(20,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         [DefaultValue(@"substring(suser_name(),patindex('%\%',suser_name())+(1),(20))")]
         public string? LastUpdatedUserName { get; set; }
 
         [DefaultValue("getdate()")]
         [Column(TypeName = "datetime")]
-        [Display(Name = "Son Dəyişmə tarixi")]
+        [Display(Name = nameof(Resources.Entity_Base_LastUpdatedDate), ResourceType = typeof(Resources))]
         public DateTime LastUpdatedDate { get; set; }
     }
 }

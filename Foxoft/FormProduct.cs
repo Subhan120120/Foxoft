@@ -42,7 +42,7 @@ namespace Foxoft
 
             InitializeGallery();
 
-            tabbedControlGroup1.SelectedTabPage = autoGroupForQiymətlər;
+            tabbedControlGroup1.SelectedTabPage = autoGroupForPrices;
 
             this.productTypeCode = productTypeCode;
             this.isNew = isNew;

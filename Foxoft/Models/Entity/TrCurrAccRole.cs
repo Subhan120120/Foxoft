@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Cari Hesab Yetkisi")]
+    [Display(Name = nameof(Resources.Entity_CurrAccRole), ResourceType = typeof(Resources))]
     public partial class TrCurrAccRole : BaseEntity
     {
         [Key]
-        [Display(Name = "Cari Hesab Rol Id")]
+        [Display(Name = nameof(Resources.Entity_CurrAccRole_Id), ResourceType = typeof(Resources))]
         public int CurrAccRoleId { get; set; }
 
-        [ForeignKey("DcCurrAcc")]
-        [Display(Name = "Cari Hesab")]
+        [ForeignKey(nameof(DcCurrAcc))]
+        [Display(Name = nameof(Resources.Entity_CurrAccRole_CurrAccCode), ResourceType = typeof(Resources))]
         public string CurrAccCode { get; set; }
 
-        [Display(Name = "Rol")]
-        [ForeignKey("DcRole")]
+        [Display(Name = nameof(Resources.Entity_CurrAccRole_RoleCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcRole))]
         public string RoleCode { get; set; }
 
-
         public virtual DcCurrAcc DcCurrAcc { get; set; }
-
         public virtual DcRole DcRole { get; set; }
     }
 }

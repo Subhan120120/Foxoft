@@ -1,27 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Interface Dili")]
+    [Display(Name = nameof(Resources.Entity_UILanguage), ResourceType = typeof(Resources))]
     public partial class DcUILanguage
     {
-        public DcUILanguage()
-        {
-            DcCurrAccs = new HashSet<DcCurrAcc>();
-        }
+        public DcUILanguage() { DcCurrAccs = new HashSet<DcCurrAcc>(); }
 
         [Key]
-        [Display(Name = "Dil Kodu")]
-        [StringLength(10, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_UILanguage_Code), ResourceType = typeof(Resources))]
+        [StringLength(10, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string LanguageCode { get; set; }
 
-        [Display(Name = "Dil Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_UILanguage_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string LanguageDesc { get; set; }
-
 
         public virtual ICollection<DcCurrAcc> DcCurrAccs { get; set; }
     }

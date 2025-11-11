@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Form Hesabatı")]
+    [Display(Name = nameof(Resources.Entity_FormReport), ResourceType = typeof(Resources))]
     public partial class TrFormReport
     {
         [Key, Column(Order = 0)]
-        [ForeignKey("DcForm")]
-        [Display(Name = "Form Kodu")]
+        [ForeignKey(nameof(DcForm))]
+        [Display(Name = nameof(Resources.Entity_FormReport_FormCode), ResourceType = typeof(Resources))]
         public string FormCode { get; set; }
 
         [Key, Column(Order = 1)]
-        [ForeignKey("DcReport")]
-        [Display(Name = "Report Id")]
+        [ForeignKey(nameof(DcReport))]
+        [Display(Name = nameof(Resources.Entity_FormReport_ReportId), ResourceType = typeof(Resources))]
         public int ReportId { get; set; }
 
-        [Display(Name = "Qısayol")]
+        [Display(Name = nameof(Resources.Entity_FormReport_Shortcut), ResourceType = typeof(Resources))]
         public string? Shortcut { get; set; }
 
 

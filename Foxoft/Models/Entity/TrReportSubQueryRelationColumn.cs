@@ -1,34 +1,27 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Hesabat Alt Sorğusu Əlaqəli Kolonu")]
+    [Display(Name = nameof(Resources.Entity_ReportSubQueryRelationColumn), ResourceType = typeof(Resources))]
     public partial class TrReportSubQueryRelationColumn : BaseEntity
     {
-        public TrReportSubQueryRelationColumn()
-        {
-        }
-
         [Key]
-        [Display(Name = "İd")]
+        [Display(Name = nameof(Resources.Entity_ReportSubQueryRelationColumn_Id), ResourceType = typeof(Resources))]
         public int Id { get; set; }
 
-        [Display(Name = "Əsas Sorğu Kolonu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_ReportSubQueryRelationColumn_ParentColumnName), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string ParentColumnName { get; set; }
 
-        [Display(Name = "Alt Sorğu Kolonu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_ReportSubQueryRelationColumn_SubColumnName), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string SubColumnName { get; set; }
 
-        [Display(Name = "Alt Sorğu Kodu")]
-        [ForeignKey("TrReportSubQuery")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ReportSubQueryRelationColumn_SubQueryId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(TrReportSubQuery))]
         public int SubQueryId { get; set; }
-
 
         public virtual TrReportSubQuery TrReportSubQuery { get; set; }
     }

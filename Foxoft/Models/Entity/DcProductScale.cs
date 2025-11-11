@@ -1,41 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Özəllik")]
+    [Display(Name = nameof(Resources.Entity_ProductScale), ResourceType = typeof(Resources))]
     [Index(nameof(ProductCode), IsUnique = true)]
     [Index(nameof(ScaleProductNumber), IsUnique = true)]
     public partial class DcProductScale
     {
-        public DcProductScale()
-        {
-        }
-
         [Key]
-        [Display(Name = "Özəllik Kodu")]
+        [Display(Name = nameof(Resources.Entity_ProductScale_Id), ResourceType = typeof(Resources))]
         public int Id { get; set; }
 
-        [Display(Name = "Məhsul Kodu")]
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-
+        [Display(Name = nameof(Resources.Entity_ProductScale_ProductCode), ResourceType = typeof(Resources))]
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(Resources),
+                                    ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(30, ErrorMessageResourceType = typeof(Resources),
+                         ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string ProductCode { get; set; }
 
-        [Display(Name = "Tərəzi Məhsul Açıqlaması")]
+        [Display(Name = nameof(Resources.Entity_ProductScale_ScaleProductDesc), ResourceType = typeof(Resources))]
         public string? ScaleProductDesc { get; set; }
 
-        [Display(Name = "Tərəzi Məhsul Kodu")]
+        [Display(Name = nameof(Resources.Entity_ProductScale_ScaleProductNumber), ResourceType = typeof(Resources))]
         public int? ScaleProductNumber { get; set; }
 
-        [Display(Name = "Tərəzi İstifadə Et")]
+        [Display(Name = nameof(Resources.Entity_ProductScale_UseInScale), ResourceType = typeof(Resources))]
         public bool UseInScale { get; set; }
 
-
-        [ForeignKey("ProductCode")]
-        public virtual DcProduct DcProduct{ get; set; }
+        [ForeignKey(nameof(ProductCode))]
+        public virtual DcProduct DcProduct { get; set; }
     }
 }

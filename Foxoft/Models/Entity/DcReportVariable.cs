@@ -1,61 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Hesabat Dəyişəni")]
+    [Display(Name = nameof(Resources.Entity_ReportVariable), ResourceType = typeof(Resources))]
     public partial class DcReportVariable
     {
-        public DcReportVariable()
-        {
-        }
-
         [Key]
-        [Display(Name = "Dəyişən ID")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_Id), ResourceType = typeof(Resources))]
         public int VariableId { get; set; }
 
-        [Display(Name = "Hesabat İD")]
-        [ForeignKey("DcReport")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_ReportId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcReport))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public int ReportId { get; set; }
 
-        [Display(Name = "Dəyişən tipi İD")]
-        [ForeignKey("DcReportVariableType")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_TypeId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcReportVariableType))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public byte VariableTypeId { get; set; }
 
-        [Display(Name = "Dəyişən Propertisi")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_Property), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(200, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string VariableProperty { get; set; }
 
-        [Display(Name = "Dəyişən Dəyəri")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_Value), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(200, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string VariableValue { get; set; }
 
-        [Display(Name = "Əməliyat")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_Operator), ResourceType = typeof(Resources))]
+        [StringLength(200, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? VariableOperator { get; set; }
 
-        [Display(Name = "Dəyər Tipi")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_ValueType), ResourceType = typeof(Resources))]
+        [StringLength(200, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string VariableValueType { get; set; }
 
-        [Display(Name = "Dəyişən Təmsilci")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(200, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ReportVariable_Representative), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(200, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string Representative { get; set; }
 
         public virtual DcReport DcReport { get; set; }
         public virtual DcReportVariableType DcReportVariableType { get; set; }
-
     }
 }

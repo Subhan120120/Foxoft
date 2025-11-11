@@ -1,31 +1,25 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "İyerarxiya Özəllik Tipi")]
+    [Display(Name = nameof(Resources.Entity_HierarchyFeatureType), ResourceType = typeof(Resources))]
     public partial class TrHierarchyFeatureType
     {
         [Key, Column(Order = 0)]
-        [ForeignKey("DcHierarchy")]
-        [Display(Name = "İyerarxiya Kodu")]
+        [ForeignKey(nameof(DcHierarchy))]
+        [Display(Name = nameof(Resources.Entity_Hierarchy_Code), ResourceType = typeof(Resources))]
         public string HierarchyCode { get; set; }
 
         [Key, Column(Order = 1)]
-        [ForeignKey("DcFeatureType")]
-        [Display(Name = "Özəllik Tipi Kodu")]
+        [ForeignKey(nameof(DcFeatureType))]
+        [Display(Name = nameof(Resources.Entity_FeatureType_Id), ResourceType = typeof(Resources))]
         public int FeatureTypeId { get; set; }
 
-
-        [JsonIgnore]
-        [ForeignKey("HierarchyCode")]
+        [ForeignKey(nameof(HierarchyCode))]
         public virtual DcHierarchy DcHierarchy { get; set; }
-
-        [ForeignKey("FeatureTypeId")]
+        [ForeignKey(nameof(FeatureTypeId))]
         public virtual DcFeatureType DcFeatureType { get; set; }
-        
     }
 }

@@ -1,56 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Depo")]
+    [Display(Name = nameof(Resources.Entity_Warehouse), ResourceType = typeof(Resources))]
     public partial class DcWarehouse : BaseEntity
     {
         [Key]
-        [Display(Name = "Depo Kodu")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_Code), ResourceType = typeof(Resources))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string WarehouseCode { get; set; }
 
-        [Display(Name = "Depo Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(150, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string WarehouseDesc { get; set; }
 
-        [Display(Name = "Depo Tipi")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_Type), ResourceType = typeof(Resources))]
         public byte WarehouseTypeCode { get; set; }
 
-        [Display(Name = "Ofis")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_OfficeCode), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(5, ErrorMessageResourceType = typeof(Resources),
+                         ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string OfficeCode { get; set; }
 
-        [Display(Name = "Mağaza Kodu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_StoreCode), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string StoreCode { get; set; }
 
-        [Display(Name = "Mənfi Stoka İcazə Ver")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_PermitNegativeStock), ResourceType = typeof(Resources))]
         public bool PermitNegativeStock { get; set; }
 
-        [Display(Name = "Mənfi Stokda Xəbərdar Et")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_WarnNegativeStock), ResourceType = typeof(Resources))]
         public bool WarnNegativeStock { get; set; }
 
-        [Display(Name = "Stok Səviyyəsi")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_ControlStockLevel), ResourceType = typeof(Resources))]
         public bool ControlStockLevel { get; set; }
 
-        [Display(Name = "Stok Səviyyəsini Xəbardar Et")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_WarnStockLevelRate), ResourceType = typeof(Resources))]
         public bool WarnStockLevelRate { get; set; }
 
-        [Display(Name = "Varsayılandır")]
+        [Display(Name = nameof(Resources.Entity_Warehouse_IsDefault), ResourceType = typeof(Resources))]
         public bool IsDefault { get; set; }
 
-        [Display(Name = "Qeyri-Aktiv")]
+        [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 
-        [Display(Name = "Guid Id")]
+        [Display(Name = nameof(Resources.Common_RowGuid), ResourceType = typeof(Resources))]
         public Guid RowGuid { get; set; }
     }
 }

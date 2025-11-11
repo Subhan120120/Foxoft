@@ -1,29 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Yetki Tipi")]
+    [Display(Name = nameof(Resources.Entity_ClaimType), ResourceType = typeof(Resources))]
     public partial class DcClaimType
     {
         public DcClaimType()
         {
-            //DcClaims = new HashSet<DcClaim>();
-           // TrRoleClaims = new HashSet<TrRoleClaim>();
+            DcClaims = new HashSet<DcClaim>();
         }
 
         [Key]
-        [Display(Name = "Səlahiyyət Tip Id")]
+        [Display(Name = nameof(Resources.Entity_ClaimType_Id), ResourceType = typeof(Resources))]
         public byte ClaimTypeId { get; set; }
 
-        [Display(Name = "Səlahiyyət Tipi Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_ClaimType_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [StringLength(50,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
         public string ClaimTypeDesc { get; set; }
 
-
         public virtual ICollection<DcClaim> DcClaims { get; set; }
-        //public virtual ICollection<TrRoleClaim> TrRoleClaims { get; set; }
-
     }
 }

@@ -1,65 +1,66 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Kredit")]
+    [Display(Name = nameof(Resources.Entity_Installment), ResourceType = typeof(Resources))]
     public partial class TrInstallment
     {
-        public TrInstallment()
-        {
-            TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>();
-        }
+        public TrInstallment() { TrInstallmentGuarantors = new HashSet<TrInstallmentGuarantor>(); }
 
         [Key]
-        [Display(Name = "Kredit İd")]
+        [Display(Name = nameof(Resources.Entity_Installment_Id), ResourceType = typeof(Resources))]
         public int InstallmentId { get; set; }
 
-        [ForeignKey("TrInvoiceHeader")]
-        [Display(Name = "Faktura İd")]
+        [ForeignKey(nameof(TrInvoiceHeader))]
+        [Display(Name = nameof(Resources.Entity_Installment_InvoiceHeaderId), ResourceType = typeof(Resources))]
         public Guid InvoiceHeaderId { get; set; }
 
         [Column(TypeName = "date")]
         [DefaultValue("getdate()")]
-        [Display(Name = "Kredit Tarixi")]
+        [Display(Name = nameof(Resources.Entity_Installment_Date), ResourceType = typeof(Resources))]
         public DateTime InstallmentDate { get; set; }
 
-        [Display(Name = "Ödəmə Planı Kodu")]
-        [ForeignKey("DcInstallmentPlan")]
+        [Display(Name = nameof(Resources.Entity_Installment_PlanCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcInstallmentPlan))]
         public string InstallmentPlanCode { get; set; }
 
-        [Display(Name = "Komissiya")]
-        public decimal Commission { get; set; } // Interest rate associated with the plan, if applicable 
+        [Display(Name = nameof(Resources.Entity_Installment_Commission), ResourceType = typeof(Resources))]
+        public decimal Commission { get; set; }
 
-        [Display(Name = "Faiz Dərəcəsi (%)")]
-        [Range(0, 100, ErrorMessage = "{0} 0 ilə 100 arasında olmalıdır \n")]
+        [Display(Name = nameof(Resources.Entity_Installment_InterestRate), ResourceType = typeof(Resources))]
+        [Range(0, 100,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public float InterestRate { get; set; }
 
-
         [NotMapped]
-        [Display(Name = "Ödənişlərin Cəmi")]
+        [Display(Name = nameof(Resources.Entity_Installment_TotalPaid), ResourceType = typeof(Resources))]
         public decimal TotalPaid { get; set; }
 
         [NotMapped]
-        [Display(Name = "Qalan Balans")]
+        [Display(Name = nameof(Resources.Entity_Installment_RemainingBalance), ResourceType = typeof(Resources))]
         public decimal RemainingBalance { get; set; }
 
         [NotMapped]
-        [Display(Name = "Aylıq Ödəniş")]
+        [Display(Name = nameof(Resources.Entity_Installment_MonthlyPayment), ResourceType = typeof(Resources))]
         public decimal MonthlyPayment { get; set; }
 
         [NotMapped]
-        [Display(Name = "Ödənilməli")]
+        [Display(Name = nameof(Resources.Entity_Installment_DueAmount), ResourceType = typeof(Resources))]
         public decimal DueAmount { get; set; }
 
         [NotMapped]
-        [Display(Name = "Gecikən Günlər")]
+        [Display(Name = nameof(Resources.Entity_Installment_OverdueDays), ResourceType = typeof(Resources))]
         public int OverdueDays { get; set; }
 
         [NotMapped]
-        [Display(Name = "Gecikmə Tarixi")]
-        public DateTime? OverdueDate { get; set; } // İlk gecikmə tarixi olaraq "OverdueDate" istifadə edildi
+        [Display(Name = nameof(Resources.Entity_Installment_OverdueDate), ResourceType = typeof(Resources))]
+        public DateTime? OverdueDate { get; set; }
 
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcInstallmentPlan DcInstallmentPlan { get; set; }

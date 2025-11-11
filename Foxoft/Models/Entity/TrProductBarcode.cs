@@ -1,43 +1,38 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Policy;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Məhsul Barkodu")]
+    [Display(Name = nameof(Resources.Entity_ProductBarcode), ResourceType = typeof(Resources))]
     public partial class TrProductBarcode : BaseEntity
     {
-        public TrProductBarcode()
-        {
-        }
-
         [Key]
+        [Display(Name = nameof(Resources.Entity_ProductBarcode_Id), ResourceType = typeof(Resources))]
         public int Id { get; set; }
 
-        [Display(Name = "Barkod")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_ProductBarcode_Barcode), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string Barcode { get; set; }
 
-        [Display(Name = "Məhsul Kodu")]
-        [ForeignKey("DcProduct")]
+        [Display(Name = nameof(Resources.Entity_ProductBarcode_ProductCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcProduct))]
         public string ProductCode { get; set; }
 
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [Display(Name = "Barkod Tipi")]
-        [ForeignKey("DcBarcodeType")]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [Display(Name = nameof(Resources.Entity_ProductBarcode_BarcodeTypeCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcBarcodeType))]
         public string BarcodeTypeCode { get; set; }
 
-
-        [Display(Name = "Say")]
+        [Display(Name = nameof(Resources.Entity_ProductBarcode_Qty), ResourceType = typeof(Resources))]
         [DefaultValue(1)]
         public decimal Qty { get; set; }
 
-
-        [ForeignKey("BarcodeTypeCode")]
+        [ForeignKey(nameof(BarcodeTypeCode))]
         public virtual DcBarcodeType DcBarcodeType { get; set; }
 
-        [ForeignKey("ProductCode")]
+        [ForeignKey(nameof(ProductCode))]
         public virtual DcProduct DcProduct { get; set; }
     }
 }

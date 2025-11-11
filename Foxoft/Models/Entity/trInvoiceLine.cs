@@ -1,18 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
     [Index(nameof(InvoiceHeaderId), nameof(ProductCode))]
-    [Display(Name = "Faktura Detalı")]
+    [Display(Name = nameof(Resources.Entity_InvoiceLine), ResourceType = typeof(Resources))]
     public partial class TrInvoiceLine : BaseEntity
     {
         private decimal ConvertToBasicUOM(decimal qty)
@@ -47,21 +43,21 @@ namespace Foxoft.Models
         [Key]
         public Guid InvoiceLineId { get; set; }
 
-        [ForeignKey("TrInvoiceHeader")]
+        [ForeignKey(nameof(TrInvoiceHeader))]
         public Guid InvoiceHeaderId { get; set; }
 
-        [ForeignKey("RelatedLine")]
+        [ForeignKey(nameof(RelatedLine))]
         public Guid? RelatedLineId { get; set; }
 
-        [Display(Name = "Məhsul Kodu")]
-        [ForeignKey("DcProduct")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcProduct))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(30, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string ProductCode { get; set; }
 
         [NotMapped]
-        [Display(Name = "Say")]
-        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_Qty), ResourceType = typeof(Resources))]
+        [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.##}")]
         public decimal Qty
         {
@@ -95,111 +91,108 @@ namespace Foxoft.Models
                     QtyOut = isReturn ? -basicUOMQty : basicUOMQty;
             }
         }
-
         [DefaultValue("0")]
-        [Display(Name = "Say Giriş")]
-        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyIn), ResourceType = typeof(Resources))]
+        [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyIn { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Say Çıxış")]
-        [Range(0, int.MaxValue, ErrorMessage = "{0} {1} dan az ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_QtyOut), ResourceType = typeof(Resources))]
+        [Range(0, int.MaxValue, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public decimal QtyOut { get; set; }
 
-        //[DefaultValue(1)]
-        [Display(Name = "Ölçü Vahidi")]
-        [ForeignKey("DcUnitOfMeasure")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_UnitOfMeasureId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcUnitOfMeasure))]
         public int? UnitOfMeasureId { get; set; }
 
         [Column(TypeName = "money")]
-        [Display(Name = "Qiymət")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_Price), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public decimal Price { get; set; }
 
-        [Display(Name = "Valyuta")]
-        [ForeignKey("DcCurrency")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_CurrencyCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcCurrency))]
         public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting.LocalCurrencyCode;
 
         [DefaultValue("1")]
-        [Display(Name = "Valyuta Kursu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ExchangeRate), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public float ExchangeRate { get; set; } = 1;
 
         [Column(TypeName = "money")]
-        [Display(Name = "Qiymət (YPV)")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_PriceLoc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public decimal PriceLoc { get { return Math.Round(Price / (decimal)ExchangeRate, 4); } set { } }
 
         [Column(TypeName = "money")]
-        [Display(Name = "Tutar")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_Amount), ResourceType = typeof(Resources))]
         public decimal Amount { get { return (QtyIn + QtyOut) * Price; } set { } }
 
         [Column(TypeName = "money")]
-        [Display(Name = "Tutar (YPV)")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_AmountLoc), ResourceType = typeof(Resources))]
         public decimal AmountLoc { get { return (QtyIn + QtyOut) * PriceLoc; } set { } }
 
         [DefaultValue("0")]
-        [Display(Name = "Endirim")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_PosDiscount), ResourceType = typeof(Resources))]
         public decimal PosDiscount { get; set; }
 
         [Column(TypeName = "money")]
-        [Display(Name = "Net Tutar")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_NetAmount), ResourceType = typeof(Resources))]
         public decimal NetAmount { get { return (QtyIn + QtyOut) * Price * (1 - PosDiscount / 100); } set { } }
 
         [Column(TypeName = "money")]
-        [Display(Name = "Net Tutar (YPV)")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_NetAmountLoc), ResourceType = typeof(Resources))]
         public decimal NetAmountLoc { get { return (QtyIn + QtyOut) * PriceLoc * (1 - PosDiscount / 100); } set { } }
 
         [DefaultValue("0")]
         [Column(TypeName = "money")]
-        [Display(Name = "Kampaniya Endirimi")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_DiscountCampaign), ResourceType = typeof(Resources))]
         public decimal DiscountCampaign { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "ƏDV")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_VatRate), ResourceType = typeof(Resources))]
         public float VatRate { get; set; }
 
-        [Display(Name = "Sətir Açıqlaması")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_LineDescription), ResourceType = typeof(Resources))]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? LineDescription { get; set; }
 
-        [ForeignKey("DcSerialNumber")]
-        [Display(Name = "Seria Nömrəsi")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+        [ForeignKey(nameof(DcSerialNumber))]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_SerialNumberCode), ResourceType = typeof(Resources))]
+        [StringLength(150, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? SerialNumberCode { get; set; }
 
-        [Display(Name = "Satıcı")]
-        [ForeignKey("DcCurrAcc")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_SalesPersonCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcCurrAcc))]
         public string? SalesPersonCode { get; set; }
 
-        [Display(Name = "Usta")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_WorkerCode), ResourceType = typeof(Resources))]
         public string? WorkerCode { get; set; }
 
-        [Display(Name = "Maya Dəyəri")]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductCost), ResourceType = typeof(Resources))]
         public decimal? ProductCost { get; set; }
 
-        [Display(Name = "Mənfəət")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_Benefit), ResourceType = typeof(Resources))]
         public decimal? Benefit => PriceLoc * (1 - PosDiscount / 100) - ProductCost;
 
-        [Display(Name = "Toplam Mənfəət")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_TotalBenefit), ResourceType = typeof(Resources))]
         public decimal? TotalBenefit => NetAmountLoc - ((QtyIn + QtyOut) * ProductCost);
 
         [NotMapped]
-        [Display(Name = "Qalıq")]
+        [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]
         public decimal Balance { get; set; }
 
         [NotMapped]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ReturnQty), ResourceType = typeof(Resources))]
         public decimal ReturnQty { get; set; }
 
         [NotMapped]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_RemainingQty), ResourceType = typeof(Resources))]
         public decimal RemainingQty { get; set; }
 
         [NotMapped]
-        [Display(Name = "Məhsul Adı")]
+        [Display(Name = nameof(Resources.Entity_InvoiceLine_ProductDesc), ResourceType = typeof(Resources))]
         public string ProductDesc { get; set; }
-
-        //public string ProductDesc { get { if (!Object.ReferenceEquals(DcProduct, null)) return DcProduct.ProductDesc; else return ""; } set { } }  // gridview da set{} iwlemir
 
         public virtual TrInvoiceHeader TrInvoiceHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }
@@ -211,6 +204,5 @@ namespace Foxoft.Models
 
         public virtual TrInvoiceLine RelatedLine { get; set; } // Navigation property to the related line
         public virtual ICollection<TrInvoiceLine> InverseRelatedLines { get; set; } // Navigation property for the inverse relationship
-
     }
 }

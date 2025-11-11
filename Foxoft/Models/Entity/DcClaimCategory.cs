@@ -2,10 +2,11 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Kateqoriya İyerarxiyası")]
+    [Display(Name = nameof(Resources.Entity_ClaimCategory), ResourceType = typeof(Resources))]
     public partial class DcClaimCategory : BaseEntity
     {
         public DcClaimCategory()
@@ -14,23 +15,24 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Kateqoriya Id")]
+        [Display(Name = nameof(Resources.Entity_ClaimCategory_Id), ResourceType = typeof(Resources))]
         public int CategoryId { get; set; }
 
-        [Display(Name = "Kateqoriya Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_ClaimCategory_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
         public string CategoryDesc { get; set; }
 
-        [Display(Name = "Kateqoriya Səviyyəsi")]
+        [Display(Name = nameof(Resources.Entity_ClaimCategory_Level), ResourceType = typeof(Resources))]
         public int CategoryLevel { get; set; }
 
-        [Display(Name = "Ana Kateqoriya Kodu")]
+        [Display(Name = nameof(Resources.Entity_ClaimCategory_ParentId), ResourceType = typeof(Resources))]
         public int? CategoryParentId { get; set; }
 
-        [Display(Name = "Sıra")]
+        [Display(Name = nameof(Resources.Entity_ClaimCategory_Order), ResourceType = typeof(Resources))]
         public int Order { get; set; }
-
-
 
         public virtual ICollection<DcClaim> DcClaims { get; set; }
     }

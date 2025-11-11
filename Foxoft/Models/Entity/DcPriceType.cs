@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Qiymət Tipi")]
+    [Display(Name = nameof(Resources.Entity_PriceType), ResourceType = typeof(Resources))]
     public partial class DcPriceType
     {
         public DcPriceType()
@@ -19,16 +13,17 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Qiymət Tipi Kodu")]
+        [Display(Name = nameof(Resources.Entity_PriceType_Code), ResourceType = typeof(Resources))]
         public string PriceTypeCode { get; set; }
 
-        [Display(Name = "Qiymət Tipi Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxıla bilmez \n")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_PriceType_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string PriceTypeDesc { get; set; }
 
         public virtual ICollection<TrPriceListHeader> TrPriceListHeaders { get; set; }
         public virtual ICollection<DcProductStaticPrice> TrStaticPrices { get; set; }
-
     }
 }

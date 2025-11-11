@@ -1,44 +1,36 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Qiymət Cədvəli Detalı")]
+    [Display(Name = nameof(Resources.Entity_PriceListLine), ResourceType = typeof(Resources))]
     public partial class TrPriceListLine : BaseEntity
     {
         [Key]
         public Guid PriceListLineId { get; set; }
 
-        [ForeignKey("TrPriceListHeader")]
+        [ForeignKey(nameof(TrPriceListHeader))]
         public Guid PriceListHeaderId { get; set; }
 
-        [Display(Name = "Məhsul Kodu")]
-        [ForeignKey("DcProduct")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_PriceListLine_ProductCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcProduct))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(30, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string ProductCode { get; set; }
 
-        [Display(Name = "Qiymət")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_PriceListLine_Price), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public decimal Price { get; set; }
 
-        [Display(Name = "Valyuta")]
-        [ForeignKey("DcCurrency")]
+        [Display(Name = nameof(Resources.Entity_PriceListLine_CurrencyCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcCurrency))]
         public string CurrencyCode { get; set; } = Properties.Settings.Default.AppSetting.LocalCurrencyCode;
 
-        [Display(Name = "Sətir Açıqlaması")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_PriceListLine_LineDescription), ResourceType = typeof(Resources))]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string LineDescription { get; set; }
-
 
         public virtual TrPriceListHeader TrPriceListHeader { get; set; }
         public virtual DcProduct DcProduct { get; set; }

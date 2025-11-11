@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Şirkət")]
+    [Display(Name = nameof(Resources.Entity_Company), ResourceType = typeof(Resources))]
     public partial class DcCompany
     {
         [Key]
-        [Display(Name = "Şirkət Kodu")]
+        [Display(Name = nameof(Resources.Entity_Company_Code), ResourceType = typeof(Resources))]
         public string CompanyCode { get; set; }
 
-        [Display(Name = "Şirkət Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Company_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [StringLength(150,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
         public string CompanyDesc { get; set; }
 
-        [Display(Name = "Qeyri-Aktiv")]
+        [Display(Name = nameof(Resources.Entity_Company_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 
-        [Display(Name = "Guid Id")]
+        [Display(Name = nameof(Resources.Entity_Company_RowGuid), ResourceType = typeof(Resources))]
         public Guid RowGuid { get; set; }
     }
 }

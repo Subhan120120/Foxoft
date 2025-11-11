@@ -1,11 +1,11 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Özəllik Tipi")]
+    [Display(Name = nameof(Resources.Entity_FeatureType), ResourceType = typeof(Resources))]
     public partial class DcFeatureType
     {
         public DcFeatureType()
@@ -15,17 +15,18 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Özəllik Tipi Kodu")]
+        [Display(Name = nameof(Resources.Entity_FeatureType_Id), ResourceType = typeof(Resources))]
         public int FeatureTypeId { get; set; }
 
-        [Display(Name = "Özəllik Adı")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_FeatureType_Name), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string FeatureTypeName { get; set; }
 
-        [Display(Name = "Sıra")]
+        [Display(Name = nameof(Resources.Entity_FeatureType_Order), ResourceType = typeof(Resources))]
         public int Order { get; set; }
 
-        [Display(Name = "Filtirlənir")]
+        [Display(Name = nameof(Resources.Entity_FeatureType_Filterable), ResourceType = typeof(Resources))]
         public bool Filterable { get; set; }
 
 

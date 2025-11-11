@@ -1,47 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Proses")]
+    [Display(Name = nameof(Resources.Entity_Process), ResourceType = typeof(Resources))]
     public partial class DcProcess
-   {
-      public DcProcess()
-      {
-         TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
-         TrPaymentHeaders = new HashSet<TrPaymentHeader>();
-      }
+    {
+        public DcProcess()
+        {
+            TrInvoiceHeaders = new HashSet<TrInvoiceHeader>();
+            TrPaymentHeaders = new HashSet<TrPaymentHeader>();
+        }
 
-      [Key]
-      [Display(Name = "Proses Kodu")]
-      [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      public string ProcessCode { get; set; }
+        [Key]
+        [Display(Name = nameof(Resources.Entity_Process_Code), ResourceType = typeof(Resources))]
+        [StringLength(5, ErrorMessageResourceType = typeof(Resources),
+                        ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
+        public string ProcessCode { get; set; }
 
-      [Display(Name = "Proses Adı")]
-      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-      [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      public string ProcessDesc { get; set; }
+        [Display(Name = nameof(Resources.Entity_Process_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(150, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
+        public string ProcessDesc { get; set; }
 
-      [Display(Name = "Proses İstiqaməti")]
-      [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-      [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
-      public byte ProcessDir { get; set; }
+        [Display(Name = nameof(Resources.Entity_Process_Dir), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        public byte ProcessDir { get; set; }
 
-      [Display(Name = "Xüsusi Valyuta")]
-      [ForeignKey("DcCurrency")]
-      public string? CustomCurrencyCode { get; set; }
+        [Display(Name = nameof(Resources.Entity_Process_CustomCurrency), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcCurrency))]
+        public string? CustomCurrencyCode { get; set; }
 
-
-      public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
-      public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
-
-      public virtual DcCurrency DcCurrency { get; set; }
-   }
+        public virtual ICollection<TrInvoiceHeader> TrInvoiceHeaders { get; set; }
+        public virtual ICollection<TrPaymentHeader> TrPaymentHeaders { get; set; }
+        public virtual DcCurrency DcCurrency { get; set; }
+    }
 }

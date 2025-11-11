@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Hesabat Yetkisi")]
+    [Display(Name = nameof(Resources.Entity_ClaimReport), ResourceType = typeof(Resources))]
     public partial class TrClaimReport : BaseEntity
     {
         [Key]
+        [Display(Name = nameof(Resources.Entity_ClaimReport_Id), ResourceType = typeof(Resources))]
         public int ClaimReportId { get; set; }
 
-        [Required]
-        [ForeignKey("DcClaim")]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [Display(Name = nameof(Resources.Entity_ClaimReport_ClaimCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcClaim))]
         public string ClaimCode { get; set; }
 
-        [Required]
-        [ForeignKey("DcReport")]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [Display(Name = nameof(Resources.Entity_ClaimReport_ReportId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcReport))]
         public int ReportId { get; set; }
-
 
         public virtual DcReport DcReport { get; set; }
         public virtual DcClaim DcClaim { get; set; }

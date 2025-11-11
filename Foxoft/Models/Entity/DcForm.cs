@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Form")]
+    [Display(Name = nameof(Resources.Entity_Form), ResourceType = typeof(Resources))]
     public partial class DcForm
     {
         public DcForm()
@@ -13,13 +13,11 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Form Kodu")]
+        [Display(Name = nameof(Resources.Entity_Form_Code), ResourceType = typeof(Resources))]
         public string FormCode { get; set; }
 
-        [Display(Name = "Form Açıqlaması")]
-        //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_Form_Desc), ResourceType = typeof(Resources))]
         public string? FormDesc { get; set; }
-
 
         public virtual ICollection<TrFormReport> TrFormReports { get; set; }
     }

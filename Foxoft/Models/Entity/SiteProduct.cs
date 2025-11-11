@@ -1,60 +1,49 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Sayt Məhsulu")]
+    [Display(Name = nameof(Resources.Entity_SiteProduct), ResourceType = typeof(Resources))]
     public partial class SiteProduct : BaseEntity
     {
-        public SiteProduct()
-        {
-        }
-
-        [Display(Name = "Məhsul Id")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_ProductId), ResourceType = typeof(Resources))]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
-
         [Key]
-        [Display(Name = "Məhsul Kodu")]
-        [ForeignKey("DcProduct")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_ProductCode), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcProduct))]
         public string ProductCode { get; set; }
 
-        [Display(Name = "Məhsul Açıqlaması")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_Desc), ResourceType = typeof(Resources))]
+        [StringLength(50,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? Desc { get; set; }
 
-        [Display(Name = "Qiymət")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_Price), ResourceType = typeof(Resources))]
         public decimal Price { get; set; }
 
-        [Display(Name = "Reytinq")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_Rating), ResourceType = typeof(Resources))]
         public int? Rating { get; set; }
 
+        [Display(Name = nameof(Resources.Entity_SiteProduct_CategoryId), ResourceType = typeof(Resources))]
         public int CategoryId { get; set; }
 
-        [Display(Name = "Slug")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_Slug), ResourceType = typeof(Resources))]
+        [StringLength(150,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? Slug { get; set; }
 
-        [Display(Name = "Baxış Sayı")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_ViewCount), ResourceType = typeof(Resources))]
         public int ViewCount { get; set; }
 
-        [Display(Name = "Saytda Göstər")]
+        [Display(Name = nameof(Resources.Entity_SiteProduct_UseInSite), ResourceType = typeof(Resources))]
         public bool UseInSite { get; set; }
 
-
-
-
-        [ForeignKey("ProductCode")]
+        [ForeignKey(nameof(ProductCode))]
         public virtual DcProduct DcProduct { get; set; }
     }
 }

@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Foxoft.Properties; // Resources üçün
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Yetki")]
+    [Display(Name = nameof(Resources.Entity_Claim), ResourceType = typeof(Resources))]
     public partial class DcClaim
     {
         public DcClaim()
@@ -18,22 +16,31 @@ namespace Foxoft.Models
         }
 
         [Key]
+        [Display(Name = nameof(Resources.Entity_Claim_Code), ResourceType = typeof(Resources))]
         public string ClaimCode { get; set; }
 
-        [Required]
+        [Display(Name = nameof(Resources.Entity_Claim_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
         public string ClaimDesc { get; set; }
 
-        [Required]
-        [ForeignKey("DcClaimType")]
+        [Display(Name = nameof(Resources.Entity_Claim_TypeId), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [ForeignKey(nameof(DcClaimType))]
         public byte ClaimTypeId { get; set; }
 
-        [ForeignKey("DcClaimCategory")]
+        [Display(Name = nameof(Resources.Entity_Claim_CategoryId), ResourceType = typeof(Resources))]
+        [ForeignKey(nameof(DcClaimCategory))]
         public int CategoryId { get; set; }
 
-        [Display(Name = "Id")]
+        [Display(Name = nameof(Resources.Entity_Claim_Id), ResourceType = typeof(Resources))]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
 
         public virtual DcClaimType DcClaimType { get; set; }
         public virtual DcClaimCategory DcClaimCategory { get; set; }

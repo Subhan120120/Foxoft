@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+﻿using System.ComponentModel.DataAnnotations;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Dəyişən")]
+    [Display(Name = nameof(Resources.Entity_Variable), ResourceType = typeof(Resources))]
     public partial class DcVariable
     {
         [Key]
-        [Display(Name = "Dəyişən Kodu")]
-        [StringLength(5, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Variable_Code), ResourceType = typeof(Resources))]
+        [StringLength(5, ErrorMessageResourceType = typeof(Resources),
+                         ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string VariableCode { get; set; }
 
-        [Display(Name = "Dəyişən Kodu")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Variable_Desc), ResourceType = typeof(Resources))]
+        [StringLength(150, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? VariableDesc { get; set; }
 
-        [Display(Name = "Sonuncu Nömrə")]
+        [Display(Name = nameof(Resources.Entity_Variable_LastNumber), ResourceType = typeof(Resources))]
         public int? LastNumber { get; set; }
     }
 }

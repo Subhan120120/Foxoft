@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
     [Index(nameof(ProductTypeCode))]
-    [Display(Name = "Məhsul")]
+    [Display(Name = nameof(Resources.Entity_Product), ResourceType = typeof(Resources))]
     public partial class DcProduct : BaseEntity
     {
         public DcProduct()
@@ -22,104 +21,110 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Məhsul Kodu")]
-        [Required(AllowEmptyStrings = false)]
-        [StringLength(30, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Product_Code), ResourceType = typeof(Resources))]
+        [Required(AllowEmptyStrings = false,
+                  ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(30, ErrorMessageResourceType = typeof(Resources),
+                         ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string ProductCode { get; set; }
 
-        [Display(Name = "Umico Kodu")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Product_Code2), ResourceType = typeof(Resources))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources),
+                         ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? ProductCode2 { get; set; }
 
-        [Display(Name = "Id")]
+        [Display(Name = nameof(Resources.Entity_Product_Id), ResourceType = typeof(Resources))]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductId { get; set; }
 
-        [Display(Name = "Məhsul Adı")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Product_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
+        [StringLength(150, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string ProductDesc { get; set; }
 
-        [Display(Name = "Məhsul Özəlliyi")]
-        [StringLength(150, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Product_Feature), ResourceType = typeof(Resources))]
+        [StringLength(150, ErrorMessageResourceType = typeof(Resources),
+                          ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? ProductFeature { get; set; }
 
-        [Display(Name = "Məhsul Tipi")]
-        [ForeignKey("DcProductType")]
-        [Range(1, int.MaxValue, ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [ForeignKey(nameof(DcProductType))]
+        [Display(Name = nameof(Resources.Entity_Product_Type), ResourceType = typeof(Resources))]
+        [Range(1, int.MaxValue, ErrorMessageResourceType = typeof(Resources),
+                             ErrorMessageResourceName = nameof(Resources.Validation_Range_Min))]
         public byte ProductTypeCode { get; set; }
 
-        [Display(Name = "İyerarxiya Kodu")]
-        [ForeignKey("DcHierarchy")]
+        [ForeignKey(nameof(DcHierarchy))]
+        [Display(Name = nameof(Resources.Entity_Product_HierarchyCode), ResourceType = typeof(Resources))]
         public string? HierarchyCode { get; set; }
 
         [DefaultValue("1")]
-        [Display(Name = "POSda İstifadə Et")]
+        [Display(Name = nameof(Resources.Entity_Product_UsePos), ResourceType = typeof(Resources))]
         public bool UsePos { get; set; }
 
-        [Display(Name = "Tanıtım")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Product_PromotionCode), ResourceType = typeof(Resources))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources),
+                         ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? PromotionCode { get; set; }
 
-        [Display(Name = "Tanıtım2")]
-        [StringLength(50, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Product_PromotionCode2), ResourceType = typeof(Resources))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources),
+                         ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? PromotionCode2 { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Vergi Dərəcəsi")]
+        [Display(Name = nameof(Resources.Entity_Product_TaxRate), ResourceType = typeof(Resources))]
         public double TaxRate { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Pos Endirimi")]
+        [Display(Name = nameof(Resources.Entity_Product_PosDiscount), ResourceType = typeof(Resources))]
         public double PosDiscount { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Qeyri-Aktiv")]
+        [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 
-        const string qiymetler = "Qiymətlər";
+        //const string qiymetler = "Qiymətlər";
         [DefaultValue("0")]
-        [Display(Name = "Alış Qiyməti", GroupName = qiymetler, Order = 0)]
+        [Display(Name = nameof(Resources.Entity_Product_PurchasePrice), ResourceType = typeof(Resources), GroupName = nameof(Resources.Entity_Product_Prices), Order = 0)]
         public decimal PurchasePrice { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Topdan Satış Qiy.", GroupName = qiymetler, Order = 1)]
-        //[DisplayName("Toptan Satış Qiyməti")]
+        [Display(Name = nameof(Resources.Entity_Product_WholesalePrice), ResourceType = typeof(Resources), GroupName = nameof(Resources.Entity_Product_Prices), Order = 1)]
         public decimal WholesalePrice { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "Satış Qiyməti", GroupName = qiymetler, Order = 2)]
+        [Display(Name = nameof(Resources.Entity_Product_RetailPrice), ResourceType = typeof(Resources), GroupName = nameof(Resources.Entity_Product_Prices), Order = 2)]
         public decimal RetailPrice { get; set; }
 
         [DefaultValue("0")]
-        [Display(Name = "İnternetdə İstifadə Et")]
+        [Display(Name = nameof(Resources.Entity_Product_UseInternet), ResourceType = typeof(Resources))]
         public bool UseInternet { get; set; }
 
-        [Display(Name = "Şəkil")]
-        [StringLength(300, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_Product_ImagePath), ResourceType = typeof(Resources))]
+        [StringLength(300, ErrorMessageResourceType = typeof(Resources),
+                           ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max))]
         public string? ImagePath { get; set; }
 
-
-        [ForeignKey("DcUnitOfMeasure")]
-        [Display(Name = "Default Ölçü Vahidi")]
+        [ForeignKey(nameof(DcUnitOfMeasure))]
+        [Display(Name = nameof(Resources.Entity_Product_DefaultUnitOfMeasureId), ResourceType = typeof(Resources))]
         public int DefaultUnitOfMeasureId { get; set; }
 
-        [Display(Name = "Qalıq Xəbərdarlıq Səviyyəsi")]
+        [Display(Name = nameof(Resources.Entity_Product_BalanceWarningLevel), ResourceType = typeof(Resources))]
         public decimal BalanceWarningLevel { get; set; }
 
-
-
-
         [NotMapped]
-        [Display(Name = "Qalıq")]
+        [Display(Name = nameof(Resources.Common_Balance), ResourceType = typeof(Resources))]
         public decimal Balance { get; set; }
 
         [NotMapped]
-        [Display(Name = "Maya Dəyəri.")]
+        [Display(Name = nameof(Resources.Entity_Product_ProductCost), ResourceType = typeof(Resources))]
         public decimal? ProductCost { get; set; }
 
         [NotMapped]
-        [Display(Name = "Son Satış Qiy.")]
+        [Display(Name = nameof(Resources.Entity_Product_LastSalePrice), ResourceType = typeof(Resources))]
         public decimal? LastSalePrice { get; set; }
 
         public virtual DcProductType DcProductType { get; set; }
@@ -135,6 +140,5 @@ namespace Foxoft.Models
         public virtual ICollection<TrProductDiscount> TrProductDiscounts { get; set; }
         public virtual ICollection<TrPriceListLine> TrPriceListLines { get; set; }
         public virtual ICollection<TrProductBarcode> TrProductBarcodes { get; set; }
-        //public virtual ICollection<TrProductUnitOfMeasure> TrProductUnitOfMeasures { get; set; }
     }
 }

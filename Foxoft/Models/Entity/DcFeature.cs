@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Özəllik")]
+    [Display(Name = nameof(Resources.Entity_Feature), ResourceType = typeof(Resources))]
     public partial class DcFeature
     {
         public DcFeature()
@@ -14,20 +15,18 @@ namespace Foxoft.Models
         }
 
         [Key, Column(Order = 0)]
-        [Display(Name = "Özəllik Kodu")]
+        [Display(Name = nameof(Resources.Entity_Feature_Code), ResourceType = typeof(Resources))]
         public string FeatureCode { get; set; }
 
         [Key, Column(Order = 1)]
-        [ForeignKey("DcFeatureType")]
-        [Display(Name = "Özəllik Tipi Kodu")]
+        [ForeignKey(nameof(DcFeatureType))]
+        [Display(Name = nameof(Resources.Entity_Feature_TypeId), ResourceType = typeof(Resources))]
         public int FeatureTypeId { get; set; }
 
-        [Display(Name = "Özəllik Açıqlaması")]
-        //[Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_Feature_Desc), ResourceType = typeof(Resources))]
         public string? FeatureDesc { get; set; }
 
-
-        [ForeignKey("FeatureTypeId")]
+        [ForeignKey(nameof(FeatureTypeId))]
         public virtual DcFeatureType DcFeatureType { get; set; }
 
         [JsonIgnore]

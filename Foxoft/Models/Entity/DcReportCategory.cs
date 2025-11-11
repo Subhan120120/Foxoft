@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Hesabat Kateqoriyası")]
+    [Display(Name = nameof(Resources.Entity_ReportCategory), ResourceType = typeof(Resources))]
     public partial class DcReportCategory : BaseEntity
     {
-        public DcReportCategory()
-        {
-            DcReports = new HashSet<DcReport>();
-        }
+        public DcReportCategory() { DcReports = new HashSet<DcReport>(); }
 
         [Key]
-        [Display(Name = "Hesabat Kateqoriyası")]
+        [Display(Name = nameof(Resources.Entity_ReportCategory_Id), ResourceType = typeof(Resources))]
         public int ReportCategoryId { get; set; }
 
-        [Display(Name = "Hesabat Kateqoriya Adı")]
-        [Required(ErrorMessage = "Hesabat Kateqoriya Adı tələb olunur.")]
+        [Display(Name = nameof(Resources.Entity_ReportCategory_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
             ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
         public string ReportCategoryDesc { get; set; }
 
         public virtual ICollection<DcReport> DcReports { get; set; }

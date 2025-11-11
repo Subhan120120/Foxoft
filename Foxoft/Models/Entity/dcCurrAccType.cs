@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Cari Hesab Tipi")]
+    [Display(Name = nameof(Resources.Entity_CurrAccType), ResourceType = typeof(Resources))]
     public partial class DcCurrAccType
     {
         public DcCurrAccType()
@@ -19,16 +15,21 @@ namespace Foxoft.Models
         }
 
         [Key]
-        [Display(Name = "Cari Hesab Tipi Kodu")]
+        [Display(Name = nameof(Resources.Entity_CurrAccType_Code), ResourceType = typeof(Resources))]
         public byte CurrAccTypeCode { get; set; }
 
-
-        [Display(Name = "Cari Hesab Tipi Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
-        [StringLength(100, ErrorMessage = "{0} {1} simvoldan çox ola bilməz \n")]
+        [Display(Name = nameof(Resources.Entity_CurrAccType_Desc), ResourceType = typeof(Resources))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
+        )]
+        [StringLength(100,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.Validation_StringLength_Max)
+        )]
         public string CurrAccTypeDesc { get; set; }
 
-        [Display(Name = "Qeyri-Aktiv")]
+        [Display(Name = nameof(Resources.Common_IsDisabled), ResourceType = typeof(Resources))]
         public bool IsDisabled { get; set; }
 
         public virtual ICollection<DcCurrAcc> DcCurrAccs { get; set; }

@@ -1,17 +1,10 @@
-﻿using DevExpress.XtraEditors;
-using System;
-using System.Configuration;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using Microsoft.Data.SqlClient;
-using System.IO;
-using System.Reflection;
-using System.Windows.Forms;
 
 namespace Foxoft
 {
     public class AdoMethods
     {
-
         private string subConnString = Properties.Settings.Default.SubConnString;
 
 

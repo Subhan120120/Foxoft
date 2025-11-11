@@ -1,34 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Rol")]
+    [Display(Name = nameof(Resources.Entity_Role), ResourceType = typeof(Resources))]
     public partial class DcRole : BaseEntity
     {
-        public DcRole()
-        {
-            TrRoleClaims = new HashSet<TrRoleClaim>();
-            TrCurrAccRoles = new HashSet<TrCurrAccRole>();
-        }
+        public DcRole() { TrRoleClaims = new HashSet<TrRoleClaim>(); TrCurrAccRoles = new HashSet<TrCurrAccRole>(); }
 
         [Key]
-        [Display(Name = "Rol Kodu")]
+        [Display(Name = nameof(Resources.Entity_Role_Code), ResourceType = typeof(Resources))]
         public string RoleCode { get; set; }
 
-        [Display(Name = "Rol Açıqlaması")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [Display(Name = nameof(Resources.Entity_Role_Desc), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources),
+                  ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string RoleDesc { get; set; }
-
 
         public virtual ICollection<TrRoleClaim> TrRoleClaims { get; set; }
         public virtual ICollection<TrCurrAccRole> TrCurrAccRoles { get; set; }
-
     }
 }

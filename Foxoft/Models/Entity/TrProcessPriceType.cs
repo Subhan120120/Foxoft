@@ -1,36 +1,30 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Policy;
+using Foxoft.Properties;
 
 namespace Foxoft.Models
 {
-    [Display(Name = "Proses Qiymət Tipi")]
+    [Display(Name = nameof(Resources.Entity_ProcessPriceType), ResourceType = typeof(Resources))]
     public partial class TrProcessPriceType : BaseEntity
     {
-        public TrProcessPriceType()
-        {
-        }
-
         [Key]
+        [Display(Name = nameof(Resources.Entity_ProcessPriceType_Id), ResourceType = typeof(Resources))]
         public int Id { get; set; }
 
-        [ForeignKey("DcProcess")]
-        [Display(Name = "Proses Kodu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [ForeignKey(nameof(DcProcess))]
+        [Display(Name = nameof(Resources.Entity_ProcessPriceType_ProcessCode), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string ProcessCode { get; set; }
 
-        [ForeignKey("DcPriceType")]
-        [Display(Name = "Qiymət Tipi Kodu")]
-        [Required(ErrorMessage = "{0} boş buraxila bilmez \n")]
+        [ForeignKey(nameof(DcPriceType))]
+        [Display(Name = nameof(Resources.Entity_ProcessPriceType_PriceTypeCode), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.Validation_Required))]
         public string PriceTypeCode { get; set; }
 
-
-
-        [ForeignKey("ProcessCode")]
+        [ForeignKey(nameof(ProcessCode))]
         public virtual DcProcess DcProcess { get; set; }
 
-        [ForeignKey("PriceTypeCode")]
+        [ForeignKey(nameof(PriceTypeCode))]
         public virtual DcPriceType DcPriceType { get; set; }
     }
 }
