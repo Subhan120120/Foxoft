@@ -40,7 +40,7 @@ namespace Foxoft
 
             InitializeControlText();
 
-            InitializeGallery();
+            galleryControl1.Gallery.Groups.Add(galleryItemGroup1);
 
             tabbedControlGroup1.SelectedTabPage = autoGroupForPrices;
 
