@@ -20,6 +20,7 @@ namespace Foxoft.Models
 
         [Display(Name = "Hesabat Kateqoriya Adı")]
         [Required(ErrorMessage = "Hesabat Kateqoriya Adı tələb olunur.")]
+            ErrorMessageResourceName = nameof(Resources.Validation_Required)
         public string ReportCategoryDesc { get; set; }
 
         public virtual ICollection<DcReport> DcReports { get; set; }
