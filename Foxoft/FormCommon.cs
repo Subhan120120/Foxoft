@@ -35,7 +35,7 @@ namespace Foxoft
         {
             InitializeComponent();
             bindingSource1.DataSource = typeof(T);
-            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.Name;
+            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.GetName();
 
             IsNew = isNew;
             ProcessCode = processCode;

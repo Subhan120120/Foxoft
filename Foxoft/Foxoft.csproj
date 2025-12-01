@@ -91,7 +91,6 @@
 		<None Remove="Resources\registration_24px.png" />
 		<None Remove="Resources\registration_32px.png" />
 		<None Remove="Resources\search_client_32px.png" />
-		<None Remove="Resources\startup.png" />
 		<None Remove="Resources\startup550x363.png.png" />
 		<None Remove="tr\DevExpress.Data.v24.2.resources.dll" />
 		<None Remove="tr\DevExpress.DataAccess.v24.2.resources.dll" />
@@ -328,7 +327,6 @@
 		<EmbeddedResource Include="AppCode\SqlQuery\View_Transactions.sql" />
 		<EmbeddedResource Include="Resources\fox_007.ico" />
 		<EmbeddedResource Include="Resources\NoPhoto.png" />
-		<EmbeddedResource Include="Resources\startup.png" />
 		<EmbeddedResource Include="Resources\startup550x363.png.png" />
 	</ItemGroup>
 

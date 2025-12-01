@@ -35,7 +35,7 @@ namespace Foxoft
         public FormCommonList(string processCode, string fieldName_Id)
         {
             InitializeComponent();
-            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.Name;
+            Text = ((DisplayAttribute)typeof(T).GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault())?.GetName();
 
             BBI_New.ImageOptions.SvgImage = svgImageCollection1["add"];
             BBI_Edit.ImageOptions.SvgImage = svgImageCollection1["edit"];
